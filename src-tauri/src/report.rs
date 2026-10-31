@@ -167,8 +167,37 @@ impl Redact {
                 from = i + "[mic]".len() + 1;
             }
         }
-        s
+        hide_hardware_addresses(&s)
     }
+}
+
+/// Bluetooth hardware addresses (a device's Core Audio id is one: "AC-DE-48-00-11-22:output") as [device]: a
+/// persistent identifier of someone's headphones.
+fn hide_hardware_addresses(s: &str) -> String {
+    let b = s.as_bytes();
+    let hex2 = |i: usize| i + 2 <= b.len() && b[i].is_ascii_hexdigit() && b[i + 1].is_ascii_hexdigit();
+    let address_at = |i: usize| {
+        let sep = *b.get(i + 2)?;
+        ((sep == b'-' || sep == b':') && (0..6).all(|k| hex2(i + 3 * k) && (k == 5 || b.get(i + 3 * k + 2) == Some(&sep))))
+            .then_some(17)
+    };
+    let (mut out, mut i) = (String::with_capacity(s.len()), 0);
+    while i < b.len() {
+        // (only where an address starts: not in the middle of a longer run of hex)
+        let starts = i == 0 || !b[i - 1].is_ascii_alphanumeric();
+        match address_at(i).filter(|n| starts && b.get(i + n).is_none_or(|c| !c.is_ascii_alphanumeric())) {
+            Some(n) => {
+                out.push_str("[device]");
+                i += n;
+            }
+            None => {
+                let c = s[i..].chars().next().unwrap();
+                out.push(c);
+                i += c.len_utf8();
+            }
+        }
+    }
+    out
 }
 
 /// The user's full name (macOS's account name), if it can be read.
@@ -476,5 +505,10 @@ mod tests {
         assert!(!r.quotes_lyrics("paper lanterns"));
         assert_eq!(r.text("/Users/someone/x by Some One"), "~/x by [user]");
         assert_eq!(r.text("microphone now 'A' (was 'B')"), "microphone now '[mic]' (was '[mic]')");
+        // a Bluetooth device's id is its hardware address
+        assert_eq!(r.text("output switched: 'AC-DE-48-00-11-22:output' -> 'BuiltInSpeakerDevice'"),
+                   "output switched: '[device]:output' -> 'BuiltInSpeakerDevice'");
+        assert_eq!(r.text("uid ac:de:48:00:11:22, été"), "uid [device], été");
+        assert_eq!(r.text("at 12:34:56 took 0.5 s; id 1AC-DE-48-00-11-22"), "at 12:34:56 took 0.5 s; id 1AC-DE-48-00-11-22");
     }
 }

@@ -10,8 +10,9 @@
 import { useEffect, useRef } from "react";
 import { live } from "@/lib/session";
 import { frameDrawn, frameIdle } from "@/lib/perf";
-import { BLACK_KEYS, COLORS, credit, fold, grade, NOTE_NAMES, noteName, smoothed } from "@/lib/music";
+import { BLACK_KEYS, centreAt, COLORS, credit, creditAt, fold, grade, LEVELS, NOTE_NAMES, noteName, smoothed } from "@/lib/music";
 import { drawRibbon, grain, paletteFor, ribbonLive } from "@/components/Ribbon";
+import { guide, pitchAlpha } from "@/lib/guideFade";
 
 export const KEYS_W = 54;     // keyboard strip on the left
 export const NOW_AT = 0.3;    // the now line, as a fraction of the lane width (same on every play)
@@ -52,14 +53,15 @@ let verdicts = new Map<number, LineVerdict | null>();
 const RANKS: [number, string][] = [[0.95, "Perfect"], [0.9, "Excellent"], [0.8, "Great"], [0.6, "Good"], [0.4, "OK"]];
 function lineScore(f0: number, f1: number) {
   let ref = 0, both = 0, cr = 0;
+  const level = live.scoring, win = LEVELS[level].centre;   // at Steady and Pro, your pitch's centre (vibrato evens out)
   for (let f = Math.round(f0); f < f1; f++) {
     if (Number.isNaN(live.singerAt(f))) continue;
     ref++;
-    const u = live.youAt(f);
+    const u = win ? centreAt(g => live.youAt(g), f, win) : live.youAt(f);
     if (Number.isNaN(u)) continue;
     const e = errAt(f, u);
     if (Number.isNaN(e)) continue;
-    both++; cr += credit(e);
+    both++; cr += creditAt(e, level);
   }
   if (ref < 30 || both / ref < 0.25) return null;                // a short or barely sung line gets no word
   return (cr / both) * Math.min(1, both / ref / 0.5);
@@ -195,7 +197,7 @@ export default function Lane() {
       if (fp.v.size > 6000) for (const k of fp.v.keys()) { if (k < newest - 3000) fp.v.delete(k); else break; }
     };
     // the "you" ball: where it is, where it's gliding from/to and since when, how loud and what colour
-    const ball = { y: 0, r: 3.5, a: 0, from: 0, to: 0, t0: 0, level: 8, col: "#e6e9f0", seen: -1e9, on: false, okAt: -1e9 };
+    const ball = { y: 0, r: 3.5, a: 0, from: 0, to: 0, t0: 0, level: 8, col: "#e6e9f0", seen: -1e9, on: false, okAt: -1e9, fade: 1 };
     // first play: where the wrapped octave starts, set once per take from your first phrase
     const wrap = { song: null as unknown, lo: WRAP_DEFAULT, set: false, scanned: -1, sung: new Array(12).fill(0), n: 0 };
     const resize = () => {
@@ -219,7 +221,7 @@ export default function Lane() {
     const signature = (perf: number) => {
       const s = live.song, v = live.viz;
       return !s ? `-|${cv.width}x${cv.height}`
-        : `${s.version}|${live.now(perf).toFixed(1)}|${live.usr.length}|${v.length ? v[v.length - 1].f : 0}|${live.showNotes()}|${live.blind}|`
+        : `${s.version}|${live.now(perf).toFixed(1)}|${live.usr.length}|${v.length ? v[v.length - 1].f : 0}|${live.showNotes()}|${live.blind}|${guide.level}|`
           + `${s.cache ? 1 : 0}|${s.cacheBars.length}|${s.track.art}|${live.songOffset}|${cv.width}x${cv.height}|${motion.matches}|${live.lowPower}|${live.draw30}`;
     };
     const tick = (perfNow: number) => {
@@ -481,16 +483,19 @@ export default function Lane() {
       if (!show) firstPlayFold(now);
       // first play: the pitch tracker sometimes reports a note an octave off for a moment; within a phrase, a
       // sudden leap of about an octave is put back in the phrase's octave, unless you stay there (0.3 s)
-      const drawn: { f: number; x: number; y: number; col: string }[] = [];
+      // "Fade the guide" (lib/guideFade.ts): on a song you know, your line fades where you're within a semitone
+      const fade = show ? guide.level : 0;
+      const drawn: { f: number; x: number; y: number; col: string; a: number }[] = [];
       for (const { f, u } of pts) {
         if (Number.isNaN(u)) continue;
-        let pm: number, col: string;
+        let pm: number, col: string, a = 1;
         if (show) {
           const e = errAt(f, u), bm = barAt(f);
           const sv = Number.isNaN(bm) ? singerIn8va(f) : bm;
           if (!Number.isNaN(sv)) anchor = sv;
           pm = !Number.isNaN(bm) && Math.abs(e) <= 50 ? bm : anchor + fold(100 * (u - anchor)) / 100;
           col = COLORS[grade(e)];
+          a = pitchAlpha(fade, e);
         } else {
           // decided once per frame as it arrives (see firstPlayFold): redeciding from what's still on screen
           // made stretches jump an octave as the start of their phrase scrolled away
@@ -510,7 +515,7 @@ export default function Lane() {
           col = "#e6e9f0";
         }
         prevF = f;
-        drawn.push({ f, x: xOf(f), y: y(pm), col });
+        drawn.push({ f, x: xOf(f), y: y(pm), col, a });
       }
       // one path per run of the same colour, so joints don't double up; older parts fade. Over the ribbon, a
       // dark under-stroke first, so the line stays crisp on the light
@@ -520,12 +525,12 @@ export default function Lane() {
       let i = 0;
       while (i < drawn.length) {
         let j = i + 1;
-        while (j < drawn.length && drawn[j].col === drawn[i].col && drawn[j].f - drawn[j - 1].f <= 4 && Math.abs(drawn[j].y - drawn[j - 1].y) < 3 * rowH
+        while (j < drawn.length && drawn[j].col === drawn[i].col && drawn[j].a === drawn[i].a && drawn[j].f - drawn[j - 1].f <= 4 && Math.abs(drawn[j].y - drawn[j - 1].y) < 3 * rowH
                && !across(drawn[j - 1].y, drawn[j].y)) j++;
-        if (j - i >= 2 || (i + 1 < drawn.length && drawn[i + 1].f - drawn[i].f <= 4)) {
+        if (drawn[i].a > 0 && (j - i >= 2 || (i + 1 < drawn.length && drawn[i + 1].f - drawn[i].f <= 4))) {
           const last = Math.min(j, drawn.length - 1);
           g.strokeStyle = under ? "rgba(7,8,12,.5)" : drawn[i].col;
-          g.globalAlpha = Math.max(0.35, 1 - (now - drawn[i].f) / 500);
+          g.globalAlpha = drawn[i].a * Math.max(0.35, 1 - (now - drawn[i].f) / 500);
           g.beginPath(); g.moveTo(drawn[i].x, drawn[i].y);
           for (let k = i + 1; k <= last; k++) {
             if (drawn[k].f - drawn[k - 1].f > 4 || Math.abs(drawn[k].y - drawn[k - 1].y) >= 3 * rowH || across(drawn[k - 1].y, drawn[k].y)) break;
@@ -597,6 +602,7 @@ export default function Lane() {
         else if (Math.abs(ty - ball.to) > 0.5) { ball.from = ball.y; ball.to = ty; ball.t0 = perf; }
         if (live.level != null) ball.level = live.level;
         ball.col = show ? COLORS[grade(errNow)] : "#e6e9f0";
+        ball.fade = show ? pitchAlpha(fade, errNow) : 1;
         ball.seen = perf;
       }
       {
@@ -604,7 +610,7 @@ export default function Lane() {
         const k = Math.max(0, Math.min(1, (perf - ball.t0) / 150));
         ball.y = ball.from + (ball.to - ball.from) * (0.5 - 0.5 * Math.cos(Math.PI * k));
         ball.r += ((3.5 + 4.5 * Math.max(0, Math.min(1, ball.level / 18))) - ball.r) * 0.15;
-        ball.a += ((heard ? 0.6 : 0) - ball.a) * (heard ? 0.35 : 0.15);
+        ball.a += ((heard ? 0.6 * ball.fade : 0) - ball.a) * (heard ? 0.35 : 0.15);
         if (ball.a > 0.02) {
           g.globalAlpha = ball.a;
           halo(g, (gg, d) => { gg.beginPath(); gg.arc(nowX, ball.y, ball.r + d, 0, Math.PI * 2); }, ball.col, 10);

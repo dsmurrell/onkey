@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "OnKey",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "identifier": "audio.onkey.app",
   "build": {
     "frontendDist": "../ui/out",
@@ -67,6 +67,7 @@
     },
     "resources": {
       "../THIRD_PARTY_NOTICES.md": "THIRD_PARTY_NOTICES.md",
+      "demo/*": "demo/",
       "models/crepe-full-b32.onnx": "models/crepe-full-b32.onnx",
       "models/UVR_MDXNET_KARA_2.onnx": "models/UVR_MDXNET_KARA_2.onnx",
       "models/wav2vec2-base-960h-fp16.onnx": "models/wav2vec2-base-960h-fp16.onnx",

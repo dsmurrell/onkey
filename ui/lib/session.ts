@@ -2,9 +2,11 @@
 // The live session, fed by the engine's Server-Sent Events (/events).
 // Pitch frames (10 ms) live in plain arrays read by the canvas every frame; React only sees the slow-moving
 // parts (song, takes, status, score) through useSession().
-import { useEffect, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { learnNow, learnTakes } from "./learnState";
 import { updateArrived } from "./perf";
+import { SAME_SONG_MS, startingView, type Starting, type StartingView } from "./starting";
+import { demoFrom, type DemoSong } from "./demo";
 export { firstPlayGoing, learnNow, learnOf } from "./learnState";
 
 /** The longest the notes stay dimmed while the place is being confirmed (Live.lockDim). */
@@ -29,19 +31,21 @@ export type Take = { name: string; artist: string; track_id?: string; status: "l
  *  `mic_device`: the microphone OnKey listens to (the same one setup's mic check used); null: none connected.
  *  `output_ms`: how long after the music app plays you hear it, as allowed for; `output`: the output device and
  *  its timing check (see OutputTiming). */
-export type Status = { echo_cancel?: boolean; player: null | { state: string; name: string; artist: string; app: string }; output_ms?: number;
+export type Status = { echo_cancel?: boolean; pause_ends_ms?: number | null; player: null | { state: string; name: string; artist: string; app: string }; output_ms?: number;
                        output?: OutputTiming;
                        youtube_blocked?: null | { browser: string; setting: string }; youtube?: boolean; listening?: boolean;
+                       /** "Pause listening": OnKey follows nothing until resumed (setListeningPaused) */
+                       listening_paused?: boolean;
                        browser_sounding?: null | { browser: string; works: boolean };
                        mic?: Perm; audio?: Perm; automation_denied?: string | null; not_answering?: string | null; mic_device?: string | null;
                        music_quiet?: null | { app: string; level_db: number; volume?: number | null };
-                       models?: { state: "ready" | "missing"; error?: string } };
+                       models?: { state: "ready" | "missing" | "broken"; error?: string } };
 
 /** What listening mode is doing, in words. `kind`: "finding" (music heard, being named), "new_song" (the song
  *  changed, the next being named), "unnamed" (couldn't name it), "no_shazam" (only songs learned here are
  *  recognised), "shazam_off" (not a song learned here, and Shazam is switched off), "learning" (a first play of the
  *  song shown). */
-export type Line = { kind: "finding" | "new_song" | "unnamed" | "no_shazam" | "shazam_off" | "podcast" | "learning" | "elsewhere"; text: string };
+export type Line = { kind: "finding" | "new_song" | "unnamed" | "no_shazam" | "shazam_off" | "podcast" | "learning" | "elsewhere" | "stopped"; text: string };
 
 /** A song being learned (src-tauri/src/progress.rs): its stage and how much of the whole learn is done (0..1),
  *  from the work actually done (music separated, words timed, bars made); `fraction` is null while the song still
@@ -94,6 +98,8 @@ const SONG_EVENTS = new Set(["song", "update", "lyrics", "notes", "art", "track"
 
 class Live {
   song: SongState | null = null;
+  /** how strictly this take is scored (the engine's `level`, from Settings when it started) */
+  scoring: "relaxed" | "steady" | "pro" = "relaxed";
   usr: (number | null)[] = [];
   /** the ribbon's frames, the last ~6 s */
   viz: VizFrame[] = [];
@@ -160,6 +166,7 @@ class Live {
                       cache: ev.cached ? ev.cache : null, cacheBars: ev.cache_bars || [], barText: this.shownBarText(), beats: ev.beats || null, mode: ev.mode || "sing",
                       learned: ev.learned || 0, learnTakes: learnTakes(this.takes, ev.track) };
         this.usr = []; this.viz = []; this.drowned = false;
+        this.scoring = ev.level === "steady" || ev.level === "pro" ? ev.level : "relaxed";
         if (this.ended) { this.ended = false; this.frozenPerf = null; }      // a new play after one you finished
         this.songOffset = this.offTarget = ev.song_offset; this.score = null; this.clockOffset = null; this.lastTap = null; this.stalledSince = null; this.blind = !!ev.blind; this.aligned = false;
         this.place = "provisional"; this.songPerf = perf; this.readyPerf = null; this.locking = false; this.lockEnd = -1e9;
@@ -245,9 +252,9 @@ class Live {
         this.lastStatus = said;
         this.lowPower = !!ev.low_power;
         this.draw30 = !!ev.draw_30;
-        this.status = { player: ev.player, output_ms: ev.output_ms, output: ev.output, echo_cancel: ev.echo_cancel, youtube_blocked: ev.youtube_blocked ?? null, browser_sounding: ev.browser_sounding ?? null, youtube: !!ev.youtube, listening: !!ev.listening,
+        this.status = { player: ev.player, output_ms: ev.output_ms, output: ev.output, echo_cancel: ev.echo_cancel, youtube_blocked: ev.youtube_blocked ?? null, browser_sounding: ev.browser_sounding ?? null, youtube: !!ev.youtube, listening: !!ev.listening, listening_paused: !!ev.listening_paused,
                                      mic: ev.mic, audio: ev.audio, automation_denied: ev.automation_denied ?? null, not_answering: ev.not_answering ?? null, models: ev.models,
-                                     mic_device: ev.mic_device, music_quiet: ev.music_quiet ?? null };
+                                     mic_device: ev.mic_device, music_quiet: ev.music_quiet ?? null, pause_ends_ms: ev.pause_ends_ms ?? null };
         this.line = ev.listening ? ev.line ?? null : null;
         this.changed(); break;
       }
@@ -347,6 +354,13 @@ class Live {
     return { song: this.song, takes: this.takes, learning: this.learning, status: this.status, score: this.score, connected: this.connected,
              ended: this.ended, lag: this.lag, blind: this.blind, aligned: this.aligned, problem: this.problem, line: this.line,
              drowned: this.drowned, notSong: this.notSong };
+  }
+  /** "Pause listening" switched here: shown at once, before the engine's next status says so. */
+  listeningPaused(on: boolean) {
+    this.status = { ...this.status, listening_paused: on };
+    if (on) this.line = null;           // listening's status line ("Still listening"…) goes with it
+    this.lastStatus = "";               // the engine's next status is taken whatever it says
+    this.changed();
   }
   dismissNotSong() { if (this.notSong) { this.notSong = null; this.changed(); } }
   changed() { this.snapshot = this.makeSnapshot(); this.listeners.forEach(f => f()); }
@@ -519,8 +533,9 @@ export function useSession() {
  *  sung. Follows the engine's events, so a button using it enables itself the moment learning finishes. */
 export function useLearn(t: { id: string; name: string; artist: string } | null | undefined): LearnJob | null {
   useEffect(() => { live.start(); }, []);
-  const { learning, takes, song } = useSession();
-  return t ? learnNow(learning, takes, song, t) : null;
+  const { learning, takes, song, ended } = useSession();
+  // (a play that ended, by Finish, a stop from the Library or its end, isn't learning as it plays any more)
+  return t ? learnNow(learning, takes, ended ? null : song, t) : null;
 }
 
 /** Whether a song is playing in a window that can be seen (see live.playing). */
@@ -585,18 +600,37 @@ export type Settings = { listening: boolean; control_spotify: boolean; control_m
   /** Shazam names songs not learned here when no music app OnKey controls says what plays (on by default) */
   shazam?: boolean;
   /** lyrics from LRCLIB shown with the notes (on by default); off, LRCLIB isn't asked and none are shown */
-  show_lyrics?: boolean };
+  show_lyrics?: boolean;
+  /** how strictly takes are scored (Relaxed by default) */
+  scoring_level?: "relaxed" | "steady" | "pro";
+  /** "Fade the guide": on a song you've sung well, your own pitch line fades (lib/guideFade.ts); off by default */
+  fade_guide?: boolean };
 export async function getSettings(): Promise<Settings | null> {
   if (mirror()) return (await fetch("/api/settings")).json();
   return inApp() ? ((await invoke("settings_now")) as Settings) : null;
 }
-export async function setSetting(key: "listening" | "control_spotify" | "control_music" | "hide_starters" | "keep_models" | "battery_30fps" | "voice_breaks" | "shazam" | "show_lyrics", on: boolean) {
+export async function setSetting(key: "listening" | "control_spotify" | "control_music" | "hide_starters" | "keep_models" | "battery_30fps" | "voice_breaks" | "shazam" | "show_lyrics" | "fade_guide", on: boolean) {
   if (inApp()) await invoke("set_setting", { key, on });
   if (key === "show_lyrics") live.showLyrics(on);
 }
 
+/** "Pause listening": while paused, OnKey follows nothing (no capture, nothing named or learned, no take; the take
+ *  under way ends and is scored). Kept across restarts until resumed. Shown at once; the engine follows within
+ *  about half a second. */
+export async function setListeningPaused(on: boolean) {
+  live.listeningPaused(on);
+  if (!inApp()) return;
+  // (not saved, a full disk say: it still holds until OnKey quits, so the window keeps showing it)
+  await invoke("set_listening_paused", { on }).catch(() => {});
+}
+
+/** How strictly takes are scored, from the next take on. */
+export async function setScoringLevel(level: "relaxed" | "steady" | "pro") {
+  if (inApp()) await invoke("set_scoring_level", { level });
+}
+
 /** A microphone (an input device): Core Audio's id for it and its name. */
-export type Mic = { uid: string; name: string };
+export type Mic = { uid: string; name: string; virtual?: boolean };
 /** The microphones connected, the one OnKey listens to now (`chosen`, null: none), and the one picked in Settings
  *  (`preferred`, null: automatic, the Mac's own input as chosen in System Settings → Sound). */
 export type Mics = { devices: Mic[]; chosen: Mic | null; preferred: string | null };
@@ -667,11 +701,30 @@ export async function playAlong(track: string, position: number): Promise<boolea
 export async function stopPlayAlong() {
   if (inApp()) await invoke("stop_play_along");
 }
-/** Where the music app is right now. */
-export async function playerNow(): Promise<{ track: string; playing: boolean; position: number } | null> {
+/** Where the music app is right now (its own position), and where the song is as heard (`heard`: listening's place,
+ *  once a check since the song last started or moved has placed it; null until then). `listening`: listening mode
+ *  is on (off, nothing is ever heard). */
+export type PlayerNow = { track: string; playing: boolean; position: number; heard?: number | null;
+  /** the take under way: where the song is (s), placed as its bars are; null before it's placed (for development tools) */
+  take?: number | null;
+  /** for the log only: listening's [age of its last feed, that block's length, audio fed behind the wall clock], s */
+  feed?: [number, number, number] | null; demo?: boolean;
+  /** where your recording is (s), read at the same moment as `heard`; null when it isn't playing */
+  voice?: number | null };
+export async function playerNow(): Promise<PlayerNow | null> {
   if (!inApp()) return null;
-  return (await invoke("player_now")) as { track: string; playing: boolean; position: number } | null;
+  return (await invoke("player_now")) as PlayerNow | null;
 }
+/** "Play with the song" plays your recording natively (voice.rs): open the take's recording (its length, s), play it
+ *  from a place (a move if playing), stop, let it go, and set its level (dB). */
+export async function voiceOpen(take: string): Promise<number | null> {
+  if (!inApp()) return null;
+  return (await invoke("voice_open", { id: take })) as number | null;
+}
+export const voicePlay = (from: number) => inApp() ? invoke("voice_play", { from }) : Promise.resolve();
+export const voiceStop = () => inApp() ? invoke("voice_stop") : Promise.resolve();
+export const voiceClose = () => inApp() ? invoke("voice_close") : Promise.resolve();
+export const voiceGain = (db: number) => inApp() ? invoke("voice_gain", { db }) : Promise.resolve();
 
 /** Score this play now (the lyrics are over), without waiting for the song to end. */
 export async function finishTake() {
@@ -694,8 +747,10 @@ export async function setEchoCancel(on: boolean) {
 }
 
 /** Play, pause, skip or start over, in the music app being followed. */
-export async function control(action: "restart" | "next" | "previous" | "playpause") {
+export async function control(action: "restart" | "next" | "previous" | "playpause", why = "") {
   if (inApp()) {
+    // logged with what asked for it, so a song that pauses or restarts by itself shows whether a key or click did
+    if (why) void invoke("ui_log", { msg: `${action} from the ${why} (window ${document.hasFocus() ? "focused" : "not focused"})` }).catch(() => {});
     const go = (): Promise<boolean> => controlled("player_control", { action }, go);
     await go();     // (awaited: the Library shows "Starting…" until the app has been asked)
     return;
@@ -704,14 +759,29 @@ export async function control(action: "restart" | "next" | "previous" | "playpau
   await fetch(`/api/spotify/${action}`, { method: "POST" });
 }
 
-/** Start a song in its app; with `home`, go to the Sing page once it's started. */
-/** A song OnKey was just asked to play (its name, and when), so the Sing page says "Starting …" until it plays
- *  instead of showing what it shows when nothing is playing. */
-let starting: { id: string; name: string; at: number } | null = null;
-export function startingSong(): { id: string; name: string } | null {
-  return starting && performance.now() - starting.at < STARTING_MS ? starting : null;
+/** A song OnKey was just asked to start (lib/starting.ts), so the Sing page shows it as starting, in its app, at
+ *  once and until it plays (not the song before, nor what it shows when nothing plays), or says the app couldn't. */
+let starting: Starting | null = null;
+const startingListeners = new Set<() => void>();
+function setStarting(s: Starting | null) {
+  starting = s;
+  startingListeners.forEach(f => f());
 }
-const STARTING_MS = 10000;
+/** Forget the song being started (its failure dismissed, or opened in its app instead). */
+export function clearStarting() { setStarting(null); }
+/** What the Sing page shows for the song being started, if one is (re-checked every half second, for its timeout).
+ *  `songVersion`: the song shown now; `naming`: OnKey is naming what it hears (listening mode). */
+export function useStarting(songVersion: number | null, naming: boolean): StartingView | null {
+  const s = useSyncExternalStore(f => { startingListeners.add(f); return () => { startingListeners.delete(f); }; },
+                                 () => starting, () => null);
+  const [now, setNow] = useState(() => performance.now());
+  useEffect(() => {
+    if (!s) return;
+    const t = setInterval(() => setNow(performance.now()), 500);
+    return () => clearInterval(t);
+  }, [s]);
+  return startingView(s, Math.max(now, s?.at ?? 0), songVersion, naming);
+}
 
 /** To the Sing page, in place (components/GoHome.tsx); a full load only if that isn't listening. */
 export function goHome() {
@@ -719,15 +789,51 @@ export function goHome() {
   else location.href = "/";
 }
 
+/** Start a song in its app; with `home`, go to the Sing page at once, which shows it as starting in its app until it
+ *  plays, or says why the app couldn't start it (with a button to open it there). In listening mode without control
+ *  of that app, the prompt asks instead (components/ControlPrompt.tsx). */
+const playing = new Set<string>();   // songs being started right now
+
 export async function playTrack(trackId: string, home = false, name = "") {
+  // A second Sing for the same song while the first is still starting (a double click, or a click landing on the
+  // Sing page's own button) would make the app start it again from the top: ignore it.
+  if (playing.has(trackId)) return;
+  playing.add(trackId);
+  try { await playTrackOnce(trackId, home, name); } finally { playing.delete(trackId); }
+}
+
+async function playTrackOnce(trackId: string, home: boolean, name: string) {
   if (inApp()) {
     const go = async (): Promise<boolean> => {
-      const ok = await controlled("play_track", { id: trackId }, go, home);
-      if (ok && home) {
-        starting = { id: trackId, name, at: performance.now() };
+      let mine: Starting | null = null;
+      if (home) {
+        // the app it starts in, as its "in Apple Music ↗" link says (the same rule picks both)
+        const app = await openApp(trackId).catch(() => null);
+        mine = { id: trackId, name, app: app ?? "", at: performance.now(), before: live.song?.version ?? null };
+        setStarting(mine);
         goHome();
       }
-      return ok;
+      const r = (await invoke("play_track", { id: trackId }).catch(() => null)) as PlayAnswer | null;
+      const still = () => mine && starting === mine;
+      if (r?.needs) {
+        if (still()) setStarting(null);
+        window.dispatchEvent(new CustomEvent<ControlNeeded>("onkey-control-needed", { detail: { ...r.needs, retry: go, home } }));
+        return false;
+      }
+      if (!r?.ok) {
+        if (still()) setStarting({ ...mine!, app: r?.cant?.app ?? mine!.app, cant: r?.cant?.why ?? "failed" });
+        return false;
+      }
+      // the song shown already (it was paused, say): it's started over, with no new song to wait for, so the
+      // "starting" screen would wait out its 15 s and then say it didn't start
+      // (by the id it's played by there too: a song kept by its ISRC shows by Spotify's id while it plays). Its new
+      // take, if one follows, shows in a moment: until then the starting screen stays, not the old lane
+      if (still() && (live.song?.track.id === trackId || (r.id && live.song?.track.id === r.id))) {
+        setStarting({ ...mine!, endsAt: performance.now() + SAME_SONG_MS });
+        return true;
+      }
+      if (still() && r.app && r.app !== mine!.app) setStarting({ ...mine!, app: r.app });
+      return true;
     };
     await go();     // (awaited: the Library shows "Starting…" until the app has been asked)
     return;
@@ -735,10 +841,12 @@ export async function playTrack(trackId: string, home = false, name = "") {
   if (mirror()) return;
   await fetch(`/api/spotify/play?track=${encodeURIComponent(trackId)}`, { method: "POST" });
   if (home) {
-    starting = { id: trackId, name, at: performance.now() };
+    setStarting({ id: trackId, name, app: "Spotify", at: performance.now(), before: live.song?.version ?? null });
     goHome();
   }
 }
+/** play_track's answer (src-tauri/src/lib.rs). */
+type PlayAnswer = { ok?: boolean; app?: string; id?: string; needs?: Omit<ControlNeeded, "retry" | "home">; cant?: { app: string; why: "no_id" | "failed"; track: string } };
 
 /** Your own artist and title for a YouTube video whose names were read wrong (used for its lyrics too). */
 export async function renameTrack(trackId: string, artist: string, name: string) {
@@ -749,6 +857,12 @@ export type TakeSummary = {
   id: string; track: Track; recorded: string; score: number; accuracy: number; coverage: number; within50: number;
   bias_cents: number; latency_ms: number; live_score: number | null; repeat: boolean; notes_hit: number | null; notes_total: number | null;
   mode?: "learn" | "sing"; blind?: boolean;
+  /** the level it was scored at ("relaxed" for takes from before levels) */
+  level?: "relaxed" | "steady" | "pro";
+  /** sung at another level than the one chosen now: that level, and its score then (the score shown is at the level now) */
+  sung_level?: "relaxed" | "steady" | "pro" | null; sung_score?: number | null;
+  /** when it was scored again, with a stretch of the song marked "Not the melody" left out (none: as first scored) */
+  rescored?: string | null;
 };
 
 export async function setBlind(on: boolean) {
@@ -759,6 +873,8 @@ export async function setBlind(on: boolean) {
 }
 
 export type LibrarySong = { track: Track; learned: string | null; fraction: number; ready: boolean; best: number | null;
+                            /** the level `best` is at: that of the latest take (like with like) */
+                            best_level?: string | null;
                             /** how hard it is to sing, 1 (easy) to 5 (very hard), from its learned notes; null when too few */
                             difficulty?: number | null;
                             /** takes sung of it (with some singing heard) */
@@ -766,7 +882,34 @@ export type LibrarySong = { track: Track; learned: string | null; fraction: numb
                             /** hearted, and when (local time, 2026-10-13T09:15:00) */
                             favorite?: boolean; favorited_at?: string | null;
                             /** the app it opens in ("Spotify", "Apple Music", "YouTube"): see openInApp */
-                            app?: string };
+                            app?: string;
+                            /** its sung range (MIDI, 5th-95th percentile of its notes) and how it sits against
+                             *  yours (range.rs); absent until it has notes, the fit until you have a range */
+                            range?: [number, number]; range_names?: [string, string];
+                            fit?: FitKey; fit_label?: string;
+                            /** singable as it is or an octave away (the Library's "In your range") */
+                            fit_suits?: boolean;
+                            /** its next play learns it afresh ("Learn again" asked for: see learnAgain) */
+                            learn_again?: boolean;
+                            /** its learned copy looks off: the same jump seen on two plays (where, by how much, s) */
+                            relearn?: Relearn | null };
+
+export type Relearn = { at: number; by: number; since?: string };
+/** A learned song's "Learn again" state: asked for, and where its learned copy looks off (null: nowhere seen). */
+export type LearnAgainState = { learned: boolean; learn_again: boolean; relearn: Relearn | null };
+
+export type FitKey = "fits" | "few_above" | "few_below" | "octave_lower" | "octave_higher" | "above" | "below" | "wider";
+
+/** Your vocal range from your takes (range.rs): MIDI notes and their names; null until there's 30 s of singing. */
+export type VoiceRange = { range: { low: number; high: number; mid_lo: number; mid_hi: number; low_name: string; high_name: string;
+                                    mid_lo_name: string; mid_hi_name: string; seconds: number } | null;
+                           /** takes it's from, and older takes still being measured from their recordings */
+                           takes: number; pending: number };
+
+export async function getVoiceRange(): Promise<VoiceRange | null> {
+  if (!inApp()) return null;
+  return (await invoke("voice_range")) as VoiceRange;
+}
 
 /** Heart a song or take its heart away. The name and artist find the learned song when it's kept under another id;
  *  a song still being learned gets its heart once it's saved. */
@@ -790,15 +933,26 @@ export function nowLocal(): string {
 }
 
 // ---------------------------------------------------------------- saved takes and learned songs
-// From the Rust engine inside the app; from the Python engine's server otherwise.
+// From the Rust engine inside the app; from the Python engine's server otherwise. A read that fails rejects (it's
+// never an empty list: see lib/dataSafety's readList).
 export async function getTakes(): Promise<TakeSummary[]> {
   if (inApp()) return (await invoke("takes")) as TakeSummary[];
-  return (await fetch("/api/takes")).json();
+  const r = await fetch("/api/takes");
+  if (!r.ok) throw new Error(`the engine answered ${r.status}`);
+  return r.json();
+}
+
+/** The demo song bundled with this build ("Try it now"), or null when there's none (lib/demo.ts). */
+export async function demoInfo(): Promise<DemoSong | null> {
+  if (!inApp()) return null;
+  return demoFrom(await invoke("demo_info").catch(() => null));
 }
 
 export async function getLibrary(): Promise<LibrarySong[]> {
   if (inApp()) return (await invoke("library")) as LibrarySong[];
-  return (await fetch("/api/library")).json();
+  const r = await fetch("/api/library");
+  if (!r.ok) throw new Error(`the engine answered ${r.status}`);
+  return r.json();
 }
 
 export async function getTake(id: string): Promise<any | null> {
@@ -844,14 +998,35 @@ export async function setMini(on: boolean) {
   if (inApp()) await invoke("set_mini", { on });
 }
 
-/** Delete a take (it goes to the Trash). */
+/** "Not the melody": the stretches of a learned song (song seconds) whose learned notes follow a backing vocal or a
+ *  harmony, all of them as they are to be (none puts every one back). Kept with the song; every take of it is scored
+ *  again with them left out. Returns the stretches as kept and how many takes' scores changed. */
+export async function setNotMelody(songId: string, stretches: [number, number][]): Promise<{ not_melody: [number, number][]; rescored: number } | null> {
+  if (!inApp()) return null;
+  return (await invoke("set_not_melody", { id: songId, stretches })) as { not_melody: [number, number][]; rescored: number } | null;
+}
+
+/** Delete a take (it goes to the Trash). Rejects with the engine's message if it couldn't (nothing is deleted). */
 export async function deleteTake(id: string) {
   if (inApp()) await invoke("delete_take", { id });
 }
 
-/** Forget a learned song; it will be learned again the next time it plays. Your takes stay. */
+/** Forget a learned song; it will be learned again the next time it plays. Your takes stay. Rejects if it couldn't
+ *  go to the Trash (it stays). */
 export async function forgetSong(id: string) {
   if (inApp()) await invoke("forget_song", { id });
+}
+
+/** Learn a song again on its next play (`on`: from scratch, as a first play; your takes stay, and it sings as
+ *  before until that play has learned enough), or take that back (`on` false). Without `on`, just its state. */
+export async function learnAgain(id: string, on?: boolean): Promise<LearnAgainState | null> {
+  if (!inApp()) return null;
+  try {
+    return (await invoke("learn_again", { id, on: on ?? null })) as LearnAgainState;
+  } catch (e) {
+    void invoke("ui_log", { msg: `learn again ${id}: ${String(e)}` }).catch(() => {});
+    throw e;
+  }
 }
 
 /** Stop learning a song and delete it (a learning card's delete: a video that isn't a song, say). A YouTube video
@@ -948,6 +1123,16 @@ export type ShareWindow = { start: number; end: number; at: string; to: string; 
 export async function shareWindow(id: string, t?: number): Promise<ShareWindow | null> {
   if (!inApp()) return null;
   return (await invoke("share_window", { id, t: t ?? null })) as ShareWindow | null;
+}
+/** The take page's "Share this take" ask at a proud moment (a best, a clear step up, a first score over 80), or
+ *  null. Shown once per take: `sharePromptSeen` once it's on screen. */
+export type SharePrompt = { kind: "first" | "over80" | "best" | "up"; reason: string };
+export async function sharePrompt(id: string): Promise<SharePrompt | null> {
+  if (!inApp()) return null;
+  return (await invoke("share_prompt", { id })) as SharePrompt | null;
+}
+export async function sharePromptSeen(id: string): Promise<void> {
+  if (inApp()) await invoke("share_prompt_seen", { id });
 }
 /** Makes the share video into Downloads (shown in Finder; the song's start time copied). Its path. */
 export async function shareTake(id: string, start: number): Promise<{ path: string; at: string }> {

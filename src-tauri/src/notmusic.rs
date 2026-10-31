@@ -40,7 +40,7 @@ impl Verdict {
 /// numpy's percentile (linear interpolation).
 fn percentile(v: &[f64], q: f64) -> f64 {
     let mut s = v.to_vec();
-    s.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    s.sort_by(|a, b| a.total_cmp(b));     // (NaN audio sorts last, never panics)
     let pos = q / 100.0 * (s.len() - 1) as f64;
     let (i, f) = (pos.floor() as usize, pos - pos.floor());
     if i + 1 < s.len() { s[i] + (s[i + 1] - s[i]) * f } else { s[i] }
@@ -88,7 +88,7 @@ pub fn judge(x: &[f32]) -> Option<Verdict> {
     for k in 0..t {
         let r = row(k);
         let mut s = r.to_vec();
-        s.sort_by(|a, b| a.partial_cmp(b).unwrap());
+        s.sort_by(|a, b| a.total_cmp(b));     // (NaN audio sorts last, never panics)
         let med = if nb % 2 == 1 { s[nb / 2] } else { (s[nb / 2 - 1] + s[nb / 2]) / 2.0 };
         for j in 1..nb - 1 {
             pk[k * nb + j] = r[j] > r[j - 1] && r[j] > r[j + 1] && r[j] > med + 12.0;
@@ -122,6 +122,14 @@ pub fn judge(x: &[f32]) -> Option<Verdict> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn nan_audio_is_judged_without_a_panic() {
+        let mut x = tone_song(12);
+        x[1000..1100].iter_mut().for_each(|v| *v = f32::NAN);
+        let _ = judge(&x);
+        assert_eq!(percentile(&[3.0, f64::NAN, 1.0, 2.0], 0.0), 1.0);
+    }
 
     fn tone_song(secs: usize) -> Vec<f32> {
         // a chord held for half a second at a time, with a click on every beat: music

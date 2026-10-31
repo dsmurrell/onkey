@@ -7,18 +7,74 @@ export const noteName = (m: number) => NOTE_NAMES[((Math.round(m) % 12) + 12) % 
 /** Signed cents error with octave errors forgiven, in [-600, 600). */
 export const fold = (cents: number) => ((((cents + 600) % 1200) + 1200) % 1200) - 600;
 
-/** Same rule as the engine's scoring: full credit within 50 cents, none beyond 150. */
+/** Same rule as the engine's scoring at Relaxed: full credit within 50 cents, none beyond 150. */
 export const credit = (err: number) => Math.max(0, Math.min(1, (150 - Math.abs(err)) / 100));
+
+/** How strictly takes are scored: the engine's table (dsp.rs LEVELS). `full`/`zero`: cents for full and no credit;
+ *  `centre`: frames your pitch's centre is judged over (vibrato averages out); 0: exact pitch. */
+export type Level = "relaxed" | "steady" | "pro";
+export const LEVELS: Record<Level, { name: string; full: number; zero: number; centre: number; about: string }> = {
+  relaxed: { name: "Relaxed", full: 50, zero: 150, centre: 0, about: "Forgiving: full credit within half a semitone. Good for beginners and children." },
+  steady: { name: "Steady", full: 35, zero: 100, centre: 17, about: "Tighter pitch and timing, for singers who are mostly in tune." },
+  pro: { name: "Pro", full: 25, zero: 70, centre: 17, about: "Tight, for trained singers: a quarter of a semitone for full credit." },
+};
+export const levelOf = (l: unknown): Level => (l === "steady" || l === "pro" ? l : "relaxed");
+/** The best score of these takes, like with like: of the ones at the same level as the latest. */
+export function bestAtLatestLevel<T extends { score: number; recorded: string; level?: string | null }>(takes: T[]): { best: number; level: string } | null {
+  if (!takes.length) return null;
+  const latest = takes.reduce((a, b) => (b.recorded > a.recorded ? b : a));
+  const level = levelOf(latest.level);
+  return { best: Math.max(...takes.filter(t => levelOf(t.level) === level).map(t => t.score)), level };
+}
+/** Credit for a cents error at a level (Relaxed: exactly `credit`). */
+export const creditAt = (err: number, level: Level) => {
+  if (level === "relaxed") return credit(err);
+  const { full, zero } = LEVELS[level];
+  return Math.max(0, Math.min(1, (zero - Math.abs(err)) / (zero - full)));
+};
+/** Your pitch's centre at frame f as the engine judges it at Steady and Pro (dsp.rs `centre`): the mean of the sung
+ *  frames within `win` frames, leaving out those more than 150 cents from their median (the next note). */
+export function centreAt(get: (f: number) => number, f: number, win: number) {
+  const here = get(f);
+  if (Number.isNaN(here) || win <= 1) return here;
+  const h = Math.floor(win / 2), v: number[] = [];
+  for (let k = f - h; k <= f + h; k++) { const x = get(k); if (!Number.isNaN(x)) v.push(x); }
+  v.sort((a, b) => a - b);
+  const n = v.length, m = n % 2 ? v[(n - 1) / 2] : (v[n / 2 - 1] + v[n / 2]) / 2;
+  let s = 0, c = 0;
+  for (const x of v) if (100 * Math.abs(x - m) < 150) { s += x; c++; }
+  return c ? s / c : here;
+}
 
 export type Grade = "good" | "close" | "off" | "none";
 export const grade = (err: number): Grade =>
   Number.isNaN(err) ? "none" : Math.abs(err) <= 50 ? "good" : Math.abs(err) <= 100 ? "close" : "off";
 
+/** How a line (or a stretch) sang, from its accuracy (0-1) at the take's level: the bands drop as the level gets
+ *  stricter, as its credit does, so a decent take at Pro still shows green. */
+const LINE_BANDS: Record<Level, [number, number]> = { relaxed: [0.85, 0.65], steady: [0.75, 0.55], pro: [0.65, 0.45] };
+export const lineGrade = (accuracy: number, level: Level): Grade => {
+  const [good, close] = LINE_BANDS[level];
+  return accuracy >= good ? "good" : accuracy >= close ? "close" : "off";
+};
+
+/** How far off, in plain words: "35¢ flat" under a semitone, then "about 4 semitones flat", "about an octave low". */
+export function offBy(cents: number) {
+  const c = Math.round(Math.abs(cents)), up = cents > 0;
+  if (c < 100) return `${c}¢ ${up ? "sharp" : "flat"}`;
+  const semis = Math.round(c / 100);
+  if (semis >= 11) {
+    const oct = Math.round(semis / 12);
+    return `about ${oct === 1 ? "an octave" : `${oct} octaves`} ${up ? "high" : "low"}`;
+  }
+  return `about ${semis === 1 ? "a semitone" : `${semis} semitones`} ${up ? "sharp" : "flat"}`;
+}
+
 export const COLORS: Record<Grade, string> = { good: "#34d27b", close: "#f5b83d", off: "#f2626b", none: "#8b94ab" };
 
 /** The app a track plays in, from its id. */
 export const sourceName = (trackId: string) =>
-  trackId.startsWith("music:") ? "Apple Music" : trackId.startsWith("youtube:") ? "YouTube" : "Spotify";
+  trackId.startsWith("demo:") ? "OnKey" : trackId.startsWith("music:") ? "Apple Music" : trackId.startsWith("youtube:") ? "YouTube" : "Spotify";
 
 export const clock = (s: number) => {
   const t = Math.max(0, s);

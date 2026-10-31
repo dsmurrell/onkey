@@ -19,11 +19,12 @@ BIN="$APP/Contents/MacOS/onkey"
 fail=0
 bad() { echo "check-release: $*" >&2; fail=1; }
 
-# strings only the development-only code has (devtest.rs, mirror.rs)
+# strings only the development-only code has (devtest.rs, mirror.rs, ear.rs and native/ear.swift)
 FORBIDDEN=(
   ONKEY_SIM ONKEY_EVENTS_LOG ONKEY_MIRROR ONKEY_KEEP_AUDIO
   "simulated singer" "simulated player" "kept audio for lyric tests" "kept mic for echo tests"
-  "__ONKEY_MIRROR__" "event: mirror" "/api/probe"
+  "__ONKEY_MIRROR__" "event: mirror" "/api/probe" "/dev/along" "/api/ear"
+  "onkey_ear_start" "ear summary" "ear: listening to take"
 )
 STR=$(mktemp); trap 'rm -f "$STR"' EXIT
 strings -a "$BIN" > "$STR"
@@ -40,8 +41,8 @@ while read -r v; do
   ok=0; for a in "${ALLOWED_VARS[@]}"; do [[ "$v" == "$a"* ]] && ok=1; done
   [ $ok = 1 ] || bad "experiment knob in the release binary: $v (read it with crate::devtest::knob!)"
 done < <(grep -oE '(ONKEY_[A-Z][A-Z0-9_]*|TRACKER_TRACE|SIM_ERR[A-Z_]*)' "$STR" | sort -u)
-if nm "$BIN" 2>/dev/null | grep -E "onkey_lib(::|[0-9]+)(devtest|mirror)" | grep -vq "stub"; then
-  bad "development-only symbols (devtest/mirror) in the release binary"
+if nm "$BIN" 2>/dev/null | grep -E "onkey_lib(::|[0-9]+)(devtest|mirror|ear)" | grep -vq "stub"; then
+  bad "development-only symbols (devtest/mirror/ear) in the release binary"
 fi
 if codesign -d "$APP" >/dev/null 2>&1; then
   if codesign -d --entitlements - "$APP" 2>/dev/null | grep -q "get-task-allow"; then

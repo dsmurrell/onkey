@@ -53,8 +53,9 @@ export default function ControlPrompt() {
         </p>
         {browser && (
           <p className="mt-2 rounded-xl bg-amber-400/10 px-3 py-2 text-xs text-amber-200">
-            This is the bigger permission: OnKey can then read and control the YouTube tab in your browser. Your browser
-            also needs “Allow JavaScript from Apple Events” turned on.
+            This is the bigger permission: OnKey can then read and control the YouTube tab in your browser, and listens to
+            your browser’s sound, whatever it is (calls too): sound it doesn’t recognise may go to Shazam as a short
+            fingerprint, never the audio. Your browser also needs “Allow JavaScript from Apple Events” turned on.
           </p>
         )}
         <div className="mt-5 flex flex-wrap justify-end gap-2">

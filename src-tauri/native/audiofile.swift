@@ -1,11 +1,11 @@
 // Take recordings as AAC (.m4a), with macOS's own encoder (Audio Toolbox's ExtAudioFile): mono, about 64 kbps,
-// ~0.5 MB a minute instead of 16-bit WAV's 5.8. Called from Rust (src/takeaudio.rs) through a small C interface.
+// ~0.5 MB a minute instead of 16-bit WAV's 5.8 (a share clip's voice higher, as it's encoded a second time). Called from Rust (src/takeaudio.rs) through a small C interface.
 // Everything here runs on the caller's thread (the encoder makes none of its own), so a background-QoS caller
 // keeps it at background priority.
 import AudioToolbox
 import Foundation
 
-private let targetBitRate: UInt32 = 64_000
+private let takeBitRate: UInt32 = 64_000
 private let chunkFrames = 16_384
 
 private func url(_ p: UnsafePointer<CChar>) -> CFURL {
@@ -29,7 +29,8 @@ private func aacRate(_ rate: Double) -> Double {
 }
 
 /// A new mono AAC .m4a at `path` (replacing any file there), taking float mono at `rate` from the caller.
-private func createAAC(_ path: UnsafePointer<CChar>, _ rate: Double) -> (ExtAudioFileRef?, OSStatus) {
+/// `target`: the bit rate to aim for (bits/s).
+private func createAAC(_ path: UnsafePointer<CChar>, _ rate: Double, _ target: UInt32) -> (ExtAudioFileRef?, OSStatus) {
     var fmt = AudioStreamBasicDescription(mSampleRate: aacRate(rate), mFormatID: kAudioFormatMPEG4AAC, mFormatFlags: 0,
                                           mBytesPerPacket: 0, mFramesPerPacket: 1024, mBytesPerFrame: 0,
                                           mChannelsPerFrame: 1, mBitsPerChannel: 0, mReserved: 0)
@@ -44,7 +45,7 @@ private func createAAC(_ path: UnsafePointer<CChar>, _ rate: Double) -> (ExtAudi
     var conv: AudioConverterRef?
     var size = UInt32(MemoryLayout<AudioConverterRef?>.size)
     if ExtAudioFileGetProperty(f, kExtAudioFileProperty_AudioConverter, &size, &conv) == noErr, let c = conv {
-        var br = bitRate(c)
+        var br = bitRate(c, target)
         if AudioConverterSetProperty(c, kAudioConverterEncodeBitRate, UInt32(MemoryLayout<UInt32>.size), &br) == noErr {
             var config: UnsafeRawPointer? = nil      // (a null CFPropertyListRef: "rebuild from its properties")
             _ = ExtAudioFileSetProperty(f, kExtAudioFileProperty_ConverterConfig,
@@ -54,17 +55,17 @@ private func createAAC(_ path: UnsafePointer<CChar>, _ rate: Double) -> (ExtAudi
     return (f, noErr)
 }
 
-/// `targetBitRate`, or the nearest the encoder offers at this sample rate (lower rates allow less: 16 kHz mono
+/// `target`, or the nearest the encoder offers at this sample rate (lower rates allow less: 16 kHz mono
 /// tops out under 64 kbps).
-private func bitRate(_ c: AudioConverterRef) -> UInt32 {
+private func bitRate(_ c: AudioConverterRef, _ target: UInt32) -> UInt32 {
     var size: UInt32 = 0
     guard AudioConverterGetPropertyInfo(c, kAudioConverterApplicableEncodeBitRates, &size, nil) == noErr, size > 0 else {
-        return targetBitRate
+        return target
     }
     var ranges = [AudioValueRange](repeating: AudioValueRange(), count: Int(size) / MemoryLayout<AudioValueRange>.size)
-    guard AudioConverterGetProperty(c, kAudioConverterApplicableEncodeBitRates, &size, &ranges) == noErr else { return targetBitRate }
+    guard AudioConverterGetProperty(c, kAudioConverterApplicableEncodeBitRates, &size, &ranges) == noErr else { return target }
     let rates = ranges.flatMap { [$0.mMinimum, $0.mMaximum] }.filter { $0 > 0 }
-    guard let best = rates.min(by: { abs($0 - Double(targetBitRate)) < abs($1 - Double(targetBitRate)) }) else { return targetBitRate }
+    guard let best = rates.min(by: { abs($0 - Double(target)) < abs($1 - Double(target)) }) else { return target }
     return UInt32(best)
 }
 
@@ -74,12 +75,12 @@ private func writeFloats(_ f: ExtAudioFileRef, _ p: UnsafeMutablePointer<Float>,
     return ExtAudioFileWrite(f, UInt32(frames), &list)
 }
 
-/// 16-bit mono samples at `rate` to a mono AAC .m4a at `path`. 0, or the Core Audio error.
+/// 16-bit mono samples at `rate` to a mono AAC .m4a at `path`, at about `bitRate` bits/s. 0, or the Core Audio error.
 @_cdecl("onkey_aac_write")
-public func onkey_aac_write(_ samples: UnsafePointer<Int16>?, _ frames: Int64, _ rate: Double,
+public func onkey_aac_write(_ samples: UnsafePointer<Int16>?, _ frames: Int64, _ rate: Double, _ bitRate: UInt32,
                             _ path: UnsafePointer<CChar>) -> Int32 {
     guard rate > 0 else { return -50 }
-    let (file, st) = createAAC(path, rate)
+    let (file, st) = createAAC(path, rate, bitRate)
     guard let f = file else { return st }
     var buf = [Float](repeating: 0, count: chunkFrames)
     var done = 0
@@ -111,7 +112,7 @@ public func onkey_aac_convert(_ src: UnsafePointer<CChar>, _ dst: UnsafePointer<
     var client = floatFormat(fmt.mSampleRate, UInt32(ch))
     st = ExtAudioFileSetProperty(i, kExtAudioFileProperty_ClientDataFormat, UInt32(MemoryLayout.size(ofValue: client)), &client)
     guard st == noErr else { return st }
-    let (file, cst) = createAAC(dst, fmt.mSampleRate)
+    let (file, cst) = createAAC(dst, fmt.mSampleRate, takeBitRate)
     guard let o = file else { return cst }
     var inBuf = [Float](repeating: 0, count: chunkFrames * ch)
     var mono = [Float](repeating: 0, count: chunkFrames)

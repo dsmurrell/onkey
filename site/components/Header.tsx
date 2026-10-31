@@ -11,6 +11,7 @@ export function Header() {
         <nav className="flex items-center gap-1 text-sm" aria-label="Main">
           <Link href="/docs/" className="inline-flex min-h-11 items-center rounded-full px-3 text-muted transition hover:text-fg">Docs</Link>
           <Link href="/docs/faq/" className="inline-flex min-h-11 items-center rounded-full px-3 text-muted transition hover:text-fg">FAQ</Link>
+          <Link href="/changelog/" className="hidden min-h-11 items-center rounded-full px-3 text-muted transition hover:text-fg sm:inline-flex">What&rsquo;s new</Link>
           <a href={GITHUB_URL} data-track="GitHub" className="inline-flex min-h-11 items-center rounded-full px-3 text-muted transition hover:text-fg">GitHub</a>
           {DISCORD_URL && <a href={DISCORD_URL} data-track="Discord" className="inline-flex min-h-11 items-center rounded-full px-3 text-muted transition hover:text-fg">Discord</a>}
         </nav>

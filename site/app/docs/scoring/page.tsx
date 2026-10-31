@@ -33,8 +33,32 @@ export default function Scoring() {
         </li>
       </ul>
       <p>
-        These rules are forgiving on purpose. They're set for beginners (I'm one), so if you sing well you'll score
-        high. Stricter modes for better singers are next.
+        These are the rules at <strong>Relaxed</strong>, the default level. They're forgiving on purpose, for
+        beginners (I'm one) and children, so if you sing well you'll score high.
+      </p>
+
+      <h2>Levels</h2>
+      <p>
+        If Relaxed is too kind, pick a stricter level in Settings → Scoring. It applies from your next take, and each
+        take keeps the level it was scored at: takes not at Relaxed show a small tag, and a song's best score only
+        compares takes at the same level.
+      </p>
+      <div className="table-wrap">
+        <table>
+          <thead><tr><th>Level</th><th className="num">Full credit within</th><th className="num">No credit from</th><th className="num">Timing slack</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Relaxed</strong> (default)</td><td className="num">50 cents</td><td className="num">150 cents</td><td className="num">80 ms</td></tr>
+            <tr><td><strong>Steady</strong></td><td className="num">35 cents</td><td className="num">100 cents</td><td className="num">60 ms</td></tr>
+            <tr><td><strong>Pro</strong></td><td className="num">25 cents</td><td className="num">70 cents</td><td className="num">50 ms</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        <strong>Vibrato isn't penalised.</strong> At Steady and Pro your pitch is judged by the middle of its wobble,
+        averaged over 0.17 s (about one cycle of a typical vibrato, which swings 5 to 7 times a second). A steady
+        vibrato around the right note scores close to full; a note held sharp or flat is still sharp or flat. At
+        Relaxed your exact pitch is used, as it always was, and a wide vibrato (±80 cents) loses about a tenth of
+        its credit. Octaves are forgiven at every level.
       </p>
 
       <CreditPlayground />

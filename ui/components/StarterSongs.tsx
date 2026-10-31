@@ -154,6 +154,54 @@ function PlaylistStrip() {
   );
 }
 
+/** The cards in one row that scrolls sideways: the edge fades where there's more, and ‹ › buttons that scroll by a
+ *  card (each hidden at its end). */
+function Scroller({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLUListElement>(null);
+  const [ends, setEnds] = useState({ start: true, end: false });
+  useEffect(() => {
+    const ul = ref.current;
+    if (!ul) return;
+    // each end is reached when its card is wholly in view: watched, not worked out from scroll events (the app's
+    // WebKit didn't always send one for where a smooth scroll stopped, leaving › up and the last card faded)
+    const first = ul.firstElementChild, last = ul.lastElementChild;
+    if (!first || !last) return;
+    const seen = new Map<Element, boolean>();
+    const io = new IntersectionObserver(entries => {
+      for (const e of entries) seen.set(e.target, e.intersectionRatio >= 0.97);
+      setEnds({ start: seen.get(first) ?? true, end: seen.get(last) ?? false });
+    }, { root: ul, threshold: [0, 0.5, 0.97, 1] });
+    io.observe(first);
+    io.observe(last);
+    return () => io.disconnect();
+  }, []);
+  const by = (dir: 1 | -1) => {
+    const ul = ref.current, card = ul?.firstElementChild as HTMLElement | null;
+    if (!ul || !card) return;
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // stops at each card's edge, plus the two ends; a card edge within half a card of an end is dropped, so the last
+    // step forward lands on the very end (not 24 px short of it, leaving the last card cut off and › up) and the
+    // last step back on the very start
+    const step = card.offsetWidth + 8, max = ul.scrollWidth - ul.clientWidth, sl = ul.scrollLeft;
+    const stops = [0];
+    for (let x = step; x < max - step / 2; x += step) stops.push(x);
+    if (max > 0) stops.push(max);
+    const to = dir > 0 ? stops.find(x => x > sl + 2) ?? max : [...stops].reverse().find(x => x < sl - 2) ?? 0;
+    ul.scrollTo({ left: to, behavior: still ? "auto" : "smooth" });
+  };
+  const fade = `linear-gradient(to right, ${ends.start ? "black" : "transparent"}, black 2.5rem, black calc(100% - 2.5rem), ${ends.end ? "black" : "transparent"})`;
+  const arrow = "absolute top-1/2 z-10 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full border border-white/10 bg-ink-900/90 text-lg leading-none text-ink-200 shadow-lg shadow-black/40 transition hover:bg-ink-850 hover:text-white";
+  return (
+    <div className="relative">
+      <ul ref={ref} className="flex gap-2 overflow-x-auto pb-2 select-none [scrollbar-width:none]" style={{ maskImage: fade, WebkitMaskImage: fade }}>
+        {children}
+      </ul>
+      {!ends.start && <button onClick={() => by(-1)} aria-label="Earlier songs" className={`${arrow} -left-3`}>‹</button>}
+      {!ends.end && <button onClick={() => by(1)} aria-label="More songs" className={`${arrow} -right-3`}>›</button>}
+    </div>
+  );
+}
+
 export default function StarterSongs({ onHide, className = "", hideLabel = "Hide suggestions" }: { onHide: () => void; className?: string; hideLabel?: string }) {
   const playlist = !!(STARTER_PLAYLIST_URL || STARTER_PLAYLIST_APPLE_URL);
   const found = useStarterCovers();
@@ -163,11 +211,11 @@ export default function StarterSongs({ onHide, className = "", hideLabel = "Hide
         <span className="font-medium text-ink-300">Try these <span className="font-normal text-ink-500">· songs OnKey follows well</span></span>
         <button onClick={onHide} className="text-ink-500 transition hover:text-ink-200">{hideLabel}</button>
       </div>
-      <ul className="flex snap-x gap-2 overflow-x-auto pr-8 pb-2 [scrollbar-width:thin] [mask-image:linear-gradient(to_right,black_calc(100%-2.5rem),transparent)]">
+      <Scroller>
         {STARTER_SONGS.map(s => {
           const cover = found.get(songKey(s));
           return (
-            <li key={songKey(s)} className="glass flex w-48 shrink-0 snap-start flex-col rounded-2xl p-3">
+            <li key={songKey(s)} className="glass flex w-48 shrink-0 flex-col rounded-2xl p-3">
               <span className="flex items-center gap-2.5">
                 <StarterArt title={s.title} artist={s.artist} cover={cover} />
                 <span className="flex min-w-0 flex-col">
@@ -185,7 +233,7 @@ export default function StarterSongs({ onHide, className = "", hideLabel = "Hide
             </li>
           );
         })}
-      </ul>
+      </Scroller>
       {playlist && <PlaylistStrip />}
     </section>
   );

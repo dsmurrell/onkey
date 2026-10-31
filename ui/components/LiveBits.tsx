@@ -1,12 +1,14 @@
 "use client";
 // The pieces around the lane: lyrics, score and hint, transport controls, the takes tray and status chips.
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { TIMING_CHECK_VERIFIED } from "@/components/TimingCheck";
-import { dismissTimingHint, finishTake, learnOf, learnPct, live, playTrack, setBlind, setEchoCancel, skipToSinging, control, type Take, usePlaying, useSession } from "@/lib/session";
+import { dismissTimingHint, finishTake, setListeningPaused, learnOf, learnPct, live, playTrack, setBlind, setEchoCancel, skipToSinging, control, type Take, usePlaying, useSession } from "@/lib/session";
 import { typing } from "@/lib/keys";
 import { clock, fold } from "@/lib/music";
+import { FADE_LEVELS, guide, onGuideLevel } from "@/lib/guideFade";
 import { setDancer, useDancer } from "@/components/Dancer";
+import Cover from "@/components/Cover";
 
 /** Re-render a component every `ms` (for things derived from the live clock), only while the clock runs (see
  *  live.playing): paused, finished, nothing playing or the window hidden, once more and then no timer at all. */
@@ -192,7 +194,10 @@ export function Lyrics({ compact = false }: { compact?: boolean }) {
 // ------------------------------------------------------------------ score + hint
 export function ScoreAndHint() {
   const { score, song, blind } = useSession();
-  const hint = useHint();
+  const said = useHint();
+  // the guide faded (lib/guideFade.ts): "✓ On pitch" isn't said, only when you're off
+  const level = useSyncExternalStore(onGuideLevel, () => guide.level, () => 0 as const);
+  const hint = said === "ok" && !FADE_LEVELS[level].okPill ? "" : said;
   if (song?.mode === "learn" || blind) {
     return (
       <div className="text-right">
@@ -253,8 +258,8 @@ export function Transport() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (typing(e) || e.metaKey || e.ctrlKey) return;
-      if (e.code === "Space") { e.preventDefault(); control("playpause"); }
-      else if (e.key === "r" || e.key === "R") control("restart");
+      if (e.code === "Space") { e.preventDefault(); control("playpause", "Space key"); }
+      else if (e.key === "r" || e.key === "R") control("restart", "R key");
       else if (e.key === "ArrowRight") { if (!skipToSinging()) control("next"); }
       else if (e.key === "ArrowLeft") control("previous");
       else if (e.key === "b" || e.key === "B") { if (live.song?.mode === "sing") setBlind(!live.blind); }
@@ -265,10 +270,10 @@ export function Transport() {
   const btn = "grid h-9 w-9 place-items-center rounded-full text-ink-200 transition hover:bg-white/8 hover:text-white active:scale-95";
   return (
     <div className="glass flex items-center gap-1 rounded-full px-2 py-1 shadow-lg shadow-black/30">
-      <button className={btn} title="Start the song over (R)" onClick={() => control("restart")}><Icon d={ICONS.restart} /></button>
+      <button className={btn} title="Start the song over (R)" onClick={() => control("restart", "restart button")}><Icon d={ICONS.restart} /></button>
       <button className={btn} title="Previous (←)" onClick={() => control("previous")}><Icon d={ICONS.prev} /></button>
       <button className="grid h-11 w-11 place-items-center rounded-full bg-white text-ink-950 shadow transition hover:scale-105 active:scale-95"
-              title={playing ? "Pause (space)" : "Play (space)"} onClick={() => control("playpause")}>
+              title={playing ? "Pause (space)" : "Play (space)"} onClick={() => control("playpause", "play button")}>
         <Icon d={playing ? ICONS.pause : ICONS.play} filled />
       </button>
       <button className={`${btn} ${lull ? "text-accent-300" : ""}`} title={lull ? "Skip to the singing (→)" : "Next song (→)"}
@@ -320,7 +325,7 @@ function TakeChip({ t }: { t: Take }) {
   ) : t.status === "failed" ? <div className="text-xs text-off">couldn’t score</div>
     : readyOnly ? (
       t.status === "learned" && t.track_id ? (
-        <button onClick={e => { e.preventDefault(); playTrack(t.track_id!); }}
+        <button onClick={e => { e.preventDefault(); void playTrack(t.track_id!, true, t.name); }}
                 className="rounded-full bg-accent-500 px-2.5 py-1 text-xs font-semibold text-white transition hover:bg-accent-400">Sing now</button>
       ) : <div className="text-right text-[11px] text-ink-300">{Math.round(100 * (t.learned ?? 0))}% learned<br /><span className="text-ink-400">play it through</span></div>
     ) : (
@@ -368,11 +373,20 @@ export function StatusChips() {
   const chip = "flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs text-ink-300";
   return (
     <div className="flex flex-wrap items-center gap-1">
-      <span className={chip} title="Connection to the engine">
-        <span className={`h-1.5 w-1.5 rounded-full ${connected ? "bg-good" : "bg-off"}`} />{connected ? "Live" : "Reconnecting"}
-      </span>
-      <span className={chip} title={`How long after the music app plays you hear it; scoring allows for it${status.output?.correction_ms != null ? " (from your timing check in Settings)" : ""}`}>
-        <Icon d={ICONS.head} size={14} />{(status.output?.reported_ms ?? out) > 100 ? "Bluetooth" : "Wired / speakers"} · {out} ms
+      {/* Live: pressed, OnKey stops listening (no take, nothing named or learned) until pressed again (also ⌘⇧P) */}
+      {!connected
+        ? <span className={chip} title="Connection to the engine"><span className="h-1.5 w-1.5 rounded-full bg-off" />Reconnecting</span>
+        : status.listening_paused
+          ? <button onClick={() => void setListeningPaused(false)} title="Resume listening (⌘⇧P)"
+                    className="flex items-center gap-1.5 rounded-full bg-amber-400/10 px-2.5 py-1 text-xs text-amber-200 transition hover:bg-amber-400/16">
+              <span aria-hidden>⏸</span>Listening paused</button>
+          : <button onClick={() => void setListeningPaused(true)} title="Pause listening (⌘⇧P)"
+                    className={`${chip} transition hover:bg-white/6 hover:text-ink-100`}>
+              <span className="h-1.5 w-1.5 rounded-full bg-good" />Live</button>}
+      {/* where you hear the music: the device's name (else what kind it likely is); its delay in the tooltip */}
+      <span className={chip} title={`Sound plays on ${status.output?.name || "this device"}. You hear it ${out} ms after the music app plays it; scoring allows for that${status.output?.correction_ms != null ? " (from your timing check in Settings)" : ""}.`}>
+        <Icon d={ICONS.head} size={14} />
+        <span className="max-w-44 truncate">{status.output?.name || ((status.output?.reported_ms ?? out) > 100 ? "Bluetooth" : "Headphones or speakers")}</span>
       </span>
       {TIMING_CHECK_VERIFIED && status.output?.suggest && <TimingHint uid={status.output.uid} name={status.output.name} />}
       {status.mic_device !== undefined && (
@@ -386,18 +400,18 @@ export function StatusChips() {
 }
 
 /** The switches while singing, at the bottom right (status stays at the left, so each fits on one line on a laptop):
- *  Notes ahead, Echo cancel, and Dancer (under the dancer). */
+ *  Show notes, Echo cancel, and Dancer (under the dancer). */
 export function SingSwitches() {
   const { status, song, blind } = useSession();
   return (
     <div className="flex flex-wrap items-center justify-end gap-1">
       {song?.mode === "sing" && (
-        <button onClick={() => setBlind(!blind)} title="Hide the notes ahead to test yourself (B)"
+        <button onClick={() => setBlind(!blind)} title="Hide the notes to test yourself: a Blind take (B)"
                 className={`flex items-center gap-2 rounded-full px-2.5 py-1 text-xs transition hover:bg-white/6 ${blind ? "text-ink-100" : "text-ink-300"}`}>
           <span className={`relative h-4 w-7 rounded-full transition ${blind ? "bg-ink-500" : "bg-accent-500"}`}>
             <span className={`absolute top-0.5 h-3 w-3 rounded-full bg-white transition-all ${blind ? "left-0.5" : "left-3.5"}`} />
           </span>
-          Notes ahead
+          Show notes
         </button>
       )}
       {status.echo_cancel != null && (
@@ -442,6 +456,7 @@ export function SongClock() {
 export function FinishSong() {
   useTick(500);
   const song = live.song;
+  if (pausedEndsIn() != null) return null;     // (paused: PausedFinish says it instead)
   const lines = (song?.lyrics ?? []).filter(([, text]) => text.trim());
   // learned songs only: on a first play, finishing early would also stop the rest of the song being learned
   if (!song || song.mode !== "sing" || !song.cache || lines.length < 3) return null;
@@ -456,6 +471,92 @@ export function FinishSong() {
         That was the last line
         <span className="text-ink-500">·</span>
         <span className="text-accent-300">Finish and see your score</span>
+      </button>
+    </div>
+  );
+}
+
+/** Seconds until a paused take ends and is scored (the engine's PAUSE_ENDS_S), while paused with one open. */
+function pausedEndsIn(): number | null {
+  const at = live.status.pause_ends_ms;
+  if (!at || !live.song || live.ended || live.status.player?.state !== "paused") return null;
+  return Math.max(0, (at - Date.now()) / 1000);
+}
+
+/** The take still open (History): it's listed once it's scored, so until then it shows here, singing or paused
+ *  (with the countdown to its score and Finish now). */
+export function OpenTake() {
+  const { song, ended } = useSession();
+  const [, set] = useState(0);
+  const left = pausedEndsIn();
+  const counting = left != null;
+  useEffect(() => {
+    if (!counting) return;
+    const id = setInterval(() => set(x => x + 1), 1000);
+    return () => clearInterval(id);
+  }, [counting]);
+  if (!song || ended || (song.mode !== "sing" && song.mode !== "learn")) return null;
+  const learning = song.mode !== "sing";
+  const paused = live.status.player?.state === "paused";
+  const what = learning ? "learned" : "scored";
+  const status = paused && left != null
+    ? (left > 0.5 ? `Paused · ${what} in ${clock(Math.ceil(left))}` : learning ? "Learning…" : "Scoring…")
+    : `${paused ? "Paused" : learning ? "Learning as it plays" : "Singing now"} · ${what} when it ends`;
+  // (shaped like History's song cards, first among them: the play under way, listed once it's scored)
+  return (
+    <div className="glass rounded-3xl border-accent-400/30 p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-3">
+          <Cover name={song.track.name} art={song.track.art} link={song.track.link} size={44} />
+          <div className="min-w-0">
+            <div className="truncate font-medium">{song.track.name}</div>
+            <div className="truncate text-sm text-ink-400">{song.track.artist}</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 pt-1 text-[10px] uppercase tracking-wider text-ink-400">
+          <span className="relative flex h-2 w-2">
+            {!paused && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-400 opacity-60 motion-reduce:animate-none" />}
+            <span className={`relative inline-flex h-2 w-2 rounded-full ${paused ? "bg-ink-400" : "bg-accent-400"}`} />
+          </span>
+          {paused ? "paused" : "now"}
+        </div>
+      </div>
+      <div className="mt-3 flex min-h-9 items-end justify-between gap-3">
+        <span className="tabular text-xs text-ink-300">{status}</span>
+        {(!learning || paused) && (
+          <button onClick={() => finishTake()}
+                  className="shrink-0 rounded-full bg-white/6 px-3 py-1.5 text-xs font-medium text-accent-300 outline-none transition hover:bg-accent-500 hover:text-white focus-visible:ring-2 focus-visible:ring-accent-400/60">
+            Finish now
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** Paused mid-song: the take waits a minute in case you carry on, then is scored. Says so, with Finish to score
+ *  it now. */
+export function PausedFinish() {
+  useSession();      // (re-rendered when the status says it's paused, and ticking each second while it counts down:
+  const [, set] = useState(0);     // useTick stops while paused)
+  const left = pausedEndsIn();
+  const counting = left != null;
+  useEffect(() => {
+    if (!counting) return;
+    const id = setInterval(() => set(x => x + 1), 1000);
+    return () => clearInterval(id);
+  }, [counting]);
+  if (left == null) return null;
+  const learning = live.song?.mode !== "sing";
+  return (
+    <div className="pointer-events-none absolute inset-x-0 bottom-6 flex justify-center">
+      <button onClick={() => finishTake()}
+              className="pointer-events-auto glass flex animate-rise items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-ink-100 shadow-lg shadow-black/40 transition hover:border-accent-400/40 hover:text-white">
+        Paused
+        <span className="text-ink-500">·</span>
+        <span className="tabular text-ink-300">{left > 0.5 ? `${learning ? "learned" : "scored"} in ${clock(Math.ceil(left))}` : learning ? "learning…" : "scoring…"}</span>
+        <span className="text-ink-500">·</span>
+        <span className="text-accent-300">Finish now</span>
       </button>
     </div>
   );
@@ -526,10 +627,15 @@ export function TakeToast() {
     if (finished.length > seen.current) {
       seen.current = finished.length;
       setShown(finished[finished.length - 1]);
-      const id = setTimeout(() => setShown(null), 7000);
-      return () => clearTimeout(id);
     }
   }, [takes]);
+  // (its own timer, kept by what's shown: another takes update within the 7 s used to clear it, never set again,
+  // so the notice stayed up for good)
+  useEffect(() => {
+    if (!shown) return;
+    const id = setTimeout(() => setShown(null), 7000);
+    return () => clearTimeout(id);
+  }, [shown]);
   if (!shown) return null;
   const body = shown.status === "done"
     ? <><span className="tabular text-lg font-bold text-white">{shown.score}</span>

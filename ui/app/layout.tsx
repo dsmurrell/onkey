@@ -6,6 +6,8 @@ import ReportProblem from "@/components/ReportProblem";
 import MirrorBadge from "@/components/MirrorBadge";
 import UpdatePill from "@/components/UpdatePill";
 import GoHome from "@/components/GoHome";
+import DevDrive from "@/components/DevDrive";
+import OpenLinks from "@/components/OpenLinks";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -26,6 +28,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <MirrorBadge />
         <UpdatePill />
         <GoHome />
+        <DevDrive />
+        <OpenLinks />
       </body>
     </html>
   );

@@ -83,7 +83,7 @@ fn take_dir_refuses_anything_but_a_take_id() {
     let (_, id) = store.new_take_dir("20261015-120000-Adele-Hello").unwrap();
     for bad in ["..", ".", "", "../takes", "a/../..", "/etc", ".hidden", "..x", "x/y", "x\\y", "20261015..", "~"] {
         assert!(store.take_dir(bad).is_none(), "take_dir({bad:?}) must be refused");
-        assert!(!store.delete_take(bad), "delete_take({bad:?}) must do nothing");
+        assert!(store.delete_take(bad).is_err(), "delete_take({bad:?}) must do nothing");
         assert!(!valid_take_id(bad));
     }
     assert!(dir.join("settings.json").exists() && dir.join("takes").is_dir(), "the data folder is untouched");
@@ -127,14 +127,14 @@ fn the_mic_is_chosen_from_the_input_devices_not_by_name() {
     println!("input devices: {:?}\nchosen: {chosen:?}", all.iter().map(|m| &m.name).collect::<Vec<_>>());
     assert_eq!(chosen.is_some(), !all.is_empty(), "a mic whenever there's an input device");
     if let Some(c) = &chosen {
-        assert!(all.contains(c), "the chosen mic is one of the input devices");
+        assert!(all.iter().any(|m| m.uid == c.uid), "the chosen mic is one of the input devices");
         assert!(!c.name.is_empty() && c.name != "OnKey");
     }
     set_mic_preference("no-such-device-uid");
     assert_eq!(chosen_mic(), chosen, "a chosen mic that isn't connected falls back to automatic");
     if let Some(last) = all.last() {
         set_mic_preference(&last.uid);
-        assert_eq!(chosen_mic().as_ref(), Some(last), "a connected chosen mic is used");
+        assert_eq!(chosen_mic().map(|m| m.uid), Some(last.uid.clone()), "a connected chosen mic is used");
     }
     set_mic_preference("");
     assert_eq!(chosen_mic(), chosen);

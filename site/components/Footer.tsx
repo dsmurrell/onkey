@@ -24,6 +24,7 @@ export function Footer() {
           <Link href="/docs/how-it-works/" className="inline-block py-1.5 hover:text-fg">How it works</Link>
           <Link href="/docs/privacy/" className="inline-block py-1.5 hover:text-fg">Privacy &amp; legal</Link>
           <Link href="/docs/faq/" className="inline-block py-1.5 hover:text-fg">FAQ</Link>
+          <Link href="/changelog/" className="inline-block py-1.5 hover:text-fg">What&rsquo;s new</Link>
           <a href={GITHUB_URL} data-track="GitHub" className="inline-block py-1.5 hover:text-fg">GitHub</a>
           {DISCORD_URL && <a href={DISCORD_URL} data-track="Discord" className="inline-block py-1.5 hover:text-fg">Discord</a>}
         </nav>

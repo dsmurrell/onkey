@@ -16,6 +16,7 @@ extern "C" {
     fn onkey_mic_list(buf: *mut c_char, len: i32);
     fn onkey_set_mic_preference(uid: *const c_char);
     fn onkey_output_latency_ms() -> i32;
+    fn onkey_mic_channel(count: *mut i32) -> i32;
     fn onkey_output_uid(uid: *mut std::ffi::c_char, len: i32);
     fn onkey_output_name(name: *mut std::ffi::c_char, len: i32);
     fn onkey_app_sounding(bundle: *const c_char) -> i32;
@@ -66,6 +67,9 @@ pub struct Capture {
 pub struct Mic {
     pub uid: String,
     pub name: String,
+    /// installed by another app (BlackHole, Krisp, Zoom): Settings lists these apart
+    #[serde(rename = "virtual")]
+    pub is_virtual: bool,
 }
 
 fn c_str(buf: &[c_char]) -> String {
@@ -75,10 +79,11 @@ fn c_str(buf: &[c_char]) -> String {
 /// The microphone OnKey listens to now, the take engine and setup's mic check alike (native/capture.swift
 /// `chooseMic`): the one chosen in Settings while it's connected, else the Mac's default input (not Bluetooth
 /// headphones' while the Mac has another mic). None: no input device at all.
+/// (`is_virtual` isn't looked up here, as the engine reads this every round: `mics` has it.)
 pub fn chosen_mic() -> Option<Mic> {
     let (mut uid, mut name) = ([0 as c_char; 512], [0 as c_char; 512]);
     let found = unsafe { onkey_mic_choice(uid.as_mut_ptr(), name.as_mut_ptr(), 512) } == 1;
-    found.then(|| Mic { uid: c_str(&uid), name: c_str(&name) })
+    found.then(|| Mic { uid: c_str(&uid), name: c_str(&name), is_virtual: false })
 }
 
 /// Every microphone connected.
@@ -86,7 +91,8 @@ pub fn mics() -> Vec<Mic> {
     let mut buf = vec![0 as c_char; 64 * 1024];
     unsafe { onkey_mic_list(buf.as_mut_ptr(), buf.len() as i32) };
     let list: Vec<serde_json::Value> = serde_json::from_str(&c_str(&buf)).unwrap_or_default();
-    list.iter().filter_map(|m| Some(Mic { uid: m["uid"].as_str()?.to_string(), name: m["name"].as_str()?.to_string() })).collect()
+    list.iter().filter_map(|m| Some(Mic { uid: m["uid"].as_str()?.to_string(), name: m["name"].as_str()?.to_string(),
+                                       is_virtual: m["virtual"].as_bool().unwrap_or(false) })).collect()
 }
 
 /// Prefer this microphone (a uid from `mics`) while it's connected; "" for automatic.
@@ -104,7 +110,7 @@ impl Capture {
         if crate::devtest::sim_player_on() {
             // the simulated player's sound instead of a tap (its mic channel is silent: ONKEY_SIM sings into it)
             let (rate, stop) = crate::devtest::sim_capture(producer);
-            let mic = chosen_mic().unwrap_or(Mic { uid: String::new(), name: String::new() });
+            let mic = chosen_mic().unwrap_or(Mic { uid: String::new(), name: String::new(), is_virtual: false });
             return Ok(Capture { rate, mic_name: mic.name, mic_uid: mic.uid, consumer, sim: Some(stop) });
         }
         *PRODUCER.lock().unwrap() = Some(producer);
@@ -115,7 +121,13 @@ impl Capture {
             0 => {
                 let (mut uid, mut name) = ([0 as c_char; 512], [0 as c_char; 512]);
                 unsafe { onkey_capture_mic(uid.as_mut_ptr(), name.as_mut_ptr(), 512) };
-                Ok(Capture { rate, mic_name: c_str(&name), mic_uid: c_str(&uid), consumer, sim: None })
+                let c = Capture { rate, mic_name: c_str(&name), mic_uid: c_str(&uid), consumer, sim: None };
+                // (a rate Core Audio didn't give, 0: the resampler would never move on and grow until memory ran out)
+                if !(rate.is_finite() && rate >= 8000.0) {
+                    drop(c);     // (stops it)
+                    return Err(CaptureError::DeviceFailed);
+                }
+                Ok(c)
             }
             1 => Err(CaptureError::AppSilent),
             2 => Err(CaptureError::TapRefused),
@@ -170,6 +182,21 @@ pub fn output_latency_ms() -> i32 {
     unsafe { onkey_output_latency_ms() }
 }
 
+/// An interface with several inputs: which one OnKey is taking your voice from (native/capture.swift picks the one
+/// your voice is on), logged when it changes so a report shows it. Called about once a second.
+pub fn note_mic_channel() {
+    static LAST: std::sync::atomic::AtomicI64 = std::sync::atomic::AtomicI64::new(-1);
+    let mut count = 0i32;
+    let ch = unsafe { onkey_mic_channel(&mut count) };
+    if count < 2 {
+        return;
+    }
+    let now = ((count as i64) << 32) | ch as i64;
+    if LAST.swap(now, std::sync::atomic::Ordering::Relaxed) != now {
+        crate::engine::log(&format!("mic: using input {} of {count}", ch + 1));
+    }
+}
+
 /// Whether an app (bundle id prefix) is playing any sound right now.
 pub fn app_sounding(bundle: &str) -> bool {
     let b = CString::new(bundle).unwrap();
@@ -219,7 +246,9 @@ pub struct Watchdog {
 
 impl Default for Watchdog {
     fn default() -> Self {
-        let long_ago = std::time::Instant::now() - std::time::Duration::from_secs(600);
+        // (checked: on Windows an Instant can't go back before boot, and subtracting panicked within 10 minutes of it)
+        let now = std::time::Instant::now();
+        let long_ago = now.checked_sub(std::time::Duration::from_secs(600)).unwrap_or(now);
         Watchdog { quiet_since: None, dead_since: None, last_restart: long_ago, gap_s: Self::MIN_GAP_S, sounding: false,
                    last_asked: long_ago, wakes: wake_count(), quiet_tries: 0, quiet_gap_s: Self::QUIET_GAP_S, here: true, here_asked: long_ago }
     }

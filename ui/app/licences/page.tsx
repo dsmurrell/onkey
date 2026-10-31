@@ -3,7 +3,7 @@
 // OnKey uses, with the copyright notices and licence texts their licences ask to go with every copy).
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Logo, Nav } from "@/components/Nav";
+import { Logo, Nav, WhatsNew } from "@/components/Nav";
 import { thirdPartyNotices } from "@/lib/session";
 
 export default function LicencesPage() {
@@ -13,7 +13,7 @@ export default function LicencesPage() {
 
   return (
     <div className="min-h-dvh bg-[radial-gradient(1200px_500px_at_50%_-10%,rgba(124,108,246,.10),transparent)]">
-      <header data-tauri-drag-region className="app-header flex items-center gap-5 px-6 pt-4 pb-3"><Logo /><Nav /></header>
+      <header data-tauri-drag-region className="app-header flex items-center gap-5 px-6 pt-4 pb-3"><Logo /><Nav /><span className="ml-auto"><WhatsNew /></span></header>
       <main className="mx-auto max-w-3xl px-6 pb-16">
         <Link href="/settings" className="mt-6 inline-block text-xs text-ink-400 hover:text-white">← Settings</Link>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight">Open-source licences</h1>

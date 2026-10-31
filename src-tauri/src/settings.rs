@@ -9,12 +9,19 @@
 //!   control_music    the same for Apple Music
 //!   youtube          follow YouTube in your browser (youtube.rs)
 //!   shazam           use Shazam to name songs not learned here, when no music app OnKey controls says what plays
-//!                    (listen.rs `shazam_wanted`); on unless turned off. Off: nothing is sent to Apple
+//!                    (listen.rs `shazam_wanted`); on unless turned off. Off: nothing is sent to Shazam
 //!   setup_done       first-run setup is done (permissions.rs)
 //!   mic              the microphone chosen in Settings (a Core Audio device uid); none: automatic (capture.rs)
 //!   show_lyrics      show lyrics (from LRCLIB) with the notes; on unless turned off. Off: LRCLIB is never asked
 //!                    (lyrics.rs), and lyrics already kept on this Mac are hidden, not deleted (the window)
+//!   fade_guide       "Fade the guide": on a song you've sung well before, your own pitch line on the Sing screen
+//!                    fades (the window decides how far, from your past takes: ui/lib/guideFade.ts); off unless
+//!                    turned on
+//!   listening_paused "Pause listening": OnKey follows nothing (no capture, nothing named, recognised or learned,
+//!                    no take) until you resume it (engine.rs); off unless turned on, and it stays paused across
+//!                    restarts
 //!   auto_update      check GitHub Releases for a new OnKey on launch and daily (updater.rs); on unless turned off
+//!   scoring_level    how strictly takes are scored: "steady" or "pro" (dsp::LEVELS); none: Relaxed, the default
 //!   output_timing    per output device (Core Audio uid): your tap-along check of its delay, and whether its
 //!                    suggestion to check was dismissed (timing.rs)
 //! Control of Spotify and Apple Music is on by default (setup asks macOS for it; its "Listen only" turns both off),
@@ -50,7 +57,9 @@ pub fn init(dir: &Path) {
     }
     // written back when it changed, and so that the last good copy (.bak) is there from now on
     if why.is_some() || read(&backup(&file)).as_ref() != Some(&v) {
-        save(&file, &v);
+        if let Err(e) = save(&file, &v) {
+            crate::engine::log(&format!("settings: couldn't be saved: {e}"));
+        }
     }
     *VALUES.lock().unwrap() = Some(v);
     *FILE.lock().unwrap() = Some(file);
@@ -87,11 +96,11 @@ fn load(dir: &Path) -> (Value, Option<String>) {
 }
 
 /// Write the settings, then the same as the last good copy.
-fn save(file: &Path, v: &Value) {
+fn save(file: &Path, v: &Value) -> std::io::Result<()> {
     let b = v.to_string();
-    if crate::store::write_atomic(file, b.as_bytes()).is_ok() {
-        let _ = crate::store::write_atomic(&backup(file), b.as_bytes());
-    }
+    crate::store::write_atomic(file, b.as_bytes())?;
+    let _ = crate::store::write_atomic(&backup(file), b.as_bytes());
+    Ok(())
 }
 
 /// An existing install's control settings, as they were: off where never allowed. A new install gets none
@@ -161,6 +170,17 @@ pub fn get_f64(key: &str) -> Option<f64> {
 
 /// Change one setting to any value (null removes it) and save it.
 pub fn set_value(key: &str, value: Value) {
+    let _ = try_set_value(key, value);
+}
+
+/// `set`, saying whether it was saved (the Settings page says so when it wasn't: a full disk, say).
+pub fn try_set(key: &str, on: bool) -> Result<(), String> {
+    try_set_value(key, json!(on))
+}
+
+/// `set_value`, saying whether it was saved: Err (and logged) if the file couldn't be written. The setting holds
+/// until OnKey quits either way.
+pub fn try_set_value(key: &str, value: Value) -> Result<(), String> {
     let mut values = VALUES.lock().unwrap();
     let v = values.get_or_insert_with(|| json!({}));
     if value.is_null() {
@@ -171,8 +191,12 @@ pub fn set_value(key: &str, value: Value) {
         v[key] = value;
     }
     if let Some(f) = FILE.lock().unwrap().as_ref() {
-        save(f, v);
+        if let Err(e) = save(f, v) {
+            crate::engine::log(&format!("settings: {key} couldn't be saved: {e}"));
+            return Err(format!("Couldn’t save the setting ({e}). It holds until OnKey quits."));
+        }
     }
+    Ok(())
 }
 
 /// Listening mode: songs are followed by listening (see listen.rs), and by asking the apps OnKey may control.
@@ -192,9 +216,28 @@ pub fn show_lyrics() -> bool {
     get_opt("show_lyrics").unwrap_or(true)
 }
 
+/// "Pause listening": off unless you paused it; kept until you resume, also across restarts.
+pub fn listening_paused() -> bool {
+    listening_paused_in(VALUES.lock().unwrap().as_ref().unwrap_or(&Value::Null))
+}
+
+fn listening_paused_in(v: &Value) -> bool {
+    v["listening_paused"].as_bool().unwrap_or(false)
+}
+
+/// "Fade the guide": off unless you turned it on (the window does the fading).
+pub fn fade_guide() -> bool {
+    get_opt("fade_guide").unwrap_or(false)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn fade_the_guide_is_off_unless_turned_on() {
+        assert!(!fade_guide());
+    }
 
     #[test]
     fn control_is_on_by_default_for_new_installs_only() {
@@ -252,6 +295,24 @@ mod tests {
     }
 
     #[test]
+    fn listening_is_not_paused_unless_you_paused_it_and_a_pause_outlasts_a_restart() {
+        assert!(!listening_paused_in(&json!({})), "a new install listens");
+        assert!(!listening_paused_in(&json!({"setup_done": true, "listening": true})), "an existing one too");
+        let dir = std::env::temp_dir().join(format!("onkey-settings-pause-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        let file = dir.join("settings.json");
+        for on in [true, false] {
+            let mut v = json!({"setup_done": true});
+            v["listening_paused"] = json!(on);
+            save(&file, &v).unwrap();
+            let (back, _) = load(&dir);
+            assert_eq!(listening_paused_in(&back), on, "read back as saved");
+        }
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
     fn a_damaged_settings_file_is_read_from_its_last_good_copy() {
         let dir = std::env::temp_dir().join(format!("onkey-settings-test-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
@@ -259,8 +320,10 @@ mod tests {
         std::fs::write(dir.join("songs").join("x.json"), "{}").unwrap();
         let file = dir.join("settings.json");
         let good = json!({"setup_done": true, "listening": true, "control_spotify": true, "control_music": true, "youtube": true});
-        save(&file, &good);
+        save(&file, &good).unwrap();
         assert_eq!(read(&backup(&file)), Some(good.clone()), "the last good copy is kept beside it");
+        // a write that fails says so (here: the folder it goes in isn't there)
+        assert!(save(&dir.join("gone").join("settings.json"), &good).is_err());
         assert_eq!(load(&dir), (good.clone(), None), "a whole file is read as it is");
 
         // cut short mid-write: the copy, with setup still done and control still on (not migrated as if new)

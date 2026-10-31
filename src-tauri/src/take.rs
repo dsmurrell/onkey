@@ -8,7 +8,7 @@ use std::sync::Arc;
 
 use serde_json::{json, Value};
 
-use crate::dsp::{self, credit, onset_envelope, shape_hits, tolerant_error, FRAME_S, TOL};
+use crate::dsp::{self, onset_envelope, shape_hits, FRAME_S, TOL};
 use crate::notes::Bar;
 use crate::pitch::{Crepe, HOP, SR, WIN};
 use crate::resample::Resampler;
@@ -47,6 +47,8 @@ pub struct Take {
     pub track: Track,
     pub mode: Mode,
     pub blind: bool,
+    /// how strictly it's scored (dsp::LEVELS): the level in Settings when the take started
+    pub level: dsp::Level,
     pub lyrics: Vec<(f64, String)>,
     /// the lyrics as LRCLIB gave them, before any lining up
     pub lyrics_given: Vec<(f64, String)>,
@@ -117,6 +119,9 @@ pub struct Take {
     pub lag: i64,
     /// stretches skipped over (take frames): not sung, so not scored
     skipped: Vec<(i64, i64)>,
+    /// the song's stretches (song seconds) marked "Not the melody" (store::not_melody): its learned notes there follow
+    /// a backing vocal or a harmony, so the live score leaves them out, as the after-song one does
+    left_out: Vec<(f64, f64)>,
     /// the place each stretch before a jump (skip, gap, resume) had when the jump came: (take frame the stretch ends
     /// at, song offset), in order. A later correction of the place (the music app's jump landing a little off) is
     /// for the music after the jump; applied to the whole take it moved what was sung before too (live, a skip
@@ -159,7 +164,7 @@ impl Take {
         let bars = Arc::new(song.as_ref().map(|s| crate::notes::NoteTracker::bars(&s.midi)).unwrap_or_default());
         let (app, played_as) = (Source::of_id(&track.id), track.id.clone());
         Take {
-            app, played_as, track, mode, blind: blind || mode == Mode::Learn, lyrics: Vec::new(), lyrics_given: Vec::new(), rate, heard, speakers: heard < 10, music_quiet: false, quiet_s: 0.0, learned_fraction, song, fp, bars, bar_text: Arc::new(Vec::new()),
+            app, played_as, track, mode, blind: blind || mode == Mode::Learn, level: dsp::Level::current(), lyrics: Vec::new(), lyrics_given: Vec::new(), rate, heard, speakers: heard < 10, music_quiet: false, quiet_s: 0.0, learned_fraction, song, fp, bars, bar_text: Arc::new(Vec::new()),
             n: 0, peak: 0.0, mic: Vec::new(), mic16: Vec::new(),
             music_kept: crate::devtest::keep_music().then(Vec::new), clean16: Vec::new(),
             viz: crate::viz::Viz::new(rate),
@@ -168,7 +173,7 @@ impl Take {
             mic_rs: Resampler::new(rate, SR as f64), ref_rs: Resampler::new(rate, SR as f64),
             usr: Vec::new(), usr_raw: (Vec::new(), Vec::new()), usr_done: 0, sent_usr: 0, live: LivePitch::default(), mic_db: Vec::new(), quiet_at: Vec::new(), drowned: false, drowned_checked: 0.0,
             song_offset: None, aligned: false, provisional: false, align_conf: 0.0, last_try: None, tries: Vec::new(), moves: Vec::new(),
-            align_at: -1e9, lag: heard.max(5), skipped: Vec::new(), before_jumps: Vec::new(), audio_from: 0, skip_base: None, resume_check: false, lag_locked: true, lag_at: 0.0, exact_place: false, app_guess: false, tracker: Some(crate::tracker::Tracker::new()), place_sure: false,
+            align_at: -1e9, lag: heard.max(5), skipped: Vec::new(), left_out: Vec::new(), before_jumps: Vec::new(), audio_from: 0, skip_base: None, resume_check: false, lag_locked: true, lag_at: 0.0, exact_place: false, app_guess: false, tracker: Some(crate::tracker::Tracker::new()), place_sure: false,
         }
     }
 
@@ -548,6 +553,15 @@ impl Take {
         out
     }
 
+    /// The music this take captured (16 kHz), laid out at the place it has now (`one_place`): what the song's Shazam
+    /// signature is made from, starting at `song_offset`. The take's own `ref16` is in take time, and a stretch
+    /// before a jump had another place: a signature made from it as it is put that stretch where the last one is
+    /// (The A Team, 22 Oct: a play skipped to singing at 177 s, its place moving from +0.06 to -0.87 s, made the
+    /// signature that put the first 177 s of the song 0.93 s early, so listening's clock ran over a second behind).
+    pub fn music_placed(&self) -> Vec<f32> {
+        self.one_place(&self.ref16, HOP, 0.0)
+    }
+
     /// The singer's pitch for take frames [a, b) (NaN where silent or unknown), once placed.
     /// One bar per sung syllable (made when the song was learned): replaces the bars from the pitch line.
     pub fn use_syllables(&mut self, syl: Vec<(i64, i64, i32, String)>) {
@@ -686,6 +700,19 @@ impl Take {
         }
     }
 
+    /// Leave the song's "Not the melody" stretches (song seconds) out of this take's score.
+    pub fn leave_out(&mut self, stretches: Vec<(f64, f64)>) {
+        self.left_out = stretches;
+    }
+
+    /// The song's "Not the melody" stretches in this take (take frames [from, to), each part of it at its place).
+    pub fn left_out(&self) -> Vec<(i64, i64)> {
+        if self.left_out.is_empty() || self.song_offset.is_none() {
+            return Vec::new();
+        }
+        crate::analysis::take_frames(&self.left_out, &self.stretches())
+    }
+
     /// Running score over the take so far (None until there's something to score).
     pub fn running(&self) -> Option<f32> {
         let end = (self.usr_done as i64 - self.lag).min(self.ref_known_until());
@@ -696,19 +723,20 @@ impl Take {
         let usr = self.usr_scored(end);
         let mut ext = vec![f32::NAN; TOL];
         ext.extend(self.target(0, end + TOL as i64));
-        let err_line = tolerant_error(&ext, &usr, TOL, 50);
+        let err_line = self.level.error(&ext, &usr);
         let mut ext_bar = vec![f32::NAN; TOL];
         ext_bar.extend(self.bar_target(0, end + TOL as i64));
-        let err_bar = tolerant_error(&ext_bar, &usr, TOL, 50);
+        let err_bar = self.level.error(&ext_bar, &usr);
         let err: Vec<f32> = err_line.iter().zip(&err_bar)
             .map(|(l, b)| if !b.is_nan() && (l.is_nan() || b.abs() < l.abs()) { *b } else { *l }).collect();
         let (mut voiced, mut both, mut cr) = (0usize, 0usize, 0f64);
+        let out = self.left_out();
         for i in 0..end as usize {
-            if !r[i].is_nan() {
+            if !r[i].is_nan() && !out.iter().any(|&(a, b)| (a..b).contains(&(i as i64))) {
                 voiced += 1;
                 if !usr[i].is_nan() {
                     both += 1;
-                    cr += credit(err[i]) as f64;
+                    cr += self.level.credit(err[i]) as f64;
                 }
             }
         }
@@ -748,7 +776,8 @@ impl Take {
     pub fn song_event(&self, version: u64) -> Value {
         let mut ev = json!({"type": "song", "version": version, "track": self.track, "lyrics": self.lyrics,
             "fps": 100, "heard": self.heard, "cached": self.song.is_some(), "mode": self.mode.name(),
-            "learned": self.learned_fraction, "song_offset": self.song_offset, "blind": self.blind});
+            "learned": self.learned_fraction, "song_offset": self.song_offset, "blind": self.blind,
+            "level": self.level.name()});
         if let Some(s) = &self.song {
             ev["cache"] = json!(s.midi.iter().map(|v| if v.is_nan() { None } else { Some((v * 100.0).round() / 100.0) }).collect::<Vec<_>>());
             ev["cache_bars"] = json!(self.bars.iter().map(|b| [b.0, b.1, b.2 as i64]).collect::<Vec<_>>());
@@ -1089,6 +1118,25 @@ mod tests {
     }
 
     #[test]
+    fn the_music_a_signature_is_made_from_is_at_the_take_s_place_now() {
+        // skipped at 10 s, the place then 0.93 s earlier: the music before the jump lands where it was heard
+        let mut take = take_of(5000);
+        take.ref16 = (0..2000 * HOP).map(|i| i as f32).collect();
+        take.song_offset = Some(0.06);
+        take.end_stretch(1000);
+        take.song_offset = Some(-0.87);
+        let m = take.music_placed();
+        assert_eq!(m.len(), take.ref16.len());
+        // song time s is at sample (s - song_offset) * SR in the signature's audio, before the jump and after it
+        let at = |s: f64| ((s + 0.87) * SR as f64).round() as usize;
+        let heard = |s: f64| take.ref16[((s - 0.06) * SR as f64).round() as usize];
+        assert_eq!(m[at(5.0)], heard(5.0), "before the jump: at the place it was heard");
+        assert_eq!(m[at(15.0)], take.ref16[((15.0 + 0.87) * SR as f64).round() as usize], "after it: as it was");
+        let plain = take_of(3000);
+        assert!(plain.music_placed().is_empty() && plain.ref16.is_empty());
+    }
+
+    #[test]
     fn a_singer_drowned_by_the_speakers_is_told() {
         // over speakers, 60 s of the singer's part with a confident voice in the mic all through: the song's leak
         // (-30 dB) with you under it, never louder (drowned), or you over it half the time (heard)
@@ -1135,6 +1183,33 @@ mod tests {
         assert!(take.usr_scored(1000).iter().all(|v| v.is_nan()), "10 s in, 12 dB over the leak isn't enough yet");
         take.mic_db = (0..n).map(|k| if k % 2 == 0 { -28.0 } else { -40.0 }).collect();
         assert!(take.usr_scored(n as i64).iter().filter(|v| !v.is_nan()).count() > n / 3, "after 30 s it is");
+    }
+
+    #[test]
+    fn a_stretch_left_out_isnt_scored_live() {
+        // sung right for 30 s, then 30 s on other notes (the learned notes there a backing vocal's)
+        let n = 6000;
+        let song = Learned { midi: vec![60.0; n + 100], covered: vec![true; n + 100], onset: vec![[0.0; dsp::FP_BANDS]; n + 100] };
+        let track = Track { id: "t".into(), name: "t".into(), duration: (n + 100) as f64 * FRAME_S, ..Default::default() };
+        let mut take = Take::new(track, Some(song), false, 48000.0, 3);
+        take.song_offset = Some(0.0);
+        take.aligned = true;
+        take.set_speakers(false);
+        take.lag = 0;
+        take.usr_raw = ((0..n).map(|k| if k < n / 2 { 60.0 } else { 63.0 }).collect(), vec![0.9; n]);
+        take.usr_done = n;
+        take.quiet_at = vec![false; n];
+        take.mic_db = (0..n).map(|k| if k % 2 == 0 { -20.0 } else { -40.0 }).collect();
+        let all = take.running().unwrap();
+        assert!(all < 60.0, "{all}");
+        // the second half left out: as if it were all the first
+        take.leave_out(vec![(30.0, 61.0)]);
+        assert_eq!(take.left_out(), vec![(3000, 6100)]);
+        let kept = take.running().unwrap();
+        assert!(kept > 95.0, "{kept}");
+        // the take 10 s into the song: the stretch lands 10 s earlier in it
+        take.song_offset = Some(10.0);
+        assert_eq!(take.left_out(), vec![(2000, 5100)]);
     }
 
     #[test]

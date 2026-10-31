@@ -133,7 +133,12 @@ pub fn set_enabled(on: bool) {
 pub fn set_data_dir(dir: &Path) {
     ENABLED.store(crate::settings::get("youtube"), std::sync::atomic::Ordering::Relaxed);
     let file = dir.join("youtube-names.json");
-    let names = std::fs::read(&file).ok().and_then(|b| serde_json::from_slice(&b).ok()).unwrap_or_default();
+    // there but unreadable: renaming is off this run, so the names you gave aren't written over with one
+    let Some(names) = crate::store::read_kept(&file) else {
+        crate::store::log_unreadable(&file);
+        *NAMES.lock().unwrap() = None;
+        return;
+    };
     *NAMES.lock().unwrap() = Some((file, names));
 }
 
@@ -150,7 +155,7 @@ pub fn rename(id: &str, artist: &str, name: &str) -> Result<(), String> {
         return Err("a title is needed".into());
     }
     let mut guard = NAMES.lock().unwrap();
-    let (file, names) = guard.as_mut().ok_or("OnKey's data folder isn't ready")?;
+    let (file, names) = guard.as_mut().ok_or("OnKey couldn't read the names you gave videos, so it won't change them now")?;
     names.insert(video.to_string(), (artist.to_string(), name.to_string()));
     crate::store::write_atomic(file, &serde_json::to_vec_pretty(names).unwrap()).map_err(|e| e.to_string())
 }
@@ -213,32 +218,87 @@ struct Page {
 }
 
 /// Every YouTube video tab in a browser, read through JavaScript. Err: the browser refuses JavaScript.
+///
+/// Each tab gets `TAB_WAIT` to answer: a tab the browser has put to sleep can leave JavaScript unanswered for good
+/// (live, 29 Oct: one of three YouTube tabs in Chrome never answered, so the whole ask took 10 s and Chrome was
+/// called "not answering" every minute). Such a tab is left out for `TAB_REST`, and the others are still read.
 fn read_tabs(b: Browser) -> Result<Vec<Page>, ()> {
+    let skip = asleep_now();
     let script = format!(r#"tell application id "{bundle}"
+        set skip to {{{skip}}}
         set out to ""
         repeat with w in windows
             repeat with t in tabs of w
                 set u to URL of t
-                if u contains "youtube.com/watch" then
+                if ({watch}) and skip does not contain u then
                     try
-                        set out to out & ({js}) & linefeed
-                    on error e
-                        if e contains "JavaScript" then return "NOJS"
+                        with timeout of {wait} seconds
+                            set out to out & ({js}) & linefeed
+                        end timeout
+                    on error e number n
+                        if n is -1712 then
+                            set out to out & "ASLEEP " & u & linefeed
+                        else if e contains "JavaScript" then
+                            return "NOJS"
+                        end if
                     end try
                 end if
             end repeat
         end repeat
         return out
-    end tell"#, bundle = b.app_bundle(), js = b.run_js(PAGE_JS));
+    end tell"#, bundle = b.app_bundle(), js = b.run_js(PAGE_JS), wait = TAB_WAIT, watch = WATCH_TAB,
+        skip = skip.iter().map(|u| format!("\"{}\"", u.replace('\\', "").replace('"', ""))).collect::<Vec<_>>().join(", "));
     let out = osa(&script).unwrap_or_default();
     if out == "NOJS" {
         return Err(());
     }
-    Ok(out.lines().filter_map(|l| serde_json::from_str::<Page>(l).ok()).collect())
+    let (pages, asleep) = parse_tabs(&out);
+    for u in asleep {
+        crate::engine::log(&format!("{}: a YouTube tab didn't answer in {TAB_WAIT} s (asleep?): left out for {} s", b.name(), TAB_REST.as_secs()));
+        ASLEEP.lock().unwrap().push((u, std::time::Instant::now() + TAB_REST));
+    }
+    Ok(pages)
 }
 
-/// The video id in a watch address ("…/watch?v=ID&…").
+/// How long one tab has to answer (in seconds; the page's JavaScript takes milliseconds).
+const TAB_WAIT: u32 = 1;
+/// How long a tab that didn't answer is left out. Short, so a sleeping tab you wake and play is followed soon.
+const TAB_REST: std::time::Duration = std::time::Duration::from_secs(20);
+
+/// Tabs (by address) that didn't answer, and until when they're left out.
+static ASLEEP: Mutex<Vec<(String, std::time::Instant)>> = Mutex::new(Vec::new());
+
+fn asleep_now() -> Vec<String> {
+    let mut a = ASLEEP.lock().unwrap();
+    a.retain(|(_, until)| *until > std::time::Instant::now());
+    a.iter().map(|(u, _)| u.clone()).collect()
+}
+
+/// The pages read, and the addresses of tabs that didn't answer in time ("ASLEEP <address>" lines).
+fn parse_tabs(out: &str) -> (Vec<Page>, Vec<String>) {
+    let mut pages = Vec::new();
+    let mut asleep = Vec::new();
+    for l in out.lines() {
+        if let Some(u) = l.strip_prefix("ASLEEP ") {
+            asleep.push(u.to_string());
+        } else if let Ok(p) = serde_json::from_str::<Page>(l) {
+            pages.push(p);
+        }
+    }
+    (pages, asleep)
+}
+
+/// YouTube's own watch pages (AppleScript, on a tab's address `u`): a page elsewhere with "youtube.com/watch" in its
+/// address isn't one (it could name the song, and its cover image would be loaded in OnKey's window).
+const WATCH_TAB: &str = r#"u starts with "https://www.youtube.com/watch?" or u starts with "https://music.youtube.com/watch?" or u starts with "https://m.youtube.com/watch?""#;
+
+/// The video id in a YouTube watch address ("https://www.youtube.com/watch?v=ID&…"); None for any other site's.
 fn video_id(url: &str) -> Option<String> {
+    let rest = url.strip_prefix("https://")?;
+    let host = &rest[..rest.find(['/', '?', '#']).unwrap_or(rest.len())];
+    if !["www.youtube.com", "music.youtube.com", "m.youtube.com"].contains(&host) || !rest[host.len()..].starts_with("/watch?") {
+        return None;
+    }
     let q = url.split_once('?')?.1;
     let v = q.split('&').find_map(|kv| kv.strip_prefix("v="))?;
     let v: String = v.chars().take_while(|c| c.is_ascii_alphanumeric() || *c == '-' || *c == '_').collect();
@@ -276,8 +336,12 @@ pub fn state() -> Option<State> {
                 continue;
             }
         };
-        // the tab that's playing (not an advert), else one that's paused
-        let Some(page) = tabs.iter().find(|p| !p.p && !p.ad).or_else(|| tabs.first()) else { continue };
+        // the tab that's playing (not an advert), else one that's paused: the video followed when it's there (a
+        // pause of it isn't another video paused, which ended its take a minute later)
+        let video = FOLLOWED.lock().unwrap().video.clone();
+        let Some(page) = tabs.iter().find(|p| !p.p && !p.ad)
+            .or_else(|| tabs.iter().find(|p| video.is_some() && video_id(&p.u) == video))
+            .or_else(|| tabs.first()) else { continue };
         let Some(s) = to_state(b, page) else { continue };
         if s.playing {
             let mut f = FOLLOWED.lock().unwrap();
@@ -314,7 +378,8 @@ fn to_state(_b: Browser, p: &Page) -> Option<State> {
         f.last.insert(vid.clone(), (p.t, d));
         (p.t, d)
     };
-    let art = if p.art.starts_with("https://") { p.art.clone() } else { thumbnail(&vid) };
+    // (only YouTube's own image host, as listed in the README's Privacy: an address a page gives could be anyone's)
+    let art = if p.art.starts_with("https://i.ytimg.com/") { p.art.clone() } else { thumbnail(&vid) };
     Some(State {
         playing: !p.p && !p.ad,
         track: Track { id: format!("{ID_PREFIX}{vid}"), name, artist, album: p.al.clone(), duration, art: Some(art), link: None },
@@ -335,7 +400,8 @@ fn in_tab(video: &str, js: &str) -> Option<String> {
     let script = format!(r#"tell application id "{bundle}"
         repeat with w in windows
             repeat with t in tabs of w
-                if URL of t contains "v={video}" then
+                set u to URL of t
+                if ({watch}) and u contains "v={video}" then
                     set r to ({run})
                     try
                         return r as string
@@ -346,7 +412,7 @@ fn in_tab(video: &str, js: &str) -> Option<String> {
             end repeat
         end repeat
         return "NOTAB"
-    end tell"#, bundle = b.app_bundle(), run = b.run_js(js));
+    end tell"#, bundle = b.app_bundle(), run = b.run_js(js), watch = WATCH_TAB);
     osa(&script).filter(|r| r != "NOTAB")
 }
 
@@ -394,14 +460,15 @@ pub fn play_track(id: &str) {
     let reused = followed.is_some_and(|b| osa(&format!(r#"tell application id "{}"
         repeat with w in windows
             repeat with t in tabs of w
-                if URL of t contains "youtube.com/watch" then
+                set u to URL of t
+                if {watch} then
                     set URL of t to "{url}"
                     return "ok"
                 end if
             end repeat
         end repeat
         return ""
-    end tell"#, b.app_bundle())).as_deref() == Some("ok"));
+    end tell"#, b.app_bundle(), watch = WATCH_TAB)).as_deref() == Some("ok"));
     if !reused {
         let b = followed.or_else(|| [Browser::Chrome, Browser::Safari].into_iter().find(|b| b.running()));
         let mut cmd = Command::new("open");
@@ -490,6 +557,15 @@ mod tests {
     use super::*;
 
     #[test]
+    fn a_tab_that_didnt_answer_is_named_and_the_others_still_read() {
+        let out = "{\"t\":12.5,\"p\":false,\"u\":\"https://www.youtube.com/watch?v=abc\"}\nASLEEP https://www.youtube.com/watch?v=old\n";
+        let (pages, asleep) = parse_tabs(out);
+        assert_eq!(pages.len(), 1);
+        assert_eq!(pages[0].t, 12.5);
+        assert_eq!(asleep, vec!["https://www.youtube.com/watch?v=old".to_string()]);
+    }
+
+    #[test]
     fn titles() {
         let cases = [
             ("Velvet Harbour - Paper Lanterns (Official Music Video)", "VelvetHarbourVEVO", "Velvet Harbour", "Paper Lanterns"),
@@ -544,5 +620,11 @@ mod tests {
         assert_eq!(video_id("https://music.youtube.com/watch?v=abc-_123&list=RD").as_deref(), Some("abc-_123"));
         assert_eq!(video_id("https://www.youtube.com/watch?list=x&v=Q1w2E3").as_deref(), Some("Q1w2E3"));
         assert_eq!(video_id("https://www.youtube.com/"), None);
+        // another site with YouTube's address in its own: not a video
+        assert_eq!(video_id("https://evil.example/youtube.com/watch?v=abc"), None);
+        assert_eq!(video_id("https://www.youtube.com.evil.example/watch?v=abc"), None);
+        assert_eq!(video_id("https://user@www.youtube.com/watch?v=abc"), None);
+        assert_eq!(video_id("http://www.youtube.com/watch?v=abc"), None);
+        assert_eq!(video_id("https://m.youtube.com/watch?v=abc").as_deref(), Some("abc"));
     }
 }

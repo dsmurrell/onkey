@@ -7,7 +7,18 @@ import { restartToUpdate, useUpdate } from "@/lib/update";
 export default function UpdatePill() {
   const [u, setU] = useUpdate();
   const [hidden, setHidden] = useState(false);
-  if (!u || u.state !== "ready" || hidden) return null;
+  if (!u || hidden) return null;
+  // a download or install that failed: said (it used to vanish), with why in its tooltip; Settings can try again
+  if (u.state === "error" && u.available)
+    return (
+      <div id="update-pill" role="status" title={u.error ? `Why: ${u.error}. Settings → Check now tries again.` : "Settings → Check now tries again."}
+           className="in-[.mini]:hidden fixed bottom-3 left-3 z-40 flex items-center gap-2 rounded-full border border-white/10 bg-black/60 py-1 pl-3 pr-1 text-xs text-ink-200 shadow-lg backdrop-blur animate-rise">
+        <span className="h-1.5 w-1.5 rounded-full bg-off" />
+        <span>Couldn’t update to OnKey {u.available}</span>
+        <button onClick={() => setHidden(true)} aria-label="Hide" className="rounded-full px-1.5 py-1 text-ink-400 transition hover:text-white">×</button>
+      </div>
+    );
+  if (u.state !== "ready") return null;
   const restart = async () => setU(await restartToUpdate());
   return (
     <div id="update-pill" role="status"

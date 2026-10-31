@@ -19,10 +19,23 @@ use crate::take::{Mode, Take};
 
 /// Shorter takes (skipped tracks) aren't scored.
 const MIN_TAKE_S: f64 = 20.0;
+/// A take paused this long ends and is scored (it can't be known whether the song will be resumed: a resume within
+/// it carries on the same take). The window counts it down, with Finish to score it now (LiveBits PausedFinish).
+const PAUSE_ENDS_S: u64 = 60;
+
+fn now_ms() -> u64 {
+    std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0, |d| d.as_millis() as u64)
+}
 /// listening mode keeps this much of the captured sound (more than the listener's, so a take can begin with all of it)
 const HEARD_S: f64 = 28.0;
 /// listening mode: a song that stops being recognised (not at its end) keeps its take this long, in case it's found again
 const LOST_HOLD_S: u64 = 20;
+/// control mode: the music app gone quiet and saying nothing plays (stopped, or quit) this long ends the take
+const STOPPED_S: u64 = 5;
+/// a jump ahead in the song up to this long is filled with silence in the take; a longer one ends it (s)
+const MAX_FILL_S: f64 = 180.0;
+/// The longest one take runs (see its use): longer than nearly every song, short enough that its audio stays in memory
+const MAX_TAKE_S: f64 = 20.0 * 60.0;
 /// a song's own silence at its very start, kept in its take (listen.rs counts it as the song too)
 const LEAD_SILENCE_S: f64 = 2.0;
 /// with nothing playing, the music apps are looked at this often (ms)
@@ -46,8 +59,20 @@ pub struct Shared {
     /// the track listened back to has been heard playing (until then, another song still playing doesn't end
     /// it: in listening mode you start the song yourself, after clicking)
     pub along_heard: bool,
+    /// Stop was clicked: listening back ends once the music is paused or moves on (until then the song still
+    /// playing isn't a new take: live, one started in the moment before Spotify paused, and was scored "unsung")
+    pub along_stopping: bool,
     /// what the music app is playing: (track id, playing, position s, when that was read)
     pub player_now: Option<(String, bool, f64, Instant)>,
+    /// listening back: the app was told where to play from at this moment (None: not yet), and the song is placed
+    /// from what's read after it (see `Along`)
+    pub along_from: Option<Instant>,
+    /// listening back: where the song is (song s, at the end of the audio captured), placed as a take places it,
+    /// and when that was; None while it isn't playing or not yet placed. Your recording plays there (player_now)
+    pub along_place: Option<(f64, Instant)>,
+    /// the take under way: where the song is (song s, at the end of the audio captured) and when that was; None
+    /// before it's placed (for development tools: player_now's `take`)
+    pub take_place: Option<(f64, Instant)>,
     pub takes: Vec<Value>,
 }
 
@@ -459,6 +484,46 @@ pub fn learning() -> bool {
     PENDING.load(std::sync::atomic::Ordering::SeqCst) > 0
 }
 
+/// "Pause listening" switched (lib.rs `set_listening_paused`), or anything else the window should hear about at
+/// once: the engine's loop, if it's napping (no capture, or paused), goes round now, and sends its status.
+static WAKE: (Mutex<bool>, std::sync::Condvar) = (Mutex::new(false), std::sync::Condvar::new());
+static STATUS_NOW: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+pub fn wake() {
+    STATUS_NOW.store(true, std::sync::atomic::Ordering::SeqCst);
+    *WAKE.0.lock().unwrap() = true;
+    WAKE.1.notify_all();
+}
+
+/// Sleep for `d`, or until `wake`.
+fn nap(d: Duration) {
+    let woken = WAKE.0.lock().unwrap();
+    let (mut woken, _) = WAKE.1.wait_timeout_while(woken, d, |w| !*w).unwrap();
+    *woken = false;
+}
+
+/// What the engine's loop does about "Pause listening", from whether it was paused last time round and is now.
+#[derive(Debug, PartialEq)]
+enum Pause {
+    /// not paused: everything as usual
+    Listen,
+    /// just paused: the take under way ends (scored as usual), the capture stops, the song followed is forgotten
+    Stop,
+    /// still paused: nothing captured, named, recognised or learned; the loop naps
+    Idle,
+    /// just resumed: everything starts again as usual (capture once music plays)
+    Resume,
+}
+
+fn pause_step(was: bool, now: bool) -> Pause {
+    match (was, now) {
+        (false, false) => Pause::Listen,
+        (false, true) => Pause::Stop,
+        (true, true) => Pause::Idle,
+        (true, false) => Pause::Resume,
+    }
+}
+
 pub fn quitting() -> bool {
     QUITTING.load(std::sync::atomic::Ordering::SeqCst)
 }
@@ -515,14 +580,57 @@ pub fn spawn(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners:
         std::thread::Builder::new().name("onkey-score".into()).spawn(move || {
             for done in rx {
                 let (app, shared, store) = (app.clone(), shared.clone(), store.clone());
-                std::thread::spawn(move || {
-                    score_take(&app, &shared, &store, done);
+                let entry = done.entry;
+                // a panic scoring it (or a thread that couldn't start) still counts the take done, so a quit or the
+                // updater doesn't wait on it for good, and it shows as "couldn't score" rather than "scoring" forever
+                let failed = move |app: &AppHandle, shared: &Arc<Mutex<Shared>>| {
+                    if let Some(e) = shared.lock().unwrap_or_else(|e| e.into_inner()).takes.get_mut(entry) {
+                        e["status"] = json!("failed");
+                    }
+                    takes_changed(app, shared);
                     PENDING.fetch_sub(1, std::sync::atomic::Ordering::SeqCst);
+                };
+                let (app2, shared2) = (app.clone(), shared.clone());
+                let started = std::thread::Builder::new().name("onkey-scoring".into()).spawn(move || {
+                    match std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| score_take(&app, &shared, &store, done))) {
+                        Ok(()) => { PENDING.fetch_sub(1, std::sync::atomic::Ordering::SeqCst); }
+                        Err(p) => {
+                            let why = p.downcast_ref::<&str>().map(|s| s.to_string()).or_else(|| p.downcast_ref::<String>().cloned()).unwrap_or_default();
+                            log(&format!("scoring a take failed (a panic: {why})"));
+                            failed(&app, &shared);
+                        }
+                    }
                 });
+                if let Err(e) = started {
+                    log(&format!("scoring a take couldn't start: {e}"));
+                    failed(&app2, &shared2);
+                }
             }
         }).unwrap();
     }
     std::thread::Builder::new().name("onkey-engine".into()).spawn(move || run(app, shared, store, learners, tx)).unwrap();
+}
+
+/// A take of `took` is over though nothing is playing, by the app's paused state `s`: `took` played on to within
+/// a few seconds of its end (`last_pos`) and the app now shows it back at its start, or shows another track.
+fn came_to_end(took: &source::Track, s: &source::State, last_pos: f64) -> bool {
+    let near_end = took.duration > 0.0 && last_pos >= took.duration - 5.0;
+    near_end && (s.track.id != took.id || s.position < 1.0)
+}
+
+/// Songs forgotten from the Library, and the newest take then (TAKE_VERSION): a play of one already under way
+/// is still scored and kept in History, but doesn't learn the song back or save its bars (`forgotten_during`).
+static FORGOTTEN: Mutex<Vec<(String, u64)>> = Mutex::new(Vec::new());
+
+/// The Library forgot song `id` (lib.rs forget_song).
+pub fn forgotten(id: &str) {
+    let v = TAKE_VERSION.load(std::sync::atomic::Ordering::Relaxed);
+    FORGOTTEN.lock().unwrap_or_else(|e| e.into_inner()).push((id.to_string(), v));
+}
+
+/// Was any of `ids` forgotten after take `version` began?
+fn forgotten_during(ids: &[&str], version: u64) -> bool {
+    FORGOTTEN.lock().unwrap_or_else(|e| e.into_inner()).iter().any(|(id, v)| version <= *v && ids.contains(&id.as_str()))
 }
 
 fn takes_changed(app: &AppHandle, shared: &Arc<Mutex<Shared>>) {
@@ -533,12 +641,17 @@ fn takes_changed(app: &AppHandle, shared: &Arc<Mutex<Shared>>) {
 /// Stop learning a song (the Library's "Stop learning and delete"): the play of it under way ends with nothing
 /// kept, a learn of it waiting or under way stops, what was learned of it before is forgotten, and it isn't
 /// learned again while it plays (a YouTube video: never). See discard.rs.
-pub fn stop_learning(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store, ids: &[String]) {
+/// Err if what was learned couldn't be moved to the Trash (it stays; the learning still stops).
+pub fn stop_learning(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store, ids: &[String]) -> Result<(), String> {
     let version = TAKE_VERSION.load(std::sync::atomic::Ordering::Relaxed);
+    let mut forgot = Ok(());
     for id in ids {
         log(&format!("stopped learning {id} (from the Library)"));
         crate::discard::discard(id, version);
-        store.forget(id);
+        if let Err(e) = store.forget(id) {
+            log(&format!("{id}: {e}"));
+            forgot = Err(e);
+        }
     }
     let mut changed = false;
     for t in shared.lock().unwrap().takes.iter_mut() {
@@ -550,24 +663,50 @@ pub fn stop_learning(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store
     if changed {
         takes_changed(app, shared);
     }
+    forgot
 }
 
 fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: LearnerFactory, done_tx: Sender<Done>) {
-    let mut crepe = Crepe::new().expect("pitch model");
+    // (the pitch model not loading, a damaged install say: said in the window, which may open after this, so said
+    // every second, and the engine does nothing more, stopping as soon as OnKey quits; it used to die silently here,
+    // the window saying "Getting ready…" for good and every quit waiting its full time)
+    let mut crepe = match Crepe::new() {
+        Ok(c) => c,
+        Err(e) => {
+            log(&format!("the pitch model couldn't load: {e}"));
+            crate::models::set_state(json!({"state": "broken", "error": e.to_string()}));
+            while !quitting() {
+                emit(&app, json!({"type": "status", "models": crate::models::state(), "listening": crate::settings::listening(), "listening_paused": crate::settings::listening_paused()}));
+                std::thread::sleep(Duration::from_secs(1));
+            }
+            STOPPED.store(true, std::sync::atomic::Ordering::SeqCst);
+            return;
+        }
+    };
 
     // the music apps are polled on their own thread: AppleScript calls take ~50-100 ms
     let state: Arc<Mutex<Option<(source::State, Instant)>>> = Arc::new(Mutex::new(None));
     {
         let state = state.clone();
         std::thread::spawn(move || loop {
+            // the demo song (demo.rs), while it plays: OnKey's own player says where it is, in every mode
+            let demo = crate::demo::on();
+            // listening paused (and no demo song, which you start yourself): nothing is followed, asked or listened to
+            if crate::settings::listening_paused() && !demo {
+                *state.lock().unwrap() = None;
+                std::thread::sleep(Duration::from_millis(IDLE_POLL_MS));
+                continue;
+            }
             // listening mode: followed by its sound (and asked only if you've allowed control of that app)
-            let listening = crate::settings::listening();
+            let listening = crate::settings::listening() && !demo;
             // (a podcast episode or an ad is never a song: no take)
-            let s = if listening { crate::listen::follow() } else { source::poll() }.filter(|s| source::is_song(&s.track.id));
+            let s = if demo { crate::demo::state() } else if listening { crate::listen::follow() } else { source::poll() }
+                .filter(|s| source::is_song(&s.track.id));
             // (a track stopped from the Library, or a video found not to be a song, isn't followed: no take of it)
             if let Some(s) = &s {
                 crate::discard::now_playing(&s.track.id);
             }
+            crate::discard::note_playing(s.as_ref().filter(|s| s.playing).map(|s| (s.track.id.as_str(), s.track.name.as_str())));
             let s = s.filter(|s| !crate::discard::ignored(&s.track.id));
             // listening is cheap to read (no AppleScript), so it's read often: a pause or a jump shows sooner.
             // With nothing playing, half as often as that or less: each look asks Core Audio (or the music app)
@@ -586,11 +725,17 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
     let mut capture_from = Source::Spotify.bundle();
     let mut cur: Option<Current> = None;
     let mut version = 0u64;
-    let mut last_status = Instant::now() - Duration::from_secs(10);
+    let mut last_status = Instant::now().checked_sub(Duration::from_secs(10)).unwrap_or_else(Instant::now);     // (checked: Windows, just after boot)
     let mut last_pos = 0.0f64;
     let mut paused_since: Option<Instant> = None;
+    // when a paused take will end and be scored (epoch ms), for the window's countdown
+    let mut pause_ends_ms: Option<u64> = None;
     let mut state_changed = Instant::now();
+    // the sound output's device (see where its silence is left out)
+    let mut out_uid = capture::output_uid();
     let mut placed_pending = false;
+    // listening back to a take: where the song is (see `Along`)
+    let mut along: Option<Along> = None;
     let mut block = Vec::new();
     let mut watchdog = capture::Watchdog::default();
     // when the watchdog dropped the capture (a take running on gets the time without it as silence)
@@ -599,7 +744,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
     let mut music_level = capture::MusicLevel::default();
     let mut last_problem = None;
     let mut sim: Option<crate::devtest::SimSinger> = None;
-    let mut skipped_at = Instant::now() - Duration::from_secs(60);
+    let mut skipped_at = Instant::now().checked_sub(Duration::from_secs(60)).unwrap_or_else(Instant::now);
     let mut finished: Option<String> = None;
     let mut lost_since: Option<Instant> = None;
     // the sound while the song under way is thought paused, and which take's (see RESUME_HOLD_S)
@@ -612,6 +757,11 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
     // the capture let go while nothing played (REST_AFTER), and since when nothing has
     let mut rested = false;
     let mut quiet_since: Option<Instant> = None;
+    // "Pause listening" as it was last time round (see `Pause`); paused at launch: as you left it
+    let mut was_paused = crate::settings::listening_paused() && !crate::demo::on();
+    if was_paused {
+        log("listening paused by you (as it was left)");
+    }
     // development builds: the live pitch's latency and cadence (ONKEY_PERF)
     #[allow(clippy::default_constructed_unit_structs)]     // (a unit struct in release builds)
     let mut dot = crate::devtest::DotClock::default();
@@ -684,6 +834,15 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             STOPPED.store(true, std::sync::atomic::Ordering::SeqCst);
             return;
         }
+        // the demo song came to its end (no next song follows it): its take is scored now, and OnKey listens for
+        // your music app again
+        if let Some(t) = crate::demo::ended_take() {
+            if cur.as_ref().is_some_and(|c| c.take.track.id == t.id) {
+                finished = Some(t.id.clone());
+                end_take(cur.take(), &shared, "the demo song came to its end");
+                emit(&app, json!({"type": "phase", "phase": "ended"}));
+            }
+        }
         // singing a learned song, watching it: learning waits (it made the lane stutter on an M2 Air)
         crate::learn::set_singing(cur.as_ref().is_some_and(|c| c.take.mode == Mode::Sing)
             && WINDOW_MOVING.load(std::sync::atomic::Ordering::Relaxed));
@@ -691,16 +850,11 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
         {
             let mut sh = shared.lock().unwrap();
             sh.player_now = st.as_ref().map(|(s, at)| (s.track.id.clone(), s.playing, s.position, *at));
-            // listening back ends when the music moves to another track (once the track was heard)
-            if sh.play_along.as_ref().is_some_and(|p| st.as_ref().is_some_and(|(s, _)| &s.track.id == p)) {
-                sh.along_heard = true;
-            }
-            if sh.along_heard && sh.play_along.as_ref().is_some_and(|p| st.as_ref().is_some_and(|(s, _)| &s.track.id != p)) {
-                sh.play_along = None;
-            }
+            sh.take_place = cur.as_ref().and_then(|c| c.take.song_time()).map(|p| (p, Instant::now()));
+            along_follows(&mut sh, st.as_ref().map(|(s, _)| (s.track.id.as_str(), s.playing)));
         }
 
-        if last_status.elapsed() > Duration::from_secs(3) {
+        if last_status.elapsed() > Duration::from_secs(3) || STATUS_NOW.swap(false, std::sync::atomic::Ordering::SeqCst) {
             last_status = Instant::now();
             // headphones connected or disconnected mid-song (or their timing just checked in Settings): what you
             // hear moves, so the display follows
@@ -736,9 +890,11 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             // (read on its own: a guard taken inside the json! would hold the lock through the slow parts below,
             // the Automation check and browser_unheard's Core Audio queries, and the emit, blocking player_now)
             let echo_cancel = shared.lock().unwrap().echo_cancel;
-            emit(&app, json!({"type": "status", "music_quiet": quiet_music, "mic_device": mic_now.map(|m| m.name), "output_ms": crate::timing::heard_ms(), "output": crate::timing::status(), "echo_cancel": echo_cancel, "youtube": crate::youtube::enabled(), "listening": crate::settings::listening(), "low_power": low_power(), "draw_30": draw_30(),
+            emit(&app, json!({"type": "status", "music_quiet": quiet_music, "mic_device": mic_now.map(|m| m.name), "output_ms": crate::timing::heard_ms(), "output": crate::timing::status(), "echo_cancel": echo_cancel, "youtube": crate::youtube::enabled(), "listening": crate::settings::listening(), "listening_paused": crate::settings::listening_paused(), "low_power": low_power(), "draw_30": draw_30(),
                 "line": status_line.as_ref().map(|(k, t)| json!({"kind": k, "text": t})),
                 "mic": mic, "audio": audio, "automation_denied": source::automation_denied(), "not_answering": source::not_answering(), "models": crate::models::state(),
+                // paused with a take open: when it ends and is scored, unless the song resumes first
+                "pause_ends_ms": pause_ends_ms.filter(|_| cur.is_some()),
                 "player": st.as_ref().map(|(s, _)| json!({"state": if s.playing {"playing"} else {"paused"},
                     "name": s.track.name, "artist": s.track.artist, "app": s.source.name()})),
                 // YouTube is playing in a browser whose page OnKey isn't allowed to read: which setting to turn on
@@ -747,9 +903,50 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                 "browser_sounding": crate::listen::browser_unheard().map(|(browser, works)| json!({"browser": browser, "works": works}))}));
         }
 
+        // "Pause listening" (lib.rs `set_listening_paused`): the take under way ends and is scored as usual, the
+        // capture stops (as after REST_AFTER), and until you resume nothing is captured, named, recognised or
+        // learned, and no take starts; the status above is still sent, so the window shows it. The demo song,
+        // which you start yourself, plays on
+        let paused = crate::settings::listening_paused() && !crate::demo::on();
+        match pause_step(std::mem::replace(&mut was_paused, paused), paused) {
+            Pause::Stop => {
+                log("listening paused by you");
+                if cur.is_some() {
+                    end_take(cur.take(), &shared, "listening paused");
+                    emit(&app, json!({"type": "phase", "phase": "ended"}));
+                }
+                if capture.take().is_some() {
+                    crate::records::note("capture", json!({"what": "stopped", "why": "listening paused"}));
+                }
+                crate::listen::reset();
+                if status_line.take().is_some() {
+                    emit(&app, json!({"type": "listen", "line": null}));
+                }
+                capture_lost = None;
+                rested = true;
+                quiet_since = None;
+                paused_since = None;
+                pause_ends_ms = None;
+                held.clear();
+                held_for = None;
+                heard_audio.clear();
+            }
+            Pause::Resume => log("listening resumed"),
+            Pause::Listen | Pause::Idle => {}
+        }
+        if paused {
+            nap(Duration::from_millis(500));
+            continue;
+        }
+
         // another app started playing: listen to that one instead (the take of the last one ends below, as
         // its track id differs)
-        let listening = crate::settings::listening();
+        // (the demo song, while it plays, is followed as an app OnKey controls, whatever the mode: demo.rs)
+        let listening = crate::settings::listening() && !crate::demo::on();
+        // not listening (the demo song playing): listening's status line ("Still listening", …) goes
+        if !listening && status_line.take().is_some() {
+            emit(&app, json!({"type": "listen", "line": null}));
+        }
         // what to capture: the app being followed; in listening mode, the app playing sound (found without asking it)
         let want: Option<(&'static str, &'static str)> = if listening {
             crate::listen::want_bundle().map(|b| (b, crate::listen::app_name(b)))
@@ -768,7 +965,9 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
         // capture runs once the app has played (the tap only delivers while the app plays audio); stopped while
         // nothing played (resting), it starts again only once the app sounds
         if capture.is_none() {
-            if let Some((bundle, name)) = want.filter(|_| !rested || !listening || crate::listen::sounding_now()) {
+            // (or at once to listen back: its place is found from the music, as a take's is: `Along`)
+            let along = shared.lock().unwrap().play_along.is_some();
+            if let Some((bundle, name)) = want.filter(|_| !rested || !listening || along || crate::listen::sounding_now()) {
                 match Capture::start(bundle) {
                     Ok(c) => {
                         crate::records::note("capture", json!({"what": "started", "app": bundle, "rate": c.rate, "mic": !c.mic_uid.is_empty(),
@@ -784,7 +983,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                             } else if let Some(c) = cur.as_mut() {
                                 c.take.gap(gap);
                                 if let Some(l) = &c.learner {
-                                    l.push(vec![0.0; (gap * c.take.rate) as usize * 2]);
+                                    l.push_silence(gap, c.take.rate);
                                 }
                                 log(&format!("{}: {:.2} s without capture kept as silence", c.take.track.name, gap));
                             }
@@ -818,7 +1017,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                 }
             }
             if capture.is_none() {
-                std::thread::sleep(Duration::from_millis(500));
+                nap(Duration::from_millis(500));
                 continue;
             }
         }
@@ -826,9 +1025,13 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
 
         // finish now: score this play, and don't start another of the same track until it changes or restarts
         if std::mem::take(&mut shared.lock().unwrap().finish) {
-            if let (Some(c), Some((s, _))) = (cur.take(), &st) {
+            // (also when the last poll found nothing, e.g. the song just ended or is briefly lost: the take ends
+            // where it was last heard rather than being dropped unscored)
+            if let Some(c) = cur.take() {
                 finished = Some(c.take.track.id.clone());
-                last_pos = s.position;
+                if let Some((s, _)) = &st {
+                    last_pos = s.position;
+                }
                 log(&format!("finished {} early", c.take.track.name));
                 end_take(Some(c), &shared, "finished early");
                 emit(&app, json!({"type": "phase", "phase": "ended"}));
@@ -865,9 +1068,17 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                     }
                 }
                 paused_since = None;
+                pause_ends_ms = None;
             } else if paused_since.is_none() {
                 paused_since = Some(Instant::now());
+                pause_ends_ms = Some(now_ms() + PAUSE_ENDS_S * 1000);
                 state_changed = Instant::now();
+            }
+            // the song came to its end and the app stopped there: back at its start, paused (Spotify with nothing
+            // queued), or another track paused (it moved on, then stopped). Scored now, not after a minute's pause
+            if !s.playing && cur.as_ref().is_some_and(|c| came_to_end(&c.take.track, s, last_pos)) {
+                end_take(cur.take(), &shared, "the song came to its end");
+                emit(&app, json!({"type": "phase", "phase": "ended"}));
             }
             if new_song && s.playing {
                 // a first play just started turns out to be a song learned here, now named as it is (its app's id
@@ -900,7 +1111,14 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                 // what you hear is this far behind what's captured: Core Audio's figure, with your timing check of
                 // the device when there's one (timing.rs); the bleed guard goes by the device, as before
                 let (heard, reported) = crate::timing::heard_frames();
-                let mut take = Take::new(s.track.clone(), store.load_song(&s.track.id), blind, rate, heard);
+                // "Learn again" asked for: learned from scratch, as a first play is (store::learning_again)
+                let again = store.learning_again(&s.track.id);
+                if again {
+                    log(&format!("{}: learning it again (asked for), from scratch", s.track.name));
+                }
+                let mut take = Take::new(s.track.clone(), if again { None } else { store.load_song(&s.track.id) }, blind, rate, heard);
+                // the song's stretches marked "Not the melody" on a take's page: left out of the score live too
+                take.leave_out(store.not_melody(&s.track.id));
                 if heard != reported {
                     take.set_speakers(reported < 10);
                 }
@@ -940,8 +1158,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                 // position when it says, else listening's clock. The song was named some seconds after it started;
                 // the sound since its start was kept, and the take (and its learner) begin with it
                 // (the music app's position runs ahead of what's heard; listening's doesn't)
-                let app_lead = if crate::listen::from_app() { player_lead(s.source) } else { 0.0 };
-                let p = crate::listen::position(&s.track.id, s.position - app_lead);
+                let (p, at) = first_place(listening, s);
                 let lead = match carry {
                     Some(had) => had,
                     None if listening => p.lead,
@@ -955,7 +1172,6 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                     }
                     take.push(&back);
                 }
-                let at = if listening && !p.exact { p.pos } else { s.position - player_lead(s.source) };
                 take.place(at);
                 // the music app said where: the notes show at once, but it's only a first guess that the music's own
                 // fingerprint moves (where the song is comes from the music, one way for every source)
@@ -1057,11 +1273,23 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                     });
                 }
             }
-            if paused_since.is_some_and(|p| p.elapsed() > Duration::from_secs(60)) && cur.is_some() {
+            if paused_since.is_some_and(|p| p.elapsed() > Duration::from_secs(PAUSE_ENDS_S)) && cur.is_some() {
                 end_take(cur.take(), &shared, "paused for a minute");
+                // (the window shows it ended, as every other end does: else History's card for the play under way and
+                // the Sing page kept showing it, paused, after it was scored)
+                emit(&app, json!({"type": "phase", "phase": "ended"}));
             }
         }
 
+        // a take is at most MAX_TAKE_S long: a live stream or an hours-long mix is one "track" that never changes,
+        // and its take (and learner) would hold ~0.5 MB of audio a second until the Mac swapped. It ends there, as
+        // "finish" does: no new take of that track until it changes or restarts
+        if let Some(c) = cur.take_if(|c| c.take.seconds() > MAX_TAKE_S) {
+            finished = Some(c.take.track.id.clone());
+            log(&format!("{} has played for {} minutes: its take ends there", c.take.track.name, MAX_TAKE_S / 60.0));
+            end_take(Some(c), &shared, "it played for 20 minutes");
+            emit(&app, json!({"type": "phase", "phase": "ended"}));
+        }
         // the song playing was stopped from the Library (discard.rs): its take ends here, nothing kept
         if cur.as_ref().is_some_and(|c| crate::discard::dropped(&[c.take.track.id.as_str()], c.version)) {
             end_take(cur.take(), &shared, "stopped from the Library");
@@ -1173,9 +1401,12 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             // (a take of what's playing comes first: when the music app itself says what plays, the listener may
             // still be naming it, and "Couldn't name this song" over a song being learned was wrong)
             let following = cur.as_ref().filter(|c| st.as_ref().is_some_and(|(s, _)| s.track.id == c.take.track.id));
+            let stopped = crate::discard::playing_ignored();
             let line = match following {
                 Some(c) if c.take.mode == Mode::Learn => Some(("learning", "Learning: sing along, it’s scored from the next play".to_string())),     // the title is right above
                 Some(_) => None,
+                // a song you stopped learning still playing: not "finding the next song"
+                None if stopped.is_some() => stopped.map(|n| ("stopped", format!("Not learning {n}"))),
                 None if crate::listen::not_song() => Some(("podcast", "Podcast playing: OnKey sings along to music".to_string())),
                 None => crate::listen::status_line(),
             };
@@ -1184,12 +1415,34 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                 emit(&app, json!({"type": "listen", "line": line.as_ref().map(|(k, t)| json!({"kind": k, "text": t}))}));
                 status_line = line;
             }
+        } else if st.is_none() && cur.is_some() && !tap_heard {
+            // control mode: the music app stopped or quit mid-song (Apple Music at the end of its queue says "stopped",
+            // Spotify quit): no player and no sound for STOPPED_S, the song came to its end (a single missed poll is
+            // back within half a second)
+            if lost_since.get_or_insert_with(Instant::now).elapsed() > Duration::from_secs(STOPPED_S) {
+                end_take(cur.take(), &shared, "the music app stopped");
+                emit(&app, json!({"type": "phase", "phase": "ended"}));
+            }
+        } else if !listening {
+            lost_since = None;
         }
         // while the music is paused (and just around pausing and resuming, as its state is read every 0.4 s), the
         // tap delivers exact digital silence: leave those 10 ms pieces out of the take entirely
         // (for 3 s after a change: a browser may rebuffer for a couple of seconds after resuming)
         // (not a song's own silence in its first seconds: listening counts it as the song, and the music app's
         // position runs on through it; dropped, it left a song OnKey started 0.45 s behind until re-placed)
+        // the sound output switched (headphones connected or gone): the music app goes quiet while it moves over,
+        // and the tap delivers exact silence that isn't the song (27 Oct: 1.26 s of it learned into Take On Me,
+        // which then ran 1.27 s off from 2:01 on every play): left out, as around a pause
+        let out_now = capture::output_uid();
+        if out_now != out_uid {
+            if cur.is_some() {
+                // (by name, as the mic is, so a report takes it out; a Bluetooth device's id is its hardware address)
+                log(&format!("output switched (now '{}'): its silence is left out, as around a pause", capture::output_name()));
+            }
+            out_uid = out_now;
+            state_changed = Instant::now();
+        }
         let lead_silence = listening && paused_since.is_none()
             && cur.as_ref().is_some_and(|c| c.take.song_time().is_some_and(|t| t < LEAD_SILENCE_S));
         let around_pause = (paused_since.is_some() || state_changed.elapsed() < Duration::from_millis(3000)) && !lead_silence;
@@ -1202,6 +1455,8 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             }
             block = kept;
         }
+        follow_along(&mut along, &shared, st.as_ref(), listening, &store, rate, &block);
+        let mut jumped_far: Option<f64> = None;
         if let Some(c) = cur.as_mut() {
             c.take.music_quiet = music_level.quiet();
             // you dragged the app's progress bar forward: the time skipped becomes silence in the take. In listening
@@ -1211,8 +1466,13 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                 let polled = s.position + at.elapsed().as_secs_f64();
                 let p = crate::listen::position(&s.track.id, polled - if crate::listen::from_app() { player_lead(s.source) } else { 0.0 });
                 let actual = if listening { p.pos } else { polled };
-                if s.playing && s.track.id == c.take.track.id && !placed_pending && at.elapsed() < Duration::from_millis(300)
-                    && skipped_at.elapsed() > Duration::from_millis(2500) && actual - now > 3.0 {
+                let ahead = s.playing && s.track.id == c.take.track.id && !placed_pending && at.elapsed() < Duration::from_millis(300)
+                    && skipped_at.elapsed() > Duration::from_millis(2500) && actual - now > 3.0;
+                // (moved minutes ahead, in an hours-long track: not filled with silence, it ends the take, as a long
+                // capture gap does, and the next starts where the song is)
+                if ahead && actual - now > MAX_FILL_S {
+                    jumped_far = Some(actual - now);
+                } else if ahead {
                     // (the music app says it moved on: listening goes there too, and none of the sound before is the new place's)
                     if listening && p.exact {
                         crate::listen::app_moved(actual);
@@ -1225,7 +1485,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                     if silent > 0.0 {
                         c.take.moved_ahead(silent);
                         if let Some(l) = &c.learner {
-                            l.push(vec![0.0; (silent * c.take.rate) as usize * 2]);
+                            l.push_silence(silent, c.take.rate);
                         }
                     }
                     if frames > 0 {
@@ -1253,7 +1513,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             if placed_pending && c.take.seconds() > 1.0 {
                 if let Some((s, at)) = &st {
                     if s.track.id == c.take.track.id && s.playing && at.elapsed() < Duration::from_millis(300) {
-                        c.take.place(s.position + at.elapsed().as_secs_f64() - if listening && !crate::listen::from_app() { 0.0 } else { player_lead(s.source) });
+                        c.take.place(app_place(listening, s, *at));
                         placed_pending = false;
                     }
                 }
@@ -1267,7 +1527,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                     app.seek(target);
                     c.take.skip(target - now);
                     if let Some(l) = &c.learner {
-                        l.push(vec![0.0; ((target - now) * c.take.rate) as usize * 2]);
+                        l.push_silence(target - now, c.take.rate);
                     }
                     skipped_at = Instant::now();
                     crate::records::note_for(c.version, "placement", json!({"what": "skip to singing", "by_s": target - now, "to_s": target}));
@@ -1436,6 +1696,10 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                     emit(&app, crate::viz::event(c.version, f0, &frames));
                 }
             }
+        }
+
+        if let Some(by) = jumped_far {
+            end_take(cur.take(), &shared, &format!("the song moved {by:.0} s ahead"));
         }
 
         // watchdog: the Mac woke, or the tap dead while the app plays (capture::Watchdog): restart it
@@ -1659,10 +1923,107 @@ fn resumed_tail(held: &[f32]) -> Vec<f32> {
     pieces[pieces.len() - sound..].concat()
 }
 
+/// Listening back: the song's place, from the audio just captured (`block`, the same as a take gets), published for
+/// player_now. Started once the app plays the track after it was told where to (`along_from`), and afresh when the
+/// song moves more than 3 s from its place (a seek, or a drag in the app), as a take restarts or moves ahead.
+fn follow_along(along: &mut Option<Along>, shared: &Arc<Mutex<Shared>>, st: Option<&(source::State, Instant)>, listening: bool,
+                store: &Store, rate: f64, block: &[f32]) {
+    let want = {
+        let sh = shared.lock().unwrap();
+        sh.play_along.clone().zip(sh.along_from)
+    };
+    let st = st.filter(|(s, _)| want.as_ref().is_some_and(|(id, _)| *id == s.track.id));
+    let (Some((s, read)), Some((_, from))) = (st, want) else {
+        *along = None;
+        shared.lock().unwrap().along_place = None;
+        return;
+    };
+    if !s.playing {
+        if let Some(a) = along.as_mut() {
+            a.paused = true;
+        }
+        shared.lock().unwrap().along_place = None;
+        return;
+    }
+    let fresh = read.elapsed() < Duration::from_millis(300);
+    let moved = along.as_ref().and_then(|a| a.take.song_time()).is_some_and(|now| fresh && (app_place(listening, s, *read) - now).abs() > 3.0);
+    if *read > from && (along.as_ref().map_or(true, |a| a.from != from) || moved) {
+        *along = Some(Along::start(listening, s, store, rate, from));
+    }
+    let Some(a) = along.as_mut() else { return };
+    if std::mem::take(&mut a.paused) {
+        a.take.resumed();
+    }
+    a.take.push(block);
+    if a.pending && a.take.seconds() > 1.0 && fresh {
+        a.take.place(app_place(listening, s, *read));
+        a.pending = false;
+    }
+    a.take.step_place();
+    shared.lock().unwrap().along_place = a.take.song_time().map(|p| (p, Instant::now()));
+}
+
+/// Listening back, as the music app's state comes in (track id, playing): heard once the app plays the track, over
+/// when it moves to another track (once the track was heard), and after Stop once the music is paused or gone.
+pub fn along_follows(sh: &mut Shared, st: Option<(&str, bool)>) {
+    let Some(p) = sh.play_along.clone() else {
+        sh.along_stopping = false;
+        return;
+    };
+    if st.is_some_and(|(id, _)| id == p) {
+        sh.along_heard = true;
+    }
+    let other = st.is_some_and(|(id, _)| id != p);
+    let stopped = sh.along_stopping && st.map_or(true, |(id, playing)| id != p || !playing);
+    if (sh.along_heard && other) || stopped {
+        sh.play_along = None;
+        sh.along_stopping = false;
+    }
+}
+
 /// How far ahead of the sound a music app's own reported position is (s), when OnKey follows the app (not
 /// listening mode, whose clock is the sound itself). Spotify's runs ahead: on 6 first plays timed by it, the
 /// lyrics showed 0.39-0.88 s before the singer (median 0.67 s, of which 0.15 s is the window's deliberate lead);
 /// allowing 0.45 s leaves them a little early (median 0.23 s), not late.
+/// Where a song just started is, to place a take from (and listening back's `Along`): in listening mode listening's
+/// place (the music app's own position when it says, less its lead), else the app's position less its lead. Then
+/// the music's own fingerprint places it (Take::step).
+fn first_place(listening: bool, s: &source::State) -> (crate::listen::Position, f64) {
+    let app_lead = if crate::listen::from_app() { player_lead(s.source) } else { 0.0 };
+    let p = crate::listen::position(&s.track.id, s.position - app_lead);
+    let at = if listening && !p.exact { p.pos } else { s.position - player_lead(s.source) };
+    (p, at)
+}
+
+/// The music app's position now (read at `read`), as the song's place: a take's better first placement, once it has
+/// a second of audio (in listening mode without the app's position, listening's clock, which has no lead).
+fn app_place(listening: bool, s: &source::State, read: Instant) -> f64 {
+    s.position + read.elapsed().as_secs_f64() - if listening && !crate::listen::from_app() { 0.0 } else { player_lead(s.source) }
+}
+
+/// Listening back to a take ("Play with the song"): the song's place, found exactly as a take finds it. A take of it
+/// that's never scored or kept: placed first from the app (`first_place`, `app_place` after a second), then by the
+/// music's fingerprint as it plays (Take::step_place), started afresh when the song moves.
+struct Along {
+    take: Take,
+    /// the app's position is to be read again once there's a second of audio (as `placed_pending` for a take)
+    pending: bool,
+    /// the moment the app was told where to play from that this place started after (lib.rs play_along)
+    from: Instant,
+    paused: bool,
+}
+
+impl Along {
+    fn start(listening: bool, s: &source::State, store: &Store, rate: f64, from: Instant) -> Along {
+        let (p, at) = first_place(listening, s);
+        let mut take = Take::new(s.track.clone(), store.load_song(&s.track.id), true, rate, crate::timing::heard_frames().0);
+        take.set_echo_cancel(false);     // (only its place is wanted: the mic isn't listened to)
+        take.place(at);
+        log(&format!("play with the song: {} placed from {at:.2} s{}", s.track.name, if p.heard { " (listening's clock)" } else { "" }));
+        Along { take, pending: !listening || !p.heard, from, paused: false }
+    }
+}
+
 fn player_lead(source: Source) -> f64 {
     // (not learned per output: the music's own fingerprint places each take, from this as a first guess; a learned
     // lead swung between -0.4 and 1.5 s live and started songs further off)
@@ -1687,6 +2048,8 @@ fn score_take(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store, done:
     let played_id = take.track.id.clone();
     let watch = learner.as_ref().map(|l| crate::discard::watch(vec![played_id.clone()], l.stop_flag(), version));
     let is_dropped = |id: &str| crate::discard::dropped(&[played_id.as_str(), id], version);
+    // forgotten from the Library while this play was under way: scored, but the song isn't made again from it
+    let forgot = |id: &str| forgotten_during(&[played_id.as_str(), id], version);
     let update = |fields: Value| {
         if let Some(e) = shared.lock().unwrap().takes.get_mut(entry) {
             for (k, v) in fields.as_object().unwrap() {
@@ -1751,7 +2114,7 @@ fn score_take(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store, done:
                         log(&format!("{}: making its syllable bars from this play", take.track.name));
                         crate::devtest::keep_audio(&take.track, take.song_offset.unwrap_or(0.0), &take.ref16, &l.vocal16, &take.lyrics, &take.lyrics,
                                                    take.music_kept.as_deref().map(|m| (m, take.rate as u32)));
-                        if !quitting() && !is_dropped(&take.track.id) {
+                        if !quitting() && !is_dropped(&take.track.id) && !forgot(&take.track.id) {
                             make_syllables(store, &take, &one_place(&take, &l), None);
                         }
                     }
@@ -1790,6 +2153,9 @@ fn score_take(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store, done:
         crate::progress::stage(crate::progress::Stage::Scoring);
         // your pitch as tracked live (smoothed as a full re-track would be: the scores match, see simsession)
         let usr = take.usr_track();
+        // your voice per semitone, octave as sung, kept with the take for your range (range.rs)
+        let voice = crate::range::Voice::from_frames(&usr.0, &usr.1,
+            &(0..usr.0.len()).map(|i| crate::dsp::frame_db(&take.mic16, i)).collect::<Vec<_>>());
         let (fingerprint, audible) = if take.mode == Mode::Learn {
             let (f, a) = take.fingerprint();
             (Some(f), Some(a))
@@ -1804,13 +2170,17 @@ fn score_take(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store, done:
             live: json!({"score": live, "lag_ms": take.lag * 10, "cached": take.mode == Mode::Sing, "aligned": take.aligned}),
             fingerprint, audible,
             bars: (take.mode == Mode::Sing && !take.bar_text.is_empty()).then(|| take.bars_in_take()),
+            level: take.level,
         });
         // how much of the song this play alone covered (what was learned before aside)
         let this_play = out.learned.as_ref().map(|(_, c, _)| c.iter().filter(|v| **v).count() as f64 * crate::dsp::FRAME_S / take.track.duration.max(1.0));
         if is_dropped(&take.track.id) {
             return Err("stopped from the Library".into());
         }
-        if let Some((line, covered, fp)) = out.learned {
+        if forgot(&take.track.id) && out.learned.is_some() {
+            log(&format!("{}: forgotten from the Library during this play: not learned again from it", take.track.name));
+        }
+        if let Some((line, covered, fp)) = out.learned.filter(|_| !forgot(&take.track.id)) {
             let covered_now = covered.clone();
             // the song's one id is settled again as it's saved, with the save (two plays of one song under two ids,
             // scored at once, each checked before the other was saved and both kept: My Love, My Life, live)
@@ -1825,7 +2195,9 @@ fn score_take(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store, done:
                     w.also(&take.track.id);
                 }
             }
-            if !saved {
+            if !saved && store.learning_again(&take.track.id) {
+                // (said by the store: too little heard to replace the copy)
+            } else if !saved {
                 log(&format!("{}: this play couldn't be lined up with what was learned before, so it wasn't added", take.track.name));
             } else {
                 // an earlier play's lyric times and bars, merged with this play's by what it heard (else this
@@ -1849,13 +2221,23 @@ fn score_take(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store, done:
         if let (Some(off), true) = (take.song_offset, take.aligned) {
             let secs = take.ref16.len() as f64 / crate::recognize::SR as f64;
             if secs >= 20.0 && store.load_song(&take.track.id).is_some() && store.signature(&take.track.id).map_or(true, |(_, _, had)| secs > had) {
-                if let Some(sig) = crate::recognize::signature(&take.ref16) {
+                // (the music at the take's place now, every stretch where it was heard: Take::music_placed)
+                if let Some(sig) = crate::recognize::signature(&take.music_placed()) {
                     store.save_signature(&take.track.id, &sig, off, secs);
                     crate::listen::songs_changed();
                 }
             }
         }
-        let r = out.result;
+        let mut r = out.result;
+        // the song's stretches marked "Not the melody" (its learned notes there a backing vocal's or a harmony's): left
+        // out of the score, as from every take of it before (store::rescore_take)
+        let left_out = take.left_out();
+        if !left_out.is_empty() {
+            analysis::leave_out(&mut r, &left_out);
+            log(&format!("{}: {} stretch{} marked not the melody left out of the score (score {} as first scored)", take.track.name,
+                         left_out.len(), if left_out.len() == 1 { "" } else { "es" }, r["scored_first"]["score"]));
+        }
+        r["voice"] = voice.to_json();
         // the music too quiet to trust for most of the take (the app's own volume turned right down): what the mic
         // heard can't be told from the room, so it isn't scored as singing (and the window said to turn it up)
         let too_quiet = take.quiet_s > 0.5 * take.seconds();
@@ -1878,6 +2260,11 @@ fn score_take(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store, done:
             (Mode::Sing, false, _) => "unsung",
         };
         store.played(&take.track.id);
+        if take.mode == Mode::Sing {
+            if let Some((at, by)) = store.note_slips(&take.track.id, &crate::listen::take_slips(&take.track.id)) {
+                log(&format!("{}: jumped {by:+.2} s at {at:.0} s on two plays: its learned copy is off there, relearn suggested", take.track.name));
+            }
+        }
         store.note_play(&take.track.id, &take.played_as, take.app);   // where it played, for "open in your music app"
         log(&format!("scored {}: {} (score {}, learned {:.0}%{})", take.track.name, status, r["score"], 100.0 * fraction,
                      this_play.map_or(String::new(), |p| format!("; this play covered {:.0}%", 100.0 * p))));
@@ -1893,7 +2280,9 @@ fn score_take(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store, done:
     if is_dropped(&take.track.id) {
         // (stopped after it was saved, or while it saved: forgotten again, so nothing of it stays)
         for id in [played_id.as_str(), take.track.id.as_str()] {
-            store.forget(id);
+            if let Err(e) = store.forget(id) {
+                log(&format!("{id}: {e}"));
+            }
         }
         log(&format!("{}: stopped learning it; nothing kept", take.track.name));
         outcome = json!({"status": "discarded"});
@@ -1923,7 +2312,7 @@ fn save_take(store: &Store, take: &Take, result: &Value) -> std::io::Result<Stri
     // result.json (what History lists) last
     let (dir, name) = store.new_take_dir(&name)?;
     let started = Instant::now();
-    if let Err(e) = crate::takeaudio::write_m4a(&dir.join(crate::takeaudio::M4A), &take.mic, take.rate) {
+    if let Err(e) = crate::takeaudio::write_m4a(&dir.join(crate::takeaudio::M4A), &take.mic, take.rate, crate::takeaudio::TAKE_BIT_RATE) {
         // never lose the recording: as WAV, as before (converted later)
         log(&format!("take audio: AAC encoding failed ({e}): kept as WAV"));
         write_wav(&dir.join(crate::takeaudio::WAV), &take.mic, take.rate as u32)?;
@@ -1936,7 +2325,9 @@ fn save_take(store: &Store, take: &Take, result: &Value) -> std::io::Result<Stri
         result["app"] = json!(k);
     }
     store::write_atomic(&dir.join("meta.json"), json!({"track": take.track, "recorded": store::now_iso(),
-        "song_offset": take.song_offset, "mode": take.mode.name(), "blind": take.blind, "lyrics": take.lyrics}).to_string().as_bytes())?;
+        "song_offset": take.song_offset, "mode": take.mode.name(), "blind": take.blind, "lyrics": take.lyrics,
+        // each part of the take's place in the song (between skips), for leaving a stretch of the song out later
+        "places": take.stretches().iter().map(|p| [p.0, p.1, p.2]).collect::<Vec<_>>()}).to_string().as_bytes())?;
     store::write_atomic(&dir.join("result.json"), result.to_string().as_bytes())?;
     Ok(name)
 }
@@ -1966,6 +2357,27 @@ pub fn write_wav(path: &std::path::Path, samples: &[i16], rate: u32) -> std::io:
 #[cfg(test)]
 mod tests {
     #[test]
+    fn pausing_listening_stops_once_idles_while_paused_and_resumes_once() {
+        use super::{pause_step, Pause};
+        assert_eq!(pause_step(false, false), Pause::Listen);
+        assert_eq!(pause_step(false, true), Pause::Stop, "the take ends and the capture stops once, as you pause");
+        assert_eq!(pause_step(true, true), Pause::Idle, "then nothing, round after round");
+        assert_eq!(pause_step(true, false), Pause::Resume);
+        // a pause and resume, round by round: one stop and one resume, however long it lasts
+        let rounds = [false, true, true, true, false, false];
+        let steps: Vec<Pause> = rounds.windows(2).map(|w| pause_step(w[0], w[1])).collect();
+        assert_eq!(steps, [Pause::Stop, Pause::Idle, Pause::Idle, Pause::Resume, Pause::Listen]);
+    }
+
+    #[test]
+    fn a_nap_ends_when_woken() {
+        let t = std::time::Instant::now();
+        std::thread::spawn(|| { std::thread::sleep(std::time::Duration::from_millis(50)); super::wake(); });
+        super::nap(std::time::Duration::from_secs(5));
+        assert!(t.elapsed() < std::time::Duration::from_secs(2));
+    }
+
+    #[test]
     fn a_guessed_length_never_shrinks() {
         // The Kill: a first play heard to 229.7 s, a second paused at 197.2 s
         assert_eq!(super::guessed_length(None, 197.2, Some(229.7)), 229.7);
@@ -1975,6 +2387,107 @@ mod tests {
     }
 
     use super::*;
+
+    #[test]
+    fn a_song_forgotten_during_a_play_isnt_learned_back_from_it() {
+        // (TAKE_VERSION is the app's one counter, which other tests move on: only ever forward)
+        let now = TAKE_VERSION.load(std::sync::atomic::Ordering::Relaxed);
+        forgotten("spotify:track:forgot");
+        assert!(forgotten_during(&["spotify:track:forgot"], now), "the play under way");
+        assert!(forgotten_during(&["spotify:track:x", "spotify:track:forgot"], now.saturating_sub(5)), "by either id");
+        assert!(!forgotten_during(&["spotify:track:forgot"], u64::MAX), "a play after it: learns it afresh");
+        assert!(!forgotten_during(&["spotify:track:other"], now));
+    }
+
+    #[test]
+    fn a_song_that_played_to_its_end_and_stopped_is_over_at_once() {
+        let t = |id: &str| source::Track { id: id.into(), name: "Hello".into(), duration: 240.0, ..Default::default() };
+        let paused = |id: &str, position: f64| source::State { playing: false, track: t(id), position, source: Source::Spotify };
+        // Spotify, nothing queued: back at 0:00, paused
+        assert!(came_to_end(&t("a"), &paused("a", 0.0), 239.6));
+        // it moved on to the next track, then stopped
+        assert!(came_to_end(&t("a"), &paused("b", 0.0), 238.0));
+        // a pause mid-song, or a restart while paused mid-song: a pause, not the end
+        assert!(!came_to_end(&t("a"), &paused("a", 120.0), 120.0));
+        assert!(!came_to_end(&t("a"), &paused("a", 0.0), 120.0));
+        assert!(!came_to_end(&t("a"), &paused("b", 0.0), 120.0));
+        // paused near the end, still there: a pause
+        assert!(!came_to_end(&t("a"), &paused("a", 238.0), 238.0));
+        // length unknown: never guessed
+        let mut live = t("a");
+        live.duration = 0.0;
+        assert!(!came_to_end(&live, &paused("a", 0.0), 3600.0));
+    }
+
+    /// Listening back places the song as a take does: from the app's position once it has been told where to play,
+    /// on with the audio, nowhere while paused, and afresh when the song moves.
+    #[test]
+    fn listening_back_places_the_song_as_a_take_does() {
+        let store = Store::new(std::env::temp_dir().join(format!("onkey-along-test-{}", std::process::id())));
+        let shared = Arc::new(Mutex::new(along("a")));
+        let track = source::Track { id: "a".into(), name: "A".into(), artist: String::new(), album: String::new(), duration: 300.0, art: None, link: None };
+        let state = |playing, position| (source::State { playing, track: track.clone(), position, source: Source::Music }, Instant::now());
+        let half = vec![0f32; 24_000 * CHANNELS];
+        let mut a = None;
+        let place = |sh: &Arc<Mutex<Shared>>| sh.lock().unwrap().along_place.map(|p| p.0);
+        // not yet told where to play: what the app says is the old place
+        follow_along(&mut a, &shared, Some(&state(true, 30.0)), false, &store, 48_000.0, &half);
+        assert!(a.is_none() && place(&shared).is_none());
+        shared.lock().unwrap().along_from = Some(Instant::now());
+        follow_along(&mut a, &shared, Some(&state(true, 30.0)), false, &store, 48_000.0, &half);
+        assert!(place(&shared).is_some_and(|p| (p - 30.5).abs() < 1e-6), "{:?}", place(&shared));
+        follow_along(&mut a, &shared, Some(&state(true, 30.5)), false, &store, 48_000.0, &half);
+        assert!(place(&shared).is_some_and(|p| (p - 31.0).abs() < 1e-6), "on with the audio: {:?}", place(&shared));
+        follow_along(&mut a, &shared, Some(&state(false, 31.0)), false, &store, 48_000.0, &[]);
+        assert!(place(&shared).is_none(), "paused: not placed");
+        // dragged ahead in the app: placed afresh there
+        follow_along(&mut a, &shared, Some(&state(true, 100.0)), false, &store, 48_000.0, &half);
+        assert!(place(&shared).is_some_and(|p| (p - 100.5).abs() < 1e-6), "{:?}", place(&shared));
+        // another track: over
+        shared.lock().unwrap().play_along = None;
+        follow_along(&mut a, &shared, Some(&state(true, 101.0)), false, &store, 48_000.0, &half);
+        assert!(a.is_none() && place(&shared).is_none());
+    }
+
+    fn along(id: &str) -> Shared {
+        Shared { blind: false, echo_cancel: true, skip_to: None, finish: false, play_along: Some(id.into()), along_heard: false,
+                 along_stopping: false, player_now: None, along_from: None, along_place: None, take_place: None, takes: Vec::new() }
+    }
+
+    #[test]
+    fn listening_back_ends_when_the_song_moves_on() {
+        let mut sh = along("a");
+        // the song before still plays a moment: not the end
+        along_follows(&mut sh, Some(("b", true)));
+        assert_eq!(sh.play_along.as_deref(), Some("a"));
+        along_follows(&mut sh, Some(("a", true)));
+        along_follows(&mut sh, Some(("a", false)));
+        assert_eq!(sh.play_along.as_deref(), Some("a"), "a pause while listening back doesn't end it");
+        along_follows(&mut sh, Some(("b", true)));
+        assert_eq!(sh.play_along, None);
+    }
+
+    #[test]
+    fn after_stop_the_song_playing_on_is_no_take() {
+        // live, 22 Oct: Stop, and a take of The A Team started before Spotify had paused
+        let mut sh = along("a");
+        along_follows(&mut sh, Some(("a", true)));
+        sh.along_stopping = true;
+        along_follows(&mut sh, Some(("a", true)));
+        assert_eq!(sh.play_along.as_deref(), Some("a"), "still playing: still listening back");
+        along_follows(&mut sh, Some(("a", false)));
+        assert_eq!(sh.play_along, None);
+        assert!(!sh.along_stopping);
+        // stopped before the app played it, or with nothing playing: over at once
+        let mut sh = along("a");
+        sh.along_stopping = true;
+        along_follows(&mut sh, Some(("b", true)));
+        assert_eq!(sh.play_along, None);
+        let mut sh = along("a");
+        sh.along_stopping = true;
+        along_follows(&mut sh, None);
+        assert_eq!(sh.play_along, None);
+    }
 
     #[test]
     fn a_second_quit_joins_the_first_ones_wait() {

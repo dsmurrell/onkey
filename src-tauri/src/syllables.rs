@@ -131,11 +131,21 @@ pub type Heard = Vec<Option<Vec<(usize, usize, f64, f64)>>>;
 /// place_lines, and when each letter of the lines it placed was heard.
 pub fn place_lines_heard(aligner: &mut WordAligner, vocal16: &[f32], song_offset: f64, lyrics: &[(f64, String)]) -> Option<(Vec<(f64, String)>, Heard)> {
     let (logp, times) = song_logprobs(aligner, vocal16, song_offset)?;
+    let times: Vec<f64> = times.into_iter().map(|t| t - HEARD_LAG_S).collect();
     place_on(&logp, &times, (song_offset, song_offset + vocal16.len() as f64 / 16_000.0), lyrics).map(|(l, h, _)| (l, h))
 }
 
 /// The word timer's stretch (s), see song_logprobs.
 const WORDS_CHUNK_S: usize = 10;
+
+/// How late the word timer hears a letter after it's sung (s): a learned song's line-up moves every frame's time back
+/// by this (not a first play's live line-up: its words are lit by a pace spread from the line's start that is made to
+/// run early already, and 0.05 s earlier lines cost JamendoLyrics' first plays 2.4 points of the right word lit). Measured
+/// [align-night] 26 Oct on the align eval: line starts heard by the whole-song alignment sit a median +0.04 s
+/// (JamendoLyrics' hand-marked onsets, 287 lines) and +0.055 s (the library's silver truth, 43 lines) after the
+/// singing, words +0.05 / +0.07 s; 0.05 s centres them (more starts lines early, which is fine, but words drift
+/// early: JamendoLyrics' word AAE grows past 0.08 s).
+const HEARD_LAG_S: f64 = 0.05;
 
 /// The word aligner's log-probabilities for the whole vocal, 10 s at a time, and each frame's song time.
 /// (10 s, not 20: the word timer's activations grow with the stretch it's given, and they were the learning's peak
@@ -339,7 +349,9 @@ pub fn check_placement(lyrics: &[(f64, String)], placed: Vec<(f64, String)>, mut
         if !inlier {
             heard[i] = None;
         }
-        let mut t = if inlier { placed[i].0 } else { fit };
+        // a line that opens on a sung vowel ("oh oh ...", "whoa"): the aligner hears the vowel late, or not at all and
+        // starts the line at its first word, so the line goes no later than the fit puts it
+        let mut t = if inlier && opens_on_vowel(text) { placed[i].0.min(fit) } else if inlier { placed[i].0 } else { fit };
         if let (Some(prev), Some(pg)) = (out.last(), i.checked_sub(1).map(|j| lyrics[j].0)) {
             let gap = (0.5 * (g - pg)).clamp(0.0, 0.5);
             t = t.max(prev.0 + gap);
@@ -347,6 +359,21 @@ pub fn check_placement(lyrics: &[(f64, String)], placed: Vec<(f64, String)>, mut
         out.push((t.max(0.0), text.clone()));
     }
     (out, heard, Fit { offset: a, drift: b, agree, heard: pts.len(), believed })
+}
+
+/// Whether a lyric line opens on a sung vowel or filler ("Oh, you and I", "whoa oh oh", "aw ah"), letters doubled or
+/// not. The whole-song alignment starts those lines late: on the align eval [align-night] 29% of them heard more
+/// than 0.3 s late (Kinematic's "oh oh ..." lines by 0.8-1.1 s, Daniel Powter, Ben E. King, Ridgway), against 2.7% of
+/// other lines.
+fn opens_on_vowel(text: &str) -> bool {
+    let Some(w) = lead_words(text).into_iter().next() else { return false };
+    let mut d = String::new();
+    for c in w.chars().skip_while(|c| !c.is_alphabetic()).take_while(|c| c.is_alphabetic()).flat_map(|c| c.to_lowercase()) {
+        if !d.ends_with(c) {
+            d.push(c);
+        }
+    }
+    matches!(d.as_str(), "oh" | "ah" | "aw" | "whoa" | "woah" | "yeah" | "hey" | "na" | "la" | "m" | "uh" | "ha" | "eh")
 }
 
 /// How well a line's words are heard in the singer between song seconds `a` and `b` (the mean probability of its
@@ -388,6 +415,13 @@ pub struct LiveLineUp {
     /// (a low quantile, so a word filled by it comes early rather than late); None if too few words were heard
     pub pace: Option<f64>,
 }
+
+/// The least a live line-up's lines must be heard (the mean probability of their letters along the alignment) to be
+/// shown. Forced alignment puts every word it's given somewhere, so lines can agree on a move where they aren't sung:
+/// on the align eval [align-night] every line-up believed with a wrong move was heard 0.02-0.21 (Third Eye Blind's
+/// first play: 3 lines "agreeing" on -8.3 s at 0.19, every line after it then 9-10 s early all song; Zara Larsson
+/// -8.1 s at 0.17; Tom Odell -11.8 s at 0.07; Coldplay's Clocks -4.4 s at 0.02), every right one 0.25 or more.
+const LIVE_MIN_HEARD: f32 = 0.23;
 
 /// Seconds of the most recent separated singer a live line-up listens to (bounded work, however long the play).
 pub const LIVE_WINDOW_S: f64 = 40.0;
@@ -473,6 +507,10 @@ pub fn line_up_live(aligner: &mut WordAligner, vocal16: &[f32], song_offset: f64
                 let heard_conf: Vec<f32> = (0..given.len()).filter(|&i| heard[i].is_some()).filter_map(|i| conf[i]).collect();
                 let c = heard_conf.iter().sum::<f32>() / heard_conf.len().max(1) as f32;
                 trace(format!("guess {guess:+.2}: {agree} of {} lines agree on {moved:+.2}, heard {c:.2}", moves.len()));
+                if c < LIVE_MIN_HEARD {
+                    trace(format!("guess {guess:+.2}: heard {c:.2}, under {LIVE_MIN_HEARD}: words forced onto singing that isn't them"));
+                    break;
+                }
                 if !found.as_ref().is_some_and(|f| c <= f.0) {
                     found = Some((c, LiveLineUp { lyrics: keep_shown(shown, &placed, now), heard: agree, moved, pace: pace(given, &heard) }));
                 }
@@ -933,6 +971,16 @@ pub fn merge_play(old_lyrics: &[(f64, String)], new_lyrics: &[(f64, String)], pl
 #[cfg(test)]
 mod tests {
     use super::keep_shown;
+
+    #[test]
+    fn lines_opening_on_a_sung_vowel() {
+        for l in ["oh oh and the clothes that you wear", "Oh, you and I", "Whoa-oh", "Ooh, baby", "aw ah aw ah", "(Hey) yeah yeah"] {
+            assert!(super::opens_on_vowel(l), "{l}");
+        }
+        for l in ["Only you", "Hello", "Ahead of time", "", "(oh) only you"] {
+            assert!(!super::opens_on_vowel(l), "{l}");
+        }
+    }
 
     #[test]
     fn a_live_line_up_never_moves_a_line_already_shown() {

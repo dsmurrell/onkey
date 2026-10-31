@@ -15,6 +15,12 @@ export function useDevTools(): boolean {
   return on;
 }
 
+/** Development tools: the ear (src-tauri/src/ear.rs) measures the gap heard between the song and the voice while
+ *  "Play with the song" plays this take (`on`), from what the music app and the window output; off, its summary. */
+export async function devEar(take: string, on: boolean) {
+  if (inApp()) await invoke("dev_ear", { take, on }).catch(() => {});
+}
+
 /** A take's link, for pinpointing it to Claude: onkey://take/<take id>?t=<s into the take>&song=<s into the song>,
  *  or, for the play under way, onkey://live/<engine version>?song=<s into the song>&track=<id>&at=<local time>.
  *  Paste it to a coding agent or into a bug report to point at the exact moment. */
@@ -50,3 +56,4 @@ export function DevCopy({ label, text }: { label: string; text: () => string | n
     </button>
   );
 }
+

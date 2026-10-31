@@ -1,12 +1,17 @@
 // Builds the Swift library (native/capture.swift for audio capture, native/shazam.swift for recognising songs,
-// native/audiofile.swift for the takes' AAC recordings, native/share.swift for a take's share video) into a static library and links it, then runs
+// native/audiofile.swift for the takes' AAC recordings, native/share.swift for a take's share video, native/demo.swift for the demo song's player, native/voice.swift for a take played with the song) into a static library and links it, then runs
 // Tauri's own build step.
 use std::{env, path::PathBuf, process::Command};
 
 fn main() {
     let out = PathBuf::from(env::var("OUT_DIR").unwrap());
-    let srcs = ["native/capture.swift", "native/permissions.swift", "native/shazam.swift", "native/audiofile.swift", "native/share.swift"];
-    for src in srcs {
+    let mut srcs = vec!["native/capture.swift", "native/permissions.swift", "native/shazam.swift", "native/audiofile.swift", "native/share.swift", "native/demo.swift", "native/voice.swift"];
+    // development builds only: the ear's taps (src/ear.rs), never in a release
+    println!("cargo:rerun-if-changed=native/ear.swift");
+    if env::var_os("CARGO_FEATURE_DEVTEST").is_some() {
+        srcs.push("native/ear.swift");
+    }
+    for src in &srcs {
         println!("cargo:rerun-if-changed={src}");
     }
 
@@ -15,7 +20,7 @@ fn main() {
         .args(["swiftc", "-O", "-parse-as-library", "-emit-library", "-static", "-module-name", "OnKeyCapture",
                "-target", "arm64-apple-macos14.2", "-o"])
         .arg(&lib)
-        .args(srcs)
+        .args(&srcs)
         .status()
         .expect("couldn't run swiftc (are Xcode's command line tools installed?)");
     assert!(status.success(), "swiftc failed to build {srcs:?}");
@@ -37,9 +42,10 @@ fn main() {
         println!("cargo:rustc-link-lib=framework={fw}");
     }
 
-    // keeping test audio (devtest's keep_audio): only in the private development checkout, which has
-    // dev/devkeep.rs (it isn't published), and only in development builds
+    // keeping test audio (devtest's keep_audio) and the tools that use it (dev/devhooks.rs): only in the private
+    // development checkout, which has dev/ (it isn't published), and only in development builds
     println!("cargo:rerun-if-changed=dev/devkeep.rs");
+    println!("cargo:rerun-if-changed=dev/devhooks.rs");
     println!("cargo:rustc-check-cfg=cfg(keepaudio)");
     if env::var_os("CARGO_FEATURE_DEVTEST").is_some() && std::path::Path::new("dev/devkeep.rs").exists() {
         println!("cargo:rustc-cfg=keepaudio");

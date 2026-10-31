@@ -7,20 +7,33 @@ import Cover, { SourceLinks } from "@/components/Cover";
 import Setup from "@/components/Setup";
 import StarterSongs, { StarterSheet, useStartersHidden } from "@/components/StarterSongs";
 import VoiceBreak from "@/components/VoiceBreak";
+import DemoSong from "@/components/DemoSong";
+import RecentSongs from "@/components/RecentSongs";
+import { offerDemo } from "@/lib/demo";
 import Heart from "@/components/Heart";
+import GuideFade from "@/components/GuideFade";
 import { DevCopy, logTime, takeLink } from "@/components/Dev";
-import { Logo, Nav } from "@/components/Nav";
-import { FinishSong, SingSwitches, Icon, Lyrics, ScoreAndHint, SkipToSinging, SongClock, StatusChips, TakeToast, Transport, useTick } from "@/components/LiveBits";
-import { getLibrary, inApp, learnAnyway, isFavorite, learnPct, learnStage, live, openApp, startingSong, openPrivacySettings, playerNow, renameTrack, setFavorite, setMini, setupOpenSettings, setupStatus, setYouTube, usePlaying, useSession, type LearnJob, type Line, type SongState, type Status } from "@/lib/session";
+import { SongDevTools } from "@devhooks/hooks";
+import { Logo, Nav, WhatsNew } from "@/components/Nav";
+import { FinishSong, PausedFinish, SingSwitches, Icon, Lyrics, ScoreAndHint, SkipToSinging, SongClock, StatusChips, TakeToast, Transport, useTick } from "@/components/LiveBits";
+import { errorText } from "@/lib/dataSafety";
+import { getLibrary, inApp, learnAnyway, isFavorite, learnPct, learnStage, live, openApp, openInApp, clearStarting, useStarting, openPrivacySettings, playerNow, renameTrack, setFavorite, setListeningPaused, setMini, setupOpenSettings, setupStatus, setYouTube, usePlaying, useSession, type LearnJob, type Line, type SongState, type Status } from "@/lib/session";
+import type { StartingView } from "@/lib/starting";
 import { typing } from "@/lib/keys";
 import { clock, sourceName } from "@/lib/music";
 
 export default function Sing() {
   useEffect(() => { live.start(); }, []);
-  const { song: playing, connected, status, ended, takes, problem, score, line, learning, drowned, notSong } = useSession();
+  const { song: playing, connected, status, ended, takes, problem, score, line, learning, drowned, notSong, blind } = useSession();
   // listening mode, the song changed (or isn't named yet): the old one goes at once, the status line says what's happening
   const finding = !!line && line.kind !== "learning";
-  const song = finding ? null : playing;
+  // a song just started from the Library, History or a take: shown as starting in its app at once, until it plays
+  // (never the song before: its lane, or its score once it ended), or why the app couldn't start it
+  const start = useStarting(playing?.version ?? null, finding);
+  // listening paused: nothing is followed, so the page shows the pause (Waiting), not the song that was open, its
+  // lane or "Session finished"
+  const paused = !!status.listening_paused;
+  const song = finding || start || paused ? null : playing;
   // the app the song plays in (listening mode: the one heard; a Shazam match's id doesn't say)
   // the app it opens in when it was kept by its ISRC (as "Open in your music app" does), else its id's
   const [opensIn, setOpensIn] = useState<{ id: string; app: string } | null>(null);
@@ -70,30 +83,29 @@ export default function Sing() {
           so the lane, lyrics and controls stay centred in the window */}
       <VoiceBreak />
       <StarterSheet />
-      <header data-tauri-drag-region className="app-header grid grid-cols-[minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)] items-center gap-4 px-6 pt-4 pb-3">
-        <div className="flex min-w-0 items-center gap-5 overflow-clip"><Logo /><Nav /></div>
+      {/* the left column is never narrower than the logo and menu (max-content), so they're never cut off on a narrow
+          window: the middle (status line, or the song) gives way instead */}
+      <header data-tauri-drag-region className="app-header grid grid-cols-[minmax(max-content,1fr)_minmax(0,auto)_minmax(0,1fr)] items-center gap-4 px-6 pt-4 pb-3">
+        <div className="flex items-center gap-3 lg:gap-5"><Logo /><Nav /></div>
         <div className="min-w-0 text-center">
           {!song && line && <StatusLine line={line} />}
           {!song && <LearningLine jobs={learning} className={line ? "mt-1.5" : ""} />}
           {song && (
             <div key={song.version} className="flex animate-rise items-center justify-center gap-3">
-              <Cover name={song.track.name} art={song.track.art} link={song.track.link} size={40} eager />
+              {/* (as tall as the two lines of text beside it) */}
+              <Cover name={song.track.name} art={song.track.art} link={song.track.link} size={44} eager />
               <div className="min-w-0 text-left">
                 <div className="flex items-center gap-1.5">
                   <span className="truncate text-[15px] font-semibold tracking-tight">{song.track.name}</span>
                   <Heart on={favOn} onToggle={toggleFav} size={14} className="-my-1.5 h-6 w-6" />
                   {song.track.id.startsWith("youtube:") && <RenameVideo id={song.track.id} artist={song.track.artist} name={song.track.name} />}
-                  <DevCopy label="Copy link" text={async () => {
-                    const n = await playerNow().catch(() => null);
-                    return takeLink("live", song.version, { song: n?.position, track: song.track.id, mode: song.mode, at: logTime() });
-                  }} />
                 </div>
                 <div className="flex items-center gap-2 truncate text-sm text-ink-400">
                   {song.track.artist}<span className="text-ink-600">·</span><SongClock />
                   {/* the app it plays from, as the link to the song there; then the other service, dimmer */}
                   <span className="text-ink-600">·</span><SourceLinks source={source} artist={song.track.artist} name={song.track.name} appleLink={song.track.link} trackId={song.track.id} />
                 </div>
-                {line?.kind === "learning" && <div role="status" className="mt-0.5 truncate text-xs text-accent-300">{line.text}</div>}
+                {/* (no "Learning: sing along…" line here: the lane's own card says it, and how the first play is scored) */}
                 {/* (earlier songs still being learned aren't shown over a playing song: it crowded the header; the
                     Library shows their progress) */}
               </div>
@@ -101,6 +113,17 @@ export default function Sing() {
           )}
         </div>
         <div className="flex items-center justify-end gap-4">
+          {/* development tools here, apart from the title, so they never move what people see */}
+          {song && (
+            <span className="flex items-center gap-1.5">
+              <DevCopy label="Copy link" text={async () => {
+                const n = await playerNow().catch(() => null);
+                return takeLink("live", song.version, { song: n?.position, track: song.track.id, mode: song.mode, at: logTime() });
+              }} />
+              <SongDevTools track={song.track.id} mode={song.mode} />
+            </span>
+          )}
+          <WhatsNew />
           {song && <ScoreAndHint />}
           {app && (
             <button onClick={() => toggleMini(true)} title="Mini mode: a small lyrics bar that stays on top of other apps (M)"
@@ -112,16 +135,18 @@ export default function Sing() {
       </header>
 
       <main className="relative mx-4 min-h-0 flex-1 overflow-clip rounded-3xl border border-white/6 bg-ink-900 shadow-2xl shadow-black/40">
-        {!finding && <Lane />}
-        {!ended && !finding && <Dancer />}
+        {!finding && !start && !paused && <Lane />}
+        {!ended && !finding && !start && !paused && <Dancer />}
         {song && !ended && <SkipToSinging />}
         {song && !ended && <FinishSong />}
+        {song && !ended && <PausedFinish />}
+        <GuideFade song={song} blind={blind} ended={!!ended && !paused} />
         {song?.mode === "learn" && <Learning key={song.version} />}
-        {!song && <Waiting connected={connected} line={line} player={status.player} youtube={!!status.youtube} listening={!!status.listening} onSetup={() => setSetup(true)} />}
+        {!song && <Waiting start={start} connected={connected} line={line} player={status.player} youtube={!!status.youtube} listening={!!status.listening} paused={!!status.listening_paused} />}
         {!setup && <Notices status={status} song={song} />}
         {!setup && song?.mode === "sing" && !ended && drowned && <SpeakerHint key={song.version} id={song.track.id} />}
         {!setup && notSong && <NotASong key={notSong.track_id} id={notSong.track_id} name={notSong.name} />}
-        {ended && !finding && <Ended takes={takes} />}
+        {ended && !finding && !start && !paused && <Ended takes={takes} />}
         {(problem === "permission" || status.audio === "denied") && !setup && <NeedsPermission app={status.player?.app ?? "your music app"} />}
       </main>
       {setup && <Setup onClose={() => setSetup(false)} />}
@@ -131,7 +156,7 @@ export default function Sing() {
       <footer className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-4 px-6 pb-5">
         <StatusChips />
         <Transport />
-        <div className="flex min-w-0 items-end justify-end gap-2"><TakeToast />{!ended && <SingSwitches />}</div>
+        <div className="flex min-w-0 items-end justify-end gap-2"><TakeToast />{!ended && !paused && <SingSwitches />}</div>
       </footer>
     </div>
   );
@@ -209,79 +234,101 @@ const LINE_SUB: Record<Line["kind"], string> = {
   shazam_off: "Shazam is off (Settings), so from its sound alone OnKey recognises only songs already learned on this Mac. Turn Shazam on to name new ones.",
   podcast: "Play a song and OnKey follows along.",
   learning: "",
+  stopped: "You stopped learning it, so OnKey leaves it be. Play another song and OnKey follows along.",
   elsewhere: "OnKey hears what plays on this Mac. If it's playing on another device (your phone, a speaker), switch it to this Mac in the app's device menu.",
 };
 
 /** First run (nothing learned yet) and still no song after this long: suggest songs to try, whatever the line says. */
 const STARTERS_AFTER_MS = 45_000;
 
-function Waiting({ connected, line, player, youtube, listening, onSetup }: { connected: boolean; line: Line | null; player: null | { state: string; name: string; artist: string }; youtube: boolean; listening: boolean; onSetup: () => void }) {
+function Waiting({ start, connected, line, player, youtube, listening, paused }: { start: StartingView | null; connected: boolean; line: Line | null; player: null | { state: string; name: string; artist: string }; youtube: boolean; listening: boolean; paused: boolean }) {
   const [busy, setBusy] = useState(false);
   const said = line && line.kind !== "learning" ? line : null;
   // songs to try: while nothing plays, and on a first run when OnKey has heard no song for a while
   const [startersHidden, hideStarters] = useStartersHidden();
   const [firstRun, setFirstRun] = useState(false);
+  // the demo song ("Try it now"), while you have no songs of your own
+  const [demo, setDemo] = useState(false);
   const [waited, setWaited] = useState(false);
   useEffect(() => {
     let gone = false;
-    getLibrary().then(l => { if (!gone) setFirstRun(l.length === 0); }).catch(() => {});
+    getLibrary().then(l => { if (!gone) { setFirstRun(l.length === 0); setDemo(offerDemo(l)); } }).catch(() => {});
     const t = setTimeout(() => setWaited(true), STARTERS_AFTER_MS);
     return () => { gone = true; clearTimeout(t); };
   }, []);
-  // a song just started from the Library, History or a take: say so until it plays (not the nothing-playing screen)
-  const [start, setStart] = useState(startingSong);
-  useEffect(() => {
-    if (!start) return;
-    const t = setTimeout(() => setStart(startingSong()), 1000);
-    return () => clearTimeout(t);
-  }, [start]);
+  if (connected && paused) return <ListeningPaused />;
   const idle = !said && player?.state !== "playing" && !start;
   const starters = connected && startersHidden === false && (idle || (firstRun && waited && !start));
-  const title = !connected ? "Starting OnKey…" : start ? (start.name ? `Starting ${start.name}…` : "Starting the song…") : said ? (said.kind === "finding" || said.kind === "new_song" ? "Getting ready…" : said.kind === "podcast" ? "Not a song" : said.kind === "elsewhere" ? said.text : "Still listening") : player?.state === "playing" ? "Getting ready…"
-    : youtube ? "Play a song in Spotify, Apple Music or YouTube" : "Play a song in Spotify or Apple Music";
+  const title = !connected ? "Starting OnKey…" : start ? start.title : said ? (said.kind === "finding" || said.kind === "new_song" ? "Getting ready…" : said.kind === "podcast" ? "Not a song" : said.kind === "elsewhere" || said.kind === "stopped" ? said.text : "Still listening") : player?.state === "playing" ? "Getting ready…"
+    : "Play a song and sing along";
   const sub = !connected
     ? "Connecting to the engine on this Mac."
     : start
-      ? "The lane appears as soon as it plays."
+      ? start.sub
     : said
       ? LINE_SUB[said.kind]
       : player?.state === "playing"
-        ? `Listening to ${player.name} — the lane appears in a moment.`
-        : "OnKey follows along automatically. Sing whatever comes on — every song becomes a take you can review.";
+        ? `Listening to ${player.name}. The lane appears in a moment.`
+        : `In Spotify${youtube ? ", Apple Music or YouTube" : " or Apple Music"}. OnKey follows along, and every song becomes a take you can review.`;
   return (
-    <div className="absolute inset-0 grid place-items-center overflow-y-auto p-6">
-      <div className="flex w-full max-w-2xl flex-col items-center">
-      <div className="max-w-md text-center animate-rise">
-        <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-accent-500/12 text-accent-300">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
+    // my-auto, not place-items-center: when it's taller than the frame it scrolls from its top, never cut off there
+    <div className="absolute inset-0 flex flex-col items-center overflow-y-auto p-6">
+      <div className="my-auto flex w-full max-w-3xl flex-col items-center py-4">
+      <div className="max-w-lg text-center animate-rise">
+        <div className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-2xl bg-accent-500/12 text-accent-300">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
             <path d="M9 18V6l11-2v12M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM20 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
           </svg>
         </div>
-        <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-        <p className="mt-2 text-ink-300">{sub}</p>
-        <div className="mt-6 flex justify-center gap-4 text-xs text-ink-400">
-          <span><Kbd>Space</Kbd> play / pause</span><span><Kbd>R</Kbd> start over</span><span><Kbd>←</Kbd><Kbd>→</Kbd> skip</span><span><Kbd>F</Kbd> favourite</span>
-        </div>
-        {/* the YouTube switch; when listening, only while it's off (songs in a browser aren't picked up until it's on) */}
-        {connected && (!listening || !youtube) && (
-          <div className="mx-auto mt-8 max-w-sm rounded-xl border border-white/6 px-4 py-3 text-left text-xs text-ink-400">
-            <div className="flex items-center justify-between gap-3">
-              <span className="font-medium text-ink-200">YouTube and YouTube Music <span className="ml-1 rounded-full bg-white/6 px-1.5 py-px text-[10px] font-normal text-ink-300">Experimental</span></span>
-              <button disabled={busy} onClick={async () => { setBusy(true); await setYouTube(!youtube); setBusy(false); }}
-                      className="shrink-0 rounded-lg bg-white/6 px-2.5 py-1 text-ink-100 transition hover:bg-white/10 disabled:opacity-50">
-                {youtube ? "Turn off" : "Turn on"}</button>
-            </div>
-            <p className="mt-1.5">{youtube
-              ? "On. macOS asks once to let OnKey control your browser, so it can read where the video is."
-              : "Off, so songs playing in your browser aren’t picked up. Turn it on to sing along in Chrome, Safari, Brave or Edge: macOS asks once to let OnKey control the browser."}</p>
+        <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
+        <p className="mt-2 text-balance text-[15px] text-ink-300">{sub}</p>
+        {start?.failed && (
+          <div className="mt-5 flex justify-center gap-2">
+            <button onClick={() => { void openInApp(start.id); clearStarting(); }}
+                    className="rounded-xl bg-accent-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-accent-400">
+              Open in {start.app}</button>
+            <button onClick={clearStarting} className="rounded-xl px-4 py-2 text-sm text-ink-300 transition hover:text-white">Not now</button>
           </div>
         )}
-        <button onClick={onSetup} className="mt-5 text-xs text-ink-500 transition hover:text-ink-200">Setup: permissions and mic check</button>
+        <div className="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-ink-400">
+          <span><Kbd>Space</Kbd> play / pause</span><span><Kbd>R</Kbd> start over</span><span><Kbd>←</Kbd><Kbd>→</Kbd> skip</span><span><Kbd>F</Kbd> favourite</span>
+        </div>
       </div>
+      {/* your last songs first, then the demo and songs to try */}
+      {connected && idle && <RecentSongs className="mt-10 animate-rise" />}
+      {connected && idle && demo && <DemoSong className="mt-8 animate-rise" />}
       {starters && <StarterSongs onHide={() => hideStarters(true)} className="mt-8 animate-rise" />}
       {connected && idle && startersHidden && (
         <button onClick={() => hideStarters(false)} className="mt-6 text-xs text-ink-500 transition hover:text-ink-200">Songs to try</button>
       )}
+      {/* the YouTube switch; when listening, only while it's off (songs in a browser aren't picked up until it's on) */}
+      {connected && (!listening || !youtube) && (
+        <div className="mt-8 w-full max-w-sm rounded-xl border border-white/6 px-4 py-3 text-left text-xs text-ink-400 animate-rise">
+          <div className="flex items-center justify-between gap-3">
+            <span className="font-medium text-ink-200">YouTube and YouTube Music <span className="ml-1 rounded-full bg-white/6 px-1.5 py-px text-[10px] font-normal text-ink-300">Experimental</span></span>
+            <button disabled={busy} onClick={async () => { setBusy(true); await setYouTube(!youtube); setBusy(false); }}
+                    className="shrink-0 rounded-lg bg-white/6 px-2.5 py-1 text-ink-100 transition hover:bg-white/10 disabled:opacity-50">
+              {youtube ? "Turn off" : "Turn on"}</button>
+          </div>
+          <p className="mt-1.5">{youtube
+            ? "On. macOS asks once to let OnKey control your browser, so it can read where the video is."
+            : "Off, so songs playing in your browser aren’t picked up. Turn it on to sing along in Chrome, Safari, Brave or Edge: macOS asks once to let OnKey control the browser."}</p>
+        </div>
+      )}
+      </div>
+    </div>
+  );
+}
+
+/** Listening paused (the Live chip, the header's pill, ⌘⇧P): nothing is followed, so no "Play a song…" here. */
+function ListeningPaused() {
+  return (
+    <div className="absolute inset-0 grid place-items-center p-6">
+      <div className="max-w-lg text-center animate-rise">
+        <p className="text-[15px] text-ink-300">Listening is paused. Resume to sing along.</p>
+        <button onClick={() => void setListeningPaused(false)} title="Resume listening (⌘⇧P)"
+                className="mt-4 rounded-xl bg-accent-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-accent-400">
+          Resume</button>
       </div>
     </div>
   );
@@ -294,12 +341,16 @@ function RenameVideo({ id, artist, name }: { id: string; artist: string; name: s
   const [a, setA] = useState(artist);
   const [n, setN] = useState(name);
   const [busy, setBusy] = useState(false);
-  useEffect(() => { if (!open) { setA(artist); setN(name); } }, [open, artist, name]);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => { if (!open) { setA(artist); setN(name); setError(null); } }, [open, artist, name]);
   async function save(e: React.FormEvent) {
     e.preventDefault();
     if (!n.trim()) return;
     setBusy(true);
-    try { await renameTrack(id, a, n); setOpen(false); } finally { setBusy(false); }
+    setError(null);
+    try { await renameTrack(id, a, n); setOpen(false); }
+    catch (err) { setError(errorText(err, "Couldn’t save the name.")); }
+    finally { setBusy(false); }
   }
   return (
     <span className="relative">
@@ -318,6 +369,7 @@ function RenameVideo({ id, artist, name }: { id: string; artist: string; name: s
           <label className="mt-2 block text-[11px] text-ink-400" htmlFor="rename-title">Title</label>
           <input id="rename-title" value={n} onChange={e => setN(e.target.value)}
                  className="mt-1 w-full rounded-lg border border-white/8 bg-white/4 px-2.5 py-1.5 text-sm text-ink-100 outline-none focus:border-accent-400" />
+          {error && <p role="alert" className="mt-2 text-xs text-off">{error}</p>}
           <div className="mt-3 flex justify-end gap-2">
             <button type="button" onClick={() => setOpen(false)} className="rounded-lg px-3 py-1.5 text-xs text-ink-300 transition hover:text-ink-100">Cancel</button>
             <button type="submit" disabled={busy || !n.trim()}
@@ -380,6 +432,12 @@ function Notices({ status, song }: { status: Status; song: SongState | null }) {
         Its learning models, which come inside the app, are missing or damaged{m.error ? ` (${m.error})` : ""}. Songs you’ve
         already learned still work. To fix it, download OnKey again and replace the app in Applications: your songs and
         takes are kept.
+      </Notice>
+    ),
+    m && m.state === "broken" && (
+      <Notice key="models-broken" title="OnKey can’t hear your singing right now">
+        Its pitch model, which comes inside the app, couldn’t load{m.error ? ` (${m.error})` : ""}. To fix it, download
+        OnKey again and replace the app in Applications: your songs and takes are kept.
       </Notice>
     ),
     !song && status.youtube_blocked && (
@@ -524,7 +582,7 @@ function NeedsPermission({ app }: { app: string }) {
   );
 }
 
-/** Mini mode: the current and next lyric line, how close you are to the note, and your score, on a small
+/** Mini mode: the current and next lyric line, your live score, a progress line and the dancer, on a small
  *  rounded card floating above other apps. Drag it anywhere (text doesn't catch the mouse, so the whole card
  *  is a handle); the button opens the full window again. */
 function Mini({ onExpand }: { onExpand: () => void }) {

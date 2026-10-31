@@ -157,8 +157,8 @@ export function HowSections() {
               <CoveragePlayground />
             </div>
             <p>
-              For now the scoring is a bit lenient on purpose. It&rsquo;s set for beginners like me, so harder modes to
-              really test good singers may come later.
+              By default the scoring is lenient on purpose, set for beginners like me. Good singers can pick a
+              stricter level, Steady or Pro, in Settings (vibrato isn&rsquo;t marked down at either).
             </p>
             <p>The numbers in your report are explained in <Link href="/docs/scoring/">Scoring explained</Link>.</p>
           </>

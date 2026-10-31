@@ -1,13 +1,19 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import LearnSongGuide from "@/components/guides/LearnSongGuide";
+import { isDemo } from "@/lib/demo";
+import { useEffect, useMemo, useState } from "react";
 import Cover from "@/components/Cover";
+import CardMenu, { MenuItem } from "@/components/CardMenu";
 import DeleteButton from "@/components/DeleteButton";
 import Heart, { HEART } from "@/components/Heart";
-import { Logo, Nav } from "@/components/Nav";
+import { Logo, Nav, WhatsNew } from "@/components/Nav";
 import LearnBar from "@/components/LearnBar";
 import StarterSongs, { useStartersHidden } from "@/components/StarterSongs";
-import { firstPlayGoing, forgetSong, getLibrary, stopLearning, learnLabel, learnNow, live, type LearnJob, type LibrarySong, nowLocal, openInApp, playTrack, setFavorite, useSession } from "@/lib/session";
+import ReadError from "@/components/ReadError";
+import { DIFFICULTY, DifficultyPicker, SortMenu } from "@/components/ListControls";
+import { readList, runDelete } from "@/lib/dataSafety";
+import { firstPlayGoing, forgetSong, getLibrary, learnAgain, stopLearning, learnLabel, learnNow, live, type LearnJob, type LibrarySong, nowLocal, openInApp, playTrack, setFavorite, useSession } from "@/lib/session";
 
 type Filter = "all" | "favorites" | "unscored" | "partial";
 const FILTER_KEY = "onkey.libraryFilter";
@@ -16,6 +22,7 @@ const SORTS: [Sort, string][] = [["recent", "Recent"], ["easy", "Easiest first"]
                                  ["best", "Best score"], ["most", "Most sung"], ["az", "A–Z"]];
 const SORT_KEY = "onkey.librarySort";
 const LEVELS_KEY = "onkey.libraryLevels";
+const IN_RANGE_KEY = "onkey.libraryInRange";
 const byName = (a: LibrarySong, b: LibrarySong) => a.track.name.localeCompare(b.track.name);
 /** Songs in `sort` order; `shown` comes in recent order (or hearted order for Favourites), kept for ties. */
 function sorted(songs: LibrarySong[], sort: Sort): LibrarySong[] {
@@ -42,6 +49,8 @@ export default function Library() {
   // the difficulty levels picked (none: every song) and the order, remembered too
   const [levels, setLevelsState] = useState<number[]>([]);
   const [sort, setSortState] = useState<Sort>("recent");
+  // only songs that suit your voice, as they are or an octave away (range.rs), remembered too
+  const [inRange, setInRangeState] = useState(false);
   useEffect(() => {
     try {
       const f = localStorage.getItem(FILTER_KEY);
@@ -50,17 +59,28 @@ export default function Library() {
       if (Array.isArray(l)) setLevelsState(l.filter(n => [1, 2, 3, 4, 5].includes(n)));
       const o = localStorage.getItem(SORT_KEY);
       if (SORTS.some(([k]) => k === o)) setSortState(o as Sort);
+      setInRangeState(localStorage.getItem(IN_RANGE_KEY) === "1");
     } catch {}
   }, []);
   const setFilter = (f: Filter) => { setFilterState(f); try { localStorage.setItem(FILTER_KEY, f); } catch {} };
   const setLevels = (l: number[]) => { setLevelsState(l); try { localStorage.setItem(LEVELS_KEY, JSON.stringify(l)); } catch {} };
   const toggleLevel = (n: number) => setLevels(levels.includes(n) ? levels.filter(x => x !== n) : [...levels, n].sort());
+  const setInRange = (on: boolean) => { setInRangeState(on); try { localStorage.setItem(IN_RANGE_KEY, on ? "1" : "0"); } catch {} };
   const setSort = (o: Sort) => { setSortState(o); try { localStorage.setItem(SORT_KEY, o); } catch {} };
   // hearts given on this page (over the library as loaded): on, and when
   const [hearts, setHearts] = useState<Map<string, string | null>>(new Map());
   function heart(s: LibrarySong, on: boolean) {
     setHearts(h => new Map(h).set(s.track.id, on ? nowLocal() : null));
     void setFavorite(s.track, on);
+  }
+  // "Learn again" asked for or taken back on this page (over the library as loaded)
+  const [again, setAgain] = useState<Map<string, boolean>>(new Map());
+  // asked for: it plays now, as Sing does, and that play learns it afresh (taken back: it's left as it was)
+  async function learnItAgain(s: LibrarySong, on: boolean) {
+    const st = await learnAgain(s.track.id, on).catch(() => null);
+    if (!st) return;
+    setAgain(a => new Map(a).set(s.track.id, st.learn_again));
+    if (st.learn_again) await sing(s);
   }
   async function forget(id: string) {
     await forgetSong(id);
@@ -73,7 +93,10 @@ export default function Library() {
   }
   // songs being learned right now show here too: the one playing, and any still finishing after their play
   useEffect(() => { live.start(); }, []);
-  const { song, takes, learning: jobs } = useSession();
+  const { song: playing, takes, learning: jobs, ended } = useSession();
+  // the play under way, while it is: once it ends (Stop learning and delete, say) its card goes, though the music
+  // app may play on
+  const song = ended ? null : playing;
   // newest activity first (top left): the song learning as it plays, then those finishing (the latest first), then
   // the library, the last played or learned first
   const learning = useMemo(() => {
@@ -89,7 +112,14 @@ export default function Library() {
   const learnFor = (t: LibrarySong["track"]): LearnJob | null =>
     learnNow(jobs, takes, song, t);   // (as useLearn)
   const settled = takes.filter(t => t.status !== "learning" && t.status !== "scoring").length;
-  useEffect(() => { getLibrary().then(r => setSongs(r.filter(s => s?.track?.id))).catch(() => setSongs([])); }, [settled]);
+  // a read that fails shows as that (with a retry), never as "Nothing learned yet"
+  const [readErr, setReadErr] = useState<{ error: string; detail: string } | null>(null);
+  const [tries, setTries] = useState(0);
+  useEffect(() => {
+    readList(getLibrary, "songs").then(r => {
+      if ("items" in r) { setSongs(r.items.filter(s => s?.track?.id)); setReadErr(null); } else setReadErr(r);
+    });
+  }, [settled, tries]);
   const all = useMemo(() => {
     if (songs === null) return null;
     const byId = new Map(songs.map(s => [s.track.id, s]));
@@ -109,17 +139,22 @@ export default function Library() {
   const partlyCount = withHearts.length - main.length;
   // songs at each difficulty level, for the level buttons
   const perLevel = useMemo(() => [1, 2, 3, 4, 5].map(n => main.filter(s => s.difficulty === n).length), [main]);
+  // songs that suit your voice; none fitted yet (no range of yours yet) and the filter isn't offered
+  const fitted = main.some(s => s.fit != null);
+  const inRangeCount = main.filter(s => s.fit_suits).length;
+  const rangeOn = inRange && fitted;
   // Favourites: the most recently hearted first (when sorted by Recent)
   const shown = useMemo(() => {
     let match = (filter === "partial" ? withHearts.filter(partly) : filter === "favorites" ? withHearts : main)
       .filter(s => `${s.track.name} ${s.track.artist}`.toLowerCase().includes(q.trim().toLowerCase()));
     if (levels.length) match = match.filter(s => s.difficulty != null && levels.includes(s.difficulty));
+    if (rangeOn) match = match.filter(s => s.fit_suits);
     if (filter === "unscored") match = match.filter(s => s.best == null);
     if (filter === "favorites")
       match = match.filter(s => s.favorite).sort((a, b) => (b.favorited_at ?? "").localeCompare(a.favorited_at ?? ""));
     return sorted(match, sort);
-  }, [withHearts, main, q, filter, levels, sort]); // eslint-disable-line
-  const narrowed = levels.length > 0 || q.trim() !== "";
+  }, [withHearts, main, q, filter, levels, sort, rangeOn]); // eslint-disable-line
+  const narrowed = levels.length > 0 || q.trim() !== "" || rangeOn;
 
   async function sing(s: LibrarySong) {
     setStarting(s.track.id);
@@ -130,26 +165,27 @@ export default function Library() {
 
   return (
     <div className="min-h-dvh bg-[radial-gradient(1200px_500px_at_50%_-10%,rgba(124,108,246,.10),transparent)]">
-      <header data-tauri-drag-region className="app-header flex items-center gap-5 px-6 pt-4 pb-3"><Logo /><Nav /></header>
-      <main className="mx-auto max-w-6xl px-6 pb-16">
+      <header data-tauri-drag-region className="app-header flex items-center gap-5 px-6 pt-4 pb-3"><Logo /><Nav /><span className="ml-auto"><WhatsNew /></span></header>
+      <main className="mx-auto max-w-6xl px-6 pb-16 min-[1400px]:max-w-[88rem]">
         <div className="mt-6 mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 className="text-3xl font-semibold tracking-tight">Library</h1>
             <p className="mt-1 text-ink-300">Songs OnKey has learned. Pick one to sing it with every note shown ahead.</p>
           </div>
-          {all && all.length > 0 && (
+          {!readErr && all && all.length > 0 && (
             <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search songs"
                    className="w-64 rounded-xl border border-white/8 bg-white/4 px-3.5 py-2 text-sm text-ink-100 placeholder:text-ink-400 outline-none transition focus:border-accent-400/50 focus:bg-white/6" />
           )}
         </div>
 
-        {all === null ? (
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{[0, 1, 2].map(i => <div key={i} className="glass h-36 rounded-3xl shimmer" />)}</div>
+        {readErr ? <ReadError {...readErr} onRetry={() => setTries(n => n + 1)} /> : all === null ? (
+          <div className={GRID}>{[0, 1, 2, 3].map(i => <div key={i} className="glass h-[88px] rounded-3xl shimmer" />)}</div>
         ) : all.length === 0 ? (
           <div className={`glass rounded-3xl px-6 text-center ${startersHidden === false ? "pt-16 pb-6" : "py-20"}`}>
             <h2 className="text-xl font-semibold">Nothing learned yet</h2>
             <p className="mx-auto mt-1 max-w-md text-ink-300">Play a song through once while OnKey is open and it learns the melody.
               A whole playlist works too: just let it play.</p>
+            <div className="mx-auto mt-6 max-w-[340px] text-left"><LearnSongGuide /></div>
             <Link href="/" className="mt-5 inline-block rounded-xl bg-accent-500 px-4 py-2 font-medium text-white transition hover:bg-accent-400">Start</Link>
             {startersHidden === false && <StarterSongs onHide={() => hideStarters(true)} className="mx-auto mt-12 max-w-4xl" />}
             {startersHidden && <button onClick={() => hideStarters(false)} className="mt-4 block w-full text-xs text-ink-500 transition hover:text-ink-200">Show songs to try</button>}
@@ -168,24 +204,17 @@ export default function Library() {
               </button>
             ))}
           </div>
-          <div role="group" aria-label="Difficulty" className="inline-flex items-center gap-1 rounded-full border border-white/8 bg-white/4 p-1 text-sm">
-            <span className="px-2 text-xs text-ink-400">Difficulty</span>
-            {[1, 2, 3, 4, 5].map(n => (
-              <button key={n} aria-pressed={levels.includes(n)} onClick={() => toggleLevel(n)}
-                      title={`${LEVELS[n - 1]}: ${perLevel[n - 1]} song${perLevel[n - 1] === 1 ? "" : "s"}`}
-                      aria-label={`${LEVELS[n - 1]} (${n} of 5)`}
-                      className={`group flex h-8 items-center gap-0.5 rounded-full px-2.5 outline-none transition focus-visible:ring-2 focus-visible:ring-accent-400/60
-                                  ${levels.includes(n) ? "bg-white/10" : "hover:bg-white/5"}`}>
-                {[1, 2, 3, 4, 5].map(i => (
-                  <span key={i} className={`h-1.5 w-1.5 rounded-full transition ${i > n ? "bg-ink-700"
-                    : levels.includes(n) ? "bg-white" : "bg-ink-300 group-hover:bg-ink-100"}`} />
-                ))}
-              </button>
-            ))}
-            {levels.length > 0 && <button onClick={() => setLevels([])} className="px-2 text-xs text-ink-400 transition hover:text-white">Clear</button>}
-          </div>
-          <SortMenu sort={sort} onSort={setSort} />
-          <span className="tabular text-sm text-ink-500">{shown.length} song{shown.length === 1 ? "" : "s"}</span>
+          <DifficultyPicker levels={levels} onToggle={toggleLevel} onClear={() => setLevels([])} counts={perLevel} />
+          {fitted && (
+            <button aria-pressed={rangeOn} onClick={() => setInRange(!rangeOn)}
+                    title={`Songs that fit your range, as they are or sung an octave lower or higher (octaves are forgiven): ${inRangeCount} song${inRangeCount === 1 ? "" : "s"}`}
+                    className={`rounded-full border border-white/8 px-3.5 py-2 text-sm outline-none transition focus-visible:ring-2 focus-visible:ring-accent-400/60
+                                ${rangeOn ? "bg-white/10 text-white" : "bg-white/4 text-ink-300 hover:text-white"}`}>
+              In your range
+            </button>
+          )}
+          <SortMenu sorts={SORTS} sort={sort} onSort={setSort} />
+          <span className="tabular text-sm text-ink-500">{shown.length} {filter === "partial" ? "partly learned" : "learned"}</span>
           </div>
           {filter === "partial" && partlyCount > 0 && (
             <div className="-mt-1 mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-1 text-sm text-ink-400">
@@ -201,61 +230,95 @@ export default function Library() {
           ) : shown.length === 0 ? (
             <p className="px-1 py-10 text-center text-ink-400">
               {filter === "partial" && !narrowed ? "Nothing partly learned: every song is ready." : filter === "unscored" && !narrowed ? "Every song has a score. Nice." : q.trim() ? <>No songs match “{q.trim()}”.</> : "No songs match these filters."}
-              {narrowed && <button onClick={() => { setQ(""); setLevels([]); }} className="ml-2 text-accent-300 underline-offset-2 hover:underline">Clear</button>}
+              {narrowed && <button onClick={() => { setQ(""); setLevels([]); setInRange(false); }} className="ml-2 text-accent-300 underline-offset-2 hover:underline">Clear</button>}
             </p>
           ) : (
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {shown.map(s => { const job = learnFor(s.track); return (
+          <div className={GRID}>
+            {shown.map(s => { const job = learnFor(s.track); const being = !!job || learning.has(s.track.id);
+                              const learnsAgain = again.get(s.track.id) ?? !!s.learn_again; return (
               <div key={s.track.id} role="button" tabIndex={0} aria-disabled={!!job || undefined}
-                   title={job ? "It can be sung once it’s learned" : undefined}
+                   aria-label={job ? undefined : `Sing ${s.track.name} by ${s.track.artist}`}
+                   title={job ? "It can be sung once it’s learned" : !s.ready ? "Play it through to finish learning" : undefined}
                    onClick={() => !job && !starting && sing(s)}
                    onKeyDown={e => { if (e.key === "Enter" && !job && !starting) sing(s); }}
-                   className={`glass group relative overflow-hidden rounded-3xl p-4 text-left transition
+                   // over the cards after it while its menu is open
+                   className={`glass group relative rounded-3xl p-3.5 text-left transition has-[[aria-expanded=true]]:z-20
                                ${job ? "cursor-default" : "cursor-pointer hover:-translate-y-0.5 hover:border-accent-400/35"} ${starting ? "opacity-60" : ""}`}>
-                <span className="absolute top-3 right-3 z-10 flex items-center" onClick={e => e.stopPropagation()}>
-                  <Heart on={!!s.favorite} onToggle={on => heart(s, on)} subtle />
-                  {!job && !learning.has(s.track.id) ? (
-                    <DeleteButton what="Delete this song (your takes stay in History; it goes to the Trash)" confirm="Delete this song?"
-                                  onDelete={() => forget(s.track.id)} />
-                  ) : (
-                    <DeleteButton what="Stop learning this and delete it (not a song, say)" confirm="Stop learning and delete?"
-                                  onDelete={() => stop(s.track)} />
-                  )}
-                </span>
-                <div className="flex items-start gap-3.5">
+                <div className="flex items-center gap-3.5">
                   <Cover name={s.track.name} art={s.track.art} link={s.track.link} />
-                  <div className="min-w-0 flex-1 pr-14">
+                  <div className="min-w-0 flex-1">
                     <div className="truncate font-medium">{s.track.name}</div>
                     <div className="truncate text-sm text-ink-400">{s.track.artist}</div>
-                    <div className="mt-2 flex items-center gap-2 text-xs">
+                    <div className="mt-1.5 flex items-center gap-2 whitespace-nowrap text-xs">
+                      {/* a status only when it isn't simply ready to sing */}
                       {job
                         ? <span className="flex items-center gap-1.5 rounded-full bg-accent-500/12 px-2 py-0.5 font-medium text-accent-300">
                             <span className="h-1.5 w-1.5 rounded-full bg-accent-400" />Learning</span>
-                        : s.ready
-                        ? <span className="rounded-full bg-good/12 px-2 py-0.5 font-medium text-good">Ready</span>
-                        : <span className="rounded-full bg-close/12 px-2 py-0.5 font-medium text-close">{Math.round(100 * s.fraction)}% learned</span>}
+                        : learnsAgain
+                        ? <span className="rounded-full bg-accent-500/12 px-2 py-0.5 font-medium text-accent-300"
+                                title="Its next play learns it afresh; until then it sings as before">Learns again next play</span>
+                        : !s.ready
+                        ? <span className="rounded-full bg-close/12 px-2 py-0.5 font-medium text-close">{Math.round(100 * s.fraction)}% learned</span>
+                        : s.relearn
+                        ? <span className="rounded-full bg-close/12 px-2 py-0.5 font-medium text-close"
+                                title={`Its lyrics slip at ${clock(s.relearn.at)} on your plays: learning it again should fix that (⋯ menu)`}>Relearn suggested</span>
+                        : s.best == null
+                        ? <span className="rounded-full bg-white/6 px-2 py-0.5 text-ink-300" title="You haven’t sung it with OnKey yet">Not scored yet</span>
+                        : null}
                       {s.difficulty != null && <Difficulty level={s.difficulty} />}
-                      {s.best != null && <span className="text-ink-400">best <span className="tabular font-semibold text-ink-100">{s.best}</span></span>}
-                      {s.app && !job && (
-                        <button onClick={e => { e.stopPropagation(); void openInApp(s.track.id); }} onKeyDown={e => e.stopPropagation()}
-                                title={`Open in ${s.app}`} className="truncate text-ink-500 underline-offset-2 transition hover:text-ink-200 hover:underline">
-                          in {s.app} ↗</button>
+                      {/* your plays of it (its page: best, trend, every take), once you've sung it */}
+                      {(s.takes ?? 0) > 0 && (
+                        <Link href={`/song?id=${encodeURIComponent(s.track.id)}`} onClick={e => e.stopPropagation()} onKeyDown={e => e.stopPropagation()}
+                              title="Your plays of this song" className="truncate text-ink-400 underline-offset-2 transition hover:text-ink-100 hover:underline">
+                          {s.takes} {s.takes === 1 ? "play" : "plays"}
+                          {s.best != null && <> · best <span className="tabular font-semibold text-ink-100">{s.best}</span></>}
+                        </Link>
                       )}
+                      {isDemo(s.track.id) && <span className="text-ink-500" title="An example song that comes with OnKey">demo song</span>}
                     </div>
+                    {/* how it suits your voice, when known */}
+                    {!job && s.ready && s.fit_label && (
+                      <div className={`mt-1 truncate text-xs ${s.fit === "fits" ? "text-good/90" : s.fit_suits ? "text-ink-300" : "text-close/90"}`}
+                           title={s.range_names ? `${s.fit_label}. Its notes: ${s.range_names[0]}–${s.range_names[1]}` : s.fit_label}>{s.fit_label}</div>
+                    )}
+                  </div>
+                  {/* the heart and the ⋯ menu (its app, delete) at the top; Sing below (the whole card sings it) */}
+                  <div className="-mt-1 -mr-1 flex flex-col items-end justify-between self-stretch">
+                    <span className="flex items-center" onClick={e => e.stopPropagation()} onKeyDown={e => e.stopPropagation()}>
+                      <Heart on={!!s.favorite} onToggle={on => heart(s, on)} subtle />
+                      <CardMenu label={`More for ${s.track.name}`}>
+                        {s.app && !job && !isDemo(s.track.id) && <MenuItem onSelect={() => void openInApp(s.track.id)}>Open in {s.app} ↗</MenuItem>}
+                        {s.ready && !being && !isDemo(s.track.id) && (
+                          <MenuItem onSelect={() => void learnItAgain(s, !learnsAgain)}>{learnsAgain ? "Don’t learn it again" : "Learn again"}</MenuItem>
+                        )}
+                        {/* the row presses its trash button, which asks before deleting (the label goes while it asks) */}
+                        <span onClick={e => { if (!(e.target as HTMLElement).closest("button")) e.currentTarget.querySelector("button")?.click(); }}
+                              className="flex cursor-pointer items-center gap-1 rounded-xl py-0.5 pr-3 pl-1 text-ink-300 transition hover:bg-white/8 [&:has(>span:first-child)>[data-label]]:hidden">
+                          {!being ? (
+                            <DeleteButton what="Delete this song (your takes stay in History; it goes to the Trash)" confirm="Delete this song?"
+                                          onDelete={() => forget(s.track.id)} />
+                          ) : (
+                            <DeleteButton what="Stop learning this and delete it (not a song, say)" confirm="Stop learning and delete?"
+                                          onDelete={() => stop(s.track)} />
+                          )}
+                          <span data-label>{being ? "Stop learning and delete" : "Delete"}</span>
+                        </span>
+                      </CardMenu>
+                    </span>
+                    {!job && (
+                      <span aria-hidden className="mr-1 mb-0.5 flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-0.5 text-sm font-medium text-accent-300 transition group-hover:bg-accent-500/15 group-hover:text-white">
+                        {starting === s.track.id ? "Starting…" : "Sing"}
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M8 5.5v13l11-6.5z" /></svg>
+                      </span>
+                    )}
                   </div>
                 </div>
-                <div className="mt-4 flex items-end justify-between gap-4 text-sm">
-                  {job ? <LearnBar job={job} showPct={false} className="min-w-0 flex-1" />
-                       : <span className="text-ink-400">{s.ready ? "Notes ahead" : "Play it through to finish learning"}</span>}
-                  {job ? (
+                {job && (
+                  <div className="mt-3 flex items-center gap-4 text-sm">
+                    <LearnBar job={job} showPct={false} className="min-w-0 flex-1" />
                     <span className="tabular shrink-0 font-medium text-ink-400">{learnLabel(job)}</span>
-                  ) : (
-                    <span className="flex shrink-0 items-center gap-1.5 font-medium text-accent-300 transition group-hover:text-white">
-                      {starting === s.track.id ? "Starting…" : "Sing"}
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M8 5.5v13l11-6.5z" /></svg>
-                    </span>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             ); })}
           </div>
@@ -276,60 +339,37 @@ export default function Library() {
   );
 }
 
-const LEVELS = ["Easy", "Moderate", "Medium", "Hard", "Very hard"];
+const LEVELS = DIFFICULTY;
+/** The cards: up to four across on a wide window. */
+const GRID = "grid gap-3 sm:grid-cols-2 lg:grid-cols-3 min-[1400px]:grid-cols-4";
 
 /** How hard a song is to sing, as 1-5 dots (store::difficulty): mostly the range of its melody. */
 function Difficulty({ level }: { level: number }) {
   const word = LEVELS[level - 1] ?? "";
   return (
-    <span className="flex items-center gap-0.5" role="img" aria-label={`Difficulty ${level} of 5: ${word}`}
+    <span className="tabular rounded-md border border-white/10 px-1.5 py-px text-ink-300" aria-label={`Difficulty ${level} of 5: ${word}`}
           title={`Difficulty ${level} of 5: ${word}. Mostly how wide the melody's range is.`}>
-      {[1, 2, 3, 4, 5].map(i => (
-        <span key={i} className={`h-1.5 w-1.5 rounded-full ${i <= level ? "bg-ink-300" : "bg-ink-700"}`} />
-      ))}
+      {level}<span className="text-ink-500">/5</span>
     </span>
   );
 }
 
 /** The order, as a pill like the filters beside it, opening a small menu. */
-function SortMenu({ sort, onSort }: { sort: Sort; onSort: (s: Sort) => void }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const away = (e: PointerEvent) => { if (!ref.current?.contains(e.target as Node)) setOpen(false); };
-    const esc = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
-    document.addEventListener("pointerdown", away); document.addEventListener("keydown", esc);
-    return () => { document.removeEventListener("pointerdown", away); document.removeEventListener("keydown", esc); };
-  }, [open]);
-  const label = SORTS.find(([k]) => k === sort)?.[1] ?? "Recent";
-  return (
-    <div ref={ref} className="relative ml-auto">
-      <button onClick={() => setOpen(o => !o)} aria-haspopup="menu" aria-expanded={open}
-              className="flex items-center gap-2 rounded-full border border-white/8 bg-white/4 py-2 pr-3 pl-4 text-sm text-ink-300 outline-none transition hover:text-white focus-visible:ring-2 focus-visible:ring-accent-400/60">
-        <span className="text-ink-400">Sort</span><span className="text-ink-100">{label}</span>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden
-             className={`text-ink-400 transition ${open ? "rotate-180" : ""}`}><path d="M6 9l6 6 6-6" /></svg>
-      </button>
-      {open && (
-        <div role="menu" className="absolute right-0 z-20 mt-2 w-48 overflow-hidden rounded-2xl border border-white/10 bg-ink-900/98 p-1 shadow-xl shadow-black/50">
-          {SORTS.map(([k, l]) => (
-            <button key={k} role="menuitemradio" aria-checked={sort === k} onClick={() => { onSort(k); setOpen(false); }}
-                    className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-sm transition hover:bg-white/6 ${sort === k ? "text-white" : "text-ink-300"}`}>
-              {l}{sort === k && <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden className="text-accent-400"><path d="M5 12l5 5 9-10" /></svg>}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 /** The Partly learned tab's "Delete all": every song shown there (not hearted ones), after asking. Each goes to the
  *  Trash as one deleted from its card does; takes stay in History. */
 function ClearPartly({ songs, hearted, narrowed, onDelete }: { songs: LibrarySong[]; hearted: number; narrowed: boolean; onDelete: (id: string) => Promise<void> }) {
   const [asking, setAsking] = useState(false);
   const [busy, setBusy] = useState(false);
+  // a delete that failed (the songs before it are gone, it and those after stay): said here, and it can be tried again
+  const [error, setError] = useState<string | null>(null);
+  async function deleteAll() {
+    setBusy(true);
+    setError(null);
+    const failed = await runDelete(async () => { for (const x of songs) await onDelete(x.track.id); });
+    setBusy(false);
+    if (failed) setError(failed);
+    else setAsking(false);
+  }
   if (songs.length === 0) return null;
   const n = songs.length, what = `${n} ${narrowed ? "shown " : ""}partly learned song${n === 1 ? "" : "s"}`;
   if (!asking) {
@@ -341,12 +381,20 @@ function ClearPartly({ songs, hearted, narrowed, onDelete }: { songs: LibrarySon
   }
   return (
     <span className="flex shrink-0 items-center gap-3" role="group" aria-label="Delete all partly learned songs">
-      <span className="text-ink-200">Delete {what}? Takes stay in History{hearted ? `; ${hearted} hearted kept` : ""}.</span>
-      <button disabled={busy} onClick={async () => { setBusy(true); for (const x of songs) await onDelete(x.track.id); setBusy(false); setAsking(false); }}
+      {error
+        ? <span className="text-off" role="alert">{error}</span>
+        : <span className="text-ink-200">Delete {what}? Takes stay in History{hearted ? `; ${hearted} hearted kept` : ""}.</span>}
+      <button disabled={busy} onClick={deleteAll}
               className="rounded-lg bg-red-500/80 px-3 py-1 font-medium text-white transition hover:bg-red-500 disabled:opacity-60">
-        {busy ? "Deleting…" : "Delete all"}
+        {busy ? "Deleting…" : error ? "Try again" : "Delete all"}
       </button>
-      <button disabled={busy} onClick={() => setAsking(false)} className="text-ink-400 transition hover:text-white">Cancel</button>
+      <button disabled={busy} onClick={() => { setAsking(false); setError(null); }} className="text-ink-400 transition hover:text-white">Cancel</button>
     </span>
   );
+}
+
+/** A song time as m:ss (2:06). */
+function clock(s: number) {
+  const t = Math.max(0, Math.round(s));
+  return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
 }

@@ -9,6 +9,7 @@ export const DOCS = [
   { href: "/docs/privacy/", title: "Privacy & legal" },
   { href: "/docs/faq/", title: "FAQ" },
   { href: "/docs/your-voice/", title: "Singing comfortably" },
+  { href: "/docs/beyond-pitch/", title: "Beyond pitch" },
   { href: "/docs/troubleshooting/", title: "Troubleshooting" },
   { href: "/docs/credits/", title: "Credits" },
 ];

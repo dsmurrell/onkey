@@ -1,6 +1,19 @@
 # Changelog
 
-## 0.1.0
+## 0.2.0 · 2026-10-31
+
+Pause listening, clearer paused songs, and audio interfaces that just work.
+
+- Pause listening (⌘⇧P, the Live chip or the OnKey menu): OnKey hears nothing until you resume.
+- A paused song shows when it'll be scored, with Finish now, and History shows the song you're singing.
+- Your voice is heard on whichever input of an audio interface your mic is on; virtual devices are listed apart.
+- Learn a song again from the Library, guides linked from Settings, and What's new in the app.
+- Fixes: quitting is instant, listening back stays in step after a skip, Sing starts a song cleanly, takes are
+  never lost on Finish, Library's delete works, and long radio streams stop at 20 minutes.
+
+All the details: https://singonkey.app/changelog/
+
+## 0.1.0 · 2026-10-22
 
 The first public release.
 

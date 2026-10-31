@@ -49,6 +49,12 @@ pub(crate) use knob;
 mod devkeep;
 #[cfg(keepaudio)]
 pub use devkeep::{keep_audio, keep_mic, keep_music};
+// and the tools that use what it keeps (lib.rs dev_hook)
+#[cfg(keepaudio)]
+#[path = "../dev/devhooks.rs"]
+mod devhooks;
+#[cfg(keepaudio)]
+pub use devhooks::dev_hook;
 
 #[cfg(not(keepaudio))]
 mod nokeep {
@@ -56,6 +62,7 @@ mod nokeep {
     pub fn keep_mic(_track: &crate::source::Track, _song_offset: f64, _heard: i64, _mic16: &[f32], _clean16: &[f32], _ref16: &[f32]) {}
     pub fn keep_audio(_track: &crate::source::Track, _song_offset: f64, _mix16: &[f32], _vocal16: &[f32],
                       _lyrics_given: &[(f64, String)], _lyrics_aligned: &[(f64, String)], _music48: Option<(&[i16], u32)>) {}
+    pub fn dev_hook(_name: &str, _args: &serde_json::Value) -> serde_json::Value { serde_json::Value::Null }
 }
 #[cfg(not(keepaudio))]
 pub use nokeep::*;

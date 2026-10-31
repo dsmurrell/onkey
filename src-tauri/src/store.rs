@@ -42,8 +42,28 @@ pub struct Store {
 
 const MAGIC: &[u8; 4] = b"OKS1";
 
+/// A song id as a file name: letters and digits, every other character '_'. That alone isn't one name per id
+/// ("youtube:ab-cd_efghi" and "youtube:ab_cd-efghi" were one file, so learning one played the other's notes and
+/// forgetting one trashed both): an id with anything but letters, digits and ':' also gets a hash of itself, after
+/// a '-' no plain name has. Ids of letters, digits and ':' (Spotify, Apple Music, ISRC, Shazam) keep the names
+/// they always had; the others' files are renamed once at start-up (`rename_to_safe_names`).
 fn safe(id: &str) -> String {
+    let plain = plain_name(id);
+    if id.chars().all(|c| c.is_ascii_alphanumeric() || c == ':') {
+        plain
+    } else {
+        format!("{plain}-{:016x}", fnv1a(id))
+    }
+}
+
+/// The file name every song id had before `safe` added a hash (see there).
+fn plain_name(id: &str) -> String {
     id.chars().map(|c| if c.is_ascii_alphanumeric() { c } else { '_' }).collect()
+}
+
+/// FNV-1a, 64-bit: the same for an id on every run and every Mac (std's hasher isn't promised to be).
+fn fnv1a(s: &str) -> u64 {
+    s.bytes().fold(0xcbf2_9ce4_8422_2325, |h, b| (h ^ b as u64).wrapping_mul(0x0000_0100_0000_01b3))
 }
 
 /// A take's id as the store names them (`new_take_dir`: "20261015-120000-Adele-Hello", "…-2"): letters,
@@ -57,8 +77,8 @@ pub fn valid_take_id(id: &str) -> bool {
         && !id.contains("..")
 }
 
-/// A song id from the window: something with a letter or digit in it (its file name is `safe`, letters, digits
-/// and '_' only, so it can't be a path whatever it is; this only keeps out ids that would name no song at all).
+/// A song id from the window: something with a letter or digit in it (its file name is `safe`, letters, digits,
+/// '_' and '-' only, so it can't be a path whatever it is; this only keeps out ids that would name no song at all).
 pub fn valid_song_id(id: &str) -> bool {
     id.len() <= 255 && id.chars().any(|c| c.is_ascii_alphanumeric())
 }
@@ -102,9 +122,9 @@ struct WriteLock {
 static WRITES: WriteLock = WriteLock { owner: std::sync::Mutex::new((None, 0)), free: std::sync::Condvar::new() };
 
 /// Held while one thread updates the store (see `WriteLock`).
-struct Writing;
+pub(crate) struct Writing;
 
-fn writing() -> Writing {
+pub(crate) fn writing() -> Writing {
     let me = std::thread::current().id();
     let mut o = WRITES.owner.lock().unwrap_or_else(|e| e.into_inner());
     while o.0.is_some_and(|t| t != me) {
@@ -126,12 +146,39 @@ impl Drop for Writing {
     }
 }
 
+/// A small file OnKey keeps whole and writes back changed (a list or a map): its contents, or the default when
+/// it isn't there yet. None when it's there but couldn't be read: then the caller mustn't write it back, as what
+/// it would write (the default plus one change) would replace everything in it. One that reads but is garbled
+/// is first moved aside, kept as "<name>.unreadable-<time>", and starts afresh.
+pub(crate) fn read_kept<T: serde::de::DeserializeOwned + Default>(path: &Path) -> Option<T> {
+    match std::fs::read(path) {
+        Ok(b) => serde_json::from_slice(&b).ok().or_else(|| {
+            let name = path.file_name()?.to_string_lossy().to_string();
+            let aside = path.with_file_name(format!("{name}.unreadable-{}", now_iso().replace(':', ".")));
+            std::fs::rename(path, &aside).ok()?;
+            if !cfg!(test) {
+                crate::engine::log(&format!("{name} was garbled: kept as {}, starting afresh", aside.display()));
+            }
+            Some(T::default())
+        }),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => Some(T::default()),
+        Err(_) => None,
+    }
+}
+
+/// Logged when a file couldn't be read and so was left as it is, not written over.
+pub(crate) fn log_unreadable(path: &Path) {
+    if !cfg!(test) {
+        crate::engine::log(&format!("couldn't read {}: left as it is, not written over", path.display()));
+    }
+}
+
 /// In the name of `write_atomic`'s temp files: ".<file>.tmp-<pid>-<n>".
 pub(crate) const TMP_MARK: &str = ".tmp-";
 
 /// Temp files left in `dir` by a write that never finished (OnKey was killed mid-write): another process's, and
 /// over ten minutes old (so a lab tool opening the same folder never takes one from under a running OnKey).
-fn sweep_temp_files(dir: &Path) {
+pub(crate) fn sweep_temp_files(dir: &Path) {
     let mine = format!("{TMP_MARK}{}-", std::process::id());
     let old = |e: &std::fs::DirEntry| e.metadata().ok().and_then(|m| m.modified().ok())
         .and_then(|t| t.elapsed().ok()).is_some_and(|age| age.as_secs() > 600);
@@ -171,6 +218,11 @@ impl Store {
 
     fn song_path(&self, id: &str, ext: &str) -> PathBuf {
         self.root.join("songs").join(format!("{}.{ext}", safe(id)))
+    }
+
+    /// Where a song's file with this extension is kept ("bin", "json", "syl.json", …): for installing the demo song.
+    pub fn song_file(&self, id: &str, ext: &str) -> PathBuf {
+        self.song_path(id, ext)
     }
 
     pub fn takes_dir(&self) -> PathBuf {
@@ -237,7 +289,30 @@ impl Store {
     fn save_song_noted(&self, track: &Track, mut midi: Vec<f32>, mut covered: Vec<bool>, mut onset: Vec<[f32; FP_BANDS]>,
                        note: (bool, bool)) -> bool {
         let _writing = writing();
-        let old = self.load_song(&track.id);
+        // its .json there but garbled (a sync tool, a disk fault): moved aside, kept, before this play writes one
+        // afresh (it was written over, its heart, lyric times and the rest lost)
+        let json = self.song_path(&track.id, "json");
+        if json.exists() && read_kept::<Value>(&json).is_none() {
+            log_unreadable(&json);
+            return false;
+        }
+        // what's learned of it already, or its .json (its heart, lyrics), there but unreadable just now: not saved
+        // over (this play's part alone, a .json without them)
+        if let Some(p) = ["bin", "json"].map(|e| self.song_path(&track.id, e)).into_iter().find(|p| p.exists() && std::fs::read(p).is_err()) {
+            log_unreadable(&p);
+            return false;
+        }
+        // learning it again: this play replaces what was learned (only once it learned enough to sing)
+        let again = self.learning_again(&track.id);
+        if again && !(Learned { midi: midi.clone(), covered: covered.clone(), onset: onset.clone() }).ready(track.duration) {
+            if !cfg!(test) {
+                crate::engine::log(&format!("{} - {}: learning it again, but this play heard too little of it to replace what was learned: the next play tries again",
+                                            track.artist, track.name));
+            }
+            return false;
+        }
+        let old = if again { None } else { self.load_song(&track.id) };
+        let first = !self.song_path(&track.id, "json").exists();
         if let Some(old) = &old {
             if !old.onset.is_empty() && !onset.is_empty() {
                 let Some(sh) = fingerprint_shift(&onset, &old.onset, &covered, &old.covered) else { return false };
@@ -276,6 +351,14 @@ impl Store {
             }
             return false;
         }
+        if again {
+            // what was made from the copy replaced (its signature, syllable bars, words heard) goes with it: made
+            // again from this play, as for a first one
+            for ext in ["shsig", "syl.json", "words"] {
+                let _ = std::fs::remove_file(self.song_path(&track.id, ext));
+            }
+            crate::lyrics::forget_learned(&track.id);
+        }
         {
             let mut track = track.clone();
             // keep a cover found earlier, and the Apple Music page found for the same cover
@@ -295,8 +378,12 @@ impl Store {
                 meta["length_guessed"] = json!(true);
             }
             if let Some(old) = self.song_meta(&track.id) {
-                // keep lyrics already lined up with this song, and its heart
-                for k in ["lyric_times", "lyric_check", "lyric_lines", "lyrics", "lyrics_placed", "favorite", "favorited_at", "played_in", "aliases"] {
+                // keep lyrics already lined up with this song, and its heart (learned again: not the lyric times,
+                // lined up with the copy replaced; this play lines them up afresh)
+                for k in ["lyric_times", "lyric_check", "lyric_lines", "lyrics", "lyrics_placed", "favorite", "favorited_at", "played_in", "aliases", "not_melody"] {
+                    if again && k.starts_with("lyric") {
+                        continue;
+                    }
                     if !old[k].is_null() {
                         meta[k] = old[k].clone();
                     }
@@ -306,7 +393,17 @@ impl Store {
             if let Some(at) = self.take_pending_favorite(&track.id) {
                 mark_favorite(&mut meta, true, &at);
             }
-            let _ = write_atomic(&self.song_path(&track.id, "json"), meta.to_string().as_bytes());
+            if let Err(e) = write_atomic(&self.song_path(&track.id, "json"), meta.to_string().as_bytes()) {
+                if !cfg!(test) {
+                    crate::engine::log(&format!("{} - {}: its details couldn't be saved: {e}", track.artist, track.name));
+                }
+                // a first save with notes and no .json would be a song sung but never listed, hearted or forgotten:
+                // the notes go too, and the next play learns it as a first play again
+                if first {
+                    let _ = std::fs::remove_file(self.song_path(&track.id, "bin"));
+                }
+                return false;
+            }
         }
         true
     }
@@ -347,12 +444,28 @@ impl Store {
     /// Where to open the song kept as `id` (or known by it in an app) in your music app; `running`: the app
     /// being listened to now, if any. With the song's track as stored, when it's learned here.
     pub fn open_pick(&self, id: &str, running: Option<Source>) -> (Pick, Option<Track>) {
+        let (pick, _, track) = self.pick_with_ids(id, running);
+        (pick, track)
+    }
+
+    /// The pick (see `open_pick`), the song's ids (the one it's kept under and its aliases), and its track.
+    fn pick_with_ids(&self, id: &str, running: Option<Source>) -> (Pick, Vec<String>, Option<Track>) {
         let m = self.song_meta(id).or_else(|| self.learned_metas().into_iter().find(|m| aliases(m).iter().any(|a| a == id)));
         let own = m.as_ref().and_then(|m| m["track"]["id"].as_str().map(String::from)).unwrap_or_else(|| id.to_string());
         let ids: Vec<String> = m.as_ref().map(aliases).unwrap_or_default();
         let played_in = m.as_ref().and_then(|m| m["played_in"].as_str().and_then(app_of_key));
         let track = m.and_then(|m| serde_json::from_value::<Track>(m["track"].clone()).ok());
-        (pick_app(&own, &ids, played_in, self.usual_app(), running), track)
+        let pick = pick_app(&own, &ids, played_in, self.usual_app(), running);
+        let mut all = vec![id.to_string(), own];
+        all.extend(ids);
+        (pick, all, track)
+    }
+
+    /// How OnKey starts the song kept as `id` (or known by it in an app) when you press Play or Sing: in the app its
+    /// "in Apple Music ↗" link names, by its id there (see `play_plan`). `open`: whether an app is running now.
+    pub fn play_plan(&self, id: &str, running: Option<Source>, open: impl Fn(Source) -> bool) -> PlayPlan {
+        let (pick, ids, _) = self.pick_with_ids(id, running);
+        play_plan(&ids, &pick, open)
     }
 
     fn learned_metas(&self) -> Vec<Value> {
@@ -361,6 +474,36 @@ impl Store {
             .filter_map(|e| serde_json::from_slice::<Value>(&std::fs::read(e.path()).ok()?).ok())
             .filter(|m| m["track"]["id"].is_string())
             .collect()
+    }
+
+    /// Once at start-up: songs whose files were named before `safe` gave ids with punctuation a name of their own
+    /// are renamed to it (each file, its .json last, so one stopped part way is finished at the next start). A
+    /// song whose new name is taken already is left as it is. Returns how many were renamed.
+    pub fn rename_to_safe_names(&self) -> usize {
+        let _writing = writing();
+        let songs = self.root.join("songs");
+        let mut n = 0;
+        for e in std::fs::read_dir(&songs).into_iter().flatten().flatten() {
+            let p = e.path();
+            if !is_song_meta(&p) {
+                continue;
+            }
+            let Some(id) = std::fs::read(&p).ok().and_then(|b| serde_json::from_slice::<Value>(&b).ok())
+                .and_then(|m| m["track"]["id"].as_str().map(String::from)) else { continue };
+            let (old, new) = (plain_name(&id), safe(&id));
+            if old == new || p.file_stem().is_none_or(|s| s.to_string_lossy() != old) || self.song_path(&id, "json").exists() {
+                continue;
+            }
+            let moved = ["bin", "syl.json", "shsig", "words", "json"].iter().try_for_each(|ext| {
+                let from = songs.join(format!("{old}.{ext}"));
+                if from.exists() { std::fs::rename(&from, self.song_path(&id, ext)) } else { Ok(()) }
+            });
+            match moved {
+                Ok(()) => n += 1,
+                Err(e) => crate::engine::log(&format!("library: {id} couldn't be renamed to its own file name: {e}")),
+            }
+        }
+        n
     }
 
     /// Once at start-up: the apps' ids and the app played in, for songs learned before they were kept: from the
@@ -424,7 +567,10 @@ impl Store {
                 let _ = write_atomic(&self.song_path(&id, "json"), m.to_string().as_bytes());
             }
         } else {
-            let mut p = self.pending_favorites();
+            let Some(mut p) = self.pending_favorites() else {
+                log_unreadable(&self.root.join("favorites-pending.json"));
+                return on;
+            };
             if on {
                 p.entry(id).or_insert_with(|| json!(now_iso()));
             } else {
@@ -445,14 +591,14 @@ impl Store {
         let id = self.favorite_id(t);
         match self.song_meta(&id) {
             Some(m) => m["favorite"].as_bool().unwrap_or(false),
-            None => self.pending_favorites().contains_key(&id),
+            None => self.pending_favorites().is_some_and(|p| p.contains_key(&id)),
         }
     }
 
-    fn pending_favorites(&self) -> serde_json::Map<String, Value> {
-        std::fs::read(self.root.join("favorites-pending.json")).ok()
-            .and_then(|b| serde_json::from_slice::<Value>(&b).ok())
-            .and_then(|v| v.as_object().cloned()).unwrap_or_default()
+    /// Hearts given to songs not saved yet; None if the file is there but couldn't be read (then it isn't
+    /// written over: see `read_kept`).
+    fn pending_favorites(&self) -> Option<serde_json::Map<String, Value>> {
+        read_kept(&self.root.join("favorites-pending.json"))
     }
 
     fn write_pending_favorites(&self, p: &serde_json::Map<String, Value>) {
@@ -467,7 +613,7 @@ impl Store {
     /// A heart given to `id` before it was saved: when (and it's no longer pending).
     fn take_pending_favorite(&self, id: &str) -> Option<String> {
         let _writing = writing();
-        let mut p = self.pending_favorites();
+        let mut p = self.pending_favorites()?;
         let at = p.remove(id)?;
         self.write_pending_favorites(&p);
         Some(at.as_str().map_or_else(now_iso, String::from))
@@ -496,6 +642,71 @@ impl Store {
         });
     }
 
+    /// The stretches of a learned song (song seconds, [from, to), in order) marked "Not the melody" on a take's page:
+    /// its learned notes there follow a backing vocal or a harmony instead of the lead, so they're left out of
+    /// every take's score (analysis::leave_out) and of the live one (Take::leave_out).
+    pub fn not_melody(&self, id: &str) -> Vec<(f64, f64)> {
+        self.song_meta(id).map(|m| stretches_of(&m["not_melody"])).unwrap_or_default()
+    }
+
+    /// Keep a learned song's "Not the melody" stretches (see `not_melody`), tidied (`tidy_stretches`); nothing
+    /// left removes them. Returns them as kept, or None when the song isn't learned.
+    pub fn set_not_melody(&self, id: &str, stretches: &[(f64, f64)]) -> Option<Vec<(f64, f64)>> {
+        let tidy = tidy_stretches(stretches);
+        let r = |x: f64| (x * 100.0).round() / 100.0;
+        let mut saved = None;
+        self.with_meta(id, |m| {
+            saved = Some(tidy.clone());
+            let was = m["not_melody"].clone();
+            match m.as_object_mut() {
+                Some(o) if tidy.is_empty() => { o.remove("not_melody"); }
+                Some(o) => { o.insert("not_melody".into(), json!(tidy.iter().map(|&(a, b)| [r(a), r(b)]).collect::<Vec<_>>())); }
+                None => return false,
+            }
+            m["not_melody"] != was
+        });
+        saved
+    }
+
+    /// The takes of a learned song (kept under its id, or under one it has played as): their ids.
+    pub fn takes_of(&self, id: &str) -> Vec<String> {
+        let ids: Vec<String> = std::iter::once(id.to_string()).chain(self.song_meta(id).map(|m| aliases(&m)).unwrap_or_default()).collect();
+        let mut out: Vec<String> = std::fs::read_dir(self.takes_dir()).into_iter().flatten().flatten()
+            .filter(|e| e.path().is_dir())
+            .filter(|e| std::fs::read(e.path().join("meta.json")).ok().and_then(|b| serde_json::from_slice::<Value>(&b).ok())
+                .is_some_and(|m| m["track"]["id"].as_str().is_some_and(|t| ids.iter().any(|i| i == t))))
+            .map(|e| e.file_name().to_string_lossy().into_owned()).collect();
+        out.sort();
+        out
+    }
+
+    /// Score a take again with the song's "Not the melody" stretches left out (`stretches`, song seconds; none: as
+    /// first scored), and keep it, marked as rescored then. Returns its score if it changed.
+    pub fn rescore_take(&self, take: &str, stretches: &[(f64, f64)]) -> Option<i64> {
+        let d = self.take_dir(take)?;
+        let meta: Value = serde_json::from_slice(&std::fs::read(d.join("meta.json")).ok()?).ok()?;
+        let off = meta["song_offset"].as_f64()?;   // (never placed in the song: nothing to leave out)
+        let mut r: Value = serde_json::from_slice(&std::fs::read(d.join("result.json")).ok()?).ok()?;
+        let was = r.clone();
+        // each part of the take at its own place in the song (a take kept before its places were: its offset throughout)
+        let mut places: Vec<(i64, i64, i64)> = meta["places"].as_array().map(|a| a.iter()
+            .filter_map(|p| Some((p[0].as_i64()?, p[1].as_i64()?, p[2].as_i64()?))).collect()).unwrap_or_default();
+        if places.is_empty() {
+            places.push((0, i64::MAX, (off / FRAME_S).round() as i64));
+        }
+        let frames = crate::analysis::take_frames(stretches, &places);
+        crate::analysis::leave_out(&mut r, &frames);
+        if r == was {
+            return None;
+        }
+        match r.as_object_mut() {
+            Some(o) if frames.is_empty() => { o.remove("rescored"); }
+            _ => r["rescored"] = json!(now_iso()),
+        }
+        write_atomic(&d.join("result.json"), r.to_string().as_bytes()).ok()?;
+        (r["score"] != was["score"]).then(|| r["score"].as_i64()).flatten()
+    }
+
     /// A learned song's length as kept (s), when it has one.
     pub fn song_duration(&self, id: &str) -> Option<f64> {
         self.song_meta(id)?["track"]["duration"].as_f64().filter(|d| *d > 0.0)
@@ -505,16 +716,19 @@ impl Store {
         serde_json::from_slice(&std::fs::read(self.song_path(id, "json")).ok()?).ok()
     }
 
-    /// Forget a learned song (to the Trash, so it can be recovered); your takes stay.
-    pub fn forget(&self, id: &str) {
+    /// Forget a learned song (to the Trash, so it can be recovered); your takes stay. If a file can't be moved
+    /// to the Trash it stops there with an error and nothing is deleted: its .json goes last, so a song only part
+    /// moved still shows in the Library and can be deleted again.
+    pub fn forget(&self, id: &str) -> Result<(), String> {
         if !valid_song_id(id) {
-            return;
+            return Err("not a song".into());
         }
         let _writing = writing();
-        for ext in ["bin", "json", "syl.json", "shsig", "words"] {
-            to_trash(&self.song_path(id, ext));
+        for ext in ["bin", "syl.json", "shsig", "words", "json"] {
+            to_trash(&self.song_path(id, ext))?;
         }
         crate::lyrics::forget_learned(id);
+        Ok(())
     }
 
     /// Keep a song's Shazam signature, made from `seconds` of its audio starting `start` s into the song. A
@@ -532,9 +746,13 @@ impl Store {
         let _ = write_atomic(&self.song_path(id, "shsig"), &b);
     }
 
-    /// A song's Shazam signature: (bytes, song seconds where it starts, seconds it covers).
+    /// A song's Shazam signature: (bytes, song seconds where it starts, seconds it covers). None while it's to be
+    /// learned again: made from the copy that's off, it would place that play off in the same way.
     pub fn signature(&self, id: &str) -> Option<(Vec<u8>, f64, f64)> {
         let b = std::fs::read(self.song_path(id, "shsig")).ok()?;
+        if self.learning_again(id) {
+            return None;
+        }
         if b.len() < 20 || &b[..4] != b"SHS1" {
             return None;
         }
@@ -552,6 +770,20 @@ impl Store {
             return None;
         }
         self.learned_tracks().into_iter().find(|k| same_title(k, t))
+    }
+
+    /// The ids "Stop learning and delete" forgets for song `t` being learned: its own, and the entry it's kept under
+    /// by its title (its ISRC) when that one is itself unfinished (not ready to sing, or being learned again). A
+    /// song learned in full before isn't touched: another video with the same title stopped is that video only.
+    pub fn stop_learning_ids(&self, t: &Track) -> Vec<String> {
+        let mut ids = vec![t.id.clone()];
+        if let Some(k) = self.known_as(t) {
+            let ready = self.load_song(&k.id).is_some_and(|l| l.ready(self.song_duration(&k.id).unwrap_or(k.duration)));
+            if !ready || self.learning_again(&k.id) {
+                ids.push(k.id);
+            }
+        }
+        ids
     }
 
     /// The id song `t` is kept under: one entry per song, by its ISRC when it has one (Shazam's), so a song heard
@@ -582,9 +814,10 @@ impl Store {
         // a heart given to the song under another id while it was being learned goes with it
         for k in same.iter().map(|k| k.id.as_str()).chain(std::iter::once(t.id.as_str())).filter(|k| *k != target.id) {
             if let Some(at) = self.take_pending_favorite(k) {
-                let mut p = self.pending_favorites();
-                p.entry(target.id.clone()).or_insert(json!(at));
-                self.write_pending_favorites(&p);
+                if let Some(mut p) = self.pending_favorites() {
+                    p.entry(target.id.clone()).or_insert(json!(at));
+                    self.write_pending_favorites(&p);
+                }
             }
         }
         if let Some(mut m) = self.song_meta(&target.id) {
@@ -644,6 +877,26 @@ impl Store {
                     m["played_in"] = f["played_in"].clone();
                     changed = true;
                 }
+                // stretches marked "Not the melody" on either are left out of the score of the one kept
+                let mine = stretches_of(&m["not_melody"]);
+                let theirs = stretches_of(&f["not_melody"]);
+                if !theirs.is_empty() {
+                    let both = tidy_stretches(&[mine.clone(), theirs].concat());
+                    if both != mine {
+                        m["not_melody"] = json!(both.iter().map(|(a, b)| [a, b]).collect::<Vec<_>>());
+                        changed = true;
+                    }
+                }
+                // its lyrics lined up with the song, when the one kept has none (and whether they were placed by the
+                // words heard, which goes with them)
+                if m["lyric_times"].is_null() && !f["lyric_times"].is_null() {
+                    for k in ["lyric_times", "lyric_check", "lyric_lines", "lyrics", "lyrics_placed"] {
+                        if !f[k].is_null() {
+                            m[k] = f[k].clone();
+                        }
+                    }
+                    changed = true;
+                }
                 changed
             });
         }
@@ -700,9 +953,13 @@ impl Store {
             .collect()
     }
 
-    /// Delete a take (to the Trash, so it can be recovered).
-    pub fn delete_take(&self, id: &str) -> bool {
-        self.take_dir(id).is_some_and(|d| to_trash(&d))
+    /// Delete a take (to the Trash, so it can be recovered). Not a take id: refused; already gone: done; can't be
+    /// moved to the Trash: an error, and it stays.
+    pub fn delete_take(&self, id: &str) -> Result<(), String> {
+        if !valid_take_id(id) {
+            return Err("not a take".into());
+        }
+        self.take_dir(id).map_or(Ok(()), |d| to_trash(&d))
     }
 
     /// Syllable bars for a learned song, if made: (start frame, end frame, MIDI note, syllable), song frames.
@@ -865,6 +1122,58 @@ impl Store {
         }
     }
 
+    /// "Learn again" asked for this song: its next play learns it from scratch, as a first play does (the copy
+    /// learned before is set aside, not merged into), and replaces it once that play learned enough to sing
+    /// (READY_COVERAGE). Until then the old copy is kept, so asking can be taken back.
+    pub fn learning_again(&self, id: &str) -> bool {
+        self.song_meta(id).is_some_and(|m| m["learn_again"].is_string())
+    }
+
+    /// A learned song's "Learn again" state, for its page: asked for, and `relearn` (see note_slips).
+    pub fn song_state(&self, id: &str) -> Value {
+        let m = self.song_meta(id).unwrap_or(Value::Null);
+        json!({"learned": !m.is_null(), "learn_again": m["learn_again"].is_string(), "relearn": m["relearn"]})
+    }
+
+    /// Ask for a song to be learned again on its next play (`on`), or take that back.
+    pub fn set_learn_again(&self, id: &str, on: bool) -> Result<(), String> {
+        if !valid_song_id(id) {
+            return Err("not a song".into());
+        }
+        let _writing = writing();
+        let mut m = self.song_meta(id).ok_or("not a learned song")?;
+        if on {
+            m["learn_again"] = json!(now_iso());
+        } else if let Some(o) = m.as_object_mut() {
+            o.remove("learn_again");
+        }
+        write_atomic(&self.song_path(id, "json"), m.to_string().as_bytes()).map_err(|e| e.to_string())
+    }
+
+    /// Jumps that blamed this song's learned copy on one play (listen::take_slips: where, by how much), kept with
+    /// it, the last few plays' worth. The same jump on two plays means the copy is off there: the song is marked
+    /// `relearn` (where and by how much), returned. A new learn writes the record afresh, without either.
+    pub fn note_slips(&self, id: &str, slips: &[(f64, f64)]) -> Option<(f64, f64)> {
+        if slips.is_empty() {
+            return None;
+        }
+        let _writing = writing();
+        let mut m = self.song_meta(id)?;
+        let mut plays: Vec<Vec<(f64, f64)>> = serde_json::from_value(m["slips"].clone()).unwrap_or_default();
+        plays.push(slips.to_vec());
+        let n = plays.len();
+        if n > 5 {
+            plays.drain(..n - 5);
+        }
+        let again = repeated_slip(&plays);
+        m["slips"] = json!(plays);
+        if let Some((at, by)) = again {
+            m["relearn"] = json!({"at": (at * 10.0).round() / 10.0, "by": (by * 100.0).round() / 100.0, "since": now_iso()});
+        }
+        let _ = write_atomic(&self.song_path(id, "json"), m.to_string().as_bytes());
+        again
+    }
+
     /// A learned song was just played (sung or learned): it goes first in the library.
     pub fn played(&self, id: &str) {
         let _writing = writing();
@@ -875,9 +1184,11 @@ impl Store {
     }
 
     /// Learned songs, the last played or learned first, with your best score from your takes and how many there are.
+    /// The best is like with like: of the takes scored at the level of your latest one (`best_level`).
     pub fn library(&self) -> Vec<Value> {
         let usual = self.usual_app();
         let mut best: std::collections::HashMap<String, i64> = Default::default();
+        let mut best_level: std::collections::HashMap<String, String> = Default::default();
         let mut last: std::collections::HashMap<String, String> = Default::default();
         let mut sung: std::collections::HashMap<String, u32> = Default::default();
         for t in self.takes() {
@@ -890,6 +1201,11 @@ impl Store {
             }
             if t["coverage"].as_f64().unwrap_or(0.0) >= 0.1 {
                 *sung.entry(id.clone()).or_default() += 1;
+                // takes come newest first: the first one sets the level the best is taken at
+                let level = t["level"].as_str().unwrap_or("relaxed");
+                if best_level.entry(id.clone()).or_insert_with(|| level.to_string()) != level {
+                    continue;
+                }
                 let s = t["score"].as_i64().unwrap_or(0);
                 let e = best.entry(id).or_insert(s);
                 *e = (*e).max(s);
@@ -906,8 +1222,9 @@ impl Store {
                 let at = [m["learned"].as_str(), m["played"].as_str(), last.get(&id).map(|s| s.as_str())]
                     .into_iter().flatten().max().unwrap_or("").to_string();
                 json!({"track": m["track"], "learned": m["learned"], "fraction": frac, "difficulty": self.difficulty(&id), "takes": sung.get(&id).copied().unwrap_or(0),
-                       "ready": frac >= READY_COVERAGE, "best": best.get(&id), "active": at,
+                       "ready": frac >= READY_COVERAGE, "best": best.get(&id), "best_level": best_level.get(&id), "active": at,
                        "favorite": m["favorite"].as_bool().unwrap_or(false), "favorited_at": m["favorited_at"],
+                       "learn_again": m["learn_again"].is_string(), "relearn": m["relearn"],
                        "app": pick_app(&id, &aliases(&m), m["played_in"].as_str().and_then(app_of_key), usual, None).app.name()})
             }).collect();
         rows.sort_by(|a, b| b["active"].as_str().unwrap_or("").cmp(a["active"].as_str().unwrap_or("")));
@@ -916,10 +1233,31 @@ impl Store {
 
     /// How hard a learned song is to sing, 1 (easy) to 5 (very hard), from its notes (`difficulty`).
     pub fn difficulty(&self, id: &str) -> Option<u8> {
+        difficulty(&self.song_bars(id)?)
+    }
+
+    /// A learned song's syllable bars (start and end in 10 ms song frames, MIDI note), if it has them.
+    pub fn song_bars(&self, id: &str) -> Option<Vec<(i64, i64, i64)>> {
         let v: Value = serde_json::from_slice(&std::fs::read(self.song_path(id, "syl.json")).ok()?).ok()?;
-        let bars: Vec<(i64, i64, i64)> = v["bars"].as_array()?.iter()
-            .filter_map(|b| Some((b[0].as_i64()?, b[1].as_i64()?, b[2].as_i64()?))).collect();
-        difficulty(&bars)
+        Some(v["bars"].as_array()?.iter().filter_map(|b| Some((b[0].as_i64()?, b[1].as_i64()?, b[2].as_i64()?))).collect())
+    }
+
+    /// Whether the folder of takes (and, with `songs`, of learned songs) can be read: an empty list from one that
+    /// can't is "couldn't read your takes", not "no takes yet". A folder not there (nothing saved yet) is fine.
+    pub fn readable(&self, songs: bool) -> Result<(), String> {
+        let dirs = [Some(("takes", self.takes_dir())), songs.then(|| ("songs", self.root.join("songs")))];
+        for (what, d) in dirs.into_iter().flatten() {
+            match std::fs::read_dir(&d) {
+                Err(e) if e.kind() != std::io::ErrorKind::NotFound => {
+                    if !cfg!(test) {
+                        crate::engine::log(&format!("couldn't read {}: {e}", d.display()));
+                    }
+                    return Err(format!("couldn't read the {what} folder ({e})"));
+                }
+                _ => {}
+            }
+        }
+        Ok(())
     }
 
     /// Every take's summary, newest first.
@@ -958,6 +1296,8 @@ impl Store {
         // where in the song the recording starts, for playing it back with the song
         if let Some(m) = std::fs::read(d.join("meta.json")).ok().and_then(|b| serde_json::from_slice::<Value>(&b).ok()) {
             r["song_offset"] = m["song_offset"].clone();
+            // (and, a take with a jump in it, each stretch's own place: Take::stretches)
+            r["places"] = m["places"].clone();
         }
         // every take's recording is kept, up to a cap for them all (takeaudio::retain): past it the oldest go
         r["audio_kept"] = json!(crate::takeaudio::recording(&d).is_some());
@@ -971,7 +1311,7 @@ pub fn app_key(app: Source) -> Option<&'static str> {
         Source::Spotify => Some("spotify"),
         Source::Music => Some("music"),
         Source::YouTube => Some("youtube"),
-        Source::Other => None,
+        Source::Other | Source::Demo => None,
     }
 }
 
@@ -1110,6 +1450,33 @@ pub fn pick_app(id: &str, aliases: &[String], played_in: Option<Source>, usual: 
     }
 }
 
+/// How a song is started from OnKey: played in `app` by `id`, or not (`NoId`: OnKey knows no id for it in `app`,
+/// the app it opens in, nor in another app that's running, so there's nothing to tell an app to play).
+#[derive(Debug, Clone, PartialEq)]
+pub enum PlayPlan {
+    Start { app: Source, id: String },
+    NoId { app: Source },
+}
+
+/// Which app starts a song and by which id. The app it opens in (`pick`, as its "in Apple Music ↗" link says) by its
+/// id there, whatever the id it was asked by belongs to: a song learned from Spotify and last played in Apple Music
+/// starts in Apple Music, as its link says (it was started in Spotify while the link said Apple Music). With no id
+/// there (learned from Spotify, or only heard), another app's id when that app is running (`open`); else `NoId`,
+/// and the window says so and offers to open it in its app. `ids`: the id asked by, the one it's kept under, its aliases.
+pub fn play_plan(ids: &[String], pick: &Pick, open: impl Fn(Source) -> bool) -> PlayPlan {
+    if let Some(id) = &pick.id {
+        return PlayPlan::Start { app: pick.app, id: id.clone() };
+    }
+    let other = ids.iter().find(|i| {
+        let a = Source::of_id(i);
+        a != Source::Other && a != pick.app && open(a)
+    });
+    match other {
+        Some(id) => PlayPlan::Start { app: Source::of_id(id), id: id.clone() },
+        None => PlayPlan::NoId { app: pick.app },
+    }
+}
+
 /// Set a song's heart in its .json, and when it was given (kept, not cleared, when it's taken away).
 fn mark_favorite(meta: &mut Value, on: bool, at: &str) {
     meta["favorite"] = json!(on);
@@ -1118,26 +1485,57 @@ fn mark_favorite(meta: &mut Value, on: bool, at: &str) {
     }
 }
 
-/// Move a file or folder to the user's Trash (~/.Trash), named so it doesn't clash; deleted outright if that fails.
-fn to_trash(p: &Path) -> bool {
+/// What the window shows when a delete couldn't move something to the Trash (nothing was deleted).
+pub const TRASH_FAILED: &str = "Couldn't move it to the Trash, so nothing was deleted.";
+
+/// Move a file or folder to the user's Trash (~/.Trash), named so it doesn't clash. Never deleted outright: if
+/// the move fails it stays where it is and this says so (a failed move once fell through to deleting it).
+fn to_trash(p: &Path) -> Result<(), String> {
+    let home = std::env::var_os("HOME").ok_or_else(|| TRASH_FAILED.to_string())?;
+    trash_into(p, &Path::new(&home).join(".Trash"))
+}
+
+/// `to_trash` into `trash` (a test's folder). Nothing there: nothing to do.
+fn trash_into(p: &Path, trash: &Path) -> Result<(), String> {
     if !p.exists() {
-        return false;
+        return Ok(());
     }
-    if let Some(home) = std::env::var_os("HOME") {
-        let name = p.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
-        let dest = Path::new(&home).join(".Trash").join(format!("OnKey {} {name}", now_iso().replace(':', ".")));
-        if std::fs::rename(p, &dest).is_ok() {
-            return true;
+    let name = p.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
+    let dest = trash.join(format!("OnKey {} {name}", now_iso().replace(':', ".")));
+    std::fs::rename(p, &dest).map_err(|e| {
+        if !cfg!(test) {
+            crate::engine::log(&format!("couldn't move {} to the Trash ({e}): left where it is", p.display()));
         }
-    }
-    if p.is_dir() { std::fs::remove_dir_all(p).is_ok() } else { std::fs::remove_file(p).is_ok() }
+        TRASH_FAILED.to_string()
+    })
 }
 
 /// songs/<track>.json (not the .syl.json syllable files beside it)
 /// Two tracks with the same artist and title (letters and digits, any case): the same song under two ids.
 pub fn same_title(a: &Track, b: &Track) -> bool {
+    // the demo song is its own entry: never merged with (or into) a song of the same name learned from an app
+    if crate::demo::is_demo(&a.id) || crate::demo::is_demo(&b.id) {
+        return false;
+    }
     let norm = |s: &str| s.to_lowercase().chars().filter(|c| c.is_alphanumeric()).collect::<String>();
-    !norm(&a.name).is_empty() && norm(&a.name) == norm(&b.name) && norm(&a.artist) == norm(&b.artist)
+    !norm(&a.name).is_empty() && norm(&a.name) == norm(&b.name) && same_artist(&a.artist, &b.artist)
+}
+
+/// The same artist, as apps credit a song differently: one's artists are all among the other's (Spotify credits
+/// Shallow to "Lady Gaga", Apple Music to "Lady Gaga & Bradley Cooper": it was learned again from Spotify).
+pub fn same_artist(a: &str, b: &str) -> bool {
+    let names = |s: &str| -> Vec<String> {
+        let s = s.to_lowercase();
+        let s = [" feat. ", " feat ", " ft. ", " with ", " x ", " and ", " & ", ", "].iter().fold(s, |s, sep| s.replace(sep, "|"));
+        s.split('|').map(|n| n.chars().filter(|c| c.is_alphanumeric()).collect::<String>()).filter(|n| !n.is_empty()).collect()
+    };
+    let (na, nb) = (names(a), names(b));
+    let whole = |s: &str| s.to_lowercase().chars().filter(|c| c.is_alphanumeric()).collect::<String>();
+    if whole(a) == whole(b) {
+        return true;    // (as before: "Simon & Garfunkel" is one name either way)
+    }
+    let (short, long) = if na.len() <= nb.len() { (na, nb) } else { (nb, na) };
+    !short.is_empty() && short.iter().all(|n| long.contains(n))
 }
 
 fn is_song_meta(p: &Path) -> bool {
@@ -1149,13 +1547,56 @@ fn is_apple_art(url: &str) -> bool {
     url.strip_prefix("https://").and_then(|r| r.split('/').next()).is_some_and(|host| host.ends_with(".mzstatic.com"))
 }
 
+/// Stretches (s) as JSON kept them: [[from, to], …].
+fn stretches_of(v: &Value) -> Vec<(f64, f64)> {
+    v.as_array().map(|a| a.iter().filter_map(|p| Some((p[0].as_f64()?, p[1].as_f64()?))).collect()).unwrap_or_default()
+}
+
+/// Stretches of a song (s) in order, none before 0 or shorter than a tenth of a second, overlapping or touching
+/// ones made one.
+pub fn tidy_stretches(x: &[(f64, f64)]) -> Vec<(f64, f64)> {
+    let mut v: Vec<(f64, f64)> = x.iter().filter(|(a, b)| a.is_finite() && b.is_finite())
+        .map(|&(a, b)| (a.min(b).max(0.0), a.max(b).max(0.0))).filter(|(a, b)| b - a >= 0.1).collect();
+    v.sort_by(|p, q| p.0.total_cmp(&q.0));
+    let mut out: Vec<(f64, f64)> = Vec::new();
+    for (a, b) in v {
+        match out.last_mut() {
+            Some(l) if a <= l.1 => l.1 = l.1.max(b),
+            _ => out.push((a, b)),
+        }
+    }
+    out
+}
+
+/// Takes' summaries as last made, by folder: (result.json's time, the level shown, the summary). Scoring a take at
+/// another level takes a few ms, so a long history is scored once per level change, not on every look.
+static SUMMARIES: std::sync::Mutex<Option<std::collections::HashMap<PathBuf, (std::time::SystemTime, &'static str, Value)>>> =
+    std::sync::Mutex::new(None);
+
+/// A take's summary, scored at the level chosen in Settings (analysis::at_level: a take sung at another level is
+/// scored again, so every score shown is at one level; it keeps "sung_level" and "sung_score").
 fn take_summary(d: &Path) -> Option<Value> {
-    let r: Value = serde_json::from_slice(&std::fs::read(d.join("result.json")).ok()?).ok()?;
+    let level = crate::dsp::Level::current();
+    let when = std::fs::metadata(d.join("result.json")).and_then(|m| m.modified()).ok()?;
+    if let Some((w, l, v)) = SUMMARIES.lock().unwrap().as_ref().and_then(|c| c.get(d)) {
+        if *w == when && *l == level.name() {
+            return Some(v.clone());
+        }
+    }
+    let v = take_summary_at(d, level)?;
+    SUMMARIES.lock().unwrap().get_or_insert_with(Default::default).insert(d.to_path_buf(), (when, level.name(), v.clone()));
+    Some(v)
+}
+
+fn take_summary_at(d: &Path, level: crate::dsp::Level) -> Option<Value> {
+    let mut r: Value = serde_json::from_slice(&std::fs::read(d.join("result.json")).ok()?).ok()?;
+    crate::analysis::at_level(&mut r, level);
     Some(json!({"id": d.file_name()?.to_string_lossy(), "track": r["track"], "recorded": r["recorded"],
         "score": r["score"], "accuracy": r["accuracy"], "coverage": r["coverage"], "within50": r["within50"],
         "bias_cents": r["bias_cents"], "latency_ms": r["latency_ms"], "live_score": r["live"]["score"],
         "repeat": r["live"]["cached"].as_bool().unwrap_or(false), "mode": r["mode"], "blind": r["blind"],
-        "notes_hit": r["notes_hit"], "notes_total": r["notes_total"], "app": r["app"]}))
+        "notes_hit": r["notes_hit"], "notes_total": r["notes_total"], "app": r["app"], "rescored": r["rescored"],
+        "level": crate::dsp::Level::parse(r["level"].as_str()).name(), "sung_level": r["sung_level"], "sung_score": r["sung_score"]}))
 }
 
 pub fn now_iso() -> String {
@@ -1341,6 +1782,13 @@ fn on_phrases(lyrics: &[(f64, String)], starts: &[f64]) -> f64 {
 /// later plays are Exact) only when it fits the learned singing (`voiced`, song frames of the learned line) at least
 /// nearly as well as the kept times do (and half its lines on phrase starts); a pairing that doesn't is shown but not kept (Unchecked). None pair: the
 /// first entry with LRCLIB's timing (Unfit). None when there are no candidates.
+/// A jump of the latest play (the last of `plays`) seen on an earlier one too: at the same place (within 3 s) and
+/// by the same amount (within 0.25 s). Where and by how much, as the latest play saw it.
+fn repeated_slip(plays: &[Vec<(f64, f64)>]) -> Option<(f64, f64)> {
+    let (last, before) = plays.split_last()?;
+    last.iter().copied().find(|&(at, by)| before.iter().flatten().any(|&(a, b)| (a - at).abs() <= 3.0 && (b - by).abs() <= 0.25))
+}
+
 pub fn learned_play(kept: &Kept, candidates: &[Vec<(f64, String)>], voiced: Option<&[bool]>) -> Option<LearnedPlay> {
     if let Some(e) = candidates.iter().find(|e| kept.times.len() == e.len() && lyrics_check(e) == kept.check) {
         let lyrics = e.iter().zip(&kept.times).map(|(l, t)| (*t, l.1.clone())).collect();
@@ -1558,6 +2006,18 @@ mod tests {
     use super::*;
 
     #[test]
+    fn a_jump_seen_again_at_the_same_place_suggests_a_relearn() {
+        // Take On Me, 28 Oct: +1.27 s at 2:06 on every play
+        assert_eq!(repeated_slip(&[vec![(126.4, 1.27)]]), None);
+        assert_eq!(repeated_slip(&[vec![(126.4, 1.27)], vec![(125.6, 1.27)]]), Some((125.6, 1.27)));
+        // elsewhere, or by another amount: not the same fault
+        assert_eq!(repeated_slip(&[vec![(126.4, 1.27)], vec![(60.0, 1.27)]]), None);
+        assert_eq!(repeated_slip(&[vec![(126.4, 1.27)], vec![(126.0, 2.1)]]), None);
+        // an older play's jump that this play didn't see: nothing new to say
+        assert_eq!(repeated_slip(&[vec![(126.4, 1.27)], vec![(126.0, 1.3)], vec![]]), None);
+    }
+
+    #[test]
     fn syllables_found_in_the_lyrics_and_given_back() {
         // made-up words (no song lyrics in the repo)
         let lyrics = vec![(10.0, "We've walked the hills, sung them all,".to_string()), (14.0, String::new()),
@@ -1654,6 +2114,86 @@ mod tests {
     }
 
     #[test]
+    fn learning_again_replaces_the_copy_once_a_play_learned_enough() {
+        let dir = std::env::temp_dir().join(format!("onkey-learnagain-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let store = Store::new(dir.clone());
+        let song = Track { id: "isrc:GBY".into(), name: "Song".into(), artist: "A".into(), duration: 100.0, ..Default::default() };
+        let n = (100.0 / FRAME_S) as usize;
+        assert!(store.set_learn_again(&song.id, true).is_err(), "not learned: nothing to learn again");
+        assert!(store.save_song(&song, vec![60.0; n], vec![true; n], vec![[1.0; FP_BANDS]; n]));
+        store.save_signature(&song.id, b"sig", 0.0, 90.0);
+        assert!(store.set_favorite(&song, true));
+        assert!(store.set_learn_again(&song.id, true).is_ok());
+        assert!(store.learning_again(&song.id) && store.song_state(&song.id)["learn_again"] == true);
+        assert!(store.signature(&song.id).is_none(), "set aside while it's learned again");
+        // taken back: as it was
+        store.set_learn_again(&song.id, false).unwrap();
+        assert!(!store.learning_again(&song.id) && store.signature(&song.id).is_some());
+        store.set_learn_again(&song.id, true).unwrap();
+        // a play that heard half of it: not enough to sing, the old copy stays and so does the ask
+        assert!(!store.save_song(&song, vec![62.0; n], (0..n).map(|i| i < n / 2).collect(), vec![[2.0; FP_BANDS]; n]));
+        assert_eq!(store.load_song(&song.id).unwrap().midi[0], 60.0);
+        assert!(store.learning_again(&song.id));
+        // one that heard 90%: replaces it, not merged in (the last 10% isn't the old copy's), the ask is done,
+        // the old signature gone with it, the heart kept
+        assert!(store.save_song(&song, vec![63.0; n], (0..n).map(|i| i < n * 9 / 10).collect(), vec![[3.0; FP_BANDS]; n]));
+        let now = store.load_song(&song.id).unwrap();
+        assert_eq!(now.midi[0], 63.0);
+        assert!(!now.covered[n - 1]);
+        assert!(!store.learning_again(&song.id));
+        assert!(store.signature(&song.id).is_none());
+        assert_eq!(store.song_meta(&song.id).unwrap()["favorite"], true);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn not_the_melody_is_kept_with_the_song_and_rescores_its_takes() {
+        let dir = std::env::temp_dir().join(format!("onkey-notmelody-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let store = Store::new(dir.clone());
+        std::fs::create_dir_all(dir.join("songs")).unwrap();
+        let song = Track { id: "isrc:GBX".into(), name: "Song".into(), artist: "A".into(), duration: 100.0, ..Default::default() };
+        let n = (100.0 / FRAME_S) as usize;
+        assert!(store.set_not_melody(&song.id, &[(1.0, 2.0)]).is_none(), "not learned: nothing kept");
+        assert!(store.save_song(&song, vec![60.0; n], vec![true; n], vec![[1.0; FP_BANDS]; n]));
+        assert!(store.not_melody(&song.id).is_empty());
+        // tidied: in order, overlapping ones made one, a slip of a click dropped
+        let kept = store.set_not_melody(&song.id, &[(50.0, 55.0), (12.0, 10.0), (54.0, 58.25), (70.0, 70.05)]).unwrap();
+        assert_eq!(kept, vec![(10.0, 12.0), (50.0, 58.25)]);
+        assert_eq!(store.not_melody(&song.id), kept);
+        // kept when more of the song is learned (its first 10 s again)
+        assert!(store.save_song(&song, vec![61.0; n], (0..n).map(|i| i < 1000).collect(), vec![[1.0; FP_BANDS]; n]));
+        assert_eq!(store.not_melody(&song.id), kept);
+
+        // a take of it starting 40 s in (song frame 4000), right for 10 s then 10 s on a backing vocal's notes;
+        // another song's take
+        let take = |name: &str, id: &str| {
+            let (d, _) = store.new_take_dir(name).unwrap();
+            let err: Vec<Option<f32>> = (0..2000).map(|i| Some(if i < 1000 { 0.0 } else { 300.0 })).collect();
+            std::fs::write(d.join("meta.json"), json!({"track": {"id": id}, "song_offset": 40.0}).to_string()).unwrap();
+            std::fs::write(d.join("result.json"), json!({"track": {"id": id}, "score": 67, "accuracy": 0.667, "coverage": 1.0,
+                "notes": [], "notes_hit": 0, "notes_total": 0, "lines": [], "ref": vec![Some(60.0); 2000], "err": err}).to_string()).unwrap();
+        };
+        take("20261026-010000-A-Song", &song.id);
+        take("20261026-020000-B-Other", "isrc:OTHER");
+        let takes = store.takes_of(&song.id);
+        assert_eq!(takes, vec!["20261026-010000-A-Song".to_string()]);
+        assert_eq!(store.rescore_take(&takes[0], &[(50.0, 60.0)]), Some(100));
+        let r = store.take_result(&takes[0]).unwrap();
+        assert_eq!((r["left_out"].clone(), r["rescored"].is_string()), (json!([[1000, 2000]]), true));
+        assert!(store.takes().iter().any(|t| t["id"] == takes[0] && t["rescored"].is_string() && t["score"] == 100));
+        // the same again changes nothing; put back, it's as first scored and no longer marked
+        assert_eq!(store.rescore_take(&takes[0], &[(50.0, 60.0)]), None);
+        assert!(store.set_not_melody(&song.id, &[]).unwrap().is_empty());
+        assert!(store.not_melody(&song.id).is_empty());
+        assert_eq!(store.rescore_take(&takes[0], &[]), Some(67));
+        let r = store.take_result(&takes[0]).unwrap();
+        assert!(r["rescored"].is_null() && r["left_out"].is_null() && r["scored_first"].is_null());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
     fn a_song_learned_under_another_id_is_found_by_its_title() {
         // learned from Shazam's match (by ISRC), then played with Spotify's own id: the same song, ready to sing
         let dir = std::env::temp_dir().join(format!("onkey-knownas-{}", std::process::id()));
@@ -1670,6 +2210,176 @@ mod tests {
         assert!(store.known_as(&t("spotify:track:x", "Castle on the Hill - Acoustic")).is_none(), "another version");
         assert!(store.known_as(&learned).is_none(), "kept under its own id");
         let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn stopping_a_song_being_learned_never_forgets_a_learned_one_with_its_title() {
+        let dir = std::env::temp_dir().join(format!("onkey-stopids-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let store = Store::new(dir.clone());
+        std::fs::create_dir_all(dir.join("songs")).unwrap();
+        let t = |id: &str| Track { id: id.into(), name: "Hello".into(), artist: "Adele".into(), duration: 100.0, ..Default::default() };
+        let n = (100.0 / crate::dsp::FRAME_S) as usize;
+        // learned in full from Spotify; a video with the same title being learned is stopped: the video only
+        let learned = t("spotify:track:hello");
+        assert!(store.save_song(&learned, vec![60.0; n], vec![true; n], vec![[1.0; FP_BANDS]; n]));
+        let video = t("youtube:YQHsXMglC9A");
+        assert_eq!(store.stop_learning_ids(&video), vec![video.id.clone()]);
+        assert!(store.song_path(&learned.id, "json").exists(), "nothing changed on the way");
+        // asked to be learned again: that entry is unfinished, and goes too
+        store.set_learn_again(&learned.id, true).unwrap();
+        assert_eq!(store.stop_learning_ids(&video), vec![video.id.clone(), learned.id.clone()]);
+        // only part learned (kept under its ISRC): it goes too
+        let _ = std::fs::remove_dir_all(dir.join("songs"));
+        std::fs::create_dir_all(dir.join("songs")).unwrap();
+        let part = t("isrc:GBBKS1500214");
+        assert!(store.save_song(&part, vec![60.0; n], (0..n).map(|i| i < n / 4).collect(), vec![[1.0; FP_BANDS]; n]));
+        assert_eq!(store.stop_learning_ids(&video), vec![video.id.clone(), part.id.clone()]);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn ids_differing_only_in_punctuation_have_files_of_their_own() {
+        // the names songs always had stay theirs
+        assert_eq!(safe("spotify:track:6PCUP3dWmTjcTtXY02oFdT"), "spotify_track_6PCUP3dWmTjcTtXY02oFdT");
+        assert_eq!(safe("isrc:GBAHS1700004"), "isrc_GBAHS1700004");
+        // two YouTube ids one '-'/'_' apart: two names, the same on every run
+        let (a, b) = (safe("youtube:ab-cd_efghi"), safe("youtube:ab_cd-efghi"));
+        assert_ne!(a, b);
+        assert_eq!(a, safe("youtube:ab-cd_efghi"));
+        assert!(a.starts_with("youtube_ab_cd_efghi-") && a.chars().all(|c| c.is_ascii_alphanumeric() || c == '_' || c == '-'));
+        assert_ne!(safe("a:b"), safe("a_b"));
+        // a song kept under the old shared name is renamed to its own, once, every file with it
+        let dir = std::env::temp_dir().join(format!("onkey-safenames-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let store = Store::new(dir.clone());
+        let id = "youtube:ab-cd_efghi";
+        let old = dir.join("songs").join("youtube_ab_cd_efghi");
+        std::fs::write(old.with_extension("json"), json!({"track": {"id": id, "name": "Hello", "artist": "Adele"}}).to_string()).unwrap();
+        std::fs::write(old.with_extension("bin"), b"bin").unwrap();
+        std::fs::write(dir.join("songs/spotify_track_x.json"), json!({"track": {"id": "spotify:track:x", "name": "X", "artist": "Y"}}).to_string()).unwrap();
+        assert_eq!(store.rename_to_safe_names(), 1);
+        assert!(!old.with_extension("json").exists() && !old.with_extension("bin").exists());
+        assert_eq!(std::fs::read(store.song_path(id, "bin")).unwrap(), b"bin");
+        assert!(store.song_path(id, "json").exists() && dir.join("songs/spotify_track_x.json").exists());
+        assert_eq!(store.rename_to_safe_names(), 0, "once");
+        // the other id, one '-'/'_' apart, has nothing learned now
+        assert!(!store.song_path("youtube:ab_cd-efghi", "json").exists());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn a_file_that_cant_be_read_is_never_written_over() {
+        use std::os::unix::fs::PermissionsExt;
+        let dir = std::env::temp_dir().join(format!("onkey-kept-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let store = Store::new(dir.clone());
+        let set = |p: &Path, mode| std::fs::set_permissions(p, std::fs::Permissions::from_mode(mode)).unwrap();
+        let t = |id: &str| Track { id: id.into(), name: "Hello".into(), artist: "Adele".into(), duration: 100.0, ..Default::default() };
+        // read_kept: not there is the default; there and whole is it; garbled is moved aside (kept), then afresh
+        let list = dir.join("list.json");
+        assert_eq!(read_kept::<Vec<String>>(&list), Some(vec![]));
+        std::fs::write(&list, r#"["a","b"]"#).unwrap();
+        assert_eq!(read_kept::<Vec<String>>(&list), Some(vec!["a".to_string(), "b".to_string()]));
+        std::fs::write(&list, r#"["a","#).unwrap();
+        assert_eq!(read_kept::<Vec<String>>(&list), Some(vec![]));
+        let aside: Vec<_> = std::fs::read_dir(&dir).unwrap().flatten()
+            .filter(|e| e.file_name().to_string_lossy().starts_with("list.json.unreadable-")).collect();
+        assert!(aside.len() == 1 && std::fs::read(aside[0].path()).unwrap() == br#"["a","#);
+        // hearts given to songs being learned: an unreadable file of them isn't replaced by one with only the new heart
+        let pending = dir.join("favorites-pending.json");
+        std::fs::write(&pending, r#"{"spotify:track:a":"2026-10-01T10:00:00"}"#).unwrap();
+        set(&pending, 0o000);
+        let unreadable = std::fs::read(&pending).is_err();      // (not as root)
+        store.set_favorite(&t("spotify:track:b"), true);
+        assert!(store.take_pending_favorite("spotify:track:a").is_none() || !unreadable);
+        set(&pending, 0o644);
+        if unreadable {
+            assert_eq!(std::fs::read_to_string(&pending).unwrap(), r#"{"spotify:track:a":"2026-10-01T10:00:00"}"#);
+        }
+        // a learned song whose .bin can't be read just now isn't saved over with this play's part alone
+        let n = (100.0 / crate::dsp::FRAME_S) as usize;
+        let part = |a: usize, b: usize| (0..n).map(|i| (a..b).contains(&i)).collect::<Vec<bool>>();
+        assert!(store.save_song(&t("isrc:X"), vec![60.0; n], part(0, 9000), Vec::new()));
+        let bin = store.song_path("isrc:X", "bin");
+        let before = std::fs::read(&bin).unwrap();
+        set(&bin, 0o000);
+        let saved = store.save_song(&t("isrc:X"), vec![62.0; n], part(9000, 10000), Vec::new());
+        set(&bin, 0o644);
+        if unreadable {
+            assert!(!saved, "refused");
+            assert_eq!(std::fs::read(&bin).unwrap(), before, "left as it was");
+        }
+        assert!(store.save_song(&t("isrc:X"), vec![62.0; n], part(9000, 10000), Vec::new()), "readable again: saved");
+        assert!(store.load_song("isrc:X").unwrap().fraction(100.0) > 0.99);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn a_folder_that_cant_be_read_is_an_error_not_an_empty_list() {
+        use std::os::unix::fs::PermissionsExt;
+        let dir = std::env::temp_dir().join(format!("onkey-unreadable-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let store = Store::new(dir.clone());
+        assert_eq!(store.readable(true), Ok(()), "empty folders: no takes yet, not an error");
+        // not there at all (nothing saved yet): fine too
+        let fresh = Store { root: dir.join("nowhere") };
+        assert_eq!(fresh.readable(true), Ok(()));
+        // a folder that can't be listed
+        let set = |d: &Path, mode| std::fs::set_permissions(d, std::fs::Permissions::from_mode(mode)).unwrap();
+        set(&dir.join("songs"), 0o000);
+        let songs = store.readable(true);
+        let takes_only = store.readable(false);
+        set(&dir.join("songs"), 0o755);
+        set(&dir.join("takes"), 0o000);
+        let takes = store.readable(false);
+        set(&dir.join("takes"), 0o755);
+        let _ = std::fs::remove_dir_all(&dir);
+        if std::fs::read_dir("/var/root").is_ok() {
+            return;     // (as root every folder can be read)
+        }
+        assert!(songs.is_err_and(|e| e.contains("songs")));
+        assert_eq!(takes_only, Ok(()));
+        assert!(takes.is_err_and(|e| e.contains("takes")));
+    }
+
+    #[test]
+    fn a_delete_that_cant_reach_the_trash_deletes_nothing() {
+        let dir = std::env::temp_dir().join(format!("onkey-trash-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let store = Store::new(dir.join("data"));
+        let (take, _) = store.new_take_dir("20261026-120000-Adele-Hello").unwrap();
+        std::fs::write(take.join("result.json"), "{}").unwrap();
+        let song = store.song_path("isrc:X", "json");
+        std::fs::write(&song, "{}").unwrap();
+        // a Trash that can't be moved into (not there): an error, and both stay
+        let nowhere = dir.join("no-trash");
+        assert_eq!(trash_into(&take, &nowhere), Err(TRASH_FAILED.to_string()));
+        assert_eq!(trash_into(&song, &nowhere), Err(TRASH_FAILED.to_string()));
+        assert!(take.join("result.json").exists() && song.exists(), "nothing deleted outright");
+        // a Trash that's there: moved into it, whole
+        let trash = dir.join("Trash");
+        std::fs::create_dir_all(&trash).unwrap();
+        assert_eq!(trash_into(&take, &trash), Ok(()));
+        assert!(!take.exists());
+        let moved: Vec<_> = std::fs::read_dir(&trash).unwrap().flatten().map(|e| e.path()).collect();
+        assert!(moved.len() == 1 && moved[0].join("result.json").exists(), "{moved:?}");
+        // already gone: nothing to do
+        assert_eq!(trash_into(&take, &nowhere), Ok(()));
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn an_artist_credited_differently_is_the_same_artist() {
+        assert!(same_artist("Lady Gaga", "Lady Gaga & Bradley Cooper"));
+        assert!(same_artist("Ed Sheeran feat. Khalid", "Ed Sheeran"));
+        assert!(same_artist("Simon & Garfunkel", "Simon & Garfunkel"));
+        assert!(same_artist("Beyoncé, JAY-Z", "JAY-Z & Beyoncé"));
+        assert!(!same_artist("Lady Gaga", "Bradley Cooper & Lukas Nelson"));
+        assert!(!same_artist("Paul Simon", "Simon & Garfunkel"));
+        assert!(!same_artist("", "Adele"));
+        let t = |id: &str, artist: &str| Track { id: id.into(), name: "Shallow".into(), artist: artist.into(), ..Default::default() };
+        assert!(same_title(&t("spotify:track:2VxeLyX666F8uXCJ0dZF8B", "Lady Gaga"), &t("isrc:USUM71813192", "Lady Gaga & Bradley Cooper")));
     }
 
     #[test]
@@ -1699,6 +2409,104 @@ mod tests {
         assert_eq!(store.canonical(&t("isrc:GBX", "Hello")).id, "isrc:GBX");
         assert!(store.load_song(&hello).is_none() && store.load_song("isrc:GBX").is_some());
         assert_eq!(store.merge_duplicates(), 0);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn a_garbled_song_json_is_kept_aside_not_written_over() {
+        let dir = std::env::temp_dir().join(format!("onkey-garbled-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let store = Store::new(dir.clone());
+        let t = Track { id: "spotify:track:g".into(), name: "Hello".into(), artist: "Adele".into(), duration: 100.0, ..Default::default() };
+        let n = (100.0 / crate::dsp::FRAME_S) as usize;
+        std::fs::write(store.song_path(&t.id, "json"), br#"{"track": {"id": "spotify:track:g"}, "favorite": tr"#).unwrap();
+        assert!(store.save_song(&t, vec![60.0; n], vec![true; n], vec![[1.0; FP_BANDS]; n]));
+        let aside: Vec<_> = std::fs::read_dir(dir.join("songs")).unwrap().flatten()
+            .filter(|e| e.file_name().to_string_lossy().starts_with("spotify_track_g.json.unreadable-")).collect();
+        assert_eq!(aside.len(), 1, "the garbled one kept beside it");
+        assert!(store.song_meta(&t.id).is_some(), "and a whole one written");
+        assert_eq!(store.learned_tracks().len(), 1, "the one set aside isn't listed as a song");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn a_merge_keeps_what_was_marked_on_the_entry_merged_away() {
+        let dir = std::env::temp_dir().join(format!("onkey-mergekeep-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let store = Store::new(dir.clone());
+        let t = |id: &str| Track { id: id.into(), name: "Hello".into(), artist: "Adele".into(), duration: 100.0, ..Default::default() };
+        let n = (100.0 / crate::dsp::FRAME_S) as usize;
+        let onset: Vec<[f32; FP_BANDS]> = (0..n).map(|i| [((i * 37 % 101) as f32) / 10.0; FP_BANDS]).collect();
+        let (from, to) = (t("spotify:track:a"), t("isrc:GBX"));
+        assert!(store.save_song(&from, vec![60.0; n], (0..n).map(|i| i < n / 2).collect(), onset.clone()));
+        assert!(store.save_song(&to, vec![60.0; n], (0..n).map(|i| i >= n / 2).collect(), onset.clone()));
+        store.set_not_melody(&from.id, &[(10.0, 20.0)]);
+        store.set_not_melody(&to.id, &[(15.0, 30.0), (60.0, 70.0)]);
+        store.with_meta(&from.id, |m| { m["lyric_times"] = json!([1.0, 2.0]); m["lyrics_placed"] = json!(true); true });
+        store.merge_into(&from.id, &to);
+        assert_eq!(store.not_melody(&to.id), vec![(10.0, 30.0), (60.0, 70.0)], "both entries' stretches");
+        let m = store.song_meta(&to.id).unwrap();
+        assert_eq!(m["lyric_times"], json!([1.0, 2.0]), "the lyric times of the one merged away, the kept one having none");
+        assert!(store.lyrics_placed(&to.id));
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn the_app_and_id_a_song_starts_by() {
+        let ids = |v: &[&str]| v.iter().map(|s| s.to_string()).collect::<Vec<_>>();
+        let pick = |app, id: Option<&str>| Pick { app, id: id.map(String::from) };
+        let start = |app, id: &str| PlayPlan::Start { app, id: id.to_string() };
+        let none = |_: Source| false;
+        let spotify_open = |s: Source| s == Source::Spotify;
+        // learned from Spotify, last played in Apple Music (its link says Apple Music): Apple Music, by its id there,
+        // though it was asked for by its Spotify id (it used to start in Spotify)
+        let both = ids(&["spotify:track:5fVZ", "spotify:track:5fVZ", "music:AB12"]);
+        assert_eq!(play_plan(&both, &pick(Source::Music, Some("music:AB12")), none), start(Source::Music, "music:AB12"));
+        // kept by its ISRC, opens in Apple Music, no Apple Music id: nothing to play it by (it used to "start" and do nothing)
+        let heard = ids(&["isrc:X", "isrc:X"]);
+        assert_eq!(play_plan(&heard, &pick(Source::Music, None), none), PlayPlan::NoId { app: Source::Music });
+        assert_eq!(play_plan(&heard, &pick(Source::Music, None), |_| true), PlayPlan::NoId { app: Source::Music });
+        // learned from Spotify, heard in Apple Music since (no id there): Spotify's id when Spotify is running, else none
+        let sp = ids(&["isrc:X", "isrc:X", "spotify:track:5fVZ"]);
+        assert_eq!(play_plan(&sp, &pick(Source::Music, None), spotify_open), start(Source::Spotify, "spotify:track:5fVZ"));
+        assert_eq!(play_plan(&sp, &pick(Source::Music, None), none), PlayPlan::NoId { app: Source::Music });
+        // learned from Apple Music, opens in Spotify with no id there, Apple Music not running: none (it isn't launched
+        // for a song you'd expect in Spotify)
+        let mu = ids(&["isrc:X", "isrc:X", "music:AB12"]);
+        assert_eq!(play_plan(&mu, &pick(Source::Spotify, None), none), PlayPlan::NoId { app: Source::Spotify });
+        assert_eq!(play_plan(&mu, &pick(Source::Spotify, None), |s| s == Source::Music), start(Source::Music, "music:AB12"));
+        // a Spotify song that opens in Spotify: as before
+        let own = ids(&["spotify:track:5fVZ", "spotify:track:5fVZ"]);
+        assert_eq!(play_plan(&own, &pick(Source::Spotify, Some("spotify:track:5fVZ")), none), start(Source::Spotify, "spotify:track:5fVZ"));
+    }
+
+    #[test]
+    fn the_demo_song_starts_in_onkey_whatever_app_is_usual_or_running() {
+        // (test-all: library-play's play plan with demo-song's Source::Demo) the Library's Play on the demo starts
+        // OnKey's own player, never Spotify or Apple Music
+        let id = "demo:stand-by-me-placeholder";
+        for (usual, running) in [(None, None), (Some(Source::Spotify), Some(Source::Music)), (Some(Source::Music), Some(Source::Spotify))] {
+            let pick = pick_app(id, &[], None, usual, running);
+            assert_eq!(pick, Pick { app: Source::Demo, id: Some(id.to_string()) });
+            assert_eq!(play_plan(&[id.to_string(), id.to_string()], &pick, |_| true), PlayPlan::Start { app: Source::Demo, id: id.to_string() });
+        }
+    }
+
+    #[test]
+    fn a_song_starts_where_its_link_opens() {
+        let dir = std::env::temp_dir().join(format!("onkey-playplan-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let store = Store::new(dir.clone());
+        std::fs::create_dir_all(dir.join("songs")).unwrap();
+        let t = Track { id: "spotify:track:5fVZ".into(), name: "Yellow".into(), artist: "Coldplay".into(), duration: 100.0, ..Default::default() };
+        let n = (100.0 / crate::dsp::FRAME_S) as usize;
+        assert!(store.save_song(&t, vec![60.0; n], vec![true; n], vec![[1.0; FP_BANDS]; n]));
+        // played in Apple Music since: the link and Play both say Apple Music, by its id there
+        store.note_play("spotify:track:5fVZ", "music:AB12", Source::Music);
+        assert_eq!(store.open_pick("spotify:track:5fVZ", None).0, Pick { app: Source::Music, id: Some("music:AB12".into()) });
+        assert_eq!(store.play_plan("spotify:track:5fVZ", None, |_| false), PlayPlan::Start { app: Source::Music, id: "music:AB12".into() });
+        // asked by its Apple Music id (a take's), the same
+        assert_eq!(store.play_plan("music:AB12", None, |_| false), PlayPlan::Start { app: Source::Music, id: "music:AB12".into() });
         let _ = std::fs::remove_dir_all(&dir);
     }
 

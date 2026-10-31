@@ -14,6 +14,8 @@ github.com              contacts  # update check (latest.json from this repo's r
 open.spotify.com        link      # open a song or the starter playlist in Spotify
 music.apple.com         link      # open a song in Apple Music
 www.youtube.com         link      # open or search a song on YouTube
+music.youtube.com       text      # only recognised in your browser tab's address (a YouTube Music video); never contacted (youtube.rs)
+m.youtube.com           text      # only recognised in your browser tab's address (mobile YouTube); never contacted (youtube.rs)
 dsmurrell.com           link      # "Made by" in Settings
 discord.gg              link      # "Join OnKey's Discord" in Settings
 singonkey.app           link      # OnKey's website (allowed for Settings links)

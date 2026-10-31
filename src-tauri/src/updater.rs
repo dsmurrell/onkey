@@ -157,6 +157,7 @@ pub fn restart_when_ready(app: AppHandle, shared: Arc<Mutex<engine::Shared>>, qu
     let at_click = playing(&shared).filter(|p| p.1).map(|p| p.0);
     let now = status(&app);
     let _ = app.emit("onkey-update", now.clone());
+    let available = now["available"].clone();
     std::thread::spawn(move || {
         while !song_over(at_click.as_deref(), playing(&shared).as_ref().map(|(id, p)| (id.as_str(), *p))) {
             std::thread::sleep(Duration::from_millis(500));
@@ -172,7 +173,7 @@ pub fn restart_when_ready(app: AppHandle, shared: Arc<Mutex<engine::Shared>>, qu
             app.restart();
         }
         RESTART_WANTED.store(false, Ordering::SeqCst);
-        set_state(&app, json!({"state": "error", "error": "the update couldn't be installed"}));
+        set_state(&app, json!({"state": "error", "error": "the update couldn't be installed", "available": available}));
     });
     now
 }

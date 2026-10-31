@@ -60,7 +60,7 @@ address in a release.
 OnKey is for practising at home, with music you're entitled to play. Please:
 
 - Keep what it learns to yourself. Its transcription of each song's melody is for your practice, so don't share or
-  publish it.
+  publish it. Sharing OnKey itself is welcome.
 - To share a take, use **Share** on its page. It makes a short video of your voice and your pitch line, with no
   music, and you can add the song from Instagram's own music library, which is licensed for this. Headphone takes
   are best: sung on speakers, some of the song is in your recording. Don't post screen recordings with the music

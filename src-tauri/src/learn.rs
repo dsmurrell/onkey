@@ -253,10 +253,22 @@ impl Workers {
                     crate::progress::stage(crate::progress::Stage::Waiting);     // (shown: waiting its turn)
                     g = cv.wait(g).unwrap();
                 };
-                let r = f(&mut *set.0, &mut *set.1);
-                lock.lock().unwrap().0.push(set);
-                cv.notify_one();
-                r
+                // a panic in the models (a model file not shaped as the code expects, say) mustn't keep the one slot
+                // for good: every later song would wait at "Waiting" forever. The set is let go and its slot freed
+                match std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut *set.0, &mut *set.1))) {
+                    Ok(r) => {
+                        lock.lock().unwrap_or_else(|e| e.into_inner()).0.push(set);
+                        cv.notify_one();
+                        r
+                    }
+                    Err(_) => {
+                        drop(set);
+                        lock.lock().unwrap_or_else(|e| e.into_inner()).1 -= 1;
+                        cv.notify_one();
+                        crate::engine::log("learning: the models failed (a panic): that set let go");
+                        Err("learning crashed".into())
+                    }
+                }
             }
         }
     }
@@ -331,8 +343,11 @@ impl Learner {
         let quick_run = quick.clone();
         let handle = std::thread::Builder::new().name("onkey-learn".into()).spawn(move || {
             lower_priority();
-            let r = run(&mut workers, rate, rx, &shared, &stop, defer, &reports, &quick_run);
-            reports.lock().unwrap().take();
+            // (a panic anywhere in it still counts this learner done, so the models can be let go and a quit
+            // doesn't wait on it)
+            let r = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| run(&mut workers, rate, rx, &shared, &stop, defer, &reports, &quick_run)))
+                .unwrap_or_else(|_| Err("learning crashed".into()));
+            reports.lock().unwrap_or_else(|e| e.into_inner()).take();
             workers.release();
             RUNNING.fetch_sub(1, Ordering::SeqCst);
             r
@@ -365,6 +380,17 @@ impl Learner {
     pub fn push(&self, stereo: Vec<f32>) {
         if let Some(tx) = &self.tx {
             let _ = tx.send(stereo);
+        }
+    }
+
+    /// `seconds` of silence (time skipped in the song), in pieces of at most 10 s rather than one buffer.
+    pub fn push_silence(&self, seconds: f64, rate: f64) {
+        let mut left = (seconds.max(0.0) * rate) as usize;
+        let piece = (10.0 * rate) as usize;
+        while left > 0 {
+            let n = left.min(piece.max(1));
+            self.push(vec![0.0; n * 2]);
+            left -= n;
         }
     }
 
@@ -535,6 +561,25 @@ pub(crate) mod tests {
             assert_eq!(l.finish().expect("learned").vocal16.len(), 50 * SR);
         }
         assert!(LOADED.load(Ordering::SeqCst) <= SEPARATING_AT_ONCE, "{} sets loaded", LOADED.load(Ordering::SeqCst));
+    }
+
+    #[test]
+    fn a_panic_in_the_shared_models_frees_their_slot() {
+        struct Panics;
+        impl Separator for Panics {
+            fn separate(&mut self, _: &[f32], _: f64) -> Result<Vec<f32>, String> {
+                panic!("a model shaped other than expected");
+            }
+        }
+        let bad = Learner::start_with(Box::new(|| Ok((Box::new(Panics) as Box<dyn Separator>, Box::new(NoPitch) as Box<dyn VocalPitch>))), 8000.0);
+        bad.push(vec![0.1; 2 * 8000 * 30]);
+        assert!(bad.finish().is_err());
+        // the next song gets models (it waited forever for the slot before)
+        let good = Learner::start_with(Box::new(|| Ok((Box::new(Slow(0.0)) as Box<dyn Separator>, Box::new(NoPitch) as Box<dyn VocalPitch>))), 8000.0);
+        good.push(vec![0.1; 2 * 8000 * 30]);
+        let (tx, rx) = std::sync::mpsc::channel();
+        std::thread::spawn(move || { let _ = tx.send(good.finish().map(|o| o.vocal16.len())); });
+        assert_eq!(rx.recv_timeout(Duration::from_secs(20)).expect("not stuck waiting"), Ok(30 * SR));
     }
 
     #[test]

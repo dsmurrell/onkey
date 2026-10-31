@@ -8,5 +8,16 @@
   <string>OnKey listens to the music playing on your Mac to learn the singer's melody. It never saves the music or sends it. In listening mode a short fingerprint of it (not the audio) goes to Apple's Shazam to name the song.</string>
   <key>NSAppleEventsUsageDescription</key>
   <string>OnKey asks Spotify, Music or your browser (for YouTube) what's playing and controls playback when you press play, skip or start over.</string>
+  <key>CFBundleURLTypes</key>
+  <array>
+    <dict>
+      <key>CFBundleURLName</key>
+      <string>OnKey take link</string>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>onkey</string>
+      </array>
+    </dict>
+  </array>
 </dict>
 </plist>

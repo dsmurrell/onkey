@@ -3,8 +3,8 @@
 # it. make-dmg.sh runs it on every DMG it makes; anyone can run it on a DMG they downloaded, from a checkout of the
 # same version. It checks:
 #   - the disk image holds OnKey.app, an Applications link and its install window's layout, nothing else
-#   - the app holds only the files a release should (binary, Info.plist, icon, notices, models.rs's models,
-#     signature, ticket, provisioning profile)
+#   - the app holds only the files a release should (binary, Info.plist, icon, notices, models.rs's models, the
+#     demo song's files that git tracks in src-tauri/demo/, signature, ticket, provisioning profile)
 #   - scripts/check-release.sh: no development-only code, every model with its expected SHA-256 (and the version)
 #   - no data files (recordings, event logs, lyrics) built into the window's pages
 #   - no paths from the build machine, no private keys or tokens
@@ -63,11 +63,19 @@ BIN="$APP/Contents/MacOS/onkey"
 
 # --- the app's files: exactly these, plus models.rs's models
 MODELS=$(perl -0ne 'while (/file: "([^"]+)",\s*sha256: "[0-9a-f]{64}"/g) { print "Contents/Resources/models/$1\n" }' "$ROOT/src-tauri/src/models.rs")
+# the demo song (src-tauri/demo/, Resources/demo/): only files git tracks there, so a stand-in recording left in the
+# folder (a placeholder used in development, never ours to give away) fails the check rather than shipping
+if git -C "$ROOT" rev-parse --git-dir > /dev/null 2>&1; then
+  DEMO=$(git -C "$ROOT" ls-files -- src-tauri/demo | sed 's|^src-tauri/demo/|Contents/Resources/demo/|')
+else
+  DEMO=$(cd "$ROOT/src-tauri" && ls demo 2>/dev/null | sed 's|^|Contents/Resources/demo/|')
+fi
 EXPECTED="Contents/Info.plist
 Contents/MacOS/onkey
 Contents/Resources/icon.icns
 Contents/Resources/THIRD_PARTY_NOTICES.md
-$MODELS"
+$MODELS
+$DEMO"
 SIGNED="Contents/_CodeSignature/CodeResources
 Contents/CodeResources
 Contents/embedded.provisionprofile"

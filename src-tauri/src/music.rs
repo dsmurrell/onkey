@@ -70,12 +70,18 @@ pub fn seek(seconds: f64) {
     osa(&format!("tell application \"Music\" to set player position to {:.2}", seconds.max(0.0)));
 }
 
-/// Play a track from your library by its id (tracks only streamed, not added to the library, can't be found).
-pub fn play_track(id: &str) {
-    let Some(pid) = id.strip_prefix(ID_PREFIX) else { return };
-    if !pid.is_empty() && pid.chars().all(|c| c.is_ascii_alphanumeric()) {
-        osa(&format!(r#"tell application "Music" to play (some track of library playlist 1 whose persistent ID is "{pid}")"#));
+/// Play a track from your library by its id (tracks only streamed, not added to the library, can't be found);
+/// false when Music didn't (not found, refused, or no answer). Music is started if it isn't running.
+pub fn play_track(id: &str) -> bool {
+    let Some(pid) = id.strip_prefix(ID_PREFIX) else { return false };
+    if pid.is_empty() || !pid.chars().all(|c| c.is_ascii_alphanumeric()) {
+        return false;
     }
+    let done = osa(&format!(r#"tell application "Music" to play (some track of library playlist 1 whose persistent ID is "{pid}")"#)).is_some();
+    if !done {
+        crate::engine::log(&format!("Apple Music didn't play {id} (not in your library, or Music didn't answer)"));
+    }
+    done
 }
 
 /// Covers found so far (None: being looked up, or none found), so each track is looked up once.

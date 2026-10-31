@@ -305,6 +305,7 @@ fn sampler() {
         let pitch_ms = if fresh { f32::from_bits(PITCH_LAG.load(Relaxed)) } else { f32::NAN };
         let s = Sample { t: now(), cpu: pct as f32, mb: footprint_mb() as f32, loop_ms, pitch_ms };
         // a line a minute in the log while a take plays (or while OnKey is busy): enough to see a slow-down there too
+        crate::capture::note_mic_channel();
         minute.push(s.cpu);
         if minute.len() >= 60 {
             let busy = minute.iter().cloned().fold(0f32, f32::max) > 50.0;

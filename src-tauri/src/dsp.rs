@@ -14,9 +14,128 @@ pub fn fold(c: f32) -> f32 {
     (c + 600.0).rem_euclid(1200.0) - 600.0
 }
 
-/// Score credit for a cents error: full within 50 cents, none beyond 150.
+/// Score credit for a cents error: full within 50 cents, none beyond 150 (Relaxed, the default level).
 pub fn credit(err: f32) -> f32 {
     ((150.0 - err.abs()) / 100.0).clamp(0.0, 1.0)
+}
+
+/// How strictly a take is scored, chosen in Settings ("scoring_level") and kept with each take ("level").
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Default)]
+pub enum Level {
+    /// the rules OnKey always had: forgiving, for beginners and children
+    #[default]
+    Relaxed,
+    /// tighter pitch and timing, for singers who are mostly in tune
+    Steady,
+    /// tight, for trained singers
+    Pro,
+}
+
+/// One level's rules.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Rules {
+    /// full credit within this many cents of the note
+    pub full: f32,
+    /// no credit from this many cents off; in between it falls in a straight line
+    pub zero: f32,
+    /// timing slack (frames): each half-second may shift this far to line you up with the singer
+    pub tol: usize,
+    /// judge your pitch by its centre over this many frames, not frame by frame, so vibrato isn't marked down;
+    /// 0: exact pitch. See `centre`.
+    pub centre: usize,
+}
+
+/// Every level's numbers, in one place.
+///   Relaxed: today's rules exactly (existing scores stay as they were): ±50 cents full, nothing at 150, 80 ms slack,
+///            exact pitch only (a ±80 cent vibrato already scores ~90% here).
+///   Steady:  ±35 full, nothing at 100, 60 ms slack.
+///   Pro:     ±25 full, nothing at 70, 50 ms slack.
+/// Steady and Pro judge your pitch by its centre over 170 ms: one cycle of a 6 Hz vibrato, the middle of singers'
+/// usual 5-7 Hz (trained singers measure ~5.8-6.3 Hz and ±65-70 cents on average, up to ±100), so a regular wobble
+/// around the note averages out while a held wrong note stays wrong. See `centre` for why it's a median-guided mean.
+pub const LEVELS: [(Level, &str, Rules); 3] = [
+    (Level::Relaxed, "relaxed", Rules { full: 50.0, zero: 150.0, tol: TOL, centre: 0 }),
+    (Level::Steady, "steady", Rules { full: 35.0, zero: 100.0, tol: 6, centre: 17 }),
+    (Level::Pro, "pro", Rules { full: 25.0, zero: 70.0, tol: 5, centre: 17 }),
+];
+
+/// `centre`: frames this far (cents) from the window's median are another note (a step either side), left out of
+/// the mean; wider than any vibrato's swing from its middle (±100 cents)
+const CENTRE_KEEP_CENTS: f32 = 150.0;
+
+impl Level {
+    pub fn rules(self) -> Rules {
+        LEVELS.iter().find(|l| l.0 == self).unwrap().2
+    }
+
+    pub fn name(self) -> &'static str {
+        LEVELS.iter().find(|l| l.0 == self).unwrap().1
+    }
+
+    /// From its name as kept ("relaxed", "steady", "pro"); anything else (an older take with none): Relaxed.
+    pub fn parse(s: Option<&str>) -> Level {
+        LEVELS.iter().find(|l| Some(l.1) == s).map_or(Level::Relaxed, |l| l.0)
+    }
+
+    /// The level chosen in Settings (development builds: ONKEY_LEVEL for the tools when nothing's chosen).
+    pub fn current() -> Level {
+        let set = crate::settings::get_str("scoring_level");
+        Level::parse(set.or_else(|| crate::devtest::knob!("ONKEY_LEVEL")).as_deref())
+    }
+
+    /// For the lab's tools (examples): ONKEY_LEVEL, else Relaxed.
+    pub fn from_env() -> Level {
+        Level::parse(std::env::var("ONKEY_LEVEL").ok().as_deref())
+    }
+
+    /// Credit for a cents error at this level (Relaxed: exactly `credit`).
+    pub fn credit(self, err: f32) -> f32 {
+        if self == Level::Relaxed {
+            return credit(err);
+        }
+        let r = self.rules();
+        ((r.zero - err.abs()) / (r.zero - r.full)).clamp(0.0, 1.0)
+    }
+
+    /// Per-frame signed cents error of `usr` against `ref_ext` (padded by TOL frames either side, as
+    /// `tolerant_error` wants with TOL), at this level's timing slack, on your pitch's centre where the level
+    /// says so. Relaxed: exactly `tolerant_error(ref_ext, usr, TOL, 50)`. (Taking the closer of the exact pitch and
+    /// the centre was tried: it let a sharp singer with vibrato earn credit each time the swing crossed the note.)
+    pub fn error(self, ref_ext: &[f32], usr: &[f32]) -> Vec<f32> {
+        let r = self.rules();
+        let ext = &ref_ext[TOL - r.tol..ref_ext.len() - (TOL - r.tol)];
+        if r.centre == 0 {
+            return tolerant_error(ext, usr, r.tol, 50);
+        }
+        tolerant_error(ext, &centre(usr, r.centre), r.tol, 50)
+    }
+}
+
+/// Your pitch's centre: per frame, the mean of the sung frames within `win` frames around it (NaN where this one
+/// isn't sung), leaving out frames over CENTRE_KEEP_CENTS from their median, so a step to the next note or two
+/// doesn't drag it. A plain mean blurred every note change (a perfect singer lost ~20% at Pro in simulation); a
+/// plain median leaves a ±10-15 cent ripple of a vibrato whose cycle isn't the window's length; the mean
+/// around the median cancels a 5-7 Hz vibrato to within a few cents and keeps note steps sharp.
+pub fn centre(usr: &[f32], win: usize) -> Vec<f32> {
+    let h = win / 2;
+    let n = usr.len();
+    let mut w: Vec<f32> = Vec::with_capacity(win + 1);
+    (0..n).map(|i| {
+        if usr[i].is_nan() {
+            return f32::NAN;
+        }
+        w.clear();
+        w.extend(usr[i.saturating_sub(h)..(i + h + 1).min(n)].iter().copied().filter(|v| !v.is_nan()));
+        let m = median(&mut w);
+        let (mut s, mut k) = (0f64, 0usize);
+        for v in &w {
+            if 100.0 * (v - m).abs() < CENTRE_KEEP_CENTS {
+                s += *v as f64;
+                k += 1;
+            }
+        }
+        if k == 0 { usr[i] } else { (s / k as f64) as f32 }
+    }).collect()
 }
 
 /// Signed cents error of `usr` vs the singer, forgiving timing but not pitch.
@@ -334,5 +453,57 @@ mod tests {
         let e = tolerant_error(&reference, &usr, TOL, 50);
         assert!(e[..50].iter().all(|v| v.abs() < 1e-3));
         assert!(e[60..].iter().all(|v| (v - 70.0).abs() < 1e-2));
+    }
+}
+
+#[cfg(test)]
+mod level_tests {
+    use super::*;
+
+    #[test]
+    fn relaxed_is_the_rules_as_they_were() {
+        assert_eq!(Level::default(), Level::Relaxed);
+        assert_eq!(Level::parse(None), Level::Relaxed);
+        assert_eq!(Level::parse(Some("pro")), Level::Pro);
+        assert_eq!(Level::parse(Some("nonsense")), Level::Relaxed);
+        for e in (-2000..2000).map(|c| c as f32 * 0.37) {
+            assert_eq!(Level::Relaxed.credit(e).to_bits(), credit(e).to_bits());
+        }
+        // the error, frame for frame, is tolerant_error's with 80 ms slack on the exact pitch, gaps and all
+        let (mut seed, mut next) = (1u32, 0.0f32);
+        let mut rnd = || { seed = seed.wrapping_mul(1_103_515_245).wrapping_add(12_345); (seed >> 8) as f32 / 16_777_216.0 };
+        let ext: Vec<f32> = (0..1000 + 2 * TOL).map(|i| if i % 97 < 9 { f32::NAN } else { 60.0 + (i / 40) as f32 % 5.0 }).collect();
+        let usr: Vec<f32> = (0..1000).map(|i| { next = 60.0 + (i / 40) as f32 % 5.0 + rnd() - 0.5; if rnd() < 0.1 { f32::NAN } else { next } }).collect();
+        let a = Level::Relaxed.error(&ext, &usr);
+        let b = tolerant_error(&ext, &usr, TOL, 50);
+        assert!(a.iter().zip(&b).all(|(x, y)| x.to_bits() == y.to_bits()));
+    }
+
+    #[test]
+    fn stricter_levels_give_less_credit_off_the_note() {
+        for e in [0.0, 20.0, 30.0, 40.0, 60.0, 90.0, 120.0] {
+            let (r, s, p) = (Level::Relaxed.credit(e), Level::Steady.credit(e), Level::Pro.credit(e));
+            assert!(r >= s && s >= p, "{e}: {r} {s} {p}");
+        }
+        assert_eq!(Level::Steady.credit(35.0), 1.0);
+        assert_eq!(Level::Steady.credit(100.0), 0.0);
+        assert_eq!(Level::Pro.credit(25.0), 1.0);
+        assert_eq!(Level::Pro.credit(70.0), 0.0);
+    }
+
+    #[test]
+    fn the_centre_cancels_vibrato_and_keeps_note_steps() {
+        // 6 Hz, ±80 cents around 60, then a step to 62
+        let usr: Vec<f32> = (0..400).map(|i| (if i < 200 { 60.0 } else { 62.0 }) + 0.8 * (2.0 * std::f32::consts::PI * 0.06 * i as f32).sin()).collect();
+        let c = centre(&usr, 17);
+        for (rate, hz) in [(5.0f32, "5"), (7.0, "7")] {
+            let u: Vec<f32> = (0..300).map(|i| 60.0 + 0.8 * (2.0 * std::f32::consts::PI * rate * 0.01 * i as f32).sin()).collect();
+            let worst = centre(&u, 17)[20..280].iter().map(|v| (100.0 * (v - 60.0)).abs()).fold(0.0, f32::max);
+            assert!(worst < 25.0, "{hz} Hz: {worst}");
+        }
+        assert!(c[20..190].iter().all(|v| (v - 60.0).abs() < 0.1), "within the first note");
+        assert!(c[210..380].iter().all(|v| (v - 62.0).abs() < 0.1), "within the second");
+        // a held wrong note stays wrong
+        assert!(centre(&[60.4; 50], 17).iter().all(|v| (v - 60.4).abs() < 1e-4));
     }
 }

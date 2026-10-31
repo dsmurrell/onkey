@@ -5,16 +5,29 @@ import { openInApp, openLink } from "@/lib/session";
 /** A song's album cover; a tile coloured from the song name when there's no cover (or it can't load). A cover
  *  from Apple (iTunes Search or Shazam) links to the song's Apple Music page (`link`), as Apple's terms ask. */
 export default function Cover({ name, art, link, size = 56, eager = false }: { name: string; art?: string | null; link?: string | null; size?: number; eager?: boolean }) {
-  // which cover failed to load (a new one, e.g. found after the song started, gets its own chance)
+  // which cover failed to load (a new one, e.g. found after the song started, gets its own chance), and which loaded
   const [failed, setFailed] = useState<string | null>(null);
+  const [loaded, setLoaded] = useState<string | null>(null);
   const radius = Math.round(size * 0.28);
+  let h = 0;
+  for (const c of name) h = (h * 31 + c.charCodeAt(0)) % 360;
+  const initial = name.replace(/[^A-Za-z0-9]/g, "").slice(0, 1).toUpperCase();
   if (art && failed !== art) {
+    const shown = loaded === art;
+    // a soft tint from the name (with its initial) until the cover arrives, then the cover fades in over it
     const img = (
-      // eager where it's always on screen (the Sing page's header): WebKit could leave a lazy cover there unloaded
-      // eslint-disable-next-line @next/next/no-img-element
-      <img key={art} src={sizedArt(art, size * 2)} alt="" width={size} height={size} loading={eager ? "eager" : "lazy"} decoding={eager ? "sync" : "async"} onError={() => setFailed(art)}
-           className="shrink-0 object-cover shadow-lg shadow-black/30 ring-1 ring-white/8"
-           style={{ width: size, height: size, borderRadius: radius }} />
+      <span className="relative grid shrink-0 place-items-center overflow-hidden font-bold text-white/35 shadow-lg shadow-black/30 ring-1 ring-white/8"
+            style={{ width: size, height: size, borderRadius: radius, fontSize: size * 0.32,
+                     background: `linear-gradient(135deg, hsl(${h} 40% 30%), hsl(${(h + 40) % 360} 35% 18%))` }}>
+        {!shown && <span aria-hidden>{initial}</span>}
+        {/* eager where it's always on screen (the Sing page's header): WebKit could leave a lazy cover there unloaded */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img key={art} src={sizedArt(art, size * 2)} alt="" width={size} height={size} loading={eager ? "eager" : "lazy"} decoding={eager ? "sync" : "async"}
+             onError={() => setFailed(art)} onLoad={() => setLoaded(art)}
+             // already loaded (from the cache) before React was listening
+             ref={el => { if (el?.complete && el.naturalWidth > 0 && loaded !== art) setLoaded(art); }}
+             className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 motion-reduce:transition-none ${shown ? "opacity-100" : "opacity-0"}`} />
+      </span>
     );
     if (!link) return img;
     // a span, not a button: covers sit inside cards that are themselves clickable
@@ -27,13 +40,11 @@ export default function Cover({ name, art, link, size = 56, eager = false }: { n
       </span>
     );
   }
-  let h = 0;
-  for (const c of name) h = (h * 31 + c.charCodeAt(0)) % 360;
   return (
     <div className="grid shrink-0 place-items-center font-bold text-white/90 shadow-inner"
          style={{ width: size, height: size, borderRadius: radius, fontSize: size * 0.32,
                   background: `linear-gradient(135deg, hsl(${h} 70% 58%), hsl(${(h + 40) % 360} 65% 38%))` }}>
-      {name.replace(/[^A-Za-z0-9]/g, "").slice(0, 1).toUpperCase()}
+      {initial}
     </div>
   );
 }

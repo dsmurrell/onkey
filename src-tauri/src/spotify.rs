@@ -114,9 +114,42 @@ pub fn seek(seconds: f64) {
     osa(&format!("tell application \"Spotify\" to set player position to {:.2}", seconds.max(0.0)));
 }
 
-pub fn play_track(id: &str) {
-    if id.starts_with("spotify:track:") && id.chars().all(|c| c.is_ascii_alphanumeric() || c == ':') {
-        osa(&format!(r#"tell application "Spotify" to play track "{id}""#));
+/// Play a track by its id; false when Spotify didn't (not installed, refused, or no answer).
+pub fn play_track(id: &str) -> bool {
+    if !(id.starts_with("spotify:track:") && id.chars().all(|c| c.is_ascii_alphanumeric() || c == ':')) {
+        return false;
+    }
+    // The song already in Spotify (paused, say) is started over from the top instead: asked to play it again,
+    // Spotify resumes it for a split second and then starts it over (live, 29 Oct), which sounds like a double start.
+    let done = osa(&play_script(id)).is_some();
+    if !done {
+        crate::engine::log(&format!("Spotify didn't play {id} (not installed, or it didn't answer)"));
+    }
+    done
+}
+
+fn play_script(id: &str) -> String {
+    format!(r#"tell application "Spotify"
+set same to false
+try
+set same to ((id of current track) is "{id}")
+end try
+if same then
+set player position to 0
+play
+else
+play track "{id}"
+end if
+end tell"#)
+}
+
+#[cfg(test)]
+mod play_tests {
+    #[test]
+    fn the_song_already_there_is_started_over_not_played_again() {
+        let s = super::play_script("spotify:track:3JvKfv6T31zO0ini8iNItO");
+        assert!(s.contains(r#"(id of current track) is "spotify:track:3JvKfv6T31zO0ini8iNItO""#));
+        assert!(s.contains("set player position to 0\nplay\nelse\nplay track"));
     }
 }
 

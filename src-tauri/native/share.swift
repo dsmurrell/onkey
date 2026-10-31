@@ -1,7 +1,7 @@
 // "Share this take": a vertical video (1080x1920, 30 fps, H.264 + AAC) of a stretch of a take: the song's title at
 // the top, the middle left clear for Instagram's lyrics sticker, and the note lane at the bottom (the singer's notes,
-// your pitch line coloured by how close it was), with the notes hit counting up. Your voice only: the song is added
-// in Instagram. Called from Rust (src/share.rs), which works out everything drawn, as JSON; this only draws and
+// your pitch line coloured by how close it was), with the notes hit counting up; over the last moments an end card
+// (the icon, what OnKey is, where to get it). Your voice only: the song is added in Instagram. Called from Rust (src/share.rs), which works out everything drawn, as JSON; this only draws and
 // encodes it with macOS's own AVFoundation, on the caller's thread.
 import AVFoundation
 import AppKit
@@ -16,6 +16,8 @@ private let BEFORE: CGFloat = 1.3, AFTER: CGFloat = 2.7
 private struct Spec {
     let title: String, artist: String, footer: String
     let seconds: Double
+    /// the end card's lines (what, for what, where) and how long it's up at the end (s)
+    let end: [String], endSeconds: Double
     let lo: Double, hi: Double
     let notes: [(t0: Double, t1: Double, midi: Double, hit: Double)]
     let line: [(t: Double, midi: Double?, err: Double?)]
@@ -27,6 +29,8 @@ private struct Spec {
         artist = o["artist"] as? String ?? ""
         footer = o["footer"] as? String ?? ""
         seconds = o["seconds"] as? Double ?? 0
+        end = o["end"] as? [String] ?? []
+        endSeconds = o["end_s"] as? Double ?? 0
         lo = o["lo"] as? Double ?? 48
         hi = o["hi"] as? Double ?? 72
         step = o["step"] as? Double ?? 0.01
@@ -68,8 +72,8 @@ private func fitted(_ s: String, size: CGFloat, weight: NSFont.Weight, maxWidth:
     return t + "…"
 }
 
-/// What stays the same in every frame: the background, title, the lane's panel and the footer.
-private func background(_ spec: Spec, icon: CGImage?) -> CGImage? {
+/// A full frame's canvas, flipped to top-left coordinates, with the clip's gradient drawn.
+private func canvas() -> CGContext? {
     guard let ctx = CGContext(data: nil, width: W, height: H, bitsPerComponent: 8, bytesPerRow: 0,
                               space: CGColorSpace(name: CGColorSpace.sRGB)!,
                               bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue) else { return nil }
@@ -77,6 +81,49 @@ private func background(_ spec: Spec, icon: CGImage?) -> CGImage? {
     let grad = CGGradient(colorsSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
                           colors: [rgb(22, 20, 38), rgb(48, 38, 112)] as CFArray, locations: [0, 1])!
     ctx.drawLinearGradient(grad, start: CGPoint(x: 0, y: 0), end: CGPoint(x: CGFloat(W) * 0.4, y: CGFloat(H)), options: [.drawsAfterEndLocation])
+    return ctx
+}
+
+/// The icon in `rect`, rounded by `corner` (top-left coordinates).
+private func drawIcon(_ ctx: CGContext, _ icon: CGImage, in rect: CGRect, corner: CGFloat) {
+    ctx.saveGState()
+    ctx.addPath(CGPath(roundedRect: rect, cornerWidth: corner, cornerHeight: corner, transform: nil))
+    ctx.clip()
+    // (images draw upside down in the flipped context: flipped back around their own box)
+    ctx.translateBy(x: 0, y: rect.minY * 2 + rect.height); ctx.scaleBy(x: 1, y: -1)
+    ctx.draw(icon, in: rect)
+    ctx.restoreGState()
+}
+
+/// The end card: the icon, what OnKey is ("Sing on key"), for what ("Free for Mac") and where (the site, in a pill
+/// like the lane's panel), centred on the clip's gradient.
+private func endCard(_ spec: Spec, icon: CGImage?) -> CGImage? {
+    guard spec.end.count >= 3, spec.endSeconds > 0, let ctx = canvas() else { return nil }
+    let iconSize: CGFloat = 280, iy: CGFloat = 600
+    if let icon {
+        // a soft glow behind it, in the notes' violet
+        ctx.saveGState()
+        ctx.setShadow(offset: .zero, blur: 120, color: rgb(124, 108, 246, 0.55))
+        ctx.addPath(CGPath(roundedRect: CGRect(x: (CGFloat(W) - iconSize) / 2, y: iy, width: iconSize, height: iconSize),
+                           cornerWidth: 64, cornerHeight: 64, transform: nil))
+        ctx.setFillColor(rgb(48, 38, 112)); ctx.fillPath()
+        ctx.restoreGState()
+        drawIcon(ctx, icon, in: CGRect(x: (CGFloat(W) - iconSize) / 2, y: iy, width: iconSize, height: iconSize), corner: 64)
+    }
+    text(ctx, spec.end[0], y: iy + iconSize + 70, size: 100, color: rgb(255, 255, 255), weight: .bold)
+    text(ctx, spec.end[1], y: iy + iconSize + 200, size: 52, color: rgb(190, 185, 230))
+    let site = spec.end[2], siteSize: CGFloat = 48
+    let sw = (site as NSString).size(withAttributes: [.font: NSFont.systemFont(ofSize: siteSize, weight: .semibold)]).width
+    let pill = CGRect(x: (CGFloat(W) - sw) / 2 - 44, y: iy + iconSize + 320, width: sw + 88, height: 100)
+    ctx.addPath(CGPath(roundedRect: pill, cornerWidth: 50, cornerHeight: 50, transform: nil))
+    ctx.setFillColor(rgb(18, 16, 34)); ctx.fillPath()
+    text(ctx, site, y: pill.minY + (pill.height - siteSize * 1.2) / 2, size: siteSize, color: rgb(181, 168, 255), weight: .semibold)
+    return ctx.makeImage()
+}
+
+/// What stays the same in every frame: the background, title, the lane's panel and the footer.
+private func background(_ spec: Spec, icon: CGImage?) -> CGImage? {
+    guard let ctx = canvas() else { return nil }
     text(ctx, fitted(spec.title, size: 72, weight: .semibold, maxWidth: 960), y: 150, size: 72, color: rgb(255, 255, 255), weight: .semibold)
     text(ctx, fitted(spec.artist, size: 40, weight: .regular, maxWidth: 960), y: 245, size: 40, color: rgb(190, 185, 230))
     let panel = CGPath(roundedRect: CGRect(x: LX0 - 16, y: LY0 - 16, width: LX1 - LX0 + 32, height: LY1 - LY0 + 32),
@@ -89,13 +136,7 @@ private func background(_ spec: Spec, icon: CGImage?) -> CGImage? {
     let iconSize: CGFloat = 76, gap: CGFloat = 20
     let x0 = (CGFloat(W) - (iconSize + gap + lw)) / 2, iy: CGFloat = 1788
     if let icon {
-        ctx.saveGState()
-        ctx.addPath(CGPath(roundedRect: CGRect(x: x0, y: iy, width: iconSize, height: iconSize), cornerWidth: 18, cornerHeight: 18, transform: nil))
-        ctx.clip()
-        // (images draw upside down in the flipped context: flipped back around their own box)
-        ctx.translateBy(x: 0, y: iy * 2 + iconSize); ctx.scaleBy(x: 1, y: -1)
-        ctx.draw(icon, in: CGRect(x: x0, y: iy, width: iconSize, height: iconSize))
-        ctx.restoreGState()
+        drawIcon(ctx, icon, in: CGRect(x: x0, y: iy, width: iconSize, height: iconSize), corner: 18)
     }
     text(ctx, label, y: iy + (iconSize - footerFont * 1.2) / 2, size: footerFont, color: rgb(225, 220, 250), weight: .medium,
          x: x0 + iconSize + gap)
@@ -105,7 +146,7 @@ private func background(_ spec: Spec, icon: CGImage?) -> CGImage? {
 private let GOOD = rgb(52, 210, 123), CLOSE = rgb(245, 184, 61), OFF = rgb(242, 98, 107), NONE = rgb(139, 148, 171)
 
 /// One frame, `now` seconds into the clip, drawn into `ctx` (top-left coordinates).
-private func drawFrame(_ ctx: CGContext, _ spec: Spec, bg: CGImage, now: Double) {
+private func drawFrame(_ ctx: CGContext, _ spec: Spec, bg: CGImage, end: CGImage?, now: Double) {
     ctx.saveGState()
     ctx.translateBy(x: 0, y: CGFloat(H)); ctx.scaleBy(x: 1, y: -1)
     ctx.translateBy(x: 0, y: CGFloat(H)); ctx.scaleBy(x: 1, y: -1)   // (the background image is drawn the right way up)
@@ -152,11 +193,22 @@ private func drawFrame(_ ctx: CGContext, _ spec: Spec, bg: CGImage, now: Double)
     let hit = spec.notes.filter { $0.t0 >= 0 && $0.t0 < spec.seconds && $0.t1 <= now && $0.hit >= 0.5 }.count
     text(ctx, "\(hit) note\(hit == 1 ? "" : "s") hit", y: 1690, size: 56, color: rgb(181, 168, 255), weight: .semibold)
     ctx.restoreGState()
+    // the end card, faded in over a quarter of a second at the start of its time
+    if let end {
+        let into = now - (spec.seconds - spec.endSeconds)
+        if into >= 0 {
+            ctx.saveGState()
+            ctx.setAlpha(CGFloat(min(1, into / 0.25)))
+            ctx.draw(end, in: CGRect(x: 0, y: 0, width: W, height: H))
+            ctx.restoreGState()
+        }
+    }
 }
 
 /// Renders the frames to a silent H.264 .mov at `url`.
 private func writeVideo(_ spec: Spec, icon: CGImage?, to url: URL) -> Int32 {
     try? FileManager.default.removeItem(at: url)
+    let end = endCard(spec, icon: icon)
     guard let bg = background(spec, icon: icon), let writer = try? AVAssetWriter(outputURL: url, fileType: .mov) else { return -2 }
     let input = AVAssetWriterInput(mediaType: .video, outputSettings: [
         AVVideoCodecKey: AVVideoCodecType.h264, AVVideoWidthKey: W, AVVideoHeightKey: H,
@@ -183,7 +235,7 @@ private func writeVideo(_ spec: Spec, icon: CGImage?, to url: URL) -> Int32 {
         if let ctx = CGContext(data: CVPixelBufferGetBaseAddress(buf), width: W, height: H, bitsPerComponent: 8,
                                bytesPerRow: CVPixelBufferGetBytesPerRow(buf), space: CGColorSpace(name: CGColorSpace.sRGB)!,
                                bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue) {
-            drawFrame(ctx, spec, bg: bg, now: Double(k) / Double(FPS))
+            drawFrame(ctx, spec, bg: bg, end: end, now: Double(k) / Double(FPS))
         }
         CVPixelBufferUnlockBaseAddress(buf, [])
         if !adaptor.append(buf, withPresentationTime: CMTime(value: CMTimeValue(k), timescale: FPS)) { return -7 }

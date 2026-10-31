@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = { title: "Singing comfortably" };
 
@@ -35,6 +36,11 @@ export default function YourVoice() {
       <p>
         Pain, a scratchy throat, or a voice that's still hoarse the next day mean it's time to rest. If it lasts more
         than a couple of weeks, see a doctor or a voice specialist.
+      </p>
+
+      <p>
+        For technique (breath, registers, singing without strain), see <Link href="/docs/beyond-pitch/">Beyond
+        pitch</Link>.
       </p>
 
       <p className="text-sm">This page is general advice about singing, not medical advice.</p>

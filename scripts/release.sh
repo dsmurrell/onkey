@@ -146,7 +146,7 @@ else
     | sed -E 's/^Merge (branch )?//; s/^\[([^]]+)\]:? */- **\1**: /; /^- /!s/^/- /' > "$NOTES"
 fi
 [ -s "$NOTES" ] || echo "- Fixes and improvements." > "$NOTES"
-{ echo "## $V — $(date +%Y-%m-%d)"; echo; cat "$NOTES"; echo; } > "$ENTRY"
+{ echo "## $V · $(date +%Y-%m-%d)"; echo; cat "$NOTES"; echo; } > "$ENTRY"
 if [ -f CHANGELOG.md ]; then
   python3 - "$ENTRY" <<'EOF'
 import sys
@@ -199,7 +199,9 @@ else
   [ "$APPV" = "$V" ] || echo "WARNING: the reused app is version $APPV, not $V (fine for a rehearsal, not for a release)"
 fi
 if [ $DRY = 0 ]; then
-  codesign -dv --verbose=2 "$APP" 2>&1 | grep -q "^Authority=Developer ID Application" || die "the app isn't signed with a Developer ID (an ad hoc dry-run build?)"
+  # (grep reads it all, not -q: -q stops at the first match, codesign is cut off writing the rest, and pipefail
+  # took that for a failure, now and then)
+  codesign -dv --verbose=2 "$APP" 2>&1 | grep "^Authority=Developer ID Application" > /dev/null || die "the app isn't signed with a Developer ID (an ad hoc dry-run build?)"
   xcrun stapler validate -q "$APP" || die "the app has no notarisation ticket stapled"
   [ -f "$DIST/OnKey.dmg" ] && { xcrun stapler validate -q "$DIST/OnKey.dmg" || die "the DMG has no notarisation ticket stapled"; }
   # what people download: only the expected files, no data files, paths or keys, listed hosts, entitlements

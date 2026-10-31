@@ -57,6 +57,11 @@ const VERIFY_AFTER_GAP_S: f64 = 2.0;
 const JUMP_S: f64 = 1.0;
 /// a jump by Shazam's place alone, with no gap, is believed only from answers over this long (s)
 const JUMP_SPAN_S: f64 = 20.0;
+/// a jump forward by this much (s) with the sound running on is the learned copy's fault, not the music's: it has
+/// time in it the song hasn't (Store::note_slips)
+const SLIP_S: std::ops::RangeInclusive<f64> = JUMP_S..=3.0;
+/// such jumps seen while songs played, not yet kept with their song: (song id, where, by how much)
+static SLIPS: Mutex<Vec<(String, f64, f64)>> = Mutex::new(Vec::new());
 /// checks that fit the clock but all sit more than this far to one side of it: the clock drifts, and is slewed
 const DRIFT_S: f64 = 0.25;
 /// how fast a drift is taken up (s per s of music)
@@ -93,8 +98,7 @@ const ALIAS_S: f64 = 3.0;
 /// words once versions and features are left out ("Somewhere Over the Rainbow" and "Over the Rainbow / What a
 /// Wonderful World", "Shallow" and "Shallow - Radio Edit").
 pub fn same_song(a: &Track, b: &Track) -> bool {
-    let norm = |s: &str| s.to_lowercase().chars().filter(|c| c.is_alphanumeric()).collect::<String>();
-    if a.artist.is_empty() || norm(&a.artist) != norm(&b.artist) {
+    if a.artist.is_empty() || !crate::store::same_artist(&a.artist, &b.artist) {
         return false;
     }
     let words = |s: &str| -> Vec<String> {
@@ -794,6 +798,13 @@ impl Listener {
                 let agrees = same && (pos - c.pos).abs() <= JUMP_S;
                 if agrees && !c.unsure {
                     c.sure = true;
+                    // the first check after a move, placed exactly here (not Shazam's place): the clock goes there.
+                    // A move puts the clock where the app says, less its lead as measured, which can be most of a
+                    // second off (offline, alongheard: a drag 0.2-0.8 s off left the recording that far off after it)
+                    if req.gap && other.is_none() && (pos - c.pos).abs() > 0.05 {
+                        self.notes.push((t, format!("check of {} after a move places it at {pos:.2} s (clock {:.2} s)", c.track.name, c.pos)));
+                        c.pos = pos;
+                    }
                     if let Some(s) = self.suspect.take() {
                         let what = if s.id == c.track.id { format!("{:.1} s", s.pos + (t - s.t)) } else { s.id };
                         self.notes.push((t, format!("check of {} fits the clock ({:.1} s): {what} not believed", c.track.name, c.pos)));
@@ -881,6 +892,17 @@ impl Listener {
                         c.sure = true;
                         c.pos = pos;
                         self.sound_since = self.sound_since.max(jump_at);
+                        // ahead with the sound running on (no seek, no gap): the learned copy has time the song
+                        // hasn't (27 Oct: Take On Me, 1.26 s of silence while the output switched, +1.27 s at 2:06
+                        // on every play since). Kept with the song: the same jump on two plays suggests a relearn
+                        if !gap && SLIP_S.contains(&(pos - from)) {
+                            let mut slips = SLIPS.lock().unwrap();
+                            slips.push((c.track.id.clone(), from, pos - from));
+                            let n = slips.len();
+                            if n > 50 {
+                                slips.drain(..n - 50);
+                            }
+                        }
                         self.event(Event::Jumped { from, to: pos });
                     }
                 } else if let Some(m) = other {
@@ -1041,6 +1063,11 @@ struct Host {
     rx: Receiver<(Request, Answer)>,
     last_feed: Instant,
     bundle: Option<&'static str>,
+    /// timing diagnostics (`timing`): the last block's length (s), and how far the audio fed has fallen behind the
+    /// wall clock since `fed_from` (fed without a break of over a second): `fed_s` of audio in that time
+    block_s: f64,
+    fed_from: Instant,
+    fed_s: f64,
 }
 
 static HOST: Mutex<Option<Host>> = Mutex::new(None);
@@ -1081,7 +1108,16 @@ fn start_host(rate: f64) -> Host {
                 r = build();
             }
             let asked = Instant::now();
-            let a = work(r.as_mut(), &req);
+            // (a panic in it, reading a reply say, is an answer of nothing, and a recogniser made afresh: the worker
+            // carries on, else listening would wait for this answer for good and never name another song)
+            let a = match std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| work(r.as_mut(), &req))) {
+                Ok(a) => a,
+                Err(_) => {
+                    crate::engine::log("listening: recognising failed (a panic): taken as nothing named");
+                    r = build();
+                    Answer::Identified(None)
+                }
+            };
             // the records: each recognition request, how long it took and what it answered (ids and numbers)
             crate::records::note("recognize", serde_json::json!({"kind": format!("{:?}", req.kind), "gap": req.gap,
                 "ms": (asked.elapsed().as_secs_f64() * 10_000.0).round() / 10.0, "audio_s": req.audio.len() as f64 / SR as f64,
@@ -1101,7 +1137,7 @@ fn start_host(rate: f64) -> Host {
             }
         }
     }).unwrap();
-    Host { l: Listener::new(), rs: crate::resample::Resampler::new(rate, SR as f64), rate, tx, rx, last_feed: Instant::now(), bundle: None }
+    Host { l: Listener::new(), rs: crate::resample::Resampler::new(rate, SR as f64), rate, tx, rx, last_feed: Instant::now(), bundle: None, block_s: 0.0, fed_from: Instant::now(), fed_s: 0.0 }
 }
 
 /// The captured audio (interleaved [music L, music R, mic]) from the app `bundle`, as the engine drains it.
@@ -1130,9 +1166,30 @@ pub fn feed(block: &[f32], rate: f64, bundle: &'static str) {
     h.rs.process(&mono, &mut x16);
     let before = h.l.events.len();
     h.l.feed(&x16);
-    h.last_feed = Instant::now();
-    while let Ok((req, a)) = h.rx.try_recv() {
-        h.l.answer(&req, a);
+    let now = Instant::now();
+    h.block_s = mono.len() as f64 / rate;
+    // (the first block after a break covers time before it: counting starts from its end)
+    if now.duration_since(h.last_feed).as_secs_f64() > 1.0 {
+        h.fed_from = now;
+        h.fed_s = 0.0;
+    } else {
+        h.fed_s += h.block_s;
+    }
+    h.last_feed = now;
+    loop {
+        match h.rx.try_recv() {
+            Ok((req, a)) => h.l.answer(&req, a),
+            Err(std::sync::mpsc::TryRecvError::Empty) => break,
+            // the recognising thread is gone: a new one, and the request it had is asked again
+            Err(std::sync::mpsc::TryRecvError::Disconnected) => {
+                crate::engine::log("listening: the recognising thread stopped: started again");
+                let fresh = start_host(rate);
+                h.tx = fresh.tx;
+                h.rx = fresh.rx;
+                h.l.asked = false;
+                break;
+            }
+        }
     }
     if let Some(req) = h.l.want() {
         REQUESTS[(req.kind == Kind::Verify) as usize].fetch_add(1, std::sync::atomic::Ordering::Relaxed);
@@ -1149,6 +1206,14 @@ pub fn feed(block: &[f32], rate: f64, bundle: &'static str) {
     if n > 200 {
         h.l.events.drain(..n - 100);
     }
+}
+
+/// The jumps that blamed song `id`'s learned copy (see SLIP_S), since last asked: (where, by how much).
+pub fn take_slips(id: &str) -> Vec<(f64, f64)> {
+    let mut slips = SLIPS.lock().unwrap();
+    let mine = slips.iter().filter(|s| s.0 == id).map(|s| (s.1, s.2)).collect();
+    slips.retain(|s| s.0 != id);
+    mine
 }
 
 /// Seconds of sound heard since the last pause (as far as it's kept): a song the music app says started that
@@ -1240,6 +1305,16 @@ pub fn position(id: &str, app_pos: f64) -> Position {
     }
 }
 
+/// For the log of "Play with the song" (diagnostics only): how old listening's last feed is (s), how long that block
+/// of audio was (s), and how far the audio fed has fallen behind the wall clock while fed without a break (s:
+/// growing means the capture delivers late, or loses audio).
+pub fn timing() -> Option<(f64, f64, f64)> {
+    let g = HOST.lock().unwrap();
+    let h = g.as_ref()?;
+    let behind = h.last_feed.duration_since(h.fed_from).as_secs_f64() - h.fed_s;
+    Some((h.last_feed.elapsed().as_secs_f64(), h.block_s, behind))
+}
+
 fn sure_of(id: &str) -> bool {
     HOST.lock().unwrap().as_ref().and_then(|h| h.l.now().filter(|c| c.track.id == id).map(|c| c.sure)).unwrap_or(false)
 }
@@ -1298,11 +1373,16 @@ pub fn follow() -> Option<State> {
     }
     // a song OnKey just asked the app to play: what it says before it really plays it from the start (the song
     // before, or the new one at 0 while it loads) isn't believed (see `starting_says`)
+    // (an answer not believed isn't run on below either: that would follow the same stale answer as the app's)
+    let mut ignored = false;
     let app = match app {
         Some(s) => {
             let now = start_clock();
             match starting_says(&mut STARTING.lock().unwrap(), &s, now) {
-                Start::Ignore => None,
+                Start::Ignore => {
+                    ignored = true;
+                    None
+                }
                 Start::Waiting => Some(State { playing: false, ..s }),
                 Start::Playing => Some(s),
             }
@@ -1330,7 +1410,7 @@ pub fn follow() -> Option<State> {
         // the music app didn't answer: listening's word, else (for a few seconds, while it still sounds) the app's
         // last, run on
         None => state().or_else(|| {
-            let held = APP_SAID.lock().unwrap().as_ref().filter(|_| music_app && now.is_some() && crate::source::controllable(src.unwrap()))
+            let held = APP_SAID.lock().unwrap().as_ref().filter(|_| !ignored && music_app && now.is_some() && crate::source::controllable(src.unwrap()))
                 .and_then(|(s, t)| app_held(s, t.elapsed().as_secs_f64()));
             if held.is_some() {
                 FROM_APP.store(true, std::sync::atomic::Ordering::Relaxed);

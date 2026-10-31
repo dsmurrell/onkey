@@ -1,24 +1,44 @@
 "use client";
 import Link from "next/link";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+
+/** the take page's "Your voice" level (dB), kept on this Mac */
+const VOICE_DB_KEY = "onkey.take.voiceDb";
 import { useSearchParams } from "next/navigation";
-import { Logo, Nav } from "@/components/Nav";
+import { Logo, Nav, WhatsNew } from "@/components/Nav";
 import LearnBar from "@/components/LearnBar";
+import LevelTag from "@/components/LevelTag";
 import { reportProblem } from "@/components/ReportProblem";
 import SharePanel from "@/components/SharePanel";
-import { DevCopy, takeLink } from "@/components/Dev";
-import { allowControl, alongMode, type AlongMode, getSettings, getTake, joinAlong, learnLabel, playAlong, playTrack, playerNow, stopPlayAlong, takeAudioUrl, takePlaying, type Track, useLearn, useSession } from "@/lib/session";
-import { COLORS, clock, credit, grade, noteName, scoreWord, sourceName, when } from "@/lib/music";
+import Challenge from "@/components/Challenge";
+import LeaveOutGuide from "@/components/guides/LeaveOutGuide";
+import { DevCopy, devEar, takeLink, useDevTools } from "@/components/Dev";
+import { driveGraphAt } from "@/lib/devDrive";
+import { alongTiming } from "@/lib/alongTiming";
+import { songAtTake, takeAtSong, type Place } from "@/lib/places";
+import { allowControl, alongMode, type AlongMode, getSettings, getTake, joinAlong, setNotMelody, sharePrompt, sharePromptSeen, type SharePrompt, learnLabel, playAlong, playTrack, playerNow, type PlayerNow, stopPlayAlong, voiceClose, voiceGain, voiceOpen, voicePlay, voiceStop as voiceStopNative, takeAudioUrl, takePlaying, type Track, useLearn, useSession } from "@/lib/session";
+import { COLORS, LEVELS, clock, creditAt, grade, levelOf, lineGrade, noteName, offBy, scoreWord, sourceName, when } from "@/lib/music";
 
 type Line = { t0: number; t1: number; text: string; ref_frames: number; coverage: number; accuracy: number | null; bias: number | null };
 type Result = {
   track: Track; recorded: string; score: number; accuracy: number; coverage: number; within50: number; bias_cents: number;
-  latency_ms: number; frame_s: number; song_offset?: number | null; lines: Line[]; ref: (number | null)[]; usr: (number | null)[]; err: (number | null)[];
+  latency_ms: number; frame_s: number; song_offset?: number | null; places?: Place[] | null; lines: Line[]; ref: (number | null)[]; usr: (number | null)[]; err: (number | null)[];
   notes?: [number, number, number, number][]; notes_hit?: number; notes_total?: number; live?: { score: number | null; cached: boolean } | null;
   mode?: "learn" | "sing"; blind?: boolean;
+  /** the level it was scored at (none: from before levels, Relaxed) */
+  level?: string;
+  /** sung at another level than Settings' now: that level and its score then (store::take_summary) */
+  sung_level?: string | null; sung_score?: number | null;
   /** false: an older take whose recording isn't kept (every take's is, until they pass 2 GB together) */
   audio_kept?: boolean;
+  /** the learned song this take is of, and its stretches marked "Not the melody" (song seconds), left out of the score */
+  song_id?: string; not_melody?: [number, number][];
+  /** take frames left out of this take's score, its score as first scored, and when it was scored again */
+  left_out?: [number, number][]; scored_first?: { score: number } | null; rescored?: string | null;
 };
+
+/** A stretch of the graph (s), [from, to). */
+type Span = [number, number];
 
 export default function TakePage() {
   return <Suspense><Take /></Suspense>;
@@ -49,20 +69,39 @@ function logUi(msg: string) {
   try { (window as any).__TAURI_INTERNALS__?.invoke("ui_log", { msg }); } catch {}
 }
 
+/** One take's page, made afresh for each take: another take opened in place (an onkey:// link while this page is
+ *  open) never shows under the old one's graph, recording or loads still on their way. */
 function Take() {
   const id = useSearchParams().get("id") ?? "";
+  return <TakeOf key={id} />;
+}
+
+function TakeOf() {
+  const params = useSearchParams();
+  const id = params.get("id") ?? "";
+  // development tools: "Play with the song" asked for without a click (components/DevDrive.tsx), from this place
+  const driveAt = params.get("along"), driveN = params.get("n");
+  // a link's moment (onkey://take/<id>?t=…, components/OpenLinks.tsx): gone to once the recording has loaded
+  const tParam = params.get("t");
+  const startAt = useRef<number | null>(null);
+  useEffect(() => { const s = Number(tParam); startAt.current = tParam != null && Number.isFinite(s) ? s : null; }, [id, tParam]);
+  const dev = useDevTools();
   const [r, setR] = useState<Result | null | undefined>(undefined);
   const [lyricsOff, setLyricsOff] = useState(false);
   // "Show lyrics" off (Settings): the lines are scored as ever, but their words aren't shown
-  useEffect(() => {
-    Promise.all([getTake(id), getSettings().catch(() => null)])
-      .then(([take, s]) => {
-        const off = s?.show_lyrics === false;
-        setLyricsOff(off);
-        setR(take && off ? { ...take, lines: take.lines.map((l: Line) => ({ ...l, text: "" })) } : take);
-      })
-      .catch(() => setR(null));
-  }, [id]);
+  const load = () => Promise.all([getTake(id), getSettings().catch(() => null)])
+    .then(([take, s]) => {
+      const off = s?.show_lyrics === false;
+      setLyricsOff(off);
+      setR(take && off ? { ...take, lines: take.lines.map((l: Line) => ({ ...l, text: "" })) } : take);
+    })
+    .catch(() => setR(null));
+  useEffect(() => { void load(); }, [id]); // eslint-disable-line
+  // "Not the melody": choosing a stretch of the graph to leave out of the song's score (`sel`, graph s)
+  const [marking, setMarking] = useState(false);
+  const [sel, setSel] = useState<Span | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [rescoredNote, setRescoredNote] = useState("");
   const job = useLearn(r?.track);     // the song still being learned: it can be sung again once that's done
   const [src, setSrc] = useState("");
   // the recording, loaded into memory once (a few MB), so jumping around in it is instant
@@ -79,7 +118,7 @@ function Take() {
         if (!alive) return;
         if (!b) { setSrc(""); return; }
         blob.current = b; url = URL.createObjectURL(b); setSrc(url);
-        void singingGain(b).then(g => { boost.current.gain = g; if (boost.current.node) boost.current.node.gain.value = g; });
+        void singingGain(b).then(g => { boost.current.gain = g; applyGain(); });
       })
       .catch(() => takeAudioUrl(id).then(u => { if (alive) setSrc(u); }).catch(() => { if (alive) setSrc(""); }));
     return () => { alive = false; if (url) URL.revokeObjectURL(url); };
@@ -90,6 +129,38 @@ function Take() {
   // level: live, "Play with the song" let only the loudest notes through): it plays brought up to a listening level,
   // through a limiter (see singingGain), set up on the first play (sound may only start from a click)
   const boost = useRef<{ gain: number; node: GainNode | null; ctx: AudioContext | null }>({ gain: 1, node: null, ctx: null });
+  // "Your voice": louder or quieter than that listening level (dB), your choice kept on this Mac
+  const [voiceDb, setVoiceDb] = useState(0);
+  const voiceDbRef = useRef(0);
+  useEffect(() => { try { const v = Number(localStorage.getItem(VOICE_DB_KEY)); if (Number.isFinite(v)) { voiceDbRef.current = v; setVoiceDb(v); } } catch {} }, []);
+  const applyGain = () => {
+    const b = boost.current;
+    if (b.node) b.node.gain.value = b.gain * Math.pow(10, voiceDbRef.current / 20);
+    void voiceGain(20 * Math.log10(b.gain) + voiceDbRef.current);   // the same level, for "Play with the song"
+  };
+  // development tools: "Shift" moves your voice later (+) or earlier (-) against the song in "Play with the song", to
+  // line it up by ear. Each setting goes to the log next to the ear's measured gap, to compare what you hear with what
+  // it measures (kept per take on this Mac)
+  const shiftKey = `onkey.dev.shift.${id}`;
+  const [shiftMs, setShiftMs] = useState(0);
+  const shiftRef = useRef(0);
+  useEffect(() => { try { const v = Number(localStorage.getItem(shiftKey)); shiftRef.current = Number.isFinite(v) ? v : 0; setShiftMs(shiftRef.current); } catch {} }, [shiftKey]);
+  // ✓: you hear it in sync at this shift (to the log too); moving the shift takes the mark off
+  const [synced, setSynced] = useState(false);
+  useEffect(() => { try { setSynced(localStorage.getItem(`${shiftKey}.ok`) === "1"); } catch {} }, [shiftKey]);
+  const markSynced = (on: boolean) => {
+    setSynced(on);
+    try { if (on) localStorage.setItem(`${shiftKey}.ok`, "1"); else localStorage.removeItem(`${shiftKey}.ok`); } catch {}
+  };
+  const changeShift = (v: number) => {
+    shiftRef.current = v; setShiftMs(v);
+    try { localStorage.setItem(shiftKey, String(v)); } catch {}
+    if (synced) markSynced(false);
+  };
+  const changeVoiceDb = (v: number) => {
+    voiceDbRef.current = v; setVoiceDb(v); applyGain();
+    try { localStorage.setItem(VOICE_DB_KEY, String(v)); } catch {}
+  };
   // closed when the page goes: WebKit allows only a few AudioContexts, and after several take pages a new one
   // would fail (the voice boost silently gone)
   useEffect(() => () => {
@@ -109,7 +180,7 @@ function Take() {
     try {
       const ctx = new AudioContext();
       const node = ctx.createGain();
-      node.gain.value = boost.current.gain;
+      node.gain.value = boost.current.gain * Math.pow(10, voiceDbRef.current / 20);
       const limit = ctx.createDynamicsCompressor();
       limit.threshold.value = -3; limit.knee.value = 0; limit.ratio.value = 20; limit.attack.value = 0.002; limit.release.value = 0.1;
       ctx.createMediaElementSource(a).connect(node).connect(limit).connect(ctx.destination);
@@ -119,15 +190,27 @@ function Take() {
   };
   const [t, setT] = useState(0);
   const [sharing, setSharing] = useState(false);
+  // the player: what the play button plays, and the dev tools tucked under "dev"
+  // "With the song" first: hearing yourself against the track is what most people want; "Your voice only" when the
+  // take can't be placed in the song (no place, so no switch shown)
+  const [pick, setWithSong] = useState(true);
+  const withSong = pick && r?.song_offset != null;
+  const [devOpen, setDevOpen] = useState(false);
+  // a proud moment (a best on the song, a clear step up, a first score over 80): "Share this take" is offered, once
+  // per take (marked shown as soon as it's on screen; ✕ or Share puts it away)
+  const [proud, setProud] = useState<SharePrompt | null>(null);
+  useEffect(() => {
+    void sharePrompt(id).then(p => { if (p) { setProud(p); void sharePromptSeen(id); } }).catch(() => {});
+  }, [id]);
   const [playing, setPlaying] = useState(false);
-  // "Play with the song" plays the recording decoded into Web Audio, not through the <audio> element: the element
-  // lands seeks on an AAC recording ~0.7 s from where it's told, so the sync loop kept re-seeking it every second or
-  // two and nudging its speed in between (stutters, the voice changing speed and pitch). A buffer starts at an exact
-  // sample and runs on the audio clock, so it only needs moving when the song jumps.
-  const voice = useRef<{ buf: AudioBuffer | null; src: AudioBufferSourceNode | null; at: number; from: number }>({ buf: null, src: null, at: 0, from: 0 });
+  // "Play with the song" plays the recording natively (voice.rs), not in the window: WebKit holds its sound back
+  // ~0.1-0.15 s more than it says, so the voice came out late. The native player says exactly where the voice is, read
+  // with the song's place (player_now's `voice`), so the two are compared at one moment, as a take's bars are placed.
+  // `at`/`from`: when and where it last started, for the playhead in between readings.
+  const voice = useRef<{ dur: number | null; on: boolean; at: number; from: number }>({ dur: null, on: false, at: 0, from: 0 });
   const voicePos = () => {
-    const v = voice.current, c = boost.current.ctx;
-    return v.src && c ? v.from + (c.currentTime - v.at) : (audio.current?.currentTime ?? 0);
+    const v = voice.current;
+    return v.on ? v.from + (performance.now() - v.at) / 1000 : (audio.current?.currentTime ?? 0);
   };
   // the playhead shows the moment you're hearing, on the graph's time line. Two delays put it behind the
   // recording's own clock:
@@ -145,21 +228,29 @@ function Take() {
   // waits there, so a click puts it exactly where clicked and resuming doesn't jump back
   const heardFrom = useRef(0);
   const heardPos = () => Math.max(0, heardFrom.current, voicePos() - heardMs.current / 1000);
+  // (the native player fades each start, stop and move: never a hard cut)
   const voiceStop = () => {
     const v = voice.current;
-    if (v.src) { const s = v.src; v.src = null; try { s.stop(); } catch {} s.disconnect(); }
+    if (!v.on) return;
+    v.on = false;
+    void voiceStopNative();
   };
   const voiceStart = (pos: number) => {
-    const v = voice.current, c = boost.current.ctx, n = boost.current.node;
-    if (!v.buf || !c || !n) return;
-    voiceStop();
-    const s = c.createBufferSource();
-    s.buffer = v.buf; s.connect(n); s.start(0, Math.max(0, pos));
-    v.src = s; v.at = c.currentTime; v.from = Math.max(0, pos);
+    const v = voice.current;
+    if (v.dur == null) return;
+    pos = Math.max(0, pos);
+    void voicePlay(pos);
+    v.on = true; v.at = performance.now(); v.from = pos;
     heardFrom.current = Math.max(0, pos - latency.current);
-    s.onended = () => { if (voice.current.src === s) { voice.current.src = null; setPlaying(false); } };
     setPlaying(true);
   };
+  // another take in this page (an onkey:// link goes from take to take in place): let the last one's recording go, and
+  // stop playing it, so the next "Play with the song" opens this take's
+  useEffect(() => () => {
+    voice.current = { dur: null, on: false, at: 0, from: 0 };
+    void voiceClose();
+    audio.current?.pause(); setAlong(false); setLining(false); setPlaying(false);
+  }, [id]);
   // listening back with the song: the music app plays the track, your recording follows its position (lined up
   // the way the take was scored), corrected several times a second
   const [along, setAlong] = useState(false);
@@ -170,12 +261,19 @@ function Take() {
   const [mode, setMode] = useState<AlongMode | null>(null);
   const [joined, setJoined] = useState(false);
   const [joinFrom, setJoinFrom] = useState(0);
-  useEffect(() => { if (r) alongMode(r.track.id).then(setMode).catch(() => setMode(null)); }, [r]);
+  const [modeTried, setModeTried] = useState(false);
+  useEffect(() => { if (r) alongMode(r.track.id).then(setMode).catch(() => setMode(null)).finally(() => setModeTried(true)); }, [r]);
   const holdUntil = useRef(0);        // after asking the app to jump, or a seek: readings settle for a moment
-  // the last few (song position - recording position) differences: the music app's position arrives late by a
-  // varying 50-300 ms (it's asked over Apple Events), so one reading isn't a drift; the median of five is
-  const off = (r?.song_offset ?? 0) - (r?.latency_ms ?? 0) / 1000;      // song time at the recording's start
-  const songAt = (g: number) => Math.max(0, (r?.song_offset ?? 0) + g);  // song time at graph time g
+  const startingUntil = useRef(0);    // OnKey pausing, seeking and playing the song: lining up, not "paused"
+  // waiting for the song to be placed before the recording plays (shown as "Lining up with the song…")
+  const [lining, setLining] = useState(false);
+  // One rule, with or without control of the app: the recording plays where the engine places the song (player_now's
+  // `heard`), exactly as it places a take's bars (the app's position, then the music's own fingerprint), and waits,
+  // silent, while it isn't placed. The last few (song - recording) differences: one reading can be a moment old, so
+  // the median of five is what counts
+  // (a take with a jump in it has a place per stretch: lib/places.ts)
+  const recordingAt = (song: number) => takeAtSong(song, r?.places, r?.song_offset ?? 0) + (r?.latency_ms ?? 0) / 1000;
+  const songAt = (g: number) => Math.max(0, songAtTake(g, r?.places, r?.song_offset ?? 0));  // song time at graph time g
   useEffect(() => {
     if (!along || !r) return;
     let alive = true;
@@ -183,61 +281,125 @@ function Take() {
     let said = "";
     const diffs: number[] = [];
     const say = (what: string) => { if (what !== said) { said = what; logUi(`play with the song: ${what}`); } };
+    // timing, for the log (diagnostics: where the voice is against the song heard), at the start and every 2 s
+    let timedAt = -Infinity;
+    const timing = (n: PlayerNow, song: number, target: number) => {
+      const now = performance.now();
+      if (now - timedAt < 2000) return;
+      timedAt = now;
+      logUi(`play with the song: timing ${alongTiming(n, song, target, n.voice ?? null, Math.round(heardMs.current - latency.current * 1000))}`);
+    };
     const tick = async () => {
       const n = await playerNow().catch(() => null);
       if (!alive) return;
       const v = voice.current;
-      if (!v.buf) { say("decoding the recording"); return; }
+      if (v.dur == null) { say("opening the recording"); return; }
       if (performance.now() < holdUntil.current) return;
-      const quiet = (why: string) => { say(why); if (v.src) { voiceStop(); setPlaying(false); } setJoined(false); };
+      // (lining up again after a move keeps a join: the window doesn't ask you to play the song again)
+      const quiet = (why: string, wait = false) => { say(why); setLining(wait); if (v.on) { voiceStop(); setPlaying(false); } if (!wait) setJoined(false); };
       if (!n) return quiet("no music app state");
       // (the player names the song by the id it's kept under, or, outside listening mode, by its app's own id)
-      if (n.track !== r.track.id && n.track !== mode?.play_id) return quiet(`the music app plays another track (${n.track}, take ${r.track.id})`);
-      if (!n.playing) return quiet("the music is paused");
-      setJoined(true);
-      const target = n.position - off;
-      if (target < 0 || target > v.buf.duration) return quiet(`outside the recording (song ${n.position.toFixed(1)} s, recording ${target.toFixed(1)} of ${v.buf.duration.toFixed(1)} s)`);
-      say("playing together");
-      if (!v.src) { diffs.length = 0; voiceStart(target); holdUntil.current = performance.now() + 400; return; }
+      if (n.track !== r.track.id && n.track !== mode?.play_id) return quiet(`the music app plays another track (${n.track}, take ${r.track.id})`, !!mode?.control);
+      if (!n.playing && performance.now() >= startingUntil.current) return quiet("the music is paused");
+      if (n.heard == null) return quiet("lining up with the song (until it's placed)", true);
+      setLining(false); setJoined(true);
+      const song = n.heard;
+      const target = recordingAt(song) - shiftRef.current / 1000;
+      if (target < 0 || target > v.dur) return quiet(`outside the recording (song ${song.toFixed(1)} s, recording ${target.toFixed(1)} of ${v.dur.toFixed(1)} s)`);
+      // (with how far the app's own clock is from the song heard, for the log: never used)
+      if (!v.on) { say(`playing together, as placed (the app's clock ${(n.position - song).toFixed(2)} s ahead of it${shiftRef.current ? `; dev shift ${shiftRef.current > 0 ? "+" : ""}${shiftRef.current} ms` : ""})`); diffs.length = 0; voiceStart(target); holdUntil.current = performance.now() + 300; timedAt = -Infinity; timing(n, song, target); return; }
       setT(heardPos());
-      diffs.push(target - voicePos());
+      timing(n, song, target);
+      if (n.voice == null) return;     // (just started: not rendering yet)
+      diffs.push(target - n.voice);
       if (diffs.length > 5) diffs.shift();
       if (diffs.length < 3) return;
       const diff = [...diffs].sort((x, y) => x - y)[Math.floor(diffs.length / 2)];
-      // only a real jump in the song moves the recording; the audio clock doesn't drift within a song
-      if (Math.abs(diff) > 0.3) {
+      // the voice follows every move of the song (a jump, or the music's fingerprint placing it again): both places are
+      // exact now, so anything over a few hundredths is a move, not noise (the audio clocks don't drift within a song)
+      if (Math.abs(diff) > 0.05) {
         say(`moved the recording ${diff.toFixed(2)} s`);
-        voiceStart(target); diffs.length = 0; holdUntil.current = performance.now() + 400;
+        voiceStart(target); diffs.length = 0; holdUntil.current = performance.now() + 300;
       }
     };
     const id = setInterval(tick, 150);
-    return () => { alive = false; clearInterval(id); voiceStop(); setPlaying(false); };
-  }, [along, r, off, mode]);
+    return () => { alive = false; clearInterval(id); voiceStop(); setPlaying(false); setLining(false); };
+  }, [along, r, mode]);
   useEffect(() => () => { void stopPlayAlong(); }, []);
   // your recording playing here is never to be heard as music by listening mode
   useEffect(() => { void takePlaying(playing); }, [playing]);
   useEffect(() => () => { void takePlaying(false); }, []);
   const startAlong = (from: number) => {
-    route();      // from the click: the window only lets sound start from one
     audio.current?.pause(); voiceStop();
-    const c = boost.current.ctx;
-    if (!voice.current.buf && c && blob.current)
-      blob.current.arrayBuffer().then(x => c.decodeAudioData(x))
-        .then(buf => { voice.current.buf = buf; logUi(`play with the song: recording decoded (${buf.duration.toFixed(1)} s)`); })
-        .catch(e => logUi(`play with the song: couldn't decode the recording (${e})`));
-    setAlong(true); holdUntil.current = performance.now() + 700;
+    if (voice.current.dur == null)
+      voiceOpen(id).then(d => {
+        if (d == null) { logUi("play with the song: couldn't open the recording"); return; }
+        voice.current.dur = d; applyGain(); logUi(`play with the song: recording opened (${d.toFixed(1)} s)`);
+      }).catch(e => logUi(`play with the song: couldn't open the recording (${e})`));
+    setAlong(true); setLining(true); holdUntil.current = performance.now() + 700;
     if (mode && !mode.control) {
       // join in: it plays once the song is heard
       setJoinFrom(songAt(from)); setJoined(false);
       void joinAlong(r!.track.id);
       return;
     }
+    startingUntil.current = performance.now() + 4000;
     void playAlong(mode?.play_id ?? r!.track.id, songAt(from)); };
-  const stopAlong = () => { setAlong(false); voiceStop(); setPlaying(false); audio.current?.pause(); void stopPlayAlong(); };
+  const stopAlong = () => { setAlong(false); setLining(false); voiceStop(); setPlaying(false); audio.current?.pause(); void stopPlayAlong(); };
+  // development tools: a driven request presses the buttons through their own code, once the page is as ready as
+  // for a click (the take, its recording and how it plays along loaded): from a place, as a click on the graph then
+  // "Play with the song" (or, playing, as a click on the graph); a driven stop, as "Stop"
+  const driven = useRef<string | null>(null);
+  useEffect(() => {
+    if (!dev || driveAt == null || driveN == null || driven.current === driveN) return;
+    if (!r || !src || !audio.current || !modeTried) return;
+    driven.current = driveN;
+    const g = driveGraphAt(driveAt, r.song_offset);
+    if (g == null || r.song_offset == null || r.audio_kept === false) { logUi(`dev drive: can't play this take with the song (${driveAt})`); return; }
+    logUi(`dev drive: Play with the song from ${g.toFixed(2)} s on the graph (song ${(r.song_offset + g).toFixed(2)} s)`);
+    heardFrom.current = g; setT(g);
+    startAlong(g);
+  }); // eslint-disable-line react-hooks/exhaustive-deps
+  const devStop = useRef(() => {});
+  devStop.current = () => { if (along) { logUi("dev drive: Stop"); stopAlong(); } };
+  useEffect(() => {
+    const on = () => devStop.current();
+    window.addEventListener("onkey-dev-along-stop", on);
+    return () => window.removeEventListener("onkey-dev-along-stop", on);
+  }, []);
+  // development tools: the ear measures what's heard while it plays (src-tauri/src/ear.rs)
+  useEffect(() => {
+    if (!along || !dev) return;
+    void devEar(id, true);
+    return () => { void devEar(id, false); };
+  }, [along, id, dev]);
 
   if (r === undefined) return <Shell><div className="glass mt-8 h-64 rounded-3xl shimmer" /></Shell>;
   if (r === null) return <Shell><p className="mt-10 text-ink-300">This take couldn’t be found.</p></Shell>;
-  const bias = Math.round(r.bias_cents);
+  // the song's "Not the melody" stretches in this take, on the graph (song s - the take's place in the song)
+  const songNm = r.not_melody ?? [];
+  const graphDur = r.ref.length * r.frame_s;
+  const leftOut: Span[] = r.song_offset == null ? [] : songNm.map(([a, b]): Span => [takeAtSong(a, r.places, r.song_offset!), takeAtSong(b, r.places, r.song_offset!)])
+    .filter(([a, b]) => b > 0 && a < graphDur);
+  const canMark = r.song_offset != null && !!r.song_id;
+  const keepNotMelody = async (next: [number, number][]) => {
+    if (!r.song_id) return;
+    setSaving(true);
+    try {
+      const done = await setNotMelody(r.song_id, next);
+      setRescoredNote(!done ? "This song isn’t learned yet, so nothing was left out." : done.rescored === 0 ? "No take’s score changed." :
+        `${done.rescored === 1 ? "1 take" : `${done.rescored} takes`} of this song scored again.`);
+      setMarking(false); setSel(null);
+      await load();
+    } finally { setSaving(false); }
+  };
+  const leaveOut = () => {
+    if (!sel || r.song_offset == null) return;
+    try { localStorage.setItem(LEFT_OUT_ONCE, "1"); } catch {}
+    const at = songAt;
+    void keepNotMelody([...songNm, [at(sel[0]), at(sel[1])]]);
+  };
+  const putBack = (i: number) => void keepNotMelody(songNm.filter((_, k) => k !== i));
   // s on the graph: you want to hear s, so the recording goes to s + latency (the graph draws your voice moved
   // that much earlier); the output's delay is taken care of by the playhead waiting at s (heardFrom)
   const seek = (s: number) => {
@@ -262,58 +424,176 @@ function Take() {
   return (
     <Shell>
       <audio ref={audio} src={src || undefined} preload="auto"
+             onLoadedMetadata={() => { if (startAt.current != null) { seek(startAt.current); startAt.current = null; } }}
              onTimeUpdate={() => setT(heardPos())} onPlay={() => { route(); setPlaying(true); }}
              onPause={() => { setT(heardPos()); setPlaying(false); }} onEnded={() => setPlaying(false)} />
-      <section className="mt-6 grid gap-6 md:grid-cols-[auto_1fr] md:items-center">
+      {/* the ring stays beside the title at every width (smaller when narrow), so the graph stays on the first screen */}
+      <section className="mt-6 grid grid-cols-[auto_1fr] items-start gap-4 md:items-center md:gap-6">
         <ScoreRing score={r.score} />
         <div className="min-w-0">
-          <div className="flex items-center gap-2 text-sm text-ink-400">
-            {when(r.recorded)}
-            <ModeBadge blind={r.mode === "learn" || !!r.blind} first={r.mode === "learn"} />
+          <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+            <div className="min-w-0">
+              <h1 className="truncate text-3xl font-semibold tracking-tight">{r.track.name}</h1>
+              <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span className="text-lg text-ink-300">{r.track.artist}</span>
+                <span aria-hidden className="text-ink-500">·</span>
+                <span className="text-sm text-ink-400">{when(r.recorded)}</span>
+                <ModeBadge mode={r.mode} blind={!!r.blind} />
+                <LevelTag level={r.level} />
+              </div>
+            </div>
+            <div className="flex shrink-0 flex-wrap items-center gap-2">
+              <button onClick={() => playTrack(r.track.id, true, r.track.name)} disabled={!!job} title={job ? "It can be sung once it’s learned" : undefined}
+                      className="tabular rounded-xl bg-accent-500 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-accent-600/25 transition hover:bg-accent-400
+                                 disabled:cursor-default disabled:bg-white/6 disabled:text-ink-300 disabled:shadow-none">
+                {job ? learnLabel(job) : "Sing it again"}
+              </button>
+              {r.song_offset != null && r.audio_kept !== false && (
+                <button onClick={() => { setSharing(v => !v); setProud(null); }} aria-expanded={sharing} title="A 20-second video of your voice and the notes, for Instagram"
+                        className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition ${sharing || (proud && !sharing) ? "bg-accent-500/20 text-accent-100 ring-1 ring-accent-400/40 hover:bg-accent-500/30" : "bg-white/6 text-ink-100 hover:bg-white/10"}`}>
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M12 3v12" /><path d="M7 8l5-5 5 5" /><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
+                  </svg>
+                  Share
+                </button>
+              )}
+              {!job && <Challenge song={r.track.name} artist={r.track.artist} score={r.score} />}
+            </div>
           </div>
-          <h1 className="mt-1 truncate text-3xl font-semibold tracking-tight">{r.track.name}</h1>
-          <div className="text-lg text-ink-300">{r.track.artist}</div>
           <p className="mt-3 max-w-2xl text-ink-200">{verdict(r)}</p>
+          <p className="mt-2 max-w-2xl text-sm text-ink-300" title={`${Math.round(100 * r.within50)}% of your singing was within 50 cents of the singer.`}>
+            <ScoreStory r={r} />
+          </p>
+          {r.sung_level && r.sung_score != null && (
+            <p className="mt-1 text-xs text-ink-400" title="Scored again from your singing as it was kept, at the level chosen in Settings">
+              Shown at {LEVELS[levelOf(r.level)].name}. Sung at {LEVELS[levelOf(r.sung_level)].name}, it scored {r.sung_score}.
+            </p>
+          )}
+          {r.left_out?.length && r.scored_first ? (
+            <p className="mt-1 text-xs text-ink-400">
+              Scored without {r.left_out.length === 1 ? "the part" : "the parts"} marked not the melody{r.scored_first.score !== r.score ? ` (it was ${r.scored_first.score})` : ""}.
+            </p>
+          ) : null}
           {job && <LearnBar job={job} className="mt-3 max-w-sm" />}
-          <div className="mt-4 flex flex-wrap items-center gap-2">
-            <button onClick={() => playTrack(r.track.id, true, r.track.name)} disabled={!!job} title={job ? "It can be sung once it’s learned" : undefined}
-                    className="tabular rounded-xl bg-accent-500 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-accent-600/25 transition hover:bg-accent-400
-                               disabled:cursor-default disabled:bg-white/6 disabled:text-ink-300 disabled:shadow-none">
-              {job ? learnLabel(job) : "Sing it again"}
+          {proud && !sharing && r.song_offset != null && r.audio_kept !== false && (
+            <div className="mt-4 inline-flex max-w-full items-center gap-3 rounded-xl bg-accent-500/10 py-1.5 pl-3 pr-1.5 text-sm text-accent-100">
+              <span className="min-w-0 truncate"><span aria-hidden className="mr-1.5 text-accent-300">✦</span>{proud.reason}</span>
+              <button onClick={() => { setSharing(true); setProud(null); }}
+                      className="shrink-0 rounded-lg bg-accent-500 px-3 py-1 text-xs font-medium text-white transition hover:bg-accent-400">
+                Share this take
+              </button>
+              <button onClick={() => setProud(null)} aria-label="Not now" title="Not now"
+                      className="shrink-0 px-1 text-accent-200/70 transition hover:text-white">✕</button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="glass mt-8 rounded-3xl p-4">
+        {r.audio_kept === false ? (
+          <p className="mb-3 px-1 text-xs text-ink-400">Your recording of this take isn’t kept any more: OnKey keeps every take’s recording until they pass 2 GB together, then lets the oldest go (never your favourites’ or a song’s best take). The scores stay.</p>
+        ) : (
+          <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-2 px-1">
+            {/* one play button; what it plays is chosen beside it */}
+            <button onClick={() => {
+                      if (along) stopAlong();
+                      else if (playing) audio.current?.pause();
+                      else if (withSong) startAlong(t);
+                      else play();
+                    }}
+                    aria-label={playing || along ? "Stop" : "Play"} title={playing || along ? "Stop" : withSong ? "Play your recording with the song" : "Play your recording"}
+                    className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent-500 text-white shadow-lg shadow-accent-600/25 transition hover:bg-accent-400">
+              {playing || along
+                ? <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>
+                : <svg viewBox="0 0 24 24" className="ml-0.5 h-4 w-4" fill="currentColor" aria-hidden><path d="M8 5v14l11-7z" /></svg>}
             </button>
-            {r.audio_kept !== false && (
-            <button onClick={() => { if (along) stopAlong(); else if (playing) audio.current?.pause(); else { play(); } }}
-                    className="rounded-xl bg-white/6 px-4 py-2 text-sm font-medium text-ink-100 transition hover:bg-white/10">
-              {playing && !along ? "Pause" : "Play your voice"}
+            {r.song_offset != null && (
+              <span className="flex rounded-xl bg-white/6 p-0.5 text-sm" role="radiogroup" aria-label="What plays">
+                {([[true, "With the song"], [false, "Your voice only"]] as const).map(([k, label]) => (
+                  <button key={label} role="radio" aria-checked={withSong === k}
+                          onClick={() => {
+                            if (withSong === k) return;
+                            setWithSong(k);
+                            // switching while it plays carries on from here the other way
+                            if (along) { stopAlong(); if (!k) play(); }
+                            else if (playing) { audio.current?.pause(); if (k) startAlong(t); }
+                          }}
+                          className={`rounded-lg px-3 py-1.5 font-medium transition ${withSong === k ? "bg-white/12 text-white" : "text-ink-300 hover:text-white"}`}>
+                    {label}
+                  </button>
+                ))}
+              </span>
+            )}
+            <button onClick={() => { seek(0); if (audio.current && !along && playing) { route(); void audio.current.play(); } }}
+                    disabled={t <= 1} title="Back to the beginning" aria-label="Back to the beginning"
+                    className="grid h-8 w-8 place-items-center rounded-lg text-ink-300 transition hover:bg-white/6 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent">
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M3 12a9 9 0 1 0 3-6.7" /><path d="M3 4v5h5" />
+              </svg>
             </button>
+            <span className="tabular text-sm text-ink-300">{clock(t)}<span className="text-ink-500"> / {clock(graphDur)}</span></span>
+            {/* the recording waits, silent, until the song is placed (the same words as live singing's) */}
+            {along && lining && !(mode && !mode.control && !joined) && (
+              <span role="status" className="text-sm text-accent-200">Lining up with the song…</span>
             )}
-            {r.song_offset != null && r.audio_kept !== false && (
-              <button onClick={() => (along ? stopAlong() : startAlong(t))}
-                      className={`rounded-xl px-4 py-2 text-sm font-medium transition ${along ? "bg-accent-500/20 text-accent-200 hover:bg-accent-500/30" : "bg-white/6 text-ink-100 hover:bg-white/10"}`}>
-                {along ? "Stop" : "Play with the song"}
-              </button>
-            )}
-            {/* back to the beginning, whichever way it's playing (or about to: from where it stopped) */}
-            {r.audio_kept !== false && t > 1 && (
-              <button onClick={() => { seek(0); if (audio.current && !along) { route(); void audio.current.play(); } }} title="Play from the beginning"
-                      className="inline-flex items-center gap-1.5 rounded-xl bg-white/6 px-3 py-2 text-sm font-medium text-ink-100 transition hover:bg-white/10">
+            <span className="ml-auto flex items-center gap-3">
+              <label className="inline-flex items-center gap-2 text-ink-400" title="How loud your voice plays, against the song">
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                  <path d="M3 12a9 9 0 1 0 3-6.7" /><path d="M3 4v5h5" />
+                  <path d="M11 5 6 9H3v6h3l5 4z" /><path d="M15.5 8.5a5 5 0 0 1 0 7" /><path d="M18.5 5.5a9 9 0 0 1 0 13" />
                 </svg>
-                From the start
-              </button>
-            )}
-            {r.song_offset != null && r.audio_kept !== false && (
-              <button onClick={() => setSharing(v => !v)} aria-expanded={sharing}
-                      className="inline-flex items-center gap-1.5 rounded-xl bg-white/6 px-3 py-2 text-sm font-medium text-ink-100 transition hover:bg-white/10">
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                  <path d="M12 3v12" /><path d="M7 8l5-5 5 5" /><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
+                <span className="sr-only">Your voice</span>
+                <input type="range" min={-6} max={12} step={1} value={voiceDb} onChange={e => changeVoiceDb(Number(e.target.value))}
+                       aria-valuetext={voiceDb === 0 ? "normal" : `${voiceDb > 0 ? "+" : ""}${voiceDb} dB`} className="w-20 accent-accent-400" />
+                <span className="tabular w-9 text-xs">{voiceDb === 0 ? "" : `${voiceDb > 0 ? "+" : ""}${voiceDb} dB`}</span>
+              </label>
+              {dev && (
+                <button onClick={() => setDevOpen(v => !v)} aria-expanded={devOpen} title="Development tools (not in releases)"
+                        className={`rounded-md border border-dashed px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide transition ${devOpen || shiftMs !== 0 ? "border-fuchsia-400/70 bg-fuchsia-500/20 text-fuchsia-100" : "border-fuchsia-400/40 text-fuchsia-300/80 hover:text-fuchsia-100"}`}>
+                  dev{shiftMs !== 0 ? ` ${shiftMs > 0 ? "+" : ""}${shiftMs}` : ""}
+                </button>
+              )}
+              <span className="cursor-help text-ink-500 transition hover:text-ink-200" tabIndex={0}
+                    title={`OnKey keeps your voice, not the music. “With the song” ${mode && !mode.control ? `plays your recording in step with ${r.track.name} when you play it in ${mode.app}` : `plays the track in ${sourceName(r.track.id)} alongside your recording`}. Your microphone’s latency (${r.latency_ms} ms) was allowed for automatically.`}>
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+                  <circle cx="12" cy="12" r="9" /><path d="M12 11v5" /><path d="M12 7.5v.01" />
                 </svg>
-                Share
-              </button>
+              </span>
+            </span>
+            {dev && devOpen && (
+              <div className="basis-full">
+                <label title="Development tool (not in releases): line your voice up with the song by ear; the log keeps it next to the ear's gap"
+                     className="inline-flex items-center gap-2 rounded-lg border border-dashed border-fuchsia-400/70 bg-fuchsia-500/10 px-2 py-1 text-xs text-fuchsia-200">
+                <span className="rounded bg-fuchsia-500/30 px-1 text-[10px] font-semibold uppercase tracking-wide text-fuchsia-100">dev</span>
+                Shift
+                <input type="range" min={-500} max={500} step={10} value={shiftMs} onChange={e => changeShift(Number(e.target.value))}
+                       onPointerUp={() => logUi(`dev shift: take ${id} voice ${shiftRef.current >= 0 ? "+" : ""}${shiftRef.current} ms (set by ear; + is later)`)}
+                       onKeyUp={() => logUi(`dev shift: take ${id} voice ${shiftRef.current >= 0 ? "+" : ""}${shiftRef.current} ms (set by ear; + is later)`)}
+                       className="w-28 accent-fuchsia-400" />
+                <span className="tabular w-20">{shiftMs === 0 ? "0" : `${shiftMs > 0 ? "+" : ""}${shiftMs} ms`}{shiftMs > 0 ? " later" : shiftMs < 0 ? " earlier" : ""}</span>
+                <button onClick={e => {
+                          e.preventDefault(); const on = !synced; markSynced(on);
+                          logUi(`dev shift: take ${id} ${on ? "marked in sync" : "unmarked"} at ${shiftRef.current >= 0 ? "+" : ""}${shiftRef.current} ms${along ? "" : " (not playing with the song)"}`);
+                        }}
+                        title={synced ? "Marked: it sounds in sync at this shift (click to unmark)" : "Mark it: it sounds in sync at this shift"}
+                        aria-pressed={synced}
+                        className={`rounded px-1.5 py-0.5 font-semibold transition ${synced ? "bg-fuchsia-400 text-ink-950" : "bg-fuchsia-500/20 text-fuchsia-200 hover:bg-fuchsia-500/35"}`}>✓</button>
+              </label>
+              </div>
             )}
           </div>
-          {sharing && r.song_offset != null && (
+        )}
+        {along && mode && !mode.control && !joined && (
+          <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl bg-accent-500/10 px-3 py-2 text-sm text-accent-100">
+              <span>Play {r.track.name} in {mode.app}{joinFrom < 5 ? " from the beginning" : ""}. OnKey will join in.</span>
+              {joinFrom >= 5 && <span className="text-accent-200/80">Go to {clock(joinFrom)} in {mode.app} for this part.</span>}
+              {mode.key && (
+                <button onClick={async () => { await allowControl(mode.key!); const m = await alongMode(r.track.id); setMode(m); stopAlong(); }}
+                        className="text-xs text-accent-300 underline-offset-2 hover:underline">Let OnKey start it for you</button>
+              )}
+            </div>
+        )}
+        {sharing && r.song_offset != null && (
+          <div className="mb-3">
             <SharePanel id={id} song={r.track.name} t={t} onClose={() => setSharing(false)}
                         onShow={g => { if (!playing && !along) { heardFrom.current = g; setT(g); } }}
                         onPlay={g => {
@@ -324,45 +604,67 @@ function Take() {
                           window.clearTimeout(clipStop.current);
                           clipStop.current = window.setTimeout(() => audio.current?.pause(), 20_000);
                         }} />
-          )}
-          {along && mode && !mode.control && !joined ? (
-            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl bg-accent-500/10 px-3 py-2 text-sm text-accent-100">
-              <span>Play {r.track.name} in {mode.app}{joinFrom < 5 ? " from the beginning" : ""}. OnKey will join in.</span>
-              {joinFrom >= 5 && <span className="text-accent-200/80">Go to {clock(joinFrom)} in {mode.app} for this part.</span>}
-              {mode.key && (
-                <button onClick={async () => { await allowControl(mode.key!); const m = await alongMode(r.track.id); setMode(m); stopAlong(); }}
-                        className="text-xs text-accent-300 underline-offset-2 hover:underline">Let OnKey start it for you</button>
-              )}
-            </div>
-          ) : r.audio_kept === false ? (
-            <p className="mt-2 text-xs text-ink-400">Your recording of this take isn’t kept any more: OnKey keeps every take’s recording until they pass 2 GB together, then lets the oldest go (never your favourites’ or a song’s best take). The scores stay.</p>
-          ) : (
-            <p className="mt-2 text-xs text-ink-400">OnKey keeps your voice, not the music. “Play with the song” {mode && !mode.control ? `plays your recording in step with ${r.track.name} when you play it in ${mode.app}` : `plays the track in ${sourceName(r.track.id)} alongside your recording`}.</p>
-          )}
-        </div>
-      </section>
-
-      <section className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-5">
-        <Tile label="Pitch accuracy" value={`${Math.round(100 * r.accuracy)}%`} sub={`${Math.round(100 * r.within50)}% within 50 cents`} />
-        <Tile label="Notes hit" value={r.notes_total ? `${r.notes_hit}/${r.notes_total}` : "–"} sub="held within a semitone" />
-        <Tile label="Sang along" value={`${Math.round(100 * r.coverage)}%`} sub="of the singer’s part" />
-        <Tile label="Tendency" value={Math.abs(bias) < 10 ? "Centred" : `${Math.abs(bias)}¢ ${bias > 0 ? "sharp" : "flat"}`}
-              sub={Math.abs(bias) < 10 ? "neither sharp nor flat" : bias > 0 ? "a little high on average" : "a little low on average"} />
-        <Tile label="Latency" value={`${r.latency_ms} ms`} sub="allowed for automatically" />
-      </section>
-
-      <section className="glass mt-4 rounded-3xl p-4">
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-3 px-1">
-          <h2 className="text-sm font-medium text-ink-200">You against the singer</h2>
-          <div className="flex flex-wrap gap-4 text-xs text-ink-300">
+          </div>
+        )}
+        <PitchView r={r} t={t} playing={playing} onSeek={seek} clock={heardPos} leftOut={leftOut}
+                   marking={marking} sel={sel} onSel={setSel} />
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-3 px-1 text-xs text-ink-400">
+          <div className="flex flex-wrap items-center gap-4">
             <Key color="#6252e0" label="Singer’s notes" bar /><Key color={COLORS.good} label="You, within 50¢" />
             <Key color={COLORS.close} label="Within 100¢" /><Key color={COLORS.off} label="Further off" />
+            {/* the take's details beside the graph they describe: held notes light up green */}
+            <span className="flex items-center gap-x-4 text-ink-300">
+              {!!r.notes_total && <span title="Notes you held within a semitone for at least half their length. Their bars light up green.">
+                <span className="tabular text-ink-100">{r.notes_hit}</span> of {r.notes_total} notes held</span>}
+              <span title="Where your pitch sat against the singer’s on average">
+                {Math.abs(r.bias_cents) < 10 ? "Centred on average" : `${offBy(r.bias_cents)} on average`}</span>
+            </span>
           </div>
+          {canMark && !marking && (
+            <button onClick={() => { setMarking(true); setSel(null); setRescoredNote(""); }}
+                    title="Leave out a part where the notes follow a backing vocal or harmony, not the melody"
+                    className="rounded-lg px-2.5 py-1 font-medium text-ink-300 transition hover:bg-white/6 hover:text-white">
+              Not the melody?
+            </button>
+          )}
         </div>
-        <PitchView r={r} t={t} playing={playing} onSeek={seek} clock={heardPos} />
+        {marking && (
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl bg-accent-500/10 px-3 py-2 text-sm text-accent-100">
+            {sel ? (
+              <>
+                <span className="tabular">{clock(sel[0])} to {clock(sel[1])}</span>
+                <button onClick={leaveOut} disabled={saving}
+                        className="rounded-lg bg-accent-500 px-3 py-1 text-sm font-medium text-white transition hover:bg-accent-400 disabled:opacity-60">
+                  {saving ? "Scoring again…" : "Leave it out of the score"}
+                </button>
+              </>
+            ) : (
+              <span>Drag across the part where the notes follow a backing vocal or harmony instead of the melody.</span>
+            )}
+            {/* how it goes, until you've left a part out once */}
+            {!sel && !leftOutBefore() && <div className="order-last basis-full"><div className="mt-1 max-w-[300px]"><LeaveOutGuide /></div></div>}
+            <button onClick={() => { setMarking(false); setSel(null); }} className="text-xs text-accent-300 underline-offset-2 hover:underline">Cancel</button>
+            <span className="basis-full text-xs text-accent-200/80">It’s left out of the score of every take of this song, and when you sing it next.</span>
+          </div>
+        )}
+        {(leftOut.length > 0 || rescoredNote) && !marking && (
+          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 px-1 text-xs text-ink-400">
+            {leftOut.length > 0 && <span>Left out of the score, not the melody:</span>}
+            {songNm.map(([a, b], i) => {
+              if (r.song_offset == null || b - r.song_offset <= 0 || a - r.song_offset >= graphDur) return null;
+              return (
+                <span key={`${a}-${b}`} className="flex items-center gap-1.5">
+                  <span className="tabular text-ink-200">{clock(a - r.song_offset)} to {clock(b - r.song_offset)}</span>
+                  <button onClick={() => putBack(i)} disabled={saving} className="text-accent-300 underline-offset-2 hover:underline disabled:opacity-60">Put it back</button>
+                </span>
+              );
+            })}
+            {rescoredNote && <span>{rescoredNote}</span>}
+          </div>
+        )}
       </section>
       <div className="mt-3 flex items-center justify-end gap-4">
-        <DevCopy label="Copy take link" text={() => takeLink("take", id, { t, song: r.song_offset != null ? r.song_offset + t : null })} />
+        <DevCopy label="Copy take link" text={() => takeLink("take", id, { t, song: r.song_offset != null ? songAt(t) : null })} />
         <button onClick={() => reportProblem(id)} className="text-xs text-ink-400 underline-offset-2 transition hover:text-white hover:underline">
           Report a problem with this take
         </button>
@@ -372,7 +674,7 @@ function Take() {
         <h2 className="mb-3 text-sm font-medium text-ink-200">Line by line</h2>
         {r.lines.length === 0 ? <p className="text-ink-400">{lyricsOff ? "Lyrics are off (Settings), so this take has no line-by-line report." : "No synced lyrics were found for this song."}</p> : (
           <div className="glass divide-y divide-white/5 overflow-hidden rounded-3xl">
-            {r.lines.map((l, i) => <LineRow key={i} n={i + 1} l={l} active={t >= l.t0 && t < l.t1} onClick={() => seek(l.t0)} />)}
+            {r.lines.map((l, i) => <LineRow key={i} n={i + 1} l={l} level={r.level} active={t >= l.t0 && t < l.t1} onClick={() => seek(l.t0)} />)}
           </div>
         )}
       </section>
@@ -380,16 +682,21 @@ function Take() {
   );
 }
 
-function ModeBadge({ blind, first }: { blind: boolean; first?: boolean }) {
-  return blind
-    ? <span className="rounded-full bg-white/6 px-2 py-0.5 text-xs font-medium text-ink-200" title="Sung with no notes shown">Blind{first ? " · first time" : ""}</span>
-    : <span className="rounded-full bg-accent-500/12 px-2 py-0.5 text-xs font-medium text-accent-300" title="Sung with the notes ahead">Guided</span>;
+/** You've left a part out before (localStorage): the "Not the melody?" animation isn't shown any more. */
+const LEFT_OUT_ONCE = "onkey.leftOutOnce";
+const leftOutBefore = () => { try { return localStorage.getItem(LEFT_OUT_ONCE) === "1"; } catch { return false; } };
+
+// the normal way (notes shown) has no tag
+function ModeBadge({ mode, blind }: { mode?: string; blind: boolean }) {
+  const [label, why] = mode === "learn" ? ["First play", "The first time this song played: OnKey learned its melody, with no notes shown"]
+    : blind ? ["Blind", "Sung with no notes shown"] : [null, null];
+  return label ? <span className="rounded-full bg-white/6 px-2 py-0.5 text-xs font-medium text-ink-200" title={why!}>{label}</span> : null;
 }
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-dvh bg-[radial-gradient(1200px_500px_at_50%_-10%,rgba(124,108,246,.10),transparent)]">
-      <header data-tauri-drag-region className="app-header flex items-center gap-5 px-6 pt-4 pb-3"><Logo /><Nav /></header>
+      <header data-tauri-drag-region className="app-header flex items-center gap-5 px-6 pt-4 pb-3"><Logo /><Nav /><span className="ml-auto"><WhatsNew /></span></header>
       <main className="mx-auto max-w-6xl px-6 pb-16">
         <Link href="/history" className="text-sm text-ink-400 transition hover:text-white">← All takes</Link>
         {children}
@@ -401,44 +708,53 @@ function Shell({ children }: { children: React.ReactNode }) {
 function ScoreRing({ score }: { score: number }) {
   const R = 54, C = 2 * Math.PI * R;
   return (
-    <div className="relative grid h-[148px] w-[148px] place-items-center">
-      <svg width={148} height={148} className="-rotate-90">
+    <div className="relative grid h-24 w-24 place-items-center md:h-[148px] md:w-[148px]">
+      <svg viewBox="0 0 148 148" className="h-full w-full -rotate-90">
         <circle cx={74} cy={74} r={R} fill="none" stroke="rgba(255,255,255,.07)" strokeWidth={10} />
         <circle cx={74} cy={74} r={R} fill="none" stroke="url(#ring)" strokeWidth={10} strokeLinecap="round"
                 strokeDasharray={`${(C * score) / 100} ${C}`} />
         <defs><linearGradient id="ring" x1="0" x2="1"><stop offset="0" stopColor="#b5a8ff" /><stop offset="1" stopColor="#6252e0" /></linearGradient></defs>
       </svg>
       <div className="absolute text-center">
-        <div className="tabular text-5xl font-bold tracking-tight">{score}</div>
-        <div className="text-xs font-medium text-accent-300">{scoreWord(score)}</div>
+        <div className="tabular text-3xl font-bold tracking-tight md:text-5xl">{score}</div>
+        <div className="text-[10px] font-medium text-accent-300 md:text-xs">{scoreWord(score)}</div>
       </div>
     </div>
   );
 }
 
-function Tile({ label, value, sub }: { label: string; value: string; sub: string }) {
-  return (
-    <div className="glass rounded-2xl px-4 py-3.5">
-      <div className="text-xs text-ink-400">{label}</div>
-      <div className="tabular mt-1 text-2xl font-bold tracking-tight">{value}</div>
-      <div className="mt-0.5 text-xs text-ink-400">{sub}</div>
-    </div>
-  );
+/** The score from its parts, as the engine makes it (dsp::score): how in tune what you sang was, counted in full once
+ *  you sing 40% of the singer's part, less below that. */
+function ScoreStory({ r }: { r: Result }) {
+  const sang = Math.round(100 * r.coverage), tune = Math.round(100 * r.accuracy);
+  const n = (v: number) => <span className="tabular font-semibold text-ink-100">{v}%</span>;
+  if (r.coverage <= 0) return <>You didn’t sing along with the singer’s part, so there was nothing to score.</>;
+  return <>You sang {n(sang)} of the singer’s part, and what you sang was {n(tune)} in tune.{" "}
+    {r.score >= tune ? "That’s your score." : "Your score counts it in full once you sing 40% or more of the part."}</>;
 }
 
 function Key({ color, label, bar }: { color: string; label: string; bar?: boolean }) {
   return <span className="flex items-center gap-1.5"><span className={bar ? "h-2 w-4 rounded-full" : "h-2 w-2 rounded-full"} style={{ background: color }} />{label}</span>;
 }
 
-function LineRow({ l, n, active, onClick }: { l: Line; n: number; active: boolean; onClick: () => void }) {
+// a click plays from the line: ▶ by its time on hover and keyboard focus, and on the line playing
+function LineRow({ l, n, level, active, onClick }: { l: Line; n: number; level?: string; active: boolean; onClick: () => void }) {
   const scored = l.accuracy != null && l.ref_frames > 20 && l.coverage > 0.2;
   const b = l.bias == null ? 0 : Math.round(l.bias);
-  const note = l.ref_frames <= 20 ? "no lead vocal" : l.coverage <= 0.2 ? "not sung" : Math.abs(b) >= 25 ? `${Math.abs(b)}¢ ${b > 0 ? "sharp" : "flat"}` : "";
-  const col = !scored ? "" : l.accuracy! >= 0.85 ? COLORS.good : l.accuracy! >= 0.65 ? COLORS.close : COLORS.off;
+  const note = l.ref_frames <= 20 ? "no lead vocal" : l.coverage <= 0.2 ? "not sung" : Math.abs(b) >= 25 ? offBy(b) : "";
+  const col = !scored ? "" : COLORS[lineGrade(l.accuracy!, levelOf(level))];
   return (
-    <button onClick={onClick} className={`grid w-full grid-cols-[52px_1fr_minmax(80px,180px)_96px] items-center gap-4 px-5 py-3 text-left transition hover:bg-white/3 ${active ? "bg-accent-500/8" : ""}`}>
-      <span className="tabular text-sm text-ink-400">{clock(l.t0)}</span>
-      <span className={`truncate ${active ? "text-white" : "text-ink-100"}`}>{l.text || <span className="text-ink-400">Line {n}</span>}</span>
+    <button onClick={onClick} title={`Play from ${clock(l.t0)}`} aria-current={active || undefined}
+            className={`group grid w-full grid-cols-[60px_1fr_minmax(80px,180px)_140px] items-center gap-4 px-5 py-3 text-left transition
+                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-400
+                        ${active ? "bg-accent-500/15 shadow-[inset_3px_0_0_var(--color-accent-400)]" : "hover:bg-white/4"}`}>
+      <span className={`tabular flex items-center gap-1.5 text-sm ${active ? "text-accent-200" : "text-ink-400 group-hover:text-ink-200"}`}>
+        <svg viewBox="0 0 24 24" className={`h-2.5 w-2.5 shrink-0 text-accent-300 transition ${active ? "opacity-100" : "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"}`} fill="currentColor" aria-hidden>
+          <path d="M7 4v16l13-8z" />
+        </svg>
+        {clock(l.t0)}
+      </span>
+      <span className={`truncate ${active ? "font-medium text-white" : "text-ink-100"}`}>{l.text || <span className="text-ink-400">Line {n}</span>}</span>
       <span className="h-1.5 overflow-hidden rounded-full bg-white/6">
         {scored && <span className="block h-full rounded-full" style={{ width: `${100 * l.accuracy!}%`, background: col }} />}
       </span>
@@ -449,18 +765,19 @@ function LineRow({ l, n, active, onClick }: { l: Line; n: number; active: boolea
 
 function verdict(r: Result) {
   const parts: string[] = [];
-  if (r.coverage < 0.35) parts.push("You sat out a lot of this one, so there was less to score.");
-  parts.push(r.accuracy > 0.85 ? "Beautifully in tune." : r.accuracy > 0.7 ? "Mostly in tune, with a few wobbly patches." :
-             r.accuracy > 0.5 ? "Often near the note, drifting off it at times." : "The melody got away from you in places.");
-  if (Math.abs(r.bias_cents) >= 20) parts.push(`On average you sat ${Math.abs(Math.round(r.bias_cents))} cents ${r.bias_cents > 0 ? "sharp" : "flat"}.`);
+  // the words loosen with the level, as the line colours do (lineGrade): Pro credits less per note
+  const lv = levelOf(r.level), d = lv === "pro" ? 0.2 : lv === "steady" ? 0.1 : 0, a = r.accuracy + d;
+  parts.push(a > 0.85 ? "Beautifully in tune." : a > 0.7 ? "Mostly in tune, with a few wobbly patches." :
+             a > 0.5 ? "Often near the note, drifting off it at times." : "The melody got away from you in places.");
+  if (Math.abs(r.bias_cents) >= 20) parts.push(`On average you sat ${offBy(r.bias_cents)}.`);
   const worst = r.lines.filter(l => l.accuracy != null && l.coverage > 0.3 && l.ref_frames > 30).sort((a, b) => a.accuracy! - b.accuracy!)[0];
-  if (worst && worst.accuracy! < 0.75) parts.push(worst.text ? `Worth another go: “${worst.text}”.` : `Worth another go: the line at ${clock(worst.t0)}.`);
+  if (worst && worst.accuracy! + d < 0.75) parts.push(worst.text ? `Worth another go: “${worst.text}”.` : `Worth another go: the line at ${clock(worst.t0)}.`);
   return parts.join(" ");
 }
 
 // ------------------------------------------------------------------ the pitch view
-function PitchView({ r, t, playing, onSeek, clock }: { r: Result; t: number; playing: boolean; onSeek: (s: number) => void;
-                     clock: () => number }) {
+function PitchView({ r, t, playing, onSeek, clock, leftOut, marking, sel, onSel }: { r: Result; t: number; playing: boolean; onSeek: (s: number) => void;
+                     clock: () => number; leftOut: Span[]; marking: boolean; sel: Span | null; onSel: (s: Span | null) => void }) {
   const cv = useRef<HTMLCanvasElement>(null), ov = useRef<HTMLCanvasElement>(null);
   const dt = r.frame_s, N = r.ref.length, dur = N * dt;
   const WIN = 12;
@@ -521,6 +838,15 @@ function PitchView({ r, t, playing, onSeek, clock }: { r: Result; t: number; pla
       g.strokeStyle = COLORS[grade(e == null ? NaN : e)];
       g.beginPath(); g.moveTo(x((i - 1) * dt), y(a)); g.lineTo(x(i * dt), y(b)); g.stroke();
     }
+    // the song's stretches marked "Not the melody": dimmed, and left out of the score
+    for (const [a, b] of leftOut) {
+      if (b < view0 || a > view0 + WIN) continue;
+      const x0 = Math.max(L, x(a)), x1 = Math.min(W, x(b));
+      g.fillStyle = "rgba(11,13,24,.62)"; g.fillRect(x0, 0, x1 - x0, plotH);
+      g.fillStyle = "rgba(255,255,255,.12)"; g.fillRect(x0, 0, 1, plotH); g.fillRect(x1 - 1, 0, 1, plotH);
+      g.save(); g.beginPath(); g.rect(x0, 0, Math.max(0, x1 - x0 - 6), plotH); g.clip();
+      g.fillStyle = "#8b94ab"; g.font = `11px ${FONT}`; g.textBaseline = "top"; g.fillText("Not the melody", x0 + 6, 6); g.restore();
+    }
     // lyrics under the plot
     g.fillStyle = "#8b94ab"; g.font = `12px ${FONT}`; g.textBaseline = "alphabetic";
     for (const l of r.lines) {
@@ -529,7 +855,7 @@ function PitchView({ r, t, playing, onSeek, clock }: { r: Result; t: number; pla
       g.save(); g.beginPath(); g.rect(xs, plotH, Math.max(0, x(l.t1) - xs - 8), B); g.clip();
       g.fillText(l.text, xs + 2, H - 6); g.restore();
     }
-  }, [r, view0, range, dt, N]);
+  }, [r, view0, range, dt, N, leftOut.map(s => s.join()).join()]); // eslint-disable-line
 
   // playhead on its own layer: while playing, redrawn every frame from the heard time (only this small canvas,
   // never the page: React re-rendering at 60 fps made playback stutter); otherwise at `t` (heard time too)
@@ -539,6 +865,12 @@ function PitchView({ r, t, playing, onSeek, clock }: { r: Result; t: number; pla
     c.width = W * dpr; c.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0);
     const draw = (at: number) => {
       g.clearRect(0, 0, W, H);
+      if (sel) {
+        const X = (s: number) => Math.max(40, Math.min(W, 40 + ((s - view0) / WIN) * (W - 40)));
+        const x0 = X(Math.min(sel[0], sel[1])), x1 = X(Math.max(sel[0], sel[1]));
+        g.fillStyle = "rgba(124,108,246,.22)"; g.fillRect(x0, 0, x1 - x0, H - 22);
+        g.fillStyle = "rgba(181,168,255,.9)"; g.fillRect(x0, 0, 1.5, H - 22); g.fillRect(x1 - 1.5, 0, 1.5, H - 22);
+      }
       const px = 40 + ((at - view0) / WIN) * (W - 40);
       if (px >= 40 && px <= W) { g.fillStyle = "rgba(255,255,255,.8)"; g.fillRect(px - 1, 0, 2, H - 22); }
     };
@@ -548,15 +880,30 @@ function PitchView({ r, t, playing, onSeek, clock }: { r: Result; t: number; pla
     const step = () => { draw(clock()); raf = requestAnimationFrame(step); };
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
-  }, [t, view0, playing]); // eslint-disable-line
+  }, [t, view0, playing, sel]); // eslint-disable-line
 
-  // drag to scroll, click to seek
+  // drag to scroll, click to seek; choosing a stretch ("Not the melody"), drag across it
   const drag = useRef<{ x: number; v: number; moved: boolean } | null>(null);
+  const pick = useRef<number | null>(null);
+  const at = (e: React.PointerEvent) => {
+    const r0 = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    return Math.max(0, Math.min(dur, view0 + ((e.clientX - r0.left - 40) / (r0.width - 40)) * WIN));
+  };
   return (
     <div>
-      <div className="relative h-[300px] cursor-grab select-none active:cursor-grabbing"
-           onPointerDown={e => { drag.current = { x: e.clientX, v: view0, moved: false }; (e.target as HTMLElement).setPointerCapture(e.pointerId); }}
+      <div className={`relative h-[300px] select-none ${marking ? "cursor-col-resize" : "cursor-grab active:cursor-grabbing"}`}
+           onPointerDown={e => {
+             (e.target as HTMLElement).setPointerCapture(e.pointerId);
+             if (marking) { pick.current = at(e); onSel(null); return; }
+             drag.current = { x: e.clientX, v: view0, moved: false };
+           }}
            onPointerMove={e => {
+             if (marking) {
+               if (pick.current == null) return;
+               const g = at(e), a = pick.current;
+               onSel(Math.abs(g - a) >= 0.2 ? [Math.min(a, g), Math.max(a, g)] : null);
+               return;
+             }
              if (!drag.current) return;
              const dx = e.clientX - drag.current.x;
              if (Math.abs(dx) > 3) drag.current.moved = true;
@@ -564,6 +911,7 @@ function PitchView({ r, t, playing, onSeek, clock }: { r: Result; t: number; pla
              setView0(Math.max(0, Math.min(dur - WIN, drag.current.v - (dx / w) * WIN)));
            }}
            onPointerUp={e => {
+             if (marking) { pick.current = null; return; }
              if (drag.current && !drag.current.moved) {
                const r0 = (e.currentTarget as HTMLElement).getBoundingClientRect();
                onSeek(view0 + ((e.clientX - r0.left - 40) / (r0.width - 40)) * WIN);
@@ -574,29 +922,31 @@ function PitchView({ r, t, playing, onSeek, clock }: { r: Result; t: number; pla
         <canvas ref={ov} className="pointer-events-none absolute inset-0 h-full w-full" />
       </div>
       {/* clicking the strip plays from there (and shows that part of the chart) */}
-      <Overview r={r} view0={view0} win={WIN} onPick={s => { setView0(Math.max(0, Math.min(dur - WIN, s - WIN / 2))); onSeek(s); }} />
+      <Overview r={r} view0={view0} win={WIN} leftOut={leftOut} onPick={s => { setView0(Math.max(0, Math.min(dur - WIN, s - WIN / 2))); onSeek(s); }} />
     </div>
   );
 }
 
-function Overview({ r, view0, win, onPick }: { r: Result; view0: number; win: number; onPick: (s: number) => void }) {
+function Overview({ r, view0, win, leftOut, onPick }: { r: Result; view0: number; win: number; leftOut: Span[]; onPick: (s: number) => void }) {
   const N = r.ref.length, dur = N * r.frame_s, bins = 160;
+  const outKey = leftOut.map(s => s.join()).join();
   const cells = useMemo(() => Array.from({ length: bins }, (_, b) => {
     let n = 0, s = 0, rv = 0;
     for (let i = Math.floor((b / bins) * N); i < Math.floor(((b + 1) / bins) * N); i++) {
+      if (leftOut.some(([a, e]) => i * r.frame_s >= a && i * r.frame_s < e)) continue;     // not the melody: not scored
       if (r.ref[i] != null) rv++;
       const e = r.err[i];
-      if (e != null) { n++; s += credit(e); }
+      if (e != null) { n++; s += creditAt(e, levelOf(r.level)); }
     }
     return n ? s / n : rv ? -1 : null;
-  }), [r, N]);
+  }), [r, N, outKey]); // eslint-disable-line
   return (
     <div className="relative mt-3 h-8 cursor-pointer" onClick={e => { const rc = e.currentTarget.getBoundingClientRect(); onPick(((e.clientX - rc.left) / rc.width) * dur); }}>
       <div className="flex h-full items-center gap-px">
         {cells.map((c, i) => (
           <div key={i} className="flex-1 rounded-sm" style={{
             height: c == null ? 0 : c < 0 ? 6 : 26,
-            background: c == null ? "transparent" : c < 0 ? "rgba(255,255,255,.08)" : c >= 0.85 ? COLORS.good : c >= 0.65 ? COLORS.close : COLORS.off,
+            background: c == null ? "transparent" : c < 0 ? "rgba(255,255,255,.08)" : COLORS[lineGrade(c, levelOf(r.level))],
             opacity: c != null && c >= 0 ? 0.85 : 1,
           }} />
         ))}

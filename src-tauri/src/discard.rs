@@ -23,6 +23,8 @@ static UNTIL_CHANGE: Mutex<Option<String>> = Mutex::new(None);
 static DROPPED: Mutex<Vec<(String, u64)>> = Mutex::new(Vec::new());
 /// Learns that can be stopped: (watch key, the ids the song goes by, its learner's stop flag).
 static WATCHED: Mutex<Vec<(u64, Vec<String>, Arc<AtomicBool>)>> = Mutex::new(Vec::new());
+/// The name of what plays now, if it's ignored (for the status line: "Not learning <name>").
+static PLAYING_IGNORED: Mutex<Option<String>> = Mutex::new(None);
 static NEXT: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
 
 fn is_video(id: &str) -> bool {
@@ -32,9 +34,13 @@ fn is_video(id: &str) -> bool {
 /// Read notsongs.json from the data folder.
 pub fn set_data_dir(dir: &std::path::Path) {
     let path = dir.join(FILE);
-    let ids: HashSet<String> = std::fs::read(&path).ok()
-        .and_then(|b| serde_json::from_slice::<Vec<String>>(&b).ok()).unwrap_or_default().into_iter().collect();
-    *FOREVER.lock().unwrap() = Some((path, ids));
+    // there but unreadable: not kept this run, so it isn't written over with only this run's videos
+    let Some(ids) = crate::store::read_kept::<Vec<String>>(&path) else {
+        crate::store::log_unreadable(&path);
+        *FOREVER.lock().unwrap() = None;
+        return;
+    };
+    *FOREVER.lock().unwrap() = Some((path, ids.into_iter().collect()));
 }
 
 /// Stop learning `id` and don't learn it while it plays (a video: never). `version`: the latest take's version now
@@ -91,6 +97,17 @@ pub fn now_playing(id: &str) {
     if u.as_deref().is_some_and(|x| x != id) {
         *u = None;
     }
+}
+
+/// What the music app plays now (`None`: nothing), and whether it's ignored: what `playing_ignored` says.
+pub fn note_playing(id_name: Option<(&str, &str)>) {
+    let n = id_name.filter(|(id, _)| ignored(id)).map(|(_, name)| name.to_string());
+    *PLAYING_IGNORED.lock().unwrap() = n;
+}
+
+/// The name of the song playing now that you stopped learning (or a video that isn't a song), if one is.
+pub fn playing_ignored() -> Option<String> {
+    PLAYING_IGNORED.lock().unwrap().clone()
 }
 
 /// The take `version`, going by any of `ids`, was discarded (after it started).

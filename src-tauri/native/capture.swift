@@ -126,10 +126,14 @@ public func onkey_mic_choice(_ uid: UnsafeMutablePointer<CChar>, _ name: UnsafeM
     return 1
 }
 
-/// The microphones connected, as a JSON array of {"uid", "name"} (copied into `buf`).
+/// The microphones connected, as a JSON array of {"uid", "name", "virtual"} (copied into `buf`), for Settings'
+/// list. "virtual": a device another app installed (BlackHole, Krisp, Loopback, Zoom, Teams): listed apart, since
+/// picked by mistake it gives silence or the wrong sound, but kept, as people route their mic through one on purpose.
 @_cdecl("onkey_mic_list")
 public func onkey_mic_list(_ buf: UnsafeMutablePointer<CChar>, _ len: Int32) {
-    let list = inputDevices().map { ["uid": $0.uid, "name": $0.name] }
+    let list: [[String: Any]] = inputDevices().map {
+        ["uid": $0.uid, "name": $0.name, "virtual": transport($0.id) == kAudioDeviceTransportTypeVirtual]
+    }
     let json = (try? JSONSerialization.data(withJSONObject: list)).flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
     copyOut(json, buf, len)
 }
@@ -201,11 +205,45 @@ private final class Capture {
     var tapUUID = UUID()
     var rescan: DispatchSourceTimer? = nil
     var scratch = [Float](repeating: 0, count: 3 * 8192)
+    // An interface with several inputs (a Focusrite 2i2's mic on input 2): the mic channel is the one your voice is
+    // on, not always the first. Each input channel's level (smoothed over ~0.2 s), and the channel in use: another
+    // takes over once it's clearly louder (4x the energy), so it doesn't flick between them. Fixed storage: this is
+    // read and written on Core Audio's real-time thread only.
+    static let maxMicChannels = 64
+    let micLevel = UnsafeMutablePointer<Float>.allocate(capacity: Capture.maxMicChannels)
+    var micChannel = 0
+    var micChannels = 0
     var rate: Double = 0
     var micName = ""
     var micUID = ""
 
-    init(bundlePrefix: String) { self.bundlePrefix = bundlePrefix }
+    init(bundlePrefix: String) {
+        self.bundlePrefix = bundlePrefix
+        micLevel.initialize(repeating: 0, count: Capture.maxMicChannels)
+    }
+    deinit { micLevel.deallocate() }
+
+    /// Updates each input channel's level from this block and picks the loudest (see `micLevel`). The mic's
+    /// buffers are all but the last (the tap's); each may hold several interleaved channels.
+    func pickMicChannel(_ abl: UnsafeMutableAudioBufferListPointer, frames: Int) {
+        var c = 0
+        for b in 0..<(abl.count - 1) {
+            let buf = abl[b], ch = max(1, Int(buf.mNumberChannels))
+            if let d = buf.mData {
+                let p = d.assumingMemoryBound(to: Float.self), nf = min(Int(buf.mDataByteSize) / (4 * ch), frames)
+                for k in 0..<ch where c + k < Capture.maxMicChannels {
+                    var e: Float = 0, i = 0, n = 0
+                    while i < nf { let v = p[i * ch + k]; e += v * v; i += 4; n += 1 }
+                    micLevel[c + k] = 0.95 * micLevel[c + k] + 0.05 * (e / Float(max(1, n)))
+                }
+            }
+            c += ch
+        }
+        micChannels = min(c, Capture.maxMicChannels)
+        var best = micChannel < micChannels ? micChannel : 0
+        for k in 0..<micChannels where micLevel[k] > 4 * micLevel[best] && micLevel[k] > 1e-8 { best = k }
+        micChannel = best
+    }
 
     func findProcs() -> [AudioObjectID] {
         readArray(AudioObjectID(kAudioObjectSystemObject), kAudioHardwarePropertyProcessObjectList)
@@ -253,17 +291,28 @@ private final class Capture {
             let frames = min(Int(tap.mDataByteSize) / (4 * tch), 8192)
             let t = tp.assumingMemoryBound(to: Float.self)
             var m: UnsafeMutablePointer<Float>? = nil
-            var mch = 1, micFrames = 0
-            if withMic && abl.count >= 2, let md = abl[0].mData {
-                m = md.assumingMemoryBound(to: Float.self)
-                mch = max(1, Int(abl[0].mNumberChannels))
-                micFrames = Int(abl[0].mDataByteSize) / (4 * mch)
+            var mch = 1, micFrames = 0, mk = 0
+            if withMic && abl.count >= 2 {
+                self.pickMicChannel(abl, frames: frames)
+                // the buffer holding the channel in use, and its place among that buffer's channels
+                var c = 0
+                for b in 0..<(abl.count - 1) {
+                    let ch = max(1, Int(abl[b].mNumberChannels))
+                    if self.micChannel < c + ch, let md = abl[b].mData {
+                        m = md.assumingMemoryBound(to: Float.self)
+                        mch = ch
+                        mk = self.micChannel - c
+                        micFrames = Int(abl[b].mDataByteSize) / (4 * ch)
+                        break
+                    }
+                    c += ch
+                }
             }
             self.scratch.withUnsafeMutableBufferPointer { o in
                 for i in 0..<frames {
                     o[3 * i] = t[i * tch]
                     o[3 * i + 1] = tch > 1 ? t[i * tch + 1] : t[i * tch]
-                    o[3 * i + 2] = (m != nil && i < micFrames) ? m![i * mch] : 0
+                    o[3 * i + 2] = (m != nil && i < micFrames) ? m![i * mch + mk] : 0
                 }
                 cb(o.baseAddress!, Int32(frames), ctx)
             }
@@ -333,6 +382,13 @@ public func onkey_capture_start(_ bundle: UnsafePointer<CChar>,
         outRate.pointee = c.rate
     }
     return code
+}
+
+/// The mic's input channel in use (from 0) and how many it has (0 when not capturing), for the log.
+@_cdecl("onkey_mic_channel")
+public func onkey_mic_channel(_ count: UnsafeMutablePointer<Int32>) -> Int32 {
+    count.pointee = Int32(current?.micChannels ?? 0)
+    return Int32(current?.micChannel ?? 0)
 }
 
 @_cdecl("onkey_capture_stop")

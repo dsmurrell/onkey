@@ -37,6 +37,8 @@ pub enum Source {
     YouTube,
     /// listening mode: a song recognised by its sound, in an app OnKey only listens to (or doesn't control)
     Other,
+    /// the demo song, which OnKey plays itself (demo.rs): followed by its player's clock in every mode
+    Demo,
 }
 
 impl Source {
@@ -47,6 +49,8 @@ impl Source {
     pub fn of_id(id: &str) -> Source {
         if id.starts_with(crate::music::ID_PREFIX) {
             Source::Music
+        } else if crate::demo::is_demo(id) {
+            Source::Demo
         } else if id.starts_with(crate::youtube::ID_PREFIX) {
             Source::YouTube
         } else if id.starts_with("isrc:") || id.starts_with("shazam:") {
@@ -63,6 +67,7 @@ impl Source {
             Source::Music => "Apple Music",
             Source::YouTube => "YouTube",
             Source::Other => "your music app",
+            Source::Demo => "OnKey",
         }
     }
 
@@ -74,6 +79,9 @@ impl Source {
             Source::Music => "com.apple.Music",
             Source::YouTube => crate::youtube::browser().map_or("com.google.Chrome", |b| b.audio_bundle()),
             Source::Other => crate::listen::bundle().unwrap_or("com.spotify.client"),
+            // OnKey's own process: the demo's player is the only sound OnKey's process makes (the window's sounds
+            // come from WebKit's process)
+            Source::Demo => crate::demo::bundle(),
         }
     }
 
@@ -81,7 +89,7 @@ impl Source {
     /// YouTube: it's opened in the background, and a browser is yours to keep in front.
     pub fn app_bundle(self) -> Option<&'static str> {
         match self {
-            Source::YouTube | Source::Other => None,
+            Source::YouTube | Source::Other | Source::Demo => None,
             s => Some(s.bundle()),
         }
     }
@@ -93,11 +101,14 @@ impl Source {
             Source::Music => crate::music::state(),
             Source::YouTube => crate::youtube::state(),
             Source::Other => crate::listen::state(),
+            Source::Demo => crate::demo::state(),
         }
     }
 
     /// "restart", "next", "previous", "playpause", "pause" or "play".
     pub fn control(self, action: &str) {
+        // logged: a song that pauses or restarts by itself then shows whether OnKey asked for it
+        crate::engine::log(&format!("asked {} to {action}", self.name()));
         // listening knows OnKey moved the song itself (it may make no gap to hear)
         match action {
             "restart" => crate::listen::moved(Some(0.0)),
@@ -108,6 +119,7 @@ impl Source {
             Source::Spotify => crate::spotify::control(action),
             Source::Music => crate::music::control(action),
             Source::YouTube => crate::youtube::control(action),
+            Source::Demo => crate::demo::control(action),
             Source::Other => {}
         }
     }
@@ -119,6 +131,7 @@ impl Source {
             Source::Spotify => crate::spotify::seek(seconds),
             Source::Music => crate::music::seek(seconds),
             Source::YouTube => crate::youtube::seek(seconds),
+            Source::Demo => crate::demo::seek(seconds),
             Source::Other => {}
         }
     }
@@ -195,6 +208,7 @@ pub fn controllable(s: Source) -> bool {
         Source::Music => crate::settings::control("control_music") && !refused(s),
         Source::YouTube => crate::youtube::enabled(),
         Source::Other => false,
+        Source::Demo => true,
     }
 }
 
@@ -372,26 +386,59 @@ pub fn control_key(s: Source) -> Option<(&'static str, &'static str)> {
         Source::Spotify => Some(("control_spotify", "Spotify")),
         Source::Music => Some(("control_music", "Apple Music")),
         Source::YouTube => Some(("youtube", "your browser")),
-        Source::Other => None,
+        Source::Other | Source::Demo => None,
     }
 }
 
-/// Start a track in the app it belongs to.
-pub fn play_track(id: &str) {
+/// Start a track in the app it belongs to; false when the app didn't (or there's no app to ask: a song only ever
+/// heard). YouTube's is taken as done (it opens a tab).
+pub fn play_track(id: &str) -> bool {
+    let app = Source::of_id(id);
+    // the demo plays only until another song is started from OnKey
+    if app != Source::Demo {
+        crate::demo::stop();
+    }
+    if app == Source::Other {
+        return false;                               // a song only ever heard: nothing to tell to play it
+    }
     // listening: the song before ends now, and this one starts once the app really plays it
-    if matches!(Source::of_id(id), Source::Spotify | Source::Music) {
+    if matches!(app, Source::Spotify | Source::Music) {
         crate::listen::onkey_plays(id);
     }
-    match Source::of_id(id) {
+    let done = match app {
         Source::Spotify => crate::spotify::play_track(id),
         Source::Music => crate::music::play_track(id),
         Source::YouTube => {
             crate::youtube::set_enabled(true);      // you chose a YouTube song in OnKey: follow YouTube from now on
-            crate::youtube::play_track(id)
+            crate::youtube::play_track(id);
+            true
         }
-        Source::Other => {}                         // a song only ever heard: nothing to tell to play it
+        Source::Demo => {
+            crate::demo::start();                   // OnKey's own player (demo.rs)
+            true
+        }
+        Source::Other => false,
+    };
+    if done {
+        *ACTIVE.lock().unwrap() = app;
+        pause_others(app);
     }
-    *ACTIVE.lock().unwrap() = Source::of_id(id);
+    done
+}
+
+/// A song was just started in `app`: Spotify or Apple Music, if another is playing (one OnKey may control), is paused,
+/// so the two don't play over each other (listening hears both; the window followed the one still playing).
+fn pause_others(app: Source) {
+    for other in [Source::Spotify, Source::Music].into_iter().filter(|o| *o != app) {
+        let running = match other {
+            Source::Spotify => crate::spotify::running(),
+            _ => crate::music::running(),
+        };
+        // (asked only when running: an Apple event to an app that isn't would start it)
+        if running && controllable(other) && other.state().is_some_and(|s| s.playing) {
+            other.control("pause");
+        }
+    }
 }
 
 /// An album cover for a learned song that doesn't have one (`track` as stored: id, name, artist): Apple's
@@ -401,18 +448,19 @@ pub fn cover_for(track: &serde_json::Value) -> Option<crate::music::Cover> {
     let id = track["id"].as_str()?;
     match Source::of_id(id) {
         Source::YouTube => Some(crate::music::Cover { art: crate::youtube::thumbnail(id.strip_prefix(crate::youtube::ID_PREFIX)?), link: None }),
+        Source::Demo => None,                       // (never looked up: the demo isn't in anyone's catalogue)
         Source::Spotify | Source::Music | Source::Other =>
             crate::music::cover_lookup(track["artist"].as_str()?, track["name"].as_str()?),
     }
 }
 
 /// Per-app values learned on this Mac (e.g. how late an app's jump lands), as atomics indexed by source.
-pub struct PerSource(pub [std::sync::atomic::AtomicI64; 4]);
+pub struct PerSource(pub [std::sync::atomic::AtomicI64; 5]);
 
 impl PerSource {
     pub const fn new(v: i64) -> PerSource {
         use std::sync::atomic::AtomicI64;
-        PerSource([AtomicI64::new(v), AtomicI64::new(v), AtomicI64::new(v), AtomicI64::new(v)])
+        PerSource([AtomicI64::new(v), AtomicI64::new(v), AtomicI64::new(v), AtomicI64::new(v), AtomicI64::new(v)])
     }
     pub fn get(&self, s: Source) -> i64 {
         self.0[s.index()].load(std::sync::atomic::Ordering::Relaxed)
@@ -440,6 +488,18 @@ mod tests {
         assert!(!resting("TestApp"));
         rest("TestApp");
         assert!(resting("TestApp") && !resting("OtherApp"));
+    }
+
+    #[test]
+    fn the_demo_song_is_onkeys_own_and_always_controlled() {
+        assert_eq!(Source::of_id("demo:wellerman"), Source::Demo);
+        assert_ne!(Source::of_id("spotify:track:demo"), Source::Demo);
+        assert!(is_song("demo:wellerman"));
+        assert!(controllable(Source::Demo), "OnKey plays it: no permission to ask, in any mode");
+        assert_eq!(Source::Demo.app_bundle(), None, "nothing to bring to the front or hide");
+        assert_eq!(Source::Demo.bundle(), crate::demo::bundle(), "its sound is captured from OnKey's own process");
+        assert!(cover_for(&serde_json::json!({"id": "demo:wellerman", "name": "Wellerman", "artist": "Traditional"})).is_none(),
+                "no cover lookup over the network for it");
     }
 
     #[test]
