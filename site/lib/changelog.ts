@@ -133,6 +133,80 @@ export const ENTRIES: Entry[] = [
     ],
   },
   {
+    date: "2026-10-28",
+    version: "0.2.0",
+    kind: "better",
+    title: "A tidier app, page by page",
+    summary: "Each take gets a clearer report, and Sing, History, Library and Settings are easier to find your way around.",
+    points: [
+      "Sing offers \"Pick up where you left off\": your last few songs, each with its last score and a Sing button",
+      "Library's Play starts the song for you, and Sing shows it starting (or says why it can't)",
+    ],
+  },
+  {
+    date: "2026-10-26",
+    version: "0.2.0",
+    kind: "new",
+    title: "Scoring levels: Relaxed, Steady and Pro",
+    summary:
+      "Choose how strictly your takes are scored in Settings. Relaxed is how OnKey has always scored; Steady and Pro " +
+      "ask for more.",
+    points: [
+      "Vibrato is judged on the centre of the note, so a good vibrato isn't marked down at any level",
+      "Each take shows the level it was scored at",
+    ],
+  },
+  {
+    date: "2026-10-26",
+    version: "0.2.0",
+    kind: "new",
+    title: "Leave out what isn't the melody",
+    summary:
+      "If OnKey picked up a backing vocal or an ad-lib instead of the tune, mark that stretch \"Not the melody\" on " +
+      "the take's page. It's left out of every score for that song, past takes included.",
+  },
+  {
+    date: "2026-10-26",
+    version: "0.2.0",
+    kind: "new",
+    title: "Your vocal range",
+    summary: "OnKey works out your range from the songs you sing, and shows how each song fits it.",
+    points: [
+      "History shows your range on a strip of keys, with your comfortable middle marked",
+      "The Library shows each song's fit, with a filter for songs in your range",
+      "When a song sits high or low, it says whether singing it an octave away would fit you better",
+    ],
+  },
+  {
+    date: "2026-10-26",
+    version: "0.2.0",
+    kind: "new",
+    title: "Challenge a friend, and share your best takes",
+    summary:
+      "From a take, copy a link that says what you scored and asks a friend to beat it. It carries only the song, " +
+      "the artist, your score and, if you like, your first name.",
+    points: [
+      "After a best on a song or a big step up, the take's page offers \"Share this take\"",
+      "A shared clip ends on an OnKey card: your voice, never the music",
+    ],
+  },
+  {
+    date: "2026-10-26",
+    version: "0.2.0",
+    kind: "new",
+    title: "Fade the guide",
+    summary:
+      "Turn it on in Settings, and on songs you already sing well your pitch line fades while you're on the note, " +
+      "so you sing by ear and not by eye. It comes back the moment you drift.",
+  },
+  {
+    date: "2026-10-26",
+    version: "0.2.0",
+    kind: "better",
+    title: "Lyrics line up better",
+    summary: "Lines and words now light up closer to when they're sung, including lines that open on an \"oh\" or \"whoa\".",
+  },
+  {
     date: "2026-10-22",
     version: "0.1.0",
     kind: "new",
