@@ -6,23 +6,7 @@ use std::sync::Mutex;
 
 use rtrb::{Consumer, Producer, RingBuffer};
 
-extern "C" {
-    fn onkey_capture_start(bundle: *const c_char,
-                           cb: extern "C" fn(*const f32, i32, *mut c_void), ctx: *mut c_void,
-                           out_rate: *mut f64) -> i32;
-    fn onkey_capture_stop();
-    fn onkey_capture_mic(uid: *mut c_char, name: *mut c_char, len: i32);
-    fn onkey_mic_choice(uid: *mut c_char, name: *mut c_char, len: i32) -> i32;
-    fn onkey_mic_list(buf: *mut c_char, len: i32);
-    fn onkey_set_mic_preference(uid: *const c_char);
-    fn onkey_output_latency_ms() -> i32;
-    fn onkey_mic_channel(count: *mut i32) -> i32;
-    fn onkey_output_uid(uid: *mut std::ffi::c_char, len: i32);
-    fn onkey_output_name(name: *mut std::ffi::c_char, len: i32);
-    fn onkey_app_sounding(bundle: *const c_char) -> i32;
-    fn onkey_webkit_separable() -> i32;
-    fn onkey_wake_count() -> i32;
-}
+use crate::platform::native::*;
 
 /// Interleaved frames: [music L, music R, mic].
 pub const CHANNELS: usize = 3;

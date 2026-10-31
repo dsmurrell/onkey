@@ -731,7 +731,7 @@ impl Store {
         Ok(())
     }
 
-    /// Keep a song's Shazam signature, made from `seconds` of its audio starting `start` s into the song. A
+    /// Keep a song's signature (recognize::signature: ShazamKit's on macOS), made from `seconds` of its audio starting `start` s into the song. A
     /// longer one replaces a shorter one (a later, fuller play of the song).
     pub fn save_signature(&self, id: &str, sig: &[u8], start: f64, seconds: f64) {
         let _writing = writing();
@@ -739,21 +739,22 @@ impl Store {
             return;
         }
         let mut b = Vec::with_capacity(sig.len() + 20);
-        b.extend_from_slice(b"SHS1");
+        b.extend_from_slice(crate::recognize::SIG_KIND);
         b.extend_from_slice(&start.to_le_bytes());
         b.extend_from_slice(&seconds.to_le_bytes());
         b.extend_from_slice(sig);
         let _ = write_atomic(&self.song_path(id, "shsig"), &b);
     }
 
-    /// A song's Shazam signature: (bytes, song seconds where it starts, seconds it covers). None while it's to be
-    /// learned again: made from the copy that's off, it would place that play off in the same way.
+    /// A song's signature: (bytes, song seconds where it starts, seconds it covers). None while it's to be learned
+    /// again (made from the copy that's off, it would place that play off in the same way), and when it's another
+    /// system's kind (a library copied from a Mac to Windows): this system can't match it.
     pub fn signature(&self, id: &str) -> Option<(Vec<u8>, f64, f64)> {
         let b = std::fs::read(self.song_path(id, "shsig")).ok()?;
         if self.learning_again(id) {
             return None;
         }
-        if b.len() < 20 || &b[..4] != b"SHS1" {
+        if b.len() < 20 || &b[..4] != crate::recognize::SIG_KIND {
             return None;
         }
         let start = f64::from_le_bytes(b[4..12].try_into().ok()?);
@@ -796,11 +797,13 @@ impl Store {
             return t.clone();
         }
         let isrc = |id: &str| id.starts_with("isrc:");
+        // (an id made from the song's names on Windows gives way to the app's own once that's known: trackids.rs)
+        let made = crate::trackids::is_media_id;
         let id = if isrc(&t.id) {
             t.id.clone()
         } else if let Some(k) = same.iter().find(|k| isrc(&k.id)) {
             k.id.clone()
-        } else if self.song_path(&t.id, "json").exists() {
+        } else if self.song_path(&t.id, "json").exists() || (made(&same[0].id) && !made(&t.id)) {
             t.id.clone()
         } else {
             same[0].id.clone()
@@ -1436,7 +1439,8 @@ pub struct Pick {
 /// unless you've played something there.
 pub fn pick_app(id: &str, aliases: &[String], played_in: Option<Source>, usual: Option<Source>, running: Option<Source>) -> Pick {
     let ids: Vec<&str> = std::iter::once(id).chain(aliases.iter().map(|a| a.as_str())).collect();
-    let id_in = |app: Source| ids.iter().find(|i| Source::of_id(i) == app).map(|i| i.to_string());
+    // (an id OnKey made from the song's names on Windows is no app's: never opened by)
+    let id_in = |app: Source| ids.iter().find(|i| Source::of_id(i) == app && !crate::trackids::is_media_id(i)).map(|i| i.to_string());
     let real = |s: Option<Source>| s.filter(|s| *s != Source::Other);
     // a song kept by an app's own id was played there
     let played_in = real(played_in).or(real(Some(Source::of_id(id))));
@@ -1469,7 +1473,7 @@ pub fn play_plan(ids: &[String], pick: &Pick, open: impl Fn(Source) -> bool) -> 
     }
     let other = ids.iter().find(|i| {
         let a = Source::of_id(i);
-        a != Source::Other && a != pick.app && open(a)
+        a != Source::Other && a != pick.app && !crate::trackids::is_media_id(i) && open(a)
     });
     match other {
         Some(id) => PlayPlan::Start { app: Source::of_id(id), id: id.clone() },
@@ -1488,26 +1492,30 @@ fn mark_favorite(meta: &mut Value, on: bool, at: &str) {
 /// What the window shows when a delete couldn't move something to the Trash (nothing was deleted).
 pub const TRASH_FAILED: &str = "Couldn't move it to the Trash, so nothing was deleted.";
 
-/// Move a file or folder to the user's Trash (~/.Trash), named so it doesn't clash. Never deleted outright: if
-/// the move fails it stays where it is and this says so (a failed move once fell through to deleting it).
+/// Move a file or folder to the Trash (the Recycle Bin on Windows: platform::shell::trash). Never deleted outright:
+/// if the move fails it stays where it is and this says so (a failed move once fell through to deleting it).
 fn to_trash(p: &Path) -> Result<(), String> {
-    let home = std::env::var_os("HOME").ok_or_else(|| TRASH_FAILED.to_string())?;
-    trash_into(p, &Path::new(&home).join(".Trash"))
-}
-
-/// `to_trash` into `trash` (a test's folder). Nothing there: nothing to do.
-fn trash_into(p: &Path, trash: &Path) -> Result<(), String> {
     if !p.exists() {
         return Ok(());
     }
-    let name = p.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
-    let dest = trash.join(format!("OnKey {} {name}", now_iso().replace(':', ".")));
-    std::fs::rename(p, &dest).map_err(|e| {
+    crate::platform::shell::trash(p).map_err(|e| {
         if !cfg!(test) {
             crate::engine::log(&format!("couldn't move {} to the Trash ({e}): left where it is", p.display()));
         }
         TRASH_FAILED.to_string()
     })
+}
+
+/// Move `p` into the folder `trash` (the Mac's ~/.Trash, or a test's folder), named so it doesn't clash. Nothing
+/// there: nothing to do.
+#[cfg_attr(not(target_os = "macos"), allow(dead_code))] // (the Mac's way; Windows has the Recycle Bin)
+pub(crate) fn trash_into(p: &Path, trash: &Path) -> Result<(), String> {
+    if !p.exists() {
+        return Ok(());
+    }
+    let name = p.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
+    let dest = trash.join(format!("OnKey {} {name}", now_iso().replace(':', ".")));
+    std::fs::rename(p, &dest).map_err(|e| e.to_string())
 }
 
 /// songs/<track>.json (not the .syl.json syllable files beside it)
@@ -1626,9 +1634,23 @@ struct libc_tm {
     tm_isdst: i32, tm_gmtoff: i64, tm_zone: *const i8,
 }
 
+#[cfg(not(windows))]
 extern "C" {
     fn localtime_r(t: *const i64, out: *mut libc_tm) -> *mut libc_tm;
     fn strftime(s: *mut i8, max: usize, fmt: *const i8, tm: *const libc_tm) -> usize;
+}
+
+// Windows' C library: the same strftime, and localtime_r as _localtime64_s (its arguments the other way round; its
+// struct tm stops at tm_isdst, so the fields after are left as they were)
+#[cfg(windows)]
+extern "C" {
+    fn _localtime64_s(out: *mut libc_tm, t: *const i64) -> i32;
+    fn strftime(s: *mut i8, max: usize, fmt: *const i8, tm: *const libc_tm) -> usize;
+}
+
+#[cfg(windows)]
+unsafe fn localtime_r(t: *const i64, out: *mut libc_tm) -> *mut libc_tm {
+    if _localtime64_s(out, t) == 0 { out } else { std::ptr::null_mut() }
 }
 
 pub fn fit<T: Clone>(x: &[T], n: usize, fill: T) -> Vec<T> {
@@ -2269,6 +2291,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(unix)] // unreadable by Unix permission bits (Windows would need an ACL)
     fn a_file_that_cant_be_read_is_never_written_over() {
         use std::os::unix::fs::PermissionsExt;
         let dir = std::env::temp_dir().join(format!("onkey-kept-{}", std::process::id()));
@@ -2316,6 +2339,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(unix)] // unreadable by Unix permission bits (Windows would need an ACL)
     fn a_folder_that_cant_be_read_is_an_error_not_an_empty_list() {
         use std::os::unix::fs::PermissionsExt;
         let dir = std::env::temp_dir().join(format!("onkey-unreadable-{}", std::process::id()));
@@ -2354,8 +2378,8 @@ mod tests {
         std::fs::write(&song, "{}").unwrap();
         // a Trash that can't be moved into (not there): an error, and both stay
         let nowhere = dir.join("no-trash");
-        assert_eq!(trash_into(&take, &nowhere), Err(TRASH_FAILED.to_string()));
-        assert_eq!(trash_into(&song, &nowhere), Err(TRASH_FAILED.to_string()));
+        assert!(trash_into(&take, &nowhere).is_err());
+        assert!(trash_into(&song, &nowhere).is_err());
         assert!(take.join("result.json").exists() && song.exists(), "nothing deleted outright");
         // a Trash that's there: moved into it, whole
         let trash = dir.join("Trash");
@@ -2507,6 +2531,34 @@ mod tests {
         assert_eq!(store.play_plan("spotify:track:5fVZ", None, |_| false), PlayPlan::Start { app: Source::Music, id: "music:AB12".into() });
         // asked by its Apple Music id (a take's), the same
         assert_eq!(store.play_plan("music:AB12", None, |_| false), PlayPlan::Start { app: Source::Music, id: "music:AB12".into() });
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn a_song_learned_under_a_made_up_id_goes_with_spotifys_own_once_known() {
+        // Windows: learned while the media session named it (an id made from its names), then heard by Spotify's
+        // own id (trackids.rs learned it): one song, kept under Spotify's id, opened and played by it
+        let dir = std::env::temp_dir().join(format!("onkey-madeid-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let store = Store::new(dir.clone());
+        let made = "spotify:media:0123456789abcdef";
+        let real = "spotify:track:48UPSzbZjgc449aqz8bxox";
+        let t = |id: &str| Track { id: id.into(), name: "Californication".into(), artist: "Red Hot Chili Peppers".into(), duration: 100.0, ..Default::default() };
+        let n = (100.0 / crate::dsp::FRAME_S) as usize;
+        assert!(store.save_song(&t(made), vec![60.0; n], vec![true; n], vec![[1.0; FP_BANDS]; n]));
+        // only the made-up id: nothing to open or play it by in Spotify (a search instead)
+        assert_eq!(store.open_pick(made, None).0, Pick { app: Source::Spotify, id: None });
+        assert_eq!(store.play_plan(made, None, |_| true), PlayPlan::NoId { app: Source::Spotify });
+        let kept = store.canonical(&t(real));
+        assert_eq!(kept.id, real);
+        assert!(store.load_song(real).is_some() && store.load_song(made).is_none(), "merged into one");
+        assert!(aliases(&store.song_meta(real).unwrap()).contains(&made.to_string()));
+        assert_eq!(store.open_pick(made, None).0, Pick { app: Source::Spotify, id: Some(real.into()) });
+        assert_eq!(store.play_plan(made, None, |_| false), PlayPlan::Start { app: Source::Spotify, id: real.into() });
+        // kept by its ISRC with both ids as aliases (listening mode): Spotify's own id, never the made-up one
+        assert_eq!(pick_app("isrc:X", &[made.into(), real.into()], Some(Source::Spotify), None, None),
+                   Pick { app: Source::Spotify, id: Some(real.into()) });
+        assert_eq!(pick_app("isrc:X", &[made.into()], Some(Source::Spotify), None, None), Pick { app: Source::Spotify, id: None });
         let _ = std::fs::remove_dir_all(&dir);
     }
 

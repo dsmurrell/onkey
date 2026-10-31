@@ -20,6 +20,7 @@ import { errorText } from "@/lib/dataSafety";
 import { getLibrary, inApp, learnAnyway, isFavorite, learnPct, learnStage, live, openApp, openInApp, clearStarting, useStarting, openPrivacySettings, playerNow, renameTrack, setFavorite, setListeningPaused, setMini, setupOpenSettings, setupStatus, setYouTube, usePlaying, useSession, type LearnJob, type Line, type SongState, type Status } from "@/lib/session";
 import type { StartingView } from "@/lib/starting";
 import { typing } from "@/lib/keys";
+import { pcWords, usePc, useWindows } from "@/lib/platform";
 import { clock, sourceName } from "@/lib/music";
 
 export default function Sing() {
@@ -238,11 +239,22 @@ const LINE_SUB: Record<Line["kind"], string> = {
   elsewhere: "OnKey hears what plays on this Mac. If it's playing on another device (your phone, a speaker), switch it to this Mac in the app's device menu.",
 };
 
+/** LINE_SUB on Windows (and Linux, `pc`): no Shazam there (a song not learned is named only by the music app), and a PC. */
+const lineSubPc = (pc: ReturnType<typeof pcWords>): Record<Line["kind"], string> => ({
+  ...LINE_SUB,
+  unnamed: "It isn’t a song OnKey has learned, and no music app has said what it is. OnKey asks again when the sound changes.",
+  no_shazam: `It isn’t a song OnKey has learned yet. On ${pc.os}, new songs are named by ${pc.apps} (with YouTube on): play it there and OnKey learns it.`,
+  shazam_off: `It isn’t a song OnKey has learned yet. On ${pc.os}, new songs are named by ${pc.apps} (with YouTube on): play it there and OnKey learns it.`,
+  elsewhere: "OnKey hears what plays on this PC. If it's playing on another device (your phone, a speaker), switch it to this PC in the app's device menu.",
+});
+
 /** First run (nothing learned yet) and still no song after this long: suggest songs to try, whatever the line says. */
 const STARTERS_AFTER_MS = 45_000;
 
 function Waiting({ start, connected, line, player, youtube, listening, paused }: { start: StartingView | null; connected: boolean; line: Line | null; player: null | { state: string; name: string; artist: string }; youtube: boolean; listening: boolean; paused: boolean }) {
   const [busy, setBusy] = useState(false);
+  const win = useWindows();
+  const pc = usePc();
   const said = line && line.kind !== "learning" ? line : null;
   // songs to try: while nothing plays, and on a first run when OnKey has heard no song for a while
   const [startersHidden, hideStarters] = useStartersHidden();
@@ -262,11 +274,11 @@ function Waiting({ start, connected, line, player, youtube, listening, paused }:
   const title = !connected ? "Starting OnKey…" : start ? start.title : said ? (said.kind === "finding" || said.kind === "new_song" ? "Getting ready…" : said.kind === "podcast" ? "Not a song" : said.kind === "elsewhere" || said.kind === "stopped" ? said.text : "Still listening") : player?.state === "playing" ? "Getting ready…"
     : "Play a song and sing along";
   const sub = !connected
-    ? "Connecting to the engine on this Mac."
+    ? `Connecting to the engine on this ${win ? "PC" : "Mac"}.`
     : start
       ? start.sub
     : said
-      ? LINE_SUB[said.kind]
+      ? (win ? lineSubPc(pc) : LINE_SUB)[said.kind]
       : player?.state === "playing"
         ? `Listening to ${player.name}. The lane appears in a moment.`
         : `In Spotify${youtube ? ", Apple Music or YouTube" : " or Apple Music"}. OnKey follows along, and every song becomes a take you can review.`;
@@ -310,7 +322,12 @@ function Waiting({ start, connected, line, player, youtube, listening, paused }:
                     className="shrink-0 rounded-lg bg-white/6 px-2.5 py-1 text-ink-100 transition hover:bg-white/10 disabled:opacity-50">
               {youtube ? "Turn off" : "Turn on"}</button>
           </div>
-          <p className="mt-1.5">{youtube
+          {/* (Windows: followed through the browser's media session, nothing for Windows to ask) */}
+          <p className="mt-1.5">{win
+            ? youtube
+              ? `On. OnKey follows songs in your browser from what it tells ${pc.os} is playing.`
+              : "Off, so songs playing in your browser aren’t picked up. Turn it on to sing along in Chrome, Edge, Firefox, Brave, Opera or Vivaldi."
+            : youtube
             ? "On. macOS asks once to let OnKey control your browser, so it can read where the video is."
             : "Off, so songs playing in your browser aren’t picked up. Turn it on to sing along in Chrome, Safari, Brave or Edge: macOS asks once to let OnKey control the browser."}</p>
         </div>
@@ -391,25 +408,31 @@ function Notices({ status, song }: { status: Status; song: SongState | null }) {
   const sounding = status.browser_sounding;
   useEffect(() => { if (status.youtube) setYtOn(false); }, [status.youtube]);
   const learning = !song || song.mode === "learn";
+  const win = useWindows();
+  const pc = usePc();
   const list = [
     (status.mic === "denied" || status.mic === "restricted") && (
       <Notice key="mic" title="OnKey can’t hear your microphone"
-              action={status.mic === "denied" ? { label: "Open System Settings", run: () => setupOpenSettings("mic") } : undefined}>
+              action={status.mic === "denied" ? { label: win ? "Open Windows Settings" : "Open System Settings", run: () => setupOpenSettings("mic") } : undefined}>
         {status.mic === "denied"
-          ? <>Your singing isn’t heard or scored until it can. In <b>System Settings → Privacy &amp; Security → Microphone</b>, turn on OnKey.</>
-          : <>Your Mac’s settings don’t let OnKey use the microphone. Ask whoever manages this Mac.</>}
+          ? win
+            ? <>Your singing isn’t heard or scored until it can. In <b>Windows Settings → Privacy &amp; security → Microphone</b>, turn on <b>Microphone access</b> and <b>Let desktop apps access your microphone</b>.</>
+            : <>Your singing isn’t heard or scored until it can. In <b>System Settings → Privacy &amp; Security → Microphone</b>, turn on OnKey.</>
+          : win
+            ? <>This PC’s settings don’t let OnKey use the microphone. Ask whoever manages this PC.</>
+            : <>Your Mac’s settings don’t let OnKey use the microphone. Ask whoever manages this Mac.</>}
       </Notice>
     ),
     status.mic === "granted" && status.mic_device === null && (
       <Notice key="mic" title="OnKey can’t hear your microphone">
         No microphone is connected, so your singing isn’t heard or scored. Connect one, or choose one in{" "}
-        <b>System Settings → Sound → Input</b>.
+        <b>{win ? pc.soundInput : "System Settings → Sound → Input"}</b>.
       </Notice>
     ),
     status.music_quiet && (
       <Notice key="music-quiet" title={`${status.music_quiet.app}’s volume is very low`}>
         OnKey can’t hear the song well{status.music_quiet.volume != null ? ` (${status.music_quiet.app} is at ${status.music_quiet.volume}%)` : ""}, so your
-        singing isn’t scored. Turn {status.music_quiet.app} up and use your Mac’s volume instead.
+        singing isn’t scored. Turn {status.music_quiet.app} up and use {win ? "the PC’s" : "your Mac’s"} volume instead.
       </Notice>
     ),
     status.automation_denied && (
@@ -430,7 +453,7 @@ function Notices({ status, song }: { status: Status; song: SongState | null }) {
     m && m.state === "missing" && learning && (
       <Notice key="models" title="OnKey can’t learn new songs right now">
         Its learning models, which come inside the app, are missing or damaged{m.error ? ` (${m.error})` : ""}. Songs you’ve
-        already learned still work. To fix it, download OnKey again and replace the app in Applications: your songs and
+        already learned still work. To fix it, download OnKey again and {win ? "install it over this one" : "replace the app in Applications"}: your songs and
         takes are kept.
       </Notice>
     ),
@@ -448,8 +471,11 @@ function Notices({ status, song }: { status: Status; song: SongState | null }) {
     !song && !status.youtube && !ytOn && sounding && sounding.browser !== ytClosed && (sounding.works ? (
       <Notice key="youtube-off" title={`Playing YouTube or YouTube Music in ${sounding.browser}?`} onClose={() => setYtClosed(sounding.browser)}
               action={{ label: "Turn on YouTube", run: () => { setYtOn(true); void setYouTube(true).catch(() => setYtOn(false)); } }}>
-        OnKey only picks up songs in your browser once YouTube is on. macOS then asks once to let OnKey control {sounding.browser}, so
-        it can read where the video is.
+        {win
+          ? <>OnKey only picks up songs in your browser once YouTube is on. It then follows the song {sounding.browser} tells
+              {" "}{pc.os} is playing, and learns it like any other.</>
+          : <>OnKey only picks up songs in your browser once YouTube is on. macOS then asks once to let OnKey control {sounding.browser}, so
+              it can read where the video is.</>}
       </Notice>
     ) : (
       <Notice key="youtube-off" title={`Playing YouTube or YouTube Music in ${sounding.browser}?`} onClose={() => setYtClosed(sounding.browser)}>

@@ -2,8 +2,9 @@
 //! where in it they start.
 //!
 //! Three recognisers, tried in this order:
-//!   - `Catalog`: the songs OnKey has learned, by their Shazam signatures (ShazamKit custom catalog). Entirely on
-//!     this Mac, no account or network; exact to ~10 ms from 2 s of music.
+//!   - `Catalog`: the songs OnKey has learned, by their signatures (ShazamKit custom catalog on macOS, OnKey's own
+//!     landmark one, landmark.rs, elsewhere). Entirely on this computer, no account or network; exact to ~10 ms
+//!     from 2 s of music.
 //!   - `Fingerprints`: learned songs that have no signature yet (learned before signatures were kept), by OnKey's
 //!     own rhythm fingerprint. Slower (it searches every song), so only a fallback. Also the stand-in recogniser
 //!     for tests, with a delay and a miss rate.
@@ -11,40 +12,53 @@
 //!     OnKey's App ID (Apple Developer account). A slow answer is waited for (the first ones after a fresh
 //!     install can take half a minute); when it fails (refused, offline, or no answer for a minute) it rests and
 //!     tries again later: 10 s, then 30 s, then every 2 min.
-use std::ffi::{c_char, CString};
+use std::ffi::c_char;
 use std::time::{Duration, Instant};
 
 use crate::dsp::{locate, onset_envelope, FP_BANDS, FRAME_S, LOCATE_MIN_FRAMES};
 use crate::source::Track;
 use crate::store::Store;
 
-extern "C" {
-    fn onkey_shz_signature(x: *const f32, n: i32, rate: f64, out_len: *mut i32) -> *mut u8;
-    fn onkey_shz_free(p: *mut u8);
-    fn onkey_shz_catalog_new() -> i32;
-    fn onkey_shz_catalog_free(h: i32);
-    fn onkey_shz_catalog_add(h: i32, sig: *const u8, len: i32, id: *const c_char) -> i32;
-    fn onkey_shz_match(h: i32, sig: *const u8, len: i32, out_id: *mut c_char, cap: i32, out_offset: *mut f64) -> i32;
-    fn onkey_shz_shazam_begin(sig: *const u8, len: i32) -> i32;
-    fn onkey_shz_shazam_poll(ticket: i32, out: *mut c_char, cap: i32) -> i32;
-    fn onkey_shz_shazam_forget(ticket: i32);
-}
+use crate::platform::native::*;
 
 pub const SR: usize = 16_000;
 
-/// A Shazam signature of mono 16 kHz audio (a compact fingerprint, not the audio).
+/// Which kind of signature learned songs keep (store.rs tags each with it): ShazamKit's on macOS, OnKey's own
+/// landmark ones (landmark.rs) where there's no ShazamKit. A library copied from the other system has its
+/// signatures passed over, not misread, and replaced by the next play of each song.
+pub const SIG_KIND: &[u8; 4] = crate::platform::signature::KIND;
+
+/// A signature of mono 16 kHz audio (a compact fingerprint, not the audio), of this system's kind (`SIG_KIND`).
 pub fn signature(x16: &[f32]) -> Option<Vec<u8>> {
     if x16.len() < SR {
         return None;
     }
-    let mut n = 0i32;
-    let p = unsafe { onkey_shz_signature(x16.as_ptr(), x16.len() as i32, SR as f64, &mut n) };
-    if p.is_null() {
-        return None;
+    crate::platform::signature::of(x16, SR as f64)
+}
+
+/// Signatures matched on this computer: ShazamKit's custom catalog on macOS, landmark.rs's elsewhere.
+pub struct SigCatalog(crate::platform::signature::Catalog);
+
+impl SigCatalog {
+    pub fn new() -> SigCatalog {
+        SigCatalog(crate::platform::signature::Catalog::new())
     }
-    let v = unsafe { std::slice::from_raw_parts(p, n as usize) }.to_vec();
-    unsafe { onkey_shz_free(p) };
-    Some(v)
+
+    /// Add a song's signature under `id`. False: it couldn't be read (another kind, say).
+    pub fn add(&mut self, id: &str, sig: &[u8]) -> bool {
+        self.0.add(id, sig)
+    }
+
+    /// The song a signature is from, and where in its signature's audio the query's starts (s).
+    pub fn find(&mut self, sig: &[u8]) -> Option<(String, f64)> {
+        self.0.find(sig)
+    }
+}
+
+impl Default for SigCatalog {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 /// What a recogniser heard.
@@ -101,26 +115,25 @@ pub enum Ask {
     No,
 }
 
-/// Learned songs, by their Shazam signatures, matched on this Mac.
+/// Learned songs, by their signatures (`SigCatalog`), matched on this computer.
 pub struct Catalog {
-    handle: i32,
+    cat: SigCatalog,
     /// song id → (track, song seconds where its signature starts)
     songs: Vec<(Track, f64)>,
 }
 
 impl Catalog {
     pub fn from_store(store: &Store) -> Catalog {
-        let handle = unsafe { onkey_shz_catalog_new() };
+        let mut cat = SigCatalog::new();
         let mut songs = Vec::new();
         for t in store.learned_tracks() {
             if let Some((sig, start, _)) = store.signature(&t.id) {
-                let id = CString::new(t.id.clone()).unwrap_or_default();
-                if unsafe { onkey_shz_catalog_add(handle, sig.as_ptr(), sig.len() as i32, id.as_ptr()) } == 0 {
+                if cat.add(&t.id, &sig) {
                     songs.push((t, start));
                 }
             }
         }
-        Catalog { handle, songs }
+        Catalog { cat, songs }
     }
 
     pub fn len(&self) -> usize {
@@ -135,26 +148,14 @@ impl Catalog {
         self.songs.iter().any(|(t, _)| t.id == id)
     }
 
-    fn query(&self, x16: &[f32]) -> Option<(Track, f64)> {
+    fn query(&mut self, x16: &[f32]) -> Option<(Track, f64)> {
         if self.songs.is_empty() {
             return None;
         }
         let sig = signature(x16)?;
-        let mut id = [0 as c_char; 512];
-        let mut offset = 0.0;
-        let r = unsafe { onkey_shz_match(self.handle, sig.as_ptr(), sig.len() as i32, id.as_mut_ptr(), id.len() as i32, &mut offset) };
-        if r != 1 {
-            return None;
-        }
-        let id = unsafe { std::ffi::CStr::from_ptr(id.as_ptr()) }.to_string_lossy().into_owned();
+        let (id, offset) = self.cat.find(&sig)?;
         let (t, start) = self.songs.iter().find(|(t, _)| t.id == id)?;
         Some((t.clone(), start + offset))
-    }
-}
-
-impl Drop for Catalog {
-    fn drop(&mut self) {
-        unsafe { onkey_shz_catalog_free(self.handle) };
     }
 }
 

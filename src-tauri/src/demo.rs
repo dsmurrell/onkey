@@ -128,16 +128,9 @@ pub trait Player: Send {
     fn state(&self) -> Option<(f64, Playing)>;
 }
 
-extern "C" {
-    fn onkey_demo_open(path: *const std::ffi::c_char) -> f64;
-    fn onkey_demo_play();
-    fn onkey_demo_pause();
-    fn onkey_demo_seek(seconds: f64);
-    fn onkey_demo_close();
-    fn onkey_demo_state(position: *mut f64) -> i32;
-}
+use crate::platform::native::*;
 
-/// The AVAudioPlayer in native/demo.swift.
+/// The AVAudioPlayer in native/demo.swift (on Windows, a WASAPI stream: platform/windows/demo.rs).
 struct Native;
 
 impl Player for Native {

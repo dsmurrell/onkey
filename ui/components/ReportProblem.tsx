@@ -2,8 +2,10 @@
 // "Report a problem": OnKey's records (logs, each play's summary, versions; never lyrics or audio) put together as a
 // zip you save and attach to a GitHub issue. Shows exactly what's in it before saving, with a box to say what went
 // wrong. Opened from Settings, the Help menu, and a take's page ("Report a problem with this take"). Nothing is
-// uploaded: the issue page opens in your browser and you attach the zip yourself.
+// uploaded: the issue page opens in your browser and you attach the zip yourself. On Windows it's saved straight to
+// the Desktop and shown selected in File Explorer (one click for a tester), with a summary.txt of the logs inside.
 import { useEffect, useState } from "react";
+import { fileName, savedFolder, usePc, useWindows } from "@/lib/platform";
 import { openReportFolder, openReportIssue, prepareReport, saveReport, showInFinder, type ReportContents } from "@/lib/session";
 
 /** Open the report dialog (about a take, when given). */
@@ -20,6 +22,8 @@ export default function ReportProblem() {
   const [text, setText] = useState("");
   const [saved, setSaved] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const win = useWindows();
+  const pc = usePc();
   useEffect(() => {
     const on = (e: Event) => setOpen({ take: (e as CustomEvent<{ take: string | null }>).detail?.take ?? null });
     window.addEventListener("onkey-report", on);
@@ -62,23 +66,38 @@ export default function ReportProblem() {
         </h2>
         {saved ? (
           <>
-            <p className="mt-2 text-sm text-ink-300">
-              Saved to <span className="font-mono text-xs text-ink-100">{saved}</span>. To send it, open an issue on GitHub
-              and attach the zip (drag it into the box). Nothing has been sent anywhere.
-            </p>
+            {win ? (
+              <p className="mt-2 text-sm text-ink-300">
+                Saved to {savedFolder(saved)} as <span className="font-mono text-xs text-ink-100">{fileName(saved)}</span>, and shown
+                in {pc.files}. Attach that one file to your message (or to a GitHub issue). Nothing has been sent anywhere.
+              </p>
+            ) : (
+              <p className="mt-2 text-sm text-ink-300">
+                Saved to <span className="font-mono text-xs text-ink-100">{saved}</span>. To send it, open an issue on GitHub
+                and attach the zip (drag it into the box). Nothing has been sent anywhere.
+              </p>
+            )}
             <div className="mt-5 flex flex-wrap justify-end gap-2">
-              <button onClick={() => showInFinder(saved)} className="rounded-xl bg-white/8 px-4 py-2 text-sm text-ink-100 transition hover:bg-white/12">Show in Finder</button>
+              <button onClick={() => showInFinder(saved)} className="rounded-xl bg-white/8 px-4 py-2 text-sm text-ink-100 transition hover:bg-white/12">{win ? `Show in ${pc.files.replace("your ", "the ")}` : "Show in Finder"}</button>
               <button onClick={() => openReportIssue(open.take)} className="rounded-xl bg-accent-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-accent-400">Open a GitHub issue</button>
               <button onClick={() => setOpen(null)} className="rounded-xl px-4 py-2 text-sm text-ink-300 transition hover:text-white">Done</button>
             </div>
           </>
         ) : (
           <>
-            <p className="mt-2 text-sm text-ink-300">
-              OnKey puts its records together in a zip for you to save and attach to a bug report: its log for the last
-              three days and a summary of each play (timings, CPU, which build, which Mac). No lyrics, no audio, no song
-              files, and no user name or home folder. Nothing is uploaded.
-            </p>
+            {win ? (
+              <p className="mt-2 text-sm text-ink-300">
+                OnKey puts its records in one zip file on your Desktop for you to attach to a message: its log for the last
+                three days, a summary of each play, and a summary of this PC, its sound and the music apps it followed. No
+                lyrics, no audio, no song files, and no user name or home folder. Nothing is uploaded.
+              </p>
+            ) : (
+              <p className="mt-2 text-sm text-ink-300">
+                OnKey puts its records together in a zip for you to save and attach to a bug report: its log for the last
+                three days and a summary of each play (timings, CPU, which build, which Mac). No lyrics, no audio, no song
+                files, and no user name or home folder. Nothing is uploaded.
+              </p>
+            )}
             <label htmlFor="report-text" className="mt-4 text-sm font-medium text-ink-100">What went wrong? <span className="font-normal text-ink-400">(optional)</span></label>
             <textarea id="report-text" value={text} onChange={e => setText(e.target.value)} rows={3} maxLength={4000}
                       placeholder="e.g. the lyrics were late in Bad Day, or it froze at Starting OnKey"
@@ -100,7 +119,7 @@ export default function ReportProblem() {
                       className="mr-auto rounded-xl px-3 py-2 text-sm text-ink-300 transition hover:text-white disabled:opacity-40">Show the files</button>
               <button onClick={() => setOpen(null)} className="rounded-xl px-4 py-2 text-sm text-ink-300 transition hover:text-white">Cancel</button>
               <button onClick={save} disabled={!contents || busy}
-                      className="rounded-xl bg-accent-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-accent-400 disabled:opacity-50">Save…</button>
+                      className="rounded-xl bg-accent-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-accent-400 disabled:opacity-50">{win ? "Save to Desktop" : "Save…"}</button>
             </div>
           </>
         )}

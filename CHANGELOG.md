@@ -2,16 +2,14 @@
 
 ## 0.2.0 · 2026-10-31
 
-Scoring levels, your vocal range, Pause listening, and audio interfaces that just work.
+Pause listening, clearer paused songs, and audio interfaces that just work.
 
-- Scoring levels in Settings: Relaxed (as before), Steady and Pro. Vibrato is judged on the note's centre.
-- Your vocal range from your takes, in History, with how each song fits it and a filter in the Library.
-- Mark a stretch "Not the melody" on a take, such as a backing vocal, and it's left out of the song's score.
 - Pause listening (⌘⇧P, the Live chip or the OnKey menu): OnKey hears nothing until you resume.
+- A paused song shows when it'll be scored, with Finish now, and History shows the song you're singing.
 - Your voice is heard on whichever input of an audio interface your mic is on; virtual devices are listed apart.
-- Challenge a friend to beat your score, Fade the guide on songs you know, and Learn a song again.
-- Fixes: Play in the Library starts the song, quitting is instant, lyrics line up better, listening back stays in
-  step after a skip, a paused song shows when it'll be scored, and long radio streams stop at 20 minutes.
+- Learn a song again from the Library, guides linked from Settings, and What's new in the app.
+- Fixes: quitting is instant, listening back stays in step after a skip, Sing starts a song cleanly, takes are
+  never lost on Finish, Library's delete works, and long radio streams stop at 20 minutes.
 
 All the details: https://singonkey.app/changelog/
 

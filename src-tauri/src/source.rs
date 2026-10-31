@@ -77,7 +77,7 @@ impl Source {
         match self {
             Source::Spotify => "com.spotify.client",
             Source::Music => "com.apple.Music",
-            Source::YouTube => crate::youtube::browser().map_or("com.google.Chrome", |b| b.audio_bundle()),
+            Source::YouTube => crate::youtube::audio_bundle(),
             Source::Other => crate::listen::bundle().unwrap_or("com.spotify.client"),
             // OnKey's own process: the demo's player is the only sound OnKey's process makes (the window's sounds
             // come from WebKit's process)
@@ -172,21 +172,9 @@ pub fn poll() -> Option<State> {
     s
 }
 
-/// Is the app with this bundle id running? Asked of macOS directly (NSRunningApplication): no osascript process and
-/// no Apple event (each AppleScript "is running" was a process launched, several times a second while following).
+/// Is the app with this bundle id running (asked of the system: on macOS no Apple event, which could open it)?
 pub fn app_running(bundle: &str) -> bool {
-    #[cfg(target_os = "macos")]
-    {
-        objc2::rc::autoreleasepool(|_| {
-            let id = objc2_foundation::NSString::from_str(bundle);
-            objc2_app_kit::NSRunningApplication::runningApplicationsWithBundleIdentifier(&id).count() > 0
-        })
-    }
-    #[cfg(not(target_os = "macos"))]
-    {
-        let _ = bundle;
-        false
-    }
+    crate::platform::sys::app_running(bundle)
 }
 
 /// Is what the music app plays (its id) a song? Not a podcast episode, an audiobook chapter or an ad (QA: a podcast
@@ -237,80 +225,10 @@ fn refused(s: Source) -> bool {
 
 /// The app macOS last refused to let OnKey control (Automation is off for it), and when: the window says so,
 /// rather than the app just seeming not to be running.
-static DENIED: Mutex<Option<(&'static str, std::time::Instant)>> = Mutex::new(None);
+pub static DENIED: Mutex<Option<(&'static str, std::time::Instant)>> = Mutex::new(None);
 
-/// AppleScript's errors when macOS won't let OnKey send an app Apple events (refused, or not yet asked and
-/// asking isn't allowed).
-pub fn is_denial(stderr: &str) -> bool {
-    stderr.contains("-1743") || stderr.contains("-1744")
-}
-
-/// Run AppleScript that talks to `app` (its name as people know it). A refusal by macOS is remembered for the
-/// window; a script that got through to the app forgets it.
-///
-/// Spotify and Apple Music are never sent anything while you've chosen not to let OnKey control them (listening
-/// mode with their control off in Settings), whoever asks: an Apple event to them is what makes macOS ask
-/// for control, which listening alone must never do.
-pub fn osa(app: &'static str, script: &str) -> Option<String> {
-    // refusals in a row: (how many, since when). One alone can be macOS hiccupping (live: a single -1743 two
-    // minutes into a song, Automation allowed all along, split the take in three); refused 3 times over 5 s is real
-    static STREAK: Mutex<(u32, Option<std::time::Instant>)> = Mutex::new((0, None));
-    if !may_send(app, crate::settings::listening(), crate::settings::control) {
-        static SAID: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
-        if !SAID.swap(true, std::sync::atomic::Ordering::Relaxed) {
-            crate::engine::log(&format!("not talking to {app}: its control is off (listen only)"));
-        }
-        return None;
-    }
-    // an app that didn't answer in time is left alone for a while: one browser stuck (live, 20 Oct: Chrome waiting on
-    // its Automation prompt for 4 minutes) mustn't stop OnKey asking Spotify or Music
-    if resting(app) {
-        return None;
-    }
-    let sent = std::time::Instant::now();
-    let out = match run_timed(script, OSA_TIMEOUT) {
-        Some(o) => Ok::<_, std::io::Error>(o),
-        None => {
-            rest(app);
-            crate::engine::log(&format!("{app} didn't answer in {:.0} s (a permission prompt may be waiting): not asked again for {:.0} s",
-                                        OSA_TIMEOUT.as_secs_f64(), OSA_REST.as_secs_f64()));
-            crate::records::apple_event(app, sent.elapsed().as_secs_f64() * 1000.0, "timeout");
-            return None;
-        }
-    };
-    crate::records::apple_event(app, sent.elapsed().as_secs_f64() * 1000.0, match &out {
-        Ok(o) if o.status.success() => "ok",
-        Ok(o) if is_denial(&String::from_utf8_lossy(&o.stderr)) => "denied",
-        _ => "error",
-    });
-    let out = out.ok()?;
-    let mut denied = DENIED.lock().unwrap();
-    let mut streak = STREAK.lock().unwrap();
-    if out.status.success() {
-        if script.contains("tell application") && denied.is_some_and(|(a, _)| a == app) {
-            *denied = None;
-        }
-        *streak = (0, None);
-    } else if is_denial(&String::from_utf8_lossy(&out.stderr)) {
-        let since = *streak.1.get_or_insert_with(std::time::Instant::now);
-        if really_refused(&mut streak.0, since.elapsed().as_secs_f64()) {
-            if denied.is_none() {
-                crate::engine::log(&format!("macOS doesn't let OnKey control {app} (Automation): refused {} times in {:.0} s",
-                                            streak.0, since.elapsed().as_secs_f64()));
-            }
-            *denied = Some((app, std::time::Instant::now()));
-        } else if streak.0 == 1 {
-            crate::engine::log(&format!("{app} refused one request ({}): not taken as Automation off yet",
-                                        String::from_utf8_lossy(&out.stderr).trim()));
-        }
-    }
-    out.status.success().then(|| String::from_utf8_lossy(&out.stdout).trim().to_string())
-}
-
-/// How long an app has to answer one Apple event (they take 50-300 ms; starting Spotify a few seconds).
-const OSA_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(10);
 /// How long an app that didn't answer in time is left alone.
-const OSA_REST: std::time::Duration = std::time::Duration::from_secs(60);
+pub const OSA_REST: std::time::Duration = std::time::Duration::from_secs(60);
 
 static RESTING: Mutex<Vec<(&'static str, std::time::Instant)>> = Mutex::new(Vec::new());
 
@@ -321,37 +239,27 @@ pub fn not_answering() -> Option<&'static str> {
     r.first().map(|(a, _)| *a)
 }
 
-fn resting(app: &str) -> bool {
+/// An app left alone for now (it didn't answer in time).
+pub fn resting(app: &str) -> bool {
     let mut r = RESTING.lock().unwrap();
     r.retain(|(_, until)| *until > std::time::Instant::now());
     r.iter().any(|(a, _)| *a == app)
 }
 
-fn rest(app: &'static str) {
+/// Leave `app` alone for `OSA_REST` (it didn't answer in time).
+pub fn rest(app: &'static str) {
     RESTING.lock().unwrap().push((app, std::time::Instant::now() + OSA_REST));
 }
 
-/// osascript running `script`, given `limit` to finish: its output, or None when it didn't (it's stopped).
-fn run_timed(script: &str, limit: std::time::Duration) -> Option<std::process::Output> {
-    use std::process::Stdio;
-    let child = std::process::Command::new("osascript").args(["-e", script])
-        .stdout(Stdio::piped()).stderr(Stdio::piped()).spawn().ok()?;
-    let id = child.id();
-    // the output is read on its own thread (a full pipe would otherwise stall the script); here, only the clock
-    let (tx, rx) = std::sync::mpsc::channel();
-    std::thread::spawn(move || { let _ = tx.send(child.wait_with_output()); });
-    match rx.recv_timeout(limit) {
-        Ok(out) => out.ok(),
-        Err(_) => {
-            let _ = std::process::Command::new("kill").arg(id.to_string()).status();
-            None
-        }
-    }
+/// May OnKey control `app` (its name as people know it) now: send it Apple events (macOS), or its media session
+/// (Windows)? Spotify and Apple Music only with their control allowed (`control`, by settings key) in listening
+/// mode; anything outside it (where the apps are followed by asking them), and the browsers (YouTube's own
+/// setting gates those). (Reading what plays needs no permission on Windows, but control stays off where you turned
+/// it off.)
+pub fn may_control(app: &str) -> bool {
+    may_send(app, crate::settings::listening(), crate::settings::control)
 }
 
-/// May OnKey send `app` (osa's name for it) Apple events? Spotify and Apple Music only with their control allowed
-/// (`control`, by settings key) in listening mode; anything outside it (where the apps are followed by asking
-/// them), and the browsers (YouTube's own setting gates those).
 fn may_send(app: &str, listening: bool, control: impl Fn(&str) -> bool) -> bool {
     let key = match app {
         "Spotify" => "control_spotify",
@@ -359,12 +267,6 @@ fn may_send(app: &str, listening: bool, control: impl Fn(&str) -> bool) -> bool 
         _ => return true,
     };
     !listening || control(key)
-}
-
-/// One more refusal in a row (`count` of them, the first `secs` ago): is Automation really off? 3 over 5 s.
-fn really_refused(count: &mut u32, secs: f64) -> bool {
-    *count += 1;
-    *count >= 3 && secs >= 5.0
 }
 
 /// The app OnKey wasn't allowed to control in the last minute, if any; in listening mode, also an app you let
@@ -387,6 +289,17 @@ pub fn control_key(s: Source) -> Option<(&'static str, &'static str)> {
         Source::Music => Some(("control_music", "Apple Music")),
         Source::YouTube => Some(("youtube", "your browser")),
         Source::Other | Source::Demo => None,
+    }
+}
+
+/// Is the position the app says its own (exact)? Always on macOS; on Windows not while its media session's
+/// timeline can't be trusted (platform/timeline.rs) or, for a browser, isn't seen current yet (browsers.rs).
+pub fn exact_position(app: Source) -> bool {
+    match app {
+        Source::Spotify => crate::platform::spotify::exact_position(),
+        Source::Music => crate::platform::music::exact_position(),
+        Source::YouTube => crate::youtube::exact_position(),
+        _ => true,
     }
 }
 
@@ -447,9 +360,11 @@ fn pause_others(app: Source) {
 pub fn cover_for(track: &serde_json::Value) -> Option<crate::music::Cover> {
     let id = track["id"].as_str()?;
     match Source::of_id(id) {
-        Source::YouTube => Some(crate::music::Cover { art: crate::youtube::thumbnail(id.strip_prefix(crate::youtube::ID_PREFIX)?), link: None }),
+        // (a song named by a browser's media session on Windows has no video: its cover is looked up as Spotify's)
+        Source::YouTube if !crate::trackids::is_media_id(id) =>
+            Some(crate::music::Cover { art: crate::youtube::thumbnail(id.strip_prefix(crate::youtube::ID_PREFIX)?), link: None }),
         Source::Demo => None,                       // (never looked up: the demo isn't in anyone's catalogue)
-        Source::Spotify | Source::Music | Source::Other =>
+        Source::YouTube | Source::Spotify | Source::Music | Source::Other =>
             crate::music::cover_lookup(track["artist"].as_str()?, track["name"].as_str()?),
     }
 }
@@ -473,15 +388,6 @@ impl PerSource {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn an_apple_event_that_takes_too_long_is_stopped() {
-        let t = std::time::Instant::now();
-        assert!(run_timed("delay 5", std::time::Duration::from_millis(300)).is_none());
-        assert!(t.elapsed() < std::time::Duration::from_secs(2), "waited for the slow script");
-        let out = run_timed("return \"hi\"", std::time::Duration::from_secs(5)).expect("a quick script finishes");
-        assert_eq!(String::from_utf8_lossy(&out.stdout).trim(), "hi");
-    }
 
     #[test]
     fn an_app_that_did_not_answer_is_left_alone_for_a_while() {
@@ -513,20 +419,6 @@ mod tests {
     }
 
     #[test]
-    fn automation_refusals_are_told_from_other_errors() {
-        assert!(is_denial("execution error: Not authorized to send Apple events to Spotify. (-1743)"));
-        assert!(is_denial("execution error: Music got an error: (-1744)"));
-        // one refusal (or a few at once) is a hiccup; refused again and again over 5 s, it's off
-        let mut n = 0;
-        assert!(!really_refused(&mut n, 0.0));
-        assert!(!really_refused(&mut n, 0.4));
-        assert!(!really_refused(&mut n, 0.8), "3 at once");
-        assert!(really_refused(&mut n, 5.2));
-        assert!(!is_denial("execution error: Spotify got an error: Can't get current track. (-1728)"));
-        assert!(!is_denial(""));
-    }
-
-    #[test]
     fn listen_only_never_talks_to_spotify_or_music() {
         let off = |_: &str| false;
         let on = |_: &str| true;
@@ -539,7 +431,7 @@ mod tests {
         // outside listening mode the apps are followed by asking them
         assert!(may_send("Spotify", false, off));
         // the names the apps' own modules use
-        assert!(include_str!("spotify.rs").contains(r#"crate::source::osa("Spotify", script)"#));
-        assert!(include_str!("music.rs").contains(r#"crate::source::osa("Apple Music", script)"#));
+        assert!(include_str!("platform/mac/spotify.rs").contains(r#"applescript::osa("Spotify", script)"#));
+        assert!(include_str!("platform/mac/music.rs").contains(r#"applescript::osa("Apple Music", script)"#));
     }
 }

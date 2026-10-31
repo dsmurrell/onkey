@@ -420,9 +420,7 @@ fn quiet() -> bool {
 /// background priority, newest first, one at a time and only while OnKey is idle (as takeaudio::start).
 pub fn start(data: PathBuf) {
     std::thread::Builder::new().name("onkey-range".into()).spawn(move || {
-        unsafe {
-            libc::pthread_set_qos_class_self_np(libc::qos_class_t::QOS_CLASS_BACKGROUND, 0);
-        }
+        crate::platform::sys::background_thread();
         std::thread::sleep(AFTER_LAUNCH);
         let (_, mut todo) = refresh(&data);
         if todo.is_empty() {

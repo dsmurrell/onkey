@@ -4,6 +4,26 @@
 use std::{env, path::PathBuf, process::Command};
 
 fn main() {
+    // the Swift glue is macOS-only: a Windows build (src/platform/windows) has no Swift to build or link
+    if env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("macos") {
+        build_swift();
+    }
+
+    // keeping test audio (devtest's keep_audio) and the tools that use it (dev/devhooks.rs): only in the private
+    // development checkout, which has dev/ (it isn't published), and only in development builds
+    println!("cargo:rerun-if-changed=dev/devkeep.rs");
+    println!("cargo:rerun-if-changed=dev/devhooks.rs");
+    println!("cargo:rustc-check-cfg=cfg(keepaudio)");
+    if env::var_os("CARGO_FEATURE_DEVTEST").is_some() && std::path::Path::new("dev/devkeep.rs").exists() {
+        println!("cargo:rustc-cfg=keepaudio");
+    }
+
+    build_identity();
+    tauri_build::build()
+}
+
+/// The Swift library (native/*.swift) built with swiftc and linked, with the Swift runtime and the frameworks it uses.
+fn build_swift() {
     let out = PathBuf::from(env::var("OUT_DIR").unwrap());
     let mut srcs = vec!["native/capture.swift", "native/permissions.swift", "native/shazam.swift", "native/audiofile.swift", "native/share.swift", "native/demo.swift", "native/voice.swift"];
     // development builds only: the ear's taps (src/ear.rs), never in a release
@@ -41,18 +61,6 @@ fn main() {
     for fw in ["CoreAudio", "AudioToolbox", "AVFoundation", "Foundation", "ShazamKit", "AppKit", "CoreServices", "IOKit", "CoreMedia", "CoreVideo", "CoreText", "CoreGraphics", "ImageIO"] {
         println!("cargo:rustc-link-lib=framework={fw}");
     }
-
-    // keeping test audio (devtest's keep_audio) and the tools that use it (dev/devhooks.rs): only in the private
-    // development checkout, which has dev/ (it isn't published), and only in development builds
-    println!("cargo:rerun-if-changed=dev/devkeep.rs");
-    println!("cargo:rerun-if-changed=dev/devhooks.rs");
-    println!("cargo:rustc-check-cfg=cfg(keepaudio)");
-    if env::var_os("CARGO_FEATURE_DEVTEST").is_some() && std::path::Path::new("dev/devkeep.rs").exists() {
-        println!("cargo:rustc-cfg=keepaudio");
-    }
-
-    build_identity();
-    tauri_build::build()
 }
 
 /// Which commit this build is (ONKEY_GIT_SHA, "-dirty" with uncommitted changes when the build script ran) and when

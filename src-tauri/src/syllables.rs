@@ -69,18 +69,34 @@ impl Syllabifier {
 
 pub struct WordAligner {
     session: Session,
+    /// on DirectML (Windows): how to go to the CPU should a run fail there
+    gpu: Option<crate::gpu::Fallback>,
 }
 
 impl WordAligner {
     pub fn load(path: &std::path::Path, threads: usize) -> Result<WordAligner, String> {
-        let session = Session::builder().and_then(|b| b.with_optimization_level(GraphOptimizationLevel::Level3))
-            .and_then(|b| b.with_intra_threads(threads)).and_then(crate::pitch::lean).and_then(|b| b.commit_from_file(path))
-            .map_err(|e| format!("loading {}: {e}", path.display()))?;
-        Ok(WordAligner { session })
+        let options = move |b: ort::session::builder::SessionBuilder| b.with_optimization_level(GraphOptimizationLevel::Level3)
+            .and_then(|b| b.with_intra_threads(threads)).and_then(crate::pitch::lean);
+        let loading = |e: ort::Error| format!("loading {}: {e}", path.display());
+        // (on Windows on DirectML when it can be: gpu.rs)
+        let (session, gpu) = crate::gpu::load("words", path, options).map_err(loading)?;
+        Ok(WordAligner { session, gpu })
     }
 
     /// Log-probabilities (frames × 29 characters) for 16 kHz audio, and seconds per frame.
     fn logprobs(&mut self, audio: &[f32]) -> Result<(Vec<f32>, f64), String> {
+        let r = self.logprobs_here(audio);
+        // (on the CPU from now on, if it failed on DirectML)
+        if let Err(e) = &r {
+            if let Some(f) = self.gpu.take() {
+                self.session = f.to_cpu(e).map_err(|e| e.to_string())?;
+                return self.logprobs_here(audio);
+            }
+        }
+        r
+    }
+
+    fn logprobs_here(&mut self, audio: &[f32]) -> Result<(Vec<f32>, f64), String> {
         let x = ndarray::Array2::from_shape_vec((1, audio.len()), audio.to_vec()).map_err(|e| e.to_string())?;
         let out = self.session.run(ort::inputs!["audio" => ort::value::Tensor::from_array(x).map_err(|e| e.to_string())?])
             .map_err(|e| e.to_string())?;

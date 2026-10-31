@@ -2,19 +2,24 @@
 // First-run setup: what OnKey does, the two permissions it needs (the microphone, and system audio recording to
 // hear the music app), letting it follow Spotify and Apple Music (recommended; or listen only), a quick "say
 // something" mic check, then what to know about learning songs, and off you go. Shown by itself until finished;
-// reopened from the "Setup" link on the waiting screen.
+// reopened from the "Setup" link on the waiting screen. On Windows: welcome, the mic check (with Windows' microphone
+// switch when it's off) and ready (lib/platform.ts `setupSteps`).
 import SystemAudioGuide from "@/components/guides/SystemAudioGuide";
 import MusicAppsGuide, { type GuideApp } from "@/components/guides/MusicAppsGuide";
 import LearnSongGuide from "@/components/guides/LearnSongGuide";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { STARTER_PLAYLIST_APPLE_URL, STARTER_PLAYLIST_URL } from "@/components/StarterSongs";
 import DemoSong from "@/components/DemoSong";
+import { setupSteps, usePc, useWindows, type SetupStep } from "@/lib/platform";
 import { getMics, openLink, setupControl, setupDone, setupLevel, setupMeter, setupOpenSettings, setupRequest, setupStatus, type AppPerm, type AskAnswer, type Perm, type SetupStatus } from "@/lib/session";
-
-const STEPS = ["Welcome", "Permissions", "Music apps", "Mic check", "Ready"] as const;
 
 export default function Setup({ onClose }: { onClose: () => void }) {
   const [step, setStep] = useState(0);
+  const win = useWindows();
+  const steps: readonly SetupStep[] = setupSteps(win);
+  const at = steps[step];
+  const go = (s: SetupStep) => setStep(Math.max(0, steps.indexOf(s)));
+  const next = () => setStep(i => Math.min(i + 1, steps.length - 1));
   const [st, setSt] = useState<SetupStatus | null>(null);
   const [audioOk, setAudioOk] = useState(false);        // the tap was allowed when we asked (status may say "unknown")
 
@@ -35,7 +40,7 @@ export default function Setup({ onClose }: { onClose: () => void }) {
       <div className="flex min-h-full items-center justify-center py-6">
       <div className="glass w-full max-w-lg animate-rise rounded-3xl px-8 pt-7 pb-6 shadow-2xl shadow-black/50" role="dialog" aria-label="Set up OnKey">
         <ol className="mb-6 flex items-center gap-2" aria-label="Setup steps">
-          {STEPS.map((s, i) => (
+          {steps.map((s, i) => (
             <li key={s} className="flex flex-1 flex-col gap-1.5">
               <span className={`h-1 rounded-full transition-colors ${i <= step ? "bg-accent-400" : "bg-white/8"}`} />
               <span className={`text-[11px] ${i === step ? "text-ink-200" : "text-ink-500"}`}>{s}</span>
@@ -43,15 +48,15 @@ export default function Setup({ onClose }: { onClose: () => void }) {
           ))}
         </ol>
 
-        {step === 0 && <Welcome macosOk={st?.macos_ok ?? true} onNext={() => setStep(1)} onLater={onClose} />}
-        {step === 1 && st && (
+        {at === "Welcome" && <Welcome win={win} macosOk={st?.macos_ok ?? true} onNext={next} onLater={onClose} />}
+        {at === "Permissions" && st && (
           <Permissions mic={st.mic} audio={audio} onAudioAllowed={() => setAudioOk(true)} refresh={refresh}
-                       onNext={() => setStep(2)} canContinue={both} />
+                       onNext={next} canContinue={both} />
         )}
-        {step === 1 && !st && <div className="h-40 rounded-2xl shimmer" />}
-        {step === 2 && <MusicApps st={st} refresh={refresh} onNext={() => setStep(3)} />}
-        {step === 3 && <MicCheck micOk={st?.mic === "granted"} onNext={() => setStep(4)} onBack={() => setStep(1)} />}
-        {step === 4 && <Ready onFinish={finish} />}
+        {at === "Permissions" && !st && <div className="h-40 rounded-2xl shimmer" />}
+        {at === "Music apps" && <MusicApps st={st} refresh={refresh} onNext={next} />}
+        {at === "Mic check" && <MicCheck win={win} micOk={st?.mic === "granted"} onNext={next} onBack={() => go("Permissions")} />}
+        {at === "Ready" && <Ready win={win} onFinish={finish} />}
       </div>
       </div>
     </div>
@@ -71,20 +76,22 @@ function Quiet({ children, onClick }: { children: React.ReactNode; onClick: () =
   return <button onClick={onClick} className="text-sm text-ink-400 transition hover:text-ink-100">{children}</button>;
 }
 
-function Welcome({ macosOk, onNext, onLater }: { macosOk: boolean; onNext: () => void; onLater: () => void }) {
+function Welcome({ win, macosOk, onNext, onLater }: { win: boolean; macosOk: boolean; onNext: () => void; onLater: () => void }) {
   return (
     <>
       <h2 className="text-2xl font-semibold tracking-tight">Welcome to OnKey</h2>
       <p className="mt-2 text-ink-300">Learn to sing the songs you love, with the music you already play.</p>
       <ul className="mt-5 space-y-3 text-sm leading-relaxed text-ink-200">
         <Point icon="M9 18V6l11-2v12M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM20 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z">
-          Play a song in your music app, as you always do. OnKey listens to the music playing on your Mac and follows along by itself.
+          Play a song in your music app, as you always do. OnKey listens to the music playing on your {win ? "PC" : "Mac"} and follows along by itself.
         </Point>
         <Point icon="M3 14c2.5 0 2.5-6 5-6s2.5 8 5 8 2.5-10 5-10 2 4 3 4">
           The first time a song plays, OnKey learns the singer’s melody. From then on you see every note coming, and where you’re sharp or flat.
         </Point>
         <Point icon="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z">
-          OnKey never saves the music it listens to. Your singing recordings stay on this Mac so you can hear your takes back. To name a new song, listening mode sends Apple’s Shazam a short fingerprint of the music app’s sound (not the audio).
+          {win
+            ? "OnKey never saves the music it listens to. Your singing recordings stay on this PC so you can hear your takes back. Songs are named on this PC too, from what your music app says is playing: nothing is sent to name them."
+            : "OnKey never saves the music it listens to. Your singing recordings stay on this Mac so you can hear your takes back. To name a new song, listening mode sends Apple’s Shazam a short fingerprint of the music app’s sound (not the audio)."}
         </Point>
       </ul>
       <p className="mt-4 text-xs leading-relaxed text-ink-400">
@@ -298,7 +305,8 @@ function AppRow({ app, state }: { app: string; state?: AskAnswer }) {
   );
 }
 
-function MicCheck({ micOk, onNext, onBack }: { micOk: boolean; onNext: () => void; onBack: () => void }) {
+function MicCheck({ win, micOk, onNext, onBack }: { win: boolean; micOk: boolean; onNext: () => void; onBack: () => void }) {
+  const pc = usePc();
   const [db, setDb] = useState(-120);
   const [heard, setHeard] = useState(false);
   const [running, setRunning] = useState(false);
@@ -341,8 +349,9 @@ function MicCheck({ micOk, onNext, onBack }: { micOk: boolean; onNext: () => voi
     <>
       <h2 className="text-2xl font-semibold tracking-tight">Can OnKey hear you?</h2>
       <p className="mt-2 text-sm text-ink-300">
-        {!micOk ? "OnKey needs the microphone first: go back to allow it."
-          : device === null ? "No microphone is connected. Connect one, or choose one in System Settings → Sound → Input."
+        {!micOk ? (win ? <>Windows has the microphone turned off for apps. In <b>Windows Settings → Privacy &amp; security → Microphone</b>, turn on <b>Microphone access</b> and <b>Let desktop apps access your microphone</b>.</>
+                       : "OnKey needs the microphone first: go back to allow it.")
+          : device === null ? `No microphone is connected. Connect one, or choose one in ${win ? pc.soundInput : "System Settings → Sound → Input"}.`
           : "Say something, or sing a note."}
       </p>
       {micOk && device && <p className="mt-1 text-xs text-ink-500">Listening to {device}. You can choose another in Settings.</p>}
@@ -360,6 +369,7 @@ function MicCheck({ micOk, onNext, onBack }: { micOk: boolean; onNext: () => voi
       <div className="mt-7 flex items-center justify-between">
         <Quiet onClick={onNext}>{heard ? "" : "Skip"}</Quiet>
         {micOk ? <Primary onClick={onNext} disabled={!heard}>Continue</Primary>
+          : win ? <Primary onClick={() => setupOpenSettings("mic")}>Open {pc.settings}</Primary>
           : <Primary onClick={onBack}>Back to permissions</Primary>}
       </div>
     </>
@@ -368,7 +378,7 @@ function MicCheck({ micOk, onNext, onBack }: { micOk: boolean; onNext: () => voi
 
 /** The last step: off you go, with what a first-time user needs to know about learning (a friend's first
  *  evening got stuck on each of these), and the starter playlist as the quickest way to fill the library. */
-function Ready({ onFinish }: { onFinish: () => void }) {
+function Ready({ win, onFinish }: { win: boolean; onFinish: () => void }) {
   const playlist = STARTER_PLAYLIST_URL || STARTER_PLAYLIST_APPLE_URL;
   const app = STARTER_PLAYLIST_URL ? "Spotify" : "Apple Music";
   return (
@@ -381,8 +391,13 @@ function Ready({ onFinish }: { onFinish: () => void }) {
       <ul className="mt-5 space-y-2 text-sm leading-relaxed text-ink-200" aria-label="How learning works">
         <Tip>Let a song play to the end. If OnKey hears only part of it, it learns the rest the next time it plays.</Tip>
         <Tip>Talk or sing along as you like. OnKey learns from the music app’s sound, not your mic.</Tip>
-        <Tip>Keep the music app’s own volume at about a quarter or more. Your Mac’s volume can be anything, even off.</Tip>
-        <Tip>Learning runs on your Mac for a couple of minutes after the song ends, longer on Macs with 8 GB of memory. Keep listening meanwhile.</Tip>
+        {win ? <>
+          <Tip>Keep the music app’s own volume at about a quarter or more.</Tip>
+          <Tip>Learning runs on this PC for a few minutes after the song ends. Keep listening meanwhile.</Tip>
+        </> : <>
+          <Tip>Keep the music app’s own volume at about a quarter or more. Your Mac’s volume can be anything, even off.</Tip>
+          <Tip>Learning runs on your Mac for a couple of minutes after the song ends, longer on Macs with 8 GB of memory. Keep listening meanwhile.</Tip>
+        </>}
       </ul>
       {playlist && (
         <div className="mt-4 flex items-center gap-3 rounded-2xl border border-accent-400/25 bg-accent-500/10 px-4 py-3">

@@ -416,12 +416,8 @@ mod live {
     use crate::dsp::FP_BANDS;
     use crate::resample::Resampler;
 
-    extern "C" {
-        fn onkey_ear_start(music: *const c_char, cb: extern "C" fn(*const f32, i32, *mut c_void), ctx: *mut c_void,
-                           out_rate: *mut f64) -> i32;
-        fn onkey_ear_stop();
-        fn onkey_ear_outputs(buf: *mut c_char, len: i32);
-    }
+    // the Swift library on macOS; a stand-in that says it isn't there on Windows (src/platform)
+    use crate::platform::native::{onkey_ear_outputs, onkey_ear_start, onkey_ear_stop};
 
     /// Interleaved frames from the ear's taps: [music, voice] (each mixed to mono).
     const CH: usize = 2;
@@ -567,6 +563,7 @@ mod live {
             if code != last_code {
                 say(&format!("ear: can't tap yet: {}", match code {
                     1 => format!("{} isn't sending sound to Core Audio", t.app_name),
+                    9 => "the ear's taps aren't on Windows".into(),
                     5 => "OnKey's WebKit process isn't sending sound (no Core Audio process object OnKey is responsible for)".into(),
                     2 => "macOS refused the tap (audio capture permission)".into(),
                     3 => "the aggregate device couldn't be made".into(),

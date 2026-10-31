@@ -9,7 +9,7 @@
 use std::cell::RefCell;
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, Condvar, Mutex, OnceLock};
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 use serde_json::{json, Value};
 
@@ -83,6 +83,30 @@ struct Entry {
     paused: bool,
     /// the song ended and waits to be learned while a song before it is (learn::Queued)
     queued: bool,
+    /// since the song ended: seconds in each stage, by its word (and "queued", "paused"), and when this lap began
+    took: Vec<(&'static str, f64)>,
+    lap: Option<Instant>,
+}
+
+impl Entry {
+    /// The time since the last lap, to what it's doing now (before that changes).
+    fn lap(&mut self) {
+        let Some(t) = self.lap else { return };
+        self.lap = Some(Instant::now());
+        let doing = if self.queued { "queued" } else if self.paused { "paused" } else { self.stage.word() };
+        let s = t.elapsed().as_secs_f64();
+        match self.took.iter_mut().find(|(w, _)| *w == doing) {
+            Some((_, t)) => *t += s,
+            None => self.took.push((doing, s)),
+        }
+    }
+}
+
+/// "separating 41 s, pitch 12 s, words 20 s, …; 93 s in all": how long a learn took after its song ended, in the
+/// order it got to each stage ("queued": waiting for a song before it; "paused": waiting while you sang).
+fn times(took: &[(&str, f64)]) -> String {
+    let all: f64 = took.iter().map(|t| t.1).sum();
+    format!("{}; {all:.0} s in all", took.iter().map(|(w, s)| format!("{w} {s:.0} s")).collect::<Vec<_>>().join(", "))
 }
 
 static JOBS: Mutex<Vec<Entry>> = Mutex::new(Vec::new());
@@ -156,10 +180,17 @@ pub fn drop_learns(track_id: &str) {
 struct Key(u64);
 
 impl Drop for Key {
-    /// The last handle on a learn gone: it's over (learned, failed or dropped).
+    /// The last handle on a learn gone: it's over (learned, failed or dropped). On Windows its stage times are
+    /// logged, with where the models ran (gpu.rs): how long learning takes on a tester's PC, and on what.
     fn drop(&mut self) {
-        JOBS.lock().unwrap_or_else(|e| e.into_inner()).retain(|e| e.key != self.0);
+        let mut jobs = JOBS.lock().unwrap_or_else(|e| e.into_inner());
+        let done = jobs.iter().position(|e| e.key == self.0).map(|i| jobs.remove(i));
+        drop(jobs);
         changed();
+        if let Some(mut e) = done.filter(|e| crate::platform::diag::LEARN_TIMES && e.lap.is_some()) {
+            e.lap();
+            crate::engine::log(&format!("learn times: {}: {} ({})", e.name, times(&e.took), crate::gpu::places()));
+        }
     }
 }
 
@@ -172,7 +203,7 @@ impl Job {
         let key = NEXT.fetch_add(1, Ordering::Relaxed);
         JOBS.lock().unwrap_or_else(|e| e.into_inner()).push(Entry {
             key, track_id: track.id.clone(), name: track.name.clone(), artist: track.artist.clone(),
-            stage: Stage::Playing, within: 0.0, shown: 0.0, playing: true, paused: false, queued: false });
+            stage: Stage::Playing, within: 0.0, shown: 0.0, playing: true, paused: false, queued: false, took: Vec::new(), lap: None });
         changed();
         Job(Arc::new(Key(key)))
     }
@@ -194,6 +225,7 @@ impl Job {
             if e.stage == Stage::Playing {
                 e.stage = Stage::Waiting;
             }
+            e.lap.get_or_insert_with(Instant::now);
         });
     }
 
@@ -205,6 +237,7 @@ impl Job {
             if e.stage.span() != s.span() {
                 e.within = 0.0;
             }
+            e.lap();
             e.stage = s;
         });
     }
@@ -215,6 +248,7 @@ impl Job {
             if on && !e.queued {
                 crate::records::note("stage", json!({"track": e.track_id, "stage": "queued"}));
             }
+            e.lap();
             e.queued = on;
         });
     }
@@ -251,7 +285,10 @@ pub fn stage(s: Stage) {
 
 /// This thread's learn is waiting while someone sings (true), or carrying on (false).
 pub fn paused(on: bool) {
-    CURRENT.with(|c| if let Some((j, ..)) = c.borrow().as_ref() { with(j.0 .0, |e| e.paused = on) });
+    CURRENT.with(|c| if let Some((j, ..)) = c.borrow().as_ref() { with(j.0 .0, |e| {
+        e.lap();
+        e.paused = on;
+    }) });
 }
 
 /// `done` of `of` units of the work in hand (pieces of audio, lines): within the part set by `part`, else the stage.
@@ -299,6 +336,28 @@ mod tests {
     fn shown(id: &str) -> Option<(String, Option<f64>)> {
         snapshot()["songs"].as_array().unwrap().iter().find(|s| s["track_id"] == id)
             .map(|s| (s["stage"].as_str().unwrap().to_string(), s["fraction"].as_f64()))
+    }
+
+    #[test]
+    fn a_learn_times_each_stage_from_when_its_song_ended() {
+        let mut e = Entry { key: 0, track_id: "t".into(), name: "T".into(), artist: String::new(), stage: Stage::Playing, within: 0.0,
+                            shown: 0.0, playing: true, paused: false, queued: false, took: Vec::new(), lap: None };
+        e.lap();
+        assert!(e.took.is_empty() && e.lap.is_none(), "nothing timed while the song plays");
+        let ago = |s: u64| Some(Instant::now() - Duration::from_secs(s));
+        e.stage = Stage::Waiting;
+        e.lap = ago(3);
+        e.lap();
+        e.stage = Stage::Separating;
+        e.lap = ago(40);
+        e.lap();
+        e.paused = true;
+        e.lap = ago(5);
+        e.lap();
+        e.paused = false;
+        e.lap = ago(2);
+        e.lap();
+        assert_eq!(times(&e.took), "waiting 3 s, separating 42 s, paused 5 s; 50 s in all");
     }
 
     #[test]

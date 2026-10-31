@@ -430,17 +430,7 @@ static STOPPED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::n
 
 /// macOS Low Power Mode is on: the window draws less (lane at 30 frames a second, no glow).
 fn low_power() -> bool {
-    #[cfg(target_os = "macos")]
-    unsafe {
-        use objc2::runtime::AnyObject;
-        let info: *mut AnyObject = objc2::msg_send![objc2::class!(NSProcessInfo), processInfo];
-        if info.is_null() {
-            return false;
-        }
-        objc2::msg_send![info, isLowPowerModeEnabled]
-    }
-    #[cfg(not(target_os = "macos"))]
-    false
+    crate::platform::sys::low_power()
 }
 
 /// The Mac is running on its battery (IOKit's power source; a desktop Mac never is).
@@ -448,29 +438,7 @@ fn on_battery() -> bool {
     if let Some(b) = crate::devtest::force_battery() {
         return b;
     }
-    #[cfg(target_os = "macos")]
-    unsafe {
-        #[link(name = "IOKit", kind = "framework")]
-        extern "C" {
-            fn IOPSCopyPowerSourcesInfo() -> *const std::ffi::c_void;
-            fn IOPSGetProvidingPowerSourceType(blob: *const std::ffi::c_void) -> *const std::ffi::c_void;
-        }
-        extern "C" {
-            fn CFStringGetCString(s: *const std::ffi::c_void, buf: *mut std::ffi::c_char, size: isize, encoding: u32) -> u8;
-            fn CFRelease(cf: *const std::ffi::c_void);
-        }
-        let info = IOPSCopyPowerSourcesInfo();
-        if info.is_null() {
-            return false;
-        }
-        let kind = IOPSGetProvidingPowerSourceType(info);       // (not owned: no release)
-        let mut buf = [0 as std::ffi::c_char; 64];
-        let ok = !kind.is_null() && CFStringGetCString(kind, buf.as_mut_ptr(), 64, 0x0800_0100) != 0;   // UTF-8
-        CFRelease(info);
-        ok && std::ffi::CStr::from_ptr(buf.as_ptr()).to_bytes() == b"Battery Power"
-    }
-    #[cfg(not(target_os = "macos"))]
-    false
+    crate::platform::sys::on_battery()
 }
 
 /// The lane draws at most 30 times a second: Low Power Mode, or on battery unless Settings says otherwise
@@ -777,6 +745,15 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             "song_offset": t.song_offset, "lag_ms": t.lag * 10, "output_ms": t.heard * 10, "aligned": t.aligned,
             "fingerprint_placed": t.fingerprint_placed(), "align_conf": t.align_conf, "blind": t.blind, "quiet_s": t.quiet_s,
             "lyric_lines_shown": t.lyrics.len()}));
+        // (Windows, Linux) how far the music app's position was from where the sound placed the song (digest.rs)
+        #[cfg(any(windows, target_os = "linux"))]
+        if let Some((app, g)) = crate::digest::gap_finish(c.version) {
+            if let (Some(line), Some(mut sum)) = (g.line(&t.track.name, app), g.summary()) {
+                log(&line);
+                sum["app"] = json!(app);
+                crate::records::take_set(c.version, "app_vs_sound", sum);
+            }
+        }
         // the times shown at the end (a first play's lyrics move as they're lined up with the singer)
         if !t.lyrics.is_empty() {
             crate::records::take_set(c.version, "lyrics", json!({"times": t.lyrics.iter().map(|l| (l.0 * 100.0).round() / 100.0).collect::<Vec<_>>(),
@@ -1508,6 +1485,16 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                 }
                 c.take.push(&block);
                 dot.pushed(c.take.clean16.len());
+            }
+            // (Windows, Linux) the music app's position against the place the sound found, once a second: "app vs sound"
+            // in the log when the take ends (digest.rs)
+            #[cfg(any(windows, target_os = "linux"))]
+            if let (Some((s, at)), Some(sound)) = (&st, c.take.song_time()) {
+                if s.playing && c.take.fingerprint_placed() && (s.track.id == c.take.track.id || s.track.name.eq_ignore_ascii_case(&c.take.track.name)) {
+                    crate::digest::gap_sample(c.version, s.source.name(), s.position + at.elapsed().as_secs_f64(), sound, crate::records::now());
+                } else {
+                    crate::digest::gap_pause(c.version);
+                }
             }
             // the app's position against the audio this take has: a better first placement
             if placed_pending && c.take.seconds() > 1.0 {

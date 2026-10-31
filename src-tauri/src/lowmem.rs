@@ -40,14 +40,9 @@ pub fn keep_by_default() -> bool {
     physical_memory().is_some_and(|b| b >= 32 << 30)
 }
 
-/// The Mac's physical memory in bytes (sysctl hw.memsize), if it can be read.
+/// The computer's physical memory in bytes, if it can be read.
 pub fn physical_memory() -> Option<u64> {
-    let mut size: u64 = 0;
-    let mut len = std::mem::size_of::<u64>();
-    let r = unsafe {
-        libc::sysctlbyname(c"hw.memsize".as_ptr(), &mut size as *mut u64 as *mut libc::c_void, &mut len, std::ptr::null_mut(), 0)
-    };
-    (r == 0 && len == std::mem::size_of::<u64>()).then_some(size)
+    crate::platform::sys::physical_memory()
 }
 
 #[cfg(test)]

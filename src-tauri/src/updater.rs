@@ -8,6 +8,7 @@
 //!   - otherwise it's installed when you quit, and the next launch is the new version.
 //!
 //! Development builds (the `devtest` feature, debug builds) never check: they'd replace themselves with a release.
+//! Nor does Windows yet: releases have no Windows build in latest.json, so every check would fail (see `supported`).
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, SystemTime};
@@ -42,9 +43,12 @@ static RESTART_WANTED: AtomicBool = AtomicBool::new(false);
 /// One check at a time (the daily one and "Check now").
 static CHECKING: Mutex<()> = Mutex::new(());
 
-/// This build updates itself: release builds only.
+/// This build updates itself: release builds only, on macOS. (Windows when its releases are in latest.json: the
+/// installer built with `createUpdaterArtifacts` and signed with the updater key in CI, and release.sh adding a
+/// `windows-x86_64` entry with its URL and signature. Until then a check there finds no Windows build and fails,
+/// so it doesn't check at all.)
 pub fn supported() -> bool {
-    !cfg!(feature = "devtest") && !cfg!(debug_assertions)
+    !cfg!(feature = "devtest") && !cfg!(debug_assertions) && cfg!(target_os = "macos")
 }
 
 pub fn auto() -> bool {
@@ -75,7 +79,7 @@ fn due(last: Option<SystemTime>, now: SystemTime) -> bool {
 /// Check now, and download what's new (quietly). The version found, if any.
 pub fn check(app: &AppHandle) -> Result<Option<String>, String> {
     if !supported() {
-        return Err("development builds don't update".into());
+        return Err("this build doesn't update itself".into());
     }
     let _one = CHECKING.lock().unwrap();
     *LAST_CHECK.lock().unwrap() = Some(SystemTime::now());
@@ -221,7 +225,7 @@ mod tests {
 
     #[test]
     fn release_builds_update_and_test_builds_do_not() {
-        assert_eq!(supported(), !cfg!(feature = "devtest") && !cfg!(debug_assertions));
+        assert_eq!(supported(), !cfg!(feature = "devtest") && !cfg!(debug_assertions) && cfg!(target_os = "macos"));
     }
 
     /// The public key the app trusts is the one that signs releases (scripts/release.sh, ~/.tauri/onkey-updater.key)

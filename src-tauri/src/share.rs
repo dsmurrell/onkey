@@ -14,11 +14,7 @@ use std::path::{Path, PathBuf};
 
 use serde_json::{json, Value};
 
-extern "C" {
-    fn onkey_share_render(json: *const std::os::raw::c_char, audio: *const std::os::raw::c_char, out: *const std::os::raw::c_char,
-                          icon: *const u8, icon_len: i64) -> i32;
-    fn onkey_media_tracks(path: *const std::os::raw::c_char) -> i32;
-}
+use crate::platform::native::*;
 
 /// How long a clip is (s).
 pub const CLIP_S: f64 = 20.0;
@@ -398,6 +394,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(target_os = "linux", ignore = "no share video on Linux yet")]
     fn a_clip_renders_to_a_video_with_its_voice() {
         // a short take: 3 s long, a tone as the voice, rendered for real (AVFoundation)
         let dir = std::env::temp_dir().join(format!("onkey-share-test-{}", std::process::id()));
@@ -433,17 +430,36 @@ mod made_up_take {
         let rate = 16000.0;
         let tone: Vec<i16> = (0..(rate as usize * 24)).map(|i| ((i as f64 * 330.0 * std::f64::consts::TAU / rate).sin() * 6000.0) as i16).collect();
         crate::takeaudio::write_m4a(&tdir.join("mic.m4a"), &tone, rate, crate::takeaudio::TAKE_BIT_RATE).unwrap();
+        let p = super::render(&made_up(), &tdir, 0, &out).unwrap();
+        let _ = std::fs::remove_dir_all(&tdir);
+        eprintln!("{}", p.display());
+    }
+
+    /// The made-up take's result: a rising and falling line of notes, every third missed.
+    pub(crate) fn made_up() -> serde_json::Value {
         let n = 2400;
         let midi = |k: usize| 60.0 + [0.0, 2.0, 4.0, 5.0, 7.0, 5.0, 4.0, 2.0][k % 8];
         let notes: Vec<serde_json::Value> = (0..40).map(|k| serde_json::json!([k * 60, k * 60 + 45, midi(k), if k % 3 == 0 { 0.2 } else { 1.0 }])).collect();
         let refl: Vec<f64> = (0..n).map(|i| midi(i / 60)).collect();
         let usr: Vec<f64> = (0..n).map(|i| midi(i / 60) + 0.3 * ((i as f64) / 7.0).sin()).collect();
         let err: Vec<f64> = (0..n).map(|i| 40.0 + 60.0 * ((i as f64) / 90.0).sin().abs()).collect();
-        let r = serde_json::json!({"song_offset": 0.0, "frame_s": 0.01, "latency_ms": 0, "ref": refl, "usr": usr, "err": err,
-                                   "notes": notes, "track": {"name": "A Made-Up Song", "artist": "Nobody"}});
-        let p = super::render(&r, &tdir, 0, &out).unwrap();
-        let _ = std::fs::remove_dir_all(&tdir);
-        eprintln!("{}", p.display());
+        serde_json::json!({"song_offset": 0.0, "frame_s": 0.01, "latency_ms": 0, "ref": refl, "usr": usr, "err": err,
+                           "notes": notes, "track": {"name": "A Made-Up Song", "artist": "Nobody"}})
+    }
+
+    /// The same clip's frames drawn by share_draw.rs (Windows' drawing), as PNGs, to set beside the Swift video's:
+    /// ONKEY_SHARE_OUT=<dir> cargo test --lib share::made_up_take::draw -- --ignored
+    #[test]
+    #[ignore]
+    fn draw_made_up_frames() {
+        use crate::share_draw::{Fonts, Frames, Spec};
+        let out = std::path::PathBuf::from(std::env::var("ONKEY_SHARE_OUT").expect("ONKEY_SHARE_OUT"));
+        std::fs::create_dir_all(&out).unwrap();
+        let spec = super::Take::from_result(&made_up()).unwrap().spec(0, "A Made-Up Song", "Nobody");
+        let mut f = Frames::new(Spec::parse(&spec.to_string()).unwrap(), Fonts::system(), super::ICON);
+        for k in [15, 150, 300, 525, 597] {
+            f.draw(k as f64 / 30.0).save_png(out.join(format!("rust-{k:03}.png"))).unwrap();
+        }
     }
 }
 

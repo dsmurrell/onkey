@@ -3,18 +3,7 @@
 //! through settings.rs).
 use serde_json::{json, Value};
 
-extern "C" {
-    fn onkey_mic_status() -> i32;
-    fn onkey_mic_request();
-    fn onkey_audio_capture_status() -> i32;
-    fn onkey_audio_capture_request() -> i32;
-    fn onkey_macos_supported() -> i32;
-    fn onkey_mic_meter(on: i32) -> i32;
-    fn onkey_mic_level() -> f32;
-    fn onkey_mic_blocks() -> i32;
-    fn onkey_automation(bundle: *const std::ffi::c_char) -> i32;
-    fn onkey_app_running(bundle: *const std::ffi::c_char) -> i32;
-}
+use crate::platform::native::*;
 
 fn name(code: i32) -> &'static str {
     match code {
@@ -184,13 +173,7 @@ pub fn request_audio() -> bool {
 
 /// Open the System Settings pane for "mic", "audio" (system audio recording) or "automation" (control of apps).
 pub fn open_settings(which: &str) {
-    let pane = match which {
-        "mic" => "Privacy_Microphone",
-        "automation" => "Privacy_Automation",
-        _ => "Privacy_AudioCapture",
-    };
-    let _ = std::process::Command::new("open")
-        .arg(format!("x-apple.systempreferences:com.apple.preference.security?{pane}")).status();
+    crate::platform::shell::open_settings(which);
 }
 
 /// Start or stop the mic level meter; true if it's running afterwards. Says in the log why it couldn't start,

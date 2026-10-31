@@ -4,6 +4,7 @@
 // through the same output as the music; you tap with each click you hear. Nothing on screen moves with the
 // clicks: you'd tap with what you see, which isn't late.
 import { useCallback, useEffect, useRef, useState } from "react";
+import { usePc, useWindows } from "@/lib/platform";
 import { checkOutputTiming, getOutputTiming, resetOutputTiming, takePlaying, type OutputTiming, type TimingResult, type TimingRun } from "@/lib/session";
 
 /** 24 clicks at 100 bpm (14.4 s); the engine doesn't count the first 4 (timing.rs SKIP): 20 taps tell tapping
@@ -14,11 +15,11 @@ const BEAT_S = 60 / 100;
 /** "AirPods Pro are", "LG Monitor is" (a device name read as plural when it ends in s) */
 const is = (name: string) => /s$/i.test(name.trim()) ? "are" : "is";
 
-/** What a check found, in words. */
-export function timingSaid(name: string, r: TimingResult) {
+/** What a check found, in words (`os`: whose figure it was, "macOS", "Windows" or "Linux"). */
+export function timingSaid(name: string, r: TimingResult, os: string) {
   if (r.confirm) return r.before_ms != null
     ? `That came out at ${r.measured_ms} ms, which doesn’t agree with the check before (${r.before_ms} ms). One more time to confirm.`
-    : `You hear it ${r.measured_ms} ms after it’s played (macOS says ${r.reported_ms} ms). One more time to confirm.`;
+    : `You hear it ${r.measured_ms} ms after it’s played (${os} says ${r.reported_ms} ms). One more time to confirm.`;
   const c = r.correction_ms ?? 0;
   if (Math.abs(c) < 20) return `${name} ${is(name)} on time: within ${Math.abs(c)} ms of what OnKey assumed.`;
   return `${name} ${is(name)} ${Math.abs(c)} ms ${c > 0 ? "behind" : "ahead of"} what OnKey assumed; adjusted.`;
@@ -114,6 +115,8 @@ function runCheck(onTap: (n: number) => void, onProgress: (p: number) => void, s
 }
 
 export function TimingCheck() {
+  const pc = usePc();
+  const os = useWindows() ? pc.os : "macOS";
   const [o, setO] = useState<OutputTiming | null>(null);
   const [run, setRun] = useState<Progress | null>(null);
   const [result, setResult] = useState<{ uid: string; r: TimingResult } | null>(null);
@@ -163,9 +166,9 @@ export function TimingCheck() {
             </div>
             <p className="mt-1 text-xs text-ink-400">
               {checked
-                ? <>Checked by you: OnKey allows {o.heard_ms} ms for the music to reach your ears here (macOS says {o.reported_ms} ms).</>
-                : <>OnKey allows {o.reported_ms} ms for the music to reach your ears here, as macOS says. Bluetooth headphones often
-                    take longer than macOS reports, which makes the lyrics and notes early. Tap along to a click to measure it (twice: the two must agree).</>}
+                ? <>Checked by you: OnKey allows {o.heard_ms} ms for the music to reach your ears here ({os} says {o.reported_ms} ms).</>
+                : <>OnKey allows {o.reported_ms} ms for the music to reach your ears here, as {os} says. Bluetooth headphones often
+                    take longer than {os} reports, which makes the lyrics and notes early. Tap along to a click to measure it (twice: the two must agree).</>}
               {!running && <span className="mt-1 block text-ink-300">{HOW}</span>}
               {o.music_playing && !running ? <span className="text-amber-200"> Pause the music first.</span> : null}
             </p>
@@ -194,7 +197,7 @@ export function TimingCheck() {
         )}
         {shown && !running && (
           <div className={`flex items-start justify-between gap-6 border-t border-white/6 px-5 py-3 text-sm ${shown.error ? "text-amber-200" : "text-ink-100"}`}>
-            <span role="status">{shown.error ?? timingSaid(o.name || "This output", shown)}</span>
+            <span role="status">{shown.error ?? timingSaid(o.name || "This output", shown, os)}</span>
           </div>
         )}
       </section>

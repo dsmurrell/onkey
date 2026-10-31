@@ -12,6 +12,7 @@ import { reportProblem } from "@/components/ReportProblem";
 import { checkForUpdate, restartToUpdate, setAutoUpdate, useUpdate } from "@/lib/update";
 import { allowControl, getMics, getOutputTiming, getSettings, openLink, setMic, setScoringLevel, setSetting, setupControl, setupStatus, setYouTube, type Mics, type OutputTiming, type Settings } from "@/lib/session";
 import { LEVELS, levelOf, type Level } from "@/lib/music";
+import { usePc, useWindows } from "@/lib/platform";
 import { errorText } from "@/lib/dataSafety";
 
 /** Audio: the output you hear the music on, which microphone OnKey listens to (automatic: the Mac's input, as chosen
@@ -19,6 +20,8 @@ import { errorText } from "@/lib/dataSafety";
  *  (the Sing page opens it with ?setup). */
 function Audio() {
   const [m, setM] = useState<Mics | null>(null);
+  const win = useWindows();
+  const pc = usePc();
   const [out, setOut] = useState<OutputTiming | null>(null);
   useEffect(() => {
     let alive = true;
@@ -42,13 +45,16 @@ function Audio() {
               <label htmlFor="set-mic" className="text-sm font-medium text-ink-100">Microphone</label>
               <p className="mt-1 text-xs text-ink-400">
                 {m.chosen ? <>Now: {m.chosen.name}.</> : <span className="text-amber-200">No microphone is connected.</span>}
-                {missing && " The one you chose isn’t connected, so OnKey uses the Mac’s own input until it is."}
+                {missing && (win ? ` The one you chose isn’t connected, so OnKey uses ${pc.defaultInput} until it is.`
+                                  : " The one you chose isn’t connected, so OnKey uses the Mac’s own input until it is.")}
               </p>
               <More>
-                Automatic uses your Mac’s input (System Settings → Sound), but not Bluetooth headphones’ mic while the Mac
-                has its own, so the music stays at full quality in them. Setup’s mic check and your takes use the same one.
-                Virtual devices other apps add (Krisp, Loopback, BlackHole, Zoom, Teams) are listed apart: pick one only to
-                sing through it on purpose, as it gives OnKey that app’s sound, not your mic’s.
+                {win ? <>Automatic uses {pc.defaultInput} ({pc.soundInput}). Setup’s mic
+                        check and your takes use the same one.</>
+                  : <>Automatic uses your Mac’s input (System Settings → Sound), but not Bluetooth headphones’ mic while the Mac
+                      has its own, so the music stays at full quality in them. Setup’s mic check and your takes use the same one.
+                      Virtual devices other apps add (Krisp, Loopback, BlackHole, Zoom, Teams) are listed apart: pick one only to
+                      sing through it on purpose, as it gives OnKey that app’s sound, not your mic’s.</>}
               </More>
             </div>
             <select id="set-mic" value={m.preferred ?? ""} onChange={e => pick(e.target.value)}
@@ -67,7 +73,7 @@ function Audio() {
         {out && (
           <div className="border-b border-white/6 px-5 py-4">
             <div className="text-sm font-medium text-ink-100">Output</div>
-            <p className="mt-1 text-xs text-ink-400">Now: {out.name}. Change it in System Settings → Sound.</p>
+            <p className="mt-1 text-xs text-ink-400">Now: {out.name}. Change it in {win ? pc.sound : "System Settings → Sound"}.</p>
           </div>
         )}
         <Link href="/?setup" className="flex items-center justify-between gap-6 px-5 py-4 text-sm text-ink-100 hover:bg-white/4">
@@ -116,9 +122,11 @@ function Shortcuts() {
 function Updates() {
   const [u, setU] = useUpdate();
   const [busy, setBusy] = useState(false);
+  const win = useWindows();
   if (!u) return null;
   const check = async () => { setBusy(true); try { setU(await checkForUpdate()); } finally { setBusy(false); } };
-  const line = !u.supported ? "Development build: it doesn’t update itself."
+  const line = !u.supported ? (win ? "This test build doesn’t update itself: install a new one over it when there is one."
+                                    : "Development build: it doesn’t update itself.")
     : u.waiting ? `OnKey ${u.available} is installed when this song is over, then OnKey restarts.`
     : u.state === "ready" ? `OnKey ${u.available} is ready. Restart to update, or it’s installed when you quit.`
     : u.state === "downloading" ? `Downloading OnKey ${u.available}…`
@@ -226,6 +234,8 @@ function ScoringLevel({ level, onChange }: { level: Level; onChange: (l: Level) 
 
 export default function SettingsPage() {
   const [s, setS] = useState<Settings | null>(null);
+  const win = useWindows();
+  const pc = usePc();
   // a setting that couldn't be saved (a full disk, say): said, rather than seeming to stick and reverting at restart
   const [unsaved, setUnsaved] = useState<string | null>(null);
   useEffect(() => { getSettings().then(setS).catch(() => setS(null)); }, []);
@@ -273,30 +283,49 @@ export default function SettingsPage() {
             <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">Let OnKey control</h2>
             <p className="mb-3 px-1 text-xs text-ink-400">
               {s.listening
-                ? "On by default: OnKey reads what’s playing and where (exact, instant positions), and can play, pause, seek and start songs. Nothing else. macOS asks once for each."
+                ? win ? "On by default: OnKey reads what’s playing and where, and can play, pause, seek and start songs. Nothing else."
+                  : "On by default: OnKey reads what’s playing and where (exact, instant positions), and can play, pause, seek and start songs. Nothing else. macOS asks once for each."
                 : "OnKey follows Spotify and Apple Music by asking them, so it controls them already."}
             </p>
             <section className="glass overflow-hidden rounded-3xl">
               <Row id="set-spotify" title="Spotify" on={!missing.spotify && (!s.listening || s.control_spotify)} disabled={missing.spotify}
                    onChange={on => change("control_spotify", on)}
-                   sub={missing.spotify ? "Spotify isn’t installed on this Mac." : "Start, pause and skip songs in Spotify from OnKey."} />
+                   sub={missing.spotify ? `Spotify isn’t installed on this ${win ? "PC" : "Mac"}.` : "Start, pause and skip songs in Spotify from OnKey."} />
               <Row id="set-music" title="Apple Music" on={!missing.music && (!s.listening || s.control_music)} disabled={missing.music}
                    onChange={on => change("control_music", on)}
-                   sub={missing.music ? "The Music app isn’t on this Mac." : "The same for the Music app (songs in your library)."} />
-              <Row id="set-youtube" title="YouTube in your browser" badge="Bigger permission" warn on={s.youtube} onChange={on => change("youtube", on)}
-                   sub="Read and control the YouTube tab in Chrome, Brave, Edge or Safari."
-                   more="Needs “Allow JavaScript from Apple Events” turned on in the browser. While it’s on (and for 10 minutes after you open a YouTube song from OnKey), OnKey listens to your browser’s sound, whatever it is, calls and podcasts included: sound it doesn’t recognise may go to Shazam as a short fingerprint (never the audio) unless Shazam is off below." />
+                   sub={missing.music ? (win ? "The Apple Music app isn’t on this PC." : "The Music app isn’t on this Mac.")
+                                      : win ? "The same for the Apple Music app." : "The same for the Music app (songs in your library)."} />
+              {/* (Windows: followed through the browser's media session, nothing for the browser or Windows to allow) */}
+              {win
+                ? <Row id="set-youtube" title="YouTube in your browser" on={s.youtube} onChange={on => change("youtube", on)}
+                       sub="Follow songs playing in Chrome, Edge, Firefox, Brave, Opera or Vivaldi."
+                       more={`From what the browser tells ${pc.os} is playing; OnKey can play, pause and seek them there. Until a song is learned its position can be a little less exact than Spotify’s.`} />
+                : <Row id="set-youtube" title="YouTube in your browser" badge="Bigger permission" warn on={s.youtube} onChange={on => change("youtube", on)}
+                       sub="Read and control the YouTube tab in Chrome, Brave, Edge or Safari."
+                       more="Needs “Allow JavaScript from Apple Events” turned on in the browser. While it’s on (and for 10 minutes after you open a YouTube song from OnKey), OnKey listens to your browser’s sound, whatever it is, calls and podcasts included: sound it doesn’t recognise may go to Shazam as a short fingerprint (never the audio) unless Shazam is off below." />}
             </section>
             {s.listening && (
               <p role="status" className="mt-3 px-1 text-xs text-ink-400">
-                {listenOnly
+                {listenOnly && win
+                  ? <>OnKey is listening only: it follows songs by their sound, and doesn’t touch any app. On {pc.os} that’s only
+                      songs it has already learned: new ones are named by {pc.apps} while they’re on here.</>
+                  : listenOnly
                   ? <>OnKey is listening only: it follows songs by their sound, and doesn’t touch any app. Positions are a little
                       less exact, and it can’t start or restart songs. Turning an app off here doesn’t take back macOS’s
                       permission: that’s in System Settings → Privacy &amp; Security → Automation.</>
                   : "With all of these off, OnKey follows songs by their sound alone."}
               </p>
             )}
-            <section className="glass mt-8 overflow-hidden rounded-3xl">
+            {/* Windows has no Shazam: nothing to switch, only what happens */}
+            {win ? (
+              <section className="glass mt-8 overflow-hidden rounded-3xl px-5 py-4">
+                <h3 className="text-sm font-medium text-ink-100">Naming songs</h3>
+                <p className="mt-1 text-xs text-ink-400">
+                  Songs you’ve sung before are recognised on this PC from their sound. New songs are named by Spotify, Apple
+                  Music or your browser (with YouTube on), from what they say is playing. Nothing is sent anywhere to name a song.
+                </p>
+              </section>
+            ) : <section className="glass mt-8 overflow-hidden rounded-3xl">
               <Row id="set-shazam" title="Use Shazam to name new songs" on={s.shazam !== false} onChange={on => change("shazam", on)}
                    sub="Names new songs from a short fingerprint of the sound, not the audio."
                    more="Songs you’ve sung before are recognised on this Mac. New songs from Spotify and Apple Music are named by the app itself while OnKey may control it; Shazam names the rest. When off, nothing is sent to Shazam and only songs already learned on this Mac are recognised there. Album covers are still looked up by artist and title in Apple’s iTunes catalogue." />
@@ -305,7 +334,7 @@ export default function SettingsPage() {
                   With Spotify and Apple Music off, new songs can only be learned with Shazam on. Songs already learned still work.
                 </p>
               )}
-            </section>
+            </section>}
             <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">Lyrics</h2>
             <section className="glass overflow-hidden rounded-3xl">
               <Row id="set-show-lyrics" title="Show lyrics" on={s.show_lyrics !== false} onChange={on => change("show_lyrics", on)}
@@ -330,12 +359,13 @@ export default function SettingsPage() {
             </section>
             <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">Performance</h2>
             <section className="glass overflow-hidden rounded-3xl">
-              <Row id="set-battery-30" title="Save battery while singing" on={s.battery_30fps !== false} onChange={on => change("battery_30fps", on)}
+              {/* (not on Windows: the engine doesn't see the battery there yet) */}
+              {!win && <Row id="set-battery-30" title="Save battery while singing" on={s.battery_30fps !== false} onChange={on => change("battery_30fps", on)}
                    sub="On battery, the notes are drawn a little less often. Still smooth."
-                   more="30 times a second instead of 60: half the drawing work for your Mac." />
+                   more="30 times a second instead of 60: half the drawing work for your Mac." />}
               {!s.small_mac && <Row id="set-keep-models" title="Keep learning models ready" on={!!s.keep_models} onChange={on => change("keep_models", on)}
                    sub="New songs are learned faster, but OnKey uses more memory."
-                   more="About 1.5 GB more, also while you sing songs OnKey already knows. Off, the models are loaded when a new song is learned and let go after. On by default on Macs with 32 GB or more." />}
+                   more={"About 1.5 GB more, also while you sing songs OnKey already knows. Off, the models are loaded when a new song is learned and let go after. On by default on " + (win ? "PCs" : "Macs") + " with 32 GB or more."} />}
             </section>
           </>
         )}
@@ -346,7 +376,9 @@ export default function SettingsPage() {
           <button onClick={() => reportProblem()} className="flex w-full items-center justify-between gap-6 border-b border-white/6 px-5 py-4 text-left text-sm text-ink-100 hover:bg-white/4">
             <span>
               Report a problem
-              <span className="mt-1 block text-xs text-ink-400">Save OnKey’s logs and timings as a zip to attach to a GitHub issue. You see what’s in it first; no lyrics or audio, nothing uploaded.</span>
+              <span className="mt-1 block text-xs text-ink-400">{win
+                ? "Save OnKey’s logs and timings as one zip on your Desktop, to attach to a message or a GitHub issue. You see what’s in it first; no lyrics or audio, nothing uploaded."
+                : "Save OnKey’s logs and timings as a zip to attach to a GitHub issue. You see what’s in it first; no lyrics or audio, nothing uploaded."}</span>
             </span>
             <span aria-hidden className="text-ink-400">›</span>
           </button>
@@ -391,7 +423,7 @@ export default function SettingsPage() {
           </Link>
         </section>
         <p className="mt-3 px-1 text-xs text-ink-400">
-          For personal practice at home. What OnKey learns stays on this Mac: please keep it to yourself, and don’t post
+          For personal practice at home. What OnKey learns stays on this {win ? "PC" : "Mac"}: please keep it to yourself, and don’t post
           takes or screen recordings with the music in them.
         </p>
       </main>

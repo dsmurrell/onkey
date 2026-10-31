@@ -3,11 +3,13 @@
 // control (start a song, skip to the singing, pause from OnKey) for an app you haven't allowed, this asks:
 // allow control of that app (macOS then asks once too), or open the song there and press play yourself.
 import { useEffect, useState } from "react";
+import { useWindows } from "@/lib/platform";
 import { allowControl, goHome, openInApp, type ControlNeeded } from "@/lib/session";
 
 export default function ControlPrompt() {
   const [ask, setAsk] = useState<ControlNeeded | null>(null);
   const [busy, setBusy] = useState(false);
+  const win = useWindows();
   useEffect(() => {
     const on = (e: Event) => setAsk((e as CustomEvent<ControlNeeded>).detail);
     window.addEventListener("onkey-control-needed", on);
@@ -48,10 +50,15 @@ export default function ControlPrompt() {
         </h2>
         <p className="mt-2 text-sm text-ink-300">
           {canAllow
-            ? `OnKey is listening to ${ask.app}, not controlling it. To start songs, skip to the singing and pause from OnKey, it needs your permission. macOS will ask you once too.`
+            ? `OnKey is listening to ${ask.app}, not controlling it. To start songs, skip to the singing and pause from OnKey, it needs your permission.${win ? "" : " macOS will ask you once too."}`
             : `OnKey follows ${ask.app} by listening only. Play, pause and skip there.`}
         </p>
-        {browser && (
+        {browser && win && (
+          <p className="mt-2 rounded-xl bg-white/6 px-3 py-2 text-xs text-ink-300">
+            OnKey can then follow songs in your browser, and play, pause and seek them there.
+          </p>
+        )}
+        {browser && !win && (
           <p className="mt-2 rounded-xl bg-amber-400/10 px-3 py-2 text-xs text-amber-200">
             This is the bigger permission: OnKey can then read and control the YouTube tab in your browser, and listens to
             your browser’s sound, whatever it is (calls too): sound it doesn’t recognise may go to Shazam as a short

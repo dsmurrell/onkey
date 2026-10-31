@@ -949,7 +949,9 @@ pub fn work(r: &mut dyn Recognizer, req: &Request) -> Answer {
 
 /// Apps listened to, by the bundle id prefix of the processes that play their sound. Capturing them needs only
 /// the audio-recording permission, never control of the app. The music apps always; a browser only while
-/// YouTube is in use (see `may_listen`): its sound is anything (calls, podcasts, other videos).
+/// YouTube is in use (see `may_listen`): its sound is anything (calls, podcasts, other videos). Windows and Linux
+/// add Opera and Vivaldi, which publish a media session / MPRIS player OnKey follows (platform/*/browsers.rs).
+#[cfg(target_os = "macos")]
 pub const APPS: [(&str, &str); 8] = [
     ("com.spotify.client", "Spotify"),
     ("com.apple.Music", "Apple Music"),
@@ -959,6 +961,19 @@ pub const APPS: [(&str, &str); 8] = [
     ("com.microsoft.edgemac", "Edge"),
     ("company.thebrowser.Browser", "Arc"),
     ("org.mozilla.firefox", "Firefox"),
+];
+#[cfg(not(target_os = "macos"))]
+pub const APPS: [(&str, &str); 10] = [
+    ("com.spotify.client", "Spotify"),
+    ("com.apple.Music", "Apple Music"),
+    ("com.google.Chrome", "Chrome"),
+    ("com.apple.WebKit.GPU", "Safari"),
+    ("com.brave.Browser", "Brave"),
+    ("com.microsoft.edgemac", "Edge"),
+    ("company.thebrowser.Browser", "Arc"),
+    ("org.mozilla.firefox", "Firefox"),
+    ("com.operasoftware.Opera", "Opera"),
+    ("com.vivaldi.Vivaldi", "Vivaldi"),
 ];
 
 /// WebKit's shared sound process: Safari's, and also OnKey's own window's (and Mail's).
@@ -1016,7 +1031,7 @@ pub fn browser_unheard() -> Option<(&'static str, bool)> {
 
 /// `browser_unheard`'s choice: a browser OnKey can follow first, then the others.
 fn unheard_browser(sounding: impl Fn(&str) -> bool, listening: bool) -> Option<(&'static str, bool)> {
-    let followable = |b: &str| crate::youtube::browser_for_audio(b).is_some();
+    let followable = crate::youtube::followable;
     let browsers = || APPS.iter().filter(|(b, _)| !matches!(*b, "com.spotify.client" | "com.apple.Music"));
     browsers().filter(|(b, _)| followable(b)).chain(browsers().filter(|(b, _)| !followable(b)))
         .find(|(b, _)| sounding(b))
@@ -1028,7 +1043,7 @@ pub fn source_of(bundle: &str) -> Source {
     match bundle {
         "com.spotify.client" => Source::Spotify,
         "com.apple.Music" => Source::Music,
-        b if crate::youtube::browser_for_audio(b).is_some() => Source::YouTube,
+        b if crate::youtube::followable(b) => Source::YouTube,
         _ => Source::Other,
     }
 }
@@ -1389,7 +1404,9 @@ pub fn follow() -> Option<State> {
         }
         None => None,
     };
-    FROM_APP.store(app.is_some(), std::sync::atomic::Ordering::Relaxed);
+    // (on Windows, a browser whose timeline isn't seen current yet, or an app whose timeline can't be trusted:
+    // listening's alignment places the song)
+    FROM_APP.store(app.as_ref().is_some_and(|s| crate::source::exact_position(s.source)), std::sync::atomic::Ordering::Relaxed);
     // a podcast episode, an audiobook or an ad is never a song: nothing followed (no take, nothing learned)
     let not_song = app.as_ref().is_some_and(|s| !crate::source::is_song(&s.track.id));
     NOT_SONG.store(not_song && app.as_ref().is_some_and(|s| s.playing), std::sync::atomic::Ordering::Relaxed);
@@ -1794,10 +1811,12 @@ mod tests {
         assert_eq!(unheard_browser(|_| false, true), None);
         // Spotify playing isn't a browser
         assert_eq!(unheard_browser(|b| b == "com.spotify.client", true), None);
-        assert_eq!(unheard_browser(|b| b == "com.apple.WebKit.GPU", false), Some(("Safari", true)));
+        // (no Safari on Windows or Linux: nothing follows its sound there)
+        assert_eq!(unheard_browser(|b| b == "com.apple.WebKit.GPU", false), Some(("Safari", cfg!(target_os = "macos"))));
         // Firefox: heard once YouTube is on when listening, but its tab can't be followed otherwise
         assert_eq!(unheard_browser(|b| b == "org.mozilla.firefox", true), Some(("Firefox", true)));
-        assert_eq!(unheard_browser(|b| b == "org.mozilla.firefox", false), Some(("Firefox", false)));
+        // (on Windows and Linux Firefox's media session / MPRIS player is followed, as every browser's)
+        assert_eq!(unheard_browser(|b| b == "org.mozilla.firefox", false), Some(("Firefox", cfg!(not(target_os = "macos")))));
         // Arc and Chrome both sounding: Chrome, which works either way
         assert_eq!(unheard_browser(|b| b == "company.thebrowser.Browser" || b == "com.google.Chrome", false), Some(("Chrome", true)));
     }
