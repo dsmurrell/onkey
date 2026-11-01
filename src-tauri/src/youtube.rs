@@ -206,8 +206,53 @@ pub(crate) fn strip_feat(s: &str) -> String {
     s.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
-/// A browser's media session (Windows) names a song by what the page told it: YouTube Music its artist, title and
-/// album; youtube.com the video's title and channel, no album. → (artist, title), as `to_state` reads the page.
+/// A browser tab's title without what the browser and the site put around the page's own: invisible marks a site
+/// starts it with (Apple Music's left-to-right mark), YouTube's count of notifications ("(3460) "), and the site's
+/// name after it. → (the page's own title, the site: "youtube", "apple-music", or "" for one OnKey doesn't know).
+pub fn tab_text(tab: &str) -> (&str, &'static str) {
+    let marks = |c: char| matches!(c, '\u{200e}' | '\u{200f}' | '\u{feff}' | '\u{200b}' | '\u{2060}') || c.is_whitespace();
+    let mut t = tab.trim_matches(marks);
+    // "(3460) Katy Perry - …": the count of notifications, which YouTube puts before the title
+    if let Some(rest) = t.strip_prefix('(') {
+        if let Some((n, after)) = rest.split_once(") ") {
+            if !n.is_empty() && n.chars().all(|c| c.is_ascii_digit() || c == '+') {
+                t = after.trim_start();
+            }
+        }
+    }
+    for (suffix, site) in [(" - YouTube Music", "youtube"), (" - YouTube", "youtube"), (" - Apple Music", "apple-music")] {
+        if let Some(text) = t.strip_suffix(suffix) {
+            return (text.trim_matches(marks), site);
+        }
+    }
+    (t, "")
+}
+
+/// The song a browser tab's title names, for when the page doesn't say what it plays: the browser's media session
+/// then gives the tab's title and no artist (Firefox on Linux does for every YouTube video: romulka, issue #1, 1 Nov
+/// 2026). "(3460) Katy Perry - Dark Horse ft. Juicy J - YouTube" → (Katy Perry, Dark Horse); "Wonderwall - Song
+/// with Lyrics by Oasis - Apple Music" → (Oasis, Wonderwall). None when it names none: YouTube's home or a search
+/// ("katy perry - YouTube": nothing before a " - " but the site), a channel, an album's or a playlist's page, or a
+/// site whose titles OnKey doesn't know. What's named is still checked for talk by `not_a_song`, as a page's names are.
+pub fn tab_title_names(tab: &str) -> Option<(String, String)> {
+    let (text, site) = tab_text(tab);
+    match site {
+        // "Artist - Title (Official Video)", as a video's title is read everywhere else (no channel to fall back on)
+        "youtube" => {
+            let (artist, title) = parse_title(text, "");
+            (!artist.is_empty() && !title.is_empty()).then_some((artist, title))
+        }
+        // "Title - Song with Lyrics by Artist" or "Title - Song by Artist"; a single's, album's, playlist's or
+        // artist's page ("… - Album by …") plays songs the title doesn't name
+        "apple-music" => [" - Song with Lyrics by ", " - Song by "].iter().find_map(|marker| text.rsplit_once(marker))
+            .map(|(title, artist)| (strip_feat(artist), strip_feat(title)))
+            .filter(|(a, t)| !a.is_empty() && !t.is_empty()),
+        _ => None,
+    }
+}
+
+/// A browser's media session (Windows, Linux) names a song by what the page told it: YouTube Music its artist, title
+/// and album; youtube.com the video's title and channel, no album. → (artist, title), as `to_state` reads the page.
 pub fn session_names(title: &str, artist: &str, album: &str) -> (String, String) {
     if !album.trim().is_empty() {
         return (strip_feat(artist), strip_feat(title));
@@ -233,13 +278,14 @@ fn spaced(s: &str) -> String {
     out
 }
 
-/// Why what a browser's media session (Windows) names isn't taken for a song, if it isn't: no artist (a page that
-/// doesn't say what it plays: the browser shows the page's title), a length no song has (`duration` s, 0 unknown),
-/// or a title or channel that says it's talk, a game or a film. A video that gets through and isn't on YouTube
-/// Music is still checked for talk by its first minute (`might_not_be_song`, notmusic.rs).
+/// Why what a browser's media session (Windows, Linux) names isn't taken for a song, if it isn't: no artist (a page
+/// that doesn't say what it plays: the browser gives the tab's title, and that named no song either:
+/// `tab_title_names`), a length no song has (`duration` s, 0 unknown), or a title or channel that says it's talk, a
+/// game or a film. A video that gets through and isn't on YouTube Music is still checked for talk by its first
+/// minute (`might_not_be_song`, notmusic.rs).
 pub fn not_a_song(title: &str, artist: &str, album: &str, duration: f64) -> Option<&'static str> {
     if artist.trim().is_empty() {
-        return Some("no artist: the page doesn't say what it plays");
+        return Some("no artist: the page doesn't say what it plays, and its tab's title names no song");
     }
     if duration > 20.0 * 60.0 {
         return Some("over 20 minutes: a mix, a show or a stream");
@@ -250,10 +296,12 @@ pub fn not_a_song(title: &str, artist: &str, album: &str, duration: f64) -> Opti
     if !album.trim().is_empty() {
         return None;                                // YouTube Music, which says the album: a song
     }
-    // (whole words only, and none a song is often called: "How to Save a Life", "Chain Reaction", "Good News")
-    const TALK: [&str; 22] = ["podcast", "episode", "interview", "gameplay", "walkthrough", "let's play", "lets play", "let s play", "trailer",
+    // (whole words only, and none a song is often called: "How to Save a Life", "Chain Reaction", "Good News"; the
+    // Russian: review, podcast, interview, vlog, trailer, walkthrough, stream, lecture)
+    const TALK: [&str; 30] = ["podcast", "episode", "interview", "gameplay", "walkthrough", "let's play", "lets play", "let s play", "trailer",
                               "reacts", "tutorial", "livestream", "live stream", "#shorts", "unboxing", "vlog", "documentary",
-                              "lecture", "full album", "full movie", "explained", "asmr"];
+                              "lecture", "full album", "full movie", "explained", "asmr",
+                              "обзор", "подкаст", "интервью", "влог", "трейлер", "прохождение", "стрим", "лекция"];
     let words = |s: &str, keep: &str| {
         let s = s.to_lowercase().replace(|c: char| !c.is_alphanumeric() && !keep.contains(c), " ");
         format!(" {} ", s.split_whitespace().collect::<Vec<_>>().join(" "))
@@ -347,6 +395,65 @@ mod tests {
         }
         // YouTube Music says the album: a song, whatever it's called
         assert_eq!(not_a_song("Interview", "Some Band", "Talk Is Cheap", 200.0), None);
+    }
+
+    /// Every tab title from romulka's report (Firefox on KDE, issue #1, 1 Nov 2026), and the shapes around them.
+    #[test]
+    fn a_tab_title_names_the_song_when_the_page_doesnt() {
+        let named = [
+            ("(3460) Katy Perry - Dark Horse ft. Juicy J - YouTube", "Katy Perry", "Dark Horse"),
+            ("(3460) TOOL - Lateralus (Official Audio) - YouTube", "TOOL", "Lateralus"),
+            ("(3461) Limp Bizkit - Break Stuff (Official Music Video) - YouTube", "Limp Bizkit", "Break Stuff"),
+            ("Katy Perry - Dark Horse (Official) ft. Juicy J - YouTube", "Katy Perry", "Dark Horse"),
+            ("(99+) Juno Hale - Tidewater [HD] - YouTube", "Juno Hale", "Tidewater"),
+            ("Juno Hale – Tidewater - YouTube Music", "Juno Hale", "Tidewater"),
+            ("Kit Ellery \"Kids of the Coast\" (Official Video) - YouTube", "Kit Ellery", "Kids of the Coast"),
+            ("\u{200e}Wonderwall - Song with Lyrics by Oasis - Apple Music", "Oasis", "Wonderwall"),
+            ("\u{200e}Stand By Me - Song with Lyrics by Ben E. King - Apple Music", "Ben E. King", "Stand By Me"),
+            ("\u{200e}Dark Horse (feat. Juicy J) - Song by Katy Perry - Apple Music", "Katy Perry", "Dark Horse"),
+            ("Song by Song - Song by The Dashes - Apple Music", "The Dashes", "Song by Song"),
+            ("\u{feff}(2) Moss Arcade - Slow Satellite - YouTube", "Moss Arcade", "Slow Satellite"),
+            // (a Russian review video is named, then turned away by not_a_song: see below)
+            ("(3462) ОЧЕНЬ рекомендуем - Silver Pines (обзор) - YouTube", "ОЧЕНЬ рекомендуем", "Silver Pines (обзор)"),
+        ];
+        for (tab, artist, title) in named {
+            assert_eq!(tab_title_names(tab), Some((artist.to_string(), title.to_string())), "{tab}");
+        }
+        let not: [&str; 13] = [
+            "(3461) YouTube",                                                   // the home page
+            "YouTube",
+            "(3460) katty peŕry - YouTube",                                     // a search: a query, not Artist - Title
+            "Katy Perry - YouTube",                                             // a channel
+            "(3460) Мексика. Часть 3. Гуляем по пирамидам. - YouTube",          // a travel vlog, no " - "
+            " - YouTube",
+            "(3460) - YouTube",
+            "Thirteenth Step альбом A Perfect Circle слушать онлайн бесплатно на Яндекс Музыке в хорошем качестве",
+            "\u{200e}Thirteenth Step - Album by A Perfect Circle - Apple Music", // an album's page
+            "\u{200e}Dark Horse - Single by Katy Perry - Apple Music",
+            "\u{200e}Today's Hits - Playlist - Apple Music",
+            "\u{200e}Oasis - Apple Music",                                      // an artist's page
+            "Netflix",
+        ];
+        for tab in not {
+            assert_eq!(tab_title_names(tab), None, "{tab}");
+        }
+        // what a tab names goes through the same talk check as what a page names
+        let (a, t) = tab_title_names("(3462) ОЧЕНЬ рекомендуем - Silver Pines (обзор) - YouTube").unwrap();
+        assert!(not_a_song(&t, &a, "", 600.0).is_some(), "a review");
+        let (a, t) = tab_title_names("The Joe Show - Episode 212 with a Singer - YouTube").unwrap();
+        assert!(not_a_song(&t, &a, "", 0.0).is_some(), "a podcast");
+        let (a, t) = tab_title_names("(3460) Katy Perry - Dark Horse ft. Juicy J - YouTube").unwrap();
+        assert_eq!(not_a_song(&t, &a, "", 225.0), None);
+        for (t, c) in [("Группа крови", "Кино"), ("Review My Kisses", "Band")] {
+            assert_eq!(not_a_song(t, c, "", 230.0), None, "{t}: a song");
+        }
+        assert!(not_a_song("Silver Pines (обзор)", "Кто-то", "", 230.0).is_some());
+        // the page's own title, for the Mac's reading of a tab (count and site off, marks off)
+        assert_eq!(tab_text("(3460) Katy Perry - Dark Horse ft. Juicy J - YouTube"), ("Katy Perry - Dark Horse ft. Juicy J", "youtube"));
+        assert_eq!(tab_text("\u{200e}Wonderwall - Song by Oasis - Apple Music"), ("Wonderwall - Song by Oasis", "apple-music"));
+        assert_eq!(tab_text("(2) Two Of Us - YouTube"), ("Two Of Us", "youtube"));
+        assert_eq!(tab_text("(Live) At The Hall - YouTube"), ("(Live) At The Hall", "youtube"), "not a count");
+        assert_eq!(tab_text("Some Band - Some Song | Bandcamp"), ("Some Band - Some Song | Bandcamp", ""));
     }
 
     #[test]

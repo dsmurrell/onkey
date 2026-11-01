@@ -153,17 +153,49 @@ pub fn js_blocked() -> Option<(&'static str, &'static str)> {
     None
 }
 
+/// A browser's session as a song to follow: what it said, with the song's names filled in (`with_names`), the
+/// browser, and whether the names were read from the tab's title (that title, for the log) rather than the page's own.
+struct Player {
+    said: Said,
+    bundle: &'static str,
+    name: &'static str,
+    tab: Option<String>,
+}
+
+/// `s` with its song's names filled in when the page gave no artist (the browser then gives the tab's title as the
+/// title) and the tab's title names a song (youtube::tab_title_names, parsed already: not for `session_names`).
+/// → (the session as named, the tab's title when the names were read from it).
+fn with_names(mut s: Said) -> (Said, Option<String>) {
+    if !s.artist.trim().is_empty() {
+        return (s, None);
+    }
+    match crate::youtube::tab_title_names(&s.title) {
+        Some((artist, title)) => {
+            let tab = std::mem::replace(&mut s.title, title);
+            s.artist = artist;
+            (s, Some(tab))
+        }
+        None => (s, None),
+    }
+}
+
 /// What a browser plays and where, as a song.
 pub fn state() -> Option<State> {
     let firefox = std::cell::OnceCell::new();
     let firefox_running = || *firefox.get_or_init(|| crate::source::app_running("org.mozilla.firefox"));
-    let all: Vec<(Said, &'static str, &'static str)> = media::sessions().into_iter()
-        .filter_map(|s| browser_of(&s.app, firefox_running).map(|(b, n)| (s, b, n))).collect();
+    // (a page that doesn't say what it plays gives no artist, and the browser shows the tab's title instead: the song
+    // is then named from the tab's title, as on Linux: romulka, issue #1)
+    let all: Vec<Player> = media::sessions().into_iter()
+        .filter_map(|s| browser_of(&s.app, firefox_running).map(|(bundle, name)| {
+            let (said, tab) = with_names(s);
+            Player { said, bundle, name, tab }
+        })).collect();
     let now = Instant::now();
     with(|f| {
         // when each began playing
-        f.began.retain(|app, _| all.iter().any(|(s, _, _)| s.app == *app));
-        for (s, _, _) in &all {
+        f.began.retain(|app, _| all.iter().any(|p| p.said.app == *app));
+        for p in &all {
+            let s = &p.said;
             let e = f.began.entry(s.app.clone()).or_insert((false, now));
             if s.playing && !e.0 {
                 e.1 = now;
@@ -171,21 +203,25 @@ pub fn state() -> Option<State> {
             e.0 = s.playing;
         }
         // only what looks like a song
-        let songs: Vec<&(Said, &str, &str)> = all.iter().filter(|(s, _, n)| match crate::youtube::not_a_song(&s.title, &s.artist, &s.album, s.duration) {
+        let songs: Vec<&Player> = all.iter().filter(|p| match crate::youtube::not_a_song(&p.said.title, &p.said.artist, &p.said.album, p.said.duration) {
             Some(why) => {
+                let s = &p.said;
                 let key = format!("no:{}:{}:{}", s.app, s.title, s.artist);
-                once(f, key, || format!("{n} plays \"{}\" by \"{}\" (album \"{}\"): not followed as a song, {why}", s.title, s.artist, s.album));
+                let tab = p.tab.as_ref().map_or(String::new(), |t| format!(", tab title \"{t}\""));
+                once(f, key, || format!("{} plays \"{}\" by \"{}\" (album \"{}\"{tab}): not followed as a song, {why}", p.name, s.title, s.artist, s.album));
                 false
             }
             None => true,
         }).collect();
         let t0 = f.began.values().map(|b| b.1).min().unwrap_or(now);
         let cands: Vec<(&str, bool, f64)> = songs.iter()
-            .map(|(s, _, _)| (s.app.as_str(), s.playing, f.began.get(&s.app).map_or(0.0, |b| b.1.duration_since(t0).as_secs_f64()))).collect();
+            .map(|p| (p.said.app.as_str(), p.said.playing, f.began.get(&p.said.app).map_or(0.0, |b| b.1.duration_since(t0).as_secs_f64()))).collect();
         let prefer = crate::settings::listening().then(crate::listen::want_bundle).flatten()
-            .and_then(|b| songs.iter().find(|(_, sb, _)| *sb == b).map(|(s, _, _)| s.app.as_str()));
-        let (s, bundle, name) = *songs.get(pick(&cands, prefer, f.app.as_deref())?)?;
-        let (artist, title) = crate::youtube::session_names(&s.title, &s.artist, &s.album);
+            .and_then(|b| songs.iter().find(|p| p.bundle == b).map(|p| p.said.app.as_str()));
+        let p = *songs.get(pick(&cands, prefer, f.app.as_deref())?)?;
+        let (s, bundle, name) = (&p.said, p.bundle, p.name);
+        // (names read from the tab's title are the song's already: parse_title has had them)
+        let (artist, title) = if p.tab.is_some() { (s.artist.clone(), s.title.clone()) } else { crate::youtube::session_names(&s.title, &s.artist, &s.album) };
         let key = media::media_id("media-", &s.artist, &s.title, &s.album);
         let id = format!("{}{key}", crate::youtube::ID_PREFIX);
         let (artist, title) = crate::youtube::named(&key).unwrap_or((artist, title));
@@ -205,8 +241,9 @@ pub fn state() -> Option<State> {
                 (true, false) => "from the browser's timeline once it changes (it may be stale when first read); until then OnKey's alignment once learned",
                 _ => "OnKey's own clock from when it began playing, then OnKey's alignment once learned",
             };
-            format!("YouTube on Windows: {name} gave title \"{}\", artist \"{}\", album \"{}\", with {timeline}, seek {}; named {artist} - {title} ({id}); position {how}",
-                    s.title, s.artist, s.album, if s.can_seek { "allowed" } else { "not allowed" })
+            let from = match &p.tab { Some(t) => format!(" (its tab's title \"{t}\")"), None => String::new() };
+            format!("YouTube on Windows: {name} gave title \"{}\", artist \"{}\", album \"{}\"{from}, with {timeline}, seek {}; named {artist} - {title} ({id}) from {}; position {how}",
+                    s.title, s.artist, s.album, if s.can_seek { "allowed" } else { "not allowed" }, if p.tab.is_some() { "the tab's title" } else { "the page" })
         });
         Some(State {
             playing: s.playing,
@@ -265,6 +302,21 @@ mod tests {
         for b in bundles() {
             assert!(!super::super::procs::exes_for(b).is_empty(), "{b}: its sound is captured by its program");
         }
+    }
+
+    /// A session with no artist gives the tab's title (Firefox without the page's names): the song is read from that.
+    #[test]
+    fn a_session_that_gives_no_artist_is_named_from_the_tabs_title() {
+        let tab = "(3460) Katy Perry - Dark Horse ft. Juicy J - YouTube";
+        let (s, raw) = with_names(Said { app: "308046B0AF4A39CB".into(), title: tab.into(), ..Default::default() });
+        assert_eq!((s.artist.as_str(), s.title.as_str(), raw.as_deref()), ("Katy Perry", "Dark Horse", Some(tab)));
+        let (s, raw) = with_names(Said { title: "(3461) YouTube".into(), ..Default::default() });
+        assert_eq!((s.artist.as_str(), s.title.as_str(), raw), ("", "(3461) YouTube", None));
+        let (s, raw) = with_names(Said { title: "Dark Horse".into(), artist: "Katy Perry".into(), album: "PRISM".into(), ..Default::default() });
+        assert_eq!((s.title.as_str(), s.artist.as_str(), s.album.as_str(), raw), ("Dark Horse", "Katy Perry", "PRISM", None), "the page's own names stay");
+        // the same id whatever the count of notifications in the tab's title
+        let (a, _) = with_names(Said { title: "(7) Katy Perry - Dark Horse ft. Juicy J - YouTube".into(), ..Default::default() });
+        assert_eq!(media::media_id("media-", &a.artist, &a.title, &a.album), media::media_id("media-", "Katy Perry", "Dark Horse", ""));
     }
 
     #[test]

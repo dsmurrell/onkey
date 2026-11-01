@@ -293,7 +293,8 @@ fn to_state(_b: Browser, p: &Page) -> Option<State> {
     let (artist, name) = if music && !p.mt.is_empty() {
         (crate::youtube::strip_feat(&p.ma), crate::youtube::strip_feat(&p.mt))
     } else {
-        crate::youtube::parse_title(if p.mt.is_empty() { p.dt.trim_end_matches(" - YouTube") } else { &p.mt }, &p.ma)
+        // (the tab's title without YouTube's count of notifications and its name: "(3) Artist - Title - YouTube")
+        crate::youtube::parse_title(if p.mt.is_empty() { crate::youtube::tab_text(&p.dt).0 } else { &p.mt }, &p.ma)
     };
     let (artist, name) = crate::youtube::named(&vid).unwrap_or((artist, name));
     // an advert plays in the same player: the song is "paused" where it was, with its own length
