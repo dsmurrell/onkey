@@ -239,7 +239,11 @@ impl IActivateAudioInterfaceCompletionHandler_Impl for Activated_Impl {
 fn process_loopback_client(pid: u32) -> ::windows::core::Result<IAudioClient> {
     use ::windows::Win32::System::Com::{StructuredStorage::PROPVARIANT, BLOB};
     use ::windows::Win32::System::Variant::VT_BLOB;
-    let params = AUDIOCLIENT_ACTIVATION_PARAMS {
+    // The parameters on the heap, and the PROPVARIANT pointing at them never dropped: the windows crate's PROPVARIANT
+    // runs PropVariantClear when dropped, which frees a VT_BLOB's data with CoTaskMemFree, and this data isn't
+    // Windows' to free. (Freeing it was heap corruption, 0xc0000374, the moment a song started in Spotify: xps,
+    // issue #1, 1 Nov 2026.)
+    let params = Box::new(AUDIOCLIENT_ACTIVATION_PARAMS {
         ActivationType: AUDIOCLIENT_ACTIVATION_TYPE_PROCESS_LOOPBACK,
         Anonymous: AUDIOCLIENT_ACTIVATION_PARAMS_0 {
             ProcessLoopbackParams: AUDIOCLIENT_PROCESS_LOOPBACK_PARAMS {
@@ -247,21 +251,23 @@ fn process_loopback_client(pid: u32) -> ::windows::core::Result<IAudioClient> {
                 ProcessLoopbackMode: PROCESS_LOOPBACK_MODE_INCLUDE_TARGET_PROCESS_TREE,
             },
         },
-    };
-    let mut pv = PROPVARIANT::default();
+    });
+    let mut pv = std::mem::ManuallyDrop::new(PROPVARIANT::default());
     unsafe {
         let inner = &mut *pv.Anonymous.Anonymous;
         inner.vt = VT_BLOB;
         inner.Anonymous.blob = BLOB { cbSize: std::mem::size_of::<AUDIOCLIENT_ACTIVATION_PARAMS>() as u32,
-                                      pBlobData: &params as *const _ as *mut u8 };
+                                      pBlobData: &*params as *const _ as *mut u8 };
     }
     let signal = Arc::new((Mutex::new(false), std::sync::Condvar::new()));
     let handler: IActivateAudioInterfaceCompletionHandler = Activated(signal.clone()).into();
     unsafe {
-        let op = ActivateAudioInterfaceAsync(VIRTUAL_AUDIO_DEVICE_PROCESS_LOOPBACK, &IAudioClient::IID, Some(&pv), &handler)?;
+        let op = ActivateAudioInterfaceAsync(VIRTUAL_AUDIO_DEVICE_PROCESS_LOOPBACK, &IAudioClient::IID, Some(&*pv), &handler)?;
         let (done, cv) = &*signal;
         let (finished, _) = cv.wait_timeout_while(done.lock().unwrap(), Duration::from_secs(5), |d| !*d).unwrap();
         if !*finished {
+            // still running: it may read the parameters later, so they're never freed (a few bytes, rarely)
+            std::mem::forget(params);
             return Err(::windows::core::Error::from(::windows::Win32::Foundation::E_FAIL));
         }
         let (mut hr, mut unk) = (::windows::core::HRESULT(0), None);

@@ -5,11 +5,14 @@ import { inApp } from "@/lib/session";
 export type UpdateStatus = {
   /** this OnKey's version */
   version: string;
-  /** release builds only: development builds never update themselves */
+  /** release builds only: development builds never check */
   supported: boolean;
+  /** an official build (scripts/release.sh): installs updates. Any other release build (a fork's, or built from
+   *  source) only says when a new official version is out ("official" state) */
+  official?: boolean;
   /** "Check for updates automatically" */
   auto: boolean;
-  state: "idle" | "checking" | "current" | "downloading" | "ready" | "error";
+  state: "idle" | "checking" | "current" | "downloading" | "ready" | "error" | "official";
   /** the newer version, once found */
   available?: string;
   error?: string;

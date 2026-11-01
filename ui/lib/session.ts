@@ -27,6 +27,7 @@ export type Take = { name: string; artist: string; track_id?: string; status: "l
  *  OnKey sing along to it (Firefox and Arc only when listening).
  *  `mic`, `audio`: the microphone's and system audio recording's permission. `automation_denied`: the app macOS
  *  won't let OnKey control. `models`: whether new songs can be learned (the learning models are there).
+ *  `lyrics_down`: LRCLIB, where lyrics come from, isn't working right now (songs learned meanwhile have no words yet).
  *  `music_quiet`: the music app plays but OnKey hears it only very faintly (its own volume turned right down).
  *  `mic_device`: the microphone OnKey listens to (the same one setup's mic check used); null: none connected.
  *  `output_ms`: how long after the music app plays you hear it, as allowed for; `output`: the output device and
@@ -37,7 +38,7 @@ export type Status = { echo_cancel?: boolean; pause_ends_ms?: number | null; pla
                        /** "Pause listening": OnKey follows nothing until resumed (setListeningPaused) */
                        listening_paused?: boolean;
                        browser_sounding?: null | { browser: string; works: boolean };
-                       mic?: Perm; audio?: Perm; automation_denied?: string | null; not_answering?: string | null; mic_device?: string | null;
+                       mic?: Perm; audio?: Perm; automation_denied?: string | null; not_answering?: string | null; lyrics_down?: boolean; mic_device?: string | null;
                        music_quiet?: null | { app: string; level_db: number; volume?: number | null };
                        models?: { state: "ready" | "missing" | "broken"; error?: string } };
 
@@ -253,7 +254,7 @@ class Live {
         this.lowPower = !!ev.low_power;
         this.draw30 = !!ev.draw_30;
         this.status = { player: ev.player, output_ms: ev.output_ms, output: ev.output, echo_cancel: ev.echo_cancel, youtube_blocked: ev.youtube_blocked ?? null, browser_sounding: ev.browser_sounding ?? null, youtube: !!ev.youtube, listening: !!ev.listening, listening_paused: !!ev.listening_paused,
-                                     mic: ev.mic, audio: ev.audio, automation_denied: ev.automation_denied ?? null, not_answering: ev.not_answering ?? null, models: ev.models,
+                                     mic: ev.mic, audio: ev.audio, automation_denied: ev.automation_denied ?? null, not_answering: ev.not_answering ?? null, lyrics_down: ev.lyrics_down ?? false, models: ev.models,
                                      mic_device: ev.mic_device, music_quiet: ev.music_quiet ?? null, pause_ends_ms: ev.pause_ends_ms ?? null };
         this.line = ev.listening ? ev.line ?? null : null;
         this.changed(); break;

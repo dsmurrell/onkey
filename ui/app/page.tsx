@@ -450,6 +450,13 @@ function Notices({ status, song }: { status: Status; song: SongState | null }) {
         Automation → OnKey</b>. OnKey tries again in a minute.
       </Notice>
     ),
+    song && status.lyrics_down && (
+      <Notice key="lyrics-down" title="Lyrics aren’t available right now">
+        LRCLIB, the free lyrics service OnKey uses, isn’t working at the moment. The notes still show, and the words
+        join them if it comes back during the song. A song learned meanwhile gets its words the next time you sing
+        it.
+      </Notice>
+    ),
     m && m.state === "missing" && learning && (
       <Notice key="models" title="OnKey can’t learn new songs right now">
         Its learning models, which come inside the app, are missing or damaged{m.error ? ` (${m.error})` : ""}. Songs you’ve

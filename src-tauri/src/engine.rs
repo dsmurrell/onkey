@@ -869,7 +869,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             let echo_cancel = shared.lock().unwrap().echo_cancel;
             emit(&app, json!({"type": "status", "music_quiet": quiet_music, "mic_device": mic_now.map(|m| m.name), "output_ms": crate::timing::heard_ms(), "output": crate::timing::status(), "echo_cancel": echo_cancel, "youtube": crate::youtube::enabled(), "listening": crate::settings::listening(), "listening_paused": crate::settings::listening_paused(), "low_power": low_power(), "draw_30": draw_30(),
                 "line": status_line.as_ref().map(|(k, t)| json!({"kind": k, "text": t})),
-                "mic": mic, "audio": audio, "automation_denied": source::automation_denied(), "not_answering": source::not_answering(), "models": crate::models::state(),
+                "mic": mic, "audio": audio, "automation_denied": source::automation_denied(), "not_answering": source::not_answering(), "lyrics_down": crate::settings::show_lyrics() && crate::lyrics::service_down(), "models": crate::models::state(),
                 // paused with a take open: when it ends and is scored, unless the song resumes first
                 "pause_ends_ms": pause_ends_ms.filter(|_| cur.is_some()),
                 "player": st.as_ref().map(|(s, _)| json!({"state": if s.playing {"playing"} else {"paused"},

@@ -131,7 +131,8 @@ function Updates() {
     : u.state === "ready" ? `OnKey ${u.available} is ready. Restart to update, or it’s installed when you quit.`
     : u.state === "downloading" ? `Downloading OnKey ${u.available}…`
     : u.state === "checking" ? "Checking…"
-    : u.state === "current" ? "You have the latest version."
+    : u.state === "official" ? `OnKey ${u.available} is out from the original project, at singonkey.app. This copy was built from source, so it doesn’t update itself.`
+    : u.state === "current" ? (u.official === false ? "You have the latest version. This copy was built from source: it says when a new version is out, and doesn’t update itself." : "You have the latest version.")
     : u.state === "error" ? (u.available ? `Couldn’t update to OnKey ${u.available}${u.error ? ` (${u.error})` : ""}. Check now tries again.`
                                           : `Couldn’t check for updates just now${u.error ? ` (${u.error})` : ""}.`)
     : "";

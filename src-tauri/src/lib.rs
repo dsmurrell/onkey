@@ -1104,6 +1104,11 @@ pub fn run() {
             setup_status, setup_request, setup_open_settings, setup_meter, setup_level, setup_done, setup_control, third_party_notices, perf_frames, report_prepare, report_save, report_open_folder, report_show, report_issue, open_link, starter_cover, set_favorite, is_favorite, open_app, mics, set_mic, output_timing, output_timing_check, output_timing_reset, output_timing_dismiss,
             update_status, update_check, update_set_auto, update_restart])
         .setup(move |app| {
+            // the release script's update rehearsal: this copy updates itself from this Mac and exits, before
+            // anything else starts (no log, no store, no engine: the data folder isn't touched)
+            if let Some(url) = updater::rehearsal_url() {
+                updater::rehearse(app.handle(), url);
+            }
             // the records first: this log session starts with the build and the Mac (records.rs)
             records::init(&app.path().app_data_dir()?);
             // (Windows) the GPUs and the one learning runs on, the last session's end if it wasn't a quit, WebView2,
@@ -1188,7 +1193,7 @@ pub fn run() {
             on_terminate();
             Ok(())
         })
-        .build(tauri::generate_context!())
+        .build(context())
         .expect("error while running OnKey")
         .run(|app, event| match event {
             // quitting (the last window closed, or an exit asked for): out of sight at once (quit_out_of_sight)
@@ -1215,6 +1220,19 @@ pub fn run() {
 /// How long a quit waits for the song playing (and any still finishing) to be learned and saved, when it has to be
 /// quick: told to stop (logging out, `./run` restarting the development build), or restarting for an update.
 const QUIT_WAIT: std::time::Duration = std::time::Duration::from_secs(25);
+
+/// The app's configuration (tauri.conf.json), but for the release script's update rehearsal, whose fake update is
+/// served over plain http on this Mac: the updater takes that address only then (updater::rehearsal_url), and the
+/// signature is still checked. Every other run keeps tauri.conf.json's https-only setting.
+fn context() -> tauri::Context<tauri::Wry> {
+    let mut context = tauri::generate_context!();
+    if updater::rehearsal_url().is_some() {
+        if let Some(u) = context.config_mut().plugins.0.get_mut("updater") {
+            u["dangerousInsecureTransportProtocol"] = serde_json::Value::Bool(true);
+        }
+    }
+    context
+}
 
 /// How long a quit the app can't hide during (RunEvent::Exit: the Dock's Quit, logging out) waits: the window
 /// stays up and frozen meanwhile, so only a moment.

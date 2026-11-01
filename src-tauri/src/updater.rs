@@ -43,12 +43,61 @@ static RESTART_WANTED: AtomicBool = AtomicBool::new(false);
 /// One check at a time (the daily one and "Check now").
 static CHECKING: Mutex<()> = Mutex::new(());
 
-/// This build updates itself: release builds only, on macOS. (Windows when its releases are in latest.json: the
-/// installer built with `createUpdaterArtifacts` and signed with the updater key in CI, and release.sh adding a
-/// `windows-x86_64` entry with its URL and signature. Until then a check there finds no Windows build and fails,
-/// so it doesn't check at all.)
+/// An official build: made by scripts/release.sh, which sets ONKEY_OFFICIAL=1 for the build. Only an official
+/// build installs updates. Any other release build (a fork's, or one built from source) checks too, but only says
+/// when a new official version is out, with a link to download it: it never replaces itself with this project's
+/// build (which would wipe out a fork's changes, and could read its data in a way it doesn't expect).
+pub const OFFICIAL: bool = match option_env!("ONKEY_OFFICIAL") {
+    Some(v) => v.len() == 1 && v.as_bytes()[0] == b'1',     // "1" (str can't be compared in a const yet)
+    None => false,
+};
+
+/// This build checks for updates: release builds only (an official one installs them; others only say), on macOS.
+/// (Windows and Linux when their releases are in latest.json: update files built with `createUpdaterArtifacts`
+/// and signed with the updater key in CI, release.sh adding `windows-x86_64` and `linux-x86_64` entries, and both
+/// in the update rehearsal. Until then a check there finds no build for it and fails, so they don't check at all.)
 pub fn supported() -> bool {
     !cfg!(feature = "devtest") && !cfg!(debug_assertions) && cfg!(target_os = "macos")
+}
+
+/// The release script's rehearsal (scripts/release.sh): before a release is published, the exact app about to ship
+/// is pointed at a fake next version served on this Mac, and must download, verify and install it. Only an
+/// address on this Mac (`http://127.0.0.1:<port>/…`) is taken.
+pub const REHEARSAL_ENV: &str = "ONKEY_UPDATE_REHEARSAL";
+
+pub fn rehearsal_url() -> Option<tauri::Url> {
+    let u = tauri::Url::parse(&std::env::var(REHEARSAL_ENV).ok()?).ok()?;
+    (u.scheme() == "http" && u.host_str() == Some("127.0.0.1")).then_some(u)
+}
+
+/// Run the rehearsal and exit: 0 when the update was downloaded, its signature checked against the key in
+/// tauri.conf.json, and installed over this app; 1 otherwise. Prints one line the release script reads, saying
+/// too whether this is an official build (one that isn't would never update anyone).
+pub fn rehearse(app: &AppHandle, url: tauri::Url) -> ! {
+    use tauri::Manager;
+    for w in app.webview_windows().values() {
+        let _ = w.hide();
+    }
+    let app = app.clone();
+    let done = std::thread::spawn(move || tauri::async_runtime::block_on(async move {
+        let update = app.updater_builder().endpoints(vec![url]).map_err(|e| e.to_string())?
+            .build().map_err(|e| e.to_string())?
+            .check().await.map_err(|e| format!("check: {e}"))?
+            .ok_or("check: no update offered")?;
+        let bytes = update.download(|_, _| {}, || {}).await.map_err(|e| format!("download or signature: {e}"))?;
+        update.install(&bytes).map_err(|e| format!("install: {e}"))?;
+        Ok::<String, String>(update.version.clone())
+    })).join().unwrap_or_else(|_| Err("the rehearsal panicked".into()));
+    match done {
+        Ok(v) => {
+            println!("update-rehearsal: ok, installed {v} (official {OFFICIAL})");
+            std::process::exit(0)
+        }
+        Err(e) => {
+            println!("update-rehearsal: failed: {e} (official {OFFICIAL})");
+            std::process::exit(1)
+        }
+    }
 }
 
 pub fn auto() -> bool {
@@ -65,6 +114,7 @@ pub fn status(app: &AppHandle) -> Value {
     let mut v = STATE.lock().unwrap().clone().unwrap_or(json!({"state": "idle"}));
     v["version"] = json!(app.package_info().version.to_string());
     v["supported"] = json!(supported());
+    v["official"] = json!(OFFICIAL);
     v["auto"] = json!(auto());
     v["waiting"] = json!(RESTART_WANTED.load(Ordering::SeqCst));
     v["checked"] = json!(LAST_CHECK.lock().unwrap().and_then(|t| t.duration_since(SystemTime::UNIX_EPOCH).ok()).map(|d| d.as_secs()));
@@ -103,6 +153,12 @@ pub fn check(app: &AppHandle) -> Result<Option<String>, String> {
         }
     };
     let version = update.version.clone();
+    // not an official build (a fork's, or built from source): say so, and never download or install it
+    if !OFFICIAL {
+        engine::log(&format!("update: OnKey {version} is out from the original project (this is a build from source: not installed)"));
+        set_state(app, json!({"state": "official", "available": version}));
+        return Ok(Some(version));
+    }
     engine::log(&format!("update: OnKey {version} is out (this is {}): downloading", update.current_version));
     set_state(app, json!({"state": "downloading", "available": version}));
     match tauri::async_runtime::block_on(update.download(|_, _| {}, || {})) {
@@ -200,6 +256,35 @@ pub fn install() -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Every installed OnKey checks this address and trusts only this key: change either by accident and no copy
+    /// out there can update again. To change them on purpose (a new repo, a rotated key: docs/RELEASING.md), change
+    /// these pins in the same commit, and say why in it.
+    const PINNED_ENDPOINT: &str = "https://github.com/dsmurrell/onkey/releases/latest/download/latest.json";
+    const PINNED_PUBKEY: &str = "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDU5RjUzMDNDNkU1OEQ4REQKUldUZDJGaHVQREQxV2V6RTBQZjZZY2N5eU9xV1dkeVN2VGFkOTl5T0JZK2g5dXlLV0JDVFpCN0EK";
+
+    #[test]
+    fn the_update_address_and_key_are_the_ones_every_installed_copy_trusts() {
+        let conf: Value = serde_json::from_str(include_str!("../tauri.conf.json")).unwrap();
+        let u = &conf["plugins"]["updater"];
+        assert_eq!(u["endpoints"], json!([PINNED_ENDPOINT]), "the update address changed");
+        assert_eq!(u["pubkey"], json!(PINNED_PUBKEY), "the update key changed");
+        // plain http only for the release script's rehearsal, switched on in code (lib.rs context), never here
+        assert_ne!(u["dangerousInsecureTransportProtocol"], json!(true));
+        assert_eq!(conf["identifier"], json!("audio.onkey.app"), "a new app id is a new app: installed copies wouldn't update into it");
+    }
+
+    #[test]
+    fn the_rehearsal_takes_only_an_address_on_this_mac() {
+        for (url, ok) in [("http://127.0.0.1:8765/latest.json", true), ("http://localhost:8765/latest.json", false),
+                          ("https://127.0.0.1/latest.json", false), ("http://127.0.0.1.evil.example/latest.json", false),
+                          ("http://10.0.0.2/latest.json", false), ("file:///tmp/latest.json", false)] {
+            std::env::set_var(REHEARSAL_ENV, url);
+            assert_eq!(rehearsal_url().is_some(), ok, "{url}");
+        }
+        std::env::remove_var(REHEARSAL_ENV);
+        assert!(rehearsal_url().is_none());
+    }
 
     #[test]
     fn a_restart_to_update_waits_for_the_song_to_end() {

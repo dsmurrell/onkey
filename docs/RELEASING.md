@@ -26,6 +26,22 @@ the update is installed when OnKey quits. Development builds (the `devtest` feat
 
 So a fix reaches most people within a day of publishing, with no prompt in the middle of a song.
 
+**Only official builds install updates.** `scripts/release.sh` builds with `ONKEY_OFFICIAL=1` (`updater.rs`
+`OFFICIAL`). Any other release build, such as a fork's or one built from source, still checks, but only says
+"OnKey X is out from the original project · Download" (a link to singonkey.app). It never replaces itself with
+this project's build, which would wipe out a fork's changes.
+
+**Every release rehearses updating itself before it's published** (`scripts/update-rehearsal.sh`, run by
+`release.sh` in dry runs and real ones):
+- a copy of the exact app about to ship is offered a fake next version, served on this Mac;
+- it must download it, check the signature and install it over itself;
+- a second copy must refuse one signed with another key;
+- the app must be an official build.
+
+If any of that fails, nothing is published. A test (`updater.rs`) pins the update address, the public key and the
+app ID, so none of them changes by accident. A day after a release, the downloads stats job fails, and GitHub
+emails, if copies are reading the new `latest.json` but none has downloaded its update.
+
 Only Apple Silicon builds are made (`darwin-aarch64` in `latest.json`), the same as the DMG.
 
 ## One-time setup
@@ -115,4 +131,5 @@ gh release edit v0.1.1 --repo dsmurrell/onkey --draft
 | `scripts/check-release.sh <OnKey.app> [version]` | fails if the app has development-only code: the `devtest` hooks (simulated singer and player, event log, kept audio) or the live mirror; or the debugging entitlement; or the wrong version; or a learning model missing or not matching its SHA-256 in `models.rs` |
 | `scripts/check-dmg.sh <OnKey.dmg or .app> [version]` | what people download: the DMG holds only the app and an Applications link; the app only its expected files; no data files built into the window's pages; no build-machine paths, keys or tokens; every web host in `scripts/release-hosts.txt` (what OnKey contacts, links it opens, library text); Developer ID, hardened runtime, exactly the expected entitlements, notarised and stapled. Runs `check-release.sh` too. Anyone can run it on a downloaded DMG from a checkout of the same version |
 | `scripts/verify-update-sig.py <bundle.tar.gz>` | checks the update's signature as OnKey will |
+| `scripts/update-rehearsal.sh <OnKey.app>` | the app updates itself from a fake next version served on this Mac, refuses one signed with another key, and is an official build |
 | `src-tauri/src/updater.rs` | the in-app updater |

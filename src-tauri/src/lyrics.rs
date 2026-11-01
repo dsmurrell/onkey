@@ -261,6 +261,27 @@ pub fn best_match(hits: &[serde_json::Value], artist: &str, title: &str, duratio
     }).max_by(|a, b| a.1.total_cmp(&b.1)).map(|(i, _)| i)
 }
 
+/// When LRCLIB last failed (a server error or no answer, while online) and last answered: unix seconds.
+static LAST_FAIL: Mutex<u64> = Mutex::new(0);
+static LAST_ANSWER: Mutex<u64> = Mutex::new(0);
+
+/// How long after its last failure LRCLIB still counts as down, with no answer since (a song being learned asks
+/// again at least every minute, so it stays down while one is).
+const DOWN_FOR_S: u64 = 180;
+
+fn noted(answered: bool) {
+    *(if answered { &LAST_ANSWER } else { &LAST_FAIL }).lock().unwrap() = now_s();
+}
+
+/// LRCLIB isn't working right now (the window says so: songs learned meanwhile have no words yet).
+pub fn service_down() -> bool {
+    down(*LAST_FAIL.lock().unwrap(), *LAST_ANSWER.lock().unwrap(), now_s())
+}
+
+fn down(last_fail: u64, last_answer: u64, now: u64) -> bool {
+    last_fail > 0 && last_fail >= last_answer && now.saturating_sub(last_fail) < DOWN_FOR_S
+}
+
 /// LRCLIB's answer to `url` (Ok(None): not found), from what's kept if it's fresh. Asked one at a time app-wide,
 /// at most every 0.3 s, never while LRCLIB has asked to wait (then Err after waiting up to 10 s); a request that
 /// doesn't get through is tried once more, as a song learned without lyrics never gets syllable bars.
@@ -290,6 +311,7 @@ fn request(url: &str) -> Result<Option<serde_json::Value>, Unanswered> {
         match ureq::get(url).set("User-Agent", &user_agent()).timeout(Duration::from_secs(10)).call() {
             Ok(r) => {
                 gate.fails = 0;
+                noted(true);
                 let v: Option<serde_json::Value> = r.into_json().ok();
                 cache_put(&key, v.clone().unwrap_or(serde_json::Value::Null));
                 return Ok(v);
@@ -298,6 +320,7 @@ fn request(url: &str) -> Result<Option<serde_json::Value>, Unanswered> {
             // asking again won't change (it isn't "can't be asked now")
             Err(ureq::Error::Status(400 | 404, _)) => {
                 gate.fails = 0;
+                noted(true);
                 cache_put(&key, serde_json::Value::Null);
                 return Ok(None);
             }
@@ -306,10 +329,16 @@ fn request(url: &str) -> Result<Option<serde_json::Value>, Unanswered> {
                 let wait = back_off(r.header("Retry-After"), gate.fails, jitter());
                 gate.fails += 1;
                 gate.next = Some(Instant::now() + wait);
+                if code == 503 {
+                    noted(false);
+                }
                 crate::engine::log(&format!("lyrics: LRCLIB says {code}: asking again in {:.1} s", wait.as_secs_f64()));
             }
             Err(ureq::Error::Status(code, _)) => {
                 crate::engine::log(&format!("lyrics: LRCLIB answered {code}"));
+                if code >= 500 {
+                    noted(false);
+                }
                 return Err(Unanswered);
             }
             Err(e) if attempt == 0 => {
@@ -318,6 +347,7 @@ fn request(url: &str) -> Result<Option<serde_json::Value>, Unanswered> {
             }
             Err(e) => {
                 crate::engine::log(&format!("lyrics: LRCLIB didn't answer ({e})"));
+                noted(false);
                 return Err(Unanswered);
             }
         }
@@ -415,6 +445,16 @@ fn strip_version(name: &str) -> String {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn lyrics_service_down_until_it_answers_or_a_while_passes() {
+        use super::{down, DOWN_FOR_S};
+        assert!(!down(0, 0, 1000), "never failed");
+        assert!(down(1000, 0, 1010), "failed, no answer since");
+        assert!(down(1000, 900, 1000 + DOWN_FOR_S - 1), "still down just inside the window");
+        assert!(!down(1000, 900, 1000 + DOWN_FOR_S), "no news for a while: not said any more");
+        assert!(!down(1000, 1005, 1010), "answered after the failure");
+    }
+
     use super::*;
     use serde_json::json;
 

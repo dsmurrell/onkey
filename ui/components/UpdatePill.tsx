@@ -3,6 +3,7 @@
 // Never in mini mode; pressed mid-song, OnKey restarts once the song is over. Not pressed: it's installed on quit.
 import { useState } from "react";
 import { restartToUpdate, useUpdate } from "@/lib/update";
+import { openLink } from "@/lib/session";
 
 export default function UpdatePill() {
   const [u, setU] = useUpdate();
@@ -15,6 +16,19 @@ export default function UpdatePill() {
            className="in-[.mini]:hidden fixed bottom-3 left-3 z-40 flex items-center gap-2 rounded-full border border-white/10 bg-black/60 py-1 pl-3 pr-1 text-xs text-ink-200 shadow-lg backdrop-blur animate-rise">
         <span className="h-1.5 w-1.5 rounded-full bg-off" />
         <span>Couldn’t update to OnKey {u.available}</span>
+        <button onClick={() => setHidden(true)} aria-label="Hide" className="rounded-full px-1.5 py-1 text-ink-400 transition hover:text-white">×</button>
+      </div>
+    );
+  // a build from source (a fork's): a new official version is out; it's never installed over this one
+  if (u.state === "official" && u.available)
+    return (
+      <div id="update-pill" role="status" title="This OnKey was built from source, so it doesn’t update itself."
+           className="in-[.mini]:hidden fixed bottom-3 left-3 z-40 flex items-center gap-2 rounded-full border border-white/10 bg-black/60 py-1 pl-3 pr-1 text-xs text-ink-200 shadow-lg backdrop-blur animate-rise">
+        <span className="h-1.5 w-1.5 rounded-full bg-accent-400" />
+        <span>OnKey {u.available} is out from the original project</span>
+        <button onClick={() => void openLink("https://singonkey.app")} className="rounded-full bg-white/8 px-2.5 py-1 font-medium text-ink-100 transition hover:bg-white/14">
+          Download
+        </button>
         <button onClick={() => setHidden(true)} aria-label="Hide" className="rounded-full px-1.5 py-1 text-ink-400 transition hover:text-white">×</button>
       </div>
     );

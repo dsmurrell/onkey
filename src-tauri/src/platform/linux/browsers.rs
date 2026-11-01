@@ -183,9 +183,20 @@ pub fn state() -> Option<State> {
             }).clone();
             let about = format!("{} {} {} {owner}", s.app.strip_prefix("org.mpris.MediaPlayer2.").unwrap_or(&s.app), s.identity, s.desktop);
             if let Some((b, n)) = browser_of(&about) {
+                mpris::said_once(n, s);     // what it says is playing (each change), as Spotify's is
                 all.push((s, b, n));
             }
         }
+        // every player there and which were taken as browsers, each time that changes: with YouTube on and a browser
+        // not followed, the log says whether its player was missing or not recognised (romulka, issue #1, 1 Nov 2026)
+        let seen: Vec<String> = players.iter().map(|s| {
+            let owner = f.owner.get(&s.app).cloned().unwrap_or_default();
+            let taken = all.iter().find(|(x, _, _)| x.app == s.app).map_or(String::new(), |(_, _, n)| format!(": {n}"));
+            format!("{} (\"{}\", desktop \"{}\", program \"{owner}\"){taken}", s.app, s.identity, s.desktop)
+        }).collect();
+        let key = format!("players:{}", seen.join("|"));
+        once(f, key, || if seen.is_empty() { "YouTube on Linux: no MPRIS players (no browser or music app says what it plays)".to_string() }
+                        else { format!("YouTube on Linux: MPRIS players {}", seen.join("; ")) });
         // when each began playing
         f.began.retain(|app, _| all.iter().any(|(s, _, _)| s.app == *app));
         for (s, _, _) in &all {

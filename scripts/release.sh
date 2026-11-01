@@ -49,6 +49,8 @@ TAG="v$V"
 REPO=${ONKEY_REPO:-dsmurrell/onkey}
 KEY=${ONKEY_UPDATER_KEY:-$HOME/.tauri/onkey-updater.key}
 export CARGO_TARGET_DIR="$ROOT/src-tauri/target-dist"     # make-dmg.sh's
+# an official build: the only kind that installs updates (updater.rs OFFICIAL); the rehearsal below checks it is
+export ONKEY_OFFICIAL=1
 APP="$CARGO_TARGET_DIR/release/bundle/macos/OnKey.app"
 DIST="$CARGO_TARGET_DIR/release-$TAG"
 say() { printf '\n== %s\n' "$*"; }
@@ -235,6 +237,10 @@ json.dump(latest, open(f"{dist}/latest.json", "w"), indent=2, ensure_ascii=False
 print("  latest.json:", ", ".join(platforms), "->", url)
 EOF
 (cd "$DIST" && shasum -a 256 OnKey.dmg "$TARBALL" 2>/dev/null > SHA256SUMS || true)
+
+# ---- the update rehearsal: the exact app about to ship must update itself, or nothing is published
+say "update rehearsal"
+ONKEY_UPDATER_KEY="$KEY" ONKEY_UPDATER_KEY_PASSWORD="$PW" scripts/update-rehearsal.sh "$APP" || die "the update rehearsal failed (above): not published"
 
 # ---- publish
 ASSETS=()
