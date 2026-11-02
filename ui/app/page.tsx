@@ -87,9 +87,10 @@ export default function Sing() {
           so the lane, lyrics and controls stay centred in the window */}
       <VoiceBreak />
       <StarterSheet />
-      {/* the left column is never narrower than the logo and menu (max-content), so they're never cut off on a narrow
-          window: the middle (status line, or the song) gives way instead */}
-      <header data-tauri-drag-region className="app-header grid grid-cols-[minmax(max-content,1fr)_minmax(0,auto)_minmax(0,1fr)] items-center gap-4 px-6 pt-4 pb-3">
+      {/* the side columns are never narrower than what's in them (max-content: the logo and menu; the score and
+          buttons, whose words run longer in some languages), so nothing is cut off or drawn over on a narrow window:
+          the middle (status line, or the song) gives way instead */}
+      <header data-tauri-drag-region className="app-header grid grid-cols-[minmax(max-content,1fr)_minmax(0,auto)_minmax(max-content,1fr)] items-center gap-4 px-6 pt-4 pb-3">
         <div className="flex items-center gap-3 lg:gap-5"><Logo /><Nav /></div>
         <div className="min-w-0 text-center">
           {!song && line && <StatusLine line={line} />}

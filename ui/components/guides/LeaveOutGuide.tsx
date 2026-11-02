@@ -20,7 +20,7 @@
  *   <LeaveOutOfScoreAnimation />
  */
 
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import StillSteps from './StillSteps';
 import { useT, type Translator } from '@/lib/i18n';
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react';
@@ -30,6 +30,7 @@ import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react';
 /* ------------------------------------------------------------------ */
 
 import { GUIDE as C } from "@/lib/colors";
+import { Fit } from "./Fit";
 
 const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
 
@@ -284,6 +285,21 @@ function Scene({ time }: { time: number }) {
   const clipId = `${uid}-clip`;
   const stripesId = `${uid}-stripes`;
   const f = frameAt(time);
+  // the score sits just after its label, wherever a translation's label ends ("Puntuación" ran under it); English's
+  // ends in time for 52, where it was drawn
+  const scoreLabel = t('guides.leaveOut.score');
+  const labelRef = useRef<SVGTextElement>(null);
+  const [labelEnd, setLabelEnd] = useState(46);
+  useLayoutEffect(() => {
+    const el = labelRef.current;
+    if (!el) return;
+    let live = true;
+    const measure = () => { if (live) setLabelEnd(16 + el.getComputedTextLength()); };
+    measure();
+    document.fonts?.ready.then(measure);
+    return () => { live = false; };
+  }, [scoreLabel]);
+  const scoreX = Math.max(52, labelEnd + 5);
 
   const playX = Math.min(GRAPH_X1, Math.max(GRAPH_X0, f.draw));
   const playInBand = playX >= BAND.x0 && playX <= BAND.x1;
@@ -301,11 +317,11 @@ function Scene({ time }: { time: number }) {
       </defs>
 
       {/* Header: score on the left, take on the right */}
-      <text x={16} y={34} fontSize={11} fontWeight={500} fill={C.muted}>
-        {t('guides.leaveOut.score')}
+      <text ref={labelRef} x={16} y={34} fontSize={11} fontWeight={500} fill={C.muted}>
+        {scoreLabel}
       </text>
       <text
-        x={52}
+        x={scoreX}
         y={35}
         fontSize={22}
         fontWeight={650}
@@ -316,7 +332,7 @@ function Scene({ time }: { time: number }) {
         {f.score.value}
       </text>
       <text
-        x={83}
+        x={scoreX + 31}
         y={34 + (1 - f.score.plus) * 3}
         fontSize={12}
         fontWeight={600}
@@ -426,9 +442,9 @@ function Scene({ time }: { time: number }) {
             strokeOpacity={0.9 * f.button.pressed}
             strokeWidth={1.5}
           />
-          <text x={BAND_MID} y={236} fontSize={11} fontWeight={600} textAnchor="middle" fill={C.text}>
+          <Fit x={BAND_MID} y={236} max={152} fontSize={11} fontWeight={600} textAnchor="middle" fill={C.text}>
             {t('guides.leaveOut.leaveOutButton')}
-          </text>
+          </Fit>
         </g>
       </g>
 

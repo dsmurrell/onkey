@@ -36,6 +36,7 @@ import { useT } from "@/lib/i18n";
 /* ------------------------------------------------------------------ */
 
 import { GUIDE as C } from "@/lib/colors";
+import { Fit } from "./Fit";
 
 const FONT = "system-ui, sans-serif";
 
@@ -315,9 +316,10 @@ function Sidebar({ select }: { select: number }) {
             <g key="privacy">
               <rect x={16} y={top - 1} width={110} height={16} rx={6} fill={C.accentDark} opacity={r2(select)} />
               <rect x={22} y={cy - 5} width={10} height={10} rx={3} fill={mix(C.line, C.accentLight, select)} />
-              <text x={38} y={cy + 3} fontSize={8.5} fill={mix(C.muted, C.text, select)}>
+              {/* (within its row, which ends at 126; cut short with "…" past that, as macOS's sidebar does) */}
+              <Fit x={38} y={cy + 3} max={84} floor={0.85} ellipsis fontSize={8.5} fill={mix(C.muted, C.text, select)}>
                 {t("guides.systemAudio.mock.privacySecurity")}
-              </text>
+              </Fit>
             </g>
           );
         }

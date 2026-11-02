@@ -20,6 +20,7 @@ import { useT, type Translator } from "@/lib/i18n";
 /* ─── Palette & type ─────────────────────────────────────────────────────── */
 
 import { GUIDE as C } from "@/lib/colors";
+import { Fit } from "./Fit";
 
 const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
 const SW = 1.5; // stroke width everywhere
@@ -262,26 +263,27 @@ function Alert({ a, shadowId }: { a: NonNullable<SceneState["alert"]>; shadowId:
       />
       <circle cx={130} cy={28} r={1.8} fill={C.accentLight} />
 
-      <text x={cx} y={60} textAnchor="middle" fontSize={10.5} fontWeight={600} fill={C.text}>
+      {/* (each line fits the alert, 12 in from its sides; each button's word fits the button) */}
+      <Fit x={cx} y={60} max={ALERT.w - 24} textAnchor="middle" fontSize={10.5} fontWeight={600} fill={C.text}>
         {t("guides.musicApps.alert.wantsAccess")}
-      </text>
-      <text x={cx} y={73} textAnchor="middle" fontSize={10.5} fontWeight={600} fill={C.text}>
+      </Fit>
+      <Fit x={cx} y={73} max={ALERT.w - 24} textAnchor="middle" fontSize={10.5} fontWeight={600} fill={C.text}>
         {t("guides.musicApps.alert.control", { app: asked })}
-      </text>
-      <text x={cx} y={91} textAnchor="middle" fontSize={9} fill={C.muted}>
+      </Fit>
+      <Fit x={cx} y={91} max={ALERT.w - 24} textAnchor="middle" fontSize={9} fill={C.muted}>
         {t("guides.musicApps.alert.allowing", { app: asked })}
-      </text>
+      </Fit>
 
       <rect x={14} y={104} width={102} height={24} rx={12} fill={C.line} />
-      <text x={65} y={119.3} textAnchor="middle" fontSize={9.5} fill={C.text}>
+      <Fit x={65} y={119.3} max={92} textAnchor="middle" fontSize={9.5} fill={C.text}>
         {t("guides.musicApps.alert.dontAllow")}
-      </text>
+      </Fit>
 
       <rect x={124} y={104} width={102} height={24} rx={12} fill={C.accent} />
       {a.press > 0 && <rect x={124} y={104} width={102} height={24} rx={12} fill={C.accentDark} opacity={a.press} />}
-      <text x={175} y={119.3} textAnchor="middle" fontSize={9.5} fontWeight={600} fill={C.text}>
+      <Fit x={175} y={119.3} max={92} textAnchor="middle" fontSize={9.5} fontWeight={600} fill={C.text}>
         {t("guides.musicApps.alert.allow")}
-      </text>
+      </Fit>
     </g>
   );
 }

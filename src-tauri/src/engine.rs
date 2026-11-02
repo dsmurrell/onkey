@@ -2069,6 +2069,8 @@ fn player_lead(source: Source) -> f64 {
 /// Full score for a finished take; a first play is learned too.
 fn score_take(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store, done: Done) {
     let Done { mut take, learner, live, entry, version, queued } = done;
+    // (for the log: how long learning and scoring took after the play ended, waiting included)
+    let ended = Instant::now();
     // how it ended, for its record (records.rs)
     let mut outcome = Value::Null;
     // this thread's work on the song (finishing its learner, scoring, timing the words…) shows in the window, and
@@ -2302,8 +2304,10 @@ fn score_take(app: &AppHandle, shared: &Arc<Mutex<Shared>>, store: &Store, done:
             }
         }
         store.note_play(&take.track.id, &take.played_as, take.app);   // where it played, for "open in your music app"
-        log(&format!("scored {}: {} (score {}, learned {:.0}%{})", take.track.name, status, r["score"], 100.0 * fraction,
-                     this_play.map_or(String::new(), |p| format!("; this play covered {:.0}%", 100.0 * p))));
+        // (how long it took shows how a PC copes: testers' reports on Windows and Linux couldn't say, issue #1)
+        log(&format!("scored {}: {} (score {}, learned {:.0}%{}; done {:.0} s after the play ended, a play of {:.0} s)", take.track.name, status,
+                     r["score"], 100.0 * fraction, this_play.map_or(String::new(), |p| format!("; this play covered {:.0}%", 100.0 * p)),
+                     ended.elapsed().as_secs_f64(), take.seconds()));
         outcome = json!({"status": status, "score": if sang { r["score"].clone() } else { Value::Null }, "take_id": report,
             "notes_hit": r["notes_hit"], "notes_total": r["notes_total"], "coverage": r["coverage"], "latency_ms": r["latency_ms"],
             "learned": (fraction * 1000.0).round() / 1000.0, "this_play_covered": this_play.map(|p| (p * 1000.0).round() / 1000.0),

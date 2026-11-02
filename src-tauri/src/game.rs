@@ -21,13 +21,18 @@ pub struct Game {
     gpu: Vec<Option<crate::gpu::Fallback>>,
 }
 
-/// Each of the five where this OS runs it (gpu.rs: DirectML on Windows when it can be, the CPU on a Mac), with the
-/// same options either way.
+/// Each of the five on the CPU, on every OS, as on a Mac. Not on DirectML: on a Windows laptop (2 Nov) GAME ran
+/// there without an error but gave wrong notes, long runs of one note, so every syllable of a line got the same bar
+/// (the pitch line, from CREPE on the same GPU, matched the Mac's); a wrong answer isn't a failure, so the fall-back
+/// to the CPU never came. GAME is small and runs once per learned song: the CPU costs seconds, not minutes.
 fn load(dir: &std::path::Path, name: &str, threads: usize, gpu: &mut Vec<Option<crate::gpu::Fallback>>) -> Result<Session, String> {
-    let (s, f) = crate::gpu::load("notes", &dir.join(format!("{name}.onnx")),
-        move |b| b.with_optimization_level(GraphOptimizationLevel::Level3).and_then(|b| b.with_intra_threads(threads)).and_then(crate::pitch::lean))
+    let s = Session::builder()
+        .and_then(|b| b.with_optimization_level(GraphOptimizationLevel::Level3))
+        .and_then(|b| b.with_intra_threads(threads))
+        .and_then(crate::pitch::lean)
+        .and_then(|b| b.commit_from_file(dir.join(format!("{name}.onnx"))))
         .map_err(|e| format!("loading GAME {name}: {e}"))?;
-    gpu.push(f);
+    gpu.push(None);
     Ok(s)
 }
 

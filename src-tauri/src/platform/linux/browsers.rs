@@ -121,6 +121,9 @@ struct Followed {
     clock: Clock,
     /// songs and players already logged (once each)
     said: Vec<String>,
+    /// the song followed, by name: which of the browser's sound streams to hear (a tab's stream is named after its
+    /// title, which names the song)
+    song: String,
 }
 
 static FOLLOWED: Mutex<Option<Followed>> = Mutex::new(None);
@@ -128,7 +131,7 @@ static FOLLOWED: Mutex<Option<Followed>> = Mutex::new(None);
 fn with<R>(f: impl FnOnce(&mut Followed) -> R) -> R {
     let mut g = FOLLOWED.lock().unwrap_or_else(|e| e.into_inner());
     f(g.get_or_insert_with(|| Followed { app: None, bundle: "com.google.Chrome", exact: false, can_seek: false, began: HashMap::new(),
-                                         owner: HashMap::new(), clock: Clock::default(), said: Vec::new() }))
+                                         owner: HashMap::new(), clock: Clock::default(), said: Vec::new(), song: String::new() }))
 }
 
 /// Log `msg` once under `key`.
@@ -145,6 +148,11 @@ fn once(f: &mut Followed, key: String, msg: impl FnOnce() -> String) {
 /// The browser followed (its bundle id, for capturing its sound).
 pub fn audio_bundle() -> &'static str {
     with(|f| f.bundle)
+}
+
+/// The name of the song followed in a browser ("" when none yet).
+pub fn song() -> String {
+    with(|f| f.song.clone())
 }
 
 /// The position followed comes from the browser's own player, seen current.
@@ -307,6 +315,7 @@ pub fn state() -> Option<State> {
         }
         f.app = Some(s.app.clone());
         f.bundle = bundle;
+        f.song = title.clone();
         f.can_seek = s.can_seek;
         f.exact = exact;
         once(f, format!("song:{id}"), || {

@@ -26,6 +26,7 @@ import { useT } from "@/lib/i18n";
 
 /* ---------- palette (the only colours used) ---------- */
 import { GUIDE as C } from "@/lib/colors";
+import { Fit } from "./Fit";
 
 const FONT = "system-ui, sans-serif";
 
@@ -254,9 +255,10 @@ const Scene = ({ ms, uid }: { ms: number; uid: string }) => {
             transform={`rotate(${spin.toFixed(1)} ${RING.cx} ${RING.cy})`}
             {...stroke}
           />
-          <text x={229} y={63.5} fontSize={10} fill={C.muted} fontFamily={FONT}>
+          {/* (the pill ends at 290: its words fit before it) */}
+          <Fit x={229} y={63.5} max={55} fontSize={10} fill={C.muted} fontFamily={FONT}>
             {t("guides.learnSong.learning")}
-          </text>
+          </Fit>
         </g>
         <g opacity={done}>
           <circle cx={RING.cx} cy={RING.cy} r={RING.r} stroke={C.good} {...stroke} />
@@ -267,9 +269,9 @@ const Scene = ({ ms, uid }: { ms: number; uid: string }) => {
             strokeDashoffset={CHECK_LEN * (1 - check)}
             {...stroke}
           />
-          <text x={229} y={63.5} fontSize={10} fontWeight={600} fill={C.good} fontFamily={FONT}>
+          <Fit x={229} y={63.5} max={55} fontSize={10} fontWeight={600} fill={C.good} fontFamily={FONT}>
             {t("guides.learnSong.learned")}
-          </text>
+          </Fit>
         </g>
       </g>
 

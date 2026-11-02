@@ -250,7 +250,7 @@ export default function Library() {
                   <div className="min-w-0 flex-1">
                     <div className="truncate font-medium">{s.track.name}</div>
                     <div className="truncate text-sm text-ink-400">{s.track.artist}</div>
-                    <div className="mt-1.5 flex items-center gap-2 whitespace-nowrap text-xs">
+                    <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 whitespace-nowrap text-xs">
                       {/* a status only when it isn't simply ready to sing */}
                       {job
                         ? <span className="flex items-center gap-1.5 rounded-full bg-accent-500/12 px-2 py-0.5 font-medium text-accent-300">
@@ -280,7 +280,7 @@ export default function Library() {
                     </div>
                     {/* how it suits your voice, when known */}
                     {!job && s.ready && fitText(t, s) && (
-                      <div className={`mt-1 truncate text-xs ${s.fit === "fits" ? "text-good/90" : "text-aside/90"}`}
+                      <div className={`mt-1 text-xs ${s.fit === "fits" ? "text-good/90" : "text-aside/90"}`}
                            title={s.range_names ? t("library.card.fitTitle", { label: fitText(t, s)!, low: s.range_names[0], high: s.range_names[1] }) : fitText(t, s)!}>{fitText(t, s)}</div>
                     )}
                   </div>

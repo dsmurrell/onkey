@@ -38,6 +38,22 @@ build() {   # build <version> <out dir>: tauri build, its file (+ .sig) moved to
   rm -rf "src-tauri/target/release/bundle/nsis" "src-tauri/target/release/bundle/appimage"
   # shellcheck disable=SC2086
   npx tauri build --ci ${BUNDLES:+--bundles $BUNDLES} --config "$(config "$v")"
+  # the AppImage: the build machine's Wayland libraries out (a blank window on newer systems), then signed again,
+  # as the signature tauri build made was of the file before
+  for f in $BUNDLE_GLOB; do
+    case "$f" in *.AppImage) ;; *) continue ;; esac
+    bash scripts/appimage-unbundle-wayland.sh "$f"
+    if [ -n "${UPDATER_MODE:-}" ]; then
+      rm -f "$f.sig"
+      # the key and its password from the environment, as tauri build had them (a throwaway key's is empty: said
+      # so, rather than asked for); never waiting on a prompt
+      if [ -z "${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}" ]; then
+        npx tauri signer sign -p "" "$f" </dev/null
+      else
+        npx tauri signer sign "$f" </dev/null
+      fi || die "couldn't sign $(basename "$f") again after taking the Wayland libraries out"
+    fi
+  done
   mkdir -p "$out"
   local n=0
   for f in $BUNDLE_GLOB; do

@@ -250,14 +250,17 @@ fn seek_in(s: &Session, seconds: f64) {
 pub mod spotify {
     use crate::source::{Source, State, Track};
 
-    /// What Spotify's media session says it plays.
+    /// What Spotify's media session says it plays, with a cover from Apple's iTunes Search (the session's own
+    /// thumbnail isn't a link the window can show), as Apple Music's and a browser's songs get theirs.
     pub fn state() -> Option<State> {
         let (playing, name, artist, album, duration, position) = super::now_playing("spotify")?;
         let made = super::media_id(crate::trackids::SPOTIFY_MEDIA, &artist, &name, &album);
         let id = crate::trackids::resolve(&made, &artist, &name).unwrap_or(made);
+        let cover = crate::music::cover_cached(&id, &artist, &name);
+        let (art, link) = cover.map_or((None, None), |c| (Some(c.art), c.link));
         Some(State {
             playing,
-            track: Track { id, name, artist, album, duration, art: None, link: None },
+            track: Track { id, name, artist, album, duration, art, link },
             position,
             source: Source::Spotify,
         })

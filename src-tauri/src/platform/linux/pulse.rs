@@ -300,6 +300,39 @@ fn is_app(i: &pa::SinkInputInfo, bundle: &str, pids: &dyn Fn() -> Vec<u32>) -> b
         || (bundle == "com.spotify.client" && prop(&i.props, pa::Prop::ApplicationName).eq_ignore_ascii_case("spotify"))
 }
 
+/// Which of an app's streams (index, paused, name) to hear: a playing one named after the song (a browser names
+/// each tab's stream after its title, which names the song), else the first (playing ones first, the newest first).
+/// romulka, issue #1 (2 Nov 2026): another tab's stream, open but silent, was heard while YouTube played the song.
+fn choose(streams: &[(u32, bool, String)], song: &str) -> Option<u32> {
+    streams.iter().find(|s| !s.1 && names(s, song)).or(streams.first()).map(|s| s.0)
+}
+
+/// Whether a stream's name names the song (a name of 3 letters or more).
+fn names(stream: &(u32, bool, String), song: &str) -> bool {
+    let song = song.trim().to_lowercase();
+    song.chars().count() >= 3 && stream.2.to_lowercase().contains(&song)
+}
+
+/// Whether to leave the stream heard (`mine`) for the one `choose` picks: when that one plays, and `mine` is paused
+/// or gone, or it's named after the song and `mine` isn't.
+fn switch(streams: &[(u32, bool, String)], song: &str, mine: u32) -> bool {
+    let find = |id: u32| streams.iter().find(|s| s.0 == id);
+    let Some(c) = choose(streams, song).filter(|c| *c != mine).and_then(find).filter(|c| !c.1) else { return false };
+    match find(mine) {
+        None => true,
+        Some(m) => m.1 || (names(c, song) && !names(m, song)),
+    }
+}
+
+/// The song a browser plays, by name, when `bundle` is the browser followed ("" otherwise).
+fn song_for(bundle: &str) -> String {
+    if super::browsers::audio_bundle() == bundle { super::browsers::song() } else { String::new() }
+}
+
+fn streams(inputs: &[pa::SinkInputInfo]) -> Vec<(u32, bool, String)> {
+    inputs.iter().map(|i| (i.index, i.corked, i.name.to_string_lossy().into_owned())).collect()
+}
+
 /// The app's playback streams now: playing ones first, the newest first.
 fn app_inputs(bundle: &str) -> Vec<pa::SinkInputInfo> {
     // (the process list only when a stream doesn't say its program, read once)
@@ -451,7 +484,8 @@ fn hear_music(bundle: &str, rate: u32, out: &Mutex<VecDeque<f32>>, stop: &Atomic
         }
         *MODE.lock().unwrap_or_else(|e| e.into_inner()) = "app";
         let inputs = app_inputs(bundle);
-        let Some((first, monitor)) = inputs.first().and_then(|i| Some((i.clone(), monitor_of(i)?))) else {
+        let chosen = choose(&streams(&inputs), &song_for(bundle));
+        let Some((first, monitor)) = inputs.iter().find(|i| Some(i.index) == chosen).and_then(|i| Some((i.clone(), monitor_of(i)?))) else {
             if !said_waiting {
                 said_waiting = true;
                 crate::engine::log(&format!("capture (Linux): {name} has no sound stream yet; waiting for it (silence meanwhile)"));
@@ -464,12 +498,11 @@ fn hear_music(bundle: &str, rate: u32, out: &Mutex<VecDeque<f32>>, stop: &Atomic
                                     first.name.to_string_lossy(), first.sample_spec.sample_rate, first.sample_spec.channels,
                                     if first.corked { ", paused" } else { "" }));
         let target = Target::App { input: first.index, monitor };
-        // follow a newer stream of the app that plays while this one is paused (a new tab, say)
+        // follow another stream of the app that plays while this one is paused (a new tab, say), or the one playing
+        // the song
         let check = |t: &Target| {
             let Target::App { input, .. } = t else { return false };
-            let now = app_inputs(bundle);
-            let mine_paused = now.iter().find(|i| i.index == *input).map_or(true, |i| i.corked);
-            mine_paused && now.iter().any(|i| i.index != *input && !i.corked)
+            switch(&streams(&app_inputs(bundle)), &song_for(bundle), *input)
         };
         match record(&target, 2, rate, out, stop, check) {
             Ended::Stopped => return,
@@ -696,6 +729,36 @@ pub fn meter_blocks() -> i32 {
 
 #[cfg(test)]
 mod tests {
+    use super::{choose, switch};
+
+    fn st(v: &[(u32, bool, &str)]) -> Vec<(u32, bool, String)> {
+        v.iter().map(|(i, p, n)| (*i, *p, n.to_string())).collect()
+    }
+
+    // romulka, issue #1 (2 Nov 2026): Firefox had a messenger tab's stream open (silent, not paused) and then YouTube's
+    #[test]
+    fn the_tab_playing_the_song_is_heard_not_another_open_one() {
+        let both = st(&[(128, false, "(3463) TOOL - Right In Two (Official Audio) - YouTube"), (80, false, "MAX")]);
+        assert_eq!(choose(&both, "Right In Two"), Some(128));
+        assert!(switch(&both, "Right In Two", 80), "leaves the messenger's stream for the song's");
+        assert!(!switch(&both, "Right In Two", 128), "stays on the song's");
+        // newest first when the order differs, and the song's still wins
+        let other = st(&[(200, false, "MAX"), (128, false, "TOOL - Right In Two - YouTube")]);
+        assert_eq!(choose(&other, "right in two"), Some(128));
+    }
+
+    #[test]
+    fn with_no_song_named_the_old_rules_hold() {
+        let s = st(&[(9, false, "Spotify"), (3, true, "Spotify")]);
+        assert_eq!(choose(&s, ""), Some(9));
+        assert!(!switch(&s, "", 9));
+        assert!(switch(&s, "", 3), "a paused stream is left for one that plays");
+        assert!(!switch(&st(&[(9, false, "a"), (3, false, "b")]), "", 3), "two playing, no song: stays put");
+        assert!(!switch(&st(&[(9, true, "Right In Two")]), "Right In Two", 3), "never to a paused one");
+        assert!(switch(&st(&[(9, false, "x")]), "", 3), "its stream gone: the one that plays");
+        assert_eq!(choose(&st(&[(9, false, "Up")]), "Up"), Some(9), "a name under 3 letters matches nothing, so the first");
+    }
+
     use std::sync::Mutex;
 
     static HEARD: Mutex<Vec<f32>> = Mutex::new(Vec::new());

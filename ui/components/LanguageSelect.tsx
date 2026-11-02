@@ -86,7 +86,7 @@ export default function LanguageSelect({ choice, onChange, id, welcome, globe }:
       <button key={code} ref={b => { items.current.push(b); }} role="menuitemradio" aria-checked={on} lang={langAttr}
               onClick={() => pick(code)}
               className={`flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-left text-sm transition hover:bg-white/6 focus:bg-white/6 focus:outline-none ${on ? "text-white" : "text-ink-300"}`}>
-        <span className="truncate">{label}</span>{on && <Check />}
+        <span className="min-w-0">{label}</span>{on && <Check />}
       </button>
     );
   };

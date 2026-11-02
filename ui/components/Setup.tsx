@@ -315,7 +315,7 @@ function AppRow({ app, state }: { app: string; state?: AskAnswer }) {
           : denied ? <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
           : <span className="h-1.5 w-1.5 rounded-full bg-current" />}
       </span>
-      <span className="flex-1 font-medium text-ink-100">{app === "Spotify" ? t("setup.musicApps.appSpotify") : t("setup.musicApps.appAppleMusic")}</span>
+      <span className="flex-1 whitespace-nowrap font-medium text-ink-100">{app === "Spotify" ? t("setup.musicApps.appSpotify") : t("setup.musicApps.appAppleMusic")}</span>
       {denied
         ? <button onClick={() => setupOpenSettings("automation")} className="rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-ink-100 transition hover:bg-white/12">{t("setup.musicApps.openSettings")}</button>
         : <span className={`text-xs ${granted ? "font-medium text-good" : "text-ink-400"}`}>{label}</span>}
@@ -378,7 +378,7 @@ function MicCheck({ win, micOk, onNext, onBack }: { win: boolean; micOk: boolean
         <div className="h-3 flex-1 overflow-hidden rounded-full bg-white/6" role="meter" aria-label={t("setup.micCheck.meterLabel")} aria-valuemin={-80} aria-valuemax={-10} aria-valuenow={Math.round(db)}>
           <div className={`h-full rounded-full transition-[width] duration-75 ${heard ? "bg-good" : "bg-accent-400"}`} style={{ width: `${pct * 100}%` }} />
         </div>
-        <span className={`w-28 text-right text-sm font-medium ${heard ? "text-good" : "text-ink-500"}`}>
+        <span className={`min-w-28 whitespace-nowrap text-right text-sm font-medium ${heard ? "text-good" : "text-ink-500"}`}>
           {heard ? t("setup.micCheck.heard") : running ? t("setup.micCheck.listening") : !micOk ? t("setup.micCheck.notAllowed")
             : !failed && device !== null ? t("setup.micCheck.starting") : t("setup.micCheck.noMic")}
         </span>

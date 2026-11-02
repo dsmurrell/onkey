@@ -426,7 +426,7 @@ export function SingSwitches() {
     <div className="flex flex-wrap items-center justify-end gap-1">
       {song?.mode === "sing" && (
         <button onClick={() => setBlind(!blind)} title={t("live.switches.blindTitle")}
-                className={`flex items-center gap-2 rounded-full px-2.5 py-1 text-xs transition hover:bg-white/6 ${blind ? "text-ink-100" : "text-ink-300"}`}>
+                className={`flex items-center gap-2 whitespace-nowrap rounded-full px-2.5 py-1 text-xs transition hover:bg-white/6 ${blind ? "text-ink-100" : "text-ink-300"}`}>
           <span className={`relative h-4 w-7 rounded-full transition ${blind ? "bg-ink-500" : "bg-accent-500"}`}>
             <span className={`absolute top-0.5 h-3 w-3 rounded-full bg-white transition-all ${blind ? "left-0.5" : "left-3.5"}`} />
           </span>
@@ -436,7 +436,7 @@ export function SingSwitches() {
       {status.echo_cancel != null && (
         <button onClick={() => setEchoCancel(!status.echo_cancel)}
                 title={t("live.switches.echoTitle")}
-                className={`flex items-center gap-2 rounded-full px-2.5 py-1 text-xs transition hover:bg-white/6 ${status.echo_cancel ? "text-ink-300" : "text-ink-100"}`}>
+                className={`flex items-center gap-2 whitespace-nowrap rounded-full px-2.5 py-1 text-xs transition hover:bg-white/6 ${status.echo_cancel ? "text-ink-300" : "text-ink-100"}`}>
           <span className={`relative h-4 w-7 rounded-full transition ${status.echo_cancel ? "bg-accent-500" : "bg-ink-500"}`}>
             <span className={`absolute top-0.5 h-3 w-3 rounded-full bg-white transition-all ${status.echo_cancel ? "left-3.5" : "left-0.5"}`} />
           </span>
@@ -454,7 +454,7 @@ export function DancerToggle() {
   const on = useDancer();
   return (
     <button onClick={() => setDancer(!on)} title={t("live.switches.dancerTitle")}
-            className={`flex items-center gap-2 rounded-full px-2.5 py-1 text-xs transition hover:bg-white/6 ${on ? "text-ink-300" : "text-ink-100"}`}>
+            className={`flex items-center gap-2 whitespace-nowrap rounded-full px-2.5 py-1 text-xs transition hover:bg-white/6 ${on ? "text-ink-300" : "text-ink-100"}`}>
       <span className={`relative h-4 w-7 rounded-full transition ${on ? "bg-accent-500" : "bg-ink-500"}`}>
         <span className={`absolute top-0.5 h-3 w-3 rounded-full bg-white transition-all ${on ? "left-3.5" : "left-0.5"}`} />
       </span>
@@ -665,7 +665,7 @@ export function TakeToast() {
   if (!shown) return null;
   const body = shown.status === "done"
     ? <><span className="tabular text-lg font-bold text-white">{shown.score}</span>
-        {shown.report && <Link href={`/take?id=${encodeURIComponent(shown.report)}`} className="text-accent-300 hover:text-white">{t("live.toast.view")}</Link>}</>
+        {shown.report && <Link href={`/take?id=${encodeURIComponent(shown.report)}`} className="shrink-0 whitespace-nowrap text-accent-300 hover:text-white">{t("live.toast.view")}</Link>}</>
     : <span className="text-good">{t("live.toast.learned")}</span>;
   return (
     <div className="glass flex min-w-0 animate-rise items-center gap-3 rounded-2xl px-4 py-2 text-sm shadow-lg shadow-black/30">
