@@ -1,3 +1,5 @@
+import { Fit } from "./Fit";
+
 /** Every diagram draws into the same 480×300 space, with a caption naming what this frame shows. */
 export const W = 480, H = 300;
 
@@ -7,7 +9,7 @@ export function Frame({ label, caption, children }: { label: string; caption?: s
       <rect width={W} height={H} fill="var(--bg-raised)" />
       {children}
       {caption && (
-        <text x={W / 2} y={H - 14} textAnchor="middle" fontSize="13" fill="var(--muted)">{caption}</text>
+        <Fit max={W - 24} x={W / 2} y={H - 14} textAnchor="middle" fontSize={13} fill="var(--muted)">{caption}</Fit>
       )}
     </svg>
   );
@@ -21,8 +23,8 @@ export function Node({ x, y, w = 120, h = 52, colour, title, sub, on = true, ico
     <g className="hl" opacity={on ? 1 : 0.32}>
       <rect x={x - w / 2} y={y - h / 2} width={w} height={h} rx="12" fill="var(--panel)" stroke={colour} strokeWidth={on ? 2 : 1} />
       {icon && <g transform={`translate(${x - w / 2 + 14} ${y - 8})`}>{icon}</g>}
-      <text x={icon ? x + 10 : x} y={sub ? y - 3 : y + 5} textAnchor="middle" fontSize="13.5" fontWeight="600" fill="var(--fg)">{title}</text>
-      {sub && <text x={icon ? x + 10 : x} y={y + 14} textAnchor="middle" fontSize="11" fill="var(--muted)">{sub}</text>}
+      <Fit max={w - (icon ? 44 : 16)} x={icon ? x + 10 : x} y={sub ? y - 3 : y + 5} textAnchor="middle" fontSize={13.5} fontWeight="600" fill="var(--fg)">{title}</Fit>
+      {sub && <Fit max={w - (icon ? 44 : 16)} x={icon ? x + 10 : x} y={y + 14} textAnchor="middle" fontSize={11} fill="var(--muted)">{sub}</Fit>}
     </g>
   );
 }

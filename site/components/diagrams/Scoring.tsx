@@ -4,6 +4,7 @@ import { Frame } from "@/components/explain/Frame";
 import { ease, useClock } from "@/components/explain/motion";
 import { formatMessage } from "@/lib/format";
 import { DUR, PHRASE, singerPitch, yourPitch } from "./song";
+import { Fit } from "@/components/explain/Fit";
 
 /** The diagrams' words, in the page's language (docs.diagrams.scoring / .credit / .coverage; built by text.ts).
  *  `words`: the phrase's syllables, one per note of PHRASE. `aria`, `credit`, `off`, `score` are raw ICU messages
@@ -63,7 +64,7 @@ export function ScoreDiagram({ step = 5, text }: { step?: number; text: ScoreTex
         <g>
           <rect x="300" y="28" width="160" height="58" rx="12" fill="var(--panel)" stroke="var(--score)" />
           <text x="380" y="62" textAnchor="middle" fontSize="26" fontWeight="700" fill="var(--score)">{score}</text>
-          <text x="380" y="78" textAnchor="middle" fontSize="10.5" fill="var(--muted)">{text.summary}</text>
+          <Fit max={148} x="380" y="78" textAnchor="middle" fontSize={10.5} fill="var(--muted)">{text.summary}</Fit>
         </g>
       )}
     </Frame>

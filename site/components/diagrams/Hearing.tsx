@@ -2,6 +2,7 @@
 import { Flow, Frame, Node, wavePath } from "@/components/explain/Frame";
 import { useClock } from "@/components/explain/motion";
 import { waveform } from "./song";
+import { Fit } from "@/components/explain/Fit";
 
 /** The diagram's words, in the page's language (docs.diagrams.hearing; built by text.ts). */
 export type HearingText = {
@@ -35,13 +36,13 @@ export function Hearing({ step = 3, text }: { step?: number; text: HearingText }
             <line key={k} x1={260 + k * 40 - scroll} x2={260 + k * 40 - scroll} y1="112" y2="164" stroke="var(--fg)" strokeOpacity="0.18" strokeDasharray="2 3" />
           ))}
         </g>
-        {step >= 2 && <text x="430" y="104" textAnchor="end" fontSize="10.5" fill="var(--muted)">{text.oneClock}</text>}
+        {step >= 2 && <Fit max={170} x="430" y="104" textAnchor="end" fontSize={10.5} fill="var(--muted)">{text.oneClock}</Fit>}
       </g>
       <g className="hl" opacity={step >= 3 ? 1 : 0.2} transform="translate(340 200)">
         <rect x="-26" y="0" width="52" height="40" rx="6" fill="var(--panel)" stroke="var(--line)" />
-        <text x="0" y="25" textAnchor="middle" fontSize="11" fill="var(--muted)">{text.disk}</text>
+        <Fit max={46} x="0" y="25" textAnchor="middle" fontSize={11} fill="var(--muted)">{text.disk}</Fit>
         <line x1="-34" y1="-4" x2="34" y2="44" stroke="var(--off)" strokeWidth="2.5" strokeLinecap="round" />
-        <text x="44" y="24" fontSize="11.5" fill="var(--fg-soft)">{text.noMusicSaved}</text>
+        <Fit max={88} floor={0.6} x="44" y="24" fontSize={11.5} fill="var(--fg-soft)">{text.noMusicSaved}</Fit>
       </g>
       {step === 1 && <text x="140" y="128" fontSize="10.5" fill="var(--faint)">{text.notHeard}</text>}
     </Frame>

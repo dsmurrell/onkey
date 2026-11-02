@@ -1,6 +1,7 @@
 "use client";
 import { Flow, Frame, Node } from "@/components/explain/Frame";
 import { useClock } from "@/components/explain/motion";
+import { Fit } from "@/components/explain/Fit";
 
 /** The diagram's words, in the page's language (docs.diagrams.big; built by text.ts). `steps`: one caption per step. */
 export type BigText = {
@@ -17,7 +18,7 @@ export function BigPicture({ step = 4, all = false, text }: { step?: number; all
   return (
     <Frame label={text.label} caption={all ? text.all : text.steps[step]}>
       <rect x="196" y="22" width="268" height="100" rx="16" fill="none" stroke="var(--line)" strokeDasharray="4 4" />
-      <text x="452" y="38" textAnchor="end" fontSize="11" fill="var(--faint)">{text.onMac}</text>
+      <Fit max={170} x="452" y="38" textAnchor="end" fontSize={11} fill="var(--faint)">{text.onMac}</Fit>
       <Flow d="M126 80 H186" colour="var(--music)" t={t} on={reached(1)} />
       <Flow d="M296 80 H340" colour="var(--music)" t={t} on={reached(2)} />
       <Flow d="M402 108 C402 150 380 176 352 196" colour="var(--singer)" t={t} on={reached(3)} />

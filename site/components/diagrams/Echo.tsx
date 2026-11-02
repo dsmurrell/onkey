@@ -2,6 +2,7 @@
 import { Frame, wavePath } from "@/components/explain/Frame";
 import { ease, useClock } from "@/components/explain/motion";
 import { waveform } from "./song";
+import { Fit } from "@/components/explain/Fit";
 
 /** The diagram's words, in the page's language (docs.diagrams.echo; built by text.ts). */
 export type EchoText = {
@@ -36,15 +37,15 @@ export function Echo({ step = 3, text }: { step?: number; text: EchoText }) {
         <text x="159" y="118" textAnchor="middle" fontSize="11" fill="var(--you)">{text.yourMic}</text>
       </g>
       {/* what the mic hears, before and after */}
-      <text x="200" y="56" fontSize="11.5" fill="var(--muted)">{step >= 3 ? text.whatsLeft : text.micHears}</text>
+      <Fit max={268} x="200" y="56" fontSize={11.5} fill="var(--muted)">{step >= 3 ? text.whatsLeft : text.micHears}</Fit>
       <path d={wavePath(mic, 200, 82, 250, 26)} fill="none" stroke={step >= 3 ? "var(--you)" : "var(--fg-soft)"} strokeWidth="1.3" />
       {/* OnKey's own copy of the song, and how it reaches the mic */}
       <g className="hl" opacity={step >= 1 && step <= 3 ? 1 : 0.15}>
-        <text x="200" y="152" fontSize="11.5" fill="var(--music)">{text.copy}</text>
+        <Fit max={268} x="200" y="152" fontSize={11.5} fill="var(--music)">{text.copy}</Fit>
         <path d={wavePath(SONG, 200, 178, 250, 20)} fill="none" stroke="var(--music)" strokeWidth="1.2" />
       </g>
       <g className="hl" opacity={step === 2 || step === 3 ? 1 : 0.15}>
-        <text x="200" y="222" fontSize="11.5" fill="var(--muted)">{text.room}</text>
+        <Fit max={268} x="200" y="222" fontSize={11.5} fill="var(--muted)">{text.room}</Fit>
         {Array.from({ length: 16 }, (_, i) => (
           <rect key={i} x={200 + i * 15} y={250 - (i === 2 ? 20 : 14 * Math.exp(-i / 4))} width="9" height={i === 2 ? 20 : 14 * Math.exp(-i / 4) + 1} rx="2" fill="var(--music)" opacity="0.7" />
         ))}

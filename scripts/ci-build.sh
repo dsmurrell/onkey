@@ -66,4 +66,4 @@ if [ -n "${UPDATER_MODE:-}" ]; then
   echo "== build $NEXT (the rehearsal's next version)"
   build "$NEXT" dist/next
 fi
-echo "== built:"; ls -la dist dist/next 2>/dev/null
+echo "== built:"; ls -la dist; [ -d dist/next ] && ls -la dist/next || true   # (dist/next: only with updater files; a preview has none)

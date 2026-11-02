@@ -1,6 +1,7 @@
 "use client";
 import { Frame } from "@/components/explain/Frame";
 import { ease, seeded, useClock } from "@/components/explain/motion";
+import { Fit } from "@/components/explain/Fit";
 
 /** The diagram's words, in the page's language (docs.diagrams.placement; built by text.ts). */
 export type PlacementText = {
@@ -24,7 +25,7 @@ export function Placement({ step = 2, text }: { step?: number; text: PlacementTe
   const winX = CX + at * CW;
   return (
     <Frame label={text.label} caption={text.steps[step]}>
-      <text x={CX} y="56" fontSize="11.5" fill="var(--music)">{text.fingerprint}</text>
+      <Fit max={480 - CX - 12} x={CX} y="56" fontSize={11.5} fill="var(--music)">{text.fingerprint}</Fit>
       {PRINT.map((col, c) => col.map((v, b) => (
         <rect key={`${c}-${b}`} x={CX + c * CW} y={BY + b * BH} width={CW - 1.5} height={BH - 2} rx="1.5" fill="var(--music)" opacity={0.12 + v * 0.75} />
       )))}
@@ -32,9 +33,10 @@ export function Placement({ step = 2, text }: { step?: number; text: PlacementTe
         <g className="hl">
           <rect x={winX - 2} y={BY - 6} width={WIN * CW + 2.5} height={BANDS * BH + 10} rx="6" fill="none"
             stroke={locked ? "var(--you)" : "var(--fg)"} strokeWidth={locked ? 2.5 : 1.5} strokeDasharray={locked ? undefined : "4 3"} />
-          <text x={winX + (WIN * CW) / 2} y={BY + BANDS * BH + 22} textAnchor="middle" fontSize="11" fill={locked ? "var(--you)" : "var(--muted)"}>
+          {/* under the window, kept inside the frame when the window is near an edge */}
+          <Fit max={130} x={Math.min(Math.max(winX + (WIN * CW) / 2, CX + 65), 480 - 12 - 65)} y={BY + BANDS * BH + 22} textAnchor="middle" fontSize={11} fill={locked ? "var(--you)" : "var(--muted)"}>
             {locked ? text.match : text.playingNow}
-          </text>
+          </Fit>
         </g>
       )}
       {step >= 3 && <path d={`M${CX + TRUE_AT * CW + 20} 62 C ${CX + 24 * CW} 40, ${CX + 28 * CW} 40, ${CX + SKIP_AT * CW + 20} 62`} fill="none" stroke="var(--faint)" strokeDasharray="3 3" markerEnd="url(#arr)" />}
