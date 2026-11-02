@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "OnKey परिचय",
+      "services": "सेवाएँ",
+      "pauseListening": "सुनना रोकें",
+      "resumeListening": "सुनना फिर से शुरू करें",
+      "hide": "OnKey छिपाएँ",
+      "hideOthers": "अन्य छिपाएँ",
+      "quit": "OnKey बंद करें"
+    },
+    "file": {
+      "title": "फ़ाइल",
+      "closeWindow": "विंडो बंद करें"
+    },
+    "edit": {
+      "title": "संपादन",
+      "undo": "पहले जैसा करें",
+      "redo": "फिर करें",
+      "cut": "कट",
+      "copy": "कॉपी",
+      "paste": "पेस्ट",
+      "selectAll": "सभी चुनें"
+    },
+    "view": {
+      "title": "दृश्य",
+      "fullScreen": "फ़ुल स्क्रीन टॉगल करें"
+    },
+    "window": {
+      "title": "विंडो",
+      "minimize": "मिनिमाइज़ करें",
+      "zoom": "ज़ूम करें",
+      "closeWindow": "विंडो बंद करें"
+    },
+    "help": {
+      "title": "सहायता",
+      "reportProblem": "समस्या की रिपोर्ट करें…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "बग रिपोर्ट के लिए OnKey के रिकॉर्ड: लॉग और आँकड़े, न लिरिक्स, न ऑडियो."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "सुर में गाएँ",
+      "free": "Mac के लिए मुफ़्त"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey आपका गायन सुनता है, यह दिखाने के लिए कि आप कितने सुर में हैं. आपकी रिकॉर्डिंग आपके Mac पर रहती हैं.",
+    "NSAudioCaptureUsageDescription": "OnKey आपके Mac पर बजते म्यूज़िक को सुनता है, ताकि गायक की धुन सीख सके. यह म्यूज़िक को कभी न सेव करता है, न भेजता है. सुनने के मोड में गाने का नाम पता करने के लिए उसका एक छोटा फ़िंगरप्रिंट (ऑडियो नहीं) Apple के Shazam को जाता है.",
+    "NSAppleEventsUsageDescription": "OnKey Spotify, संगीत ऐप या आपके ब्राउज़र (YouTube के लिए) से पूछता है कि क्या चल रहा है, और जब आप चलाएँ, स्किप करें या शुरू से चलाएँ दबाते हैं, तो प्लेबैक कंट्रोल करता है."
+  }
+}

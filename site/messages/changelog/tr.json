@@ -1,0 +1,176 @@
+{
+  "page": {
+    "title": "Yenilikler",
+    "description": "OnKey’deki her özellik ve düzeltme, en yenisi başta, onu getiren sürümle birlikte.",
+    "kicker": "Değişiklik günlüğü",
+    "heading": "OnKey’de yenilikler",
+    "intro": "Her özellik ve düzeltme, en yenisi başta, onu getiren sürümle birlikte. OnKey kendini günceller; bunlar size kendiliğinden ulaşır.",
+    "release": "OnKey {version}",
+    "latest": "En yeni",
+    "kind": {
+      "new": "Yeni",
+      "better": "Daha iyi",
+      "fix": "Düzeltildi"
+    },
+    "github": "Her değişiklik <link>GitHub</link>’da; OnKey orada açık kaynak."
+  },
+  "releases": {
+    "0-3-0": {
+      "note": "OnKey 19 dilde, ve İspanyolca, Portekizce, İtalyanca, Fransızca ve Almanca sözler şarkıya ayak uyduruyor."
+    },
+    "0-2-0": {
+      "note": "Zaten OnKey çalışan Mac’lerde kendini indirir ve kurar."
+    },
+    "0-1-0": {
+      "note": "İlk herkese açık sürüm.",
+      "link": "Hacker News’te yayımlandı"
+    }
+  },
+  "entries": {
+    "onkey-in-your-language": {
+      "title": "OnKey kendi dilinizde",
+      "summary": "OnKey artık 19 dil konuşuyor. Mac’inizin dilini kendiliğinden izler; dilerseniz üst çubuktaki, karşılama ekranındaki veya Ayarlar’daki küre simgesinden bir dil seçin.",
+      "p1": "Altısının tam desteği var, sözler dahil: İspanyolca (Latin Amerika ve İspanya), Portekizce, İtalyanca, Fransızca ve Almanca",
+      "p2": "On iki dil daha erken çeviri: Felemenkçe, Japonca, Çince (Basitleştirilmiş ve Geleneksel), Korece, Hintçe, Rusça, Türkçe, Lehçe, Endonezce, Vietnamca ve Tayca. Her biri bunu söyler ve iyileştirmek için bir bağlantı verir",
+      "p3": "Şimdilik hepsi makine çevirisi: bir şey tuhaf okunuyorsa Ayarlar’daki bağlantı metni düzeltmeniz için açar",
+      "p4": "OnKey menüsü, Mac’in izin istekleri ve kaydetme penceresi de kendi dilinizde; kapaklar ise kendi ülkenizin mağazasından gelir",
+      "p5": "Bu web sitesi, rehberleri ve bu değişiklik günlüğü de öyle: tarayıcınızın dilini izler, üstbilgideki küre simgesi dili değiştirir"
+    },
+    "lyrics-keep-time-in-more-languages": {
+      "title": "Sözler daha çok dilde şarkıya ayak uyduruyor",
+      "summary": "İspanyolca, Portekizce, İtalyanca, Fransızca ve Almanca sözcükler artık söylendikleri anda yanıyor. Aksanlı harfler (corazón, Straße, cœur) doğru okunuyor ve heceler İngilizcenin değil, her dilin kendi kurallarına göre sayılıyor.",
+      "p1": "Japonca, Çince, Korece, Hintçe, Rusça, Tayca ve başka yazı sistemlerindeki şarkılar satırlarını bütün olarak, şarkıyla aynı zamanda gösterir; kelime kelime zamanlama şimdilik yok",
+      "p2": "İngilizce sözler tam olarak eskisi gibi"
+    },
+    "songs-to-try-in-your-language": {
+      "title": "Kendi dilinizde denenecek şarkılar",
+      "summary": "İspanyolca, Portekizce, İtalyanca, Fransızca veya Almanca seçiliyken Söyle sayfası o dilde, kolaydan zora sekiz şarkı önerir; her birinin bir nedeni var.",
+      "p1": "Önerilen bir şarkıya tıklayın; bir Arşiv kartı gibi Spotify’da başlar",
+      "p2": "Apple Music’te bulmak için bağlantılar hâlâ yerinde"
+    },
+    "when-a-song-has-no-lyrics": {
+      "title": "Bir şarkının sözleri olmadığında",
+      "summary": "Sözler, herkesin katkıda bulunabildiği ücretsiz bir kütüphane olan LRCLIB’den gelir. LRCLIB’de karşılığı olmayan bir şarkı artık bunu şeridin altında ve şarkının sayfasında söyler; Yeniden ara düğmesi LRCLIB’e hemen yeniden sorar.",
+      "p1": "Önceden OnKey “yok” yanıtını bir gün hatırlıyordu; bu yüzden birinin az önce eklediği sözler ertesi güne kadar görünmüyordu",
+      "p2": "LRCLIB’in kendisi çalışmıyorsa Söyle sayfası bunu söyler: notalar devam eder, servis geri gelirse sözler eklenir, bu arada öğrenilen bir şarkı sözlerini bir sonraki söyleyişinizde alır"
+    },
+    "smoother-switching-in-spotify": {
+      "title": "Spotify’da daha pürüzsüz geçiş",
+      "summary": "Bir şarkı çalarken başka bir şarkı istemek, artık yenisini başlatmadan önce ilkini bir an duraklatır; böylece geçiş daha temiz olur."
+    },
+    "a-clearer-settings-page": {
+      "title": "Daha açık bir Ayarlar sayfası",
+      "summary": "Mikrofon OnKey’in kendi menüsünden seçilir; sanal aygıtlar ve bağlantısı kesilmiş bir mikrofon ayrı listelenir. Menüler sayfanın üstünde açılır, bu yüzden uzun bir liste hiç kesilmez.",
+      "p1": "Arşiv kartlarında bir şarkının aralık çizgisi size uyuyorsa yeşil, doğrudan uymuyorsa (bir oktav ötede, birkaç nota dışarıda veya daha geniş) şeftali rengidir",
+      "p2": "Bir adımın adı iki satıra yayıldığında Kurulum’un adım çubukları aynı hizada kalır"
+    },
+    "small-fixes-0-3-0": {
+      "title": "Küçük düzeltmeler",
+      "summary": "Biraz yanlış olan şeyler, artık yerli yerinde.",
+      "p1": "Yenilikler noktası bir güncellemeden sonra siz açana kadar görünür, yeni bir kurulumda ise hiç görünmez",
+      "p2": "Sorun bildir metin kutusunu tam yükseklikte tutar ve iletişim kutusu Ayarlar’ın üstünde saydam değil",
+      "p3": "Bir YouTube sekmesinin bildirim sayısı, “(3) Sanatçı - Başlık”, artık şarkının adını belirlemeye engel olmuyor"
+    },
+    "pause-listening": {
+      "title": "Dinlemeyi duraklat",
+      "summary": "Yayın veya podcast mi izliyorsunuz? OnKey’in dinlemesini duraklatın; siz devam ettirene kadar hiçbir şey duymaz. Bu arada hiçbir şey takip edilmez, adlandırılmaz veya öğrenilmez.",
+      "p1": "⌘⇧P’ye basın, Söyle sayfasındaki Canlı çipine tıklayın veya OnKey → Dinlemeyi Duraklat’ı seçin",
+      "p2": "Her sayfanın üstünde küçük bir “Dinleme duraklatıldı · Devam et” etiketi kalır, böylece unutmazsınız",
+      "p3": "Yeniden başlatmadan sonra da, siz devam ettirene kadar duraklatılmış kalır"
+    },
+    "see-when-a-paused-take-will-be-scored": {
+      "title": "Duraklatılan denemenin ne zaman puanlanacağını görün",
+      "summary": "Şarkının ortasında duraklatın; OnKey devam edersiniz diye bir dakika bekler. Artık bunu size söyler ve beklemeyi atlamanıza izin verir.",
+      "p1": "Söyle sayfası geri sayar: “Duraklatıldı · 0:45 sonra puanlanır · Şimdi bitir”",
+      "p2": "Geçmiş, söylediğiniz şarkıyı ilk kartı olarak gösterir; az önce duraklattığınız bir çalma hiç kaybolmuş görünmez",
+      "p3": "Geçmiş’teki her şarkı kartı puanlarınızı ikinci çalmadan itibaren çizer"
+    },
+    "audio-interfaces-and-your-microphone-list": {
+      "title": "Ses arabirimleri ve mikrofon listeniz",
+      "summary": "OnKey artık sesinizi gerçekten bulunduğu girişten alır; bir Focusrite’ın (veya birden çok girişi olan herhangi bir arabirimin) 2. girişindeki bir mikrofon doğrudan çalışır.",
+      "p1": "Ayar gerekmez: OnKey sesinizin olduğu girişi takip eder",
+      "p2": "Başka uygulamaların eklediği sanal aygıtlar (Krisp, Loopback, BlackHole, Zoom) gerçek mikrofonlarınızdan ayrı listelenir"
+    },
+    "listening-back-stays-in-step-after-a-skip": {
+      "title": "Geri dinleme atlamadan sonra da uyumlu kalır",
+      "summary": "Söylerken ileri atladıysanız “Şarkıyla” atlamadan önceki bölümü zamanlama dışı çalabiliyordu. Artık denemenin her bölümü şarkıyla uyumlu çalar."
+    },
+    "reliability-fixes": {
+      "title": "Güvenilirlik düzeltmeleri",
+      "summary": "Şarkının ortasında ters gidebilen şeyler, artık düzeltildi.",
+      "p1": "OnKey oynatıcıyı denetlerken Bitir’e basmak artık denemeyi çöpe atmaz",
+      "p2": "Nadir bir hatadan sonra bir şarkı artık sonsuza dek “Öğrenmeyi bekliyor” veya “Puanlıyor” durumunda kalmaz",
+      "p3": "Arşiv’deki Hepsini sil artık takılmaz ve “Öğrenmeyi durdur ve sil” yalnızca seçtiğiniz şarkıyı siler",
+      "p4": "Klavye kısayolları artık iletişim kutularının arkasındaki müziğe ulaşmaz",
+      "p5": "Şarkı duraklatılmış hâlde bittiğinde puan hemen gelir",
+      "p6": "Bir radyo yayını veya saatler süren bir miks, tek deneme olarak sürüp gitmek yerine 20 dakikada durur",
+      "p7": "Çıkış anlıktır: OnKey hemen kaybolur ve öğrendiklerini kaydetme işini görünmeden bitirir"
+    },
+    "songs-start-cleanly": {
+      "title": "Şarkılar temiz başlar",
+      "summary": "Bir kartta Söyle’ye basmak müziği iki kez başlatabiliyor veya baştan almadan önce şarkıdan kısa bir parça çalabiliyordu. Artık bir basış, bir temiz başlangıç demek."
+    },
+    "guides-and-help-and-beyond-pitch": {
+      "title": "Rehberler, yardım ve Perdenin ötesi",
+      "summary": "Ayarlar artık bu belgelere bağlanıyor. Yeni bir rehber, Perdenin ötesi, OnKey’in duyamadıklarını (tını, nefes, stil) ve bunları öğrenebileceğiniz ücretsiz öğretmenleri anlatıyor."
+    },
+    "smoother-setup-and-youtube": {
+      "title": "Daha pürüzsüz kurulum ve YouTube",
+      "summary": "Deneyicilerimizin ilk karşılaştığı sorunlar için düzeltmeler.",
+      "p1": "Kurulumun müzik uygulamaları adımı, macOS’in soracağı bir şey yoksa doğrudan devam eder",
+      "p2": "Chrome’un uyuttuğu bir YouTube sekmesi artık OnKey’i bekletmez",
+      "p3": "Kurulu olmayan bir müzik uygulaması açık değil, kapalı görünür"
+    },
+    "learn-a-song-again": {
+      "title": "Bir şarkıyı yeniden öğren",
+      "summary": "Bir şarkının sözleri veya notaları kayarsa OnKey’e onu yeniden öğrettirin: bir sonraki çalma onu öğrenir ve yeterince duyunca eski kopyanın yerine geçer.",
+      "p1": "Arşiv’in ⋯ menüsünden veya şarkının sayfasından Yeniden öğren’i seçin",
+      "p2": "Bir şarkının sözleri iki çalmada aynı şekilde kayarsa OnKey bunu kendisi önerir"
+    },
+    "a-tidier-app-page-by-page": {
+      "title": "Sayfa sayfa daha derli toplu bir uygulama",
+      "summary": "Her deneme daha açık bir rapor alıyor; Söyle, Geçmiş, Arşiv ve Ayarlar’da yolunuzu bulmak daha kolay.",
+      "p1": "Söyle, “Kaldığınız yerden devam edin” sunar: son birkaç şarkınız, her biri son puanı ve bir Söyle düğmesiyle",
+      "p2": "Arşiv’deki Çal şarkıyı sizin için başlatır ve Söyle onun başladığını gösterir (ya da neden başlayamadığını söyler)"
+    },
+    "scoring-levels-relaxed-steady-and-pro": {
+      "title": "Puanlama düzeyleri: Rahat, Dengeli ve Pro",
+      "summary": "Denemelerinizin ne kadar sıkı puanlanacağını Ayarlar’dan seçin. Rahat, OnKey’in her zaman puanladığı gibi; Dengeli ve Pro daha fazlasını ister.",
+      "p1": "Vibrato notanın ortasına göre değerlendirilir; iyi bir vibrato hiçbir düzeyde puan kırmaz",
+      "p2": "Her deneme puanlandığı düzeyi gösterir"
+    },
+    "leave-out-what-isn-t-the-melody": {
+      "title": "Melodi olmayanı dışarıda bırakın",
+      "summary": "OnKey ezgi yerine bir arka vokali veya doğaçlamayı yakaladıysa, denemenin sayfasında o bölümü “Melodi değil” olarak işaretleyin. O şarkının her puanından, geçmiş denemeler dahil, çıkarılır."
+    },
+    "your-vocal-range": {
+      "title": "Ses aralığınız",
+      "summary": "OnKey aralığınızı söylediğiniz şarkılardan çıkarır ve her şarkının ona nasıl oturduğunu gösterir.",
+      "p1": "Geçmiş, aralığınızı rahat orta bölgeniz işaretlenmiş bir tuş şeridinde gösterir",
+      "p2": "Arşiv her şarkının uyumunu gösterir; aralığınızdaki şarkılar için bir filtre var",
+      "p3": "Bir şarkı tiz veya pes kalıyorsa, bir oktav öteden söylemenin size daha iyi oturup oturmayacağını söyler"
+    },
+    "challenge-a-friend-and-share-your-best-takes": {
+      "title": "Arkadaşınıza meydan okuyun, en iyi denemelerinizi paylaşın",
+      "summary": "Bir denemeden, puanınızı söyleyen ve bir arkadaşınızı geçmeye çağıran bir bağlantı kopyalayın. Yalnızca şarkıyı, sanatçıyı, puanınızı ve isterseniz adınızı taşır.",
+      "p1": "Bir şarkıda en iyi puandan veya büyük bir sıçramadan sonra denemenin sayfası “Bu denemeyi paylaş”ı sunar",
+      "p2": "Paylaşılan klip bir OnKey kartıyla biter: sesiniz var, müzik yok"
+    },
+    "fade-the-guide": {
+      "title": "Rehberi azalt",
+      "summary": "Ayarlar’dan açın; zaten iyi söylediğiniz şarkılarda notanın üstündeyken ses çizginiz solar, böylece gözle değil kulakla söylersiniz. Kaydığınız anda geri gelir."
+    },
+    "lyrics-line-up-better": {
+      "title": "Sözler daha iyi hizalanıyor",
+      "summary": "Satırlar ve kelimeler artık söylendikleri ana daha yakın beliriyor; “oh” veya “whoa” ile açılan satırlar dahil."
+    },
+    "onkey-s-first-release": {
+      "title": "OnKey’in ilk sürümü",
+      "summary": "Ücretsiz, açık kaynak ve her şey Mac’inizde.",
+      "p1": "Spotify, Apple Music veya YouTube’da çaldığınız her şarkının melodisini ilk çalışında öğrenir",
+      "p2": "Şarkıcının notaları üzerinde canlı bir ses çizgisi, eşzamanlı sözler ve her deneme için bir puan",
+      "p3": "Geri dinlemek için denemeler ve paylaşmak için bir denemenin kısa videosu: sesiniz var, müzik yok",
+      "p4": "Başlangıç şarkıları, öğrendiklerinizin arşivi ve kendini kuran güncellemeler"
+    }
+  }
+}

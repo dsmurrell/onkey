@@ -1,0 +1,1504 @@
+{
+  "app": {
+    "title": "OnKey",
+    "description": "Een zangtrainer: leer de nummers zingen waar je van houdt, met de muziek die je al afspeelt."
+  },
+  "settings": {
+    "language": {
+      "title": "Taal",
+      "label": "Taal",
+      "sub": "De taal waarin OnKey met je praat. Automatisch volgt de taal van je computer.",
+      "autoNamed": "Automatisch ({language})",
+      "autoOs": "{language} ({os, select, mac {de taal van je Mac} other {de taal van deze pc}})",
+      "early": "Voorlopig",
+      "earlyNote": "Songteksten van nummers in het {language} verschijnen voorlopig zonder timing per woord. Wil je helpen? <link>Verbeter deze vertaling.</link>",
+      "credits": "Vertaald door {names}"
+    },
+    "title": "Instellingen",
+    "saveFailed": "Kon de instelling niet bewaren.",
+    "audio": {
+      "title": "Audio",
+      "mic": {
+        "label": "Microfoon",
+        "now": "Nu: {name}.",
+        "none": "Er is geen microfoon aangesloten.",
+        "nowMissingMac": "Nu: {name}. De microfoon die je koos is niet aangesloten, dus OnKey gebruikt de eigen invoer van de Mac tot dat wel zo is.",
+        "nowMissingPc": "Nu: {name}. De microfoon die je koos is niet aangesloten, dus OnKey gebruikt {input} tot dat wel zo is.",
+        "noneMissingMac": "<warn>Er is geen microfoon aangesloten.</warn> De microfoon die je koos is niet aangesloten, dus OnKey gebruikt de eigen invoer van de Mac tot dat wel zo is.",
+        "noneMissingPc": "<warn>Er is geen microfoon aangesloten.</warn> De microfoon die je koos is niet aangesloten, dus OnKey gebruikt {input} tot dat wel zo is.",
+        "moreMac": "Automatisch gebruikt de invoer van je Mac (Systeeminstellingen → Geluid), maar niet de microfoon van Bluetooth-koptelefoons zolang de Mac er zelf een heeft, zodat de muziek daarin op volle kwaliteit blijft. De microfoontest in de configuratie en je takes gebruiken dezelfde microfoon. Virtuele apparaten van andere apps (Krisp, Loopback, BlackHole, Zoom, Teams) staan apart: kies er alleen een om er bewust doorheen te zingen, want dan krijgt OnKey het geluid van die app, niet van je microfoon.",
+        "morePc": "Automatisch gebruikt {input} ({soundInput}). De microfoontest in de configuratie en je takes gebruiken dezelfde microfoon.",
+        "automatic": "Automatisch",
+        "virtual": "Virtueel (van andere apps)",
+        "notConnected": "Niet aangesloten"
+      },
+      "output": {
+        "label": "Uitvoer",
+        "now": "Nu: {name}. Wijzig het in {os, select, mac {Systeeminstellingen → Geluid} other {{sound}}}."
+      },
+      "setup": {
+        "title": "Doorloop de configuratie opnieuw",
+        "sub": "Toestemmingen en de microfoontest, zoals op de eerste dag."
+      }
+    },
+    "shortcuts": {
+      "title": "Toetscombinaties",
+      "space": "Spatie",
+      "pause": "Luisteren pauzeren of hervatten (op elke pagina)",
+      "playPause": "Afspelen of pauzeren",
+      "restart": "Het nummer opnieuw beginnen",
+      "previous": "Vorig nummer",
+      "next": "Volgend nummer, of naar de zang springen",
+      "blind": "Noten tonen of verbergen (blinde take)",
+      "favourite": "Het nummer favoriet maken",
+      "mini": "Minimodus: een kleine songtekstbalk boven andere apps"
+    },
+    "updates": {
+      "version": "OnKey {version}",
+      "unsupportedMac": "Ontwikkelversie: werkt zichzelf niet bij.",
+      "unsupportedPc": "Deze testversie werkt zichzelf niet bij: installeer een nieuwe eroverheen als die er is.",
+      "waiting": "OnKey {version} wordt geïnstalleerd als dit nummer is afgelopen, daarna herstart OnKey.",
+      "ready": "OnKey {version} staat klaar. Herstart om bij te werken, anders wordt het geïnstalleerd als je stopt.",
+      "downloading": "OnKey {version} downloaden…",
+      "checking": "Controleren…",
+      "official": "OnKey {version} is uit bij het oorspronkelijke project, op singonkey.app. Deze versie is uit de broncode gebouwd en werkt zichzelf dus niet bij.",
+      "current": "Je hebt de nieuwste versie.",
+      "currentSource": "Je hebt de nieuwste versie. Deze versie is uit de broncode gebouwd: hij meldt wanneer er een nieuwe versie is, maar werkt zichzelf niet bij.",
+      "updateFailed": "Kon niet bijwerken naar OnKey {version}. Controleer nu probeert het opnieuw.",
+      "updateFailedWhy": "Kon niet bijwerken naar OnKey {version} ({error}). Controleer nu probeert het opnieuw.",
+      "checkFailed": "Kon nu niet op updates controleren.",
+      "checkFailedWhy": "Kon nu niet op updates controleren ({error}).",
+      "restart": "Herstart om bij te werken",
+      "checkNow": "Controleer nu",
+      "auto": {
+        "title": "Controleer automatisch op updates",
+        "sub": "Eén keer per dag, op de achtergrond. Het onderbreekt nooit een nummer.",
+        "more": "OnKey vraagt GitHub om een nieuwere versie en downloadt die op de achtergrond. Hij wordt geïnstalleerd als je herstart of stopt."
+      }
+    },
+    "seeHow": {
+      "show": "Bekijk hoe het eruitziet",
+      "hide": "Verberg"
+    },
+    "more": {
+      "more": "Meer",
+      "less": "Minder"
+    },
+    "scoring": {
+      "title": "Score",
+      "label": "Scoreniveau",
+      "more": "Vibrato is prima: je toonhoogte wordt beoordeeld op het midden van de trilling. Elke score in OnKey wordt op dit niveau getoond, ook je eerdere takes: die worden opnieuw gescoord op basis van je zang zoals die bewaard is.",
+      "moreRelaxed": "Elke score in OnKey wordt op dit niveau getoond, ook je eerdere takes: die worden opnieuw gescoord op basis van je zang zoals die bewaard is."
+    },
+    "control": {
+      "title": "Laat OnKey bedienen",
+      "introMac": "Standaard aan: OnKey leest wat er speelt en waar (exacte, directe posities), en kan nummers afspelen, pauzeren, doorspoelen en starten. Niets anders. macOS vraagt het één keer per app.",
+      "introPc": "Standaard aan: OnKey leest wat er speelt en waar, en kan nummers afspelen, pauzeren, doorspoelen en starten. Niets anders.",
+      "introAsking": "OnKey volgt Spotify en Apple Music door het ze te vragen, dus het bedient ze al.",
+      "spotify": {
+        "title": "Spotify",
+        "missing": "Spotify is niet geïnstalleerd op deze {os, select, mac {Mac} other {pc}}.",
+        "sub": "Start, pauzeer en sla nummers over in Spotify vanuit OnKey."
+      },
+      "music": {
+        "title": "Apple Music",
+        "missingMac": "De Muziek-app staat niet op deze Mac.",
+        "missingPc": "De Apple Music-app staat niet op deze pc.",
+        "subMac": "Hetzelfde voor de Muziek-app (nummers in je bibliotheek).",
+        "subPc": "Hetzelfde voor de Apple Music-app."
+      },
+      "youtube": {
+        "title": "YouTube in je browser",
+        "badge": "Grotere toestemming",
+        "subMac": "Lees en bedien de YouTube-tab in Chrome, Brave, Edge of Safari.",
+        "moreMac": "Hiervoor moet ‘Sta JavaScript van Apple Events toe’ aanstaan in de browser. Zolang het aanstaat (en 10 minuten nadat je een YouTube-nummer vanuit OnKey opent), luistert OnKey naar al het geluid van je browser, ook gesprekken en podcasts: geluid dat het niet herkent kan als korte vingerafdruk (nooit de audio) naar Shazam gaan, tenzij Shazam hieronder uitstaat.",
+        "subPc": "Volg nummers die spelen in Chrome, Edge, Firefox, Brave, Opera of Vivaldi.",
+        "morePc": "Op basis van wat de browser aan {os} doorgeeft; OnKey kan ze daar afspelen, pauzeren en doorspoelen. Tot een nummer geleerd is, kan de positie iets minder exact zijn dan bij Spotify."
+      },
+      "listenOnlyMac": "OnKey luistert alleen: het volgt nummers op hun geluid en raakt geen enkele app aan. Posities zijn iets minder exact, en het kan nummers niet starten of opnieuw beginnen. Een app hier uitzetten trekt de toestemming van macOS niet in: die staat in Systeeminstellingen → Privacy en beveiliging → Automatisering.",
+      "listenOnlyPc": "OnKey luistert alleen: het volgt nummers op hun geluid en raakt geen enkele app aan. Op {os} zijn dat alleen nummers die het al geleerd heeft: nieuwe worden herkend via {apps} zolang die hier aanstaan.",
+      "allOff": "Met al deze opties uit volgt OnKey nummers alleen op hun geluid."
+    },
+    "naming": {
+      "title": "Nummers herkennen",
+      "pc": "Nummers die je eerder zong, worden op deze pc herkend aan hun geluid. Nieuwe nummers worden herkend via Spotify, Apple Music of je browser (met YouTube aan), op basis van wat die zeggen dat er speelt. Er wordt niets verstuurd om een nummer te herkennen.",
+      "shazam": {
+        "title": "Gebruik Shazam om nieuwe nummers te herkennen",
+        "sub": "Herkent nieuwe nummers aan een korte vingerafdruk van het geluid, niet aan de audio.",
+        "more": "Nummers die je eerder zong, worden op deze Mac herkend. Nieuwe nummers uit Spotify en Apple Music worden door de app zelf benoemd zolang OnKey die mag bedienen; Shazam herkent de rest. Staat het uit, dan gaat er niets naar Shazam en worden alleen nummers herkend die al op deze Mac geleerd zijn. Albumhoezen worden nog wel op artiest en titel opgezocht in de iTunes-catalogus van Apple.",
+        "warn": "Met Spotify en Apple Music uit kunnen nieuwe nummers alleen geleerd worden als Shazam aanstaat. Nummers die al geleerd zijn, blijven werken."
+      }
+    },
+    "lyrics": {
+      "title": "Songteksten",
+      "show": {
+        "title": "Toon songteksten",
+        "sub": "Van LRCLIB, een gratis songtekstdatabase van de community.",
+        "more": "Staat het uit, dan vraagt OnKey LRCLIB om niets en zing je alleen op de noten: de notenhulp en je score werken zoals gewoonlijk."
+      }
+    },
+    "voice": {
+      "title": "Je stem",
+      "breaks": {
+        "title": "Herinner me eraan mijn stem te laten rusten",
+        "sub": "Een rustige herinnering om pauze te nemen na ongeveer 35 minuten zingen.",
+        "more": "Na 20 minuten niet zingen begint de teller opnieuw."
+      },
+      "fadeGuide": {
+        "title": "Bouw de notenhulp af bij nummers die je kent",
+        "sub": "Je stemlijn vervaagt zolang je op de noot zit, zodat je meer naar jezelf luistert.",
+        "more": "Het begint zodra je een nummer goed hebt gezongen (je beste 80 of hoger, of je laatste twee takes 75 of hoger). Hoe beter je het kent, hoe vager de lijn wordt; zit je er meer dan een halve toon naast, dan verschijnt hij gewoon. De noten blijven altijd staan, en je kunt bij elke take de volledige notenhulp terughalen."
+      }
+    },
+    "performance": {
+      "title": "Prestaties",
+      "battery": {
+        "title": "Spaar de batterij tijdens het zingen",
+        "sub": "Op de batterij worden de noten iets minder vaak getekend. Nog steeds vloeiend.",
+        "more": "30 keer per seconde in plaats van 60: half zoveel tekenwerk voor je Mac."
+      },
+      "keepModels": {
+        "title": "Houd de leermodellen klaar",
+        "sub": "Nieuwe nummers worden sneller geleerd, maar OnKey gebruikt meer geheugen.",
+        "more": "Ongeveer 1,5 GB extra, ook terwijl je nummers zingt die OnKey al kent. Staat het uit, dan worden de modellen geladen als een nieuw nummer geleerd wordt en daarna weer vrijgegeven. Standaard aan op {os, select, mac {Macs} other {pc’s}} met 32 GB of meer."
+      }
+    },
+    "about": {
+      "title": "Over",
+      "report": {
+        "title": "Meld een probleem",
+        "subMac": "Bewaar de logboeken en timings van OnKey als zip om bij een GitHub-issue te voegen. Je ziet eerst wat erin zit; geen songteksten of audio, niets wordt geüpload.",
+        "subPc": "Bewaar de logboeken en timings van OnKey als één zip op je bureaublad, om bij een bericht of een GitHub-issue te voegen. Je ziet eerst wat erin zit; geen songteksten of audio, niets wordt geüpload."
+      },
+      "guides": {
+        "title": "Handleidingen en hulp",
+        "sub": "Hoe OnKey werkt, de score, problemen oplossen en comfortabel zingen, op singonkey.app."
+      },
+      "discord": {
+        "title": "Kom bij de Discord van OnKey",
+        "sub": "Stel vragen, meld een nummer dat niet gelijkloopt en deel ideeën."
+      },
+      "madeBy": {
+        "title": "Gemaakt door Daniel Murrell",
+        "tagline": "Redt douchezangers van zichzelf sinds 2026"
+      },
+      "fairUse": {
+        "title": "OnKey eerlijk gebruiken",
+        "sub": "Waar OnKey voor is, en hoe je je zang deelt zonder de muziek te delen."
+      },
+      "licences": {
+        "title": "Opensourcelicenties",
+        "sub": "De modellen, data, lettertypen en bibliotheken waarop OnKey is gebouwd, en hun licenties."
+      },
+      "footer": "Voor persoonlijke oefening thuis. Wat OnKey leert, blijft op deze {os, select, mac {Mac} other {pc}}: houd het voor jezelf, en plaats geen takes of schermopnamen met de muziek erin."
+    }
+  },
+  "music": {
+    "levels": {
+      "relaxed": {
+        "name": "Ontspannen",
+        "about": "Mild: volle punten binnen een kwarttoon. Goed voor beginners en kinderen."
+      },
+      "steady": {
+        "name": "Stabiel",
+        "about": "Strakkere toonhoogte en timing, voor zangers die meestal zuiver zingen."
+      },
+      "pro": {
+        "name": "Pro",
+        "about": "Strak, voor geoefende zangers: een kwart van een halve toon voor volle punten."
+      }
+    },
+    "offBy": {
+      "cents": "{cents}¢ {dir, select, up {te hoog} other {te laag}}",
+      "octaves": "ongeveer {count, plural, one {een octaaf} other {{count} octaven}} {dir, select, up {te hoog} other {te laag}}",
+      "semitones": "ongeveer {count, plural, one {een halve toon} other {{count} halve tonen}} {dir, select, up {te hoog} other {te laag}}"
+    },
+    "scoreWord": {
+      "superb": "Fantastisch",
+      "great": "Geweldig",
+      "good": "Goed",
+      "gettingThere": "Bijna",
+      "keepAtIt": "Hou vol"
+    }
+  },
+  "platform": {
+    "linux": {
+      "os": "Linux",
+      "settings": "de geluidsinstellingen",
+      "sound": "de geluidsinstellingen van je systeem",
+      "soundInput": "de geluidsinstellingen van je systeem → Invoer",
+      "defaultInput": "de standaardinvoer van het systeem",
+      "files": "je bestandsbeheerder",
+      "filesThe": "de bestandsbeheerder",
+      "apps": "Spotify of YouTube in je browser"
+    },
+    "windows": {
+      "os": "Windows",
+      "settings": "Windows-instellingen",
+      "sound": "Windows-instellingen → Systeem → Geluid",
+      "soundInput": "Windows-instellingen → Systeem → Geluid → Invoer",
+      "defaultInput": "de standaardinvoer van Windows",
+      "files": "de Verkenner",
+      "filesThe": "de Verkenner",
+      "apps": "Spotify, Apple Music of YouTube in je browser"
+    },
+    "setupStep": {
+      "welcome": "Welkom",
+      "permissions": "Toestemmingen",
+      "musicApps": "Muziekapps",
+      "micCheck": "Microfoontest",
+      "ready": "Klaar"
+    },
+    "savedFolder": {
+      "desktop": "de map Bureaublad",
+      "home": "je thuismap",
+      "named": "de map {folder}"
+    }
+  },
+  "learn": {
+    "stage": {
+      "playing": "Leren terwijl het speelt",
+      "waiting": "Wachten op zijn beurt",
+      "queued": "Wachten om te leren",
+      "paused": "Wachten terwijl je zingt",
+      "separating": "Zangstem scheiden",
+      "pitch": "Melodie volgen",
+      "scoring": "Je take scoren",
+      "words": "Woorden timen",
+      "bars": "Lettergreepbalkjes maken",
+      "notes": "Elke noot zoeken",
+      "saving": "Bewaren",
+      "other": "Leren"
+    },
+    "label": {
+      "queued": "Wachten om te leren",
+      "going": "Aan het leren…",
+      "percent": "Aan het leren… {pct}%"
+    }
+  },
+  "starting": {
+    "yourApp": "je muziekapp",
+    "theSong": "het nummer",
+    "noId": {
+      "title": "OnKey kan {song} niet starten in {app}",
+      "sub": "OnKey kent dit nummer nog niet in {app} (het is geleerd uit een andere app, of door te luisteren). Open het in {app} en druk op afspelen: OnKey volgt het, en kan het daarna voor je starten."
+    },
+    "failed": {
+      "title": "Starten van {song} in {app} is mislukt",
+      "subMusic": "OnKey kan nummers starten die in je Apple Music-bibliotheek staan. Open het in Apple Music en druk daar op afspelen: OnKey volgt het.",
+      "sub": "Open het in {app} en druk daar op afspelen: OnKey volgt het."
+    },
+    "going": {
+      "title": "OnKey start {song} in {app}…",
+      "sub": "De notenbaan verschijnt zodra het speelt."
+    }
+  },
+  "errors": {
+    "deleteFailed": "Kon het niet verwijderen.",
+    "readFailed": "Kon je {what, select, takes {takes} songs {nummers} other {{what}}} niet lezen",
+    "reportsInApp": "Meldingen maak je in de OnKey-app."
+  },
+  "sing": {
+    "header": {
+      "miniTitle": "Minimodus: een kleine songtekstbalk die boven andere apps blijft (M)"
+    },
+    "learning": {
+      "badge": "Dit nummer wordt geleerd",
+      "title": "Je blinde take",
+      "body": "Zing mee, zonder hints. De volgende keer zie je elke noot aankomen.",
+      "scoreAfter": "<time>{clock}</time> · score na het nummer"
+    },
+    "learningLine": {
+      "waiting": "Wachten om <hl>{name}</hl> te leren",
+      "learning": "OnKey leert <hl>{name}</hl>: {stage}",
+      "stage": {
+        "playing": "leren terwijl het speelt",
+        "waiting": "wachten op zijn beurt",
+        "queued": "wachten om te leren",
+        "paused": "wachten terwijl je zingt",
+        "separating": "zangstem scheiden",
+        "pitch": "melodie volgen",
+        "scoring": "je take scoren",
+        "words": "woorden timen",
+        "bars": "lettergreepbalkjes maken",
+        "notes": "elke noot zoeken",
+        "saving": "bewaren",
+        "other": "leren"
+      }
+    },
+    "lineSub": {
+      "mac": {
+        "finding": "OnKey herkent het nummer aan zijn geluid. Dat duurt een paar seconden, en de take begint vanaf het begin van het nummer.",
+        "new_song": "OnKey herkent het volgende nummer. De take begint vanaf het begin van het nummer.",
+        "unnamed": "OnKey en Shazam kennen dit nummer niet. OnKey vraagt het opnieuw als het geluid verandert.",
+        "no_shazam": "Shazam is nu niet bereikbaar, dus alleen nummers die op deze Mac geleerd zijn, worden herkend. OnKey blijft het proberen.",
+        "shazam_off": "Shazam staat uit (Instellingen), dus aan het geluid alleen herkent OnKey slechts nummers die al op deze Mac geleerd zijn. Zet Shazam aan om nieuwe te herkennen.",
+        "podcast": "Speel een nummer af en OnKey volgt mee.",
+        "stopped": "Je hebt het leren gestopt, dus OnKey laat het met rust. Speel een ander nummer af en OnKey volgt mee.",
+        "elsewhere": "OnKey hoort wat er op deze Mac speelt. Speelt het op een ander apparaat (je telefoon, een speaker), zet het dan in het apparaatmenu van de app over naar deze Mac."
+      },
+      "pc": {
+        "unnamed": "Dit nummer heeft OnKey niet geleerd, en geen muziekapp heeft gezegd wat het is. OnKey vraagt het opnieuw als het geluid verandert.",
+        "no_shazam": "Dit nummer heeft OnKey nog niet geleerd. Op {os} worden nieuwe nummers herkend via {apps} (met YouTube aan): speel het daar af en OnKey leert het.",
+        "shazam_off": "Dit nummer heeft OnKey nog niet geleerd. Op {os} worden nieuwe nummers herkend via {apps} (met YouTube aan): speel het daar af en OnKey leert het.",
+        "elsewhere": "OnKey hoort wat er op deze pc speelt. Speelt het op een ander apparaat (je telefoon, een speaker), zet het dan in het apparaatmenu van de app over naar deze pc."
+      }
+    },
+    "waiting": {
+      "title": {
+        "starting": "OnKey starten…",
+        "gettingReady": "Voorbereiden…",
+        "notASong": "Geen nummer",
+        "stillListening": "Luistert nog",
+        "idle": "Speel een nummer af en zing mee"
+      },
+      "sub": {
+        "connecting": "Verbinden met de engine op deze {os, select, pc {pc} other {Mac}}.",
+        "listeningTo": "Luistert naar {name}. De notenbaan verschijnt zo.",
+        "idle": "In Spotify{youtube, select, yes {, Apple Music of YouTube} other { of Apple Music}}. OnKey volgt mee, en elk nummer wordt een take die je kunt terugkijken."
+      },
+      "openIn": "Open in {app}",
+      "notNow": "Niet nu",
+      "keys": {
+        "playPause": "<kbd>Spatie</kbd> afspelen / pauzeren",
+        "startOver": "<kbd>R</kbd> opnieuw beginnen",
+        "skip": "<kbd>←</kbd><kbd>→</kbd> overslaan",
+        "favourite": "<kbd>F</kbd> favoriet"
+      },
+      "songsToTry": "Nummers om te proberen",
+      "youtube": {
+        "title": "YouTube en YouTube Music <badge>Experimenteel</badge>",
+        "turnOff": "Zet uit",
+        "turnOn": "Zet aan",
+        "pcOn": "Aan. OnKey volgt nummers in je browser op basis van wat die aan {os} doorgeeft.",
+        "pcOff": "Uit, dus nummers die in je browser spelen worden niet opgepikt. Zet het aan om mee te zingen in Chrome, Edge, Firefox, Brave, Opera of Vivaldi.",
+        "macOn": "Aan. macOS vraagt één keer of OnKey je browser mag bedienen, zodat het kan lezen waar de video is.",
+        "macOff": "Uit, dus nummers die in je browser spelen worden niet opgepikt. Zet het aan om mee te zingen in Chrome, Safari, Brave of Edge: macOS vraagt één keer of OnKey de browser mag bedienen."
+      }
+    },
+    "paused": {
+      "text": "Luisteren is gepauzeerd. Ga verder om mee te zingen.",
+      "resumeTitle": "Hervat luisteren (⌘⇧P)",
+      "resume": "Ga verder"
+    },
+    "rename": {
+      "saveFailed": "Kon de naam niet bewaren.",
+      "buttonTitle": "Verkeerde naam? Verbeter artiest en titel (gebruikt om de songtekst te vinden)",
+      "title": "Verbeter de naam van het nummer",
+      "about": "Gelezen uit de YouTube-video. OnKey zoekt de songtekst op deze naam.",
+      "artist": "Artiest",
+      "songTitle": "Titel",
+      "cancel": "Annuleer",
+      "save": "Bewaar"
+    },
+    "notices": {
+      "dismiss": "Sluit",
+      "openWindowsSettings": "Open Windows-instellingen",
+      "openSystemSettings": "Open Systeeminstellingen",
+      "mic": {
+        "title": "OnKey hoort je microfoon niet",
+        "deniedPc": "Je zang wordt niet gehoord of gescoord tot dat lukt. Zet in <b>Windows-instellingen → Privacy en beveiliging → Microfoon</b> zowel <b>Microfoontoegang</b> als <b>Bureaublad-apps toegang geven tot je microfoon</b> aan.",
+        "deniedMac": "Je zang wordt niet gehoord of gescoord tot dat lukt. Zet OnKey aan in <b>Systeeminstellingen → Privacy en beveiliging → Microfoon</b>.",
+        "restrictedPc": "De instellingen van deze pc laten OnKey de microfoon niet gebruiken. Vraag het aan wie deze pc beheert.",
+        "restrictedMac": "De instellingen van je Mac laten OnKey de microfoon niet gebruiken. Vraag het aan wie deze Mac beheert.",
+        "noneMac": "Er is geen microfoon aangesloten, dus je zang wordt niet gehoord of gescoord. Sluit er een aan, of kies er een in <b>Systeeminstellingen → Geluid → Invoer</b>.",
+        "nonePc": "Er is geen microfoon aangesloten, dus je zang wordt niet gehoord of gescoord. Sluit er een aan, of kies er een in <b>{soundInput}</b>."
+      },
+      "musicQuiet": {
+        "title": "Het volume van {app} staat heel laag",
+        "body": "OnKey hoort het nummer niet goed{at, select, yes { ({app} staat op {volume}%)} other {}}, dus je zang wordt niet gescoord. Zet {app} harder en regel het volume met {os, select, pc {de pc} other {je Mac}}."
+      },
+      "automation": {
+        "title": "OnKey mag {app} niet bedienen",
+        "body": "{listening, select, yes {OnKey volgt het nu door te luisteren, en kan daar geen nummers starten, pauzeren of overslaan.} other {Daardoor weet het niet wat daar speelt.}} Zet {app} aan in <b>Systeeminstellingen → Privacy en beveiliging → Automatisering → OnKey</b>{listening, select, yes {, of zet het uit in de instellingen van OnKey} other {}}."
+      },
+      "notAnswering": {
+        "title": "{app} antwoordt OnKey niet",
+        "body": "Misschien vraagt macOS of OnKey {app} mag bedienen, in een venster dat achter andere verborgen zit: zoek het en kies <b>Sta toe</b>. Of zet {app} aan in <b>Systeeminstellingen → Privacy en beveiliging → Automatisering → OnKey</b>. OnKey probeert het over een minuut opnieuw."
+      },
+      "lyricsDown": {
+        "title": "Songteksten zijn nu niet beschikbaar",
+        "body": "LRCLIB, de gratis songtekstdienst die OnKey gebruikt, werkt op dit moment niet. De noten verschijnen gewoon, en de woorden komen erbij als de dienst tijdens het nummer terugkomt. Een nummer dat intussen geleerd wordt, krijgt zijn woorden de volgende keer dat je het zingt."
+      },
+      "models": {
+        "title": "OnKey kan nu geen nieuwe nummers leren",
+        "body": "De leermodellen, die in de app zitten, ontbreken of zijn beschadigd{hasError, select, yes { ({error})} other {}}. Nummers die je al geleerd hebt, blijven werken. Download OnKey opnieuw en {os, select, pc {installeer het over deze versie heen} other {vervang de app in de map Apps}} om het op te lossen: je nummers en takes blijven bewaard."
+      },
+      "modelsBroken": {
+        "title": "OnKey kan je zang nu niet horen",
+        "body": "Het toonhoogtemodel, dat in de app zit, kon niet laden{hasError, select, yes { ({error})} other {}}. Download OnKey opnieuw en vervang de app in de map Apps om het op te lossen: je nummers en takes blijven bewaard."
+      },
+      "youtubeBlocked": {
+        "title": "Laat OnKey de video lezen in {browser} om mee te zingen met YouTube",
+        "body": "Kies in {browser} <b>{setting}</b>. OnKey leest alleen de positie van de video en de titel van het nummer, niets anders op de pagina."
+      },
+      "youtubeOff": {
+        "title": "Speel je YouTube of YouTube Music af in {browser}?",
+        "turnOn": "Zet YouTube aan",
+        "pc": "OnKey pikt nummers in je browser pas op als YouTube aanstaat. Daarna volgt het het nummer dat {browser} aan {os} doorgeeft, en leert het zoals elk ander nummer.",
+        "mac": "OnKey pikt nummers in je browser pas op als YouTube aanstaat. macOS vraagt dan één keer of OnKey {browser} mag bedienen, zodat het kan lezen waar de video is.",
+        "cantFollow": "OnKey kan nummers in {browser} niet volgen. Speel ze af in <b>Chrome, Safari, Brave of Edge</b> en zet YouTube aan (hier, of in Instellingen), of zet de <b>luistermodus</b> aan in Instellingen, die in elke browser werkt."
+      }
+    },
+    "notASong": {
+      "text": "<hl>{name}</hl> klinkt als praten, niet als een nummer, dus OnKey is gestopt met leren.",
+      "dismiss": "Sluit",
+      "learnIt": "Het is wel een nummer: leer het de volgende keer dat het speelt"
+    },
+    "speakerHint": {
+      "text": "OnKey hoort je niet boven de muziek uit. Als je zingt, zet de muziek dan iets zachter of gebruik een koptelefoon voor een eerlijke score.",
+      "dismiss": "Sluit",
+      "never": "Toon niet meer"
+    },
+    "ended": {
+      "title": "Sessie afgelopen",
+      "howYouDid": "Zo ging het.",
+      "noTakes": "Deze keer geen takes die lang genoeg waren om te scoren."
+    },
+    "permission": {
+      "yourApp": "je muziekapp",
+      "title": "OnKey hoort {app} nog niet",
+      "body": "Om het nummer te volgen, luistert OnKey naar de audio van {app} op je Mac. De audio wordt niet bewaard of verstuurd; in luistermodus gaat een korte vingerafdruk ervan (niet de audio) naar Shazam van Apple om het nummer te herkennen.",
+      "step1": "1. Open <b>Systeeminstellingen → Privacy en beveiliging</b>",
+      "step2": "2. Kies <b>Scherm- en systeemaudio-opname</b>",
+      "step3": "3. Zet OnKey aan onder <b>Alleen systeemaudio-opname</b>",
+      "open": "Open Systeeminstellingen"
+    },
+    "mini": {
+      "playASong": "Speel een nummer af in Spotify of Apple Music",
+      "score": "score",
+      "hideDancer": "Verberg de danser hier",
+      "expand": "Open het volledige venster (M)",
+      "showDancer": "Toon de danser",
+      "progress": "Voortgang in het nummer"
+    }
+  },
+  "live": {
+    "lyrics": {
+      "none": "Geen gesynchroniseerde songtekst voor dit nummer",
+      "off": "Songteksten staan uit (Instellingen)",
+      "findingPlace": "Je plek zoeken…",
+      "countdown": "♪ <num>{which, select, next {Volgende regel} other {Eerste regel}} over {secs} s</num>"
+    },
+    "score": {
+      "label": "Score",
+      "afterSong": "na het nummer",
+      "onPitch": "✓ Zuiver",
+      "higher": "▲ Zing hoger",
+      "lower": "▼ Zing lager"
+    },
+    "transport": {
+      "restart": "Begin het nummer opnieuw (R)",
+      "previous": "Vorige (←)",
+      "pause": "Pauzeer (spatie)",
+      "play": "Speel af (spatie)",
+      "skipToSinging": "Spring naar de zang (→)",
+      "next": "Volgend nummer (→)"
+    },
+    "take": {
+      "done": "{blind, select, yes {blind · } other {}}{hasNotes, select, yes {{hit}/{total} noten} other {bekijk}} →",
+      "couldntScore": "kon niet scoren",
+      "singNow": "Zing nu",
+      "learnedPct": "{pct}% geleerd",
+      "playThrough": "speel het helemaal af",
+      "learningPct": "aan het leren… {pct}%",
+      "waiting": "wacht om te leren",
+      "learning": "aan het leren…",
+      "scoring": "scoren…",
+      "learned": "Geleerd · klaar om te zingen"
+    },
+    "timing": {
+      "title": "Loopt de songtekst hiermee voor of achter? Tik mee met een klik om de vertraging te meten",
+      "check": "Test de timing van <hl>{name}</hl> ›",
+      "theseHeadphones": "deze koptelefoon",
+      "dismiss": "Stel dit niet meer voor"
+    },
+    "chips": {
+      "connectionTitle": "Verbinding met de engine",
+      "reconnecting": "Opnieuw verbinden",
+      "resumeTitle": "Hervat luisteren (⌘⇧P)",
+      "paused": "Luisteren gepauzeerd",
+      "pauseTitle": "Pauzeer luisteren (⌘⇧P)",
+      "live": "Live",
+      "outputTitle": "Het geluid speelt op {device}. Je hoort het {ms} ms nadat de muziekapp het afspeelt; de score houdt daar rekening mee{checked, select, yes { (uit je timingtest in Instellingen)} other {}}.",
+      "thisDevice": "dit apparaat",
+      "bluetooth": "Bluetooth",
+      "headphones": "Koptelefoon of speakers",
+      "micTitle": "De microfoon waarnaar OnKey luistert (kies een andere in Instellingen)",
+      "noMic": "Geen microfoon"
+    },
+    "switches": {
+      "blindTitle": "Verberg de noten om jezelf te testen: een blinde take (B)",
+      "showNotes": "Toon noten",
+      "echoTitle": "Haalt het geluid van de muziek uit je microfoon. Zet uit om te testen met het nummer zelf uit de speakers.",
+      "echo": "Echo-onderdrukking",
+      "dancerTitle": "Een poppetje dat op het nummer danst terwijl je zingt",
+      "dancer": "Danser"
+    },
+    "finish": {
+      "lastLine": "Dat was de laatste regel",
+      "seeScore": "Rond af en bekijk je score",
+      "now": "Rond nu af",
+      "paused": "Gepauzeerd",
+      "pausedIn": "{learning, select, yes {geleerd} other {gescoord}} over {time}",
+      "learning": "aan het leren…",
+      "scoring": "scoren…"
+    },
+    "openTake": {
+      "countdown": "Gepauzeerd · {learning, select, yes {geleerd} other {gescoord}} over {time}",
+      "learning": "Aan het leren…",
+      "scoring": "Scoren…",
+      "state": "{state, select, paused {Gepauzeerd} learning {Leert terwijl het speelt} other {Nu aan het zingen}} · {learning, select, yes {geleerd} other {gescoord}} als het afloopt",
+      "paused": "gepauzeerd",
+      "now": "nu",
+      "finish": "Rond nu af"
+    },
+    "skip": {
+      "singingIn": "Zang over {secs}s",
+      "skipAhead": "Spring vooruit"
+    },
+    "pitchTitle": "Je toonhoogte tegenover de huidige noot",
+    "toast": {
+      "view": "Bekijk",
+      "learned": "Geleerd · volgende keer met noten"
+    }
+  },
+  "lane": {
+    "verdict": {
+      "perfect": "Perfect",
+      "excellent": "Uitstekend",
+      "great": "Geweldig",
+      "good": "Goed",
+      "ok": "Oké"
+    },
+    "blind": "Blinde take · noten verborgen · druk op B om ze te tonen",
+    "findingPlace": "Je plek in het nummer zoeken…",
+    "liningUp": "Gelijkzetten met het nummer…",
+    "singingStarts": "De zang begint over {secs}s"
+  },
+  "take": {
+    "allTakes": "← Alle takes",
+    "notFound": "Deze take is niet gevonden.",
+    "header": {
+      "singAgainBlocked": "Je kunt het zingen zodra het geleerd is",
+      "singAgain": "Zing het opnieuw",
+      "shareTitle": "Een video van 20 seconden met je stem en de noten, voor Instagram",
+      "share": "Deel",
+      "within50Title": "{pct}% van je zang zat binnen 50 cent van de zanger.",
+      "sungLevelTitle": "Opnieuw gescoord op basis van je zang zoals die bewaard is, op het niveau dat in Instellingen is gekozen",
+      "sungLevel": "Getoond op niveau {level}. Gezongen op niveau {sungLevel} scoorde het {score}.",
+      "leftOut": "Gescoord zonder {count, plural, one {het deel dat is gemarkeerd} other {de delen die zijn gemarkeerd}} als niet de melodie{changed, select, yes { (het was {first})} other {}}."
+    },
+    "mode": {
+      "firstPlay": "Eerste keer",
+      "firstPlayWhy": "De eerste keer dat dit nummer speelde: OnKey leerde de melodie, zonder noten te tonen",
+      "blind": "Blind",
+      "blindWhy": "Gezongen zonder noten"
+    },
+    "story": {
+      "none": "Je zong niet mee met de zangpartij, dus er was niets om te scoren.",
+      "main": "Je zong <n>{sang}%</n> van de zangpartij, en wat je zong was <n>{tune}%</n> zuiver. {full, select, yes {Dat is je score.} other {Je score telt het volledig mee zodra je 40% of meer van de partij zingt.}}"
+    },
+    "verdict": {
+      "great": "Prachtig zuiver.",
+      "mostly": "Grotendeels zuiver, met hier en daar een wankel stukje.",
+      "often": "Vaak dicht bij de noot, soms ervan afgedwaald.",
+      "away": "De melodie ontglipte je op sommige plekken.",
+      "bias": "Gemiddeld zat je {off}.",
+      "worstLine": "Nog eens proberen: “{text}”.",
+      "worstAt": "Nog eens proberen: de regel op {time}."
+    },
+    "proud": {
+      "share": "Deel deze take",
+      "notNow": "Niet nu"
+    },
+    "player": {
+      "notKept": "Je opname van deze take is niet meer bewaard: OnKey bewaart de opname van elke take tot ze samen 2 GB overschrijden, dan laat het de oudste gaan (nooit die van je favorieten of de beste take van een nummer). De scores blijven.",
+      "stop": "Stop",
+      "play": "Speel af",
+      "playWithSong": "Speel je opname af met het nummer",
+      "playVoice": "Speel je opname af",
+      "whatPlays": "Wat er speelt",
+      "withSong": "Met het nummer",
+      "voiceOnly": "Alleen je stem",
+      "backToStart": "Terug naar het begin",
+      "lining": "Gelijkzetten met het nummer…",
+      "voiceTitle": "Hoe hard je stem klinkt tegenover het nummer",
+      "yourVoice": "Je stem",
+      "voiceNormal": "normaal",
+      "voiceDb": "{db} dB",
+      "aboutJoin": "OnKey bewaart je stem, niet de muziek. ‘Met het nummer’ speelt je opname gelijk met {song} als je dat afspeelt in {app}. Voor de vertraging van je microfoon ({ms} ms) is automatisch gecorrigeerd.",
+      "aboutPlay": "OnKey bewaart je stem, niet de muziek. ‘Met het nummer’ speelt het nummer in {app} naast je opname. Voor de vertraging van je microfoon ({ms} ms) is automatisch gecorrigeerd."
+    },
+    "join": {
+      "play": "Speel {song} af in {app}. OnKey doet mee.",
+      "playFromStart": "Speel {song} vanaf het begin af in {app}. OnKey doet mee.",
+      "goTo": "Ga naar {time} in {app} voor dit deel.",
+      "letStart": "Laat OnKey het voor je starten"
+    },
+    "graph": {
+      "singer": "Noten van de zanger",
+      "within50": "Jij, binnen 50¢",
+      "within100": "Binnen 100¢",
+      "further": "Verder ernaast",
+      "heldTitle": "Noten die je minstens de helft van hun lengte binnen een halve toon hield. Hun balkjes lichten groen op.",
+      "held": "<n>{hit}</n> van {total} noten vastgehouden",
+      "biasTitle": "Waar je toonhoogte gemiddeld zat tegenover die van de zanger",
+      "centred": "Gemiddeld in het midden",
+      "bias": "gemiddeld {off}",
+      "notMelody": "Niet de melodie"
+    },
+    "notMelody": {
+      "buttonTitle": "Laat een deel weg waar de noten een achtergrondzang of harmonie volgen, niet de melodie",
+      "button": "Niet de melodie?",
+      "span": "{from} tot {to}",
+      "saving": "Opnieuw scoren…",
+      "leaveOut": "Laat het buiten de score",
+      "drag": "Sleep over het deel waar de noten een achtergrondzang of harmonie volgen in plaats van de melodie.",
+      "cancel": "Annuleer",
+      "note": "Het blijft buiten de score van elke take van dit nummer, en ook als je het de volgende keer zingt.",
+      "leftOut": "Buiten de score gelaten, niet de melodie:",
+      "putBack": "Zet het terug",
+      "notLearned": "Dit nummer is nog niet geleerd, dus er is niets weggelaten.",
+      "noChange": "Geen enkele take kreeg een andere score.",
+      "rescored": "{count, plural, one {{count} take} other {{count} takes}} van dit nummer opnieuw gescoord."
+    },
+    "report": "Meld een probleem met deze take",
+    "lines": {
+      "title": "Regel voor regel",
+      "lyricsOff": "Songteksten staan uit (Instellingen), dus deze take heeft geen rapport per regel.",
+      "none": "Geen gesynchroniseerde songtekst gevonden voor dit nummer.",
+      "playFrom": "Speel af vanaf {time}",
+      "line": "Regel {n}",
+      "noLead": "geen leadzang",
+      "notSung": "niet gezongen"
+    }
+  },
+  "share": {
+    "saved": "Bewaard in Downloads. Voeg in Instagram {song} toe en laat het beginnen op {at} (gekopieerd).",
+    "failed": "Kon de video niet maken: {error}",
+    "clip": "<b>{at}–{to}</b><dim> · {hits} van {notes} noten geraakt</dim>",
+    "cantShare": "Deze take kan niet gedeeld worden",
+    "finding": "De clip zoeken…",
+    "which": "Welke 20 seconden",
+    "fromPlayhead": "Vanaf de afspeelkop",
+    "best": "Beste stuk",
+    "playIt": "Speel af",
+    "making": "Video maken…",
+    "make": "Maak video",
+    "close": "Sluit",
+    "noBest": "In deze take is geen noot geraakt, dus er is geen beste stuk: het begint bij de afspeelkop.",
+    "about": "Je stem zoals opgenomen, de noten en je score, zonder toegevoegde muziek. Voeg het nummer in Instagram toe uit zijn eigen muziekbibliotheek, beginnend op de getoonde tijd. Gezongen met het nummer uit de speakers? Dan zit er een deel van in je opname: takes met koptelefoon zijn het beste om te delen. <why>{open, select, yes {Verberg} other {Waarom een koptelefoon?}}</why> Plaats geen schermopnamen waarin de muziek speelt."
+  },
+  "challenge": {
+    "button": "Daag iemand uit",
+    "says": "Een link die zegt dat je <b>{score}</b> scoorde op {song}, en vraagt of ze dat kunnen verslaan.",
+    "nameLabel": "Je voornaam (optioneel)",
+    "namePlaceholder": "Laat leeg om anoniem te blijven",
+    "copied": "Gekopieerd: plak de link bij iemand",
+    "failed": "Kon niet kopiëren",
+    "copy": "Kopieer link",
+    "holds": "De link bevat alleen de naam van het nummer, de artiest en je score. Geen opname, noten of songtekst.",
+    "holdsNamed": "De link bevat alleen de naam van het nummer, de artiest, je score en je naam. Geen opname, noten of songtekst."
+  },
+  "voiceRange": {
+    "title": "Je bereik",
+    "working": "Berekenen uit je takes…",
+    "empty": "Zing een paar nummers en OnKey toont hier je stembereik.",
+    "from": "uit {count, plural, one {{count} take} other {{count} takes}}",
+    "fromPending": "uit {count, plural, one {{count} take} other {{count} takes}}; {pending} oudere worden nog gemeten",
+    "summary": "<range>{low}–{high}</range><dim>, het prettigst rond </dim><mid>{midLo}–{midHi}</mid>",
+    "aria": "Je bereik {low} tot {high}, het prettigst van {midLo} tot {midHi}",
+    "note": "De noten die je het meest zong, uit je takes (de laagste en hoogste 5% weggelaten). Het groeit naarmate je meer nummers zingt."
+  },
+  "voiceBreak": {
+    "text": "Je hebt {minutes} minuten gezongen. Geef je stem een paar minuten rust, en drink wat water.",
+    "dismiss": "Sluit",
+    "ok": "OK"
+  },
+  "takeTags": {
+    "firstPlay": "Eerste keer",
+    "blind": "Blind"
+  },
+  "timingCheck": {
+    "macOs": "macOS",
+    "title": "Je uitvoer",
+    "experimental": "Experimenteel",
+    "checkOn": "Test de timing van {name}",
+    "thisOutput": "deze uitvoer",
+    "thisOutputCap": "Deze uitvoer",
+    "checked": "Door jou getest: OnKey rekent hier {heard} ms voordat de muziek je oren bereikt ({os} zegt {reported} ms).",
+    "unchecked": "OnKey rekent hier {reported} ms voordat de muziek je oren bereikt, zoals {os} aangeeft. Bluetooth-koptelefoons doen er vaak langer over dan {os} meldt, waardoor songtekst en noten te vroeg komen. Tik mee met een klik om het te meten (twee keer: de metingen moeten overeenkomen).",
+    "how": "Tik mee in het ritme, zoals meeklappen op een beat. Wacht niet tot je elke klik hoort: blijf in de maat.",
+    "pauseFirst": "Pauzeer eerst de muziek.",
+    "reset": "Herstel",
+    "checkAgain": "Test opnieuw",
+    "redo": "Opnieuw",
+    "check": "Test de timing",
+    "tapAria": "Tik mee met elke klik",
+    "tapTitle": "Druk op de spatiebalk (of klik hier) mee met de klikken, in het ritme",
+    "keepTime": "Blijf tot het einde in de maat, en luister liever dan te kijken. Esc stopt.",
+    "cancel": "Annuleer",
+    "cantPlay": "De test kon zijn klikken niet afspelen ({error}).",
+    "said": {
+      "confirmBefore": "Dat kwam uit op {measured} ms, wat niet overeenkomt met de test ervoor ({before} ms). Nog één keer om het te bevestigen.",
+      "confirm": "Je hoort het {measured} ms nadat het is afgespeeld ({os} zegt {reported} ms). Nog één keer om het te bevestigen.",
+      "onTime": "{name} {plural, select, yes {zijn} other {is}} op tijd: binnen {ms} ms van wat OnKey aannam.",
+      "behind": "{name} {plural, select, yes {lopen} other {loopt}} {ms} ms achter op wat OnKey aannam; aangepast.",
+      "ahead": "{name} {plural, select, yes {lopen} other {loopt}} {ms} ms voor op wat OnKey aannam; aangepast."
+    }
+  },
+  "setup": {
+    "dialogLabel": "OnKey configureren",
+    "stepsLabel": "Configuratiestappen",
+    "welcome": {
+      "title": "Welkom bij OnKey",
+      "lead": "Leer de nummers zingen waar je van houdt, met de muziek die je al afspeelt.",
+      "play": "Speel een nummer af in je muziekapp, zoals je altijd doet. OnKey luistert naar de muziek die op je {os, select, mac {Mac} other {pc}} speelt en volgt vanzelf mee.",
+      "learn": "De eerste keer dat een nummer speelt, leert OnKey de melodie van de zanger. Daarna zie je elke noot aankomen, en waar je te hoog of te laag zit.",
+      "privacyPc": "OnKey bewaart de muziek waarnaar het luistert nooit. Je zangopnamen blijven op deze pc, zodat je je takes kunt terugluisteren. Nummers worden ook op deze pc herkend, op basis van wat je muziekapp zegt dat er speelt: er wordt niets verstuurd om ze te herkennen.",
+      "privacyMac": "OnKey bewaart de muziek waarnaar het luistert nooit. Je zangopnamen blijven op deze Mac, zodat je je takes kunt terugluisteren. Om een nieuw nummer te herkennen, stuurt de luistermodus een korte vingerafdruk van het geluid van de muziekapp (niet de audio) naar Shazam van Apple.",
+      "entitled": "OnKey is om thuis te oefenen met muziek die je mag afspelen. De melodieën die het leert zijn voor je eigen oefening, dus houd ze voor jezelf.",
+      "macosOld": "OnKey heeft macOS 14.2 of nieuwer nodig om andere apps te horen. Werk macOS bij in Systeeminstellingen → Algemeen → Software-update.",
+      "later": "Stel later in",
+      "start": "Aan de slag"
+    },
+    "permissions": {
+      "title": "Twee toestemmingen",
+      "sub": "macOS vraagt ze elk één keer. Je kunt ze later wijzigen in Systeeminstellingen → Privacy en beveiliging.",
+      "mic": {
+        "title": "Microfoon",
+        "why": "Om je te horen zingen.",
+        "hint": "Zet OnKey aan onder Microfoon."
+      },
+      "audio": {
+        "title": "Systeemaudio-opname",
+        "why": "Om de muziek te horen die op je Mac speelt, zodat OnKey de melodie kan leren. OnKey bewaart of verstuurt de muziek nooit; om een onbekend nummer te herkennen, kan een korte vingerafdruk ervan (niet de audio) naar Shazam van Apple gaan.",
+        "hint": "Open Scherm- en systeemaudio-opname en zet OnKey aan onder Alleen systeemaudio-opname."
+      },
+      "reopen": "Als macOS vraagt om OnKey te stoppen en opnieuw te openen nadat je iets toestaat, doe dat dan. De configuratie gaat verder waar je was.",
+      "skip": "Sla nu over",
+      "continue": "Ga verder",
+      "allowed": "Toegestaan",
+      "openSettings": "Open Systeeminstellingen",
+      "asking": "Vragen…",
+      "allow": "Sta toe",
+      "restricted": "De instellingen van je Mac staan dit niet toe. Vraag het aan wie de Mac beheert."
+    },
+    "musicApps": {
+      "title": "Laat OnKey Spotify en Apple Music volgen",
+      "recommended": "Aangeraden",
+      "why": "Zodat songtekst en noten vanaf de eerste seconde op de juiste plek staan, en OnKey nummers voor je kan afspelen en opnieuw starten.",
+      "scope": "Het kan lezen wat er speelt en waar, en afspelen, pauzeren en doorspoelen. Niets anders. macOS vraagt het één keer per app.",
+      "waitingMac": "Wachten op macOS. Als het iets vraagt over Spotify of Apple Music (de vraag kan achter dit venster opengaan), beantwoord het dan. Geen vraag? Ga verder: macOS vraagt het de eerste keer dat je daar een nummer afspeelt.",
+      "noAnswer": "macOS heeft nog geen antwoord gekregen. Staat de vraag op het scherm, beantwoord hem dan; anders vraagt macOS het de eerste keer dat je daar een nummer afspeelt.",
+      "listenOnly": "Alleen luisteren",
+      "continue": "Ga verder",
+      "carryOn": "Ga verder",
+      "asking": "Vragen…",
+      "allow": "Sta toe",
+      "appSpotify": "Spotify",
+      "appAppleMusic": "Apple Music",
+      "state": {
+        "allowed": "Toegestaan",
+        "notAllowed": "Niet toegestaan",
+        "notRunning": "macOS vraagt het als je er voor het eerst een nummer afspeelt",
+        "waiting": "Nog geen antwoord",
+        "ask": "Nog niet gevraagd"
+      },
+      "openSettings": "Open Systeeminstellingen"
+    },
+    "micCheck": {
+      "title": "Hoort OnKey je?",
+      "micOffPc": "Windows heeft de microfoon uitgeschakeld voor apps. Zet in <b>Windows-instellingen → Privacy en beveiliging → Microfoon</b> zowel <b>Microfoontoegang</b> als <b>Bureaublad-apps toegang geven tot je microfoon</b> aan.",
+      "micFirst": "OnKey heeft eerst de microfoon nodig: ga terug om die toe te staan.",
+      "noMicDevice": "Er is geen microfoon aangesloten. Sluit er een aan, of kies er een in {soundInput}.",
+      "macSoundInput": "Systeeminstellingen → Geluid → Invoer",
+      "say": "Zeg iets, of zing een noot.",
+      "device": "Luistert naar {device}. Je kunt een andere kiezen in Instellingen.",
+      "meterLabel": "Microfoonniveau",
+      "heard": "Gehoord",
+      "listening": "Luisteren…",
+      "notAllowed": "Niet toegestaan",
+      "starting": "Starten…",
+      "noMic": "Geen microfoon",
+      "headphones": "Een koptelefoon geeft de stabielste scores. Laptopspeakers werken ook: OnKey haalt de muziek uit wat de microfoon hoort.",
+      "skip": "Sla over",
+      "continue": "Ga verder",
+      "openSettings": "Open {settings}",
+      "back": "Terug naar toestemmingen"
+    },
+    "ready": {
+      "title": "Alles staat klaar",
+      "lead": "Speel een nummer af in je muziekapp en begin met zingen. De eerste keer dat een nummer speelt, leert OnKey de melodie.",
+      "tipsLabel": "Hoe leren werkt",
+      "tip": {
+        "toEnd": "Laat een nummer tot het einde spelen. Hoort OnKey maar een deel, dan leert het de rest de volgende keer dat het speelt.",
+        "talk": "Praat of zing mee zoveel je wilt. OnKey leert van het geluid van de muziekapp, niet van je microfoon.",
+        "volumePc": "Houd het eigen volume van de muziekapp op ongeveer een kwart of hoger.",
+        "learnPc": "Het leren draait op deze pc nog een paar minuten nadat het nummer is afgelopen. Blijf intussen luisteren.",
+        "volumeMac": "Houd het eigen volume van de muziekapp op ongeveer een kwart of hoger. Het volume van je Mac mag alles zijn, zelfs uit.",
+        "learnMac": "Het leren draait op je Mac nog een paar minuten nadat het nummer is afgelopen, langer op Macs met 8 GB geheugen. Blijf intussen luisteren."
+      },
+      "quickest": "<b>Snelste start:</b> speel de OnKey-startplaylist af en laat die een half uur aanstaan.",
+      "openPlaylist": "Open de playlist in {app}",
+      "playIn": "Speel af in {app}",
+      "comfortable": "Zing op een comfortabel volume: OnKey scoort je toonhoogte, niet hoe hard je zingt. Rust als je stem moe wordt, en stop als je keel pijn doet.",
+      "start": "Begin met zingen"
+    }
+  },
+  "controlPrompt": {
+    "titleAllow": "OnKey {app} laten bedienen?",
+    "titleCant": "OnKey kan {app} niet bedienen",
+    "bodyAllow": "OnKey luistert naar {app}, maar bedient het niet. Om vanuit OnKey nummers te starten, naar de zang te springen en te pauzeren, heeft het je toestemming nodig.{os, select, mac { macOS vraagt het jou ook één keer.} other {}}",
+    "bodyCant": "OnKey volgt {app} alleen door te luisteren. Speel af, pauzeer en sla over in de app zelf.",
+    "browserPc": "OnKey kan dan nummers in je browser volgen, en ze daar afspelen, pauzeren en doorspoelen.",
+    "browserMac": "Dit is de grotere toestemming: OnKey kan dan de YouTube-tab in je browser lezen en bedienen, en luistert naar al het geluid van je browser (ook gesprekken): geluid dat het niet herkent kan als korte vingerafdruk naar Shazam gaan, nooit de audio. In je browser moet ook ‘Sta JavaScript van Apple Events toe’ aanstaan.",
+    "notNow": "Niet nu",
+    "yourBrowser": "je browser",
+    "openIn": "Open in {app}",
+    "allow": "Sta bediening toe",
+    "changeLater": "Je kunt dit altijd wijzigen in Instellingen."
+  },
+  "starters": {
+    "label": "Nummers om te proberen",
+    "heading": "Probeer deze <dim>· nummers die OnKey goed volgt</dim>",
+    "hide": "Verberg suggesties",
+    "close": "Sluit",
+    "earlier": "Eerdere nummers",
+    "more": "Meer nummers",
+    "why": {
+      "en": {
+        "standByMe": "Makkelijk: een rustige, eenvoudige melodie",
+        "wonderwall": "De meezinger die iedereen kent",
+        "fastCar": "Laag en rustig, makkelijk te volgen",
+        "youngAndBeautiful": "Lange noten om vast te houden",
+        "someoneYouLoved": "Zachte verzen, groot refrein",
+        "someoneLikeYou": "Eén heldere stem, een refrein dat omhoog gaat",
+        "hallelujah": "Langzaam en expressief: goed voor je zuiverheid",
+        "iWillAlwaysLoveYou": "De uitdaging: een enorm bereik"
+      },
+      "es": {
+        "laCamisaNegra": "Makkelijk: een smalle, pakkende melodie",
+        "meVoy": "Licht en rustig, makkelijk te volgen",
+        "deMusicaLigera": "De rockmeezinger die iedereen kent",
+        "comoLaFlor": "Een lieve, wiegende klassieker",
+        "rayandoElSol": "Zachte verzen, groot refrein",
+        "rosas": "Eén heldere stem, een refrein dat omhoog gaat",
+        "hijoDeLaLuna": "Langzaam en betoverend: goed voor je zuiverheid",
+        "volverVolver": "De uitdaging: grote ranchera-noten"
+      },
+      "pt": {
+        "comoUmaOnda": "Makkelijk: een rustige, eenvoudige melodie",
+        "velhaInfancia": "Zacht en lief, makkelijk te volgen",
+        "gostavaTantoDeVoce": "Soulklassieker, een refrein dat iedereen zingt",
+        "tempoPerdido": "De rockhymne die iedereen kent",
+        "comoEuQuero": "Lichte pop met een heldere melodie",
+        "infiel": "Sertanejo-liefdesverdriet, gemaakt om mee te zingen",
+        "amarPelosDois": "Langzaam en teder: goed voor je zuiverheid",
+        "oceano": "De uitdaging: een lange, kronkelende melodie"
+      },
+      "it": {
+        "azzurro": "Makkelijk: een rustige, eenvoudige melodie",
+        "lItaliano": "De meezinger die iedereen kent",
+        "saraPercheTiAmo": "Vrolijk en speels, gemaakt voor groepen",
+        "albachiara": "Laag en rustig, makkelijk te volgen",
+        "laSolitudine": "Eén heldere stem, een refrein dat omhoog gaat",
+        "emozioni": "Langzaam en expressief: goed voor je zuiverheid",
+        "grandeGrandeGrande": "Groeit van zacht naar groots",
+        "caruso": "De uitdaging: een zwevend, operatesk refrein"
+      },
+      "fr": {
+        "lesChampsElysees": "Makkelijk: een rustige, eenvoudige melodie",
+        "jeLAimeAMourir": "Zacht en laag, makkelijk te volgen",
+        "laVieEnRose": "De klassieker die iedereen kent",
+        "avenir": "Lichte pop, helder en pakkend",
+        "jeVeux": "Fel en swingend, leuk om te zingen",
+        "derniereDanse": "Lange noten om vast te houden",
+        "laBoheme": "Langzaam en expressief: goed voor je zuiverheid",
+        "pourQueTuMAimesEncore": "De uitdaging: bouwt op naar grote noten"
+      },
+      "de": {
+        "uberDenWolken": "Makkelijk: een rustige folkmelodie",
+        "n99Luftballons": "De meezinger die iedereen kent",
+        "perfekteWelle": "Rustige verzen, groot refrein",
+        "atemlosDurchDieNacht": "Vrolijke schlager, gemaakt om mee te zingen",
+        "griechischerWein": "Een klassieker die elke generatie kent",
+        "dasBeste": "Eén heldere stem, een refrein dat omhoog gaat",
+        "aufUns": "Een groot, open refrein om uit volle borst te zingen",
+        "derWeg": "De uitdaging: langzaam, rauw en expressief"
+      }
+    },
+    "in": "in",
+    "appSpotify": "Spotify",
+    "appAppleMusic": "Apple Music",
+    "searchIn": "Zoek het in {app}",
+    "openItInAppleMusic": "Open het in Apple Music",
+    "openInAppleMusic": "Open in Apple Music",
+    "openSongInAppleMusic": "Open {title} van {artist} in Apple Music",
+    "playlist": {
+      "title": "Speel de OnKey-startplaylist af",
+      "sub": "Al deze nummers en meer, van makkelijk tot uitdagend: druk op afspelen en zing",
+      "orAppleMusic": "of Apple Music",
+      "openInAppleMusic": "Open de playlist in Apple Music",
+      "open": "Open de playlist in {app}",
+      "playIn": "Speel af in {app}"
+    }
+  },
+  "demo": {
+    "title": "Probeer het nu: zing een demonummer",
+    "starting": "Starten…",
+    "tryIt": "Probeer het nu",
+    "about": "Een voorbeeldnummer om te zien hoe OnKey werkt. Je eigen nummers moeten eerst één keer spelen om geleerd te worden."
+  },
+  "guides": {
+    "systemAudio": {
+      "summary": "Hoe je OnKey systeemaudio laat opnemen op een Mac. Open in Systeeminstellingen Privacy en beveiliging, kies Scherm- en systeemaudio-opname en zet OnKey aan onder Alleen systeemaudio-opname. Als macOS het vraagt, kies Stop en open opnieuw. OnKey opent weer met systeemaudio-opname aangevinkt en de configuratie gaat verder.",
+      "step": {
+        "openPrivacy": "Open Privacy en beveiliging",
+        "screenRecording": "Scherm- en systeemaudio-opname",
+        "turnOn": "Zet OnKey aan onder Alleen systeemaudio-opname",
+        "quitReopen": "Als macOS het vraagt: stop en open opnieuw. De configuratie gaat verder"
+      },
+      "dots": "Stappen",
+      "stepOf": "Stap {step} van {count}: {caption}",
+      "mock": {
+        "privacySecurity": "Privacy en beveiliging",
+        "screenRecording": "Scherm- en systeemaudio-opname",
+        "audioOnly": "Alleen systeemaudio-opname",
+        "appName": "OnKey",
+        "quitReopenQuestion": "Stoppen en opnieuw openen?",
+        "later": "Later",
+        "quitReopen": "Stop en open opnieuw",
+        "setup": "Configuratie",
+        "systemAudioRow": "Systeemaudio-opname"
+      }
+    },
+    "musicApps": {
+      "caption": {
+        "ask": "macOS vraagt het één keer per app",
+        "allow": "Kies Sta toe",
+        "done": "Daarna kan het volgen wat er speelt",
+        "behind": "De vraag kan achter dit venster opengaan: zoek hem"
+      },
+      "labelOne": "Animatie: macOS vraagt of OnKey {app} mag bedienen. De aanwijzer kiest Sta toe, de vraag sluit en de app verschijnt met een vinkje in het OnKey-venster. Tot slot staat de vraag half verborgen achter het OnKey-venster, met een herinnering om hem daar te zoeken.",
+      "labelTwo": "Animatie: macOS vraagt of OnKey {first} en daarna {second} mag bedienen. De aanwijzer kiest Sta toe, de vraag sluit en de app verschijnt met een vinkje in het OnKey-venster. Tot slot staat de vraag half verborgen achter het OnKey-venster, met een herinnering om hem daar te zoeken.",
+      "app": {
+        "spotify": "Spotify",
+        "appleMusic": "Apple Music"
+      },
+      "asked": {
+        "spotify": "Spotify",
+        "appleMusic": "Muziek"
+      },
+      "alert": {
+        "wantsAccess": "OnKey wil toegang om",
+        "control": "{app} te besturen",
+        "allowing": "Hiermee geef je toegang tot {app}.",
+        "dontAllow": "Sta niet toe",
+        "allow": "Sta toe"
+      },
+      "window": {
+        "title": "OnKey",
+        "note": "A4",
+        "musicApps": "MUZIEKAPPS"
+      },
+      "menuBar": {
+        "appName": "OnKey"
+      },
+      "dots": "Stappen",
+      "stepOf": "Stap {step} van {count}: {caption}",
+      "stepOfApp": "Stap {step} van {count}: {caption} ({app})"
+    },
+    "stillSteps": {
+      "dots": "Stappen",
+      "stepOf": "Stap {step} van {count}",
+      "again": "Opnieuw",
+      "next": "Volgende"
+    },
+    "learnSong": {
+      "steps": {
+        "s0": "Speel een nummer één keer tot het einde",
+        "s1": "OnKey leert de melodie van de muziek, niet van je microfoon",
+        "s2": "Een paar minuten nadat het is afgelopen",
+        "s3": "De volgende keer zing je het met de noten"
+      },
+      "summary": "OnKey leert een nummer. Een nummer speelt één keer tot het einde in een muziekspeler terwijl geluidsgolven naar OnKey stromen en de melodie als lettergreepbalkjes wordt getekend. Een paar minuten nadat het is afgelopen, wordt een leerring een groen vinkje: Geleerd. De volgende keer dat het nummer speelt, schuiven de noten voorbij met de groene stemlijn van de zanger erop en de songtekst eronder.",
+      "learning": "Aan het leren…",
+      "learned": "Geleerd",
+      "appName": "OnKey",
+      "melody": "MELODIE",
+      "you": "JIJ",
+      "lyric": {
+        "w0": "houd",
+        "w1": "het",
+        "w2": "licht",
+        "w3": "nog",
+        "w4": "e-",
+        "w5": "ven",
+        "w6": "lan-",
+        "w7": "ger",
+        "w8": "voor",
+        "w9": "de",
+        "w10": "nacht"
+      },
+      "stepsGroup": "Animatiestappen",
+      "stepLabel": "Stap {n} van {count}: {caption}"
+    },
+    "leaveOut": {
+      "steps": {
+        "s0": "Volgen de noten een achtergrondzang?",
+        "s1": "Sleep over dat deel",
+        "s2": "Het blijft buiten de score, voor elke take van het nummer"
+      },
+      "ariaLabel": "Animatie van een toonhoogtegrafiek voor één take van een nummer. Paarse balkjes tonen de noten die de score verwacht en een lijn toont wat de zanger zong, groen waar het klopt. Op één stuk springen de paarse balkjes omhoog en volgen een achtergrondzang, terwijl de zanger de melodie blijft zingen en de lijn oranje wordt. Een cursor sleept over dat stuk om het te selecteren en klikt op ‘Laat het buiten de score’. Het stuk wordt grijs gestreept, de score stijgt van {before} naar {after}, en hetzelfde stuk blijft buiten de score voor elke take van het nummer.",
+      "score": "Score",
+      "take": "Take {n}",
+      "leftOut": "Weggelaten",
+      "leaveOutButton": "Laat het buiten de score",
+      "stepsGroup": "Animatiestappen",
+      "stepLabel": "Stap {n}: {caption}"
+    },
+    "speakers": {
+      "steps": {
+        "s0": "Met speakers komt het nummer in je opname terecht",
+        "s1": "Met een koptelefoon is het alleen je stem"
+      },
+      "label": "Twee korte scènes. Uit laptopspeakers stroomt het nummer naar buiten en krult de microfoon in, zodat de opname je stem met de muziek mengt. Met een koptelefoon blijft de muziek in je oren en is de opname alleen je stem.",
+      "rec": "REC",
+      "voice": "Stem",
+      "song": "Nummer",
+      "stepsGroup": "Stappen",
+      "stepLabel": "Stap {n} van {count}: {caption}"
+    },
+    "fadeDemo": {
+      "captions": {
+        "c0": "Zodra je een nummer goed hebt gezongen",
+        "c1": "Vervaagt je lijn zolang je op de noot zit",
+        "c2": "Glijd je ervan af, dan verschijnt hij gewoon",
+        "c3": "Haal bij elke take de volledige notenhulp terug"
+      },
+      "take": "Take {n}",
+      "ariaLabel": "Vier takes van hetzelfde nummer als notenbanen: take 1, 3, 5 en 8. De paarse noten blijven in elke take hetzelfde. Je groene stemlijn is fel in take 1 en elke take vager zolang hij op de noot zit; in take 5 glijdt hij even meer dan een halve toon weg en dat deel verschijnt volledig, in rood. Een schakelaar Volledige notenhulp brengt de hele lijn terug.",
+      "fullGuide": "Volledige notenhulp",
+      "stepsGroup": "Animatiestappen",
+      "stepLabel": "Stap {n} van {count}: {caption}"
+    }
+  },
+  "guideFade": {
+    "title": "Je stemlijn vervaagt zolang je op de noot zit ({amount, select, little {een beetje} more {meer} other {helemaal}}), en verschijnt als je er meer dan een halve toon naast zit. Zet het uit in Instellingen.",
+    "note": "Notenhulp afgebouwd: deze ken je",
+    "showFull": "Toon volledige notenhulp"
+  },
+  "update": {
+    "failed": {
+      "text": "Kon niet bijwerken naar OnKey {version}",
+      "why": "Waarom: {error}. Instellingen → Controleer nu probeert het opnieuw.",
+      "again": "Instellingen → Controleer nu probeert het opnieuw."
+    },
+    "official": {
+      "text": "OnKey {version} is uit bij het oorspronkelijke project",
+      "why": "Deze OnKey is uit de broncode gebouwd en werkt zichzelf dus niet bij.",
+      "download": "Download"
+    },
+    "ready": {
+      "why": "OnKey {version} staat klaar. Herstart je nu niet, dan wordt het geïnstalleerd als je stopt.",
+      "waiting": "Bijwerken na dit nummer…",
+      "available": "Update beschikbaar",
+      "restart": "Herstart om bij te werken",
+      "later": "Later",
+      "laterWhy": "Later (wordt geïnstalleerd als je stopt)"
+    },
+    "hide": "Verberg"
+  },
+  "report": {
+    "title": "Meld een probleem",
+    "titleTake": "Meld een probleem met deze take",
+    "savedPc": "Bewaard in {folder} als <file>{name}</file>, en getoond in {files}. Voeg dat ene bestand bij je bericht (of bij een GitHub-issue). Er is niets verstuurd.",
+    "savedMac": "Bewaard als <file>{path}</file>. Om het te versturen, open je een issue op GitHub en voeg je de zip toe (sleep hem in het vak). Er is niets verstuurd.",
+    "showInPc": "Toon in {files}",
+    "showInFinder": "Toon in Finder",
+    "openIssue": "Open een GitHub-issue",
+    "done": "Gereed",
+    "introPc": "OnKey zet zijn gegevens in één zipbestand op je bureaublad, zodat je het bij een bericht kunt voegen: het logboek van de laatste drie dagen, een samenvatting van elke afspeelbeurt, en een samenvatting van deze pc, zijn geluid en de muziekapps die het volgde. Geen songteksten, geen audio, geen muziekbestanden, en geen gebruikersnaam of thuismap. Er wordt niets geüpload.",
+    "introMac": "OnKey zet zijn gegevens samen in een zip die je kunt bewaren en bij een bugrapport voegen: het logboek van de laatste drie dagen en een samenvatting van elke afspeelbeurt (timings, CPU, welke build, welke Mac). Geen songteksten, geen audio, geen muziekbestanden, en geen gebruikersnaam of thuismap. Er wordt niets geüpload.",
+    "askLabel": "Wat ging er mis? <muted>(optioneel)</muted>",
+    "placeholder": "bijv. de songtekst liep achter bij Bad Day, of het bleef hangen op OnKey starten",
+    "preparing": "Samenstellen…",
+    "inZip": "In de zip ({count} bestanden, {size}):",
+    "logs": "{count, plural, one {{count} dag} other {{count} dagen}} logboek van OnKey ({size})",
+    "size": {
+      "b": "{n} B",
+      "kb": "{n} KB",
+      "mb": "{n} MB"
+    },
+    "showFiles": "Toon de bestanden",
+    "cancel": "Annuleer",
+    "saveMac": "Bewaar…",
+    "savePc": "Bewaar op bureaublad"
+  },
+  "nav": {
+    "appName": "OnKey",
+    "songsToTry": "Nummers om te proberen",
+    "sing": "Zingen",
+    "library": "Bibliotheek",
+    "history": "Geschiedenis",
+    "settings": "Instellingen",
+    "paused": "Luisteren gepauzeerd",
+    "resume": "Ga verder",
+    "resumeWhy": "Hervat luisteren (⌘⇧P)",
+    "whatsNew": "Wat is er nieuw in OnKey",
+    "whatsNewFresh": "Wat is er nieuw in OnKey (nieuw)",
+    "testBuild": "Testversie",
+    "testBuildTitle": "Een testversie van OnKey voor Windows of Linux: installeer de volgende eroverheen zodra die er is"
+  },
+  "licences": {
+    "back": "← Instellingen",
+    "title": "Opensourcelicenties",
+    "intro": "OnKey is gratis en open source onder de MIT-licentie. Het is gebouwd op de modellen, data, lettertypen en bibliotheken hieronder.",
+    "error": "Kon de vermeldingen niet openen: {error}",
+    "missing": "De vermeldingen staan in THIRD_PARTY_NOTICES.md, naast de broncode."
+  },
+  "fairUse": {
+    "back": "← Instellingen",
+    "title": "OnKey eerlijk gebruiken",
+    "intro": "OnKey is om thuis te oefenen, met muziek die je mag afspelen. Daarom:",
+    "keep": {
+      "title": "Houd wat het leert voor jezelf.",
+      "body": "Zijn transcriptie van de melodie van elk nummer is voor jouw oefening, dus deel of publiceer die niet. OnKey zelf delen mag natuurlijk."
+    },
+    "share": {
+      "title": "Om een take te delen, gebruik je Deel op de pagina van die take.",
+      "body": "Het maakt een korte video van je stem en je stemlijn, zonder muziek, en je kunt het nummer toevoegen uit de eigen muziekbibliotheek van Instagram, die hiervoor gelicentieerd is. Takes met koptelefoon zijn het beste: gezongen met speakers zit er een deel van het nummer in je opname. Plaats geen schermopnamen waarin de muziek speelt."
+    },
+    "venue": {
+      "title": "Gebruik een gelicentieerde karaokedienst voor een café of evenement.",
+      "body": "De songteksten van OnKey komen uit een gratis database van de community."
+    },
+    "modify": {
+      "title": "Pas OnKey niet aan om de muziek te bewaren."
+    },
+    "contact": "OnKey bewaart de muziek waarnaar het luistert nooit. Rechthebbenden kunnen me bereiken op <email>hello@singonkey.app</email>."
+  },
+  "library": {
+    "title": "Bibliotheek",
+    "intro": "Nummers die OnKey heeft geleerd. Kies er een om het te zingen met elke noot vooruit in beeld.",
+    "search": "Zoek nummers",
+    "empty": {
+      "title": "Nog niets geleerd",
+      "body": "Speel een nummer één keer helemaal af terwijl OnKey open is en het leert de melodie. Een hele playlist werkt ook: laat die gewoon spelen.",
+      "start": "Start",
+      "showStarters": "Toon nummers om te proberen"
+    },
+    "filter": {
+      "label": "Toon",
+      "all": "Alles",
+      "favorites": "Favorieten",
+      "unscored": "Nog niet gescoord",
+      "partial": "Deels geleerd",
+      "count": "{count, plural, one {{count} nummer} other {{count} nummers}}"
+    },
+    "inRange": {
+      "title": "Nummers die in je bereik passen, zoals ze zijn of een octaaf lager of hoger gezongen (octaven tellen niet tegen): {count, plural, one {{count} nummer} other {{count} nummers}}",
+      "label": "In je bereik"
+    },
+    "sort": {
+      "recent": "Recent",
+      "easy": "Makkelijkste eerst",
+      "hard": "Moeilijkste eerst",
+      "best": "Beste score",
+      "most": "Meest gezongen",
+      "az": "A–Z"
+    },
+    "shownPartly": "{count} deels geleerd",
+    "shownLearned": "{count} geleerd",
+    "partlyNote": "OnKey heeft hiervan maar een deel gehoord. Speel er een helemaal af en het leren wordt afgemaakt, daarna verhuist het naar Alles.",
+    "noFavourites": "Tik op ♥ bij een nummer om het hier te bewaren.",
+    "none": {
+      "partly": "Niets deels geleerd: elk nummer is klaar.",
+      "unscored": "Elk nummer heeft een score. Mooi.",
+      "search": "Geen nummers gevonden voor ‘{q}’.",
+      "filters": "Geen nummers passen bij deze filters.",
+      "clear": "Wis"
+    },
+    "card": {
+      "sing": "Zing {name} van {artist}",
+      "whenLearned": "Je kunt het zingen zodra het geleerd is",
+      "playThrough": "Speel het helemaal af om het leren af te maken",
+      "learning": "Aan het leren",
+      "learnsAgain": "Leert opnieuw bij de volgende keer",
+      "learnsAgainTitle": "De volgende keer dat het speelt, wordt het opnieuw geleerd; tot dan zing je het zoals voorheen",
+      "pctLearned": "{pct}% geleerd",
+      "relearn": "Opnieuw leren aangeraden",
+      "relearnTitle": "De songtekst verschuift op {at} als je het afspeelt: opnieuw leren zou dat moeten oplossen (menu ⋯)",
+      "notScored": "Nog niet gescoord",
+      "notScoredTitle": "Je hebt het nog niet met OnKey gezongen",
+      "playsTitle": "Hoe vaak je dit nummer speelde",
+      "plays": "{count, plural, one {{count} keer gespeeld} other {{count} keer gespeeld}}",
+      "playsBest": "{count, plural, one {{count} keer gespeeld} other {{count} keer gespeeld}} · beste <n>{best}</n>",
+      "demo": "demonummer",
+      "demoTitle": "Een voorbeeldnummer dat bij OnKey zit",
+      "fitTitle": "{label}. De noten: {low}–{high}",
+      "starting": "Starten…",
+      "singButton": "Zing"
+    },
+    "menu": {
+      "more": "Meer voor {name}",
+      "openIn": "Open in {app} ↗",
+      "learnAgain": "Leer opnieuw",
+      "dontLearnAgain": "Leer het niet opnieuw",
+      "deleteWhat": "Verwijder dit nummer (je takes blijven in Geschiedenis; het gaat naar de prullenmand)",
+      "deleteConfirm": "Dit nummer verwijderen?",
+      "stopWhat": "Stop met leren en verwijder het (bijvoorbeeld omdat het geen nummer is)",
+      "stopConfirm": "Stoppen met leren en verwijderen?",
+      "stop": "Stop met leren en verwijder",
+      "delete": "Verwijder"
+    },
+    "startersLink": "Nummers om te proberen",
+    "footer": "OnKey bewaart de muziek nooit: het houdt alleen de noten die het leert en je eigen stem. Songteksten komen van <link>LRCLIB</link>. OnKey is niet verbonden met of goedgekeurd door Spotify, Apple of Google; hun namen zijn handelsmerken van hun eigenaren.",
+    "difficulty": {
+      "label": "Moeilijkheid {level} van 5: {word}",
+      "title": "Moeilijkheid {level} van 5: {word}. Vooral hoe groot het bereik van de melodie is."
+    },
+    "clearPartly": {
+      "button": "Verwijder alle {count}",
+      "label": "Verwijder alle deels geleerde nummers",
+      "ask": "Verwijder {count, plural, one {{count} deels geleerd nummer{shown, select, yes { dat getoond wordt} other {}}} other {{count} deels geleerde nummers{shown, select, yes { die getoond worden} other {}}}}? Takes blijven in Geschiedenis{hearted, plural, =0 {} one {; {hearted} favoriet blijft} other {; {hearted} favorieten blijven}}.",
+      "deleting": "Verwijderen…",
+      "tryAgain": "Probeer opnieuw",
+      "deleteAll": "Verwijder alles",
+      "cancel": "Annuleer"
+    }
+  },
+  "history": {
+    "title": "Je zang",
+    "intro": "Elk nummer dat je zingt, wordt een take. Zo gaat het ermee.",
+    "scoresAt": "Scores op niveau {level} · <link>wijzig</link>",
+    "search": "Zoek nummers",
+    "pending": {
+      "learning": "Het nummer leren, dan je take scoren…",
+      "scoring": "Scoren…"
+    },
+    "stat": {
+      "takes": "Takes",
+      "average": "Gemiddelde, laatste 10",
+      "best": "Beste",
+      "songs": "Nummers gezongen"
+    },
+    "chart": {
+      "title": "Score per take",
+      "axis": "oudste → nieuwste"
+    },
+    "view": {
+      "label": "Weergave",
+      "songs": "Nummers",
+      "takes": "Alle takes"
+    },
+    "show": {
+      "label": "Toon",
+      "all": "Alles",
+      "favorites": "Favorieten"
+    },
+    "clearFilters": "Wis filters",
+    "sort": {
+      "recent": "Recent",
+      "best": "Beste score",
+      "most": "Meest gezongen",
+      "improved": "Meest verbeterd",
+      "easy": "Makkelijkste eerst",
+      "hard": "Moeilijkste eerst",
+      "az": "A–Z"
+    },
+    "counts": "{songs, plural, one {{songs} nummer} other {{songs} nummers}} gezongen · {takes, plural, one {{takes} take} other {{takes} takes}}",
+    "none": {
+      "search": "Geen nummers gevonden voor ‘{q}’.",
+      "favourites": "Tik op ♥ bij een nummer om het hier te bewaren.",
+      "filters": "Geen nummers passen bij deze filters.",
+      "clear": "Wis"
+    },
+    "col": {
+      "song": "Nummer",
+      "when": "Wanneer",
+      "sung": "Gezongen",
+      "pitch": "Zuiverheid",
+      "score": "Score"
+    },
+    "rescored": "Opnieuw gescoord",
+    "rescoredTitle": "Opnieuw gescoord, zonder een deel van het nummer dat als niet de melodie is gemarkeerd",
+    "deleteWhat": "Verwijder deze take (hij gaat naar de prullenmand)",
+    "deleteConfirm": "Deze take verwijderen?",
+    "showMore": "Toon meer <n>({left} over)</n>",
+    "card": {
+      "best": "beste",
+      "scores": "Scores: {list}",
+      "plays": "{count, plural, one {{count} keer gespeeld} other {{count} keer gespeeld}} · laatste {last}",
+      "whenLearned": "{label} Je kunt het zingen zodra het geleerd is",
+      "singAgain": "Zing het opnieuw"
+    },
+    "empty": {
+      "title": "Nog geen takes",
+      "body": "Zing minstens 20 seconden mee met een nummer en het verschijnt hier.",
+      "start": "Begin met zingen"
+    }
+  },
+  "song": {
+    "back": "← Je zang",
+    "none": "Dit nummer is nog niet gespeeld.",
+    "scoresAt": "Scores op niveau {level} · <link>wijzig</link>",
+    "whenLearned": "Je kunt het zingen zodra het geleerd is",
+    "singAgain": "Zing het opnieuw",
+    "learnsAgain": "Leert opnieuw bij de volgende keer · <cancel>Annuleer</cancel>",
+    "learnAgain": "Leer opnieuw",
+    "learnAgainTitle": "Speelt het nu af en leert het opnieuw, zoals bij de eerste keer. Je beurten en scores blijven; stop je vroeg, dan blijft het zoals het was.",
+    "relearn": "De songtekst verschuift ongeveer {by} s op {at}, elke keer dat je het afspeelt. Opnieuw leren zou dat moeten oplossen.",
+    "learnItAgain": "Opnieuw leren",
+    "stat": {
+      "plays": "Keer gespeeld",
+      "best": "Beste",
+      "latest": "Laatste",
+      "gainBoth": "Laatste 3 vs eerste 3",
+      "gainOne": "Laatste vs eerste keer",
+      "fromTo": "van {from} naar {to}",
+      "fromToAverage": "gemiddeld van {from} naar {to}",
+      "singToSee": "zing het opnieuw om het te zien"
+    },
+    "chart": {
+      "title": "Score per beurt",
+      "axis": "eerste keer → laatste"
+    },
+    "table": {
+      "title": "Elke beurt",
+      "play": "Beurt",
+      "when": "Wanneer",
+      "sung": "Gezongen",
+      "sungTitle": "Hoeveel van het nummer je zong",
+      "pitch": "Zuiverheid",
+      "score": "Score"
+    },
+    "deleteWhat": "Verwijder deze beurt (hij gaat naar de prullenmand)",
+    "deleteConfirm": "Deze beurt verwijderen?"
+  },
+  "noLyrics": {
+    "line": "Voor dit nummer is nog geen songtekst. Songteksten komen van <link>LRCLIB</link>, een gratis bibliotheek waar iedereen aan kan bijdragen.",
+    "lookAgain": "Zoek opnieuw",
+    "looking": "Zoeken…",
+    "found": "Gevonden",
+    "stillNone": "Nog steeds niets",
+    "notAnswering": "LRCLIB reageert niet"
+  },
+  "cover": {
+    "openApple": "Open in Apple Music",
+    "openAppleNamed": "Open {name} in Apple Music",
+    "openIn": "Open in {app}",
+    "inAppLink": "in {app} ↗",
+    "inApp": "in {app}",
+    "following": "De app die OnKey volgt",
+    "otherLink": "{app} ↗",
+    "appleMusicLink": "Apple Music ↗"
+  },
+  "recent": {
+    "title": "Ga verder waar je was",
+    "last": "laatste <n>{score}</n>",
+    "whenLearned": "Je kunt het zingen zodra het geleerd is",
+    "singNamed": "Zing {name}",
+    "starting": "Starten…",
+    "sing": "Zing"
+  },
+  "trend": {
+    "legend": "{unit, select, play {Lijn: je gemiddelde over {avg} beurten · stippen: elke beurt} other {Lijn: je gemiddelde over {avg} takes · stippen: elke take}}",
+    "tipScore": "Score <n>{score}</n> · {pct}% gezongen",
+    "tipAverage": "Gemiddelde toen <n>{avg}</n>"
+  },
+  "listControls": {
+    "sort": "Sorteer",
+    "difficultyLabel": "Moeilijkheid",
+    "difficulty": {
+      "easy": "Makkelijk",
+      "moderate": "Redelijk",
+      "medium": "Gemiddeld",
+      "hard": "Moeilijk",
+      "veryHard": "Heel moeilijk"
+    },
+    "levelTitle": "{level}: {count, plural, one {{count} nummer} other {{count} nummers}}",
+    "levelLabel": "{level} ({n} van 5)",
+    "clear": "Wis"
+  },
+  "deleteButton": {
+    "tryAgain": "Probeer opnieuw",
+    "delete": "Verwijder",
+    "cancel": "Annuleer"
+  },
+  "readError": {
+    "body": "Ze zijn er waarschijnlijk nog: OnKey kon ze deze keer alleen niet openen. Er is niets gewijzigd of verwijderd.",
+    "tryAgain": "Probeer opnieuw"
+  },
+  "levelTag": {
+    "title": "Gescoord op niveau {level}: {about}"
+  },
+  "learnBar": {
+    "label": "OnKey leert {name}",
+    "valueText": "{stage}, {pct}%"
+  },
+  "heart": {
+    "remove": "Verwijder uit favorieten",
+    "add": "Voeg toe aan favorieten"
+  },
+  "engine": {
+    "line": {
+      "finding": "Muziek gehoord… het nummer zoeken",
+      "new_song": "Nieuw nummer… zoeken",
+      "unnamed": "Kon dit nummer niet herkennen",
+      "no_shazam": "Shazam niet beschikbaar: alleen nummers die hier geleerd zijn worden herkend",
+      "shazam_off": "Geen nummer dat hier geleerd is: Shazam staat uit in Instellingen",
+      "elsewhere": "{app} speelt, maar niet op deze Mac",
+      "learning": "Aan het leren: zing mee, vanaf de volgende keer wordt het gescoord",
+      "stopped": "{song} wordt niet geleerd",
+      "podcast": "Er speelt een podcast: OnKey zingt mee met muziek"
+    },
+    "share": {
+      "first": "{score} bij je eerste keer op {song}",
+      "over80": "Je eerste score boven {over} op {song}",
+      "best": "Je beste op {song}, met {points, plural, one {{points} punt} other {{points} punten}} verschil",
+      "up": "{points, plural, one {{points} punt} other {{points} punten}} hoger dan je vorige take van {song}"
+    },
+    "timing": {
+      "output_changed": "De uitvoer veranderde tijdens de test. Probeer opnieuw.",
+      "few_taps": "Niet genoeg tikken in de maat met de klikken. Tik mee in het ritme, één keer per klik.",
+      "uneven": "Je tikken waren te onregelmatig om te meten. Probeer opnieuw, en tik mee in het ritme, zoals meeklappen op een beat.",
+      "reacting": "Het lijkt erop dat je op elke klik wachtte. Probeer in plaats daarvan mee te tikken in het ritme.",
+      "unbelievable": "Dat ziet er niet goed uit: wachtte je op elke klik? Probeer opnieuw, en tik mee in het ritme, zoals meeklappen op een beat.",
+      "untimed": "De test kon zijn klikken niet timen. Probeer opnieuw.",
+      "stalled": "Het geluid haperde of begon opnieuw tijdens de test, dus het kan niet getimed worden. Probeer opnieuw."
+    },
+    "settingUnsaved": "Kon de instelling niet bewaren ({error}). Hij geldt tot OnKey stopt.",
+    "fit": {
+      "fits": "Past bij je stembereik",
+      "few_above": "Een paar noten boven je stembereik",
+      "few_below": "Een paar noten onder je stembereik",
+      "octave_lower": "Vooral boven je: zing het een octaaf lager",
+      "octave_higher": "Vooral onder je: zing het een octaaf hoger",
+      "above": "Vooral boven je stembereik",
+      "below": "Vooral onder je stembereik",
+      "wider": "Breder dan je stembereik"
+    },
+    "reportWhat": {
+      "log": "het logboek van OnKey van die dag",
+      "take": "samenvatting van een take: {artist} - {name}",
+      "take_reported": "de gemelde take: samenvatting van een take: {artist} - {name}",
+      "builds": "de OnKey-builds die op deze {os, select, pc {pc} other {Mac}} draaiden",
+      "summary": "de logboeken samengevat: deze {os, select, pc {pc} other {computer}}, audio, muziekapps, leren, takes, fouten",
+      "about": "de versie van OnKey, deze {os, select, pc {pc} other {Mac}}, de instellingen en wat je schreef"
+    },
+    "models": {
+      "unloadable": "ze konden niet worden geladen"
+    },
+    "youtubeSetting": {
+      "safari": "Safari ▸ Instellingen ▸ Geavanceerd: vink ‘Toon functies voor webontwikkelaars’ aan, daarna Ontwikkel ▸ Sta JavaScript van Apple Events toe",
+      "chromium": "Weergave ▸ Ontwikkelaar ▸ Sta JavaScript van Apple Events toe"
+    },
+    "app": {
+      "music_app": "je muziekapp",
+      "browser": "je browser"
+    }
+  }
+}

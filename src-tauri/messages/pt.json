@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "Sobre o OnKey",
+      "services": "Serviços",
+      "pauseListening": "Pausar Escuta",
+      "resumeListening": "Retomar Escuta",
+      "hide": "Ocultar OnKey",
+      "hideOthers": "Ocultar Outros",
+      "quit": "Encerrar OnKey"
+    },
+    "file": {
+      "title": "Arquivo",
+      "closeWindow": "Fechar Janela"
+    },
+    "edit": {
+      "title": "Editar",
+      "undo": "Desfazer",
+      "redo": "Refazer",
+      "cut": "Recortar",
+      "copy": "Copiar",
+      "paste": "Colar",
+      "selectAll": "Selecionar Tudo"
+    },
+    "view": {
+      "title": "Visualizar",
+      "fullScreen": "Entrar em Tela Cheia"
+    },
+    "window": {
+      "title": "Janela",
+      "minimize": "Minimizar",
+      "zoom": "Zoom",
+      "closeWindow": "Fechar Janela"
+    },
+    "help": {
+      "title": "Ajuda",
+      "reportProblem": "Relatar um Problema…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "Registros do OnKey para um relatório de bug: logs e números, sem letras nem áudio."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "Cante afinado",
+      "free": "Grátis para Mac"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "O OnKey ouve você cantar para mostrar como está a sua afinação. Suas gravações ficam no seu Mac.",
+    "NSAudioCaptureUsageDescription": "O OnKey ouve a música que toca no seu Mac para aprender a melodia de quem canta. Ele nunca salva nem envia a música. No modo de escuta, uma impressão digital curta dela (não o áudio) vai para o Shazam da Apple para identificar a música.",
+    "NSAppleEventsUsageDescription": "O OnKey pergunta ao Spotify, ao Música ou ao seu navegador (para o YouTube) o que está tocando e controla a reprodução quando você toca, pula ou recomeça uma música."
+  }
+}

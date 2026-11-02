@@ -1,5 +1,6 @@
 // What the Sing page shows while a song OnKey was asked to start (the Library's Play, History's and a take's Sing it
 // again) hasn't started yet. Plain TypeScript (no React), so node's test runner can check it (starting.test.mjs).
+import { t } from "./i18n";
 
 /** A song OnKey was asked to start: its id and name, the app it starts in, when (performance.now() ms), the version
  *  of the song shown then (null: none), and why the app couldn't start it, once known (src-tauri/src/lib.rs
@@ -27,18 +28,15 @@ export function startingView(s: Starting | null, now: number, songVersion: numbe
   if (!s) return null;
   if (songVersion != null && songVersion !== s.before) return null;
   if (s.endsAt != null && now >= s.endsAt) return null;
-  const app = s.app || "your music app";
-  const song = s.name || "the song";
+  const app = s.app || t("starting.yourApp");
+  const song = s.name || t("starting.theSong");
   const base = { id: s.id, app };
   if (s.cant === "no_id")
-    return { ...base, failed: true, title: `OnKey can't start ${song} in ${app}`,
-             sub: `OnKey doesn't know this song in ${app} yet (it was learned from another app, or by listening). Open it in ${app} and press play: OnKey follows it, and can start it for you after that.` };
+    return { ...base, failed: true, title: t("starting.noId.title", { song, app }), sub: t("starting.noId.sub", { app }) };
   const late = now - s.at > STARTING_MS;
   if (late && naming && !s.cant) return null;
   if (s.cant === "failed" || late)
-    return { ...base, failed: true, title: `${app} didn't start ${song}`,
-             sub: app === "Apple Music"
-               ? "OnKey can start songs that are in your Apple Music library. Open it in Apple Music and press play there: OnKey follows it."
-               : `Open it in ${app} and press play there: OnKey follows it.` };
-  return { ...base, failed: false, title: `Starting ${song} in ${app}…`, sub: "The lane appears as soon as it plays." };
+    return { ...base, failed: true, title: t("starting.failed.title", { app, song }),
+             sub: app === "Apple Music" ? t("starting.failed.subMusic") : t("starting.failed.sub", { app }) };
+  return { ...base, failed: false, title: t("starting.going.title", { song, app }), sub: t("starting.going.sub") };
 }

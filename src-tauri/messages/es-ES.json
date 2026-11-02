@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "Acerca de OnKey",
+      "services": "Servicios",
+      "pauseListening": "Pausar la escucha",
+      "resumeListening": "Reanudar la escucha",
+      "hide": "Ocultar OnKey",
+      "hideOthers": "Ocultar otras apps",
+      "quit": "Salir de OnKey"
+    },
+    "file": {
+      "title": "Archivo",
+      "closeWindow": "Cerrar ventana"
+    },
+    "edit": {
+      "title": "Edición",
+      "undo": "Deshacer",
+      "redo": "Rehacer",
+      "cut": "Cortar",
+      "copy": "Copiar",
+      "paste": "Pegar",
+      "selectAll": "Seleccionar todo"
+    },
+    "view": {
+      "title": "Visualización",
+      "fullScreen": "Usar pantalla completa"
+    },
+    "window": {
+      "title": "Ventana",
+      "minimize": "Minimizar",
+      "zoom": "Zoom",
+      "closeWindow": "Cerrar ventana"
+    },
+    "help": {
+      "title": "Ayuda",
+      "reportProblem": "Informar de un problema…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "Los registros de OnKey para un informe de error: registros y cifras, sin letras ni audio."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "Canta afinado",
+      "free": "Gratis para Mac"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey escucha tu voz para mostrarte lo afinado que cantas. Tus grabaciones se quedan en tu Mac.",
+    "NSAudioCaptureUsageDescription": "OnKey escucha la música que suena en tu Mac para aprender la melodía de la voz. Nunca guarda la música ni la envía. En modo de escucha, una huella corta (no el audio) va a Shazam, de Apple, para nombrar la canción.",
+    "NSAppleEventsUsageDescription": "OnKey pregunta a Spotify, Música o tu navegador (para YouTube) qué se reproduce, y controla la reproducción cuando eliges reproducir, saltar o empezar de nuevo."
+  }
+}

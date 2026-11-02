@@ -1,0 +1,176 @@
+{
+  "page": {
+    "title": "Yang baru",
+    "description": "Setiap fitur dan perbaikan OnKey, yang terbaru di atas, beserta rilis yang membawanya.",
+    "kicker": "Catatan perubahan",
+    "heading": "Yang baru di OnKey",
+    "intro": "Setiap fitur dan perbaikan, yang terbaru di atas, beserta rilis yang membawanya. OnKey memperbarui dirinya sendiri, jadi semua ini sampai ke Anda dengan sendirinya.",
+    "release": "OnKey {version}",
+    "latest": "Terbaru",
+    "kind": {
+      "new": "Baru",
+      "better": "Lebih baik",
+      "fix": "Diperbaiki"
+    },
+    "github": "Setiap perubahan ada di <link>GitHub</link>, tempat OnKey bersumber terbuka."
+  },
+  "releases": {
+    "0-3-0": {
+      "note": "OnKey dalam 19 bahasa, dan lirik yang seirama dengan lagu dalam bahasa Spanyol, Portugis, Italia, Prancis dan Jerman."
+    },
+    "0-2-0": {
+      "note": "Mengunduh dan memasang dirinya sendiri di Mac yang sudah menjalankan OnKey."
+    },
+    "0-1-0": {
+      "note": "Rilis publik pertama.",
+      "link": "Diluncurkan di Hacker News"
+    }
+  },
+  "entries": {
+    "onkey-in-your-language": {
+      "title": "OnKey dalam bahasa Anda",
+      "summary": "OnKey kini berbicara dalam 19 bahasa. Ia mengikuti bahasa Mac Anda dengan sendirinya, atau pilih satu dari ikon globe di bilah atas, di layar sambutan atau di Pengaturan.",
+      "p1": "Enam punya dukungan penuh, termasuk lirik: Spanyol (Amerika Latin dan Spanyol), Portugis, Italia, Prancis dan Jerman",
+      "p2": "Dua belas lainnya adalah terjemahan tahap awal: Belanda, Jepang, Mandarin (Sederhana dan Tradisional), Korea, Hindi, Rusia, Turki, Polandia, Indonesia, Vietnam dan Thai. Masing-masing memberi tahu hal itu, dengan tautan untuk memperbaikinya",
+      "p3": "Semuanya untuk sementara adalah terjemahan mesin: jika ada yang terbaca janggal, tautan di Pengaturan membukanya untuk diperbaiki",
+      "p4": "Menu OnKey, permintaan izin Mac dan dialog simpan juga dalam bahasa Anda, dan sampul album berasal dari toko negara Anda sendiri",
+      "p5": "Begitu juga situs web ini, panduannya dan catatan perubahan ini: mengikuti bahasa browser Anda, dan ikon globe di header mengubahnya"
+    },
+    "lyrics-keep-time-in-more-languages": {
+      "title": "Lirik seirama dalam lebih banyak bahasa",
+      "summary": "Kata-kata dalam bahasa Spanyol, Portugis, Italia, Prancis dan Jerman kini menyala saat dinyanyikan. Huruf beraksen (corazón, Straße, cœur) dibaca dengan benar, dan suku kata dihitung menurut aturan tiap bahasa, bukan aturan bahasa Inggris.",
+      "p1": "Lagu dalam bahasa Jepang, Mandarin, Korea, Hindi, Rusia, Thai dan aksara lain menampilkan barisnya secara utuh, seirama dengan lagu, untuk sementara tanpa pewaktuan per kata",
+      "p2": "Lirik bahasa Inggris tetap persis seperti sebelumnya"
+    },
+    "songs-to-try-in-your-language": {
+      "title": "Lagu untuk dicoba dalam bahasa Anda",
+      "summary": "Dengan bahasa Spanyol, Portugis, Italia, Prancis atau Jerman dipilih, halaman Nyanyi menyarankan delapan lagu dalam bahasa itu, dari yang mudah sampai sulit, dengan alasan untuk masing-masing.",
+      "p1": "Klik lagu yang disarankan dan lagu itu mulai di Spotify, seperti dari kartu Pustaka",
+      "p2": "Tautan untuk menemukannya di Apple Music masih ada"
+    },
+    "when-a-song-has-no-lyrics": {
+      "title": "Saat sebuah lagu tidak punya lirik",
+      "summary": "Lirik berasal dari LRCLIB, pustaka gratis yang bisa ditambahi siapa saja. Lagu yang belum ada liriknya di sana kini mengatakannya di bawah jalur dan di halaman lagunya, dengan tombol Cari lagi yang langsung menanyakan LRCLIB.",
+      "p1": "Sebelumnya OnKey mengingat jawaban “tidak ada” selama sehari, sehingga lirik yang baru saja ditambahkan seseorang tidak muncul sampai esok",
+      "p2": "Saat LRCLIB sendiri tidak berfungsi, halaman Nyanyi memberi tahu Anda: not tetap berjalan, liriknya menyusul jika layanan pulih, dan lagu yang dipelajari selama itu mendapat liriknya saat Anda menyanyikannya lagi"
+    },
+    "smoother-switching-in-spotify": {
+      "title": "Perpindahan yang lebih mulus di Spotify",
+      "summary": "Meminta lagu lain saat satu lagu sedang diputar kini menjeda lagu pertama sesaat sebelum memulai lagu berikutnya, sehingga perpindahannya lebih bersih."
+    },
+    "a-clearer-settings-page": {
+      "title": "Halaman Pengaturan yang lebih jelas",
+      "summary": "Mikrofon dipilih dari menu OnKey sendiri, dengan perangkat virtual dan mikrofon yang terputus dicantumkan terpisah. Menu terbuka di atas halaman, jadi daftar yang panjang tidak pernah terpotong.",
+      "p1": "Di kartu Pustaka, garis rentang sebuah lagu berwarna hijau jika cocok untuk Anda dan warna persik jika tidak langsung cocok (satu oktaf berbeda, beberapa not di luar, atau lebih lebar)",
+      "p2": "Bilah langkah di Penyiapan tetap sejajar saat nama sebuah langkah memakan dua baris"
+    },
+    "small-fixes-0-3-0": {
+      "title": "Perbaikan kecil",
+      "summary": "Hal-hal yang sedikit melenceng, kini sudah benar.",
+      "p1": "Titik pada Yang baru muncul setelah pembaruan sampai Anda membukanya, dan tidak pernah muncul pada pemasangan baru",
+      "p2": "Laporkan masalah menjaga kotak teksnya setinggi penuh, dan dialognya tidak tembus pandang di atas Pengaturan",
+      "p3": "Jumlah notifikasi tab YouTube, “(3) Artis - Judul”, tidak lagi mengganggu penamaan lagu"
+    },
+    "pause-listening": {
+      "title": "Jeda mendengarkan",
+      "summary": "Sedang menonton siaran atau podcast? Jeda pendengaran OnKey, dan ia berhenti mendengar apa pun sampai Anda melanjutkan. Sementara itu tidak ada yang diikuti, dinamai atau dipelajari.",
+      "p1": "Tekan ⌘⇧P, klik chip Langsung di halaman Nyanyi, atau pilih OnKey → Jeda Mendengarkan",
+      "p2": "Pil kecil “Mendengarkan dijeda · Lanjutkan” tetap ada di atas setiap halaman, supaya Anda tidak lupa",
+      "p3": "Tetap dijeda setelah dimulai ulang, sampai Anda melanjutkan"
+    },
+    "see-when-a-paused-take-will-be-scored": {
+      "title": "Lihat kapan take yang dijeda akan dinilai",
+      "summary": "Jeda di tengah lagu dan OnKey menunggu semenit kalau-kalau Anda lanjut. Kini ia memberi tahu Anda, dan membiarkan Anda melewati tunggu itu.",
+      "p1": "Halaman Nyanyi menghitung mundur: “Dijeda · dinilai dalam 0:45 · Selesai sekarang”",
+      "p2": "Riwayat menampilkan lagu yang sedang Anda nyanyikan sebagai kartu pertamanya, jadi putaran yang baru Anda jeda tidak pernah terlihat hilang",
+      "p3": "Setiap kartu lagu di Riwayat menggambar skor Anda mulai putaran kedua"
+    },
+    "audio-interfaces-and-your-microphone-list": {
+      "title": "Antarmuka audio dan daftar mikrofon Anda",
+      "summary": "OnKey kini mengambil suara Anda dari input yang benar-benar dipakai, jadi mikrofon di input 2 sebuah Focusrite (atau antarmuka apa pun dengan beberapa input) langsung bekerja.",
+      "p1": "Tanpa pengaturan: OnKey mengikuti input tempat suara Anda berada",
+      "p2": "Perangkat virtual dari aplikasi lain (Krisp, Loopback, BlackHole, Zoom) dicantumkan terpisah dari mikrofon asli Anda"
+    },
+    "listening-back-stays-in-step-after-a-skip": {
+      "title": "Mendengar ulang tetap seirama setelah lompatan",
+      "summary": "Jika Anda melompat ke depan sambil bernyanyi, “Bersama lagu” bisa memutar bagian sebelum lompatan tidak seirama. Kini setiap bagian take diputar seirama dengan lagunya."
+    },
+    "reliability-fixes": {
+      "title": "Perbaikan keandalan",
+      "summary": "Hal-hal yang bisa salah di tengah lagu, kini diperbaiki.",
+      "p1": "Selesai tidak lagi membuang take jika ditekan selagi OnKey memeriksa pemutarnya",
+      "p2": "Sebuah lagu tidak lagi bisa tersangkut di “Menunggu dipelajari” atau “Menilai” selamanya setelah kegagalan yang jarang terjadi",
+      "p3": "Hapus semua di Pustaka tidak lagi macet, dan “Berhenti mempelajari dan hapus” hanya menghapus lagu yang Anda pilih",
+      "p4": "Pintasan keyboard tidak lagi sampai ke musik di belakang dialog",
+      "p5": "Skor langsung datang saat lagu berakhir dalam keadaan dijeda",
+      "p6": "Siaran radio atau mix berjam-jam berhenti pada 20 menit, bukan berjalan terus sebagai satu take",
+      "p7": "Keluar jadi seketika: OnKey langsung menghilang dan menyelesaikan penyimpanan hasil pembelajarannya di latar"
+    },
+    "songs-start-cleanly": {
+      "title": "Lagu mulai dengan bersih",
+      "summary": "Menekan Nyanyi pada sebuah kartu bisa memulai musik dua kali, atau memutar sekelebat lagu sebelum mulai ulang. Kini satu tekanan berarti satu awal yang bersih."
+    },
+    "guides-and-help-and-beyond-pitch": {
+      "title": "Panduan dan bantuan, serta Lebih dari sekadar nada",
+      "summary": "Pengaturan kini menautkan ke dokumen ini. Panduan baru, Lebih dari sekadar nada, membahas yang tidak bisa didengar OnKey (warna suara, napas, gaya) dan guru gratis untuk mempelajarinya."
+    },
+    "smoother-setup-and-youtube": {
+      "title": "Penyiapan yang lebih mulus dan YouTube",
+      "summary": "Perbaikan untuk hal-hal pertama yang ditemui para penguji kami.",
+      "p1": "Langkah aplikasi musik di penyiapan langsung lanjut saat tidak ada yang perlu ditanyakan macOS",
+      "p2": "Tab YouTube yang ditidurkan Chrome tidak lagi menahan OnKey",
+      "p3": "Aplikasi musik yang tidak terpasang ditampilkan sebagai mati, bukan aktif"
+    },
+    "learn-a-song-again": {
+      "title": "Pelajari lagu lagi",
+      "summary": "Jika lirik atau not sebuah lagu melenceng, minta OnKey mempelajarinya dari awal: putaran berikutnya mempelajarinya, dan menggantikan salinan lama setelah cukup terdengar.",
+      "p1": "Pilih Pelajari lagi dari menu ⋯ di Pustaka atau dari halaman lagunya",
+      "p2": "OnKey menyarankannya saat lirik sebuah lagu melenceng dengan cara yang sama pada dua putaran"
+    },
+    "a-tidier-app-page-by-page": {
+      "title": "Aplikasi yang lebih rapi, halaman demi halaman",
+      "summary": "Setiap take mendapat laporan yang lebih jelas, dan Nyanyi, Riwayat, Pustaka serta Pengaturan lebih mudah dijelajahi.",
+      "p1": "Nyanyi menawarkan “Lanjutkan dari yang terakhir”: beberapa lagu terakhir Anda, masing-masing dengan skor terakhirnya dan tombol Nyanyi",
+      "p2": "Putar di Pustaka memulai lagunya untuk Anda, dan Nyanyi menunjukkan lagu itu mulai (atau mengatakan kenapa tidak bisa)"
+    },
+    "scoring-levels-relaxed-steady-and-pro": {
+      "title": "Tingkat penilaian: Santai, Mantap dan Pro",
+      "summary": "Pilih seberapa ketat take Anda dinilai di Pengaturan. Santai adalah cara OnKey selalu menilai; Mantap dan Pro menuntut lebih.",
+      "p1": "Vibrato dinilai dari titik tengah not, jadi vibrato yang bagus tidak dikurangi nilainya di tingkat mana pun",
+      "p2": "Setiap take menampilkan tingkat yang dipakai saat dinilai"
+    },
+    "leave-out-what-isn-t-the-melody": {
+      "title": "Sisihkan yang bukan melodi",
+      "summary": "Jika OnKey menangkap vokal latar atau ad-lib, bukan melodinya, tandai bagian itu “Bukan melodi” di halaman take. Bagian itu disisihkan dari setiap skor lagu tersebut, termasuk take yang lalu."
+    },
+    "your-vocal-range": {
+      "title": "Rentang suara Anda",
+      "summary": "OnKey menentukan rentang suara Anda dari lagu yang Anda nyanyikan, dan menunjukkan kecocokan setiap lagu dengannya.",
+      "p1": "Riwayat menampilkan rentang Anda pada deretan tuts, dengan bagian tengah yang nyaman ditandai",
+      "p2": "Pustaka menunjukkan kecocokan setiap lagu, dengan filter untuk lagu dalam rentang Anda",
+      "p3": "Saat sebuah lagu terlalu tinggi atau rendah, ia memberi tahu apakah menyanyikannya satu oktaf berbeda akan lebih cocok untuk Anda"
+    },
+    "challenge-a-friend-and-share-your-best-takes": {
+      "title": "Tantang teman, dan bagikan take terbaik Anda",
+      "summary": "Dari sebuah take, salin tautan yang menyebut skor Anda dan meminta teman mengalahkannya. Tautan itu hanya membawa lagu, artis, skor Anda dan, jika Anda mau, nama depan Anda.",
+      "p1": "Setelah skor terbaik pada sebuah lagu atau lonjakan besar, halaman take menawarkan “Bagikan take ini”",
+      "p2": "Klip yang dibagikan diakhiri dengan kartu OnKey: suara Anda, tanpa musiknya"
+    },
+    "fade-the-guide": {
+      "title": "Pudarkan panduan",
+      "summary": "Aktifkan di Pengaturan, dan pada lagu yang sudah Anda nyanyikan dengan baik, garis nada suara Anda memudar selama Anda tepat nada, jadi Anda bernyanyi dengan telinga, bukan mata. Garis itu kembali begitu Anda melenceng."
+    },
+    "lyrics-line-up-better": {
+      "title": "Lirik lebih selaras",
+      "summary": "Baris dan kata kini menyala lebih dekat dengan saat dinyanyikan, termasuk baris yang dibuka dengan “oh” atau “whoa”."
+    },
+    "onkey-s-first-release": {
+      "title": "Rilis pertama OnKey",
+      "summary": "Gratis, sumber terbuka, dan semuanya di Mac Anda.",
+      "p1": "Mempelajari melodi lagu apa pun yang Anda putar di Spotify, Apple Music atau YouTube, sejak putaran pertama",
+      "p2": "Garis nada suara langsung di atas not penyanyi, dengan lirik tersinkron dan skor untuk setiap take",
+      "p3": "Take untuk didengar ulang, dan video pendek sebuah take untuk dibagikan: suara Anda, tanpa musik",
+      "p4": "Lagu pembuka, pustaka berisi yang sudah Anda pelajari, dan pembaruan yang memasang dirinya sendiri"
+    }
+  }
+}

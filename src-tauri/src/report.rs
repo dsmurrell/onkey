@@ -7,6 +7,8 @@
 //! line that quotes four words in a row from lyrics kept on this Mac is left out), audio or song files (your
 //! recordings, learned songs, the lyrics cache), your user name or home folder (paths start with ~), or your
 //! microphones' names.
+//!
+//! On Windows also summary.txt (digest.rs): the logs' answers to what we'd otherwise ask a tester, section by section.
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::Mutex;
@@ -15,6 +17,9 @@ use serde_json::{json, Value};
 
 /// Where an issue is opened (the "Open a GitHub issue" button).
 pub const NEW_ISSUE_URL: &str = "https://github.com/dsmurrell/onkey/issues/new";
+
+/// What the computer is called in the report's wording.
+const MACHINE: &str = if cfg!(target_os = "macos") { "Mac" } else { "PC" };
 
 /// The report being prepared: its folder, and OnKey's data folder it was made from.
 static STAGED: Mutex<Option<(PathBuf, PathBuf)>> = Mutex::new(None);
@@ -75,7 +80,7 @@ impl Redact {
     /// in a row that are also four words of a learned song's title or artist aren't counted as lyrics (a log line
     /// naming "How to Save a Life" stays).
     pub fn for_data(data: &Path) -> Redact {
-        let home = std::env::var("HOME").unwrap_or_default();
+        let home = home_dir();
         let mut names: Vec<String> = Vec::new();
         if let Some(user) = std::path::Path::new(&home).file_name().map(|u| u.to_string_lossy().into_owned()) {
             names.push(user);
@@ -83,9 +88,8 @@ impl Redact {
         if let Ok(u) = std::env::var("USER") {
             names.push(u);
         }
-        if let Some(full) = full_name() {
-            names.push(full);
-        }
+        // (the account's full name; Windows: also its account name)
+        names.extend(crate::platform::sys::user_names());
         names.retain(|n| n.chars().count() >= 3);
         names.sort_by_key(|n| std::cmp::Reverse(n.len()));
         names.dedup();
@@ -153,6 +157,14 @@ impl Redact {
     /// Text with the home folder as ~, and the user's names and microphones' names taken out.
     pub fn text(&self, s: &str) -> String {
         let mut s = if self.home.len() > 1 { s.replace(&self.home, "~") } else { s.to_string() };
+        // (Windows: the profile folder also as JSON writes it, with forward slashes, and in lower case)
+        #[cfg(windows)]
+        if self.home.len() > 3 {
+            let fwd = self.home.replace('\\', "/");
+            for h in [self.home.replace('\\', "\\\\"), fwd.clone(), self.home.to_lowercase(), fwd.to_lowercase()] {
+                s = s.replace(&h, "~");
+            }
+        }
         for n in &self.names {
             s = s.replace(n.as_str(), "[user]");
         }
@@ -171,14 +183,19 @@ impl Redact {
     }
 }
 
-/// Bluetooth hardware addresses (a device's Core Audio id is one: "AC-DE-48-00-11-22:output") as [device]: a
-/// persistent identifier of someone's headphones.
+/// The home folder (Windows: the profile folder, C:\Users\<name>).
+fn home_dir() -> String {
+    crate::platform::shell::home()
+}
+
+/// Bluetooth hardware addresses (a device's Core Audio id is one: "AC-DE-48-00-11-22:output"; Linux's sound server
+/// names one "bluez_sink.AC_DE_48_00_11_22.a2dp_sink") as [device]: a persistent identifier of someone's headphones.
 fn hide_hardware_addresses(s: &str) -> String {
     let b = s.as_bytes();
     let hex2 = |i: usize| i + 2 <= b.len() && b[i].is_ascii_hexdigit() && b[i + 1].is_ascii_hexdigit();
     let address_at = |i: usize| {
         let sep = *b.get(i + 2)?;
-        ((sep == b'-' || sep == b':') && (0..6).all(|k| hex2(i + 3 * k) && (k == 5 || b.get(i + 3 * k + 2) == Some(&sep))))
+        ((sep == b'-' || sep == b':' || sep == b'_') && (0..6).all(|k| hex2(i + 3 * k) && (k == 5 || b.get(i + 3 * k + 2) == Some(&sep))))
             .then_some(17)
     };
     let (mut out, mut i) = (String::with_capacity(s.len()), 0);
@@ -198,18 +215,6 @@ fn hide_hardware_addresses(s: &str) -> String {
         }
     }
     out
-}
-
-/// The user's full name (macOS's account name), if it can be read.
-fn full_name() -> Option<String> {
-    unsafe {
-        let pw = libc::getpwuid(libc::getuid());
-        if pw.is_null() || (*pw).pw_gecos.is_null() {
-            return None;
-        }
-        let g = std::ffi::CStr::from_ptr((*pw).pw_gecos).to_string_lossy().into_owned();
-        Some(g.split(',').next().unwrap_or("").trim().to_string()).filter(|n| !n.is_empty())
-    }
 }
 
 /// The settings as they go in a report: on/off switches, and whether a microphone was chosen (not which).
@@ -232,7 +237,9 @@ fn recent_days(days: u32) -> Vec<String> {
 
 /// Put a report together in a folder of its own (the last one prepared is replaced): logs from the last `days` days,
 /// the plays' summaries from those days and the record of `take` (a take id from History), the builds seen, and
-/// about.json. What's in it, for the window to list: {"folder", "files": [{name, bytes, what}], "bytes"}.
+/// about.json. What's in it, for the window to list: {"folder", "files": [{name, bytes, what, what_kind, what_params}],
+/// "bytes"}: `what` is English; `what_kind` (log, take, take_reported, builds, summary, about) and `what_params`
+/// (artist, name) let the window say it in its language (src-tauri/messages/KINDS.md).
 pub fn prepare(data: &Path, take: Option<&str>, days: u32) -> Result<Value, String> {
     let dir = std::env::temp_dir().join(format!("onkey-report-{}", crate::store::format_time(std::time::SystemTime::now(), "%Y%m%d-%H%M%S")));
     if let Some((old, _)) = STAGED.lock().unwrap().take() {
@@ -252,9 +259,9 @@ pub fn stage(data: &Path, dir: &Path, take: Option<&str>, days: u32, r: &Redact,
     std::fs::create_dir_all(dir.join("takes")).map_err(|e| e.to_string())?;
     let rec = data.join("records");
     let mut files: Vec<Value> = Vec::new();
-    let mut add = |name: String, body: &str, what: String| -> Result<(), String> {
+    let mut add = |name: String, body: &str, what: String, kind: &str, params: Value| -> Result<(), String> {
         std::fs::write(dir.join(&name), body).map_err(|e| e.to_string())?;
-        files.push(json!({"name": name, "bytes": body.len(), "what": what}));
+        files.push(json!({"name": name, "bytes": body.len(), "what": what, "what_kind": kind, "what_params": params}));
         Ok(())
     };
     // the log, day by day (lines that may quote lyrics left out)
@@ -268,6 +275,7 @@ pub fn stage(data: &Path, dir: &Path, take: Option<&str>, days: u32, r: &Redact,
         logs.push(std::env::temp_dir().join("onkey.log"));
     }
     let mut left_out = 0;
+    let mut all_logs = String::new();
     for p in &logs {
         let Ok(text) = std::fs::read_to_string(p) else { continue };
         let text = if text.len() > 8 << 20 { text[text.len() - (8 << 20)..].to_string() } else { text };
@@ -279,7 +287,8 @@ pub fn stage(data: &Path, dir: &Path, take: Option<&str>, days: u32, r: &Redact,
             }
         }
         let name = format!("logs/{}", p.file_name().unwrap_or_default().to_string_lossy());
-        add(name, &out, "OnKey's log for that day".into())?;
+        add(name, &out, "OnKey's log for that day".into(), "log", json!({}))?;
+        all_logs.push_str(&out);
     }
     // the plays' summaries: the take asked about, and every play in those days
     let mut takes: Vec<PathBuf> = std::fs::read_dir(rec.join("takes")).into_iter().flatten().flatten().map(|e| e.path())
@@ -296,20 +305,28 @@ pub fn stage(data: &Path, dir: &Path, take: Option<&str>, days: u32, r: &Redact,
         if r.quotes_lyrics(&body) {
             continue;       // (a summary never holds lyrics; one that seems to isn't sent)
         }
-        let what = format!("{}a play's summary: {} - {}", if asked { "the take reported: " } else { "" },
-                           v["track"]["artist"].as_str().unwrap_or("?"), v["track"]["name"].as_str().unwrap_or("?"));
-        add(format!("takes/{name}.json"), &body, r.text(&what))?;
+        let (artist, song) = (v["track"]["artist"].as_str().unwrap_or("?"), v["track"]["name"].as_str().unwrap_or("?"));
+        let what = format!("{}a play's summary: {artist} - {song}", if asked { "the take reported: " } else { "" });
+        add(format!("takes/{name}.json"), &body, r.text(&what), if asked { "take_reported" } else { "take" },
+            json!({"artist": r.text(artist), "name": r.text(song)}))?;
     }
     if let Ok(b) = std::fs::read_to_string(rec.join("builds.json")) {
-        add("builds.json".into(), &r.text(&b), "the OnKey builds that ran on this Mac".into())?;
+        add("builds.json".into(), &r.text(&b), format!("the OnKey builds that ran on this {MACHINE}"), "builds", json!({}))?;
     }
-    let about = json!({"report": 1, "made": crate::store::now_iso(), "build": crate::records::build(), "mac": crate::records::mac(),
+    // (Windows) summary.txt: the logs' answers to what we'd otherwise ask a tester (digest.rs)
+    for (name, text, what) in crate::platform::diag::report_files(&all_logs) {
+        add(name, &text, what, "summary", json!({}))?;
+    }
+    let mut about = json!({"report": 1, "made": crate::store::now_iso(), "build": crate::records::build(), "mac": crate::records::mac(),
         "settings": settings_for_report(&settings), "days": days, "take": take, "log_lines_left_out": left_out,
         "description": "", "contains": files.iter().map(|f| f["name"].clone()).collect::<Vec<_>>(),
         "never_contains": "lyrics, audio, song files, your user name or home folder, microphone names"});
+    // (Windows: "mac" holds this PC, its "macos" the Windows version)
+    crate::platform::diag::report_about(&mut about);
     let body = serde_json::to_string_pretty(&about).unwrap_or_default();
     std::fs::write(dir.join("about.json"), &body).map_err(|e| e.to_string())?;
-    files.push(json!({"name": "about.json", "bytes": body.len(), "what": "OnKey's version, this Mac, the settings, and what you wrote"}));
+    files.push(json!({"name": "about.json", "bytes": body.len(), "what": format!("OnKey's version, this {MACHINE}, the settings, and what you wrote"),
+                      "what_kind": "about", "what_params": {}}));
     Ok(files)
 }
 
@@ -406,28 +423,6 @@ fn dos_time() -> (u16, u16) {
     ((h << 11) | (mi << 5) | (s / 2), ((y.saturating_sub(1980)) << 9) | (mo << 5) | d)
 }
 
-/// Where to save it: macOS's save panel (on the main thread), starting at ~/Desktop/OnKey-report-<date>.zip. None:
-/// cancelled.
-#[cfg(target_os = "macos")]
-pub fn ask_where(app: &tauri::AppHandle) -> Option<PathBuf> {
-    let (tx, rx) = std::sync::mpsc::channel();
-    let name = format!("OnKey-report-{}.zip", crate::store::format_time(std::time::SystemTime::now(), "%Y-%m-%d"));
-    let desktop = std::env::var("HOME").map(|h| format!("{h}/Desktop")).unwrap_or_default();
-    let _ = app.run_on_main_thread(move || {
-        use objc2_app_kit::{NSModalResponseOK, NSSavePanel};
-        use objc2_foundation::{MainThreadMarker, NSString, NSURL};
-        let Some(mtm) = MainThreadMarker::new() else { let _ = tx.send(None); return };
-        let panel = NSSavePanel::savePanel(mtm);
-        panel.setNameFieldStringValue(&NSString::from_str(&name));
-        panel.setDirectoryURL(Some(&NSURL::fileURLWithPath(&NSString::from_str(&desktop))));
-        panel.setCanCreateDirectories(true);
-        panel.setMessage(Some(&NSString::from_str("OnKey's records for a bug report: logs and numbers, no lyrics or audio.")));
-        let chosen = (panel.runModal() == NSModalResponseOK).then(|| panel.URL()).flatten().and_then(|u| u.path()).map(|p| PathBuf::from(p.to_string()));
-        let _ = tx.send(chosen);
-    });
-    rx.recv().ok().flatten()
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -450,7 +445,7 @@ mod tests {
         std::fs::write(t.join("meta.json"), json!({"lyrics": [[10.0, LYRICS[0]], [15.0, LYRICS[1]]]}).to_string()).unwrap();
         std::fs::write(t.join("result.json"), json!({"lines": [{"text": LYRICS[2]}]}).to_string()).unwrap();
         std::fs::write(d.join("songs/isrc-TEST.bin"), [0u8; 64]).unwrap();
-        let home = std::env::var("HOME").unwrap();
+        let home = home_dir();
         let today = crate::store::format_time(std::time::SystemTime::now(), "%Y%m%d");
         std::fs::write(d.join(format!("records/logs/onkey-{today}.log")), format!(
             "2026-10-16T12:00:00 new take (learn): Test - Under the Silver Bridge from 0.0s\n\
@@ -489,12 +484,41 @@ mod tests {
         }
         assert!(!text.contains("where is the moon tonight"), "a log line quoting lyrics is left out");
         assert!(!text.contains("hold me close until"), "the description's quoted lyrics are left out too");
-        let home = std::env::var("HOME").unwrap().to_lowercase();
+        let home = home_dir().to_lowercase();
         assert!(!text.contains(&home), "home folder in the report");
         assert!(text.contains("~/music/test.wav"), "paths start with ~");
         assert!(!text.contains("someone's airpods"), "microphone names are taken out");
         assert!(text.contains("under the silver bridge from 0.0s"), "a log line naming the song (its title is words of its lyrics) stays");
         assert!(text.contains("\"mic\": \"(set)\""), "settings: whether a mic was chosen, not which");
+        let _ = std::fs::remove_dir_all(&data);
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn a_windows_report_has_a_summary_and_no_profile_folder_in_any_form() {
+        let r = Redact::new(r"C:\Users\bob".into(), vec!["bob".into()], &[], &[]);
+        assert_eq!(r.text(r"at C:\Users\bob\AppData\x"), r"at ~\AppData\x");
+        assert_eq!(r.text(r#"{"p": "C:\\Users\\bob\\x"}"#), r#"{"p": "~\\x"}"#);
+        assert_eq!(r.text("file:///C:/Users/bob/x and c:\\users\\bob"), "file:///~/x and ~");
+        let data = std::env::temp_dir().join(format!("onkey-report-win-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&data);
+        std::fs::create_dir_all(data.join("records/logs")).unwrap();
+        let home = home_dir();
+        let today = crate::store::format_time(std::time::SystemTime::now(), "%Y%m%d");
+        std::fs::write(data.join(format!("records/logs/onkey-{today}.log")), format!(
+            "2026-10-28T10:00:00 ==== OnKey 0.1.0 on a PC\n\
+             2026-10-28T10:00:01 capture (Windows): only spotify.exe (pid 4) and the programs it started (per-process loopback); output \"Speakers\" (48000 Hz, 2 ch, 32-bit); mic 'Bob Mic' (48000 Hz, 1 ch, 32-bit); all taken at 48000 Hz, 32-bit float\n\
+             2026-10-28T10:00:02 ui: error: boom at {home}\\AppData\\x.js\n")).unwrap();
+        let staged = data.join("staged");
+        let r = Redact::for_data(&data);
+        let files = stage(&data, &staged, None, 3, &r, json!({})).unwrap();
+        assert!(files.iter().any(|f| f["name"] == "summary.txt"));
+        let summary = std::fs::read_to_string(staged.join("summary.txt")).unwrap();
+        assert!(summary.contains("## Audio") && summary.contains("per-process loopback") && summary.contains("mic '[mic]'"), "{summary}");
+        assert!(summary.contains(r"ui: error: boom at ~\AppData\x.js"), "{summary}");
+        assert!(!summary.to_lowercase().contains(&home.to_lowercase()), "{summary}");
+        let about = std::fs::read_to_string(staged.join("about.json")).unwrap();
+        assert!(about.contains("\"windows\""), "{about}");
         let _ = std::fs::remove_dir_all(&data);
     }
 
@@ -509,6 +533,7 @@ mod tests {
         assert_eq!(r.text("output switched: 'AC-DE-48-00-11-22:output' -> 'BuiltInSpeakerDevice'"),
                    "output switched: '[device]:output' -> 'BuiltInSpeakerDevice'");
         assert_eq!(r.text("uid ac:de:48:00:11:22, été"), "uid [device], été");
+        assert_eq!(r.text("hearing (bluez_sink.AC_DE_48_00_11_22.a2dp_sink.monitor)"), "hearing (bluez_sink.[device].a2dp_sink.monitor)");
         assert_eq!(r.text("at 12:34:56 took 0.5 s; id 1AC-DE-48-00-11-22"), "at 12:34:56 took 0.5 s; id 1AC-DE-48-00-11-22");
     }
 }

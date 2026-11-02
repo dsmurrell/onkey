@@ -1,0 +1,1504 @@
+{
+  "app": {
+    "title": "OnKey",
+    "description": "歌のトレーナー：いつも聞いている音楽で、好きな曲を歌えるようになります。"
+  },
+  "settings": {
+    "language": {
+      "title": "言語",
+      "label": "言語",
+      "sub": "OnKeyが表示する言葉。「自動」はパソコンの言語に合わせます。",
+      "autoNamed": "自動（{language}）",
+      "autoOs": "{language}（{os, select, mac {Macの言語} other {このPCの言語}}）",
+      "early": "初期対応",
+      "earlyNote": "{language}の曲の歌詞は、今のところ単語ごとのタイミングなしで表示されます。手伝っていただけますか？<link>この翻訳を改善する</link>",
+      "credits": "翻訳：{names}"
+    },
+    "title": "設定",
+    "saveFailed": "設定を保存できませんでした。",
+    "audio": {
+      "title": "オーディオ",
+      "mic": {
+        "label": "マイク",
+        "now": "現在：{name}。",
+        "none": "マイクが接続されていません。",
+        "nowMissingMac": "現在：{name}。選んだマイクが接続されていないため、接続されるまでMac内蔵の入力を使います。",
+        "nowMissingPc": "現在：{name}。選んだマイクが接続されていないため、接続されるまで{input}を使います。",
+        "noneMissingMac": "<warn>マイクが接続されていません。</warn>選んだマイクが接続されていないため、接続されるまでMac内蔵の入力を使います。",
+        "noneMissingPc": "<warn>マイクが接続されていません。</warn>選んだマイクが接続されていないため、接続されるまで{input}を使います。",
+        "moreMac": "「自動」はMacの入力（システム設定 → サウンド）を使いますが、Macに内蔵マイクがある間はBluetoothヘッドフォンのマイクは使いません。ヘッドフォンで音楽を最高の音質のまま聞けるようにするためです。セットアップのマイクチェックとテイクも同じマイクを使います。ほかのアプリが追加する仮想デバイス（Krisp、Loopback、BlackHole、Zoom、Teams）は別に並べています。選ぶと、マイクではなくそのアプリの音がOnKeyに届くので、わざとそれを通して歌いたいときだけ選んでください。",
+        "morePc": "「自動」は{input}（{soundInput}）を使います。セットアップのマイクチェックとテイクも同じマイクを使います。",
+        "automatic": "自動",
+        "virtual": "仮想（ほかのアプリから）",
+        "notConnected": "未接続"
+      },
+      "output": {
+        "label": "出力",
+        "now": "現在：{name}。変更は{os, select, mac {システム設定 → サウンド} other {{sound}}}で。"
+      },
+      "setup": {
+        "title": "セットアップをもう一度",
+        "sub": "初日と同じように、許可とマイクチェックをやり直します。"
+      }
+    },
+    "shortcuts": {
+      "title": "キーボードショートカット",
+      "space": "スペース",
+      "pause": "聞き取りを一時停止・再開（どのページでも）",
+      "playPause": "再生・一時停止",
+      "restart": "曲を最初から",
+      "previous": "前の曲",
+      "next": "次の曲、または歌い出しまでスキップ",
+      "blind": "音符を表示・非表示（ブラインドテイク）",
+      "favourite": "曲をお気に入りに",
+      "mini": "ミニモード：ほかのアプリの上に重なる小さな歌詞バー"
+    },
+    "updates": {
+      "version": "OnKey {version}",
+      "unsupportedMac": "開発ビルド：自動アップデートはしません。",
+      "unsupportedPc": "このテストビルドは自動アップデートしません。新しいものが出たら、上から入れ直してください。",
+      "waiting": "この曲が終わるとOnKey {version}をインストールし、OnKeyを再起動します。",
+      "ready": "OnKey {version}の準備ができました。再起動してアップデートするか、終了時にインストールされます。",
+      "downloading": "OnKey {version}をダウンロード中…",
+      "checking": "確認中…",
+      "official": "元のプロジェクト（singonkey.app）からOnKey {version}が出ています。このコピーはソースからビルドされているため、自動アップデートはしません。",
+      "current": "最新バージョンです。",
+      "currentSource": "最新バージョンです。このコピーはソースからビルドされています。新しいバージョンが出たらお知らせしますが、自動アップデートはしません。",
+      "updateFailed": "OnKey {version}にアップデートできませんでした。「今すぐ確認」でもう一度試します。",
+      "updateFailedWhy": "OnKey {version}にアップデートできませんでした（{error}）。「今すぐ確認」でもう一度試します。",
+      "checkFailed": "今はアップデートを確認できませんでした。",
+      "checkFailedWhy": "今はアップデートを確認できませんでした（{error}）。",
+      "restart": "再起動してアップデート",
+      "checkNow": "今すぐ確認",
+      "auto": {
+        "title": "アップデートを自動で確認",
+        "sub": "1日に1回、バックグラウンドで。曲の邪魔はしません。",
+        "more": "OnKeyはGitHubに新しいバージョンがないか問い合わせ、バックグラウンドでダウンロードします。再起動または終了のときにインストールされます。"
+      }
+    },
+    "seeHow": {
+      "show": "見た目を確認",
+      "hide": "隠す"
+    },
+    "more": {
+      "more": "詳しく",
+      "less": "閉じる"
+    },
+    "scoring": {
+      "title": "採点",
+      "label": "採点の厳しさ",
+      "more": "ビブラートは大丈夫です。音程は揺れの中心で判定します。OnKeyのすべてのスコアはこの厳しさで表示され、以前のテイクも、残してある歌声からもう一度採点されます。",
+      "moreRelaxed": "OnKeyのすべてのスコアはこの厳しさで表示され、以前のテイクも、残してある歌声からもう一度採点されます。"
+    },
+    "control": {
+      "title": "OnKeyにコントロールを許可",
+      "introMac": "標準でオン：OnKeyは何がどこまで再生中か（正確で即時の位置）を読み取り、再生・一時停止・移動・曲の開始ができます。それ以外は何もしません。macOSがそれぞれ一度だけ確認します。",
+      "introPc": "標準でオン：OnKeyは何がどこまで再生中かを読み取り、再生・一時停止・移動・曲の開始ができます。それ以外は何もしません。",
+      "introAsking": "OnKeyはSpotifyとApple Musicに問い合わせて追いかけているので、すでにコントロールしています。",
+      "spotify": {
+        "title": "Spotify",
+        "missing": "この{os, select, mac {Mac} other {PC}}にSpotifyはインストールされていません。",
+        "sub": "OnKeyからSpotifyの曲を開始・一時停止・スキップします。"
+      },
+      "music": {
+        "title": "Apple Music",
+        "missingMac": "このMacにミュージックアプリはありません。",
+        "missingPc": "このPCにApple Musicアプリはありません。",
+        "subMac": "ミュージックアプリ（ライブラリ内の曲）でも同じことを。",
+        "subPc": "Apple Musicアプリでも同じことを。"
+      },
+      "youtube": {
+        "title": "ブラウザのYouTube",
+        "badge": "大きめの許可",
+        "subMac": "Chrome、Brave、Edge、SafariのYouTubeタブを読み取り、コントロールします。",
+        "moreMac": "ブラウザで「Apple EventsからのJavaScriptを許可」をオンにする必要があります。オンの間（およびOnKeyからYouTubeの曲を開いてから10分間）、OnKeyはブラウザの音を、通話やポッドキャストを含めて何でも聞きます。認識できない音は、下でShazamをオフにしていない限り、短いフィンガープリント（音声そのものではありません）としてShazamに送られることがあります。",
+        "subPc": "Chrome、Edge、Firefox、Brave、Opera、Vivaldiで再生中の曲を追いかけます。",
+        "morePc": "ブラウザが{os}に伝える再生情報から。OnKeyはそこで再生・一時停止・移動ができます。曲を覚えるまでは、位置がSpotifyより少し不正確なことがあります。"
+      },
+      "listenOnlyMac": "OnKeyは聞くだけです。曲を音で追いかけ、どのアプリにも触れません。位置は少し不正確になり、曲の開始ややり直しはできません。ここでアプリをオフにしてもmacOSの許可は取り消されません。それはシステム設定 → プライバシーとセキュリティ → オートメーションにあります。",
+      "listenOnlyPc": "OnKeyは聞くだけです。曲を音で追いかけ、どのアプリにも触れません。{os}では、すでに覚えた曲だけが対象です。新しい曲は、ここでオンになっている間は{apps}が名前を教えます。",
+      "allOff": "すべてオフにすると、OnKeyは音だけで曲を追いかけます。"
+    },
+    "naming": {
+      "title": "曲名の調べ方",
+      "pc": "一度歌った曲は、このPC上で音から認識されます。新しい曲は、Spotify、Apple Music、またはブラウザ（YouTubeがオンのとき）が再生中と伝える情報から名前がわかります。曲名を調べるために送信されるものはありません。",
+      "shazam": {
+        "title": "新しい曲の名前をShazamで調べる",
+        "sub": "音声ではなく、音の短いフィンガープリントから新しい曲の名前を調べます。",
+        "more": "一度歌った曲はこのMac上で認識されます。SpotifyとApple Musicの新しい曲は、OnKeyがコントロールできる間はアプリ自身が名前を教えます。残りはShazamが調べます。オフにするとShazamには何も送られず、音から認識できるのはこのMacで覚えた曲だけになります。ジャケット画像は引き続き、アーティストとタイトルでAppleのiTunesカタログから探します。",
+        "warn": "SpotifyとApple Musicがオフだと、新しい曲を覚えられるのはShazamがオンのときだけです。覚えた曲はそのまま使えます。"
+      }
+    },
+    "lyrics": {
+      "title": "歌詞",
+      "show": {
+        "title": "歌詞を表示",
+        "sub": "無料のコミュニティ歌詞データベースLRCLIBから。",
+        "more": "オフにするとOnKeyはLRCLIBに何も問い合わせず、音符だけで歌います。音程ガイドとスコアはいつもどおりです。"
+      }
+    },
+    "voice": {
+      "title": "声",
+      "breaks": {
+        "title": "声を休めるお知らせ",
+        "sub": "35分ほど歌ったら、休憩をそっとお知らせします。",
+        "more": "20分歌わなければ、カウントは最初からになります。"
+      },
+      "fadeGuide": {
+        "title": "知っている曲ではガイドを薄くする",
+        "sub": "音が合っている間は音程ラインが薄くなるので、自分の声をもっと聞くようになります。",
+        "more": "曲をうまく歌えたら始まります（ベストが80以上、または直近2テイクが75以上）。よく知っている曲ほど薄くなり、半音より外れるといつもどおりに表示されます。音符はいつも表示され、どのテイクでもフルガイドに戻せます。"
+      }
+    },
+    "performance": {
+      "title": "パフォーマンス",
+      "battery": {
+        "title": "歌っている間はバッテリーを節約",
+        "sub": "バッテリー駆動時は音符を描く回数を少し減らします。それでもなめらかです。",
+        "more": "1秒に60回ではなく30回：Macの描画の仕事が半分になります。"
+      },
+      "keepModels": {
+        "title": "覚えるためのモデルを待機させておく",
+        "sub": "新しい曲を速く覚えますが、OnKeyのメモリ使用量が増えます。",
+        "more": "OnKeyが知っている曲を歌っている間も、約1.5GB多く使います。オフにすると、新しい曲を覚えるときにモデルを読み込み、終わったら解放します。32GB以上の{os, select, mac {Mac} other {PC}}では標準でオンです。"
+      }
+    },
+    "about": {
+      "title": "このアプリについて",
+      "report": {
+        "title": "問題を報告",
+        "subMac": "OnKeyのログとタイミング情報をzipに保存して、GitHubのIssueに添付します。中身は先に確認できます。歌詞や音声は含まず、何もアップロードしません。",
+        "subPc": "OnKeyのログとタイミング情報を1つのzipとしてデスクトップに保存し、メッセージやGitHubのIssueに添付します。中身は先に確認できます。歌詞や音声は含まず、何もアップロードしません。"
+      },
+      "guides": {
+        "title": "ガイドとヘルプ",
+        "sub": "OnKeyの仕組み、採点、問題の解決、無理なく歌う方法。singonkey.appにて。"
+      },
+      "discord": {
+        "title": "OnKeyのDiscordに参加",
+        "sub": "質問したり、ずれる曲を報告したり、アイデアを出したり。"
+      },
+      "madeBy": {
+        "title": "作者：Daniel Murrell",
+        "tagline": "2026年から、お風呂での熱唱をちょっとだけ上手にしています"
+      },
+      "fairUse": {
+        "title": "OnKeyの正しい使い方",
+        "sub": "OnKeyの目的と、音楽を共有せずに歌を共有する方法。"
+      },
+      "licences": {
+        "title": "オープンソースライセンス",
+        "sub": "OnKeyを支えるモデル、データ、フォント、ライブラリと、それぞれのライセンス。"
+      },
+      "footer": "自宅での個人練習のためのアプリです。OnKeyが覚えたものはこの{os, select, mac {Mac} other {PC}}の中に残ります。自分だけで使い、音楽の入ったテイクや画面収録は投稿しないでください。"
+    }
+  },
+  "music": {
+    "levels": {
+      "relaxed": {
+        "name": "ゆるめ",
+        "about": "寛容：半音の半分以内なら満点。初心者や子どもに向いています。"
+      },
+      "steady": {
+        "name": "しっかり",
+        "about": "音程とタイミングがやや厳しめ。だいたい音程が合っている人向け。"
+      },
+      "pro": {
+        "name": "プロ",
+        "about": "厳しめ、訓練を受けた歌い手向け：満点は4分の1半音以内。"
+      }
+    },
+    "offBy": {
+      "cents": "{cents}¢{dir, select, up {高め} other {低め}}",
+      "octaves": "{count, plural, other {{count}オクターブ}}ほど{dir, select, up {高め} other {低め}}",
+      "semitones": "{count, plural, other {半音{count}つ}}ほど{dir, select, up {高め} other {低め}}"
+    },
+    "scoreWord": {
+      "superb": "最高",
+      "great": "すばらしい",
+      "good": "いいね",
+      "gettingThere": "もう少し",
+      "keepAtIt": "続けよう"
+    }
+  },
+  "platform": {
+    "linux": {
+      "os": "Linux",
+      "settings": "サウンド設定",
+      "sound": "システムのサウンド設定",
+      "soundInput": "システムのサウンド設定 → 入力",
+      "defaultInput": "システムの標準入力",
+      "files": "ファイルマネージャ",
+      "filesThe": "ファイルマネージャ",
+      "apps": "SpotifyまたはブラウザのYouTube"
+    },
+    "windows": {
+      "os": "Windows",
+      "settings": "Windowsの設定",
+      "sound": "Windowsの設定 → システム → サウンド",
+      "soundInput": "Windowsの設定 → システム → サウンド → 入力",
+      "defaultInput": "Windowsの標準入力",
+      "files": "エクスプローラー",
+      "filesThe": "エクスプローラー",
+      "apps": "Spotify、Apple Music、またはブラウザのYouTube"
+    },
+    "setupStep": {
+      "welcome": "ようこそ",
+      "permissions": "許可",
+      "musicApps": "音楽アプリ",
+      "micCheck": "マイクチェック",
+      "ready": "準備完了"
+    },
+    "savedFolder": {
+      "desktop": "デスクトップ",
+      "home": "ホームフォルダ",
+      "named": "フォルダ「{folder}」"
+    }
+  },
+  "learn": {
+    "stage": {
+      "playing": "再生しながら覚えています",
+      "waiting": "順番を待っています",
+      "queued": "覚える順番待ち",
+      "paused": "歌っている間は待機",
+      "separating": "歌声を分離中",
+      "pitch": "メロディを追跡中",
+      "scoring": "テイクを採点中",
+      "words": "歌詞のタイミングを計測中",
+      "bars": "音程バーを作成中",
+      "notes": "音符を特定中",
+      "saving": "保存中",
+      "other": "覚えています"
+    },
+    "label": {
+      "queued": "覚える順番待ち",
+      "going": "覚えています…",
+      "percent": "覚えています… {pct}%"
+    }
+  },
+  "starting": {
+    "yourApp": "音楽アプリ",
+    "theSong": "この曲",
+    "noId": {
+      "title": "{app}で{song}を開始できません",
+      "sub": "OnKeyはまだ{app}でのこの曲を知りません（別のアプリから、または聞き取りで覚えました）。{app}で開いて再生してください。OnKeyが追いかけ、その後は開始もできるようになります。"
+    },
+    "failed": {
+      "title": "{app}が{song}を開始しませんでした",
+      "subMusic": "OnKeyが開始できるのは、Apple Musicのライブラリにある曲です。Apple Musicで開いて再生してください。OnKeyが追いかけます。",
+      "sub": "{app}で開いて再生してください。OnKeyが追いかけます。"
+    },
+    "going": {
+      "title": "{app}で{song}を開始しています…",
+      "sub": "再生が始まるとレーンが表示されます。"
+    }
+  },
+  "errors": {
+    "deleteFailed": "削除できませんでした。",
+    "readFailed": "{what, select, takes {テイク} songs {曲} other {{what}}}を読み込めませんでした",
+    "reportsInApp": "報告はOnKeyアプリから行います。"
+  },
+  "sing": {
+    "header": {
+      "miniTitle": "ミニモード：ほかのアプリの上に重なる小さな歌詞バー（M）"
+    },
+    "learning": {
+      "badge": "この曲を覚えています",
+      "title": "ブラインドテイク",
+      "body": "ヒントなしで歌いましょう。次からは全部の音符が見えます。",
+      "scoreAfter": "<time>{clock}</time> · スコアは曲のあとで"
+    },
+    "learningLine": {
+      "waiting": "<hl>{name}</hl>は覚える順番待ち",
+      "learning": "<hl>{name}</hl>を覚えています：{stage}",
+      "stage": {
+        "playing": "再生しながら覚えています",
+        "waiting": "順番を待っています",
+        "queued": "覚える順番待ち",
+        "paused": "歌っている間は待機",
+        "separating": "歌声を分離中",
+        "pitch": "メロディを追跡中",
+        "scoring": "テイクを採点中",
+        "words": "歌詞のタイミングを計測中",
+        "bars": "音程バーを作成中",
+        "notes": "音符を特定中",
+        "saving": "保存中",
+        "other": "覚えています"
+      }
+    },
+    "lineSub": {
+      "mac": {
+        "finding": "OnKeyが音から曲名を調べています。数秒かかり、テイクは曲の最初から始まります。",
+        "new_song": "OnKeyが次の曲の名前を調べています。テイクは曲の最初から始まります。",
+        "unnamed": "OnKeyもShazamも知らない曲です。音が変わったらもう一度調べます。",
+        "no_shazam": "今はShazamに接続できないため、このMacで覚えた曲だけを認識します。OnKeyは引き続き試します。",
+        "shazam_off": "Shazamがオフ（設定）なので、音だけではこのMacで覚えた曲しか認識できません。新しい曲の名前を調べるにはShazamをオンにしてください。",
+        "podcast": "曲を再生すると、OnKeyが追いかけます。",
+        "stopped": "覚えるのを止めたので、OnKeyはこの曲に触れません。別の曲を再生すると追いかけます。",
+        "elsewhere": "OnKeyはこのMacで再生中の音を聞きます。別のデバイス（スマートフォンやスピーカー）で再生中なら、アプリのデバイスメニューでこのMacに切り替えてください。"
+      },
+      "pc": {
+        "unnamed": "OnKeyが覚えた曲ではなく、どの音楽アプリからも曲名が伝わっていません。音が変わったらもう一度調べます。",
+        "no_shazam": "OnKeyがまだ覚えていない曲です。{os}では、新しい曲の名前は{apps}（YouTubeがオンのとき）から伝わります。そこで再生すると、OnKeyが覚えます。",
+        "shazam_off": "OnKeyがまだ覚えていない曲です。{os}では、新しい曲の名前は{apps}（YouTubeがオンのとき）から伝わります。そこで再生すると、OnKeyが覚えます。",
+        "elsewhere": "OnKeyはこのPCで再生中の音を聞きます。別のデバイス（スマートフォンやスピーカー）で再生中なら、アプリのデバイスメニューでこのPCに切り替えてください。"
+      }
+    },
+    "waiting": {
+      "title": {
+        "starting": "OnKeyを起動しています…",
+        "gettingReady": "準備しています…",
+        "notASong": "曲ではありません",
+        "stillListening": "聞き取り中",
+        "idle": "曲を再生して、一緒に歌いましょう"
+      },
+      "sub": {
+        "connecting": "この{os, select, pc {PC} other {Mac}}のエンジンに接続しています。",
+        "listeningTo": "{name}を聞いています。すぐにレーンが表示されます。",
+        "idle": "Spotify{youtube, select, yes {、Apple Music、YouTube} other {かApple Music}}で。OnKeyが追いかけ、歌った曲はすべてあとで見返せるテイクになります。"
+      },
+      "openIn": "{app}で開く",
+      "notNow": "あとで",
+      "keys": {
+        "playPause": "<kbd>スペース</kbd> 再生 / 一時停止",
+        "startOver": "<kbd>R</kbd> 最初から",
+        "skip": "<kbd>←</kbd><kbd>→</kbd> スキップ",
+        "favourite": "<kbd>F</kbd> お気に入り"
+      },
+      "songsToTry": "おすすめの曲",
+      "youtube": {
+        "title": "YouTubeとYouTube Music <badge>試験的</badge>",
+        "turnOff": "オフにする",
+        "turnOn": "オンにする",
+        "pcOn": "オン。ブラウザが{os}に伝える再生情報から、OnKeyがブラウザの曲を追いかけます。",
+        "pcOff": "オフなので、ブラウザで再生中の曲は拾いません。オンにすると、Chrome、Edge、Firefox、Brave、Opera、Vivaldiで一緒に歌えます。",
+        "macOn": "オン。動画の位置を読み取れるように、macOSがOnKeyにブラウザのコントロールを許可するか一度だけ確認します。",
+        "macOff": "オフなので、ブラウザで再生中の曲は拾いません。オンにすると、Chrome、Safari、Brave、Edgeで一緒に歌えます。macOSがOnKeyにブラウザのコントロールを許可するか一度だけ確認します。"
+      }
+    },
+    "paused": {
+      "text": "聞き取りを一時停止中です。再開して一緒に歌いましょう。",
+      "resumeTitle": "聞き取りを再開（⌘⇧P）",
+      "resume": "再開"
+    },
+    "rename": {
+      "saveFailed": "名前を保存できませんでした。",
+      "buttonTitle": "曲名が違う？アーティストとタイトルを直す（歌詞の検索に使います）",
+      "title": "曲名を直す",
+      "about": "YouTubeの動画から読み取りました。OnKeyはこの名前で歌詞を探します。",
+      "artist": "アーティスト",
+      "songTitle": "タイトル",
+      "cancel": "キャンセル",
+      "save": "保存"
+    },
+    "notices": {
+      "dismiss": "閉じる",
+      "openWindowsSettings": "Windowsの設定を開く",
+      "openSystemSettings": "システム設定を開く",
+      "mic": {
+        "title": "OnKeyにマイクの音が届いていません",
+        "deniedPc": "届くまで、歌声は聞き取られず採点もされません。<b>Windowsの設定 → プライバシーとセキュリティ → マイク</b>で、<b>マイクへのアクセス</b>と<b>デスクトップ アプリがマイクにアクセスできるようにする</b>をオンにしてください。",
+        "deniedMac": "届くまで、歌声は聞き取られず採点もされません。<b>システム設定 → プライバシーとセキュリティ → マイク</b>でOnKeyをオンにしてください。",
+        "restrictedPc": "このPCの設定では、OnKeyがマイクを使えません。このPCの管理者に相談してください。",
+        "restrictedMac": "このMacの設定では、OnKeyがマイクを使えません。このMacの管理者に相談してください。",
+        "noneMac": "マイクが接続されていないため、歌声は聞き取られず採点もされません。マイクを接続するか、<b>システム設定 → サウンド → 入力</b>で選んでください。",
+        "nonePc": "マイクが接続されていないため、歌声は聞き取られず採点もされません。マイクを接続するか、<b>{soundInput}</b>で選んでください。"
+      },
+      "musicQuiet": {
+        "title": "{app}の音量がとても小さいです",
+        "body": "OnKeyが曲をよく聞き取れないため{at, select, yes {（{app}の音量は{volume}%）} other {}}、歌声は採点されません。{app}の音量を上げて、代わりに{os, select, pc {PC} other {Mac}}の音量で調節してください。"
+      },
+      "automation": {
+        "title": "OnKeyに{app}のコントロールが許可されていません",
+        "body": "{listening, select, yes {OnKeyは代わりに聞き取りで追いかけていて、そこでの曲の開始・一時停止・スキップはできません。} other {そのため、そこで何が再生中かわかりません。}}<b>システム設定 → プライバシーとセキュリティ → オートメーション → OnKey</b>で{app}をオンにしてください{listening, select, yes {。または、OnKeyの設定でオフにしてください} other {}}。"
+      },
+      "notAnswering": {
+        "title": "{app}がOnKeyに応答しません",
+        "body": "macOSが、OnKeyに{app}のコントロールを許可するかを、ほかのウインドウの後ろに隠れた画面で尋ねているかもしれません。探して<b>許可</b>を選んでください。または<b>システム設定 → プライバシーとセキュリティ → オートメーション → OnKey</b>で{app}をオンにしてください。OnKeyは1分後にもう一度試します。"
+      },
+      "lyricsDown": {
+        "title": "今は歌詞を取得できません",
+        "body": "OnKeyが使っている無料の歌詞サービスLRCLIBが、現在動いていません。音符は表示され、曲の途中で復旧すれば歌詞も加わります。その間に覚えた曲は、次に歌うときに歌詞がつきます。"
+      },
+      "models": {
+        "title": "今はOnKeyが新しい曲を覚えられません",
+        "body": "アプリに同梱されている、覚えるためのモデルが見つからないか壊れています{hasError, select, yes {（{error}）} other {}}。すでに覚えた曲はそのまま使えます。直すには、OnKeyをもう一度ダウンロードして{os, select, pc {上からインストール} other {アプリケーションフォルダのアプリを置き換え}}てください。曲とテイクは残ります。"
+      },
+      "modelsBroken": {
+        "title": "今はOnKeyが歌声を聞き取れません",
+        "body": "アプリに同梱されている音程モデルを読み込めませんでした{hasError, select, yes {（{error}）} other {}}。直すには、OnKeyをもう一度ダウンロードしてアプリケーションフォルダのアプリを置き換えてください。曲とテイクは残ります。"
+      },
+      "youtubeBlocked": {
+        "title": "YouTubeで一緒に歌うには、{browser}の動画をOnKeyに読み取らせてください",
+        "body": "{browser}で<b>{setting}</b>を選んでください。OnKeyが読み取るのは動画の位置と曲のタイトルだけで、ページ上のほかのものは読みません。"
+      },
+      "youtubeOff": {
+        "title": "{browser}でYouTubeやYouTube Musicを再生中ですか？",
+        "turnOn": "YouTubeをオンにする",
+        "pc": "ブラウザの曲は、YouTubeをオンにすると拾えるようになります。その後は{browser}が{os}に伝える曲を追いかけ、ほかの曲と同じように覚えます。",
+        "mac": "ブラウザの曲は、YouTubeをオンにすると拾えるようになります。その後、動画の位置を読み取れるように、macOSがOnKeyに{browser}のコントロールを許可するか一度だけ確認します。",
+        "cantFollow": "OnKeyは{browser}の曲を追いかけられません。<b>Chrome、Safari、Brave、Edge</b>で再生してYouTubeをオンにする（ここか設定で）か、設定で<b>聞き取りモード</b>をオンにしてください。聞き取りモードはどのブラウザでも使えます。"
+      }
+    },
+    "notASong": {
+      "text": "<hl>{name}</hl>は曲ではなく会話のように聞こえたので、OnKeyは覚えるのをやめました。",
+      "dismiss": "閉じる",
+      "learnIt": "これは曲です：次に再生したら覚える"
+    },
+    "speakerHint": {
+      "text": "音楽の音が大きくて、OnKeyに声が聞き取れません。歌っているなら、公平なスコアのために少し音量を下げるか、ヘッドフォンを使ってください。",
+      "dismiss": "閉じる",
+      "never": "今後表示しない"
+    },
+    "ended": {
+      "title": "セッション終了",
+      "howYouDid": "結果はこちらです。",
+      "noTakes": "今回は、採点できる長さのテイクがありませんでした。"
+    },
+    "permission": {
+      "yourApp": "音楽アプリ",
+      "title": "OnKeyにまだ{app}の音が聞こえません",
+      "body": "曲を追いかけるため、OnKeyはMac上の{app}の音声を聞き取ります。音声は保存も送信もされません。聞き取りモードでは、曲名を調べるために短いフィンガープリント（音声そのものではありません）がAppleのShazamに送られます。",
+      "step1": "1. <b>システム設定 → プライバシーとセキュリティ</b>を開く",
+      "step2": "2. <b>画面収録とシステムオーディオ録音</b>を選ぶ",
+      "step3": "3. <b>システムオーディオ録音のみ</b>の下でOnKeyをオンにする",
+      "open": "システム設定を開く"
+    },
+    "mini": {
+      "playASong": "SpotifyかApple Musicで曲を再生",
+      "score": "スコア",
+      "hideDancer": "ここではダンサーを隠す",
+      "expand": "フルウインドウを開く（M）",
+      "showDancer": "ダンサーを表示",
+      "progress": "曲の進み具合"
+    }
+  },
+  "live": {
+    "lyrics": {
+      "none": "この曲の同期歌詞はありません",
+      "off": "歌詞はオフです（設定）",
+      "findingPlace": "位置を探しています…",
+      "countdown": "♪ <num>{which, select, next {次の行} other {最初の行}}まで{secs}秒</num>"
+    },
+    "score": {
+      "label": "スコア",
+      "afterSong": "曲のあとで",
+      "onPitch": "✓ 音程どおり",
+      "higher": "▲ もっと高く",
+      "lower": "▼ もっと低く"
+    },
+    "transport": {
+      "restart": "曲を最初から（R）",
+      "previous": "前へ（←）",
+      "pause": "一時停止（スペース）",
+      "play": "再生（スペース）",
+      "skipToSinging": "歌い出しまでスキップ（→）",
+      "next": "次の曲（→）"
+    },
+    "take": {
+      "done": "{blind, select, yes {ブラインド · } other {}}{hasNotes, select, yes {{hit}/{total}音} other {見る}} →",
+      "couldntScore": "採点できませんでした",
+      "singNow": "今歌う",
+      "learnedPct": "{pct}%覚えました",
+      "playThrough": "通して再生",
+      "learningPct": "覚えています… {pct}%",
+      "waiting": "覚える順番待ち",
+      "learning": "覚えています…",
+      "scoring": "採点中…",
+      "learned": "覚えました · 歌えます"
+    },
+    "timing": {
+      "title": "これで歌詞が早い、または遅い？クリック音に合わせてタップして、遅れを測ります",
+      "check": "<hl>{name}</hl>のタイミングを確認 ›",
+      "theseHeadphones": "このヘッドフォン",
+      "dismiss": "今後提案しない"
+    },
+    "chips": {
+      "connectionTitle": "エンジンへの接続",
+      "reconnecting": "再接続中",
+      "resumeTitle": "聞き取りを再開（⌘⇧P）",
+      "paused": "聞き取りを一時停止中",
+      "pauseTitle": "聞き取りを一時停止（⌘⇧P）",
+      "live": "ライブ",
+      "outputTitle": "音は{device}から出ています。音楽アプリが再生してから{ms}ミリ秒後に耳に届き、採点はそれを考慮します{checked, select, yes {（設定のタイミングチェックより）} other {}}。",
+      "thisDevice": "このデバイス",
+      "bluetooth": "Bluetooth",
+      "headphones": "ヘッドフォンかスピーカー",
+      "micTitle": "OnKeyが聞いているマイク（設定で変更できます）",
+      "noMic": "マイクなし"
+    },
+    "switches": {
+      "blindTitle": "音符を隠して自分を試す：ブラインドテイク（B）",
+      "showNotes": "音符を表示",
+      "echoTitle": "マイクから音楽の音を取り除きます。スピーカーから曲を流したまま試すにはオフにしてください。",
+      "echo": "エコーキャンセル",
+      "dancerTitle": "歌っている間、曲に合わせて踊る棒人間",
+      "dancer": "ダンサー"
+    },
+    "finish": {
+      "lastLine": "これが最後の行でした",
+      "seeScore": "終えてスコアを見る",
+      "now": "今終える",
+      "paused": "一時停止中",
+      "pausedIn": "{time}後に{learning, select, yes {覚えます} other {採点します}}",
+      "learning": "覚えています…",
+      "scoring": "採点中…"
+    },
+    "openTake": {
+      "countdown": "一時停止中 · {time}後に{learning, select, yes {覚えます} other {採点します}}",
+      "learning": "覚えています…",
+      "scoring": "採点中…",
+      "state": "{state, select, paused {一時停止中} learning {再生しながら覚えています} other {歌っています}} · 終わると{learning, select, yes {覚えます} other {採点します}}",
+      "paused": "一時停止中",
+      "now": "今",
+      "finish": "今終える"
+    },
+    "skip": {
+      "singingIn": "歌い出しまで{secs}秒",
+      "skipAhead": "先へスキップ"
+    },
+    "pitchTitle": "今の音符に対する音程",
+    "toast": {
+      "view": "見る",
+      "learned": "覚えました · 次回から音符が出ます"
+    }
+  },
+  "lane": {
+    "verdict": {
+      "perfect": "パーフェクト",
+      "excellent": "エクセレント",
+      "great": "グレート",
+      "good": "グッド",
+      "ok": "OK"
+    },
+    "blind": "ブラインドテイク · 音符は非表示 · Bで表示",
+    "findingPlace": "曲の中の位置を探しています…",
+    "liningUp": "曲に合わせています…",
+    "singingStarts": "歌い出しまで{secs}秒"
+  },
+  "take": {
+    "allTakes": "← すべてのテイク",
+    "notFound": "このテイクが見つかりませんでした。",
+    "header": {
+      "singAgainBlocked": "覚えたら歌えます",
+      "singAgain": "もう一度歌う",
+      "shareTitle": "声と音符の20秒動画、Instagram用",
+      "share": "共有",
+      "within50Title": "歌声の{pct}%が歌手から50セント以内でした。",
+      "sungLevelTitle": "残してある歌声から、設定で選んだ厳しさでもう一度採点",
+      "sungLevel": "「{level}」で表示。歌ったときは「{sungLevel}」で、スコアは{score}でした。",
+      "leftOut": "メロディではないと印をつけた{count, plural, other {部分}}を除いて採点しました{changed, select, yes {（以前は{first}）} other {}}。"
+    },
+    "mode": {
+      "firstPlay": "初回再生",
+      "firstPlayWhy": "この曲が初めて再生されたとき：OnKeyは音符を表示せずにメロディを覚えました",
+      "blind": "ブラインド",
+      "blindWhy": "音符を表示せずに歌いました"
+    },
+    "story": {
+      "none": "歌手のパートに合わせて歌わなかったので、採点するものがありませんでした。",
+      "main": "歌手のパートの<n>{sang}%</n>を歌い、歌った部分の<n>{tune}%</n>が音程どおりでした。{full, select, yes {それがスコアです。} other {パートの40%以上を歌うと、スコアに全部反映されます。}}"
+    },
+    "verdict": {
+      "great": "きれいに音程が合っています。",
+      "mostly": "ほぼ合っていて、少し揺れるところがあります。",
+      "often": "音に近いことが多いものの、ときどき外れます。",
+      "away": "ところどころメロディを見失っています。",
+      "bias": "平均すると{off}でした。",
+      "worstLine": "もう一度挑戦したい行：「{text}」",
+      "worstAt": "もう一度挑戦したい行：{time}のところ。"
+    },
+    "proud": {
+      "share": "このテイクを共有",
+      "notNow": "あとで"
+    },
+    "player": {
+      "notKept": "このテイクの録音はもう残っていません。OnKeyはすべてのテイクの録音を合計2GBまで残し、超えると古いものから消します（お気に入りと曲のベストテイクは消しません）。スコアは残ります。",
+      "stop": "停止",
+      "play": "再生",
+      "playWithSong": "録音を曲と一緒に再生",
+      "playVoice": "録音を再生",
+      "whatPlays": "再生するもの",
+      "withSong": "曲と一緒に",
+      "voiceOnly": "声だけ",
+      "backToStart": "最初に戻る",
+      "lining": "曲に合わせています…",
+      "voiceTitle": "曲に対する声の大きさ",
+      "yourVoice": "声",
+      "voiceNormal": "標準",
+      "voiceDb": "{db} dB",
+      "aboutJoin": "OnKeyが残すのは声だけで、音楽は残しません。「曲と一緒に」は、{app}で{song}を再生すると録音をそれに合わせて再生します。マイクの遅れ（{ms}ミリ秒）は自動で補正済みです。",
+      "aboutPlay": "OnKeyが残すのは声だけで、音楽は残しません。「曲と一緒に」は、{app}で曲を再生しながら録音を重ねます。マイクの遅れ（{ms}ミリ秒）は自動で補正済みです。"
+    },
+    "join": {
+      "play": "{app}で{song}を再生してください。OnKeyが合わせます。",
+      "playFromStart": "{app}で{song}を最初から再生してください。OnKeyが合わせます。",
+      "goTo": "この部分は、{app}で{time}に移動してください。",
+      "letStart": "OnKeyに開始させる"
+    },
+    "graph": {
+      "singer": "歌手の音符",
+      "within50": "50¢以内",
+      "within100": "100¢以内",
+      "further": "それ以上",
+      "heldTitle": "長さの半分以上を半音以内で保てた音符。そのバーは緑に光ります。",
+      "held": "{total}音のうち<n>{hit}</n>音を保てました",
+      "biasTitle": "歌手に対して音程が平均でどこにあったか",
+      "centred": "平均で中心",
+      "bias": "平均で{off}",
+      "notMelody": "メロディではない"
+    },
+    "notMelody": {
+      "buttonTitle": "音符がメロディではなくバックコーラスやハーモニーを追っている部分を除外",
+      "button": "メロディではない？",
+      "span": "{from}〜{to}",
+      "saving": "もう一度採点しています…",
+      "leaveOut": "スコアから除く",
+      "drag": "音符がメロディではなくバックコーラスやハーモニーを追っている部分をドラッグして選びます。",
+      "cancel": "キャンセル",
+      "note": "この曲のすべてのテイクのスコアから除かれ、次に歌うときも除かれます。",
+      "leftOut": "メロディではないため、スコアから除外：",
+      "putBack": "元に戻す",
+      "notLearned": "この曲はまだ覚えていないので、何も除いていません。",
+      "noChange": "スコアが変わったテイクはありません。",
+      "rescored": "この曲の{count, plural, other {{count}テイク}}をもう一度採点しました。"
+    },
+    "report": "このテイクの問題を報告",
+    "lines": {
+      "title": "行ごと",
+      "lyricsOff": "歌詞がオフ（設定）なので、このテイクには行ごとのレポートがありません。",
+      "none": "この曲の同期歌詞は見つかりませんでした。",
+      "playFrom": "{time}から再生",
+      "line": "{n}行目",
+      "noLead": "主旋律なし",
+      "notSung": "歌っていない"
+    }
+  },
+  "share": {
+    "saved": "ダウンロードフォルダに保存しました。Instagramで{song}を追加し、{at}から始めてください（コピー済み）。",
+    "failed": "動画を作れませんでした：{error}",
+    "clip": "<b>{at}–{to}</b><dim> · {notes}音のうち{hits}音</dim>",
+    "cantShare": "このテイクは共有できません",
+    "finding": "クリップを探しています…",
+    "which": "どの20秒",
+    "fromPlayhead": "再生位置から",
+    "best": "ベストの部分",
+    "playIt": "再生",
+    "making": "動画を作成中…",
+    "make": "動画を作る",
+    "close": "閉じる",
+    "noBest": "このテイクでは当たった音符がないので、ベストの部分はありません。再生位置から始めます。",
+    "about": "録音した声、音符、スコアだけで、音楽は入りません。曲はInstagram自身の音楽ライブラリから、表示された時間から始まるように追加してください。スピーカーで歌いましたか？その場合は曲の音が録音に少し入っています。共有にはヘッドフォンで歌ったテイクが向いています。<why>{open, select, yes {隠す} other {なぜヘッドフォン？}}</why> 音楽が流れている画面収録は投稿しないでください。"
+  },
+  "challenge": {
+    "button": "友だちに挑戦",
+    "says": "{song}で<b>{score}</b>を取ったことを伝え、超えてみてと誘うリンクです。",
+    "nameLabel": "下の名前（任意）",
+    "namePlaceholder": "空欄なら匿名のまま",
+    "copied": "コピーしました：友だちに貼り付けてください",
+    "failed": "コピーできませんでした",
+    "copy": "リンクをコピー",
+    "holds": "含まれるのは曲名、アーティスト、スコアだけです。録音、音符、歌詞は含みません。",
+    "holdsNamed": "含まれるのは曲名、アーティスト、スコア、名前だけです。録音、音符、歌詞は含みません。"
+  },
+  "voiceRange": {
+    "title": "音域",
+    "working": "テイクから計算しています…",
+    "empty": "数曲歌うと、ここに音域が表示されます。",
+    "from": "{count, plural, other {{count}テイク}}から",
+    "fromPending": "{count, plural, other {{count}テイク}}から。古い{pending}件はまだ計測中",
+    "summary": "<range>{low}–{high}</range><dim>、いちばん楽なのは</dim><mid>{midLo}–{midHi}</mid>",
+    "aria": "音域は{low}から{high}、いちばん楽なのは{midLo}から{midHi}",
+    "note": "テイクの中でいちばんよく歌った音（上下5%は除く）。歌う曲が増えるほど広がります。"
+  },
+  "voiceBreak": {
+    "text": "{minutes}分歌いました。声を数分休めて、水を飲みましょう。",
+    "dismiss": "閉じる",
+    "ok": "OK"
+  },
+  "takeTags": {
+    "firstPlay": "初回再生",
+    "blind": "ブラインド"
+  },
+  "timingCheck": {
+    "macOs": "macOS",
+    "title": "出力",
+    "experimental": "試験的",
+    "checkOn": "{name}のタイミングを確認",
+    "thisOutput": "この出力",
+    "thisOutputCap": "この出力",
+    "checked": "確認済み：OnKeyは、ここで音楽が耳に届くまでの{heard}ミリ秒を考慮しています（{os}の報告は{reported}ミリ秒）。",
+    "unchecked": "OnKeyは、{os}の報告どおり、ここで音楽が耳に届くまでの{reported}ミリ秒を考慮しています。Bluetoothヘッドフォンは{os}の報告より遅れることが多く、歌詞と音符が早く見えます。クリック音に合わせてタップして測ってください（2回、結果が一致する必要があります）。",
+    "how": "手拍子のように、リズムに乗ってタップしてください。クリック音を待たず、一緒に拍を取ります。",
+    "pauseFirst": "まず音楽を一時停止してください。",
+    "reset": "リセット",
+    "checkAgain": "もう一度確認",
+    "redo": "やり直す",
+    "check": "タイミングを確認",
+    "tapAria": "クリック音ごとにタップ",
+    "tapTitle": "クリック音に合わせてリズムよくスペースを押す（またはここをクリック）",
+    "keepTime": "最後まで拍を取り続けてください。見るより聞いて。Escで中止。",
+    "cancel": "キャンセル",
+    "cantPlay": "クリック音を再生できませんでした（{error}）。",
+    "said": {
+      "confirmBefore": "結果は{measured}ミリ秒で、前回の確認（{before}ミリ秒）と一致しません。確認のためもう一度。",
+      "confirm": "再生から{measured}ミリ秒後に聞こえています（{os}の報告は{reported}ミリ秒）。確認のためもう一度。",
+      "onTime": "{name}{plural, select, yes {は} other {は}}時間どおりです：OnKeyの想定から{ms}ミリ秒以内。",
+      "behind": "{name}{plural, select, yes {は} other {は}}OnKeyの想定より{ms}ミリ秒遅れています。調整しました。",
+      "ahead": "{name}{plural, select, yes {は} other {は}}OnKeyの想定より{ms}ミリ秒早いです。調整しました。"
+    }
+  },
+  "setup": {
+    "dialogLabel": "OnKeyをセットアップ",
+    "stepsLabel": "セットアップの手順",
+    "welcome": {
+      "title": "OnKeyへようこそ",
+      "lead": "いつも聞いている音楽で、好きな曲を歌えるようになりましょう。",
+      "play": "いつもどおり音楽アプリで曲を再生してください。OnKeyは{os, select, mac {Mac} other {PC}}で再生中の音楽を聞き取り、自動で追いかけます。",
+      "learn": "曲が初めて再生されたとき、OnKeyは歌手のメロディを覚えます。それ以降は、全部の音符と、どこで高すぎたり低すぎたりしているかが見えます。",
+      "privacyPc": "OnKeyが聞いた音楽を保存することはありません。歌声の録音はこのPCに残り、テイクを聞き返せます。曲名もこのPC上で、音楽アプリが再生中と伝える情報からわかります。曲名を調べるために送信されるものはありません。",
+      "privacyMac": "OnKeyが聞いた音楽を保存することはありません。歌声の録音はこのMacに残り、テイクを聞き返せます。新しい曲の名前を調べるため、聞き取りモードでは音楽アプリの音の短いフィンガープリント（音声そのものではありません）をAppleのShazamに送ります。",
+      "entitled": "OnKeyは、再生する権利のある音楽で自宅で練習するためのアプリです。覚えたメロディは自分の練習用なので、自分だけで使ってください。",
+      "macosOld": "ほかのアプリの音を聞くには、OnKeyにmacOS 14.2以降が必要です。システム設定 → 一般 → ソフトウェアアップデートでmacOSをアップデートしてください。",
+      "later": "あとで設定",
+      "start": "はじめる"
+    },
+    "permissions": {
+      "title": "2つの許可",
+      "sub": "macOSがそれぞれ一度だけ確認します。あとからシステム設定 → プライバシーとセキュリティで変更できます。",
+      "mic": {
+        "title": "マイク",
+        "why": "歌声を聞くため。",
+        "hint": "「マイク」の下でOnKeyをオンにします。"
+      },
+      "audio": {
+        "title": "システムオーディオ録音",
+        "why": "Macで再生中の音楽を聞いて、メロディを覚えるため。OnKeyが音楽を保存したり送信したりすることはありません。知らない曲の名前を調べるために、短いフィンガープリント（音声そのものではありません）がAppleのShazamに送られることがあります。",
+        "hint": "「画面収録とシステムオーディオ録音」を開き、「システムオーディオ録音のみ」の下でOnKeyをオンにします。"
+      },
+      "reopen": "許可したあとにmacOSがOnKeyの終了と再起動を求めたら、そうしてください。セットアップは途中から続きます。",
+      "skip": "今はスキップ",
+      "continue": "続ける",
+      "allowed": "許可済み",
+      "openSettings": "システム設定を開く",
+      "asking": "確認中…",
+      "allow": "許可",
+      "restricted": "このMacの設定では許可できません。管理者に相談してください。"
+    },
+    "musicApps": {
+      "title": "OnKeyにSpotifyとApple Musicを追いかけさせる",
+      "recommended": "おすすめ",
+      "why": "最初の1秒から歌詞と音符が正しい位置に来て、OnKeyが曲の再生ややり直しもできるようになります。",
+      "scope": "読み取れるのは何がどこまで再生中かで、できるのは再生・一時停止・移動です。それ以外は何もしません。macOSがアプリごとに一度だけ確認します。",
+      "waitingMac": "macOSを待っています。SpotifyやApple Musicについて尋ねられたら（質問はこのウインドウの後ろに開くことがあります）、答えてください。質問がなければ先へ進んでください。そのアプリで初めて曲を再生したときにmacOSが尋ねます。",
+      "noAnswer": "macOSにまだ答えが届いていません。質問が表示されていれば答えてください。表示されていなければ、そのアプリで初めて曲を再生したときに尋ねます。",
+      "listenOnly": "聞くだけ",
+      "continue": "続ける",
+      "carryOn": "先へ進む",
+      "asking": "確認中…",
+      "allow": "許可",
+      "appSpotify": "Spotify",
+      "appAppleMusic": "Apple Music",
+      "state": {
+        "allowed": "許可済み",
+        "notAllowed": "許可されていません",
+        "notRunning": "そのアプリで初めて曲を再生したときにmacOSが尋ねます",
+        "waiting": "まだ答えがありません",
+        "ask": "まだ尋ねていません"
+      },
+      "openSettings": "システム設定を開く"
+    },
+    "micCheck": {
+      "title": "OnKeyに声は届いていますか？",
+      "micOffPc": "Windowsでアプリのマイクがオフになっています。<b>Windowsの設定 → プライバシーとセキュリティ → マイク</b>で、<b>マイクへのアクセス</b>と<b>デスクトップ アプリがマイクにアクセスできるようにする</b>をオンにしてください。",
+      "micFirst": "まずマイクの許可が必要です。戻って許可してください。",
+      "noMicDevice": "マイクが接続されていません。接続するか、{soundInput}で選んでください。",
+      "macSoundInput": "システム設定 → サウンド → 入力",
+      "say": "何か話すか、一音歌ってみてください。",
+      "device": "{device}を聞いています。設定で別のものを選べます。",
+      "meterLabel": "マイクのレベル",
+      "heard": "聞こえました",
+      "listening": "聞いています…",
+      "notAllowed": "許可されていません",
+      "starting": "開始しています…",
+      "noMic": "マイクなし",
+      "headphones": "ヘッドフォンだとスコアがいちばん安定します。ノートパソコンのスピーカーでも大丈夫です。OnKeyがマイクの音から音楽を取り除きます。",
+      "skip": "スキップ",
+      "continue": "続ける",
+      "openSettings": "{settings}を開く",
+      "back": "許可に戻る"
+    },
+    "ready": {
+      "title": "準備ができました",
+      "lead": "音楽アプリで曲を再生して、歌いはじめましょう。各曲の最初の再生で、OnKeyがメロディを覚えます。",
+      "tipsLabel": "覚える仕組み",
+      "tip": {
+        "toEnd": "曲は最後まで再生してください。一部しか聞けなかった場合は、次に再生したときに残りを覚えます。",
+        "talk": "話しても一緒に歌っても大丈夫です。OnKeyはマイクではなく音楽アプリの音から覚えます。",
+        "volumePc": "音楽アプリ自体の音量は4分の1以上にしておいてください。",
+        "learnPc": "曲が終わったあと、このPCで数分間かけて覚えます。その間も聞き続けてください。",
+        "volumeMac": "音楽アプリ自体の音量は4分の1以上にしておいてください。Macの音量はいくらでも、消音でも構いません。",
+        "learnMac": "曲が終わったあと、Macで2分ほどかけて覚えます（メモリ8GBのMacではもう少し長く）。その間も聞き続けてください。"
+      },
+      "quickest": "<b>いちばん早い始め方：</b>OnKeyのはじめてのプレイリストを再生して、30分ほど流しておく。",
+      "openPlaylist": "{app}でプレイリストを開く",
+      "playIn": "{app}で再生",
+      "comfortable": "楽な声量で歌ってください。OnKeyが採点するのは音程で、声の大きさではありません。声が疲れたら休み、喉が痛むときはやめましょう。",
+      "start": "歌いはじめる"
+    }
+  },
+  "controlPrompt": {
+    "titleAllow": "OnKeyに{app}のコントロールを許可しますか？",
+    "titleCant": "OnKeyは{app}をコントロールできません",
+    "bodyAllow": "OnKeyは{app}を聞いているだけで、コントロールはしていません。OnKeyから曲を開始したり、歌い出しまでスキップしたり、一時停止したりするには許可が必要です。{os, select, mac {macOSからも一度確認があります。} other {}}",
+    "bodyCant": "OnKeyは{app}を聞き取りだけで追いかけています。再生・一時停止・スキップはそちらで。",
+    "browserPc": "許可すると、OnKeyはブラウザの曲を追いかけ、そこで再生・一時停止・移動ができます。",
+    "browserMac": "これは大きめの許可です。OnKeyはブラウザのYouTubeタブを読み取ってコントロールでき、ブラウザの音を通話も含めて何でも聞きます。認識できない音は短いフィンガープリントとしてShazamに送られることがあります（音声そのものは送りません）。ブラウザで「Apple EventsからのJavaScriptを許可」もオンにする必要があります。",
+    "notNow": "あとで",
+    "yourBrowser": "ブラウザ",
+    "openIn": "{app}で開く",
+    "allow": "コントロールを許可",
+    "changeLater": "設定でいつでも変更できます。"
+  },
+  "starters": {
+    "label": "おすすめの曲",
+    "heading": "試してみよう <dim>· OnKeyがうまく追いかけられる曲</dim>",
+    "hide": "おすすめを隠す",
+    "close": "閉じる",
+    "earlier": "前の曲",
+    "more": "もっと見る",
+    "why": {
+      "en": {
+        "standByMe": "やさしい：安定したシンプルなメロディ",
+        "wonderwall": "みんなが知っている合唱曲",
+        "fastCar": "低めで安定、追いやすい",
+        "youngAndBeautiful": "長く伸ばす音を安定させる練習に",
+        "someoneYouLoved": "静かなバースと大きなコーラス",
+        "someoneLikeYou": "澄んだ一つの声、盛り上がるコーラス",
+        "hallelujah": "ゆっくりで表情豊か：音程の練習に最適",
+        "iWillAlwaysLoveYou": "挑戦：とても広い音域"
+      },
+      "es": {
+        "laCamisaNegra": "やさしい：狭くて覚えやすいメロディ",
+        "meVoy": "軽やかで安定、追いやすい",
+        "deMusicaLigera": "みんなが知っているロックの合唱曲",
+        "comoLaFlor": "甘く揺れるクラシック",
+        "rayandoElSol": "静かなバースと大きなコーラス",
+        "rosas": "澄んだ一つの声、盛り上がるコーラス",
+        "hijoDeLaLuna": "ゆっくりで幻想的：音程の練習に最適",
+        "volverVolver": "挑戦：ランチェラの大きな音"
+      },
+      "pt": {
+        "comoUmaOnda": "やさしい：安定したシンプルなメロディ",
+        "velhaInfancia": "やわらかく甘い、追いやすい",
+        "gostavaTantoDeVoce": "ソウルの名曲、みんなが歌えるコーラス",
+        "tempoPerdido": "みんなが知っているロックアンセム",
+        "comoEuQuero": "はっきりしたメロディの軽いポップ",
+        "infiel": "セルタネージョの失恋歌、一緒に歌うために",
+        "amarPelosDois": "ゆっくりで優しい：音程の練習に最適",
+        "oceano": "挑戦：長くうねるメロディ"
+      },
+      "it": {
+        "azzurro": "やさしい：安定したシンプルなメロディ",
+        "lItaliano": "みんなが知っている合唱曲",
+        "saraPercheTiAmo": "弾んで楽しい、みんなで歌うのに",
+        "albachiara": "低めで安定、追いやすい",
+        "laSolitudine": "澄んだ一つの声、盛り上がるコーラス",
+        "emozioni": "ゆっくりで表情豊か：音程の練習に最適",
+        "grandeGrandeGrande": "静かに始まり大きく盛り上がる",
+        "caruso": "挑戦：高く舞い上がるオペラ風のコーラス"
+      },
+      "fr": {
+        "lesChampsElysees": "やさしい：安定したシンプルなメロディ",
+        "jeLAimeAMourir": "穏やかで低め、追いやすい",
+        "laVieEnRose": "みんなが知っている名曲",
+        "avenir": "軽いポップ、はっきりして覚えやすい",
+        "jeVeux": "明るくスウィング、歌って楽しい",
+        "derniereDanse": "長く伸ばす音を安定させる練習に",
+        "laBoheme": "ゆっくりで表情豊か：音程の練習に最適",
+        "pourQueTuMAimesEncore": "挑戦：大きな音へと盛り上がる"
+      },
+      "de": {
+        "uberDenWolken": "やさしい：安定したフォークのメロディ",
+        "n99Luftballons": "みんなが知っている合唱曲",
+        "perfekteWelle": "安定したバースと大きなコーラス",
+        "atemlosDurchDieNacht": "アップテンポなシュラーガー、一緒に歌うために",
+        "griechischerWein": "どの世代も知っている名曲",
+        "dasBeste": "澄んだ一つの声、盛り上がるコーラス",
+        "aufUns": "思いきり歌える大きく開けたコーラス",
+        "derWeg": "挑戦：ゆっくりで生々しく表情豊か"
+      }
+    },
+    "in": "開く：",
+    "appSpotify": "Spotify",
+    "appAppleMusic": "Apple Music",
+    "searchIn": "{app}で検索",
+    "openItInAppleMusic": "Apple Musicで開く",
+    "openInAppleMusic": "Apple Musicで開く",
+    "openSongInAppleMusic": "{artist}の{title}をApple Musicで開く",
+    "playlist": {
+      "title": "OnKeyのはじめてのプレイリストを再生",
+      "sub": "これらの曲ともっと、やさしい曲から難しい曲まで：再生を押して歌うだけ",
+      "orAppleMusic": "またはApple Music",
+      "openInAppleMusic": "Apple Musicでプレイリストを開く",
+      "open": "{app}でプレイリストを開く",
+      "playIn": "{app}で再生"
+    }
+  },
+  "demo": {
+    "title": "今すぐ試す：デモ曲を歌う",
+    "starting": "開始しています…",
+    "tryIt": "今すぐ試す",
+    "about": "OnKeyの仕組みがわかるサンプル曲です。自分の曲は、まず一度再生して覚える必要があります。"
+  },
+  "guides": {
+    "systemAudio": {
+      "summary": "MacでOnKeyにシステムオーディオの録音を許可する方法。システム設定で「プライバシーとセキュリティ」を開き、「画面収録とシステムオーディオ録音」を選び、「システムオーディオ録音のみ」の下でOnKeyをオンにします。macOSに聞かれたら「終了して再度開く」を選びます。OnKeyがシステムオーディオ録音にチェックが入った状態で開き直し、セットアップが続きます。",
+      "step": {
+        "openPrivacy": "「プライバシーとセキュリティ」を開く",
+        "screenRecording": "画面収録とシステムオーディオ録音",
+        "turnOn": "「システムオーディオ録音のみ」の下でOnKeyをオンにする",
+        "quitReopen": "macOSに聞かれたら、終了して再度開く。セットアップは続きます"
+      },
+      "dots": "手順",
+      "stepOf": "手順{step}/{count}：{caption}",
+      "mock": {
+        "privacySecurity": "プライバシーとセキュリティ",
+        "screenRecording": "画面収録とシステムオーディオ録音",
+        "audioOnly": "システムオーディオ録音のみ",
+        "appName": "OnKey",
+        "quitReopenQuestion": "終了して再度開きますか？",
+        "later": "あとで",
+        "quitReopen": "終了して再度開く",
+        "setup": "セットアップ",
+        "systemAudioRow": "システムオーディオ録音"
+      }
+    },
+    "musicApps": {
+      "caption": {
+        "ask": "macOSがアプリごとに一度だけ確認します",
+        "allow": "「許可」を選ぶ",
+        "done": "すると再生中の曲を追いかけられます",
+        "behind": "このウインドウの後ろに開くことがあります。探してみてください"
+      },
+      "labelOne": "アニメーション：OnKeyに{app}のコントロールを許可するかmacOSが尋ねます。ポインタが「許可」を選ぶと質問が閉じ、OnKeyのウインドウにチェックつきでアプリが表示されます。最後に、質問がOnKeyのウインドウの後ろに半分隠れた状態で表示され、そこを探すようにというお知らせが出ます。",
+      "labelTwo": "アニメーション：OnKeyに{first}、次に{second}のコントロールを許可するかmacOSが尋ねます。ポインタが「許可」を選ぶと質問が閉じ、OnKeyのウインドウにチェックつきでアプリが表示されます。最後に、質問がOnKeyのウインドウの後ろに半分隠れた状態で表示され、そこを探すようにというお知らせが出ます。",
+      "app": {
+        "spotify": "Spotify",
+        "appleMusic": "Apple Music"
+      },
+      "asked": {
+        "spotify": "Spotify",
+        "appleMusic": "ミュージック"
+      },
+      "alert": {
+        "wantsAccess": "“OnKey”がアクセスを要求しています：",
+        "control": "“{app}”の制御",
+        "allowing": "制御を許可すると“{app}”にアクセスできます。",
+        "dontAllow": "許可しない",
+        "allow": "許可"
+      },
+      "window": {
+        "title": "OnKey",
+        "note": "A4",
+        "musicApps": "音楽アプリ"
+      },
+      "menuBar": {
+        "appName": "OnKey"
+      },
+      "dots": "手順",
+      "stepOf": "手順{step}/{count}：{caption}",
+      "stepOfApp": "手順{step}/{count}：{caption}（{app}）"
+    },
+    "stillSteps": {
+      "dots": "手順",
+      "stepOf": "手順{step}/{count}",
+      "again": "もう一度",
+      "next": "次へ"
+    },
+    "learnSong": {
+      "steps": {
+        "s0": "曲を一度、最後まで再生",
+        "s1": "OnKeyはマイクではなく音楽からメロディを覚えます",
+        "s2": "終わってから2分ほど",
+        "s3": "次からは音符を見ながら歌えます"
+      },
+      "summary": "OnKeyが曲を覚える様子。音楽プレーヤーで曲が一度最後まで再生され、音の波がOnKeyに流れ込み、メロディが音程バーとして描かれます。終わってから2分ほどで「覚えています」のリングが緑のチェックに変わります：覚えました。次にその曲が再生されると、音符が流れ、その上に歌手の緑の音程ラインがのり、下に歌詞が出ます。",
+      "learning": "覚えています…",
+      "learned": "覚えました",
+      "appName": "OnKey",
+      "melody": "メロディ",
+      "you": "自分",
+      "lyric": {
+        "w0": "ひ",
+        "w1": "か",
+        "w2": "り",
+        "w3": "を",
+        "w4": "も",
+        "w5": "う",
+        "w6": "す",
+        "w7": "こ",
+        "w8": "し",
+        "w9": "よ",
+        "w10": "る"
+      },
+      "stepsGroup": "アニメーションの手順",
+      "stepLabel": "手順{n}/{count}：{caption}"
+    },
+    "leaveOut": {
+      "steps": {
+        "s0": "音符がバックコーラスを追っている？",
+        "s1": "その部分をドラッグ",
+        "s2": "この曲のすべてのテイクで、スコアから除かれます"
+      },
+      "ariaLabel": "ある曲の1テイクの音程グラフのアニメーション。紫のバーはスコアが期待する音符で、線は歌い手が歌ったもの、合っているところは緑です。ある区間で紫のバーがバックコーラスを追って高く跳ね上がる一方、歌い手はメロディにとどまり、線は黄色になります。カーソルがその区間をドラッグして選び、「スコアから除く」をクリックします。区間は灰色の縞になり、スコアは{before}から{after}に上がり、同じ区間がこの曲のすべてのテイクから除かれます。",
+      "score": "スコア",
+      "take": "テイク{n}",
+      "leftOut": "除外",
+      "leaveOutButton": "スコアから除く",
+      "stepsGroup": "アニメーションの手順",
+      "stepLabel": "手順{n}：{caption}"
+    },
+    "speakers": {
+      "steps": {
+        "s0": "スピーカーだと、曲が録音に入ります",
+        "s1": "ヘッドフォンなら、声だけです"
+      },
+      "label": "短い2つの場面。ノートパソコンのスピーカーでは、曲の音が外に出てマイクに回り込み、録音に声と音楽が混ざります。ヘッドフォンなら音楽は耳の中にとどまり、録音は声だけになります。",
+      "rec": "REC",
+      "voice": "声",
+      "song": "曲",
+      "stepsGroup": "手順",
+      "stepLabel": "手順{n}/{count}：{caption}"
+    },
+    "fadeDemo": {
+      "captions": {
+        "c0": "曲をうまく歌えるようになったら",
+        "c1": "音が合っている間はラインが薄くなります",
+        "c2": "外れると、いつもどおり表示されます",
+        "c3": "どのテイクでもフルガイドに戻せます"
+      },
+      "take": "テイク{n}",
+      "ariaLabel": "同じ曲の4つのテイクを音符のレーンとして：テイク1、3、5、8。紫の音符はどのテイクでも同じです。緑の音程ラインはテイク1では明るく、音が合っている間はテイクごとに薄くなります。テイク5では一瞬半音より外れ、その部分は赤くはっきり表示されます。「フルガイド」のスイッチでライン全体が戻ります。",
+      "fullGuide": "フルガイド",
+      "stepsGroup": "アニメーションの手順",
+      "stepLabel": "手順{n}/{count}：{caption}"
+    }
+  },
+  "guideFade": {
+    "title": "音が合っている間は音程ラインが薄くなり（{amount, select, little {少し} more {かなり} other {完全に}}）、半音より外れると表示されます。設定でオフにできます。",
+    "note": "ガイドを薄くしています：もう知っている曲ですね",
+    "showFull": "フルガイドを表示"
+  },
+  "update": {
+    "failed": {
+      "text": "OnKey {version}にアップデートできませんでした",
+      "why": "理由：{error}。設定 → 「今すぐ確認」でもう一度試します。",
+      "again": "設定 → 「今すぐ確認」でもう一度試します。"
+    },
+    "official": {
+      "text": "元のプロジェクトからOnKey {version}が出ています",
+      "why": "このOnKeyはソースからビルドされているため、自動アップデートはしません。",
+      "download": "ダウンロード"
+    },
+    "ready": {
+      "why": "OnKey {version}の準備ができました。今再起動しなければ、終了時にインストールされます。",
+      "waiting": "この曲のあとでアップデートします…",
+      "available": "アップデートがあります",
+      "restart": "再起動してアップデート",
+      "later": "あとで",
+      "laterWhy": "あとで（終了時にインストールされます）"
+    },
+    "hide": "隠す"
+  },
+  "report": {
+    "title": "問題を報告",
+    "titleTake": "このテイクの問題を報告",
+    "savedPc": "{folder}に<file>{name}</file>として保存し、{files}で表示しました。このファイル1つをメッセージ（またはGitHubのIssue）に添付してください。どこにも送信されていません。",
+    "savedMac": "<file>{path}</file>に保存しました。送るには、GitHubでIssueを開いてzipを添付します（入力欄にドラッグ）。どこにも送信されていません。",
+    "showInPc": "{files}で表示",
+    "showInFinder": "Finderで表示",
+    "openIssue": "GitHubでIssueを開く",
+    "done": "完了",
+    "introPc": "OnKeyは記録を1つのzipにまとめてデスクトップに置き、メッセージに添付できるようにします。直近3日分のログ、各再生のまとめ、そしてこのPC、そのサウンド、追いかけた音楽アプリのまとめです。歌詞、音声、曲のファイル、ユーザー名、ホームフォルダは含みません。何もアップロードされません。",
+    "introMac": "OnKeyは記録を1つのzipにまとめ、保存してバグ報告に添付できるようにします。直近3日分のログと各再生のまとめ（タイミング、CPU、ビルド、Macの機種）です。歌詞、音声、曲のファイル、ユーザー名、ホームフォルダは含みません。何もアップロードされません。",
+    "askLabel": "何が起きましたか？<muted>（任意）</muted>",
+    "placeholder": "例：Bad Dayで歌詞が遅れた、「OnKeyを起動しています」で固まった",
+    "preparing": "まとめています…",
+    "inZip": "zipの中身（{count}ファイル、{size}）：",
+    "logs": "OnKeyのログ{count, plural, other {{count}日分}}（{size}）",
+    "size": {
+      "b": "{n} B",
+      "kb": "{n} KB",
+      "mb": "{n} MB"
+    },
+    "showFiles": "ファイルを表示",
+    "cancel": "キャンセル",
+    "saveMac": "保存…",
+    "savePc": "デスクトップに保存"
+  },
+  "nav": {
+    "appName": "OnKey",
+    "songsToTry": "おすすめの曲",
+    "sing": "歌う",
+    "library": "ライブラリ",
+    "history": "履歴",
+    "settings": "設定",
+    "paused": "聞き取りを一時停止中",
+    "resume": "再開",
+    "resumeWhy": "聞き取りを再開（⌘⇧P）",
+    "whatsNew": "OnKeyの新機能",
+    "whatsNewFresh": "OnKeyの新機能（新着）",
+    "testBuild": "テスト版",
+    "testBuildTitle": "Windows / Linux 向けの OnKey テスト版です。次の版が出たら上から入れてください"
+  },
+  "licences": {
+    "back": "← 設定",
+    "title": "オープンソースライセンス",
+    "intro": "OnKeyはMITライセンスの無料オープンソースソフトウェアです。以下のモデル、データ、フォント、ライブラリの上に作られています。",
+    "error": "ライセンス表記を開けませんでした：{error}",
+    "missing": "ライセンス表記は、ソースの隣のTHIRD_PARTY_NOTICES.mdにあります。"
+  },
+  "fairUse": {
+    "back": "← 設定",
+    "title": "OnKeyの正しい使い方",
+    "intro": "OnKeyは、再生する権利のある音楽で自宅で練習するためのアプリです。お願い：",
+    "keep": {
+      "title": "覚えたものは自分だけで。",
+      "body": "各曲のメロディの書き起こしは自分の練習用です。共有や公開はしないでください。OnKey自体を広めるのは大歓迎です。"
+    },
+    "share": {
+      "title": "テイクを共有するには、そのページの「共有」を。",
+      "body": "声と音程ラインの短い動画を、音楽なしで作ります。曲はInstagram自身の音楽ライブラリから追加できます。こちらはライセンスされています。ヘッドフォンで歌ったテイクが向いています。スピーカーで歌うと、曲の音が録音に少し入ります。音楽が流れている画面収録は投稿しないでください。"
+    },
+    "venue": {
+      "title": "バーやイベントでは、ライセンスされたカラオケサービスを。",
+      "body": "OnKeyの歌詞は、無料のコミュニティデータベースから来ています。"
+    },
+    "modify": {
+      "title": "音楽を保存するようにOnKeyを改変しないでください。"
+    },
+    "contact": "OnKeyが聞いた音楽を保存することはありません。権利者の方は<email>hello@singonkey.app</email>までご連絡ください。"
+  },
+  "library": {
+    "title": "ライブラリ",
+    "intro": "OnKeyが覚えた曲。選ぶと、全部の音符を先に見ながら歌えます。",
+    "search": "曲を検索",
+    "empty": {
+      "title": "まだ何も覚えていません",
+      "body": "OnKeyを開いたまま曲を一度通して再生すると、メロディを覚えます。プレイリストごとでも大丈夫です。流しておくだけで。",
+      "start": "はじめる",
+      "showStarters": "おすすめの曲を見る"
+    },
+    "filter": {
+      "label": "表示",
+      "all": "すべて",
+      "favorites": "お気に入り",
+      "unscored": "まだスコアなし",
+      "partial": "一部だけ覚えた",
+      "count": "{count, plural, other {{count}曲}}"
+    },
+    "inRange": {
+      "title": "音域に合う曲。そのままか、1オクターブ上下で歌えるもの（オクターブ違いは許されます）：{count, plural, other {{count}曲}}",
+      "label": "音域に合う"
+    },
+    "sort": {
+      "recent": "最近",
+      "easy": "やさしい順",
+      "hard": "難しい順",
+      "best": "ベストスコア",
+      "most": "よく歌った順",
+      "az": "名前順"
+    },
+    "shownPartly": "一部だけ覚えた曲{count}",
+    "shownLearned": "覚えた曲{count}",
+    "partlyNote": "OnKeyはこれらの曲を一部しか聞いていません。一度通して再生すると覚え終わり、「すべて」に移ります。",
+    "noFavourites": "曲の♥を押すと、ここに残ります。",
+    "none": {
+      "partly": "一部だけの曲はありません。すべて歌えます。",
+      "unscored": "すべての曲にスコアがあります。いいですね。",
+      "search": "「{q}」に合う曲はありません。",
+      "filters": "この条件に合う曲はありません。",
+      "clear": "クリア"
+    },
+    "card": {
+      "sing": "{artist}の{name}を歌う",
+      "whenLearned": "覚えたら歌えます",
+      "playThrough": "通して再生すると覚え終わります",
+      "learning": "覚えています",
+      "learnsAgain": "次の再生でもう一度覚えます",
+      "learnsAgainTitle": "次の再生で最初から覚え直します。それまでは今までどおり歌えます",
+      "pctLearned": "{pct}%覚えました",
+      "relearn": "もう一度覚えるのがおすすめ",
+      "relearnTitle": "再生のたびに{at}で歌詞がずれます。もう一度覚えると直るはずです（⋯メニュー）",
+      "notScored": "まだスコアなし",
+      "notScoredTitle": "OnKeyでまだ歌っていません",
+      "playsTitle": "この曲の再生回数",
+      "plays": "{count, plural, other {{count}回再生}}",
+      "playsBest": "{count, plural, other {{count}回再生}} · ベスト<n>{best}</n>",
+      "demo": "デモ曲",
+      "demoTitle": "OnKeyに付属するサンプル曲",
+      "fitTitle": "{label}。音符の範囲：{low}–{high}",
+      "starting": "開始しています…",
+      "singButton": "歌う"
+    },
+    "menu": {
+      "more": "{name}のその他",
+      "openIn": "{app}で開く ↗",
+      "learnAgain": "もう一度覚える",
+      "dontLearnAgain": "覚え直さない",
+      "deleteWhat": "この曲を削除（テイクは履歴に残り、曲はゴミ箱へ）",
+      "deleteConfirm": "この曲を削除しますか？",
+      "stopWhat": "覚えるのをやめて削除（曲ではなかった、など）",
+      "stopConfirm": "覚えるのをやめて削除しますか？",
+      "stop": "覚えるのをやめて削除",
+      "delete": "削除"
+    },
+    "startersLink": "おすすめの曲",
+    "footer": "OnKeyが音楽を保存することはありません。残すのは覚えた音符と自分の声だけです。歌詞は<link>LRCLIB</link>から。OnKeyはSpotify、Apple、Googleと提携しておらず、承認も受けていません。各社の名称はそれぞれの所有者の商標です。",
+    "difficulty": {
+      "label": "難しさ{level}/5：{word}",
+      "title": "難しさ{level}/5：{word}。主にメロディの音域の広さで決まります。"
+    },
+    "clearPartly": {
+      "button": "{count}曲すべて削除",
+      "label": "一部だけ覚えた曲をすべて削除",
+      "ask": "{count, plural, other {{shown, select, yes {表示中の} other {}}一部だけ覚えた{count}曲}}を削除しますか？テイクは履歴に残ります{hearted, plural, =0 {} other {（お気に入りの{hearted}曲は残します）}}。",
+      "deleting": "削除しています…",
+      "tryAgain": "もう一度",
+      "deleteAll": "すべて削除",
+      "cancel": "キャンセル"
+    }
+  },
+  "history": {
+    "title": "歌の記録",
+    "intro": "歌った曲はすべてテイクになります。調子はこちら。",
+    "scoresAt": "採点の厳しさ「{level}」 · <link>変更</link>",
+    "search": "曲を検索",
+    "pending": {
+      "learning": "曲を覚えてから、テイクを採点します…",
+      "scoring": "採点中…"
+    },
+    "stat": {
+      "takes": "テイク",
+      "average": "直近10回の平均",
+      "best": "ベスト",
+      "songs": "歌った曲"
+    },
+    "chart": {
+      "title": "テイクごとのスコア",
+      "axis": "古い → 新しい"
+    },
+    "view": {
+      "label": "表示",
+      "songs": "曲",
+      "takes": "すべてのテイク"
+    },
+    "show": {
+      "label": "表示",
+      "all": "すべて",
+      "favorites": "お気に入り"
+    },
+    "clearFilters": "条件をクリア",
+    "sort": {
+      "recent": "最近",
+      "best": "ベストスコア",
+      "most": "よく歌った順",
+      "improved": "上達した順",
+      "easy": "やさしい順",
+      "hard": "難しい順",
+      "az": "名前順"
+    },
+    "counts": "{songs, plural, other {{songs}曲}}を歌いました · {takes, plural, other {{takes}テイク}}",
+    "none": {
+      "search": "「{q}」に合う曲はありません。",
+      "favourites": "曲の♥を押すと、ここに残ります。",
+      "filters": "この条件に合う曲はありません。",
+      "clear": "クリア"
+    },
+    "col": {
+      "song": "曲",
+      "when": "いつ",
+      "sung": "歌った割合",
+      "pitch": "音程",
+      "score": "スコア"
+    },
+    "rescored": "再採点",
+    "rescoredTitle": "メロディではないと印をつけた部分を除いて、もう一度採点しました",
+    "deleteWhat": "このテイクを削除（ゴミ箱へ）",
+    "deleteConfirm": "このテイクを削除しますか？",
+    "showMore": "もっと見る <n>（残り{left}）</n>",
+    "card": {
+      "best": "ベスト",
+      "scores": "スコア：{list}",
+      "plays": "{count, plural, other {{count}回再生}} · 最後は{last}",
+      "whenLearned": "{label} 覚えたら歌えます",
+      "singAgain": "もう一度歌う"
+    },
+    "empty": {
+      "title": "まだテイクがありません",
+      "body": "曲に合わせて20秒以上歌うと、ここに表示されます。",
+      "start": "歌いはじめる"
+    }
+  },
+  "song": {
+    "back": "← 歌の記録",
+    "none": "この曲はまだ再生していません。",
+    "scoresAt": "採点の厳しさ「{level}」 · <link>変更</link>",
+    "whenLearned": "覚えたら歌えます",
+    "singAgain": "もう一度歌う",
+    "learnsAgain": "次の再生でもう一度覚えます · <cancel>キャンセル</cancel>",
+    "learnAgain": "もう一度覚える",
+    "learnAgainTitle": "今すぐ再生して、最初の再生と同じように覚え直します。再生とスコアは残ります。途中で止めた場合はそのままです。",
+    "relearn": "再生のたびに{at}で歌詞が約{by}秒ずれます。もう一度覚えると直るはずです。",
+    "learnItAgain": "もう一度覚える",
+    "stat": {
+      "plays": "再生",
+      "best": "ベスト",
+      "latest": "最新",
+      "gainBoth": "直近3回 vs 最初の3回",
+      "gainOne": "最新 vs 初回",
+      "fromTo": "{from}から{to}へ",
+      "fromToAverage": "平均{from}から{to}へ",
+      "singToSee": "もう一度歌うと表示されます"
+    },
+    "chart": {
+      "title": "再生ごとのスコア",
+      "axis": "初回 → 最新"
+    },
+    "table": {
+      "title": "すべての再生",
+      "play": "再生",
+      "when": "いつ",
+      "sung": "歌った割合",
+      "sungTitle": "曲のどれだけを歌ったか",
+      "pitch": "音程",
+      "score": "スコア"
+    },
+    "deleteWhat": "この再生を削除（ゴミ箱へ）",
+    "deleteConfirm": "この再生を削除しますか？"
+  },
+  "noLyrics": {
+    "line": "この曲の歌詞はまだありません。歌詞は、誰でも追加できる無料のライブラリ<link>LRCLIB</link>から取得しています。",
+    "lookAgain": "もう一度探す",
+    "looking": "探しています…",
+    "found": "見つかりました",
+    "stillNone": "まだありません",
+    "notAnswering": "LRCLIBが応答しません"
+  },
+  "cover": {
+    "openApple": "Apple Musicで開く",
+    "openAppleNamed": "{name}をApple Musicで開く",
+    "openIn": "{app}で開く",
+    "inAppLink": "{app}で ↗",
+    "inApp": "{app}で",
+    "following": "OnKeyが追いかけているアプリ",
+    "otherLink": "{app} ↗",
+    "appleMusicLink": "Apple Music ↗"
+  },
+  "recent": {
+    "title": "続きから",
+    "last": "最後は<n>{score}</n>",
+    "whenLearned": "覚えたら歌えます",
+    "singNamed": "{name}を歌う",
+    "starting": "開始しています…",
+    "sing": "歌う"
+  },
+  "trend": {
+    "legend": "{unit, select, play {線：{avg}回の再生の平均 · 点：各再生} other {線：{avg}テイクの平均 · 点：各テイク}}",
+    "tipScore": "スコア<n>{score}</n> · 歌った割合{pct}%",
+    "tipAverage": "当時の平均<n>{avg}</n>"
+  },
+  "listControls": {
+    "sort": "並べ替え",
+    "difficultyLabel": "難しさ",
+    "difficulty": {
+      "easy": "やさしい",
+      "moderate": "やさしめ",
+      "medium": "ふつう",
+      "hard": "難しい",
+      "veryHard": "とても難しい"
+    },
+    "levelTitle": "{level}：{count, plural, other {{count}曲}}",
+    "levelLabel": "{level}（{n}/5）",
+    "clear": "クリア"
+  },
+  "deleteButton": {
+    "tryAgain": "もう一度",
+    "delete": "削除",
+    "cancel": "キャンセル"
+  },
+  "readError": {
+    "body": "おそらくまだ残っています。今回OnKeyが開けなかっただけです。何も変更も削除もされていません。",
+    "tryAgain": "もう一度"
+  },
+  "levelTag": {
+    "title": "「{level}」で採点：{about}"
+  },
+  "learnBar": {
+    "label": "{name}を覚えています",
+    "valueText": "{stage}、{pct}%"
+  },
+  "heart": {
+    "remove": "お気に入りから外す",
+    "add": "お気に入りに追加"
+  },
+  "engine": {
+    "line": {
+      "finding": "音楽が聞こえています…曲を探しています",
+      "new_song": "新しい曲…探しています",
+      "unnamed": "この曲の名前がわかりませんでした",
+      "no_shazam": "Shazamが使えません：ここで覚えた曲だけを認識します",
+      "shazam_off": "ここで覚えた曲ではありません：Shazamは設定でオフです",
+      "elsewhere": "{app}は再生中ですが、このMacではありません",
+      "learning": "覚えています：一緒に歌ってください。採点は次の再生から",
+      "stopped": "{song}は覚えません",
+      "podcast": "ポッドキャスト再生中：OnKeyは音楽に合わせて歌います"
+    },
+    "share": {
+      "first": "{song}の初挑戦で{score}",
+      "over80": "{song}で初めて{over}超え",
+      "best": "{song}のベストを{points, plural, other {{points}点}}更新",
+      "up": "{song}の前回のテイクから{points, plural, other {{points}点}}アップ"
+    },
+    "timing": {
+      "output_changed": "確認中に出力が変わりました。もう一度試してください。",
+      "few_taps": "クリック音に合ったタップが足りません。クリック音ごとに1回、リズムに乗ってタップしてください。",
+      "uneven": "タップがばらついていて計測できませんでした。手拍子のようにリズムに乗って、もう一度試してください。",
+      "reacting": "クリック音を待ってからタップしているようです。代わりにリズムに乗ってタップしてみてください。",
+      "unbelievable": "結果がおかしいようです。クリック音を待っていませんか？手拍子のようにリズムに乗って、もう一度試してください。",
+      "untimed": "クリック音の時間を測れませんでした。もう一度試してください。",
+      "stalled": "確認中に音が止まったり再開したりしたため、計測できません。もう一度試してください。"
+    },
+    "settingUnsaved": "設定を保存できませんでした（{error}）。OnKeyを終了するまでは有効です。",
+    "fit": {
+      "fits": "音域に合っています",
+      "few_above": "数音だけ音域より高めです",
+      "few_below": "数音だけ音域より低めです",
+      "octave_lower": "ほとんどが高すぎます：1オクターブ下げて歌いましょう",
+      "octave_higher": "ほとんどが低すぎます：1オクターブ上げて歌いましょう",
+      "above": "ほとんどが音域より高めです",
+      "below": "ほとんどが音域より低めです",
+      "wider": "音域より広い曲です"
+    },
+    "reportWhat": {
+      "log": "その日のOnKeyのログ",
+      "take": "テイクの概要：{artist} - {name}",
+      "take_reported": "報告したテイク：テイクの概要：{artist} - {name}",
+      "builds": "この{os, select, pc {PC} other {Mac}}で実行したOnKeyのビルド",
+      "summary": "ログの要約：この{os, select, pc {PC} other {コンピュータ}}、オーディオ、音楽アプリ、学習、テイク、エラー",
+      "about": "OnKeyのバージョン、この{os, select, pc {PC} other {Mac}}、設定、入力した内容"
+    },
+    "models": {
+      "unloadable": "読み込めませんでした"
+    },
+    "youtubeSetting": {
+      "safari": "Safari ▸ 設定 ▸ 詳細：「Webデベロッパ用の機能を表示」にチェックを入れ、次に 開発 ▸ Apple EventsからのJavaScriptを許可",
+      "chromium": "表示 ▸ デベロッパー ▸ Apple EventsからのJavaScriptを許可"
+    },
+    "app": {
+      "music_app": "音楽アプリ",
+      "browser": "ブラウザ"
+    }
+  }
+}

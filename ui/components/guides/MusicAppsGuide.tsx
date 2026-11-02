@@ -15,20 +15,11 @@
 
 import { useEffect, useId, useMemo, useRef, useState, type CSSProperties } from "react";
 import StillSteps from "./StillSteps";
+import { useT, type Translator } from "@/lib/i18n";
 
 /* ─── Palette & type ─────────────────────────────────────────────────────── */
 
-const C = {
-  bg: "#0b0d13",
-  panel: "#151924",
-  line: "#2a3142",
-  muted: "#8b94ab",
-  text: "#e6e9f0",
-  accent: "#7c6cf6",
-  accentLight: "#b5a8ff",
-  accentDark: "#6252e0",
-  green: "#34d27b",
-} as const;
+import { GUIDE as C } from "@/lib/colors";
 
 const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
 const SW = 1.5; // stroke width everywhere
@@ -36,15 +27,12 @@ const SW = 1.5; // stroke width everywhere
 /* ─── Script ─────────────────────────────────────────────────────────────── */
 
 export type GuideApp = "Spotify" | "Apple Music";
-/** The name macOS uses in its question. */
-const ASKED: Record<GuideApp, string> = { Spotify: "Spotify", "Apple Music": "Music" };
+/** Each app's key in the catalog: guides.musicApps.app.* (its name) and guides.musicApps.asked.* (the name macOS uses
+ *  in its question). */
+const APP_KEY: Record<GuideApp, "spotify" | "appleMusic"> = { Spotify: "spotify", "Apple Music": "appleMusic" };
 
-const CAPTIONS = [
-  "macOS asks once for each app",
-  "Choose Allow",
-  "Then it can follow what’s playing",
-  "It can open behind this window: look for it",
-] as const;
+/** The captions, by key (guides.musicApps.caption.*). */
+const CAPTIONS = ["ask", "allow", "done", "behind"] as const;
 
 type Kind = "ask" | "allow" | "done" | "behind";
 
@@ -70,10 +58,12 @@ function stepsFor(n: number): Step[] {
   return out;
 }
 
-const labelFor = (apps: readonly GuideApp[]) =>
-  `Animation: a macOS question asks whether OnKey may control ${apps.join(" and then ")}. The pointer chooses Allow, ` +
-  "the question closes and the app appears with a tick in the OnKey window. " +
-  "Last, the question is shown half hidden behind the OnKey window, with a reminder to look for it there.";
+const appName = (t: Translator, app: GuideApp) => t(`guides.musicApps.app.${APP_KEY[app]}`);
+
+const labelFor = (t: Translator, apps: readonly GuideApp[]) =>
+  apps.length === 1
+    ? t("guides.musicApps.labelOne", { app: appName(t, apps[0]) })
+    : t("guides.musicApps.labelTwo", { first: appName(t, apps[0]), second: appName(t, apps[1]) });
 
 /* ─── Geometry (viewBox units) ───────────────────────────────────────────── */
 
@@ -117,7 +107,7 @@ interface RowState {
 
 interface SceneState {
   alert: null | {
-    app: string;
+    app: GuideApp;
     x: number;
     y: number;
     opacity: number;
@@ -137,7 +127,7 @@ const ROW_OFF: RowState = { opacity: 0, dy: 6, check: 0, glow: 0 };
 
 function scene(steps: readonly Step[], apps: readonly GuideApp[], stepIndex: number, t: number): SceneState {
   const s = steps[stepIndex];
-  const app = ASKED[apps[s.app]];
+  const app = apps[s.app];
   const rowsBefore = (i: number): RowState => (i < s.app ? ROW_ON : ROW_OFF);
 
   const st: SceneState = {
@@ -239,6 +229,8 @@ function scene(steps: readonly Step[], apps: readonly GuideApp[], stepIndex: num
 /* ─── Drawing ────────────────────────────────────────────────────────────── */
 
 function Alert({ a, shadowId }: { a: NonNullable<SceneState["alert"]>; shadowId: string }) {
+  const t = useT();
+  const asked = t(`guides.musicApps.asked.${APP_KEY[a.app]}`);
   const cx = ALERT.w / 2;
   const cy = ALERT.h / 2;
   return (
@@ -271,24 +263,24 @@ function Alert({ a, shadowId }: { a: NonNullable<SceneState["alert"]>; shadowId:
       <circle cx={130} cy={28} r={1.8} fill={C.accentLight} />
 
       <text x={cx} y={60} textAnchor="middle" fontSize={10.5} fontWeight={600} fill={C.text}>
-        “OnKey” wants access to
+        {t("guides.musicApps.alert.wantsAccess")}
       </text>
       <text x={cx} y={73} textAnchor="middle" fontSize={10.5} fontWeight={600} fill={C.text}>
-        {`control “${a.app}”`}
+        {t("guides.musicApps.alert.control", { app: asked })}
       </text>
       <text x={cx} y={91} textAnchor="middle" fontSize={9} fill={C.muted}>
-        {`Allowing control gives access to “${a.app}”.`}
+        {t("guides.musicApps.alert.allowing", { app: asked })}
       </text>
 
       <rect x={14} y={104} width={102} height={24} rx={12} fill={C.line} />
       <text x={65} y={119.3} textAnchor="middle" fontSize={9.5} fill={C.text}>
-        Don’t Allow
+        {t("guides.musicApps.alert.dontAllow")}
       </text>
 
       <rect x={124} y={104} width={102} height={24} rx={12} fill={C.accent} />
       {a.press > 0 && <rect x={124} y={104} width={102} height={24} rx={12} fill={C.accentDark} opacity={a.press} />}
       <text x={175} y={119.3} textAnchor="middle" fontSize={9.5} fontWeight={600} fill={C.text}>
-        Allow
+        {t("guides.musicApps.alert.allow")}
       </text>
     </g>
   );
@@ -313,24 +305,25 @@ function AppGlyph({ app }: { app: GuideApp }) {
 }
 
 function Row({ i, name, r }: { i: number; name: GuideApp; r: RowState }) {
+  const t = useT();
   if (r.opacity <= 0) return null;
   return (
     <g transform={`translate(${ROW.x} ${ROW.ys[i] + r.dy})`} opacity={r.opacity}>
       <rect width={ROW.w} height={ROW.h} rx={12} fill={C.bg} stroke={C.line} strokeWidth={SW} />
       {r.glow > 0 && (
-        <rect width={ROW.w} height={ROW.h} rx={12} fill="none" stroke={C.green} strokeWidth={SW} opacity={0.75 * r.glow} />
+        <rect width={ROW.w} height={ROW.h} rx={12} fill="none" stroke={C.good} strokeWidth={SW} opacity={0.75 * r.glow} />
       )}
       <g transform="translate(12 10)">
         <AppGlyph app={name} />
       </g>
       <text x={32} y={19} fontSize={10.5} fontWeight={500} fill={C.text}>
-        {name}
+        {appName(t, name)}
       </text>
       <path
         d="M0 4.5 L3.6 8 L10 1"
         transform="translate(206 11)"
         fill="none"
-        stroke={C.green}
+        stroke={C.good}
         strokeWidth={SW}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -344,6 +337,7 @@ function Row({ i, name, r }: { i: number; name: GuideApp; r: RowState }) {
 }
 
 function OnKeyWindow({ rows, apps, shadowId }: { rows: SceneState["rows"]; apps: readonly GuideApp[]; shadowId: string }) {
+  const t = useT();
   const midX = WIN.x + WIN.w / 2;
   return (
     <g>
@@ -363,7 +357,7 @@ function OnKeyWindow({ rows, apps, shadowId }: { rows: SceneState["rows"]; apps:
         <circle key={x} cx={x} cy={42} r={3.25} fill="none" stroke={C.line} strokeWidth={SW} />
       ))}
       <text x={midX} y={45.5} textAnchor="middle" fontSize={10} fontWeight={600} fill={C.muted}>
-        OnKey
+        {t("guides.musicApps.window.title")}
       </text>
       <line x1={WIN.x} y1={54} x2={WIN.x + WIN.w} y2={54} stroke={C.line} strokeWidth={SW} />
 
@@ -378,12 +372,12 @@ function OnKeyWindow({ rows, apps, shadowId }: { rows: SceneState["rows"]; apps:
       />
       <circle cx={232} cy={90} r={3} fill={C.accentLight} />
       <text x={241} y={93.4} fontSize={9} fontWeight={500} fill={C.muted}>
-        A4
+        {t("guides.musicApps.window.note")}
       </text>
 
       {/* Connected music apps */}
       <text x={30} y={136} fontSize={8} fontWeight={600} fill={C.muted} style={{ letterSpacing: "0.08em" }}>
-        MUSIC APPS
+        {t("guides.musicApps.window.musicApps")}
       </text>
       {ROW.ys.slice(0, apps.length).map((y) => (
         <rect
@@ -404,11 +398,12 @@ function OnKeyWindow({ rows, apps, shadowId }: { rows: SceneState["rows"]; apps:
   );
 }
 
-function Frame({ steps, apps, step, t }: { steps: readonly Step[]; apps: readonly GuideApp[]; step: number; t: number }) {
+function Frame({ steps, apps, step, time }: { steps: readonly Step[]; apps: readonly GuideApp[]; step: number; time: number }) {
+  const t = useT();
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const clipId = `okp-clip-${uid}`;
   const shadowId = `okp-shadow-${uid}`;
-  const st = scene(steps, apps, step, t);
+  const st = scene(steps, apps, step, time);
   const alert = st.alert && st.alert.opacity > 0 ? <Alert a={st.alert} shadowId={shadowId} /> : null;
   const win = <OnKeyWindow rows={st.rows} apps={apps} shadowId={shadowId} />;
 
@@ -436,7 +431,7 @@ function Frame({ steps, apps, step, t }: { steps: readonly Step[]; apps: readonl
         <rect width={VB.w} height={18} fill={C.panel} />
         <line x1={0} y1={18} x2={VB.w} y2={18} stroke={C.line} strokeWidth={SW} />
         <text x={16} y={12.4} fontSize={8.5} fontWeight={700} fill={C.text}>
-          OnKey
+          {t("guides.musicApps.menuBar.appName")}
         </text>
         {[
           [50, 16],
@@ -576,7 +571,8 @@ export default function MusicAppsGuide({ apps: given, className, style, reducedM
   const key = (given?.length ? given : ["Spotify", "Apple Music"]).join("|");
   const apps = useMemo(() => key.split("|") as GuideApp[], [key]);
   const STEPS = useMemo(() => stepsFor(apps.length), [apps]);
-  const LABEL = labelFor(apps);
+  const t = useT();
+  const LABEL = labelFor(t, apps);
   const systemReduced = usePrefersReducedMotion();
   const reduced = reducedMotion ?? systemReduced;
 
@@ -635,8 +631,8 @@ export default function MusicAppsGuide({ apps: given, className, style, reducedM
   const rootClass = className ? `okp ${className}` : "okp";
 
   if (reduced) {
-    return <StillSteps count={STEPS.length} label={LABEL} caption={i => CAPTIONS[STEPS[i].caption]}
-                       frame={i => <Frame steps={STEPS} apps={apps} step={i} t={STEPS[i].pose} />} />;
+    return <StillSteps count={STEPS.length} label={LABEL} caption={i => t(`guides.musicApps.caption.${CAPTIONS[STEPS[i].caption]}`)}
+                       frame={i => <Frame steps={STEPS} apps={apps} step={i} time={STEPS[i].pose} />} />;
   }
 
   const active = STEPS[clock.step].caption;
@@ -656,22 +652,24 @@ export default function MusicAppsGuide({ apps: given, className, style, reducedM
     >
       <style>{CSS}</style>
       <div role="img" aria-label={LABEL}>
-        <Frame steps={STEPS} apps={apps} step={Math.min(clock.step, STEPS.length - 1)} t={clock.t} />
+        <Frame steps={STEPS} apps={apps} step={Math.min(clock.step, STEPS.length - 1)} time={clock.t} />
         <div className="okp-cap">
-          {CAPTIONS.map((text, i) => (
+          {CAPTIONS.map((id, i) => (
             <span key={i} data-on={i === active}>
-              {text}
+              {t(`guides.musicApps.caption.${id}`)}
             </span>
           ))}
         </div>
       </div>
-      <div className="okp-dots" role="group" aria-label="Steps">
+      <div className="okp-dots" role="group" aria-label={t("guides.musicApps.dots")}>
         {STEPS.map((s, i) => (
           <button
             key={i}
             type="button"
             className="okp-dot"
-            aria-label={`Step ${i + 1} of ${STEPS.length}: ${CAPTIONS[s.caption]}${s.kind === "behind" ? "" : ` (${apps[s.app]})`}`}
+            aria-label={s.kind === "behind"
+              ? t("guides.musicApps.stepOf", { step: i + 1, count: STEPS.length, caption: t(`guides.musicApps.caption.${CAPTIONS[s.caption]}`) })
+              : t("guides.musicApps.stepOfApp", { step: i + 1, count: STEPS.length, caption: t(`guides.musicApps.caption.${CAPTIONS[s.caption]}`), app: appName(t, apps[s.app]) })}
             aria-current={i === clock.step ? "step" : undefined}
             onClick={() => jump(i)}
           >

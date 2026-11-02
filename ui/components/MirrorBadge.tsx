@@ -59,7 +59,7 @@ function Badge() {
   return (
     <div id="mirror-badge" ref={ref} data-connected={connected ? "1" : "0"} title={TIP}
          className="pointer-events-auto fixed bottom-3 right-3 z-[1000] flex items-center gap-2 rounded-full border border-white/10 bg-black/70 px-3 py-1.5 text-xs text-ink-200 shadow-lg backdrop-blur">
-      <span className={`h-2 w-2 rounded-full ${connected ? "bg-emerald-400" : "bg-red-400"}`} />
+      <span className={`h-2 w-2 rounded-full ${connected ? "bg-good" : "bg-off"}`} />
       <span className="font-semibold">Live mirror (read-only)</span>
       {text && <span className="tabular text-ink-400">{text}</span>}
     </div>

@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "OnKey…",
+      "services": "Usługi",
+      "pauseListening": "Wstrzymaj słuchanie",
+      "resumeListening": "Wznów słuchanie",
+      "hide": "Ukryj OnKey",
+      "hideOthers": "Ukryj pozostałe",
+      "quit": "Zakończ OnKey"
+    },
+    "file": {
+      "title": "Plik",
+      "closeWindow": "Zamknij okno"
+    },
+    "edit": {
+      "title": "Edycja",
+      "undo": "Cofnij",
+      "redo": "Przywróć",
+      "cut": "Wytnij",
+      "copy": "Kopiuj",
+      "paste": "Wklej",
+      "selectAll": "Zaznacz wszystko"
+    },
+    "view": {
+      "title": "Widok",
+      "fullScreen": "Tryb pełnoekranowy"
+    },
+    "window": {
+      "title": "Okno",
+      "minimize": "Minimalizuj okno",
+      "zoom": "Zoom",
+      "closeWindow": "Zamknij okno"
+    },
+    "help": {
+      "title": "Pomoc",
+      "reportProblem": "Zgłoś problem…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "Zapisy OnKey do zgłoszenia błędu: logi i liczby, bez tekstów i audio."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "Śpiewaj czysto",
+      "free": "Darmowy na Maca"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey słucha Twojego śpiewu, aby pokazać, jak czysto śpiewasz. Twoje nagrania zostają na Twoim Macu.",
+    "NSAudioCaptureUsageDescription": "OnKey słucha muzyki grającej na Twoim Macu, aby nauczyć się melodii wokalisty. Nigdy nie zapisuje ani nie wysyła muzyki. W trybie słuchania krótki odcisk dźwięku (nie samo audio) trafia do Shazam od Apple, aby rozpoznać piosenkę.",
+    "NSAppleEventsUsageDescription": "OnKey pyta Spotify, Muzykę lub przeglądarkę (dla YouTube), co gra, i steruje odtwarzaniem, gdy naciśniesz odtwórz, pomiń lub od początku."
+  }
+}

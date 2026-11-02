@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { DownloadButton } from "@/components/DownloadButton";
+import { DownloadButton, type DownloadText } from "@/components/DownloadButton";
 import { REQUIREMENTS } from "@/lib/site";
 import { type Challenge, STASH_KEY, readChallenge } from "@/lib/challenge";
 
@@ -18,7 +18,7 @@ function stashed(): string {
 
 /** The invite: "<name> scored 78. Can you beat it?" over a card with the song and its artist, or a general one when the link has no
  *  challenge in it (or one that doesn't make sense). All text is set as text by React (no HTML from the link). */
-export function ChallengeInvite() {
+export function ChallengeInvite({ download }: { download: DownloadText }) {
   const [c, setC] = useState<Challenge | null>(null);
   useEffect(() => {
     setC(readChallenge(stashed()));
@@ -69,7 +69,7 @@ export function ChallengeInvite() {
           OnKey is a free singing trainer for the Mac: play a song you love, sing along, and it shows how close you are to the singer&apos;s notes and gives you a score.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <DownloadButton where="challenge" className={primary} />
+          <DownloadButton where="challenge" text={download} className={primary} />
           <Link href="/docs/how-it-works/" className="inline-flex min-h-12 items-center px-2 font-medium text-accent-soft underline-offset-4 hover:underline">
             How it works →
           </Link>

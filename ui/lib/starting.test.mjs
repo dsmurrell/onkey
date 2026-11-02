@@ -24,7 +24,7 @@ test("an app that can't start it says so, with the app named", () => {
   assert.equal(no.failed, true);
   assert.equal(no.title, "OnKey can't start Yellow in Apple Music");
   const failed = startingView(s({ cant: "failed" }), 1200, 7);
-  assert.equal(failed.title, "Apple Music didn't start Yellow");
+  assert.equal(failed.title, "Couldn’t start Yellow in Apple Music");
   assert.match(failed.sub, /Apple Music library/);
   assert.equal(startingView(s({ app: "Spotify", cant: "failed" }), 1200, 7).sub, "Open it in Spotify and press play there: OnKey follows it.");
   // a failure stays until a song shows (or it's dismissed)
@@ -38,8 +38,10 @@ test("too long without the song: said not to have started, unless OnKey is namin
   assert.equal(startingView(s(), 1000, 7, true).failed, false);       // naming, early: still "Starting"
 });
 
-test("no name or app known", () => {
+test("no name or app known: the fragments, never at the start of a title (they're lowercase)", () => {
   assert.equal(startingView(s({ name: "", app: "" }), 1000, 7).title, "Starting the song in your music app…");
+  assert.equal(startingView(s({ name: "", app: "", cant: "failed" }), 1000, 7).title, "Couldn’t start the song in your music app");
+  assert.equal(startingView(s({ name: "", app: "", cant: "no_id" }), 1000, 7).title, "OnKey can't start the song in your music app");
 });
 
 test("the song shown already, started over, shows as starting for a moment and then goes, never as a failure", () => {

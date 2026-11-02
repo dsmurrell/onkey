@@ -22,25 +22,14 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import StillSteps from './StillSteps';
+import { useT, type Translator } from '@/lib/i18n';
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react';
 
 /* ------------------------------------------------------------------ */
 /* Palette, type, geometry                                             */
 /* ------------------------------------------------------------------ */
 
-const C = {
-  bg: '#0b0d13',
-  panel: '#151924',
-  line: '#2a3142',
-  muted: '#8b94ab',
-  text: '#e6e9f0',
-  accent: '#7c6cf6',
-  accentLight: '#b5a8ff',
-  accentDark: '#6252e0',
-  good: '#34d27b',
-  amber: '#f5b942',
-  red: '#f06a6a',
-} as const;
+import { GUIDE as C } from "@/lib/colors";
 
 const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
 
@@ -97,17 +86,13 @@ const CHIP_TRACK = { x0: 10, x1: 66, y0: 17, y1: 27 } as const;
 const LOOP_MS = 12000;
 
 const STEPS = [
-  { start: 0, key: 3400, caption: 'Notes following a backing vocal?' },
-  { start: 3700, key: 7680, caption: 'Drag across that part' },
-  { start: 7900, key: 10800, caption: 'It’s left out of the score, for every take of the song' },
+  { start: 0, key: 3400, id: 's0' }, // captions: guides.leaveOut.steps.<id>
+  { start: 3700, key: 7680, id: 's1' },
+  { start: 7900, key: 10800, id: 's2' },
 ] as const;
 
-const ARIA_LABEL =
-  'Animation of a pitch graph for one take of a song. Purple bars show the notes the score expects and a line shows ' +
-  'what the singer sang, green where it matches. For one stretch the purple bars jump up high, following a backing ' +
-  'vocal, while the singer stays on the melody and the line turns amber. A cursor drags across that stretch to ' +
-  'select it and clicks "Leave it out of the score". The stretch turns to grey stripes, the score rises from ' +
-  `${SCORE_BEFORE} to ${SCORE_AFTER}, and the same stretch is left out for every take of the song.`;
+/** What the whole guide shows, for screen readers. */
+const ariaLabel = (t: Translator) => t('guides.leaveOut.ariaLabel', { before: SCORE_BEFORE, after: SCORE_AFTER });
 
 /* ------------------------------------------------------------------ */
 /* Maths helpers                                                       */
@@ -294,6 +279,7 @@ const SVG_STYLE: CSSProperties = {
 };
 
 function Scene({ time }: { time: number }) {
+  const t = useT();
   const uid = 'lvo' + useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const clipId = `${uid}-clip`;
   const stripesId = `${uid}-stripes`;
@@ -316,7 +302,7 @@ function Scene({ time }: { time: number }) {
 
       {/* Header: score on the left, take on the right */}
       <text x={16} y={34} fontSize={11} fontWeight={500} fill={C.muted}>
-        Score
+        {t('guides.leaveOut.score')}
       </text>
       <text
         x={52}
@@ -342,7 +328,7 @@ function Scene({ time }: { time: number }) {
       </text>
       <text x={344} y={34} fontSize={12} textAnchor="end">
         <tspan fill={C.text} fontWeight={600}>
-          Take 3
+          {t('guides.leaveOut.take', { n: CHIPS.current + 1 })}
         </tspan>
       </text>
 
@@ -420,7 +406,7 @@ function Scene({ time }: { time: number }) {
       </g>
 
       <text x={BAND_MID} y={194} fontSize={9.5} fontWeight={500} textAnchor="middle" letterSpacing={0.4} fill={C.muted} opacity={f.tag}>
-        Left out
+        {t('guides.leaveOut.leftOut')}
       </text>
 
       {/* Popover button under the selection */}
@@ -441,7 +427,7 @@ function Scene({ time }: { time: number }) {
             strokeWidth={1.5}
           />
           <text x={BAND_MID} y={236} fontSize={11} fontWeight={600} textAnchor="middle" fill={C.text}>
-            Leave it out of the score
+            {t('guides.leaveOut.leaveOutButton')}
           </text>
         </g>
       </g>
@@ -462,7 +448,7 @@ function Scene({ time }: { time: number }) {
               strokeWidth={1.5}
             />
             <text x={10} y={12} fontSize={9} fontWeight={current ? 600 : 500} fill={current ? C.text : C.muted}>
-              Take {i + 1}
+              {t('guides.leaveOut.take', { n: i + 1 })}
             </text>
             <rect
               x={CHIP_BAND.x0}
@@ -551,6 +537,7 @@ function usePrefersReducedMotion(): boolean {
 }
 
 function Animated() {
+  const t = useT();
   const reduced = usePrefersReducedMotion();
   const [time, setTime] = useState(0);
   const timeRef = useRef(0);
@@ -610,23 +597,23 @@ function Animated() {
 
   return (
     <div ref={rootRef} className="lvo-anim" onPointerEnter={onEnter} onPointerLeave={onLeave}>
-      <div role="img" aria-label={ARIA_LABEL}>
+      <div role="img" aria-label={ariaLabel(t)}>
         <Scene time={time} />
       </div>
       <p className="lvo-caption">
         {STEPS.map((s, i) => (
-          <span key={s.caption} data-active={i === active} aria-hidden={i !== active}>
-            {s.caption}
+          <span key={s.id} data-active={i === active} aria-hidden={i !== active}>
+            {t(`guides.leaveOut.steps.${s.id}`)}
           </span>
         ))}
       </p>
-      <div className="lvo-dots" role="group" aria-label="Animation steps">
+      <div className="lvo-dots" role="group" aria-label={t('guides.leaveOut.stepsGroup')}>
         {STEPS.map((s, i) => (
           <button
-            key={s.caption}
+            key={s.id}
             type="button"
             className="lvo-dot"
-            aria-label={`Step ${i + 1}: ${s.caption}`}
+            aria-label={t('guides.leaveOut.stepLabel', { n: i + 1, caption: t(`guides.leaveOut.steps.${s.id}`) })}
             aria-current={i === active ? 'step' : undefined}
             onClick={() => jumpTo(i)}
           >
@@ -649,9 +636,10 @@ export type LeaveOutOfScoreAnimationProps = {
 };
 
 export default function LeaveOutGuide({ className, style }: LeaveOutOfScoreAnimationProps) {
+  const t = useT();
   const reduced = usePrefersReducedMotion();
   if (reduced) {
-    return <StillSteps count={STEPS.length} label={ARIA_LABEL} caption={i => STEPS[i].caption} frame={i => <Scene time={STEPS[i].key} />} />;
+    return <StillSteps count={STEPS.length} label={ariaLabel(t)} caption={i => t(`guides.leaveOut.steps.${STEPS[i].id}`)} frame={i => <Scene time={STEPS[i].key} />} />;
   }
   return (
     <div className={className ? `lvo ${className}` : 'lvo'} style={style}>

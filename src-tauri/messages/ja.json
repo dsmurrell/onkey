@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "OnKeyについて",
+      "services": "サービス",
+      "pauseListening": "聞き取りを一時停止",
+      "resumeListening": "聞き取りを再開",
+      "hide": "OnKeyを隠す",
+      "hideOthers": "ほかを隠す",
+      "quit": "OnKeyを終了"
+    },
+    "file": {
+      "title": "ファイル",
+      "closeWindow": "ウインドウを閉じる"
+    },
+    "edit": {
+      "title": "編集",
+      "undo": "取り消す",
+      "redo": "やり直す",
+      "cut": "カット",
+      "copy": "コピー",
+      "paste": "ペースト",
+      "selectAll": "すべてを選択"
+    },
+    "view": {
+      "title": "表示",
+      "fullScreen": "フルスクリーンの切り替え"
+    },
+    "window": {
+      "title": "ウインドウ",
+      "minimize": "しまう",
+      "zoom": "拡大/縮小",
+      "closeWindow": "ウインドウを閉じる"
+    },
+    "help": {
+      "title": "ヘルプ",
+      "reportProblem": "問題を報告…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "バグ報告用のOnKeyの記録です。ログと数値だけで、歌詞や音声は含まれません。"
+  },
+  "share": {
+    "endCard": {
+      "tagline": "音程どおりに歌おう",
+      "free": "Mac向け・無料"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKeyは歌声を聞き取って、音程がどれくらい合っているかを表示します。録音はこのMacの中にだけ残ります。",
+    "NSAudioCaptureUsageDescription": "OnKeyはMacで再生中の音楽を聞き取り、歌手のメロディを覚えます。音楽を保存したり送信したりすることはありません。聞き取りモードでは、曲名を調べるために短いフィンガープリント（音声そのものではありません）がAppleのShazamに送られます。",
+    "NSAppleEventsUsageDescription": "OnKeyはSpotify、ミュージック、またはブラウザ（YouTube用）に再生中の曲を問い合わせ、再生・スキップ・最初から再生を押したときに再生をコントロールします。"
+  }
+}

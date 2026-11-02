@@ -1,6 +1,7 @@
 // Deleting and reading your takes and songs, safely: a failed delete says so (and the button works again), and a
 // failed read is never shown as "nothing here". Pure (no React, no engine), so lib/dataSafety.test.mjs can check it
 // with `npm test`.
+import { t } from "./i18n";
 
 /** What to show for an error from the engine (its own words when it gave some). */
 export function errorText(e: unknown, fallback: string): string {
@@ -16,7 +17,7 @@ export async function runDelete(onDelete: () => Promise<void> | void): Promise<s
     await onDelete();
     return null;
   } catch (e) {
-    return errorText(e, "Couldn’t delete it.");
+    return errorText(e, t("errors.deleteFailed"));
   }
 }
 
@@ -34,8 +35,8 @@ export async function deleteEach(ids: string[], del: (id: string) => Promise<voi
 /** A list read from the engine: the items, or that it couldn't be read and why (never an empty list in its place). */
 export type Read<T> = { items: T[] } | { error: string; detail: string };
 
-export async function readList<T>(get: () => Promise<T[]>, what: string): Promise<Read<T>> {
-  const error = `Couldn’t read your ${what}`;
+export async function readList<T>(get: () => Promise<T[]>, what: "takes" | "songs"): Promise<Read<T>> {
+  const error = t("errors.readFailed", { what });
   try {
     const items = await get();
     return Array.isArray(items) ? { items } : { error, detail: "" };

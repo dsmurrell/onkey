@@ -3,26 +3,25 @@ import { Flow, Frame, Node, wavePath } from "@/components/explain/Frame";
 import { useClock } from "@/components/explain/motion";
 import { waveform } from "./song";
 
-export const HEAR_STEPS = [
-  "Lots of apps make sound on your Mac",
-  "OnKey listens to the music app only",
-  "Your mic arrives on the same clock",
-  "Analysed as it plays, never saved",
-];
+/** The diagram's words, in the page's language (docs.diagrams.hearing; built by text.ts). */
+export type HearingText = {
+  label: string; steps: string[];
+  musicApp: string; browser: string; messages: string; yourMic: string; oneClock: string; disk: string; noMusicSaved: string; notHeard: string;
+};
 
 const MUSIC = waveform(70, "mix", 3);
 const VOICE = waveform(70, "vocal", 9);
 
 /** Per-app capture: only the music app is heard, your mic shares its clock, and nothing is written to disk. */
-export function Hearing({ step = 3 }: { step?: number }) {
+export function Hearing({ step = 3, text }: { step?: number; text: HearingText }) {
   const t = useClock(`hear-${step}`, 3);
   const scroll = (t * 26) % 40;
   return (
-    <Frame label="How OnKey hears the music" caption={HEAR_STEPS[step]}>
-      <Node x={78} y={56} w={120} h={40} colour="var(--music)" title="Music app" on />
-      <Node x={78} y={110} w={120} h={40} colour="var(--line)" title="Browser" on={step === 0} />
-      <Node x={78} y={164} w={120} h={40} colour="var(--line)" title="Messages" on={step === 0} />
-      <Node x={78} y={226} w={120} h={40} colour="var(--you)" title="Your mic" on={step >= 2} />
+    <Frame label={text.label} caption={text.steps[step]}>
+      <Node x={78} y={56} w={120} h={40} colour="var(--music)" title={text.musicApp} on />
+      <Node x={78} y={110} w={120} h={40} colour="var(--line)" title={text.browser} on={step === 0} />
+      <Node x={78} y={164} w={120} h={40} colour="var(--line)" title={text.messages} on={step === 0} />
+      <Node x={78} y={226} w={120} h={40} colour="var(--you)" title={text.yourMic} on={step >= 2} />
       <Flow d="M140 56 C190 56 200 110 240 110" colour="var(--music)" t={t} on={step >= 1} />
       <Flow d="M140 226 C190 226 200 150 240 150" colour="var(--you)" t={t} on={step >= 2} />
       <g className="hl" opacity={step === 0 ? 0.3 : 1}>
@@ -36,15 +35,15 @@ export function Hearing({ step = 3 }: { step?: number }) {
             <line key={k} x1={260 + k * 40 - scroll} x2={260 + k * 40 - scroll} y1="112" y2="164" stroke="var(--fg)" strokeOpacity="0.18" strokeDasharray="2 3" />
           ))}
         </g>
-        {step >= 2 && <text x="430" y="104" textAnchor="end" fontSize="10.5" fill="var(--muted)">one clock</text>}
+        {step >= 2 && <text x="430" y="104" textAnchor="end" fontSize="10.5" fill="var(--muted)">{text.oneClock}</text>}
       </g>
       <g className="hl" opacity={step >= 3 ? 1 : 0.2} transform="translate(340 200)">
         <rect x="-26" y="0" width="52" height="40" rx="6" fill="var(--panel)" stroke="var(--line)" />
-        <text x="0" y="25" textAnchor="middle" fontSize="11" fill="var(--muted)">disk</text>
+        <text x="0" y="25" textAnchor="middle" fontSize="11" fill="var(--muted)">{text.disk}</text>
         <line x1="-34" y1="-4" x2="34" y2="44" stroke="var(--off)" strokeWidth="2.5" strokeLinecap="round" />
-        <text x="44" y="24" fontSize="11.5" fill="var(--fg-soft)">no music saved</text>
+        <text x="44" y="24" fontSize="11.5" fill="var(--fg-soft)">{text.noMusicSaved}</text>
       </g>
-      {step === 1 && <text x="140" y="128" fontSize="10.5" fill="var(--faint)">not heard</text>}
+      {step === 1 && <text x="140" y="128" fontSize="10.5" fill="var(--faint)">{text.notHeard}</text>}
     </Frame>
   );
 }

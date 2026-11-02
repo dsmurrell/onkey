@@ -14,9 +14,9 @@ export function LogoMark({ size = 32 }: { size?: number }) {
   );
 }
 
-export function Logo() {
+export function Logo({ href, label }: { href: string; label: string }) {
   return (
-    <Link href="/" className="flex items-center gap-2.5 rounded-lg" aria-label="OnKey home">
+    <Link href={href} className="flex items-center gap-2.5 rounded-lg" aria-label={label}>
       <LogoMark />
       <span className="text-[15px] font-semibold tracking-tight text-fg">OnKey</span>
     </Link>

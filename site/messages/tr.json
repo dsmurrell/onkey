@@ -1,0 +1,831 @@
+{
+  "meta": {
+    "title": "OnKey: sevdiğiniz şarkıları söylemeyi öğrenin",
+    "description": "OnKey, Mac için ücretsiz ve açık kaynaklı bir şarkı söyleme antrenörüdür. Mac’inizde çalan müziği dinler, şarkıcının melodisini öğrenir ve siz söylerken bir ses rehberi gösterir; böylece nerede tiz, nerede pes kaldığınızı görürsünüz. Müziği hiçbir zaman kaydetmez."
+  },
+  "common": {
+    "skip": "İçeriğe geç",
+    "joke": "2026’dan beri duş şarkıcılarını kendilerinden kurtarıyor",
+    "sourceOnGitHub": "Kaynak kodu GitHub’da",
+    "stars": "{n, plural, one {GitHub’da # yıldız} other {GitHub’da # yıldız}}",
+    "requirements": {
+      "silicon": "Apple Silicon işlemcili bir Mac (M1 veya sonrası)",
+      "macos": "macOS 14.2 veya sonrası"
+    },
+    "early": "{language}, OnKey’de yeni: {language} şarkıların sözleri şimdilik kelime kelime zamanlama olmadan, satır satır gösteriliyor."
+  },
+  "header": {
+    "home": "OnKey ana sayfa",
+    "label": "Ana menü",
+    "docs": "Belgeler",
+    "faq": "SSS",
+    "whatsNew": "Yenilikler",
+    "github": "GitHub",
+    "discord": "Discord"
+  },
+  "footer": {
+    "license": "· ücretsiz ve açık kaynak (MIT)",
+    "madeBy": "<link>Daniel Murrell</link> yaptı",
+    "notAffiliated": "Spotify, Apple veya Google ile bağlantısı yoktur.",
+    "label": "Alt bilgi",
+    "gettingStarted": "Başlangıç",
+    "howItWorks": "Nasıl çalışır",
+    "privacy": "Gizlilik ve hukuki bilgiler",
+    "faq": "SSS",
+    "whatsNew": "Yenilikler",
+    "github": "GitHub",
+    "discord": "Discord",
+    "language": "Dil",
+    "improve": "Bu çeviriyi iyileştir"
+  },
+  "download": {
+    "mac": "Mac için indir",
+    "macsOnly": "OnKey şimdilik yalnızca Mac’lerde çalışıyor. <link>Windows ister misiniz? Buradan oy verin</link>.",
+    "send": "Mac’inize gönderin",
+    "sent": "Gönderildi",
+    "phones": "OnKey telefonlarda değil, Mac’lerde çalışır. Bağlantıyı daha sonrası için kendinize gönderin.",
+    "shareText": "OnKey, Mac için bir şarkı söyleme antrenörü: Mac’inize şuradan indirin:",
+    "mailSubject": "Mac’im için OnKey"
+  },
+  "docsNav": {
+    "label": "Belgeler",
+    "heading": "Belgeler",
+    "inEnglish": "{title} (İngilizce)",
+    "pages": {
+      "start": "Başlangıç",
+      "howItWorks": "OnKey nasıl çalışır",
+      "scoring": "Puanlama nasıl işler",
+      "privacy": "Gizlilik ve hukuki bilgiler",
+      "faq": "SSS",
+      "yourVoice": "Rahat şarkı söylemek",
+      "beyondPitch": "Perdenin ötesi",
+      "troubleshooting": "Sorun giderme",
+      "credits": "Teşekkürler"
+    }
+  },
+  "home": {
+    "kicker": "Mac için ücretsiz, açık kaynaklı bir şarkı söyleme antrenörü",
+    "title": "Sevdiğiniz şarkıları söylemeyi öğrenin.",
+    "intro": "OnKey, Mac’inizde çalan müziği dinler ve şarkıcının melodisini öğrenir. Sonra siz söylerken bir ses rehberi gösterir; böylece nerede tiz, nerede pes kaldığınızı görürsünüz.",
+    "howLink": "Nasıl çalışır →",
+    "languages": "{names} ve <more>{n, plural, one {# dilde daha} other {# dilde daha}}</more> kullanılabilir",
+    "factsLabel": "Bir bakışta",
+    "facts": {
+      "free": "Ücretsiz ve açık kaynak (MIT)",
+      "macs": "Apple Silicon, macOS 14.2+",
+      "local": "Mac’inizde çalışır, hesap gerekmez",
+      "music": "Dinlediği müziği hiçbir zaman kaydetmez"
+    },
+    "laneTitle": "Öğrenilmiş şarkı · puan 82",
+    "videoCaption": "Ben şarkıya eşlik ederken, anında puanlanıyor.",
+    "video": {
+      "label": "1:35 · sesli",
+      "video": "OnKey kullanımda: Daniel şarkıya eşlik ediyor, notalar ona doğru kayıyor ve sesi notaların üzerine çiziliyor",
+      "play": "Tanıtım videosunu sesli oynat",
+      "dialog": "Tanıtım videosu",
+      "close": "Videoyu kapat"
+    },
+    "artCaption": "Şarkı şeridinin çizimi. Tanıtım videosu yakında.",
+    "how": {
+      "title": "Nasıl çalışır",
+      "step": "Adım {n}",
+      "steps": {
+        "play": {
+          "title": "Bir şarkı çalın",
+          "body": "Spotify, Apple Music veya YouTube’da, her zamanki gibi. OnKey birlikte dinler. Kendisi müzik çalmaz veya indirmez."
+        },
+        "learn": {
+          "title": "İlk çalma ona öğretir",
+          "body": "Şarkı bitince OnKey birkaç dakika içinde şarkıcının notalarını öğrenir ve sözleri hizalar."
+        },
+        "sing": {
+          "title": "Ses rehberiyle söyleyin",
+          "body": "Bir sonraki çalmada notalar size doğru kayar ve sesiniz üzerlerine çizilir. Yeşil notanın üstünde, kırmızı dışında demek."
+        },
+        "review": {
+          "title": "Nasıl yaptığınızı görün",
+          "body": "Bir puan, tutturduğunuz ve kaçırdığınız notalar ve şarkıyla birlikte dinleyebileceğiniz kaydınız."
+        }
+      },
+      "more": "Ayrıntı ister misiniz? <link>OnKey’in tam olarak nasıl çalıştığını</link> şemalarla okuyun."
+    },
+    "privacy": {
+      "title": "Dinler ama müziği hiçbir zaman kaydetmez",
+      "body": "OnKey müziği yalnızca melodiyi öğrenmek ve notaları zamanında tutmak için dinler. Hiçbir zaman kaydetmez veya yüklemez. Mac’inizde kalanlar: öğrendiği notalar ve kendinizi dinleyebilmeniz için her denemede mikrofonunuzun kaydı.",
+      "link": "Gizlilik ve hukuki bilgiler",
+      "cards": {
+        "network": {
+          "title": "Hesap yok, sunucu yok, analitik yok",
+          "body": "Mac’inizden çıkanlar: yeni bir şarkıyı adlandırmak için bir Shazam imzası (ses değil), şarkı sözleri için LRCLIB’e ve kapaklar için Apple’a şarkının adı, bir de GitHub’da günlük güncelleme denetimi."
+        },
+        "fair": {
+          "title": "Adil puanlama",
+          "body": "Bir oktav aşağıdan söylemek de sayılır ve zamanlamanızda 80 ms pay var. Puan kaybettiren şey tiz veya pes kalmak."
+        },
+        "headphones": {
+          "title": "Kulaklık veya hoparlör",
+          "body": "En güvenilir puanları kulaklık verir. Hoparlörde mikrofonunuz sizinle birlikte şarkıyı da duyar, bu yüzden OnKey şarkıyı süzüp çıkarır."
+        }
+      }
+    },
+    "questions": {
+      "title": "Sorular",
+      "body": "En çok sorulanlar. <link>Tüm sorular</link>."
+    },
+    "get": {
+      "title": "OnKey’i edinin",
+      "body": "MIT lisansıyla ücretsiz ve açık kaynak. {requirements}.",
+      "discord": "Discord’a katılın"
+    }
+  },
+  "start": {
+    "title": "Başlangıç",
+    "lede": "OnKey’i kurun, iki izin verin ve bir şarkı çalın.",
+    "need": {
+      "title": "Neler gerekir",
+      "music": "Spotify veya Apple Music’te ya da Chrome, Brave, Edge veya Safari’de YouTube’da çalan müzik.",
+      "mic": "Bir mikrofon (dahili olan yeterli). En güvenilir puanları kulaklık verir.",
+      "why": "macOS 14.2, bir uygulamanın ek sürücü olmadan başka bir uygulamanın sesini duymasına izin veren ilk sürüm; modellerin yeterince hızlı çalışması için de Apple Silicon gerekiyor."
+    },
+    "install": {
+      "title": "Kurulum",
+      "download": "<link>Sürümler sayfasından</link> <code>OnKey.dmg</code> dosyasını indirin. Modeller uygulamanın içinde geldiği için yaklaşık 350 MB (kurulu hâlde yaklaşık 420 MB); bu sayede başka hiçbir şey indirmez.",
+      "drag": "Açın ve OnKey’i Uygulamalar klasörüne sürükleyin.",
+      "open": "OnKey’i açın. Apple tarafından imzalanmış ve onaylanmış olduğu için her uygulama gibi açılır.",
+      "openAnyway": "OnKey’i açın. Bu yapı henüz onaylanmamış, bu yüzden macOS ilk seferde uygulamayı denetleyemediğini söyler. <strong>Sistem Ayarları → Gizlilik ve Güvenlik</strong>’e gidin, aşağı kaydırın ve <strong>Yine de Aç</strong>’a tıklayın. Bunu yalnızca bir kez yapmanız gerekir.",
+      "updates": "Sonrasında OnKey günde bir kez GitHub’da yeni sürüm olup olmadığına bakar, arka planda indirir (yaklaşık 350 MB) ve yeniden başlattığınızda veya çıktığınızda kurar; hiçbir zaman şarkının ortasında değil. Bunu <strong>Ayarlar</strong>’dan kapatabilirsiniz."
+    },
+    "permissions": {
+      "title": "İzinler",
+      "permission": "İzin",
+      "why": "OnKey’in neden ihtiyacı var",
+      "mic": "<strong>Mikrofon</strong>",
+      "micWhy": "Şarkı söylemenizi duymak için.",
+      "audio": "<strong>Sistem sesi kaydı</strong>",
+      "audioWhy": "Müzik uygulamasını duymak için; böylece OnKey melodiyi öğrenir ve notaları zamanında tutar. macOS buna kayıt diyor ama OnKey sesi çalarken çözümler ve hiçbir zaman kaydetmez.",
+      "control": "<strong>Spotify ve Müzik’i yönetme</strong> (kurulumda sorulur)",
+      "controlWhy": "Ne çaldığını ve neresinde olduğunu okumak; “Yeniden söyle” ve atlama için oynatmak, duraklatmak ve ileri sarmak için. Kurulum, açık olan her uygulama için macOS’e sorar. Açık olmayan bir uygulama, o uygulamada ilk şarkı çaldığınızda sorar. “Yalnızca dinle”yi seçerseniz OnKey Spotify’a veya Müzik’e hiçbir şey göndermez ve şarkıyı sesinden takip eder.",
+      "browser": "<strong>Tarayıcınızı yönetme</strong> (isteğe bağlı, YouTube için)",
+      "browserWhy": "Yalnızca Ayarlar’dan veya Söyle sayfasından YouTube’u açarsanız: YouTube sekmesinin zamanını ve başlığını okumak; oynatmak, duraklatmak ve ileri sarmak için.",
+      "after": "Daha önce söylediğiniz şarkılar Mac’inizde tanınır, yeniler Shazam’la. Bir izni yanlışlıkla reddettiyseniz <strong>Sistem Ayarları → Gizlilik ve Güvenlik</strong>’e gidin, ilgili bölümü bulun ve OnKey’i açın."
+    },
+    "first": {
+      "title": "İlk şarkınız",
+      "play": "OnKey’i açın ve Spotify, Apple Music veya YouTube’da bir şarkı çalın. Ne söyleyeceğinizden emin değil misiniz? Öneriler için Söyle sayfasındaki OnKey logosuna tıklayın.",
+      "lyrics": "İlk seferde henüz nota yok. Sözleri satır satır görürsünüz; ilk bir buçuk dakika kadar şarkıcıyla zamanlı olarak (8 GB Mac’ler hariç). İsterseniz eşlik edin, bu deneme de puanlanır.",
+      "learns": "Şarkı bitince OnKey onu <strong>öğrenir</strong>. Benim Mac’imde bu iki üç dakika sürdü; bitene kadar Söyle düğmesinde “Öğreniyor…” yazar. Aynı anda tek şarkı öğrenilir, bu yüzden art arda çalınan şarkılar sıraları gelene kadar “Öğrenmeyi bekliyor” der.",
+      "again": "Tekrar çalın. OnKey nerede olduğunuzu anlayana kadar notalar birkaç saniye soluk kalır (“Şarkıyla hizalanıyor…”). Sonra üzerlerinde sözlerle size doğru kayar ve sesiniz anlık olarak çizilir.",
+      "score": "Şarkı bitince bir puan, her nota ve satır için bir rapor, bir de şarkıyla birlikte dinleyebileceğiniz kaydınızı alırsınız.",
+      "learned": "OnKey bir şarkının yaklaşık %70’ini duyduğunda şarkı öğrenilmiş sayılır. İleri geri atlarsanız kalanı o bölümleri bir sonraki çalmanızda öğrenilir.",
+      "rest": "Çok mu söylüyorsunuz? <link>Rahat şarkı söylemek</link> yazısına göz atın. Yaklaşık 35 dakika sonra OnKey sesinizi dinlendirmenizi hatırlatır.",
+      "next": "Sonraki: <how>OnKey nasıl çalışır</how>, <scoring>puan nasıl hesaplanır</scoring> veya <troubleshooting>sorun giderme</troubleshooting>."
+    }
+  },
+  "faqPage": {
+    "title": "SSS",
+    "before": "İndirmeden önce",
+    "using": "OnKey’i kullanırken"
+  },
+  "faq": {
+    "network": {
+      "q": "Mac’imden dışarı bir şey çıkıyor mu?",
+      "intro": "OnKey dinlediği müziği hiçbir zaman kaydetmez veya yüklemez. Kayıtlarınız ve öğrenilen şarkılar Mac’inizde kalır. Dışarı çıkanlar:",
+      "shazam": "<strong>Shazam</strong> (Apple): başka hiçbir şey ne çaldığını söyleyemediğinde yeni bir şarkıyı adlandırmak için müzik uygulamasının sesinin en fazla 5 saniyesinin imzası (ses değil, mikrofonunuz hiçbir zaman değil). Bu YouTube, diğer uygulamalar veya Yalnızca dinle durumunda olur. Spotify ve Apple Music kendi şarkılarını adlandırır; daha önce söylediğiniz şarkılar Mac’inizde tanınır. Shazam’ı Ayarlar’dan kapatabilirsiniz.",
+      "lrclib": "<strong>LRCLIB</strong>: zamanlı sözleri getirmek için şarkının sanatçısı, adı, albümü ve süresi (Sözleri göster kapalı değilse).",
+      "apple": "<strong>Apple</strong>: albüm kapaklarını bulmak için sanatçı ve şarkı adı; süresini öğrenmek için tanınan şarkının Apple Music kimliği. Kapakların kendisi Spotify’ın, Apple’ın veya YouTube’un görsel sunucularından yüklenir.",
+      "github": "<strong>GitHub</strong>: günlük yeni sürüm denetimi ve indirmesi. Bunu Ayarlar’dan kapatabilirsiniz.",
+      "outro": "Hesap yok, analitik yok, bana ait bir sunucu yok. “Sorun bildir” yalnızca Mac’inize bir dosya kaydeder; isterseniz bir GitHub issue’suna eklersiniz. <link>Gizlilik, tamamı</link>."
+    },
+    "music": {
+      "q": "OnKey müzik sağlıyor veya indiriyor mu?",
+      "a": "Hayır. Şarkıyı kendi müzik uygulamanız çalar (Spotify, Apple Music veya bir tarayıcıda YouTube). OnKey şarkıcının notalarını öğrenmek için dinler ve müziği hiçbir zaman kaydetmez."
+    },
+    "kept": {
+      "q": "Mac’imde ne saklıyor?",
+      "a": "Her şarkı için: notalar, bir parmak izi ve Shazam imzası, bir de zamanlamalarıyla sözler. Her deneme için: <strong>mikrofonunuzun kaydı</strong> (dakikada yaklaşık 0,5 MB), puanlarınız ve geri dinleyebilmeniz için söylediğiniz sözler. Hepsi <code>{dataDir}</code> içinde (paylaştığınız bir deneme hariç; o, İndirilenler’e video olarak kaydedilir) ve bir denemeyi veya şarkıyı silmek onu Çöp Sepeti’ne taşır. Müziği hiçbir zaman saklamaz; ancak hoparlörle söylenen bir deneme müziğin bir kısmını alır."
+    },
+    "permissions": {
+      "q": "Hangi izinleri istiyor?",
+      "mic": "<strong>Mikrofon</strong>: şarkı söylemenizi duymak için.",
+      "audio": "<strong>Sistem sesi kaydı</strong>: çalan müzik uygulamasını veya tarayıcıyı duymak için. macOS buna kayıt diyor ama OnKey sesi çalarken çözümler ve kaydetmez.",
+      "control": "<strong>Spotify ve Müzik’i yönetme</strong> (kurulumda sorulur): ne çaldığını ve neresinde olduğunu okumak; “Yeniden söyle” için oynatmak, duraklatmak ve ileri sarmak için. Kurulumda “Yalnızca dinle”yi seçin veya Ayarlar’da “OnKey yönetebilir” altından kapatın; OnKey onlara hiçbir şey göndermez.",
+      "browser": "<strong>Tarayıcınızı yönetme</strong> (yalnızca YouTube’u açarsanız): bir YouTube sekmesi için aynısı."
+    },
+    "macs": {
+      "q": "Hangi Mac’lerde çalışıyor?",
+      "a": "macOS 14.2 veya sonrasında Apple Silicon (M1 veya sonrası). 14.2, bir uygulamanın ek sürücü olmadan başka bir uygulamanın sesini duymasına izin veren ilk sürüm; modellerin yetişebilmesi için de Apple Silicon gerekiyor. 8 GB bellek yeterli. Intel Mac’ler desteklenmiyor."
+    },
+    "windows": {
+      "q": "Neden Windows, Linux veya telefon sürümü yok?",
+      "a": "OnKey, macOS’in uygulama başına ses yakalaması ve Core ML üzerine kurulu. Windows da tek bir uygulamanın sesini duyabiliyor, yani bir uyarlama mümkün ama henüz başlamadım. Kullanacak olsanız <link>Windows issue’sunda</link> söyleyin. Telefonlar bir uygulamanın başka bir uygulamayı duymasına izin vermez, bu yüzden telefon sürümü için farklı bir yaklaşım gerekir."
+    },
+    "browser": {
+      "q": "Benzerleriyle farkı ne? Neden tarayıcıda değil?",
+      "compare": "Çoğu şarkı söyleme uygulaması kendi kataloğuna, altyapılarına veya elle hazırlanmış nota çizelgelerine ihtiyaç duyar. OnKey zaten çaldığınız müzikten öğrenir, böylece orijinal sanatçıyla çalışırsınız. En iyi sonucu belirgin bir ana vokali olan şarkılar verir.",
+      "web": "Bir web sayfası Spotify veya Apple Music uygulamasını duyamaz, onlara ne çaldığını soramaz, ShazamKit veya Core ML kullanamaz. Bu yüzden bir Mac uygulaması."
+    },
+    "scoring": {
+      "q": "Puan nasıl hesaplanıyor?",
+      "a": "Siz ve şarkıcının birlikte söylediği her 10 ms’de perdeniz onunkiyle karşılaştırılır. Yarım tonun yarısı içinde tam puan alırsınız; bir buçuk yarım tonda sıfıra iner. Oktavlar aleyhinize sayılmaz ve zamanlamanızda 80 ms pay var. Puan, doğruluğunuzun şarkıcının bölümünün ne kadarını söylediğinizle ölçeklenmiş hâlidir. Ayrıntılar <link>Puanlama nasıl işler</link> sayfasında."
+    },
+    "licence": {
+      "q": "Lisansı ne?",
+      "a": "MIT. Ücretsiz ve kaynak kodu GitHub’da. Modellerin kendi lisansları var; <link>Teşekkürler</link> sayfasında listelenmiştir."
+    },
+    "firstPlay": {
+      "q": "İlk çalmada neden hiç nota gösterilmiyor?",
+      "a": "OnKey bir şarkıyı ilk çalması bittikten sonra öğrenir, bu yüzden henüz nota yok. Yerine sözleri satır satır görürsünüz (ilk bir buçuk dakika kadar şarkıcıyla zamanlı, 8 GB Mac’ler hariç). Yine de eşlik edin, o deneme de puanlanır. İkinci çalmadan itibaren notalar üzerlerinde sözlerle size doğru kayar."
+    },
+    "learning": {
+      "q": "Bir şarkıyı neden henüz söyleyemiyorum? “Öğreniyor…” diyor",
+      "a": "Öğrenme şarkı bittikten sonra olur ve benim Mac’imde iki üç dakika sürdü. “Yeniden söyle” düğmesi ilerlemeyi gösterir ve bitince geri gelir. Bu arada diğer şarkılar söylenebilir. Aynı anda tek şarkı öğrenilir, bu yüzden art arda çalınan şarkılar sıraları gelene kadar “Öğrenmeyi bekliyor” der. OnKey’in zaten bildiği bir şarkıyı söylerken öğrenme de duraklar."
+    },
+    "starters": {
+      "q": "İlk olarak ne söylemeliyim?",
+      "a": "OnKey iyi takip ettiği şarkıları önerir. Hiçbir şey çalmazken Söyle sayfasında, Arşiv’in altında ve Söyle sayfasındaki OnKey logosuna tıkladığınızda görünürler. Her birinin Spotify ve Apple Music bağlantıları var."
+    },
+    "busy": {
+      "q": "Mac’imi yavaşlatır mı?",
+      "a": "Öğrenilmiş bir şarkıyı söylemek hafiftir: benim Mac’imde bir CPU çekirdeğinin %15-19’u. Ağır kısım öğrenmedir, bu yüzden OnKey bunu şarkı bittikten sonra, tek tek ve düşük öncelikle yapar. Öğrenirken yaklaşık 1,7 GB bellek kullandı (en fazla 2,4 GB). 32 GB’den az belleğe sahip Mac’lerde modeller her şarkıdan sonra bellekten kaldırılır."
+    },
+    "headphones": {
+      "q": "Kulaklık gerekli mi?",
+      "a": "Hayır, ama en güvenilir puanları kulaklık verir. Hoparlörde yankı engelleme şarkıyı mikrofonunuzdan geri çıkarır: MacBook hoparlörlerinde 20 dB veya daha fazla, harici hoparlörlerde 8-14 dB. Yüksek sesli müzik yine de sızabilir."
+    },
+    "octave": {
+      "q": "Daha alçak veya daha yüksek bir oktavdan söyleyebilir miyim?",
+      "a": "Evet. Şarkıcıdan bir oktav uzakta söylemek notanın üstünde sayılır."
+    },
+    "apps": {
+      "q": "Hangi müzik uygulamaları çalışıyor?",
+      "a": "Spotify, Apple Music ve Chrome, Brave, Edge veya Safari’de YouTube. Varsayılan olarak OnKey Spotify ve Apple Music’e ne çaldığını sorar, böylece konumlar tam olur ve onları kendi penceresinden oynatıp duraklatabilir. “Yalnızca dinle” ile (Ayarlar’da “OnKey yönetebilir” altındaki her uygulama kapalı) şarkıları seslerinden tanır. OnKey’e tarayıcınızı yönetme izni vermezseniz YouTube sesinden takip edilir."
+    },
+    "shazam": {
+      "q": "Neden Shazam? Bu, Apple’a ses göndermek değil mi?",
+      "a": "ShazamKit sesi değil, bir imza (Mac’inizde hesaplanan bir parmak izi) gönderir; mikrofonunuzu hiçbir zaman göndermez. OnKey Shazam’a yalnızca başka hiçbir şey şarkıyı adlandıramadığında sorar: YouTube, diğer uygulamalar veya Yalnızca dinle. Daha önce söylediğiniz şarkılar önce Mac’inizde tanınır. Ayarlar → “Yeni şarkıları adlandırmak için Shazam kullan” seçeneğini kapatın; Apple’a hiçbir şey gitmez ama sesinden yalnızca zaten öğrendiğiniz şarkılar tanınır."
+    },
+    "lyricsOff": {
+      "q": "Şarkı sözlerini kapatabilir miyim?",
+      "a": "Evet, Ayarlar → “Sözleri göster”. Kapalıyken OnKey LRCLIB’den hiçbir şey istemez ve hiç söz göstermez. Mac’inizde zaten olan sözler silinmez, gizlenir. Notalar ve puan her zamanki gibi çalışır; sözler kapalıyken öğrenilen şarkılar notalarını yalnızca melodiden alır."
+    },
+    "oddScores": {
+      "q": "Bazı şarkılar tuhaf puan alıyor. Neden?",
+      "a": "Rap veya konuşma ağırlıklı şarkılarda puanlanacak melodi neredeyse yoktur; armoniler veya korolar da hangi sesin melodi olduğunu karıştırabilir. Bkz. <link>sınırlar</link>."
+    },
+    "report": {
+      "q": "Bir şey ters gitti. Nasıl bildiririm?",
+      "a": "Ayarlar’dan, Yardım menüsünden veya bir denemenin sayfasından <strong>Sorun bildir</strong>’i kullanın. Zip dosyasına nelerin gireceğini gösterir (OnKey günlüğünün son üç günü ve her çalmanın özeti; şarkı adları var ama söz, ses veya kayıt yok) ve Mac’inize kaydeder. Hiçbir şey yüklenmez. Sonra <github>GitHub</github>’da bir issue açın ve isterseniz zip dosyasını ekleyin. Önce <link>Sorun giderme</link> sayfasına bir bakın."
+    },
+    "updates": {
+      "q": "Güncellemeleri nasıl alırım?",
+      "a": "Otomatik olarak. OnKey günde bir kez GitHub’da yeni sürüm olup olmadığına bakar ve arka planda indirir (modeller uygulamanın içinde olduğu için yaklaşık 350 MB). “Güncellemek için yeniden başlat”ı seçtiğinizde veya çıktığınızda kurulur; hiçbir zaman şarkının ortasında değil. Denetimleri Ayarlar’dan kapatabilirsiniz."
+    }
+  },
+  "troubleshooting": {
+    "title": "Sorun giderme",
+    "lede": "OnKey açılmadığında, duyamadığında, bir şarkıyı adlandıramadığında veya kulaklığınızla zamanlaması kaydığında ne yapmalı.",
+    "starting": {
+      "title": "“OnKey başlatılıyor…” ekranında kalıyor",
+      "body": "Bu normalde birkaç saniye sürer. Bir dakika sonra hâlâ oradaysa OnKey’den çıkın (<strong>⌘Q</strong>) ve yeniden açın. Bu da işe yaramazsa <link>sorun bildirin</link>."
+    },
+    "permissions": {
+      "title": "İzin soruları",
+      "intro": "OnKey kurulumda üç şey ister:",
+      "mic": "<strong>Mikrofon</strong>: reddettiyseniz <strong>Sistem Ayarları → Gizlilik ve Güvenlik → Mikrofon</strong>’a gidin ve OnKey’i açın.",
+      "audio": "<strong>Sistem sesi kaydı</strong>: müzik uygulamasını duymak için gerekir. Reddettiyseniz veya OnKey “henüz duyamıyor” diyorsa <strong>Sistem Ayarları → Gizlilik ve Güvenlik → Ekran ve Sistem Sesi Kaydı</strong>’na gidin ve <strong>Yalnızca Sistem Sesi Kaydı</strong> altında OnKey’i açın.",
+      "control": "<strong>Spotify ve Apple Music’i yönetme</strong>: kurulum, açık olan her uygulama için macOS’e sorar. Açık olmayan bir uygulama, o uygulamada ilk şarkı çaldığınızda sorar. Soru görünmezse <strong>Devam et</strong>’e tıklayın. macOS orada ilk şarkı çaldığınızda sorar. Yanıtınızı değiştirmek için <strong>Sistem Ayarları → Gizlilik ve Güvenlik → Otomasyon → OnKey</strong>’e gidin veya OnKey Ayarlar’ındaki <strong>OnKey yönetebilir</strong> bölümünü kullanın.",
+      "buttons": "OnKey’in iletilerindeki düğmeler Sistem Ayarları’nın doğru sayfasını açar. Bir izni değiştirdikten sonra macOS OnKey’i yeniden açmanızı isteyebilir."
+    },
+    "naming": {
+      "title": "Yeni bir şarkının adlandırılması uzun sürüyor",
+      "body": "Yeni şarkılar internet bağlantısı gerektiren Shazam’la adlandırılır ve kurulumdan sonraki ilk yanıt yavaş olabilir. Şarkıyı çalmaya devam edin, OnKey sormayı sürdürür. Shazam’a ulaşılamadığını söylüyorsa bağlantınızı denetleyin. Zaten öğrendiğiniz şarkılar yine Mac’inizde tanınır. Spotify veya Apple Music’i yönetmeye izin vermek daha hızlıdır, çünkü OnKey uygulamaya ne çaldığını sorabilir."
+    },
+    "noNotes": {
+      "title": "Bir şarkıda nota yok",
+      "body": "OnKey bir şarkıyı ilk çalması bittikten sonra öğrenir ve bitene kadar Söyle düğmesinde “Öğreniyor…” yazar. Aynı anda tek şarkı öğrenilir, bu yüzden diğerleri “Öğrenmeyi bekliyor” der. OnKey’in zaten bildiği bir şarkıyı söylerken öğrenme de duraklar (“Siz söylerken bekliyor”), böylece notalar akıcı kalır. OnKey bir şarkının yaklaşık %70’ini duyduğunda şarkı öğrenilmiş sayılır; ileri geri atladıysanız bir kez daha baştan sona çalın."
+    },
+    "dim": {
+      "title": "Notalar soluk ve “Şarkıyla hizalanıyor…” diyor",
+      "body": "OnKey, müzik nerede olduğunuzu doğrulayana kadar notaları soluk tutar; böylece hiçbir zaman yanlış yerdeki notalara göre söylemezsiniz. Genellikle şarkı başladıktan veya atladıktan sonra birkaç saniye sürer. Soluk kalmaya devam ederse müzik uygulamasının kendi ses düzeyinin kısılmış olmadığını denetleyin; OnKey’in onu duyması gerekir. Uygulamanın sesini açın, bunun yerine Mac’inizin ses düzeyini kullanın."
+    },
+    "wholeLine": {
+      "title": "İlk çalmada sözler satır satır gösteriliyor",
+      "body": "Bu beklenen bir durum. Şarkı öğrenilene kadar OnKey her kelimenin ne zaman söylendiğini bilmez, bu yüzden satırın tamamını gösterir. Bir sonraki çalmadan itibaren kelimeler nota çubuklarının üzerindedir."
+    },
+    "timing": {
+      "title": "Kulaklıkta sözler erken veya geç mi?",
+      "latency": "OnKey, kulaklığınızın veya hoparlörünüzün sesi çalmasının ne kadar sürdüğünü, macOS’in her çıkış için bildirdiği değeri kullanarak hesaba katar. Testlerimde bu, Bluetooth dahil yeterince yakındı; bu yüzden ayarlanacak bir şey yok.",
+      "still": "Notalar hâlâ erken veya geç görünüyorsa OnKey şarkıyla henüz hizalanmamış olabilir. Birkaç saniye verin veya biraz geri alın. Puanınız her iki durumda da etkilenmez, çünkü OnKey gecikmenizi her şarkıdan sonra hesaplar. Belirli bir kulaklıkta tekrarlanıyorsa lütfen hangisi olduğunu <link>bana söyleyin</link>."
+    },
+    "lyrics": {
+      "title": "Söz yok veya sözler yanlış",
+      "body": "Sözler, topluluğun yürüttüğü ücretsiz bir veri tabanı olan <link>LRCLIB</link>’den gelir. Bazı şarkılar orada yok veya yalnızca farklı bir sürümü var. Hiçbir şey bulamadığında OnKey bir gün sonra tekrar sorar."
+    },
+    "busy": {
+      "title": "Mac’iniz yorgun görünüyor",
+      "intro": "Ağır kısım yeni bir şarkıyı öğrenmektir, bu yüzden OnKey bunu şarkı bittikten sonra düşük öncelikle yapar. Öğrenilmiş bir şarkıyı söylemek hafiftir. İki ayar yardımcı olur:",
+      "battery": "<strong>Söylerken pil tasarrufu yap</strong> (varsayılan olarak açık): pildeyken notalar saniyede 60 yerine 30 kez çizilir.",
+      "models": "<strong>Öğrenme modellerini hazır tut</strong> (yalnızca 32 GB veya daha fazla bellekle varsayılan olarak açık): kapatın; modeller (yaklaşık 1,5 GB) her şarkıdan sonra bellekten kaldırılır. 8 GB Mac’lerde gösterilmez, çünkü orada her zaman kaldırılır."
+    },
+    "logs": {
+      "title": "Günlükler nerede",
+      "where": "OnKey düz metin bir günlüğü <code>$TMPDIR/onkey.log</code> dosyasına yazar. Açmak için Terminal’de şunu çalıştırın:",
+      "records": "Ayrıca her günün günlüğünü ve her çalmanın kısa bir özetini (zamanlamalar, CPU, bellek, yapı ve Mac) veri klasörünün<code> records/</code> klasöründe 30 gün boyunca ve en fazla 200 MB olarak saklar. Ses veya söz içermezler ama çaldığınız şarkıların adlarını içerirler."
+    },
+    "report": {
+      "title": "Sorun bildir",
+      "choose": "Ayarlar’da <strong>Sorun bildir</strong>’i veya <strong>Yardım → Sorun Bildir…</strong>’i ya da bir denemenin sayfasında <strong>Bu denemeyle ilgili sorun bildir</strong>’i seçin.",
+      "zip": "OnKey zip dosyasına nelerin gireceğini gösterir: günlüğünün son üç günü ve her çalmanın özeti. Söz, ses, kayıt, kullanıcı adı veya ev klasörü yok. İsterseniz bir not ekleyin, sonra Mac’inize <strong>Kaydet</strong>. Hiçbir şey yüklenmez.",
+      "issue": "<strong>GitHub issue’su aç</strong>’ı seçin (veya <link>GitHub</link>’a gidin), ne olduğunu ve hangi şarkıda olduğunu yazın, isterseniz zip dosyasını ekleyin."
+    },
+    "more": "Daha fazla yanıt <link>SSS</link> sayfasında.",
+    "discord": "Veya <link>OnKey’in Discord’unda</link> sorun."
+  },
+  "docs": {
+    "diagrams": {
+      "legend": {
+        "label": "Çizimlerde kullanılan renkler",
+        "music": "Müzik",
+        "musicNote": "müzik uygulamanızın çaldığı",
+        "singer": "Şarkıcı",
+        "singerNote": "orijinal vokal, notaları ve sözleri",
+        "you": "Siz",
+        "youNote": "mikrofondan gelen sesiniz",
+        "score": "Puanınız",
+        "scoreNote": "ne kadar yakın olduğunuz"
+      },
+      "stepOf": "Adım {n} / {total}",
+      "phrase": "Hay- di be- nim- le söy- le",
+      "big": {
+        "label": "OnKey baştan sona nasıl çalışır",
+        "all": "Müzik girer, puanınız çıkar. Hepsi Mac’inizde.",
+        "steps": {
+          "play": "Müzik uygulamanız bir şarkı çalar",
+          "hears": "OnKey onu Mac’inizde duyar",
+          "learns": "İlk seferinde şarkıyı öğrenir",
+          "sing": "Notalara eşlik ederek söylersiniz",
+          "score": "Bir puan ve bir rapor alırsınız"
+        },
+        "onMac": "OnKey, Mac’inizde",
+        "musicApp": "Müzik uygulaması",
+        "musicAppSub": "Spotify, Müzik…",
+        "hears": "Duyar",
+        "hearsSub": "hiç kaydedilmez",
+        "learns": "Öğrenir",
+        "learnsSub": "notalar ve sözler",
+        "sing": "Söylersiniz",
+        "singSub": "mikrofonunuz",
+        "score": "Puanınız",
+        "scoreSub": "ve bir rapor"
+      },
+      "hearing": {
+        "label": "OnKey müziği nasıl duyar",
+        "steps": {
+          "apps": "Mac’inizde pek çok uygulama ses çıkarır",
+          "one": "OnKey yalnızca müzik uygulamasını dinler",
+          "mic": "Mikrofonunuz aynı saatle gelir",
+          "memory": "Çalarken çözümlenir, hiç kaydedilmez"
+        },
+        "musicApp": "Müzik uygulaması",
+        "browser": "Tarayıcı",
+        "messages": "Mesajlar",
+        "yourMic": "Mikrofonunuz",
+        "oneClock": "tek saat",
+        "disk": "disk",
+        "noMusicSaved": "müzik kaydedilmez",
+        "notHeard": "duyulmaz"
+      },
+      "learning": {
+        "label": "OnKey bir şarkıyı nasıl öğrenir",
+        "steps": {
+          "mixed": "Şarkı gelir: müzik ve şarkıcı karışık",
+          "separation": "Ayrıştırma şarkıcının sesini bellekte ayırır",
+          "pitch": "Perde takibi şarkıcıyı her 10 ms’de izler",
+          "notes": "Tutulan her perde bir nota çubuğu olur",
+          "lyrics": "Söz satırları, kelimelerin duyulduğu yere kayar",
+          "bars": "Her heceye bir çubuk: söylemeye hazır"
+        },
+        "singer": "şarkıcı",
+        "everythingElse": "geri kalan her şey",
+        "mix": "miks",
+        "timing": "zamanlama söz dosyasından, kulakla düzeltildi"
+      },
+      "placement": {
+        "label": "OnKey şarkıda yerinizi nasıl bulur",
+        "steps": {
+          "fingerprint": "Öğrenilen şarkı, müziğinin bir parmak izini saklar",
+          "slide": "Çalan müziğin birkaç saniyesi onun üzerinde kaydırılır",
+          "match": "Eşleştikleri yer, tam olarak bulunduğunuz yerdir",
+          "skip": "İleri atlayın, sizi yeniden bulur",
+          "listening": "Dinleme modu: Shazam öğrenmediği şarkıları adlandırır"
+        },
+        "fingerprint": "öğrenilen şarkının parmak izi (8 bant, her 10 ms)",
+        "match": "eşleşme",
+        "playingNow": "şu an çalan",
+        "skipped": "atladınız",
+        "shazam": "Shazam: “yeni bir şarkı”, 0:42",
+        "shazamNote": "yalnızca henüz öğrenilmemiş şarkılar için"
+      },
+      "echo": {
+        "label": "Yankı engelleme nasıl çalışır",
+        "steps": {
+          "speakers": "Kulaklık yokken mikrofon sizi ve şarkıyı duyar",
+          "copy": "OnKey şarkının tam olarak nasıl tınladığını bilir",
+          "learns": "O sesin mikrofona nasıl ulaştığını öğrenir",
+          "subtracts": "…ve onu çıkarır, geriye sesiniz kalır",
+          "headphones": "Kulaklıkla, çıkarılacak bir şey yoktur"
+        },
+        "speakers": "hoparlörler",
+        "headphones": "kulaklık",
+        "yourMic": "mikrofonunuz",
+        "whatsLeft": "geriye kalan: siz",
+        "micHears": "mikrofonun duyduğu",
+        "copy": "OnKey’in şarkı kopyası (aynı saat)",
+        "room": "odanın onu nasıl değiştirdiği: gecikme, yankı, tını",
+        "minusSong": "− şarkı"
+      },
+      "scoring": {
+        "label": "OnKey şarkınızı nasıl puanlar",
+        "steps": {
+          "compare": "Her 10 ms’de perdeniz şarkıcınınkiyle karşılaştırılır",
+          "credit": "Yarım tonun yarısı içinde kalmak tam puandır",
+          "octaves": "Bir oktav yukarı veya aşağı, notanın üstünde sayılır",
+          "slack": "Biraz erken veya geç olmak cezalandırılmaz",
+          "hit": "Her nota: süresinin yarısı kadar tuttuysanız tutturuldu",
+          "score": "Puan: doğruluğunuz, ne kadar söylediğinizle ölçeklenir"
+        },
+        "flat60": "60 sent pes: %90 puan",
+        "octaveLower": "bir oktav aşağı: hâlâ yeşil",
+        "slack80": "80 ms’ye kadar kayma: kabul",
+        "summary": "%86 doğru · %80’ini söylediniz"
+      },
+      "credit": {
+        "title": "Deneyin: ne kadar sapabilirsiniz?",
+        "aria": "Puan eğrisi. Notanız {n} sent {dir, select, flat {pes} other {tiz}} ve %{p} puan kazanıyor.",
+        "axis": "notadan sapma, sent (100 sent = 1 yarım ton)",
+        "credit": "%{p} puan",
+        "yourNote": "Notanız",
+        "onTheNote": "notanın üstünde",
+        "off": "{n}¢ {dir, select, flat {pes} other {tiz}}",
+        "octave": "Bir oktav aşağıdan söyleyin"
+      },
+      "coverage": {
+        "title": "Deneyin: şarkının ne kadarını söylemeniz gerekir?",
+        "aria": "Şarkıcının bölümünün %{p}’ini %86 doğrulukla söylemek {s} puan getirir.",
+        "axis": "şarkıcının bölümünden söylediğiniz pay",
+        "score": "%86 doğrulukta puan {s}",
+        "youSang": "Söylediğiniz"
+      },
+      "privacy": {
+        "label": "OnKey neyi saklar, neyi gönderir",
+        "all": "OnKey dinlediği müziği hiçbir zaman kaydetmez",
+        "steps": {
+          "kept": "Mac’inizde saklanan: OnKey’in öğrendikleri ve denemeleriniz",
+          "never": "Hiç kaydedilmeyen, gönderilmeyen: müziğin sesi",
+          "lookups": "Dışarı giden: sözler ve kapaklar için ada göre aramalar",
+          "shazam": "Yeni bir şarkıyı adlandırmak için: Shazam’a bir imza"
+        },
+        "yourMac": "Mac’iniz",
+        "kept": {
+          "notes": "Her şarkının notaları ve çubukları",
+          "fingerprint": "Parmak izi ve imzası",
+          "lyrics": "Sözler ve zamanlamaları",
+          "takes": "Denemeler: mikrofonunuz, puanlar, sözler"
+        },
+        "audio": "Müziğin sesi: çalarken çözümlenir,\nhiç kaydedilmez, gönderilmez",
+        "lrclib": "sanatçı, başlık, albüm,\nsüre: sözler için",
+        "itunes": "sanatçı, başlık: kapak",
+        "shazam": "müziğin bir imzası,\nmikrofon asla;\nkapatılabilir"
+      }
+    },
+    "howItWorks": {
+      "title": "OnKey nasıl çalışır",
+      "lede": "Yedi bölüm: büyük resimden tam sayılara kadar. Tüm çözümleme Mac’inizde yapılır.",
+      "exactNumbers": "Tam sayılar",
+      "big": {
+        "title": "1. Büyük resim",
+        "steps": {
+          "play": "Müziği zaten yaptığınız gibi <strong>Spotify, Apple Music veya YouTube</strong>’da çalarsınız. OnKey kendisi hiçbir şey çalmaz.",
+          "hears": "OnKey <strong>müzik uygulamasını</strong> macOS üzerinden <wave></wave> duyar. Ses çalarken çözümlenir ve hiç kaydedilmez.",
+          "learns": "Bir şarkının ilk çalınışından sonra OnKey onu <strong>öğrenir</strong>: şarkıcının sesini ayırır <separate></separate>, notaları çıkarır ve sözleri hizalar.",
+          "sing": "Bir sonraki çalmadan itibaren <strong>nota çubuklarının</strong> <lane></lane> size doğru geldiğini ve sesinizin <mic></mic> üstlerine çizildiğini görürsünüz.",
+          "score": "Şarkı bitince bir <strong>puan</strong> <score></score>, her satır için bir rapor ve tiz mi pes mi söyleme eğiliminde olduğunuzu öğrenirsiniz."
+        },
+        "hood": {
+          "app": "Bir Mac uygulaması: React arayüzlü bir Tauri penceresi içinde bir Rust motoru (ses, modeller, puanlama). Her şeyi <engine>engine.rs</engine> çalıştırır.",
+          "local": "Her şey Mac’inizde olur. Modeller ONNX Runtime ile çalışır; işe yaradığı yerde Core ML (GPU ve Neural Engine) üzerinde.",
+          "frames": "Ses 16 kHz’de, 10 ms’lik çerçevelerde çözümlenir; aşağıdaki her sayının birimi budur (<dsp>dsp.rs</dsp>, <code>FRAME_S</code>).",
+          "learned": "Bir şarkı, %70’i duyulduğunda öğrenilmiş sayılır (<store>store.rs</store> içinde <code>READY_COVERAGE</code>). Kısmen duyulan bir şarkı sonraki çalmalarda öğrenmeye devam eder."
+        }
+      },
+      "hearing": {
+        "title": "2. Müziği duymak",
+        "steps": {
+          "apps": "Mac’iniz aynı anda pek çok uygulamadan ses çalar.",
+          "one": "OnKey macOS’ten (izninizle) <strong>tek bir uygulamanın</strong>, müzik uygulamasının sesini ister ve geri kalanını yok sayar.",
+          "mic": "<strong>Mikrofonunuz</strong> <mic></mic> yanında, <strong>aynı saatle</strong> kaydedilir; böylece OnKey şarkının hangi anına karşı söylediğinizi bilir.",
+          "memory": "Müzik <strong>çalarken</strong>, bellekte çözümlenir (öğrenilen bir şarkı bitene kadar bellekte kalır). Hiçbir zaman diske yazılmaz, yüklenmez veya paylaşılmaz."
+        },
+        "hood": {
+          "capture": "Yakalama, Core Audio işlem muslukları (macOS 14.2+) ile yapılır; mikrofonunuzla birlikte, çıkış aygıtınızın kendi hızında (genellikle 48 kHz), tek saatte (<captureSwift>capture.swift</captureSwift>, <captureRs>capture.rs</captureRs>).",
+          "tapped": "Yalnızca müzik uygulamasının işlemleri dinlenir; paket kimliğine göre seçilir (<source>source.rs</source>).",
+          "resampled": "Çözümleme için her şey 16 kHz mono’ya yeniden örneklenir. Yayın sürümleri müziğin sesini hiçbir yere yazmaz. Her denemeyle yalnızca kendi sesiniz saklanır.",
+          "permissions": "İzinler: sistem sesi kaydı ve mikrofon. Spotify ve Müzik’i yönetmek (ne çaldığı ve nerede olduğu, “Yeniden söyle”, atlama ve duraklatma) kurulumda istenen ayrı bir izindir; “Yalnızca dinle” bunu kapatır. YouTube sekmesini yönetme, siz açmadıkça kapalıdır."
+        }
+      },
+      "learning": {
+        "title": "3. Bir şarkıyı öğrenmek",
+        "steps": {
+          "mixed": "Şarkı OnKey’e tek bir ses olarak ulaşır: <strong>şarkıcı ve grup birbirine karışmış</strong>.",
+          "separation": "Şarkı bittikten sonra bir <strong>ayrıştırma</strong> modeli <separate></separate> solisti miksten parça parça çıkarır. (Bunu siz söylerken yapmak notaları kekelettirirdi.)",
+          "pitch": "Bir <strong>perde izleyici</strong> şarkıcının sesini <strong>her 10 ms’de</strong> takip eder. Bu, kaymalar ve vibrato dahil tam ezgiyi veren kıvrımlı bir çizgi verir.",
+          "notes": "Bir nota modeli bu çizgiyi <strong>notalara</strong> çevirir; her birinin nerede başlayıp bittiğiyle birlikte.",
+          "lyrics": "<strong>Sözler</strong> LRCLIB’den kaba zamanlamalarla gelir. Bir konuşma modeli şarkıcıyı dinler ve her satırı <strong>kelimelerinin söylendiği yere</strong> taşır. İlk çalmada bunu yaklaşık ilk bir buçuk dakika için yapar, böylece o satırlar da zamanında olur.",
+          "bars": "Her satır hecelere bölünür ve her hece kendi notasında kendi <strong>çubuğunu</strong> <lane></lane> alır. Eşlik ettiğiniz şerit budur."
+        },
+        "hood": {
+          "separation": "<strong>Ayrıştırma:</strong> UVR MDX-Net Karaoke 2 (ONNX, Core ML üzerinde), 20 sn’lik parçalar üzerinde, iki yanda 2 sn bağlamla çalıştırılır. Müzik şarkı çalarken bellekte tutulur ve şarkı bitince düşük öncelikle ayrıştırılır. Aynı anda tek şarkı öğrenilir. Diğerleri sıralarını bekler (“Öğrenmeyi bekliyor”) ve öğrenilmiş bir şarkıyı pencere açıkken söylerken öğrenme duraklar (<learn>learn.rs</learn>, <mdx>mdx.rs</mdx>).",
+          "firstPlay": "<strong>İlk çalma:</strong> ilk 90 sn’ye kadar olan kısım çalarken, 5 sn’lik parçalar hâlinde, söz satırları şarkıcıyla hizalanana kadar ayrıştırılır. Geri kalanı şarkının bitmesini bekler. 8 GB Mac’lerde ve başka bir şarkı öğrenilirken bu adım atlanır. Benim arşivimde ilk çalma satırlarının %60’ı bu yolla şarkının 0,3 sn’si içindeydi; LRCLIB’in kendi zamanlarında bu oran %13.",
+          "memory": "<strong>Bellek:</strong> 8 GB’da aynı anda tek model yüklenir ve adımı bitince boşaltılır. 32 GB’ın altında öğrenme modelleri (yaklaşık 1,5 GB), Ayarlar → Öğrenme modellerini hazır tut açık değilse, bir şarkı öğrenilince boşaltılır (<lowmem>lowmem.rs</lowmem>).",
+          "pitch": "<strong>Perde:</strong> ayrıştırılmış vokal üzerinde CREPE “full”, 16 kHz, 10 ms adım, 1024 örneklik pencereler, 50–1100 Hz. Güveni 0,45’in üzerindeyse çerçeve söylenmiş sayılır (<pitch>pitch.rs</pitch>).",
+          "notes": "<strong>Notalar:</strong> GAME (OpenVPI) vokalden notaları çıkarır. Her hece çubuğu notasını alır; altında söylenen nota olmayan çubuklar atılır (<game>game.rs</game>, <syllables>syllables.rs</syllables>).",
+          "lyrics": "<strong>Sözler:</strong> LRCLIB’den eşzamanlı sözler (sanatçı, başlık, albüm ve süreye göre, bir şey bulunamazsa ada göre aranır). Satırlar, şarkının tüm kelimeleri wav2vec 2.0 (CTC) ile hizalanarak yeniden yerleştirilir ve CMU telaffuz sözlüğüyle hecelere bölünür (<lyrics>lyrics.rs</lyrics>, <ctc>ctc.rs</ctc>).",
+          "measured": "<strong>Ölçüm:</strong> elle işaretlenmiş 18 şarkıda söylenen notaların %98’i bir çubukla kaplanıyor, %92’si doğru notada, %73’ü 0,1 sn içinde başlıyor. Söz satırlarının %94’ü 0,3 sn içinde.",
+          "kept": "<strong>Şarkıyla saklananlar:</strong> perde çizgisi, çubuklar, bir ritim parmak izi, bir Shazam imzası ve sözlerin zamanlaması, ayrıca o zamanların yapıldığı LRCLIB kaydı (Mac’te saklanır, hiç yüklenmez); böylece her çalmada aynı kelimeler aynı çubuklarda görünür. Müzik ve ayrıştırılmış vokal saklanmaz."
+        }
+      },
+      "placement": {
+        "title": "4. Nerede olduğunuzu bilmek",
+        "steps": {
+          "fingerprint": "Bir şarkı öğrenilirken OnKey bir <strong>parmak izi</strong> <fingerprint></fingerprint> de saklar: her frekans bandında sesin her 10 ms’de ne kadar değiştiği.",
+          "slide": "Müzik uygulamaları şarkının neresinde olduğunu yalnızca kabaca bildirir; bu yüzden OnKey <strong>duyduğunun birkaç saniyesini</strong> parmak izi üzerinde kaydırır.",
+          "match": "Oturdukları yer <strong>tam olarak bulunduğunuz yerdir</strong>. O ana kadar notalar soluktur (“Şarkıyla hizalanıyor…”). Genellikle şarkının ilk birkaç saniyesinde belirginleşirler.",
+          "skip": "Atlayın, ileri sarın veya baştan alın; birkaç saniye içinde <strong>sizi yeniden bulur</strong>. OnKey birkaç olası yeri aklında tutar ve notaları yalnızca müzik açıkça onaylayınca taşır.",
+          "listening": "Bu <strong>dinleme modu</strong>. Daha önce söylediğiniz şarkılar Mac’inizde tanınır, yenilerini Shazam adlandırır; böylece OnKey uygulamayı yönetmeden müziği takip edebilir. Spotify ve Apple Music’i yönetmek tam konum verir ve varsayılan olarak açıktır (“Yalnızca dinle” kapatır). YouTube yönetimi isteğe bağlıdır."
+        },
+        "hood": {
+          "fingerprint": "<strong>Parmak izi:</strong> yaklaşık 60 Hz ile 7 kHz arasındaki 8 bandın her birinde sesin her 10 ms’de ne kadar yükseldiği (<dsp>dsp.rs</dsp> içinde <code>FP_BANDS</code>).",
+          "placement": "<strong>Yerleştirme:</strong> her çalmayı tek bir izleyici yerleştirir (<tracker>tracker.rs</tracker>; Arzt ve Widmer’in “any-time” müzik izleyicisinden uyarlandı). Her kontrol, müziğin son birkaç saniyesini (en fazla 8 sn) parmak iziyle 10 ms’lik çerçeve hassasiyetinde eşleştirir ve en iyi birkaç yeri ağırlıklı aday olarak tutar; böylece bir vuruş kaymış eşleşen tekrarlı bir giriş onu yanıltmaz. Müzik uygulamasının konumu ve dinlemenin yanıtları yalnızca yakınlarındaki adayları hafifçe iter. Gösterilen yer, başka bir aday yaklaşık 4 sn’lik müzik boyunca açıkça öne geçtiğinde ona taşınır.",
+          "measured": "<strong>Ölçüm:</strong> 153 gerçek çalma, müzik uygulamasının konumu yanlışken (0,73 sn veya 1,7 sn kaymış ya da 3,5 sn uzağa düşen bir atlama) yeniden oynatıldı; gösterilen yer, zamanın yaklaşık %91’inde müziğin 0,1 sn’si içindeydi. Önceki kurallar %75, %0 ve %0 yapabiliyordu.",
+          "listening": "<strong>Dinleme modu</strong> (her zaman açık, <listen>listen.rs</listen>, <recognize>recognize.rs</recognize>): 3 sn ses sonra sırayla OnKey’in kendi öğrenilmiş şarkı kataloğuna (ShazamKit, Mac’te, yaklaşık 10 ms hassasiyetle), parmak izlerine ve sonra Shazam’ın kataloğuna sorar. Öğrenilmiş şarkılar için her 3 sn’de, yalnızca Shazam’ın bildiği şarkılar için yaklaşık her 12 sn’de yeniden kontrol eder. Shazam, müzik uygulamasının sesinin en fazla 5 sn’lik bir imzasını alır; mikrofonu asla. Yeni bir Shazam yanıtı, aynı fikirde ikinci bir yanıt gerektirir. Duraklama, 0,15 sn’lik dijital sessizliktir.",
+          "shazamTest": "Shazam kataloğunun ilk testi: 30 test şarkısının 25’ini ilk 5 sn’lerinden, ortanca 0,24 sn’de adlandırdı."
+        }
+      },
+      "you": {
+        "title": "5. Sizi duymak",
+        "steps": {
+          "speakers": "Dizüstü hoparlörlerinde mikrofonunuz <strong>sizi ve şarkıyı</strong>, şarkıcı dahil, duyar. Kendi hâline bırakılsa şarkıcı sizin yerinize puan toplardı.",
+          "copy": "Ama OnKey’in şarkının kendi kopyası <wave></wave> var; mikrofonla aynı saatte.",
+          "learns": "<strong>O sesin mikrofona nasıl ulaştığını öğrenir</strong>: gecikme, odanın yankısı ve hoparlörlerinizin tınısıyla. Görüntülü aramalar da aynısını yapar.",
+          "subtracts": "Sonra şarkıya ilişkin tahminini <strong>çıkarır</strong> <echo></echo>; geriye kalan <strong>sesinizdir</strong>.",
+          "headphones": "<strong>Kulaklıkla</strong> mikrofon şarkıyı duymaz, dolayısıyla çıkarılacak bir şey yoktur. En güvenilir düzen hâlâ budur."
+        },
+        "hood": {
+          "livePitch": "<strong>Canlı perde:</strong> yankısı engellenmiş mikrofonunuz üzerinde CREPE “tiny”, her 10 ms’de, Core ML’nin CPU çekirdeklerinde: perde noktası sesinizin 2–4 ms gerisindedir ve öğrenilmiş bir şarkıyı söylemek benim Mac’imde OnKey’e bir CPU çekirdeğinin %15–19’una mal olur (<pitch>pitch.rs</pitch>).",
+          "canceller": "<strong>Yankı engelleyici:</strong> bölümlenmiş frekans alanlı uyarlanır bir filtre: 16 kHz’de 256 örneklik 16 bölüm, yani 256 ms yankı modeller (<bleed>bleed.rs</bleed>). Bazı çıkışlar yankıyı bundan daha geç verir; bu yüzden her 2 sn’de yankının gecikmesi ölçülür (GCC-PHAT, 800 ms’ye kadar) ve şarkı filtreye o kadar geç verilir. Yalnızca şarkı mikrofona açıkça ulaşırken uyarlanır ve çıkışı mikrofondan daha yüksek çıkarsa mikrofon olduğu gibi geçirilir.",
+          "measured": "<strong>Ölçüm:</strong> yerleşik MacBook hoparlörleri (yankı yaklaşık 24 ms geç): 20 dB veya daha fazlası kaldırıldı. Yankısı yaklaşık 290 ms geç gelen harici hoparlörler: 8–14 dB; gecikme ölçülmeden önce bu 1–2 dB idi.",
+          "limit": "<strong>Sınır:</strong> 8–14 dB, yüksek sesli bir şarkının bir kısmını mikrofonda bırakır ve bu, şarkı söyleme sanılabilir. Kulaklık daha güvenilirdir."
+        }
+      },
+      "scoring": {
+        "title": "6. Puanlama",
+        "steps": {
+          "compare": "Siz ve şarkıcının birlikte söylediği her 10 ms’de perdeniz, şarkıcının çizgisi ve nota çubuğundan <strong>hangisine daha yakınsanız</strong> onunla karşılaştırılır.",
+          "credit": "<strong>50 sent</strong> (yarım tonun yarısı) içinde tam puan alırsınız. Puan 150 sentte sıfıra iner.",
+          "octaves": "<strong>Oktavlar affedilir</strong>, böylece kendi aralığınızda söyleyebilirsiniz.",
+          "slack": "Her yarım saniye, şarkıcıyla hizalanmak için <strong>80 ms</strong>’ye kadar kayabilir; bu yüzden biraz erken veya geç olmak size puan kaybettirmez.",
+          "hit": "Her nota, süresinin yarısı boyunca bir yarım ton içinde tutarsanız <strong>tutturuldu</strong> sayılır. İlk 80 ms’si sayılmaz: şarkıcılar notaya kayarak girer.",
+          "score": "Puanınız <score></score>, <strong>doğruluğunuzun</strong> <strong>şarkıcının bölümünün ne kadarını söylediğinizle</strong> ölçeklenmiş hâlidir; bu yüzden tek bir iyi satır iyi puan getirmez."
+        },
+        "lenient": "Puanlama varsayılan olarak bilerek yumuşaktır; benim gibi yeni başlayanlara göre ayarlandı. İyi şarkıcılar Ayarlar’dan daha sıkı bir düzey, Dengeli veya Pro, seçebilir (ikisinde de vibrato puan kırmaz).",
+        "explained": "Raporunuzdaki sayılar <link>Puanlama nasıl işler</link> sayfasında açıklanıyor.",
+        "hood": {
+          "credit": "<strong>Puan:</strong> <code>clamp((150 − |error|) / 100, 0, 1)</code>; sent cinsinden hata, oktavlar sayılmasın diye ±600’e katlanır (<dsp>dsp.rs</dsp> içinde <code>credit</code>, <code>fold</code>).",
+          "slack": "<strong>Zamanlama payı:</strong> her 0,5 sn’lik pencere, sizi en iyi hizalayan ±80 ms (<code>TOL</code> = 8 çerçeve) içindeki tek kaymayı alır (<code>tolerant_error</code>).",
+          "delay": "<strong>Gecikmeniz:</strong> şarkıdan sonra, 0,3 sn erkenden 1,5 sn geçe kadar yapılan bir arama en iyi oturan gecikmeyi bulur (<analysis>analysis.rs</analysis>).",
+          "notesHit": "<strong>Tutturulan notalar:</strong> notanın en az yarısı boyunca, ilk 80 ms’si sayılmadan, 100 sent içinde tutulanlar. 0,15 sn’den kısa notalar sayılmaz.",
+          "score": "<strong>Puan:</strong> <code>100 × accuracy × (0.3 × min(1, sung / 0.1) + 0.7 × min(1, sung / 0.4))</code>: şarkıcının bölümünün %40’ı söylendiğinde tam çarpan.",
+          "experts": "<strong>Uzmanlarla karşılaştırma:</strong> 20 değerlendirilmiş kayıtta tutturulan notalar uzman sıralamasıyla 0,77, puan 0,61 uyuşuyor (uzmanlar birbiriyle 0,88 uyuşuyor)."
+        }
+      },
+      "privacy": {
+        "title": "7. Gizlilik",
+        "steps": {
+          "kept": "OnKey Mac’inizde her şarkı hakkında <strong>öğrendiklerini</strong> ve her deneme için <strong>mikrofonunuzun bir kaydını</strong> <lock></lock> (dakikada yaklaşık 0,5 MB), puanlarınızı ve söylediğiniz sözleri saklar; böylece geri dinleyebilirsiniz. Bir denemeyi silin, Çöp Sepeti’ne gider.",
+          "never": "<strong>Müziğin sesini veya ayrıştırılmış vokali hiçbir zaman kaydetmez, göndermez</strong>. (Müzik hoparlördeyse mikrofon kaydınızda bir kısmı bulunur.)",
+          "lookups": "Sözleri bulmak için şarkının <strong>sanatçısını, başlığını, albümünü ve süresini</strong> ücretsiz, topluluk tarafından yürütülen bir söz veritabanı olan LRCLIB’e gönderir (Sözleri göster kapalı değilse). Kapaklar için Apple’ın iTunes Search’üne sanatçı ve başlıkla sorar.",
+          "shazam": "Öğrenmediği bir şarkıyı adlandırmak için <strong>dinleme modu</strong>, Shazam’a müzik uygulamasının sesinin en fazla 5 saniyesinin bir <strong>imzasını</strong> gönderir (sesin kendisini değil, mikrofonunuzu asla). Daha önce söylediğiniz şarkılar Mac’inizde tanınır; onlar için Shazam’a hiçbir şey gitmez. Shazam’a yalnızca Spotify veya Apple Music ne çaldığını söylemediğinde sorulur ve Ayarlar’dan kapatabilirsiniz."
+        },
+        "hood": {
+          "stored": "<code>{dataDir}</code> içinde saklananlar: <code>songs/</code> (perde çizgisi, çubuklar, parmak izi, söz zamanlamaları ve bir Shazam imzası; iki modda da öğrenilen her şarkı için kaydedilir), <code>takes/</code> (<code>mic.m4a</code>: mikrofonunuz, AAC mono yaklaşık 64 kbps, dakikada yaklaşık 0,5 MB, toplamda 2 GB’a kadar tutulur; ayrıca puanlar ve söz satırlarıyla rapor) ve <code>records/</code> (günlükler ve her çalmanın yalnızca sayılardan oluşan bir özeti; 30 gün, en fazla 200 MB). Bir şarkıyı veya denemeyi silmek onu Çöp Sepeti’ne taşır.",
+          "network": "Ağ: henüz öğrenilmemiş şarkılar için Shazam (dinleme modu, kapatılabilir), LRCLIB söz aramaları (Sözleri göster kapalı değilse), kapaklar için iTunes Search, tanınan bir şarkının süresi için iTunes Lookup, kapak görselleri (Apple’dan veya YouTube’un küçük resmi) ve güncellemeler için GitHub Releases’e günlük bir kontrol. Hesap yok, analitik yok, bana ait bir sunucu yok.",
+          "more": "Ayrıntılar <link>Gizlilik ve hukuki bilgiler</link> sayfasında."
+        }
+      }
+    },
+    "scoring": {
+      "title": "Puanlama nasıl işler",
+      "lede": "Her sayı ne anlama gelir, nasıl hesaplanır ve nerede yetersiz kalır.",
+      "rules": {
+        "title": "Kurallar",
+        "every": "<strong>Her 10 ms sayılır.</strong> Siz ve şarkıcı birlikte söylerken perdeniz, şarkıcının perde çizgisi ve nota çubuğundan hangisine daha yakınsanız onunla karşılaştırılır.",
+        "credit": "<strong>Perde puanı.</strong> 50 sent (yarım tonun yarısı) içinde tam puan alırsınız. Sonra 150 sentte sıfıra inecek şekilde düz bir çizgiyle düşer.",
+        "octaves": "<strong>Oktavlar affedilir.</strong> Şarkıcının bir oktav üstü veya altı, notanın üstünde sayılır; böylece kendi aralığınızda söyleyebilirsiniz.",
+        "slack": "<strong>Zamanlama payı.</strong> Her yarım saniye, şarkıcıyla hizalanmak için 80 ms’ye kadar kayabilir; biraz erken veya geç olmak size hiçbir şey kaybettirmez.",
+        "delay": "<strong>Gecikmeniz sizin için bulunur.</strong> Şarkıdan sonra OnKey 0,3 sn erkenden 1,5 sn geçe kadar gecikmeleri dener ve sizi en iyi hizalayanı kullanır (şarkıyı biraz geç duyarsınız).",
+        "relaxed": "Bunlar varsayılan düzey olan <strong>Rahat</strong>’ın kuralları. Yeni başlayanlar (ben de öyleyim) ve çocuklar için bilerek hoşgörülü; iyi söylerseniz yüksek puan alırsınız."
+      },
+      "levels": {
+        "title": "Düzeyler",
+        "intro": "Rahat fazla cömert geliyorsa Ayarlar → Puanlama’dan daha sıkı bir düzey seçin. Bir sonraki denemenizden itibaren geçerli olur ve her deneme puanlandığı düzeyi korur: Rahat dışındaki denemeler küçük bir etiket gösterir ve bir şarkının en iyi puanı yalnızca aynı düzeydeki denemeleri karşılaştırır.",
+        "level": "Düzey",
+        "fullWithin": "Tam puan sınırı",
+        "noneFrom": "Sıfır puan sınırı",
+        "slack": "Zamanlama payı",
+        "relaxed": "<strong>Rahat</strong> (varsayılan)",
+        "steady": "<strong>Dengeli</strong>",
+        "pro": "<strong>Pro</strong>",
+        "cents": "{n} sent",
+        "ms": "{n} ms",
+        "vibrato": "<strong>Vibrato cezalandırılmaz.</strong> Dengeli ve Pro’da perdeniz, 0,17 sn üzerinden ortalaması alınan salınımının ortasına göre değerlendirilir (saniyede 5–7 kez salınan tipik bir vibratonun yaklaşık bir döngüsü). Doğru notanın etrafındaki düzgün bir vibrato tam puana yakın alır; tiz veya pes tutulan bir nota ise yine tiz veya pestir. Rahat’ta her zamanki gibi tam perdeniz kullanılır ve geniş bir vibrato (±80 sent) puanının yaklaşık onda birini kaybeder. Oktavlar her düzeyde affedilir."
+      },
+      "report": {
+        "title": "Raporunuzdaki sayılar",
+        "number": "Sayı",
+        "meaning": "Anlamı",
+        "score": "<strong>Puan</strong> (0–100)",
+        "scoreMeaning": "Ortalama perde puanınızın, şarkıcının bölümünün ne kadarını söylediğinizle ölçeklenmiş hâli (aşağıya bakın).",
+        "accuracy": "<strong>Perde doğruluğu</strong>",
+        "accuracyMeaning": "Söylediğiniz sürede ortalama perde puanınız.",
+        "notesHit": "<strong>Tutturulan notalar</strong>",
+        "notesHitMeaning": "Süresinin en az yarısı boyunca, aynı 80 ms payla, bir yarım ton içinde tuttuğunuz notalar. Şarkıcılar notaya kayarak girdiği için her notanın ilk 80 ms’si yok sayılır; 0,15 sn’den kısa notalar sayılmaz.",
+        "sangAlong": "<strong>Eşlik</strong>",
+        "sangAlongMeaning": "Şarkıcının bölümünün, sizin de söylediğiniz payı.",
+        "tendency": "<strong>Eğilim</strong>",
+        "tendencyMeaning": "Tiz mi pes mi kalma eğiliminde olduğunuz, sent olarak (hatalarınızın ortancası).",
+        "latency": "<strong>Gecikme</strong>",
+        "latencyMeaning": "OnKey’in bulduğu ve hesaba kattığı gecikme.",
+        "sangTitle": "“Eşlik” puanı nasıl etkiler",
+        "sangBody": "Puan = 100 × perde doğruluğu × ne kadar söylediğinize bağlı bir çarpan. Şarkıcının bölümünün onda birini söylemek bu çarpanın %30’unu kazandırır; geri kalanı %40’ını söyleyene kadar birikir (vokalin bir kısmı kimsenin söylemediği arka vokaller veya doğaçlamalardır). Bu yüzden tek bir iyi satır iyi puan getirmez ve yalnızca dinleyen biri neredeyse sıfır alır. Canlı puan da aynı formülü kullanır."
+      },
+      "checks": {
+        "title": "Puanın doğru olduğunu nasıl kontrol ediyorum",
+        "intro": "OnKey’deki her değişiklik kalıcı olmadan önce ölçülür. Nota çubukları elle işaretlenmiş notalarla, söz zamanlaması elle zamanlanmış sözlerle, puan ise benzetimli şarkıcılarla (kusursuz, titrek, tiz ve şarkı mikrofona sızarken sessiz) ve siz gibi puanlanan orijinal şarkıcılarla karşılaştırılır.",
+        "check": "Kontrol",
+        "result": "Sonuç",
+        "covered": "Bir nota çubuğunun kapladığı elle işaretlenmiş notalar",
+        "rightNote": "…çubuğu doğru notada olanlar",
+        "starts": "…çubuğu 0,1 sn içinde başlayanlar",
+        "noNote": "Altında söylenen nota olmayan çubuklar",
+        "lyricLines": "0,3 sn içine yerleştirilen söz satırları",
+        "expertsTitle": "Puan uzmanlarla uyuşuyor mu?",
+        "expertsIntro": "Müzik uzmanlarının zaten değerlendirdiği, zayıftan profesyonele 20 şarkı söyleme kaydını (PESnQ araştırma seti) OnKey’in aynı sırayla sıralayıp sıralamadığını görmek için puanladım. 1’in tam uyum olduğu bir ölçekte:",
+        "measure": "Ölçüt",
+        "agreement": "Uzmanlarla uyum",
+        "expertsEachOther": "Uzmanların birbiriyle uyumu (gerçekçi tavan)",
+        "notesHit": "OnKey’in tutturulan notaları",
+        "score": "OnKey’in puanı",
+        "expertsOutro": "Tutturulan notalar uzmanları zaten iyi takip ediyor; puan ona daha çok yaslanabilir. Yalnızca 20 kayıt, eşlik olmadan söylenmiş; bu yüzden bunu kanıt değil, iyi bir işaret olarak alın."
+      },
+      "limits": {
+        "title": "Sınırlar",
+        "rap": "<strong>Rap veya konuşma ağırlıklı şarkılar:</strong> perde puanlaması neredeyse hiç uygulanamaz.",
+        "harmonies": "<strong>Armoniler ve korolar:</strong> hangi sesin melodi olduğu her zaman belli değildir; bazı çubuklar bir armoniyi izleyebilir.",
+        "speakers": "<strong>Kulaklıksız söylemek:</strong> yankı engelleme MacBook hoparlörlerinde şarkının 20 dB veya daha fazlasını, harici hoparlörlerde 8–14 dB’ini kaldırır. Yüksek sesli bir şarkıdan geri kalan, şarkı söyleme sanılabilir; bu yüzden kulaklık daha güvenilirdir.",
+        "firstPlay": "<strong>İlk çalmada</strong> nota yoktur. Notalar ikinci çalmadan itibaren görünür."
+      }
+    },
+    "privacy": {
+      "title": "Gizlilik ve hukuki bilgiler",
+      "translationNote": "Bu bir çeviridir. <link>İngilizce sürümden</link> farklıysa İngilizce sürüm geçerlidir.",
+      "lede": "OnKey Mac’inizde çalışır ve dinlediği müziği hiçbir zaman kaydetmez. Kayıtlarınız ve öğrenilen şarkılar Mac’inizde kalır. Bu sayfa sakladığı ve gönderdiği her şeyi listeler.",
+      "keeps": {
+        "title": "OnKey’in Mac’inizde sakladıkları",
+        "intro": "Her şey <code>{dataDir}</code> içinde.",
+        "songs": "<strong>Öğrenilen şarkılar</strong> (<code>songs/</code>): şarkıcının perde çizgisi ve nota çubukları, müziğin bir ritim parmak izi ve Shazam imzası (şarkıyı tanımak ve yerinizi bulmak için), her söz satırının ne zaman başladığı ve her kelimenin ne zaman söylendiğinin duyulduğu (yalnızca zamanlar, kelimeler değil).",
+        "lyrics": "<strong>Sözler</strong> (<code>lrclib/</code>): LRCLIB’in yanıtları, 30 güne kadar saklanır (yanıt yoksa bir gün). Öğrenilen bir şarkı, zamanlamalarının yapıldığı sözleri saklar; böylece her çalmada aynı kelimeler görünür. Sözler hiçbir zaman yüklenmez. Ayarlar → “Sözleri göster” kapalıyken saklanan sözler gizlenir (silinmez) ve yenisi alınmaz.",
+        "takes": "<strong>Denemeler</strong> (<code>takes/</code>): geri dinleyebilmeniz için <strong>mikrofonunuzun bir kaydı</strong> (<code>mic.m4a</code>, dakikada yaklaşık 0,5 MB), puanlarınız ve sözlerle zamanlarını içeren rapor. Bir deneme yalnızca şarkıcının bölümünün en az %10’una eşlik ettiyseniz kaydedilir. Müzik hoparlördeyse bir kısmı kayıtta da bulunur. Kayıtlar toplamda 2 GB’a kadar tutulur. Bunun ötesinde önce en eskiler gider; ancak favori bir şarkının veya bir şarkının en iyi denemesi asla.",
+        "records": "<strong>Kayıtlar</strong> (<code>records/</code>), sorunları teşhis etmek için: günde bir günlük dosyası ve her çalmanın bir özeti (zamanlamalar, CPU, bellek, yapı ve Mac). Bunlar sayılar ve kimliklerdir; ses veya söz içermez, ancak günlük çaldığınız şarkıların adlarını yazar. 30 gün, en fazla 200 MB saklanır. Mac’inizden yalnızca siz bir issue’ya rapor eklerseniz çıkar.",
+        "settings": "Ayarlarınız, bir YouTube videosu için yazdığınız sanatçı ve başlık, başlangıç şarkılarının kapakları ve derlenmiş modellerin bir önbelleği.",
+        "remove": "Arşiv’de bir şarkıyı unutun veya Geçmiş’te bir denemeyi silin; dosyaları Çöp Sepeti’ne gider. Her şeyi kaldırmak için OnKey’den çıkın ve yukarıdaki klasörü silin."
+      },
+      "never": {
+        "title": "OnKey’in hiçbir zaman saklamadıkları",
+        "body": "Müziğin sesi veya ondan ayrıştırılan şarkıcı sesi. Çalarken bellekte çözümlenir; hiçbir zaman kaydedilmez, yüklenmez, paylaşılmaz veya dışa aktarılmaz. (Müzik hoparlördeyken söylediyseniz mikrofon kaydınız onu içerebilir.)"
+      },
+      "leaves": {
+        "title": "Mac’inizden çıkanlar",
+        "sentTo": "Gönderilen yer",
+        "what": "Ne ve ne zaman",
+        "shazam": "<strong>Shazam</strong> (Apple, ShazamKit üzerinden)",
+        "shazamWhat": "<strong>Müzik uygulamasının</strong> sesinin en fazla 5 saniyesinin bir imzası (mikrofonunuz asla), sesin kendisi değil. Yalnızca OnKey’in öğrenmediği bir şarkıyı, hiçbir müzik uygulaması ne çaldığını söylemiyorken adlandırmak için gönderilir: YouTube, diğer uygulamalar veya Yalnızca dinle. Spotify ve Apple Music kendi şarkılarını adlandırır; daha önce söylediğiniz şarkılar hiçbir şey gönderilmeden Mac’inizde tanınır. Ayarlar → “Yeni şarkıları adlandırmak için Shazam kullan” bunu kapatır; o zaman yalnızca zaten öğrenilmiş şarkılar tanınır.",
+        "lrclibWhat": "Bir şarkı başlarken eşzamanlı sözleri almak için şarkının sanatçısı, başlığı, albümü ve süresi; bir şey bulunamazsa ada göre bir arama. Yanıtlar Mac’inizde 30 güne kadar saklanır (yanıt yoksa bir gün); böylece yeniden çalınan bir şarkı yeniden sorulmaz. LRCLIB, ücretsiz ve topluluk tarafından yürütülen bir söz veritabanıdır. “Sözleri göster” kapalıyken hiçbir şey gönderilmez.",
+        "itunes": "<strong>iTunes Search ve Lookup</strong> (Apple)",
+        "itunesWhat": "Albüm kapağını bulmak için sanatçı ve başlık (kapak, Apple Music sayfasına bağlanır); Spotify’dan öğrenilen eski şarkılar için de. Ayrıca Shazam’ın döndürdüğü Apple Music kimliği, şarkının süresi ve albümü için. “Bunları deneyin” başlangıç kapakları birer kez, aralıklı olarak aranır ve saklanır; sonraki ziyaretler hiçbir şey göndermez.",
+        "covers": "<strong>Kapak görselleri</strong>",
+        "coversWhat": "Bir kapak gösterilirken Spotify’ın, Apple’ın veya YouTube’un görsel sunucularına sıradan görsel istekleri.",
+        "githubWhat": "Açılıştan bir dakika sonra ve ardından günde bir kez OnKey’in daha yeni bir sürümü için bir kontrol, varsa indirme. Ayarlar’da <strong>Güncellemeleri otomatik denetle</strong> kapalıysa yalnızca <strong>Şimdi denetle</strong>’ye bastığınızda kontrol eder.",
+        "nothingElse": "Başka hiçbir şey dışarı çıkmaz: hesap yok, analitik yok, çökme raporlaması yok, bana ait bir sunucu yok. Kayıtlarınız hiçbir zaman yüklenmez. “Sorun bildir”, sayılar ve günlüklerden oluşan zip dosyasında ne olduğunu size gösterir, Mac’inize kaydeder ve hiçbir şey göndermez. Bir GitHub issue’suna eklemek sizin seçiminizdir. Modeller uygulamanın içinde gelir, dolayısıyla hiçbir zaman indirilmez.",
+        "website": "Bu web sitesi (uygulama değil) ziyaretleri Plausible ile sayar. Çerez ve sizi tanımlayan hiçbir şey kullanmaz; yalnızca kaç kişinin ziyaret ettiği, nereden geldiği ve kaçının İndir’e tıkladığı gibi toplamları tutar.",
+        "flowMyna": "Anonim ziyaret yolları kendi analitik aracım Flow Myna’ya da gider: bir ziyaretin sitenin hangi bölümlerini hangi sırayla okuduğu ve bağlantının kabaca nereden geldiği (ülke gibi). Çerez yok; IP adresiniz saklanmaz.",
+        "stars": "GitHub düğmelerindeki yıldız sayısı doğrudan GitHub’dan gelir; yani tarayıcınız bunu GitHub’a sorar."
+      },
+      "streaming": {
+        "title": "Müzik akışı hizmetleri",
+        "noMusic": "OnKey müzik sağlamaz, akış yapmaz veya indirmez. Müziği kendi müzik uygulamanız çalar; OnKey, macOS’in ses yakalama izniyle dinler. Hiçbir akış hizmetinin SDK’sını veya geliştirici API’sini kullanmaz; hiçbir uygulamanın dosyalarına, belleğine veya şifrelemesine dokunmaz.",
+        "control": "Varsayılan olarak Spotify ve Apple Music’i macOS’in Otomasyon izniyle (kurulumda istenir) takip eder: ne çaldığını ve nerede olduğunu okur; çalar, duraklatır, sarar ve şarkıları başlatır. Ayarlar’da “Tarayıcınızda YouTube”u açarsanız (başta kapalıdır) OnKey, Chrome, Brave, Edge veya Safari’deki YouTube sekmesini de okur ve yönetir. Kurulumda “Yalnızca dinle”yi seçin ya da Ayarlar’da “OnKey yönetebilir” altından kapatın; OnKey o uygulamalara hiçbir şey göndermez.",
+        "terms": "OnKey duyduğu müziği hiçbir zaman kaydetmez veya dışa aktarmaz. Müzik hizmetinizin kendi koşulları, onu nasıl kullandığınız için geçerliliğini korur."
+      },
+      "rights": {
+        "title": "Hak sahipleri",
+        "body": "Bir hak sahibini veya bir hizmeti temsil ediyorsanız ve OnKey’le ilgili bir endişeniz varsa <email>{address}</email> adresine yazın. Her mesajı okurum ve hızla yanıtlarım. Endişe haklıysa ilgili özelliği değiştirir veya kaldırırım. Ayrıca bkz. <legal>LEGAL.md</legal>.",
+        "noAddress": "(adres eklenecek)"
+      },
+      "trademarks": {
+        "title": "Ticari markalar",
+        "body": "OnKey; Spotify, Apple veya Google ile bağlantılı değildir ve onlar tarafından desteklenmez. Adları sahiplerinin ticari markalarıdır ve yalnızca OnKey’in hangi uygulamalarla çalıştığını belirtmek için kullanılır."
+      },
+      "licence": {
+        "title": "Lisans",
+        "body": "OnKey, MIT lisansıyla ücretsiz ve açık kaynaklıdır."
+      }
+    },
+    "yourVoice": {
+      "title": "Rahat şarkı söylemek",
+      "lede": "OnKey art arda şarkı söylemeyi kolaylaştırır; bu yüzden sesinize biraz özen gerekir.",
+      "volume": {
+        "title": "Rahat bir ses düzeyinde söyleyin",
+        "body": "OnKey yalnızca perdenizi puanlar; müziği bastırmaya gerek yok. Kısık söylemek aynı puanı alır. Kulaklık yardımcı olur; kendinizi duymak için hoparlörlerle yarışmanız gerekmez."
+      },
+      "octave": {
+        "title": "Nota ulaşılmazsa bir oktav inin",
+        "body": "Bir şarkı sizin için fazla tiz veya pes kalıyorsa bir oktav aşağıdan ya da yukarıdan söyleyin. OnKey doğru notayı her oktavda sayar; hiçbir şey kaybetmezsiniz. Aralığınızın sınırında zorlanmak sesinizi yormanın en hızlı yoludur."
+      },
+      "warmUp": {
+        "title": "Isının ve ara verin",
+        "easy": "Birkaç kolay şarkıyla başlayın ya da bir iki dakika aralığınızda yavaşça aşağı yukarı mırıldanın.",
+        "water": "Yanınızda su bulundurun.",
+        "rest": "Yaklaşık 35 dakika söyledikten sonra OnKey dinlenmenizi hatırlatır (<strong>Ayarlar → Sesiniz</strong> altından kapatabilirsiniz).",
+        "gradually": "Yavaş yavaş artırın. İlk gününüzde birkaç saat, çoğu sesin alışık olduğundan çok daha fazlasıdır."
+      },
+      "pain": {
+        "title": "Acıyorsa durun",
+        "body": "Ağrı, boğazda kaşıntı veya ertesi gün hâlâ kısık bir ses dinlenme zamanı demektir. Birkaç haftadan uzun sürerse bir doktora veya ses uzmanına görünün."
+      },
+      "technique": "Teknik için (nefes, rejistrlar, zorlanmadan söylemek) bkz. <link>Perdenin ötesi</link>.",
+      "disclaimer": "Bu sayfa şarkı söylemeyle ilgili genel öneriler içerir; tıbbi tavsiye değildir."
+    },
+    "beyondPitch": {
+      "title": "Perdenin ötesi",
+      "lede": "OnKey notanın üstünde olup olmadığınızı gösterir. İyi söylemek bundan fazlasını gerektirir ve geri kalanı en iyi bir öğretmenden öğrenilir.",
+      "hear": {
+        "title": "OnKey neyi duyar, neyi duyamaz",
+        "body": "OnKey perdenizi şarkıcınınkine göre satır satır izler. Nerede kaydığınızı duymanın ve görmenin hızlı bir yoludur. Sesi nasıl çıkardığınızı söyleyemez: iyi nefes alıyor musunuz, zorlanıyor musunuz, duyguyla mı söylüyorsunuz. Yüksek puan notaları tutturduğunuz anlamına gelir, şarkıyı iyi söylediğiniz değil."
+      },
+      "learn": {
+        "title": "Başka neler öğrenilir",
+        "breath": "<strong>Nefes desteği:</strong> sesin arkasında düzgün hava; böylece uzun satırlar tükenmez veya titremez.",
+        "tension": "<strong>Daha az gerginlik:</strong> serbest bir boğaz, çene ve dil. Tiz notalara zorlanarak uzanmak seslerin yorulmasının ve zedelenmesinin olağan yoludur.",
+        "registers": "<strong>Rejistrlar:</strong> göğüs sesi, kafa sesi ve aralarındaki karışım; böylece aralığınızda kopmadan dolaşabilirsiniz.",
+        "vowels": "<strong>Ünlüler:</strong> notalar çınlasın ve tizler kolaylaşsın diye onları biçimlendirmek.",
+        "phrasing": "<strong>Cümleleme ve ritim:</strong> nerede nefes alınır, hangi kelimelere yaslanılır ve vuruşla birlikte oturmak."
+      },
+      "teachers": {
+        "title": "Başlangıç için ücretsiz öğretmenler",
+        "callaway": "<link>Dan Callaway</link>, Boston Conservatory at Berklee’de müzikal tiyatro şan dersi veriyor. Nefesten belting’e, teknik üzerine açık dersler.",
+        "rolka": "<link>Jeff Rolka</link>: ısınmalar, doğru tonda söylemek, tiz notalar, run’lar ve riff’ler.",
+        "suggested": "İkisini de OnKey yayımlandığında tartışmadaki şarkıcılar önerdi. Başka iyi öğretmenler de var; <link>GitHub</link>’da bir öneri her zaman hoş karşılanır."
+      },
+      "lessons": {
+        "title": "Bir öğretmenle dersler",
+        "body": "İmkânınız varsa birkaç ders alın. Bir öğretmen, kendi başınıza aylar sonra fark edeceğinizi saniyeler içinde duyar ve sesinize uygun egzersizler verir. OnKey de araları doldurma yolunuz olur: sevdiğiniz şarkılara eşlik eder ve perdenizin giderek sabitlendiğini görürsünüz."
+      },
+      "voice": "Alıştırma yaparken sesinize özen göstermek için bkz. <link>Rahat şarkı söylemek</link>."
+    },
+    "credits": {
+      "title": "Teşekkürler",
+      "lede": "OnKey şu açık projeler ve hizmetler üzerine kurulu.",
+      "component": "Bileşen",
+      "usedFor": "Kullanım amacı",
+      "licence": "Lisans",
+      "uses": {
+        "crepe": "Perde: öğrenirken full model, canlıda tiny model",
+        "game": "Her hecenin notası",
+        "wav2vec": "Her kelimenin ne zaman söylendiği",
+        "uvr": "Solist vokalini ayrıştırma",
+        "cmudict": "Hece sayıları",
+        "lrclib": "Eşzamanlı sözler, çalışma anında alınır",
+        "shazamkit": "Yeni şarkıları adlandırma",
+        "itunes": "Albüm kapakları ve şarkı süreleri",
+        "hyphenation": "Kelimeleri hecelere bölme",
+        "onnx": "Modelleri çalıştırma",
+        "tauri": "Uygulama"
+      },
+      "licences": {
+        "service": "Hizmet",
+        "macos": "macOS’in parçası"
+      },
+      "notices": "OnKey’in kendisi MIT lisansıyla ücretsiz ve açık kaynaklıdır. Tüm bildirimler <link>THIRD_PARTY_NOTICES.md</link> dosyasında."
+    }
+  }
+}

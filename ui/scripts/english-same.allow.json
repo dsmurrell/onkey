@@ -1,0 +1,624 @@
+{
+  "_": "Exceptions to scripts/english-same.mjs, each with why. removed: text a file lost that's in no message it uses (by file, or \"*\"). added: text in a message that the file never said (by message key or file). unused: keys no file uses.",
+  "removed": {
+    "lib/session.ts": [
+      {
+        "text": "stage",
+        "why": "a type, LearnJob[\"stage\"], in the table of stage words that moved to learn.stage.*: not text"
+      }
+    ],
+    "app/page.tsx": [
+      {
+        "text": "font-medium",
+        "why": "a CSS class, not text: the three permission steps' bold spans now share one <b> renderer, so the class is written once"
+      }
+    ],
+    "app/take/page.tsx": [
+      {
+        "text": "1 take",
+        "why": "the plural's one branch says it: {count, plural, one {{count} take} …}"
+      }
+    ],
+    "components/TimingCheck.tsx": [
+      {
+        "text": " Pause the music first.",
+        "why": "the leading space stays in the JSX (<span> {t(…)}</span>); the message is the sentence"
+      },
+      {
+        "text": "mr-1.5 rounded bg-amber-300/10 px-1.5 py-0.5 text-[11px] font-medium text-amber-200",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "text-amber-200",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      }
+    ],
+    "components/VoiceRange.tsx": [
+      {
+        "text": "C",
+        "why": "a note letter, now from noteName(m) (same output): not words"
+      }
+    ],
+    "components/guides/FadeGuideDemo.tsx": [
+      {
+        "text": "Take 3",
+        "why": "now “Take {n}” with the number as a value (same output)"
+      },
+      {
+        "text": "Take 8",
+        "why": "now “Take {n}” with the number as a value (same output)"
+      }
+    ],
+    "components/guides/LeaveOutGuide.tsx": [
+      {
+        "text": "Take 3",
+        "why": "now “Take {n}” with the number as a value (same output)"
+      }
+    ],
+    "lib/starting.ts": [
+      {
+        "text": " didn't start ",
+        "why": "starting.failed.title was “{app} didn't start {song}”: with the fallback “your music app” the title began lowercase, so it's now “Couldn’t start {song} in {app}” (no title starts with a fragment placeholder; 1 Nov 2026)"
+      }
+    ],
+    "components/Nav.tsx": [
+      {
+        "text": "0.2.0",
+        "why": "the release What's new was last bumped for, hard-coded: the dot now follows this OnKey's real version (lib/whatsNew.ts, 1 Nov 2026)"
+      },
+      {
+        "text": "glass flex shrink-0 items-center gap-1 rounded-full py-0.5 pl-2.5 pr-0.5 text-xs text-amber-200 animate-rise",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "absolute right-1 top-1 h-2 w-2 rounded-full bg-accent-400 ring-2 ring-[#0b0c12]",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      }
+    ],
+    "app/library/page.tsx": [
+      {
+        "text": "text-ink-300",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "text-close/90",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "rounded-lg bg-red-500/80 px-3 py-1 font-medium text-white transition hover:bg-red-500 disabled:opacity-60",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      }
+    ],
+    "app/licences/page.tsx": [
+      {
+        "text": "glass mt-6 rounded-3xl p-5 text-sm text-amber-200",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      }
+    ],
+    "app/settings/page.tsx": [
+      {
+        "text": "text-amber-200",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "bg-amber-400/12 text-amber-200",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "bg-amber-400/8 px-5 py-3 text-xs text-amber-200",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "mt-0.5 max-w-56 shrink-0 rounded-lg border border-white/8 bg-white/4 px-2.5 py-1.5 text-sm text-ink-100 outline-none focus:border-accent-400",
+        "why": "a CSS class list, not text: restyled (the mic's native select became components/Dropdown.tsx)"
+      },
+      {
+        "text": "set-mic",
+        "why": "an element id, not text: the label's htmlFor went with the native select (the Dropdown's button keeps the id)"
+      },
+      {
+        "text": "mt-1 text-xs text-ink-500 underline-offset-2 transition hover:text-ink-200 hover:underline",
+        "why": "a CSS class list, not text: \"More\" gets a gap before \"See how it looks\""
+      },
+      {
+        "text": "official",
+        "why": "a state name (u.state === \"official\"), not text: the update line's states moved into lib/updateLine.ts"
+      },
+      {
+        "text": "downloading",
+        "why": "a state name or code, not text: the update line's logic moved into lib/updateLine.ts"
+      },
+      {
+        "text": "checking",
+        "why": "a state name or code, not text: the update line's logic moved into lib/updateLine.ts"
+      }
+    ],
+    "components/ControlPrompt.tsx": [
+      {
+        "text": "mt-2 rounded-xl bg-amber-400/10 px-3 py-2 text-xs text-amber-200",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      }
+    ],
+    "components/LevelTag.tsx": [
+      {
+        "text": "rounded-full bg-amber-400/12 px-1.5 py-px text-[10px] font-medium text-amber-200 ",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      }
+    ],
+    "components/LiveBits.tsx": [
+      {
+        "text": "flex items-center gap-1.5 rounded-full bg-amber-400/10 px-2.5 py-1 text-xs text-amber-200 transition hover:bg-amber-400/16",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "text-amber-200",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      }
+    ],
+    "components/MirrorBadge.tsx": [
+      {
+        "text": "bg-emerald-400",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "bg-red-400",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      }
+    ],
+    "components/ReportProblem.tsx": [
+      {
+        "text": "text-amber-200",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "glass flex max-h-[85vh] w-full max-w-xl flex-col rounded-3xl p-6 shadow-2xl animate-rise",
+        "why": "a CSS class list, not text: restyled (the report dialog made solid)"
+      },
+      {
+        "text": "mt-4 min-h-0 flex-1 overflow-y-auto rounded-xl bg-white/3 px-3 py-2 text-xs text-ink-300",
+        "why": "a CSS class list, not text: restyled (only the file list shrinks)"
+      }
+    ],
+    "components/SharePanel.tsx": [
+      {
+        "text": "text-red-300",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      }
+    ],
+    "components/guides/StillSteps.tsx": [
+      {
+        "text": "w-full rounded-2xl bg-[#0b0d13] text-[#e6e9f0]",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "grid h-6 w-6 place-items-center rounded-full focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#b5a8ff]",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "w-4 bg-[#7c6cf6]",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "w-1.5 bg-[#2a3142] hover:bg-[#8b94ab]",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      },
+      {
+        "text": "ml-1 rounded-md px-2 py-0.5 text-xs text-[#8b94ab] transition hover:text-[#e6e9f0]",
+        "why": "a CSS class list, not text: its stock Tailwind colour or raw hex became a palette token in globals.css (same colour), in the palette pass"
+      }
+    ],
+    "components/Setup.tsx": [
+      {
+        "text": "mb-6 flex items-center gap-2",
+        "why": "a CSS class list, not text: restyled (setup's step bars top-aligned)"
+      }
+    ],
+    "components/StarterSongs.tsx": [
+      {
+        "text": "glass flex w-48 shrink-0 flex-col rounded-2xl p-3",
+        "why": "a CSS class list, not text: restyled (a starter card is clickable now)"
+      }
+    ]
+  },
+  "added": {
+    "settings.language.title": [
+      {
+        "text": "Language",
+        "why": "new: the Language row, hidden while English is the only language"
+      }
+    ],
+    "settings.language.label": [
+      {
+        "text": "Language",
+        "why": "new, hidden (as above)"
+      }
+    ],
+    "settings.language.sub": [
+      {
+        "text": "The words OnKey shows. Automatic follows your computer’s language.",
+        "why": "new, hidden (as above)"
+      }
+    ],
+    "errors.readFailed": [
+      {
+        "text": "takes",
+        "why": "readList's `what`, said by its callers (app/song, app/history: readList(getTakes, \"takes\")), now a select so a translation can say it its way"
+      },
+      {
+        "text": "songs",
+        "why": "as above (app/library: readList(getLibrary, \"songs\"))"
+      }
+    ],
+    "sing.learningLine.stage.playing": [
+      {
+        "text": "learning as it plays",
+        "why": "lowercase stage words for “Learning {name}: {stage}”, which said learnStage(j).toLowerCase() (lowercasing isn't right in every language); the same words as learn.stage.*, lowercased"
+      }
+    ],
+    "sing.learningLine.stage.waiting": [
+      {
+        "text": "waiting its turn",
+        "why": "lowercase stage words for “Learning {name}: {stage}”, which said learnStage(j).toLowerCase() (lowercasing isn't right in every language); the same words as learn.stage.*, lowercased"
+      }
+    ],
+    "sing.learningLine.stage.queued": [
+      {
+        "text": "waiting to learn",
+        "why": "lowercase stage words for “Learning {name}: {stage}”, which said learnStage(j).toLowerCase() (lowercasing isn't right in every language); the same words as learn.stage.*, lowercased"
+      }
+    ],
+    "sing.learningLine.stage.paused": [
+      {
+        "text": "waiting while you sing",
+        "why": "lowercase stage words for “Learning {name}: {stage}”, which said learnStage(j).toLowerCase() (lowercasing isn't right in every language); the same words as learn.stage.*, lowercased"
+      }
+    ],
+    "sing.learningLine.stage.separating": [
+      {
+        "text": "separating the singer",
+        "why": "lowercase stage words for “Learning {name}: {stage}”, which said learnStage(j).toLowerCase() (lowercasing isn't right in every language); the same words as learn.stage.*, lowercased"
+      }
+    ],
+    "sing.learningLine.stage.pitch": [
+      {
+        "text": "following the melody",
+        "why": "lowercase stage words for “Learning {name}: {stage}”, which said learnStage(j).toLowerCase() (lowercasing isn't right in every language); the same words as learn.stage.*, lowercased"
+      }
+    ],
+    "sing.learningLine.stage.scoring": [
+      {
+        "text": "scoring your take",
+        "why": "lowercase stage words for “Learning {name}: {stage}”, which said learnStage(j).toLowerCase() (lowercasing isn't right in every language); the same words as learn.stage.*, lowercased"
+      }
+    ],
+    "sing.learningLine.stage.words": [
+      {
+        "text": "timing the words",
+        "why": "lowercase stage words for “Learning {name}: {stage}”, which said learnStage(j).toLowerCase() (lowercasing isn't right in every language); the same words as learn.stage.*, lowercased"
+      }
+    ],
+    "sing.learningLine.stage.bars": [
+      {
+        "text": "making the note bars",
+        "why": "lowercase stage words for “Learning {name}: {stage}”, which said learnStage(j).toLowerCase() (lowercasing isn't right in every language); the same words as learn.stage.*, lowercased"
+      }
+    ],
+    "sing.learningLine.stage.notes": [
+      {
+        "text": "finding each note",
+        "why": "lowercase stage words for “Learning {name}: {stage}”, which said learnStage(j).toLowerCase() (lowercasing isn't right in every language); the same words as learn.stage.*, lowercased"
+      }
+    ],
+    "sing.learningLine.stage.saving": [
+      {
+        "text": "saving",
+        "why": "lowercase stage words for “Learning {name}: {stage}”, which said learnStage(j).toLowerCase() (lowercasing isn't right in every language); the same words as learn.stage.*, lowercased"
+      }
+    ],
+    "settings.audio.mic.nowMissingMac": [
+      {
+        "text": ". The one you chose isn’t connected, so OnKey uses the Mac’s own input until it is.",
+        "why": "“Now: {name}.” and the missing-mic sentence joined: one whole sentence per variant, joined from the pieces the code put together (checked to give the same text)"
+      }
+    ],
+    "settings.audio.mic.nowMissingPc": [
+      {
+        "text": ". The one you chose isn’t connected, so OnKey uses",
+        "why": "as above, on a PC"
+      }
+    ],
+    "settings.updates.updateFailedWhy": [
+      {
+        "text": "). Check now tries again.",
+        "why": "the optional “ ({error})” became a with-reason key: one whole sentence per variant, joined from the pieces the code put together (checked to give the same text)"
+      }
+    ],
+    "settings.updates.checkFailed": [
+      {
+        "text": "Couldn’t check for updates just now.",
+        "why": "“…just now” + optional reason + “.”: the no-reason key"
+      }
+    ],
+    "settings.updates.checkFailedWhy": [
+      {
+        "text": "Couldn’t check for updates just now (",
+        "why": "as above, the with-reason key"
+      }
+    ],
+    "settings.scoring.more": [
+      {
+        "text": "Vibrato is fine: your pitch is judged by the middle of its wobble. Every score in OnKey is shown at this level, your earlier takes too: they’re scored again from your singing as it was kept.",
+        "why": "the optional vibrato sentence (not at Relaxed) and the next sentence as one message; settings.scoring.moreRelaxed is the one without it"
+      }
+    ],
+    "song.stat.fromToAverage": [
+      {
+        "text": "average from",
+        "why": "`${both ? \"average \" : \"\"}from …`: one whole sentence per variant, joined from the pieces the code put together (checked to give the same text)"
+      }
+    ],
+    "take.player.aboutJoin": [
+      {
+        "text": "OnKey keeps your voice, not the music. “With the song” plays your recording in step with",
+        "why": "the player's title, a nested ternary: one whole sentence per variant, joined from the pieces the code put together (checked to give the same text)"
+      }
+    ],
+    "take.player.aboutPlay": [
+      {
+        "text": "OnKey keeps your voice, not the music. “With the song” plays the track in",
+        "why": "as above"
+      },
+      {
+        "text": "alongside your recording. Your microphone’s latency (",
+        "why": "as above"
+      }
+    ],
+    "take.join.playFromStart": [
+      {
+        "text": "from the beginning. OnKey will join in.",
+        "why": "the optional “ from the beginning”: one whole sentence per variant, joined from the pieces the code put together (checked to give the same text)"
+      }
+    ],
+    "challenge.holds": [
+      {
+        "text": "It holds only the song’s name, the artist, your score. No recording, notes or lyrics.",
+        "why": "the optional “ and your name”: one whole sentence per variant, joined from the pieces the code put together (checked to give the same text)"
+      }
+    ],
+    "challenge.holdsNamed": [
+      {
+        "text": "It holds only the song’s name, the artist, your score and your name. No recording, notes or lyrics.",
+        "why": "as above"
+      }
+    ],
+    "timingCheck.said.behind": [
+      {
+        "text": "ms behind what OnKey assumed; adjusted.",
+        "why": "“behind” / “ahead of” chosen in code: one whole sentence per variant, joined from the pieces the code put together (checked to give the same text)"
+      }
+    ],
+    "timingCheck.said.ahead": [
+      {
+        "text": "ms ahead of what OnKey assumed; adjusted.",
+        "why": "as above"
+      }
+    ],
+    "history.card.plays": [
+      {
+        "text": "plays",
+        "why": "plural made from “play” + “s” (the old code added s for n > 1; a card always has at least one play, so the same)"
+      }
+    ],
+    "listControls.levelTitle": [
+      {
+        "text": "songs",
+        "why": "plural made from `${what}s`"
+      }
+    ],
+    "trend.legend": [
+      {
+        "text": "takes · dots: each take",
+        "why": "`${unit}s · dots: each ${unit}` with unit take/play: a select × plural"
+      },
+      {
+        "text": "plays · dots: each play",
+        "why": "as above"
+      }
+    ],
+    "platform.linux.filesThe": [
+      {
+        "text": "the file manager",
+        "why": "was pc.files.replace(\"your \", \"the \") in ReportProblem (“Show in the file manager”); a key of its own translates properly"
+      }
+    ],
+    "guides.fadeDemo.ariaLabel": [
+      {
+        "text": "Four takes of the same song as note lanes: Take 1, 3, 5 and 8. The purple notes stay the same in every take. Your green pitch line is bright in Take 1 and fainter each take while it's on the note; in Take 5 it slips more than a semitone off for a moment and that part shows in full, in red. A Full guide switch brings the whole line back.",
+        "why": "a screen-reader summary the code joined from several + string pieces, now one message (checked to be the same text)"
+      }
+    ],
+    "guides.learnSong.summary": [
+      {
+        "text": "OnKey learning a song. A song plays once to the end in a music player while sound waves flow into OnKey and its melody is drawn as note bars. A couple of minutes after it ends, a Learning ring turns into a green check: Learned. The next time the song plays, the notes scroll by with the singer's green pitch line riding on them and the lyrics underneath.",
+        "why": "a screen-reader summary the code joined from several + string pieces, now one message (checked to be the same text)"
+      }
+    ],
+    "guides.leaveOut.ariaLabel": [
+      {
+        "text": "Animation of a pitch graph for one take of a song. Purple bars show the notes the score expects and a line shows what the singer sang, green where it matches. For one stretch the purple bars jump up high, following a backing vocal, while the singer stays on the melody and the line turns amber. A cursor drags across that stretch to select it and clicks \"Leave it out of the score\". The stretch turns to grey stripes, the score rises from",
+        "why": "a screen-reader summary the code joined from several + string pieces, now one message (checked to be the same text)"
+      }
+    ],
+    "guides.musicApps.labelOne": [
+      {
+        "text": ". The pointer chooses Allow, the question closes and the app appears with a tick in the OnKey window. Last, the question is shown half hidden behind the OnKey window, with a reminder to look for it there.",
+        "why": "a screen-reader summary the code joined from several + string pieces, now one message (checked to be the same text)"
+      }
+    ],
+    "guides.musicApps.labelTwo": [
+      {
+        "text": ". The pointer chooses Allow, the question closes and the app appears with a tick in the OnKey window. Last, the question is shown half hidden behind the OnKey window, with a reminder to look for it there.",
+        "why": "a screen-reader summary the code joined from several + string pieces, now one message (checked to be the same text)"
+      }
+    ],
+    "guides.speakers.label": [
+      {
+        "text": "Two short scenes. On laptop speakers, the backing song spills out and curls into the microphone, so the recording mixes your voice with the music. With headphones, the music stays in your ears and the recording is just your voice.",
+        "why": "a screen-reader summary the code joined from several + string pieces, now one message (checked to be the same text)"
+      }
+    ],
+    "guides.systemAudio.summary": [
+      {
+        "text": "How to let OnKey record system audio on a Mac. In System Settings, open Privacy & Security, choose Screen & System Audio Recording, and turn on OnKey under System Audio Recording Only. If macOS asks, choose Quit & Reopen. OnKey opens again with system audio recording ticked and setup carries on.",
+        "why": "a screen-reader summary the code joined from several + string pieces, now one message (checked to be the same text)"
+      }
+    ],
+    "starting.failed.title": [
+      {
+        "text": "Couldn’t start",
+        "why": "the rephrased title (see removed lib/starting.ts): the same facts, the app now after “in”, so the lowercase fragments “the song” and “your music app” never start it"
+      }
+    ],
+    "platform.savedFolder.named": [
+      {
+        "text": "the folder",
+        "why": "new fragment: savedFolder() said a bare folder name for one it didn't know (Linux names the Desktop in its own language: “Рабочий стол”), and “Saved to Рабочий стол as …” doesn't read in every language; “the folder {folder}” is a fragment each language phrases for its own “Saved to {folder}” sentence"
+      }
+    ],
+    "components/StarterSongs.tsx": [
+      {
+        "text": "Sing",
+        "why": "a starter card sings its song as a Library card does, with the Library card's own label (library.card.sing)"
+      },
+      {
+        "text": "Starting…",
+        "why": "a starter card shows the Library card's own Sing ▶ / Starting… label (library.card.*) while its song starts"
+      }
+    ],
+    "lib/updateLine.ts": [
+      {
+        "text": "Development build: it doesn’t update itself.",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": "This test build doesn’t update itself: install a new one over it when there is one.",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": "OnKey",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": "is installed when this song is over, then OnKey restarts.",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": "is ready. Restart to update, or it’s installed when you quit.",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": "Downloading OnKey",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": "…",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": "Checking…",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": "is out from the original project, at singonkey.app. This copy was built from source, so it doesn’t update itself.",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": "You have the latest version.",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": "You have the latest version. This copy was built from source: it says when a new version is out, and doesn’t update itself.",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": "Couldn’t update to OnKey",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": ". Check now tries again.",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": "(",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      },
+      {
+        "text": ").",
+        "why": "Settings update line moved, word for word, from app/settings/page.tsx into lib/updateLine.ts when the updater branch merged (its test covers the preview case)"
+      }
+    ]
+  },
+  "unused": [],
+  "moved": [
+    {
+      "from": "components/StarterSongs.tsx",
+      "to": "lib/starterSongs.ts",
+      "why": "the songs to try (titles, artists, the playlist link) moved into a data file with a list per language: names, not words to translate"
+    },
+    {
+      "from": "components/Nav.tsx",
+      "to": "lib/whatsNew.ts",
+      "why": "the localStorage key for What's new's dot moved with the decision into lib/whatsNew.ts: a key, not text"
+    }
+  ],
+  "newText": [
+    {
+      "prefix": "engine.",
+      "why": "the engine's own English (src-tauri/messages/KINDS.md), now said from the catalog by kind: lib/engineText.test.mjs renders every kind with sample values and compares with the engine's English, row by row"
+    },
+    {
+      "prefix": "starters.why.es.",
+      "why": "the Spanish songs to try (new, approved 1 Nov 2026): their reasons in English, for translators"
+    },
+    {
+      "prefix": "starters.why.pt.",
+      "why": "the Portuguese songs to try (new, as above)"
+    },
+    {
+      "prefix": "starters.why.it.",
+      "why": "the Italian songs to try (new, as above)"
+    },
+    {
+      "prefix": "starters.why.fr.",
+      "why": "the French songs to try (new, as above)"
+    },
+    {
+      "prefix": "starters.why.de.",
+      "why": "the German songs to try (new, as above)"
+    },
+    {
+      "prefix": "settings.language.autoNamed",
+      "why": "new: the picker's Automatic names the language it comes to"
+    },
+    {
+      "prefix": "settings.language.autoOs",
+      "why": "new (1 Nov 2026): first-run setup's language list names Automatic by the language it comes to and whose computer's it is (\"English (your Mac’s language)\"); lib/languages.test.mjs covers the list's order"
+    },
+    {
+      "prefix": "settings.language.early",
+      "why": "new: the Early tag and its note (the plan's wording, lab/later/languages.md)"
+    },
+    {
+      "prefix": "settings.language.credits",
+      "why": "new: translators' credit under the picker (CONTRIBUTING.md \"Credit\")"
+    },
+    {
+      "prefix": "noLyrics.",
+      "why": "new (1 Nov 2026): the line under a song LRCLIB has no lyrics for, with Look again (components/NoLyrics.tsx); the English is the engine's own wording for the window"
+    },
+    {
+      "prefix": "nav.testBuild",
+      "why": "new (approved 1 Nov 2026): the \"Test build\" tag beside the logo in preview builds, and its tooltip"
+    }
+  ]
+}

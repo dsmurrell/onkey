@@ -7,6 +7,8 @@ import { learnNow, learnTakes } from "./learnState";
 import { updateArrived } from "./perf";
 import { SAME_SONG_MS, startingView, type Starting, type StartingView } from "./starting";
 import { demoFrom, type DemoSong } from "./demo";
+import { setLanguageSetting, t } from "./i18n";
+import { EngineError } from "./engineText";
 export { firstPlayGoing, learnNow, learnOf } from "./learnState";
 
 /** The longest the notes stay dimmed while the place is being confirmed (Live.lockDim). */
@@ -27,25 +29,31 @@ export type Take = { name: string; artist: string; track_id?: string; status: "l
  *  OnKey sing along to it (Firefox and Arc only when listening).
  *  `mic`, `audio`: the microphone's and system audio recording's permission. `automation_denied`: the app macOS
  *  won't let OnKey control. `models`: whether new songs can be learned (the learning models are there).
+ *  `lyrics_down`: LRCLIB, where lyrics come from, isn't working right now (songs learned meanwhile have no words yet).
  *  `music_quiet`: the music app plays but OnKey hears it only very faintly (its own volume turned right down).
  *  `mic_device`: the microphone OnKey listens to (the same one setup's mic check used); null: none connected.
  *  `output_ms`: how long after the music app plays you hear it, as allowed for; `output`: the output device and
  *  its timing check (see OutputTiming). */
-export type Status = { echo_cancel?: boolean; pause_ends_ms?: number | null; player: null | { state: string; name: string; artist: string; app: string }; output_ms?: number;
+/** `player.app`: the music app's name, or null for one OnKey has no name for (the window says "your music app"). */
+export type Status = { echo_cancel?: boolean; pause_ends_ms?: number | null; player: null | { state: string; name: string; artist: string; app: string | null }; output_ms?: number;
                        output?: OutputTiming;
-                       youtube_blocked?: null | { browser: string; setting: string }; youtube?: boolean; listening?: boolean;
+                       /** `setting`: the engine's English; `setting_kind` (safari, chromium) says it in the window's language */
+                       youtube_blocked?: null | { browser: string; setting: string; setting_kind?: string }; youtube?: boolean; listening?: boolean;
                        /** "Pause listening": OnKey follows nothing until resumed (setListeningPaused) */
                        listening_paused?: boolean;
                        browser_sounding?: null | { browser: string; works: boolean };
-                       mic?: Perm; audio?: Perm; automation_denied?: string | null; not_answering?: string | null; mic_device?: string | null;
-                       music_quiet?: null | { app: string; level_db: number; volume?: number | null };
-                       models?: { state: "ready" | "missing" | "broken"; error?: string } };
+                       mic?: Perm; audio?: Perm; automation_denied?: string | null; not_answering?: string | null; lyrics_down?: boolean; mic_device?: string | null;
+                       /** `app`: null for an app OnKey has no name for ("your music app", said by the window) */
+                       music_quiet?: null | { app: string | null; level_db: number; volume?: number | null };
+                       models?: { state: "ready" | "missing" | "broken"; code?: "files_bad" | "unloadable" | "pitch_model"; error?: string } };
 
 /** What listening mode is doing, in words. `kind`: "finding" (music heard, being named), "new_song" (the song
  *  changed, the next being named), "unnamed" (couldn't name it), "no_shazam" (only songs learned here are
  *  recognised), "shazam_off" (not a song learned here, and Shazam is switched off), "learning" (a first play of the
- *  song shown). */
-export type Line = { kind: "finding" | "new_song" | "unnamed" | "no_shazam" | "shazam_off" | "podcast" | "learning" | "elsewhere" | "stopped"; text: string };
+ *  song shown)… `params`: its values (`app`, `song`); `text`: the engine's English (lib/engineText.ts says it in
+ *  the window's language; src-tauri/messages/KINDS.md lists every kind). */
+export type Line = { kind: "finding" | "new_song" | "unnamed" | "no_shazam" | "shazam_off" | "podcast" | "learning" | "elsewhere" | "stopped";
+                     params?: Record<string, string>; text: string };
 
 /** A song being learned (src-tauri/src/progress.rs): its stage and how much of the whole learn is done (0..1),
  *  from the work actually done (music separated, words timed, bars made); `fraction` is null while the song still
@@ -61,18 +69,14 @@ export type LearnJob = { track_id: string; name: string; artist: string; fractio
  *  it: the word fill and the note bars stay on the singing. The align eval's "right line showing" uses the same. */
 export const LINE_LEAD = 0.4;
 
-const LEARN_STAGE: Record<LearnJob["stage"], string> = {
-  playing: "Learning as it plays", waiting: "Waiting its turn", queued: "Waiting to learn", paused: "Waiting while you sing", separating: "Separating the singer", pitch: "Following the melody",
-  scoring: "Scoring your take", words: "Timing the words", bars: "Making the note bars", notes: "Finding each note", saving: "Saving",
-};
-/** What a learn is doing, in words. */
-export const learnStage = (j: LearnJob) => LEARN_STAGE[j.stage] ?? "Learning";
+/** What a learn is doing, in words (messages/en.json learn.stage, by stage; "Learning" for a stage it doesn't know). */
+export const learnStage = (j: LearnJob) => t.has(`learn.stage.${j.stage}`) ? t(`learn.stage.${j.stage}`) : t("learn.stage.other");
 /** How much of the learn is done, as a whole percentage; null while the song plays, or while it waits to be learned
  *  behind another song (a percentage standing still for minutes read as stuck). */
 export const learnPct = (j: LearnJob) => j.fraction == null || j.stage === "queued" ? null : Math.floor(100 * j.fraction);
 /** "Learning… 40%" ("Learning…" while the song plays, "Waiting to learn" while another song is learned first). */
-export const learnLabel = (j: LearnJob) => j.stage === "queued" ? "Waiting to learn"
-  : learnPct(j) == null ? "Learning…" : `Learning… ${learnPct(j)}%`;
+export const learnLabel = (j: LearnJob) => j.stage === "queued" ? t("learn.label.queued")
+  : learnPct(j) == null ? t("learn.label.going") : t("learn.label.percent", { pct: learnPct(j)! });
 
 /** The music's shape for the lane's light ribbon (src-tauri/src/viz.rs), one frame every 1/60 s: `f` on the lane's
  *  clock (frames of 10 ms, as the notes), loudness and four bands 0..1, `beat` (jumps on a beat, decays) and
@@ -91,6 +95,9 @@ export type SongState = {
   /** first-play takes of this song already in the list when it started: one more means this play has ended
    *  (learnState.firstPlayGoing) */
   learnTakes?: number;
+  /** LRCLIB was asked and had none (a "lyrics" event with no lines): "No lyrics for this song yet" with Look again;
+   *  false while they're still being looked for */
+  lyricsNone?: boolean;
 };
 
 /** The events that belong to the song playing (engine.rs keep_for_catch_up), not all of which say its version. */
@@ -229,7 +236,7 @@ class Live {
       case "lyrics":
         if (this.song && ev.version === this.song.version) {
           this.rawLyrics = ev.lyrics || [];
-          this.song = { ...this.song, lyrics: this.shownLyrics(), pace: ev.pace ?? this.song.pace }; this.changed();
+          this.song = { ...this.song, lyrics: this.shownLyrics(), pace: ev.pace ?? this.song.pace, lyricsNone: this.rawLyrics.length === 0 }; this.changed();
         }
         break;
       case "notes":           // the notes, now only where the lyrics are (the take carries on)
@@ -253,7 +260,7 @@ class Live {
         this.lowPower = !!ev.low_power;
         this.draw30 = !!ev.draw_30;
         this.status = { player: ev.player, output_ms: ev.output_ms, output: ev.output, echo_cancel: ev.echo_cancel, youtube_blocked: ev.youtube_blocked ?? null, browser_sounding: ev.browser_sounding ?? null, youtube: !!ev.youtube, listening: !!ev.listening, listening_paused: !!ev.listening_paused,
-                                     mic: ev.mic, audio: ev.audio, automation_denied: ev.automation_denied ?? null, not_answering: ev.not_answering ?? null, models: ev.models,
+                                     mic: ev.mic, audio: ev.audio, automation_denied: ev.automation_denied ?? null, not_answering: ev.not_answering ?? null, lyrics_down: ev.lyrics_down ?? false, models: ev.models,
                                      mic_device: ev.mic_device, music_quiet: ev.music_quiet ?? null, pause_ends_ms: ev.pause_ends_ms ?? null };
         this.line = ev.listening ? ev.line ?? null : null;
         this.changed(); break;
@@ -604,13 +611,31 @@ export type Settings = { listening: boolean; control_spotify: boolean; control_m
   /** how strictly takes are scored (Relaxed by default) */
   scoring_level?: "relaxed" | "steady" | "pro";
   /** "Fade the guide": on a song you've sung well, your own pitch line fades (lib/guideFade.ts); off by default */
-  fade_guide?: boolean };
+  fade_guide?: boolean;
+  /** the window's language: "auto" (the computer's own, then English) or a code chosen in Settings (lib/i18n.ts) */
+  language?: string };
+/** The computer's preferred languages, most preferred first ("en-GB", "zh-Hans-CN"…), as the engine reads them
+ *  from the system (lib.rs `ui_locale`); null outside the app. */
+export async function uiLocale(): Promise<string[] | null> {
+  return inApp() ? ((await invoke("ui_locale")) as string[]) : null;
+}
+
+/** The computer's region (ISO country code, lower case: "mx"), as the engine reads it (lib.rs `ui_region`); null
+ *  outside the app or when the system names none. */
+export async function uiRegion(): Promise<string | null> {
+  return inApp() ? (((await invoke("ui_region")) as string | null) ?? null) : null;
+}
+
 export async function getSettings(): Promise<Settings | null> {
   if (mirror()) return (await fetch("/api/settings")).json();
   return inApp() ? ((await invoke("settings_now")) as Settings) : null;
 }
+/** A setting the engine couldn't save (it rejects only when the settings file couldn't be written): code
+ *  setting_unsaved, the engine's English kept (KINDS.md). */
+const unsaved = (e: unknown): never => { throw new EngineError("setting_unsaved", typeof e === "string" ? e : String((e as Error)?.message ?? e)); };
+
 export async function setSetting(key: "listening" | "control_spotify" | "control_music" | "hide_starters" | "keep_models" | "battery_30fps" | "voice_breaks" | "shazam" | "show_lyrics" | "fade_guide", on: boolean) {
-  if (inApp()) await invoke("set_setting", { key, on });
+  if (inApp()) await invoke("set_setting", { key, on }).catch(unsaved);
   if (key === "show_lyrics") live.showLyrics(on);
 }
 
@@ -627,6 +652,12 @@ export async function setListeningPaused(on: boolean) {
 /** How strictly takes are scored, from the next take on. */
 export async function setScoringLevel(level: "relaxed" | "steady" | "pro") {
   if (inApp()) await invoke("set_scoring_level", { level });
+}
+
+/** The window's language: a code ("en", "zh"…) or "auto" (the computer's own). Shown at once, kept across restarts. */
+export async function setLanguage(code: string) {
+  setLanguageSetting(code);
+  if (inApp()) await invoke("set_language", { code }).catch(unsaved);
 }
 
 /** A microphone (an input device): Core Audio's id for it and its name. */
@@ -656,7 +687,9 @@ export async function getOutputTiming(): Promise<OutputTiming | null> {
 export type TimingRun = { clicks: number[]; stamps: [number, number][]; now: [number, number][]; taps: [number, number][]; kinds: string[];
   base_latency: number | null; output_latency: number | null; sample_rate: number };
 /** A check's result: kept (ok), one more to confirm it (confirm; before_ms: the check before, which didn't agree), or what to say. */
-export type TimingResult = { ok?: boolean; confirm?: boolean; before_ms?: number | null; error?: string; measured_ms?: number; reported_ms?: number;
+export type TimingResult = { ok?: boolean; confirm?: boolean; before_ms?: number | null; error?: string;
+  /** a refused check's code (KINDS.md: few_taps, uneven…), for lib/engineText.ts; `error` is the engine's English */
+  code?: string; measured_ms?: number; reported_ms?: number;
   correction_ms?: number; spread_ms?: number };
 /** A timing check of output `uid` done. */
 export async function checkOutputTiming(uid: string, run: TimingRun): Promise<TimingResult> {
@@ -680,7 +713,8 @@ export function skipToSinging(): boolean {
 
 /** How "Play with the song" works for a take's track. `play_id`: the id its app plays it by (a song kept by its
  *  ISRC is played by its Spotify or Apple Music id), null when none is known. */
-export type AlongMode = { control: boolean; app: string; key: string | null; play_id?: string | null };
+/** `app`: its name, or null with `app_kind` (music_app, browser) for the window to say ("your music app"). */
+export type AlongMode = { control: boolean; app: string | null; app_kind?: "app" | "music_app" | "browser"; key: string | null; play_id?: string | null };
 /** How "Play with the song" works for a track: `control` (OnKey starts it, one click) or join in (listening mode
  *  without control: you play it in `app`, OnKey hears where it is and plays your recording in step). */
 export async function alongMode(track: string): Promise<AlongMode | null> {
@@ -725,6 +759,20 @@ export const voicePlay = (from: number) => inApp() ? invoke("voice_play", { from
 export const voiceStop = () => inApp() ? invoke("voice_stop") : Promise.resolve();
 export const voiceClose = () => inApp() ? invoke("voice_close") : Promise.resolve();
 export const voiceGain = (db: number) => inApp() ? invoke("voice_gain", { db }) : Promise.resolve();
+
+/** "Look again" under "No lyrics for this song yet": LRCLIB asked about the song once more, forgetting the "none"
+ *  answer kept for it (lyrics someone has added since show up now, not in a day). "found" (the play under way shows
+ *  them; a learned song keeps them for its next play), "none", "unreachable" (LRCLIB isn't answering) or "unknown". */
+export type LookAgain = "found" | "none" | "unreachable" | "unknown";
+export async function lyricsLookAgain(id: string): Promise<LookAgain> {
+  if (!inApp()) return "unreachable";
+  try {
+    return (await invoke("lyrics_look_again", { id })) as LookAgain;
+  } catch (e) {
+    void invoke("ui_log", { msg: `look again ${id}: ${String(e)}` }).catch(() => {});
+    return "unreachable";
+  }
+}
 
 /** Score this play now (the lyrics are over), without waiting for the song to end. */
 export async function finishTake() {
@@ -896,7 +944,9 @@ export type LibrarySong = { track: Track; learned: string | null; fraction: numb
 
 export type Relearn = { at: number; by: number; since?: string };
 /** A learned song's "Learn again" state: asked for, and where its learned copy looks off (null: nowhere seen). */
-export type LearnAgainState = { learned: boolean; learn_again: boolean; relearn: Relearn | null };
+export type LearnAgainState = { learned: boolean; learn_again: boolean; relearn: Relearn | null;
+                                /** a learned song has lyrics kept or pinned to it; a learned song without is offered "Look again" */
+                                lyrics?: boolean };
 
 export type FitKey = "fits" | "few_above" | "few_below" | "octave_lower" | "octave_higher" | "above" | "below" | "wider";
 
@@ -962,10 +1012,12 @@ export async function getTake(id: string): Promise<any | null> {
 }
 
 /** "Report a problem" (components/ReportProblem.tsx): what the zip of OnKey's records will hold. */
-export type ReportContents = { folder: string; bytes: number; files: { name: string; bytes: number; what: string }[] };
+/** Each file's `what` is the engine's English; `what_kind` (log, take, take_reported, builds, summary, about) and
+ *  `what_params` (artist, name) say it in the window's language (lib/engineText.ts reportWhat). */
+export type ReportContents = { folder: string; bytes: number; files: { name: string; bytes: number; what: string; what_kind?: string; what_params?: Record<string, string> }[] };
 
 export async function prepareReport(take: string | null): Promise<ReportContents> {
-  if (!inApp()) throw new Error("Reports are made in the OnKey app.");
+  if (!inApp()) throw new Error(t("errors.reportsInApp"));
   return (await invoke("report_prepare", { take })) as ReportContents;
 }
 
@@ -1126,7 +1178,7 @@ export async function shareWindow(id: string, t?: number): Promise<ShareWindow |
 }
 /** The take page's "Share this take" ask at a proud moment (a best, a clear step up, a first score over 80), or
  *  null. Shown once per take: `sharePromptSeen` once it's on screen. */
-export type SharePrompt = { kind: "first" | "over80" | "best" | "up"; reason: string };
+export type SharePrompt = { kind: "first" | "over80" | "best" | "up"; params?: Record<string, string>; reason: string };
 export async function sharePrompt(id: string): Promise<SharePrompt | null> {
   if (!inApp()) return null;
   return (await invoke("share_prompt", { id })) as SharePrompt | null;

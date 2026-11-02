@@ -2,14 +2,19 @@
 // The filter and sort controls Library and History share: Sort (a menu), Difficulty (1 to 5), and the pill
 // style the rest of each page's filters use.
 import { useEffect, useRef, useState } from "react";
+import { useT, type Translator } from "@/lib/i18n";
 
-/** A song's difficulty, by its number (1 to 5). */
-export const DIFFICULTY = ["Easy", "Moderate", "Medium", "Hard", "Very hard"];
+/** A song's difficulty, by its number (1 to 5): the keys of its words. */
+const DIFFICULTY = ["easy", "moderate", "medium", "hard", "veryHard"] as const;
+/** A difficulty's word (1 to 5: "Easy" … "Very hard"; "" for anything else). */
+export const difficultyWord = (t: Translator, level: number) =>
+  DIFFICULTY[level - 1] ? t(`listControls.difficulty.${DIFFICULTY[level - 1]}`) : "";
 
 export const pill = (on: boolean) =>
   `rounded-full border border-white/8 px-3.5 py-2 text-sm outline-none transition focus-visible:ring-2 focus-visible:ring-accent-400/60 ${on ? "bg-white/10 text-white" : "bg-white/4 text-ink-300 hover:text-white"}`;
 
 export function SortMenu<S extends string>({ sorts, sort, onSort }: { sorts: [S, string][]; sort: S; onSort: (s: S) => void }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -24,7 +29,7 @@ export function SortMenu<S extends string>({ sorts, sort, onSort }: { sorts: [S,
     <div ref={ref} className="relative ml-auto">
       <button onClick={() => setOpen(o => !o)} aria-haspopup="menu" aria-expanded={open}
               className="flex items-center gap-2 rounded-full border border-white/8 bg-white/4 py-2 pr-3 pl-4 text-sm text-ink-300 outline-none transition hover:text-white focus-visible:ring-2 focus-visible:ring-accent-400/60">
-        <span className="text-ink-400">Sort</span><span className="text-ink-100">{label}</span>
+        <span className="text-ink-400">{t("listControls.sort")}</span><span className="text-ink-100">{label}</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden
              className={`text-ink-400 transition ${open ? "rotate-180" : ""}`}><path d="M6 9l6 6 6-6" /></svg>
       </button>
@@ -43,22 +48,23 @@ export function SortMenu<S extends string>({ sorts, sort, onSort }: { sorts: [S,
 }
 
 /** Difficulty 1 to 5, any number of them on (none: every song). `counts[n - 1]`: how many songs are that hard. */
-export function DifficultyPicker({ levels, onToggle, onClear, counts, what = "song" }: {
-  levels: number[]; onToggle: (n: number) => void; onClear: () => void; counts: number[]; what?: string;
+export function DifficultyPicker({ levels, onToggle, onClear, counts }: {
+  levels: number[]; onToggle: (n: number) => void; onClear: () => void; counts: number[];
 }) {
+  const t = useT();
   return (
-    <div role="group" aria-label="Difficulty" className="inline-flex items-center gap-1 rounded-full border border-white/8 bg-white/4 p-1 text-sm">
-      <span className="px-2 text-xs text-ink-400">Difficulty</span>
+    <div role="group" aria-label={t("listControls.difficultyLabel")} className="inline-flex items-center gap-1 rounded-full border border-white/8 bg-white/4 p-1 text-sm">
+      <span className="px-2 text-xs text-ink-400">{t("listControls.difficultyLabel")}</span>
       {[1, 2, 3, 4, 5].map(n => (
         <button key={n} aria-pressed={levels.includes(n)} onClick={() => onToggle(n)}
-                title={`${DIFFICULTY[n - 1]}: ${counts[n - 1]} ${what}${counts[n - 1] === 1 ? "" : "s"}`}
-                aria-label={`${DIFFICULTY[n - 1]} (${n} of 5)`}
+                title={t("listControls.levelTitle", { level: difficultyWord(t, n), count: counts[n - 1] })}
+                aria-label={t("listControls.levelLabel", { level: difficultyWord(t, n), n })}
                 className={`tabular h-8 w-8 rounded-full font-medium outline-none transition focus-visible:ring-2 focus-visible:ring-accent-400/60
                             ${levels.includes(n) ? "bg-white/12 text-white" : "text-ink-300 hover:bg-white/5 hover:text-ink-100"}`}>
           {n}
         </button>
       ))}
-      {levels.length > 0 && <button onClick={onClear} className="px-2 text-xs text-ink-400 transition hover:text-white">Clear</button>}
+      {levels.length > 0 && <button onClick={onClear} className="px-2 text-xs text-ink-400 transition hover:text-white">{t("listControls.clear")}</button>}
     </div>
   );
 }

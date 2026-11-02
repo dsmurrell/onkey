@@ -29,24 +29,13 @@ import {
   type ReactNode,
 } from "react";
 import StillSteps from "./StillSteps";
+import { useT } from "@/lib/i18n";
 
 /* ------------------------------------------------------------------ */
 /* Palette, type and timeline                                          */
 /* ------------------------------------------------------------------ */
 
-const C = {
-  bg: "#0b0d13",
-  panel: "#151924",
-  line: "#2a3142",
-  muted: "#8b94ab",
-  text: "#e6e9f0",
-  accent: "#7c6cf6",
-  accentLight: "#b5a8ff",
-  accentDark: "#6252e0",
-  good: "#34d27b",
-  amber: "#f5b942",
-  red: "#f06a6a",
-} as const;
+import { GUIDE as C } from "@/lib/colors";
 
 const FONT = "system-ui, sans-serif";
 
@@ -54,12 +43,8 @@ const FONT = "system-ui, sans-serif";
 const VB_W = 360;
 const VB_H = 190;
 
-const STEPS = [
-  "Open Privacy & Security",
-  "Screen & System Audio Recording",
-  "Turn on OnKey under System Audio Recording Only",
-  "If macOS asks, quit and reopen. Setup carries on",
-] as const;
+/** The steps' captions, by key (guides.systemAudio.step.*). */
+const STEPS = ["openPrivacy", "screenRecording", "turnOn", "quitReopen"] as const;
 
 /** Scene lengths in ms (about 2 s each; the last one has two beats). */
 const DURATIONS = [2000, 2200, 2200, 2600] as const;
@@ -120,11 +105,6 @@ const CURSOR: ReadonlyArray<readonly [number, number, number]> = [
   [7150, 214, 119], // Quit & Reopen
   [TOTAL, 214, 119],
 ];
-
-const SUMMARY =
-  "How to let OnKey record system audio on a Mac. In System Settings, open Privacy & Security, " +
-  "choose Screen & System Audio Recording, and turn on OnKey under System Audio Recording Only. " +
-  "If macOS asks, choose Quit & Reopen. OnKey opens again with system audio recording ticked and setup carries on.";
 
 /* ------------------------------------------------------------------ */
 /* Maths                                                               */
@@ -320,6 +300,7 @@ const SIDEBAR_BARS = [44, 58, 36, 50, 0, 46, 40] as const;
 const PRIVACY_ROW = 4;
 
 function Sidebar({ select }: { select: number }) {
+  const t = useT();
   return (
     <g>
       {/* search field */}
@@ -335,7 +316,7 @@ function Sidebar({ select }: { select: number }) {
               <rect x={16} y={top - 1} width={110} height={16} rx={6} fill={C.accentDark} opacity={r2(select)} />
               <rect x={22} y={cy - 5} width={10} height={10} rx={3} fill={mix(C.line, C.accentLight, select)} />
               <text x={38} y={cy + 3} fontSize={8.5} fill={mix(C.muted, C.text, select)}>
-                {"Privacy & Security"}
+                {t("guides.systemAudio.mock.privacySecurity")}
               </text>
             </g>
           );
@@ -385,15 +366,16 @@ const TARGET_ROW = 9;
 const SCROLL_BY = 100;
 
 function PrivacyPane({ scroll, press }: { scroll: number; press: number }) {
+  const t = useT();
   const rows: Row[] = PRIVACY_BARS.map((w, i) =>
     i === TARGET_ROW
-      ? { id: "target", label: "Screen & System Audio Recording", trailing: "chevron", highlight: press }
+      ? { id: "target", label: t("guides.systemAudio.mock.screenRecording"), trailing: "chevron", highlight: press }
       : { id: `p${i}`, bar: w, trailing: "chevron" },
   );
   return (
     <g>
       <text x={146} y={23.5} fontSize={9.5} fontWeight={600} fill={C.text}>
-        {"Privacy & Security"}
+        {t("guides.systemAudio.mock.privacySecurity")}
       </text>
       {/* toolbar edge appears once the list scrolls under it */}
       <line x1={132} x2={350} y1={33} y2={33} stroke={C.line} strokeWidth={1.5} opacity={r2(scroll)} />
@@ -408,11 +390,12 @@ function PrivacyPane({ scroll, press }: { scroll: number; press: number }) {
 }
 
 function AudioPane({ on }: { on: number }) {
+  const t = useT();
   return (
     <g>
       <path d="M150 16.5 l-3.5 3.5 l3.5 3.5" fill="none" stroke={C.muted} strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
       <text x={156} y={23.5} fontSize={9} fontWeight={600} fill={C.text}>
-        {"Screen & System Audio Recording"}
+        {t("guides.systemAudio.mock.screenRecording")}
       </text>
       <rect x={146} y={37} width={74} height={4.5} rx={2.25} fill={C.line} />
       <Group
@@ -425,7 +408,7 @@ function AudioPane({ on }: { on: number }) {
         ]}
       />
       <text x={146} y={100} fontSize={8.5} fontWeight={600} fill={C.text}>
-        System Audio Recording Only
+        {t("guides.systemAudio.mock.audioOnly")}
       </text>
       <Group
         x={144}
@@ -434,7 +417,7 @@ function AudioPane({ on }: { on: number }) {
         rows={[
           {
             id: "onkey",
-            label: "OnKey",
+            label: t("guides.systemAudio.mock.appName"),
             icon: (ix, cy) => <AppIcon x={ix} y={cy - 6.5} s={13} />,
             trailing: (cy, right) => <Toggle x={right - 20} cy={cy} on={on} />,
           },
@@ -487,38 +470,40 @@ function SettingsWindow({ select, generalOut, privacyIn, privacyOut, audioIn, sc
 /* ------------------------------------------------------------------ */
 
 function QuitDialog({ opacity, scale, pressed }: { opacity: number; scale: number; pressed: number }) {
+  const t = useT();
   return (
     <g opacity={r2(opacity)} transform={`translate(180 90) scale(${r2(scale)}) translate(-180 -90)`}>
       <rect x={100} y={42} width={160} height={96} rx={14} fill={C.panel} stroke={C.line} strokeWidth={1.5} />
       <AppIcon x={172} y={52} s={16} />
       <text x={180} y={84} fontSize={10} fontWeight={600} fill={C.text} textAnchor="middle">
-        {"Quit & Reopen?"}
+        {t("guides.systemAudio.mock.quitReopenQuestion")}
       </text>
       <rect x={124} y={90} width={112} height={4} rx={2} fill={C.line} />
       <rect x={140} y={97} width={80} height={4} rx={2} fill={C.line} />
       <rect x={110} y={108} width={64} height={18} rx={7} fill={C.line} />
       <text x={142} y={120} fontSize={8.5} fill={C.muted} textAnchor="middle">
-        Later
+        {t("guides.systemAudio.mock.later")}
       </text>
       <rect x={180} y={108} width={70} height={18} rx={7} fill={mix(C.accent, C.accentDark, pressed)} />
       <text x={215} y={120} fontSize={8.5} fontWeight={500} fill={C.text} textAnchor="middle">
-        {"Quit & Reopen"}
+        {t("guides.systemAudio.mock.quitReopen")}
       </text>
     </g>
   );
 }
 
 function AppWindow({ appear, fill, draw }: { appear: number; fill: number; draw: number }) {
+  const t = useT();
   return (
     <g opacity={r2(appear)} transform={`translate(0 ${r2((1 - appear) * 6)})`}>
       <rect x={98} y={40} width={164} height={106} rx={14} fill={C.panel} stroke={C.line} strokeWidth={1.5} />
       <WindowLights x={110} y={52} r={3} gap={10} />
       <AppIcon x={110} y={62} s={20} />
       <text x={138} y={75} fontSize={11} fontWeight={600} fill={C.text}>
-        OnKey
+        {t("guides.systemAudio.mock.appName")}
       </text>
       <text x={138} y={86} fontSize={8} fill={C.muted}>
-        Setup
+        {t("guides.systemAudio.mock.setup")}
       </text>
       <line x1={110} x2={250} y1={93} y2={93} stroke={C.line} strokeWidth={1.5} />
       <circle
@@ -543,7 +528,7 @@ function AppWindow({ appear, fill, draw }: { appear: number; fill: number; draw:
         opacity={draw > 0 ? 1 : 0}
       />
       <text x={130} y={110} fontSize={8.5} fill={C.text}>
-        System audio recording
+        {t("guides.systemAudio.mock.systemAudioRow")}
       </text>
       <circle cx={117} cy={126} r={6.5} fill="none" stroke={C.line} strokeWidth={1.5} />
       <rect x={130} y={123.75} width={78} height={4.5} rx={2.25} fill={C.line} />
@@ -700,14 +685,16 @@ export interface SystemAudioSetupAnimationProps {
 
 export default function SystemAudioGuide({
   reducedMotion,
-  ariaLabel = SUMMARY,
+  ariaLabel: givenLabel,
   className,
   style,
 }: SystemAudioSetupAnimationProps) {
+  const t = useT();
+  const ariaLabel = givenLabel ?? t("guides.systemAudio.summary");
   const prefersReduced = usePrefersReducedMotion();
   const still = reducedMotion ?? prefersReduced;
 
-  const [t, setT] = useState(FIRST_FRAME);
+  const [time, setTime] = useState(FIRST_FRAME);
   const timeRef = useRef(FIRST_FRAME);
   const holdAtRef = useRef(FIRST_FRAME);
   const pauseRef = useRef({ hover: false, focus: false });
@@ -729,7 +716,7 @@ export default function SystemAudioGuide({
         else if (next < holdAtRef.current) next = Math.min(holdAtRef.current, next + dt);
         if (next !== timeRef.current) {
           timeRef.current = next;
-          setT(next);
+          setTime(next);
         }
       }
       raf = requestAnimationFrame(tick);
@@ -760,16 +747,16 @@ export default function SystemAudioGuide({
   const jump = useCallback((i: number) => {
     timeRef.current = STARTS[i];
     holdAtRef.current = HOLD_AT[i];
-    setT(STARTS[i]);
+    setTime(STARTS[i]);
   }, []);
 
   const rootClass = className ? `osa ${className}` : "osa";
 
   if (still) {
-    return <StillSteps count={STEPS.length} label={ariaLabel} frame={i => <Frame t={STILL_AT[i]} />} caption={i => STEPS[i]} />;
+    return <StillSteps count={STEPS.length} label={ariaLabel} frame={i => <Frame t={STILL_AT[i]} />} caption={i => t(`guides.systemAudio.step.${STEPS[i]}`)} />;
   }
 
-  const step = stepAt(t);
+  const step = stepAt(time);
 
   return (
     <div
@@ -792,21 +779,22 @@ export default function SystemAudioGuide({
     >
       <style>{CSS}</style>
       <div role="img" aria-label={ariaLabel}>
-        <Frame t={t} />
+        <Frame t={time} />
         <p key={step} className="osa-caption">
-          {STEPS[step]}
+          {t(`guides.systemAudio.step.${STEPS[step]}`)}
         </p>
       </div>
-      <div className="osa-dots" role="group" aria-label="Steps">
-        {STEPS.map((caption, i) => {
+      <div className="osa-dots" role="group" aria-label={t("guides.systemAudio.dots")}>
+        {STEPS.map((id, i) => {
+          const caption = t(`guides.systemAudio.step.${id}`);
           const active = i === step;
-          const progress = active ? clamp((t - STARTS[i]) / DURATIONS[i]) : 0;
+          const progress = active ? clamp((time - STARTS[i]) / DURATIONS[i]) : 0;
           return (
             <button
-              key={caption}
+              key={id}
               type="button"
               className="osa-dot"
-              aria-label={`Step ${i + 1} of ${STEPS.length}: ${caption}`}
+              aria-label={t("guides.systemAudio.stepOf", { step: i + 1, count: STEPS.length, caption })}
               aria-current={active ? "step" : undefined}
               onClick={() => jump(i)}
             >

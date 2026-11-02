@@ -1,0 +1,14 @@
+{
+  "nav": {
+    "sing": "Sing",
+    "library": "Library"
+  },
+  "library": {
+    "count": "{count, plural, =0 {No songs yet} one {# song} other {# songs}}",
+    "learned": "Learned · ready to sing"
+  },
+  "take": {
+    "scored": "You scored <b>{score}</b> on {song}",
+    "who": "{singer, select, me {Your take} other {{singer}’s take}}"
+  }
+}

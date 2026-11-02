@@ -3,11 +3,15 @@
 // control (start a song, skip to the singing, pause from OnKey) for an app you haven't allowed, this asks:
 // allow control of that app (macOS then asks once too), or open the song there and press play yourself.
 import { useEffect, useState } from "react";
+import { useWindows } from "@/lib/platform";
+import { useT } from "@/lib/i18n";
 import { allowControl, goHome, openInApp, type ControlNeeded } from "@/lib/session";
 
 export default function ControlPrompt() {
+  const t = useT();
   const [ask, setAsk] = useState<ControlNeeded | null>(null);
   const [busy, setBusy] = useState(false);
+  const win = useWindows();
   useEffect(() => {
     const on = (e: Event) => setAsk((e as CustomEvent<ControlNeeded>).detail);
     window.addEventListener("onkey-control-needed", on);
@@ -44,35 +48,38 @@ export default function ControlPrompt() {
       <div role="dialog" aria-modal="true" aria-labelledby="control-title" onClick={e => e.stopPropagation()}
            className="glass w-full max-w-md rounded-3xl p-6 shadow-2xl animate-rise">
         <h2 id="control-title" className="text-lg font-semibold tracking-tight">
-          {canAllow ? `Let OnKey control ${ask.app}?` : `OnKey can't control ${ask.app}`}
+          {canAllow ? t("controlPrompt.titleAllow", { app: ask.app }) : t("controlPrompt.titleCant", { app: ask.app })}
         </h2>
         <p className="mt-2 text-sm text-ink-300">
           {canAllow
-            ? `OnKey is listening to ${ask.app}, not controlling it. To start songs, skip to the singing and pause from OnKey, it needs your permission. macOS will ask you once too.`
-            : `OnKey follows ${ask.app} by listening only. Play, pause and skip there.`}
+            ? t("controlPrompt.bodyAllow", { app: ask.app, os: win ? "pc" : "mac" })
+            : t("controlPrompt.bodyCant", { app: ask.app })}
         </p>
-        {browser && (
-          <p className="mt-2 rounded-xl bg-amber-400/10 px-3 py-2 text-xs text-amber-200">
-            This is the bigger permission: OnKey can then read and control the YouTube tab in your browser, and listens to
-            your browser’s sound, whatever it is (calls too): sound it doesn’t recognise may go to Shazam as a short
-            fingerprint, never the audio. Your browser also needs “Allow JavaScript from Apple Events” turned on.
+        {browser && win && (
+          <p className="mt-2 rounded-xl bg-white/6 px-3 py-2 text-xs text-ink-300">
+            {t("controlPrompt.browserPc")}
+          </p>
+        )}
+        {browser && !win && (
+          <p className="mt-2 rounded-xl bg-notice-fill/10 px-3 py-2 text-xs text-notice">
+            {t("controlPrompt.browserMac")}
           </p>
         )}
         <div className="mt-5 flex flex-wrap justify-end gap-2">
-          <button onClick={() => setAsk(null)} className="rounded-xl px-4 py-2 text-sm text-ink-300 transition hover:text-white">Not now</button>
+          <button onClick={() => setAsk(null)} className="rounded-xl px-4 py-2 text-sm text-ink-300 transition hover:text-white">{t("controlPrompt.notNow")}</button>
           {ask.track && (
             <button onClick={open} className="rounded-xl bg-white/8 px-4 py-2 text-sm text-ink-100 transition hover:bg-white/12">
-              Open in {browser ? "your browser" : ask.app}
+              {t("controlPrompt.openIn", { app: browser ? t("controlPrompt.yourBrowser") : ask.app })}
             </button>
           )}
           {canAllow && (
             <button disabled={busy} onClick={allow}
                     className="rounded-xl bg-accent-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-accent-400 disabled:opacity-50">
-              Allow control
+              {t("controlPrompt.allow")}
             </button>
           )}
         </div>
-        <p className="mt-4 text-[11px] text-ink-500">You can change this any time in Settings.</p>
+        <p className="mt-4 text-[11px] text-ink-500">{t("controlPrompt.changeLater")}</p>
       </div>
     </div>
   );

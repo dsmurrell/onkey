@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "Tentang OnKey",
+      "services": "Layanan",
+      "pauseListening": "Jeda Mendengarkan",
+      "resumeListening": "Lanjutkan Mendengarkan",
+      "hide": "Sembunyikan OnKey",
+      "hideOthers": "Sembunyikan Lainnya",
+      "quit": "Tutup OnKey"
+    },
+    "file": {
+      "title": "File",
+      "closeWindow": "Tutup Jendela"
+    },
+    "edit": {
+      "title": "Edit",
+      "undo": "Urung",
+      "redo": "Ulang",
+      "cut": "Potong",
+      "copy": "Salin",
+      "paste": "Tempel",
+      "selectAll": "Pilih Semua"
+    },
+    "view": {
+      "title": "Lihat",
+      "fullScreen": "Masuk/Keluar Layar Penuh"
+    },
+    "window": {
+      "title": "Jendela",
+      "minimize": "Minikan",
+      "zoom": "Zoom",
+      "closeWindow": "Tutup Jendela"
+    },
+    "help": {
+      "title": "Bantuan",
+      "reportProblem": "Laporkan Masalah…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "Catatan OnKey untuk laporan bug: log dan angka, tanpa lirik atau audio."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "Nyanyi tepat nada",
+      "free": "Gratis untuk Mac"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey mendengarkan nyanyian Anda untuk menunjukkan seberapa tepat nada Anda. Rekaman Anda tetap di Mac Anda.",
+    "NSAudioCaptureUsageDescription": "OnKey mendengarkan musik yang diputar di Mac Anda untuk mempelajari melodi penyanyinya. Musiknya tidak pernah disimpan atau dikirim. Dalam mode mendengarkan, sidik jari singkat dari musik itu (bukan audionya) dikirim ke Shazam milik Apple untuk menamai lagu.",
+    "NSAppleEventsUsageDescription": "OnKey menanyakan ke Spotify, Musik atau browser Anda (untuk YouTube) apa yang diputar, dan mengontrol pemutaran saat Anda menekan putar, lompat atau mulai dari awal."
+  }
+}

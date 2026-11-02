@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "Giới thiệu OnKey",
+      "services": "Dịch vụ",
+      "pauseListening": "Tạm dừng nghe",
+      "resumeListening": "Tiếp tục nghe",
+      "hide": "Ẩn OnKey",
+      "hideOthers": "Ẩn các ứng dụng khác",
+      "quit": "Thoát OnKey"
+    },
+    "file": {
+      "title": "Tệp",
+      "closeWindow": "Đóng Cửa sổ"
+    },
+    "edit": {
+      "title": "Sửa",
+      "undo": "Hoàn tác",
+      "redo": "Làm lại",
+      "cut": "Cắt",
+      "copy": "Sao chép",
+      "paste": "Dán",
+      "selectAll": "Chọn Tất cả"
+    },
+    "view": {
+      "title": "Xem",
+      "fullScreen": "Bật/tắt toàn màn hình"
+    },
+    "window": {
+      "title": "Cửa sổ",
+      "minimize": "Thu nhỏ",
+      "zoom": "Thu phóng",
+      "closeWindow": "Đóng Cửa sổ"
+    },
+    "help": {
+      "title": "Trợ giúp",
+      "reportProblem": "Báo cáo sự cố…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "Hồ sơ của OnKey cho một báo cáo lỗi: nhật ký và số liệu, không có lời bài hát hay âm thanh."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "Hát đúng tông",
+      "free": "Miễn phí cho Mac"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey nghe bạn hát để cho biết bạn đang đúng tông đến đâu. Bản ghi giọng hát của bạn chỉ lưu trên máy Mac này.",
+    "NSAudioCaptureUsageDescription": "OnKey nghe nhạc đang phát trên máy Mac để học giai điệu của ca sĩ. OnKey không bao giờ lưu hay gửi bản nhạc đi. Ở chế độ nghe, chỉ một mã nhận dạng ngắn của bản nhạc (không phải âm thanh) được gửi tới Shazam của Apple để tìm tên bài hát.",
+    "NSAppleEventsUsageDescription": "OnKey hỏi Spotify, Nhạc hoặc trình duyệt của bạn (cho YouTube) xem bài nào đang phát, và điều khiển phát nhạc khi bạn nhấn phát, chuyển bài hay hát lại từ đầu."
+  }
+}

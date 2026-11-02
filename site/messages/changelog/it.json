@@ -1,0 +1,176 @@
+{
+  "page": {
+    "title": "Novità",
+    "description": "Ogni funzione e correzione di OnKey, dalla più recente, con la versione che l’ha portata.",
+    "kicker": "Changelog",
+    "heading": "Novità in OnKey",
+    "intro": "Ogni funzione e correzione, dalla più recente, e la versione che l’ha portata. OnKey si aggiorna da solo, quindi ti arrivano senza fare niente.",
+    "release": "OnKey {version}",
+    "latest": "Ultima",
+    "kind": {
+      "new": "Nuovo",
+      "better": "Meglio",
+      "fix": "Corretto"
+    },
+    "github": "Ogni modifica è su <link>GitHub</link>, dove OnKey è open source."
+  },
+  "releases": {
+    "0-3-0": {
+      "note": "OnKey in 19 lingue, e testi che vanno a tempo in spagnolo, portoghese, italiano, francese e tedesco."
+    },
+    "0-2-0": {
+      "note": "Si scarica e si installa da solo sui Mac che hanno già OnKey."
+    },
+    "0-1-0": {
+      "note": "La prima versione pubblica.",
+      "link": "Lanciato su Hacker News"
+    }
+  },
+  "entries": {
+    "onkey-in-your-language": {
+      "title": "OnKey nella tua lingua",
+      "summary": "OnKey ora parla 19 lingue. Segue da solo la lingua del tuo Mac, oppure scegline una dal globo nella barra in alto, nella schermata di benvenuto o nelle Impostazioni.",
+      "p1": "Sei hanno la traduzione completa, testi inclusi: spagnolo (America Latina e Spagna), portoghese, italiano, francese e tedesco",
+      "p2": "Altre dodici sono traduzioni in anteprima: olandese, giapponese, cinese (semplificato e tradizionale), coreano, hindi, russo, turco, polacco, indonesiano, vietnamita e thailandese. Ognuna lo dice, con un link per migliorarla",
+      "p3": "Per ora sono tutte traduzioni automatiche: se qualcosa suona strano, il link nelle Impostazioni la apre per correggerla",
+      "p4": "Anche il menu di OnKey, le richieste di autorizzazione del Mac e la finestra di salvataggio sono nella tua lingua, e le copertine arrivano dallo store del tuo paese",
+      "p5": "Lo stesso vale per questo sito, le sue guide e questo changelog: segue la lingua del browser, e un globo nell’intestazione la cambia"
+    },
+    "lyrics-keep-time-in-more-languages": {
+      "title": "I testi vanno a tempo in più lingue",
+      "summary": "Le parole in spagnolo, portoghese, italiano, francese e tedesco ora si accendono mentre vengono cantate. I caratteri accentati (corazón, Straße, cœur) sono letti correttamente, e le sillabe si contano con le regole di ogni lingua, non con quelle dell’inglese.",
+      "p1": "I brani in giapponese, cinese, coreano, hindi, russo, thailandese e altre scritture mostrano le righe intere, a tempo con il brano, per ora senza sincronia parola per parola",
+      "p2": "I testi in inglese sono esattamente come prima"
+    },
+    "songs-to-try-in-your-language": {
+      "title": "Brani da provare nella tua lingua",
+      "summary": "Con spagnolo, portoghese, italiano, francese o tedesco selezionato, la pagina Canta suggerisce otto brani in quella lingua, dal più facile al più difficile, con un motivo per ciascuno.",
+      "p1": "Clicca un brano suggerito e parte in Spotify, come fa una scheda della Libreria",
+      "p2": "I link per trovarlo in Apple Music ci sono ancora"
+    },
+    "when-a-song-has-no-lyrics": {
+      "title": "Quando un brano non ha il testo",
+      "summary": "I testi vengono da LRCLIB, una libreria gratuita a cui chiunque può contribuire. Un brano per cui non ha niente ora lo dice sotto la corsia e nella pagina del brano, con un pulsante Cerca di nuovo che chiede subito a LRCLIB.",
+      "p1": "Prima OnKey ricordava una risposta “nessuno” per un giorno, così un testo appena aggiunto da qualcuno non compariva fino al giorno dopo",
+      "p2": "Quando è LRCLIB stesso a non funzionare, la pagina Canta te lo dice: le note continuano, le parole si aggiungono se torna, e un brano imparato nel frattempo riceve il testo la prossima volta che lo canti"
+    },
+    "smoother-switching-in-spotify": {
+      "title": "Cambi più fluidi in Spotify",
+      "summary": "Chiedere un altro brano mentre uno è in riproduzione ora mette in pausa il primo per un attimo prima di avviare il successivo, così il cambio è più pulito."
+    },
+    "a-clearer-settings-page": {
+      "title": "Una pagina Impostazioni più chiara",
+      "summary": "Il microfono si sceglie dal menu di OnKey stesso, con i dispositivi virtuali e un microfono scollegato elencati a parte. I menu si aprono sopra la pagina, così un elenco lungo non viene mai tagliato.",
+      "p1": "Nelle schede della Libreria, la linea dell’estensione di un brano è verde quando ti sta bene e color pesca quando non ti sta così com’è (un’ottava di distanza, qualche nota fuori, o più ampia)",
+      "p2": "Le barre dei passaggi della configurazione restano allineate quando il nome di un passaggio occupa due righe"
+    },
+    "small-fixes-0-3-0": {
+      "title": "Piccole correzioni",
+      "summary": "Cose che erano un po’ storte, ora a posto.",
+      "p1": "Il puntino di Novità compare dopo un aggiornamento finché non lo apri, e mai su un’installazione nuova",
+      "p2": "Segnala un problema mantiene la casella di testo a tutta altezza, e la finestra è opaca sopra le Impostazioni",
+      "p3": "Il contatore di notifiche di una scheda YouTube, “(3) Artista - Titolo”, non intralcia più il riconoscimento del brano"
+    },
+    "pause-listening": {
+      "title": "Metti in pausa l’ascolto",
+      "summary": "Stai guardando uno stream o ascoltando un podcast? Metti in pausa l’ascolto di OnKey, e smette di sentire qualsiasi cosa finché non riprendi. Nel frattempo niente viene seguito, riconosciuto o imparato.",
+      "p1": "Premi ⌘⇧P, clicca il chip Live nella pagina Canta, oppure scegli OnKey → Metti in pausa l’ascolto",
+      "p2": "Una piccola etichetta “Ascolto in pausa · Riprendi” resta in cima a ogni pagina, così non te ne dimentichi",
+      "p3": "Resta in pausa anche dopo un riavvio, finché non riprendi"
+    },
+    "see-when-a-paused-take-will-be-scored": {
+      "title": "Vedi quando un’esibizione in pausa riceverà il punteggio",
+      "summary": "Metti in pausa a metà brano e OnKey aspetta un minuto nel caso tu continui. Ora te lo dice, e ti lascia saltare l’attesa.",
+      "p1": "La pagina Canta fa il conto alla rovescia: “In pausa · punteggio tra 0:45 · Termina ora”",
+      "p2": "La Cronologia mostra il brano che stai cantando come prima scheda, così un ascolto appena messo in pausa non sembra mai perso",
+      "p3": "Ogni scheda di brano nella Cronologia disegna i tuoi punteggi dal secondo ascolto"
+    },
+    "audio-interfaces-and-your-microphone-list": {
+      "title": "Interfacce audio e l’elenco dei microfoni",
+      "summary": "OnKey ora prende la tua voce dall’ingresso in cui si trova davvero, quindi un microfono sull’ingresso 2 di una Focusrite (o di qualsiasi interfaccia con più ingressi) funziona e basta.",
+      "p1": "Nessuna impostazione da fare: OnKey segue l’ingresso in cui c’è la tua voce",
+      "p2": "I dispositivi virtuali aggiunti da altre app (Krisp, Loopback, BlackHole, Zoom) sono elencati separatamente dai tuoi microfoni veri"
+    },
+    "listening-back-stays-in-step-after-a-skip": {
+      "title": "Il riascolto resta a tempo dopo un salto",
+      "summary": "Se saltavi avanti mentre cantavi, “Con il brano” poteva riprodurre la parte prima del salto fuori tempo. Ora ogni parte dell’esibizione va a tempo con il brano."
+    },
+    "reliability-fixes": {
+      "title": "Correzioni di affidabilità",
+      "summary": "Cose che potevano andare storte a metà brano, ora sistemate.",
+      "p1": "Termina non butta più via un’esibizione se lo premi mentre OnKey controlla il lettore",
+      "p2": "Un brano non può più restare per sempre su “In attesa” o “Calcolo del punteggio” dopo un raro errore",
+      "p3": "Elimina tutti nella Libreria non si blocca più, e “Smetti di imparare ed elimina” elimina solo il brano scelto",
+      "p4": "Le scorciatoie da tastiera non raggiungono più la musica dietro le finestre di dialogo",
+      "p5": "Il punteggio arriva subito quando un brano finisce in pausa",
+      "p6": "Uno stream radio o un mix di ore si ferma a 20 minuti invece di continuare come un’unica esibizione",
+      "p7": "Uscire è immediato: OnKey sparisce subito e finisce di salvare ciò che ha imparato dietro le quinte"
+    },
+    "songs-start-cleanly": {
+      "title": "I brani partono puliti",
+      "summary": "Premere Canta su una scheda poteva avviare la musica due volte, o far sentire un frammento del brano prima che ricominciasse. Ora una pressione vuol dire una partenza pulita."
+    },
+    "guides-and-help-and-beyond-pitch": {
+      "title": "Guide e aiuto, e Oltre l’intonazione",
+      "summary": "Le Impostazioni ora rimandano a queste guide. Una nuova guida, Oltre l’intonazione, spiega cosa OnKey non può sentire (timbro, respiro, stile) e da quali insegnanti gratuiti impararlo."
+    },
+    "smoother-setup-and-youtube": {
+      "title": "Configurazione più fluida e YouTube",
+      "summary": "Correzioni per le prime cose in cui si sono imbattuti i nostri tester.",
+      "p1": "Il passaggio delle app musicali nella configurazione va avanti da solo quando macOS non ha niente da chiedere",
+      "p2": "Una scheda YouTube che Chrome ha messo a dormire non blocca più OnKey",
+      "p3": "Un’app musicale che non hai installato risulta disattivata, non attiva"
+    },
+    "learn-a-song-again": {
+      "title": "Impara di nuovo un brano",
+      "summary": "Se il testo o le note di un brano si sfasano, fai in modo che OnKey lo impari da capo: il prossimo ascolto lo impara, e sostituisce la vecchia copia quando ne ha sentito abbastanza.",
+      "p1": "Scegli Impara di nuovo dal menu ⋯ della Libreria o dalla pagina del brano",
+      "p2": "OnKey lo suggerisce quando le parole di un brano si sfasano allo stesso modo in due ascolti"
+    },
+    "a-tidier-app-page-by-page": {
+      "title": "Un’app più ordinata, pagina per pagina",
+      "summary": "Ogni esibizione ha un resoconto più chiaro, e in Canta, Cronologia, Libreria e Impostazioni è più facile orientarsi.",
+      "p1": "Canta propone “Riprendi da dove eri”: gli ultimi brani, ciascuno con l’ultimo punteggio e un pulsante Canta",
+      "p2": "Riproduci nella Libreria avvia il brano per te, e Canta lo mostra mentre parte (o dice perché non può)"
+    },
+    "scoring-levels-relaxed-steady-and-pro": {
+      "title": "Livelli di punteggio: Rilassato, Stabile e Pro",
+      "summary": "Scegli nelle Impostazioni quanto severamente valutare le tue esibizioni. Rilassato è come OnKey ha sempre valutato; Stabile e Pro chiedono di più.",
+      "p1": "Il vibrato è giudicato dal centro della nota, così un buon vibrato non viene penalizzato a nessun livello",
+      "p2": "Ogni esibizione mostra il livello con cui è stata valutata"
+    },
+    "leave-out-what-isn-t-the-melody": {
+      "title": "Escludi ciò che non è la melodia",
+      "summary": "Se OnKey ha preso un coro o un’improvvisazione invece della melodia, segna quel tratto come “Non è la melodia” nella pagina dell’esibizione. Viene escluso da ogni punteggio di quel brano, esibizioni passate comprese."
+    },
+    "your-vocal-range": {
+      "title": "La tua estensione vocale",
+      "summary": "OnKey ricava la tua estensione dai brani che canti, e mostra come ogni brano ci sta dentro.",
+      "p1": "La Cronologia mostra la tua estensione su una striscia di tasti, con la tua zona comoda segnata",
+      "p2": "La Libreria mostra quanto ogni brano ti si adatta, con un filtro per i brani nella tua estensione",
+      "p3": "Quando un brano è alto o basso, dice se cantarlo un’ottava sopra o sotto ti si adatterebbe meglio"
+    },
+    "challenge-a-friend-and-share-your-best-takes": {
+      "title": "Lancia una sfida e condividi le tue migliori esibizioni",
+      "summary": "Da un’esibizione, copia un link che dice il tuo punteggio e chiede a chi vuoi di batterlo. Contiene solo il brano, l’artista, il tuo punteggio e, se vuoi, il tuo nome.",
+      "p1": "Dopo un record su un brano o un bel salto in avanti, la pagina dell’esibizione propone “Condividi questa esibizione”",
+      "p2": "Una clip condivisa finisce su una scheda OnKey: la tua voce, mai la musica"
+    },
+    "fade-the-guide": {
+      "title": "Sfuma la guida",
+      "summary": "Attivala nelle Impostazioni, e sui brani che già canti bene la tua linea della voce si sfuma mentre sei sulla nota, così canti a orecchio e non a occhio. Torna nel momento in cui perdi la nota."
+    },
+    "lyrics-line-up-better": {
+      "title": "I testi si allineano meglio",
+      "summary": "Righe e parole ora si accendono più vicino al momento in cui vengono cantate, comprese le righe che iniziano con un “oh” o un “whoa”."
+    },
+    "onkey-s-first-release": {
+      "title": "La prima versione di OnKey",
+      "summary": "Gratuito, open source e tutto sul tuo Mac.",
+      "p1": "Impara la melodia di qualsiasi brano che ascolti in Spotify, Apple Music o YouTube, la prima volta che lo ascolti",
+      "p2": "Una linea della voce dal vivo sulle note della voce originale, con testi sincronizzati e un punteggio per ogni esibizione",
+      "p3": "Esibizioni da riascoltare, e un breve video di un’esibizione da condividere: la tua voce, senza musica",
+      "p4": "Brani per cominciare, una libreria di ciò che hai imparato e aggiornamenti che si installano da soli"
+    }
+  }
+}

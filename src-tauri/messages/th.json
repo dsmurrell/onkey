@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "เกี่ยวกับ OnKey",
+      "services": "บริการ",
+      "pauseListening": "หยุดฟังชั่วคราว",
+      "resumeListening": "ฟังต่อ",
+      "hide": "ซ่อน OnKey",
+      "hideOthers": "ซ่อนอื่นๆ",
+      "quit": "ออกจาก OnKey"
+    },
+    "file": {
+      "title": "ไฟล์",
+      "closeWindow": "ปิดหน้าต่าง"
+    },
+    "edit": {
+      "title": "แก้ไข",
+      "undo": "เลิกทำ",
+      "redo": "ทำกลับมาใหม่",
+      "cut": "ตัด",
+      "copy": "คัดลอก",
+      "paste": "วาง",
+      "selectAll": "เลือกทั้งหมด"
+    },
+    "view": {
+      "title": "มุมมอง",
+      "fullScreen": "เข้าสู่โหมดเต็มหน้าจอ"
+    },
+    "window": {
+      "title": "หน้าต่าง",
+      "minimize": "ย่อ",
+      "zoom": "ซูม",
+      "closeWindow": "ปิดหน้าต่าง"
+    },
+    "help": {
+      "title": "วิธีใช้",
+      "reportProblem": "รายงานปัญหา…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "บันทึกของ OnKey สำหรับรายงานปัญหา: ล็อกและตัวเลข ไม่มีเนื้อเพลงหรือเสียง"
+  },
+  "share": {
+    "endCard": {
+      "tagline": "ร้องให้ตรงคีย์",
+      "free": "ฟรีสำหรับ Mac"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey ฟังเสียงร้องของคุณเพื่อแสดงว่าร้องตรงคีย์แค่ไหน เสียงที่บันทึกอยู่บน Mac ของคุณ",
+    "NSAudioCaptureUsageDescription": "OnKey ฟังเพลงที่เล่นบน Mac ของคุณเพื่อเรียนรู้ทำนองของนักร้อง ไม่บันทึกหรือส่งเพลงออกไปเลย ในโหมดฟัง ลายนิ้วมือเสียงสั้นๆ (ไม่ใช่ตัวเสียง) จะส่งไป Shazam ของ Apple เพื่อระบุชื่อเพลง",
+    "NSAppleEventsUsageDescription": "OnKey ถาม Spotify, แอปเพลง หรือเบราว์เซอร์ของคุณ (สำหรับ YouTube) ว่ากำลังเล่นอะไร และควบคุมการเล่นเมื่อคุณกดเล่น ข้าม หรือเริ่มใหม่"
+  }
+}

@@ -59,20 +59,9 @@ fn r1(x: f64) -> f64 {
 
 // ---------------------------------------------------------------- which build, which Mac
 
+/// A fact about this computer by its sysctl name (the platform's: the registry on Windows).
 fn sysctl_str(name: &str) -> Option<String> {
-    let c = std::ffi::CString::new(name).ok()?;
-    let mut len = 0usize;
-    unsafe {
-        if libc::sysctlbyname(c.as_ptr(), std::ptr::null_mut(), &mut len, std::ptr::null_mut(), 0) != 0 || len == 0 {
-            return None;
-        }
-        let mut buf = vec![0u8; len];
-        if libc::sysctlbyname(c.as_ptr(), buf.as_mut_ptr() as *mut libc::c_void, &mut len, std::ptr::null_mut(), 0) != 0 {
-            return None;
-        }
-        buf.truncate(len);
-        Some(String::from_utf8_lossy(&buf).trim_end_matches('\0').trim().to_string()).filter(|s| !s.is_empty())
-    }
+    crate::platform::sys::machine(name)
 }
 
 /// This build: version, commit and when that commit was made.
@@ -136,7 +125,9 @@ fn note_build(dir: &Path) -> Option<String> {
 pub fn init(data: &Path) {
     let dir = set_dir(data);
     let m = mac();
-    crate::engine::log(&format!("==== OnKey {} on {} ({}), {} GB, macOS {}{}", build_words(&build()),
+    // (on Windows "macos" holds "Windows 11 24H2 (build …)": see sysctl_str)
+    let os = crate::platform::sys::OS_NAME;
+    crate::engine::log(&format!("==== OnKey {} on {} ({}), {} GB, {os}{}{}", build_words(&build()),
         m["model"].as_str().unwrap_or("?"), m["chip"].as_str().unwrap_or("?"), m["ram_gb"], m["macos"].as_str().unwrap_or("?"),
         if crate::lowmem::low_memory() { ", low-memory mode" } else { "" }));
     if let Some(w) = note_build(&dir) {
@@ -277,19 +268,13 @@ pub fn pitch_lag(ms: f64) {
 }
 
 fn cpu_seconds() -> f64 {
-    let mut ru: libc::rusage = unsafe { std::mem::zeroed() };
-    if unsafe { libc::getrusage(libc::RUSAGE_SELF, &mut ru) } != 0 {
-        return 0.0;
-    }
-    let tv = |t: libc::timeval| t.tv_sec as f64 + t.tv_usec as f64 / 1e6;
-    tv(ru.ru_utime) + tv(ru.ru_stime)
+    crate::platform::sys::cpu_seconds()
 }
 
-/// OnKey's memory as Activity Monitor shows it (the physical footprint), MB.
+/// OnKey's memory as Activity Monitor shows it (the physical footprint; Windows: private memory, as Task Manager
+/// shows it), MB.
 pub fn footprint_mb() -> f64 {
-    let mut ri: libc::rusage_info_v2 = unsafe { std::mem::zeroed() };
-    let r = unsafe { libc::proc_pid_rusage(libc::getpid(), libc::RUSAGE_INFO_V2, &mut ri as *mut _ as *mut libc::rusage_info_t) };
-    if r == 0 { ri.ri_phys_footprint as f64 / 1e6 } else { 0.0 }
+    crate::platform::sys::footprint_mb()
 }
 
 fn sampler() {

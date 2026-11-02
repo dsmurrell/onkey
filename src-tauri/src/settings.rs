@@ -22,6 +22,9 @@
 //!                    restarts
 //!   auto_update      check GitHub Releases for a new OnKey on launch and daily (updater.rs); on unless turned off
 //!   scoring_level    how strictly takes are scored: "steady" or "pro" (dsp::LEVELS); none: Relaxed, the default
+//!   language         the window's language: a language code ("en", "zh", "pt-BR"…) chosen in Settings; none:
+//!                    "auto", following the computer's own language (the window reads navigator.language), then
+//!                    English (ui/lib/i18n.ts)
 //!   output_timing    per output device (Core Audio uid): your tap-along check of its delay, and whether its
 //!                    suggestion to check was dismissed (timing.rs)
 //! Control of Spotify and Apple Music is on by default (setup asks macOS for it; its "Listen only" turns both off),
@@ -230,9 +233,66 @@ pub fn fade_guide() -> bool {
     get_opt("fade_guide").unwrap_or(false)
 }
 
+/// "Language": "auto" (follow the computer's language) unless a language code was chosen in Settings.
+pub fn language() -> String {
+    language_in(VALUES.lock().unwrap().as_ref().unwrap_or(&Value::Null))
+}
+
+fn language_in(v: &Value) -> String {
+    v["language"].as_str().and_then(language_code).unwrap_or_else(|| "auto".into())
+}
+
+/// A language code as kept ("en", "zh-Hans", "pt-BR": letters, digits and dashes, a 2–3 letter language first),
+/// or None for "auto" and anything that isn't a code.
+pub fn language_code(code: &str) -> Option<String> {
+    let code = code.trim();
+    let mut parts = code.split(['-', '_']);
+    let lang = parts.next()?;
+    let ok = code.len() <= 35
+        && (2..=3).contains(&lang.len())
+        && lang.chars().all(|c| c.is_ascii_alphabetic())
+        && parts.all(|p| (1..=8).contains(&p.len()) && p.chars().all(|c| c.is_ascii_alphanumeric()));
+    (ok && !code.eq_ignore_ascii_case("auto")).then(|| code.replace('_', "-"))
+}
+
+/// Choose the window's language: a code, or "auto" (kept as no setting at all). Something that isn't a code is "auto".
+pub fn set_language(code: &str) -> Result<(), String> {
+    try_set_value("language", language_code(code).map_or(Value::Null, Value::String))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn language_is_auto_unless_a_code_was_chosen_and_a_choice_outlasts_a_restart() {
+        assert_eq!(language_in(&json!({})), "auto", "a new install follows the computer");
+        assert_eq!(language_in(&json!({"setup_done": true})), "auto", "an existing one too");
+        assert_eq!(language_in(&json!({"language": "zh"})), "zh");
+        assert_eq!(language_in(&json!({"language": "pt_BR"})), "pt-BR");
+        assert_eq!(language_in(&json!({"language": "../../etc"})), "auto", "not a code: auto");
+        assert_eq!(language_in(&json!({"language": 7})), "auto");
+        for bad in ["", "auto", "AUTO", "e", "english", "en--", "zh-", "1a", "en-<b>"] {
+            assert_eq!(language_code(bad), None, "{bad}");
+        }
+        for (good, kept) in [("en", "en"), ("zh-Hans", "zh-Hans"), ("es-419", "es-419"), ("pt_BR", "pt-BR"), (" ja ", "ja")] {
+            assert_eq!(language_code(good).as_deref(), Some(kept));
+        }
+        let dir = std::env::temp_dir().join(format!("onkey-settings-language-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        let file = dir.join("settings.json");
+        for (chosen, back) in [(Some("es"), "es"), (None, "auto")] {
+            let mut v = json!({"setup_done": true});
+            if let Some(c) = chosen {
+                v["language"] = json!(c);
+            }
+            save(&file, &v).unwrap();
+            let (read_back, _) = load(&dir);
+            assert_eq!(language_in(&read_back), back, "read back as saved");
+        }
+        let _ = std::fs::remove_dir_all(&dir);
+    }
 
     #[test]
     fn fade_the_guide_is_off_unless_turned_on() {

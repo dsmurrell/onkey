@@ -1,0 +1,1504 @@
+{
+  "app": {
+    "title": "OnKey",
+    "description": "Pelatih bernyanyi: belajar menyanyikan lagu yang Anda sukai, dengan musik yang biasa Anda putar."
+  },
+  "settings": {
+    "language": {
+      "title": "Bahasa",
+      "label": "Bahasa",
+      "sub": "Bahasa yang ditampilkan OnKey. Otomatis mengikuti bahasa komputer Anda.",
+      "autoNamed": "Otomatis ({language})",
+      "autoOs": "{language} ({os, select, mac {bahasa Mac Anda} other {bahasa PC ini}})",
+      "early": "Tahap awal",
+      "earlyNote": "Lirik lagu berbahasa {language} untuk sementara ditampilkan tanpa pewaktuan per kata. Ingin membantu? <link>Perbaiki terjemahan ini.</link>",
+      "credits": "Diterjemahkan oleh {names}"
+    },
+    "title": "Pengaturan",
+    "saveFailed": "Pengaturan tidak dapat disimpan.",
+    "audio": {
+      "title": "Audio",
+      "mic": {
+        "label": "Mikrofon",
+        "now": "Sekarang: {name}.",
+        "none": "Tidak ada mikrofon yang terhubung.",
+        "nowMissingMac": "Sekarang: {name}. Mikrofon pilihan Anda tidak terhubung, jadi OnKey memakai input bawaan Mac sampai mikrofon itu terhubung lagi.",
+        "nowMissingPc": "Sekarang: {name}. Mikrofon pilihan Anda tidak terhubung, jadi OnKey memakai {input} sampai mikrofon itu terhubung lagi.",
+        "noneMissingMac": "<warn>Tidak ada mikrofon yang terhubung.</warn> Mikrofon pilihan Anda tidak terhubung, jadi OnKey memakai input bawaan Mac sampai mikrofon itu terhubung lagi.",
+        "noneMissingPc": "<warn>Tidak ada mikrofon yang terhubung.</warn> Mikrofon pilihan Anda tidak terhubung, jadi OnKey memakai {input} sampai mikrofon itu terhubung lagi.",
+        "moreMac": "Otomatis memakai input Mac Anda (Pengaturan Sistem → Bunyi), tetapi bukan mikrofon headphone Bluetooth selama Mac punya mikrofon sendiri, supaya musik di headphone tetap berkualitas penuh. Cek mikrofon saat penyiapan dan take Anda memakai mikrofon yang sama. Perangkat virtual dari aplikasi lain (Krisp, Loopback, BlackHole, Zoom, Teams) dicantumkan terpisah: pilih hanya jika Anda memang ingin bernyanyi lewat aplikasi itu, karena OnKey akan menerima suara aplikasi tersebut, bukan suara mikrofon Anda.",
+        "morePc": "Otomatis memakai {input} ({soundInput}). Cek mikrofon saat penyiapan dan take Anda memakai mikrofon yang sama.",
+        "automatic": "Otomatis",
+        "virtual": "Virtual (dari aplikasi lain)",
+        "notConnected": "Tidak terhubung"
+      },
+      "output": {
+        "label": "Output",
+        "now": "Sekarang: {name}. Ubah di {os, select, mac {Pengaturan Sistem → Bunyi} other {{sound}}}."
+      },
+      "setup": {
+        "title": "Jalankan penyiapan lagi",
+        "sub": "Izin dan cek mikrofon, seperti pada hari pertama."
+      }
+    },
+    "shortcuts": {
+      "title": "Pintasan keyboard",
+      "space": "Spasi",
+      "pause": "Jeda atau lanjutkan mendengarkan (di halaman mana pun)",
+      "playPause": "Putar atau jeda",
+      "restart": "Mulai lagu dari awal",
+      "previous": "Lagu sebelumnya",
+      "next": "Lagu berikutnya, atau lompat ke bagian nyanyian",
+      "blind": "Tampilkan atau sembunyikan not (Take tanpa not)",
+      "favourite": "Jadikan lagu favorit",
+      "mini": "Mode mini: bilah lirik kecil di atas aplikasi lain"
+    },
+    "updates": {
+      "version": "OnKey {version}",
+      "unsupportedMac": "Build pengembangan: tidak memperbarui dirinya sendiri.",
+      "unsupportedPc": "Build uji ini tidak memperbarui dirinya sendiri: pasang build baru di atasnya jika sudah ada.",
+      "waiting": "OnKey {version} dipasang setelah lagu ini selesai, lalu OnKey dimulai ulang.",
+      "ready": "OnKey {version} sudah siap. Mulai ulang untuk memperbarui, atau dipasang saat Anda keluar.",
+      "downloading": "Mengunduh OnKey {version}…",
+      "checking": "Memeriksa…",
+      "official": "OnKey {version} sudah dirilis oleh proyek aslinya di singonkey.app. Salinan ini dibangun dari kode sumber, jadi tidak memperbarui dirinya sendiri.",
+      "current": "Anda memakai versi terbaru.",
+      "currentSource": "Anda memakai versi terbaru. Salinan ini dibangun dari kode sumber: ia memberi tahu saat versi baru dirilis, tetapi tidak memperbarui dirinya sendiri.",
+      "updateFailed": "Tidak dapat memperbarui ke OnKey {version}. Periksa sekarang akan mencoba lagi.",
+      "updateFailedWhy": "Tidak dapat memperbarui ke OnKey {version} ({error}). Periksa sekarang akan mencoba lagi.",
+      "checkFailed": "Pembaruan tidak dapat diperiksa saat ini.",
+      "checkFailedWhy": "Pembaruan tidak dapat diperiksa saat ini ({error}).",
+      "restart": "Mulai ulang untuk memperbarui",
+      "checkNow": "Periksa sekarang",
+      "auto": {
+        "title": "Periksa pembaruan secara otomatis",
+        "sub": "Sekali sehari, di latar belakang. Tidak pernah mengganggu lagu.",
+        "more": "OnKey menanyakan versi lebih baru ke GitHub dan mengunduhnya di latar belakang. Pembaruan dipasang saat Anda mulai ulang atau keluar."
+      }
+    },
+    "seeHow": {
+      "show": "Lihat tampilannya",
+      "hide": "Sembunyikan"
+    },
+    "more": {
+      "more": "Selengkapnya",
+      "less": "Ringkas"
+    },
+    "scoring": {
+      "title": "Penilaian",
+      "label": "Tingkat penilaian",
+      "more": "Vibrato tidak masalah: nada Anda dinilai dari titik tengah getarannya. Setiap skor di OnKey ditampilkan pada tingkat ini, termasuk take Anda sebelumnya: semuanya dinilai ulang dari nyanyian Anda yang tersimpan.",
+      "moreRelaxed": "Setiap skor di OnKey ditampilkan pada tingkat ini, termasuk take Anda sebelumnya: semuanya dinilai ulang dari nyanyian Anda yang tersimpan."
+    },
+    "control": {
+      "title": "Izinkan OnKey mengontrol",
+      "introMac": "Aktif secara bawaan: OnKey membaca lagu yang diputar dan posisinya (tepat dan instan), serta dapat memutar, menjeda, menggeser dan memulai lagu. Tidak lebih. macOS bertanya sekali untuk masing-masing.",
+      "introPc": "Aktif secara bawaan: OnKey membaca lagu yang diputar dan posisinya, serta dapat memutar, menjeda, menggeser dan memulai lagu. Tidak lebih.",
+      "introAsking": "OnKey mengikuti Spotify dan Apple Music dengan bertanya langsung ke aplikasinya, jadi OnKey sudah mengontrol keduanya.",
+      "spotify": {
+        "title": "Spotify",
+        "missing": "Spotify tidak terpasang di {os, select, mac {Mac} other {PC}} ini.",
+        "sub": "Mulai, jeda dan lompati lagu di Spotify dari OnKey."
+      },
+      "music": {
+        "title": "Apple Music",
+        "missingMac": "Aplikasi Musik tidak ada di Mac ini.",
+        "missingPc": "Aplikasi Apple Music tidak ada di PC ini.",
+        "subMac": "Sama untuk aplikasi Musik (lagu di pustaka Anda).",
+        "subPc": "Sama untuk aplikasi Apple Music."
+      },
+      "youtube": {
+        "title": "YouTube di browser Anda",
+        "badge": "Izin lebih besar",
+        "subMac": "Baca dan kontrol tab YouTube di Chrome, Brave, Edge atau Safari.",
+        "moreMac": "Perlu “Izinkan JavaScript dari Apple Events” diaktifkan di browser. Selama aktif (dan 10 menit setelah Anda membuka lagu YouTube dari OnKey), OnKey mendengarkan semua suara dari browser Anda, termasuk panggilan dan podcast: suara yang tidak dikenalinya dapat dikirim ke Shazam sebagai sidik jari singkat (bukan audionya) kecuali Shazam dimatikan di bawah.",
+        "subPc": "Ikuti lagu yang diputar di Chrome, Edge, Firefox, Brave, Opera atau Vivaldi.",
+        "morePc": "Dari apa yang dilaporkan browser ke {os} sebagai sedang diputar; OnKey dapat memutar, menjeda dan menggesernya di sana. Sebelum sebuah lagu dipelajari, posisinya bisa sedikit kurang tepat dibanding Spotify."
+      },
+      "listenOnlyMac": "OnKey hanya mendengarkan: ia mengikuti lagu dari suaranya dan tidak menyentuh aplikasi apa pun. Posisinya sedikit kurang tepat, dan OnKey tidak dapat memulai atau mengulang lagu. Mematikan aplikasi di sini tidak mencabut izin macOS: izin itu ada di Pengaturan Sistem → Privasi & Keamanan → Automasi.",
+      "listenOnlyPc": "OnKey hanya mendengarkan: ia mengikuti lagu dari suaranya dan tidak menyentuh aplikasi apa pun. Di {os} itu hanya berlaku untuk lagu yang sudah dipelajari: lagu baru diberi nama oleh {apps} selama diaktifkan di sini.",
+      "allOff": "Jika semuanya dimatikan, OnKey mengikuti lagu dari suaranya saja."
+    },
+    "naming": {
+      "title": "Menamai lagu",
+      "pc": "Lagu yang pernah Anda nyanyikan dikenali di PC ini dari suaranya. Lagu baru diberi nama oleh Spotify, Apple Music atau browser Anda (dengan YouTube aktif), dari apa yang mereka laporkan sedang diputar. Tidak ada yang dikirim ke mana pun untuk menamai lagu.",
+      "shazam": {
+        "title": "Gunakan Shazam untuk menamai lagu baru",
+        "sub": "Menamai lagu baru dari sidik jari singkat suaranya, bukan audionya.",
+        "more": "Lagu yang pernah Anda nyanyikan dikenali di Mac ini. Lagu baru dari Spotify dan Apple Music diberi nama oleh aplikasinya sendiri selama OnKey boleh mengontrolnya; sisanya diberi nama oleh Shazam. Jika dimatikan, tidak ada yang dikirim ke Shazam dan hanya lagu yang sudah dipelajari di Mac ini yang dikenali di sana. Sampul album tetap dicari berdasarkan artis dan judul di katalog iTunes Apple.",
+        "warn": "Dengan Spotify dan Apple Music dimatikan, lagu baru hanya dapat dipelajari jika Shazam aktif. Lagu yang sudah dipelajari tetap berfungsi."
+      }
+    },
+    "lyrics": {
+      "title": "Lirik",
+      "show": {
+        "title": "Tampilkan lirik",
+        "sub": "Dari LRCLIB, basis data lirik komunitas yang gratis.",
+        "more": "Jika dimatikan, OnKey tidak meminta apa pun ke LRCLIB dan Anda bernyanyi mengikuti not saja: panduan nada dan skor Anda tetap berfungsi seperti biasa."
+      }
+    },
+    "voice": {
+      "title": "Suara Anda",
+      "breaks": {
+        "title": "Ingatkan saya untuk mengistirahatkan suara",
+        "sub": "Pengingat halus untuk beristirahat setelah sekitar 35 menit bernyanyi.",
+        "more": "Jeda 20 menit tanpa bernyanyi memulai hitungan dari awal lagi."
+      },
+      "fadeGuide": {
+        "title": "Pudarkan panduan pada lagu yang Anda hafal",
+        "sub": "Garis nada suara Anda memudar selama Anda tepat nada, supaya Anda lebih mendengarkan diri sendiri.",
+        "more": "Mulai berlaku setelah Anda menyanyikan sebuah lagu dengan baik (skor terbaik 80 atau lebih, atau dua take terakhir 75 atau lebih). Makin hafal Anda, makin pudar garisnya; jika melenceng lebih dari satu semiton, garis tampil seperti biasa. Not selalu tetap tampil, dan Anda dapat memunculkan panduan penuh lagi untuk take mana pun."
+      }
+    },
+    "performance": {
+      "title": "Kinerja",
+      "battery": {
+        "title": "Hemat baterai saat bernyanyi",
+        "sub": "Saat memakai baterai, not digambar sedikit lebih jarang. Tetap mulus.",
+        "more": "30 kali per detik, bukan 60: separuh beban gambar untuk Mac Anda."
+      },
+      "keepModels": {
+        "title": "Jaga model pembelajaran tetap siap",
+        "sub": "Lagu baru dipelajari lebih cepat, tetapi OnKey memakai lebih banyak memori.",
+        "more": "Sekitar 1,5 GB lebih banyak, juga saat Anda menyanyikan lagu yang sudah dikenal OnKey. Jika dimatikan, model dimuat saat lagu baru dipelajari dan dilepas setelahnya. Aktif secara bawaan di {os, select, mac {Mac} other {PC}} dengan memori 32 GB atau lebih."
+      }
+    },
+    "about": {
+      "title": "Tentang",
+      "report": {
+        "title": "Laporkan masalah",
+        "subMac": "Simpan log dan data waktu OnKey sebagai zip untuk dilampirkan ke issue GitHub. Anda melihat isinya dulu; tanpa lirik atau audio, tidak ada yang diunggah.",
+        "subPc": "Simpan log dan data waktu OnKey sebagai satu zip di Desktop Anda, untuk dilampirkan ke pesan atau issue GitHub. Anda melihat isinya dulu; tanpa lirik atau audio, tidak ada yang diunggah."
+      },
+      "guides": {
+        "title": "Panduan dan bantuan",
+        "sub": "Cara kerja OnKey, penilaian, mengatasi masalah dan bernyanyi dengan nyaman, di singonkey.app."
+      },
+      "discord": {
+        "title": "Gabung ke Discord OnKey",
+        "sub": "Bertanya, melaporkan lagu yang tidak sinkron, dan mengusulkan ide."
+      },
+      "madeBy": {
+        "title": "Dibuat oleh Daniel Murrell",
+        "tagline": "Menyelamatkan penyanyi kamar mandi dari dirinya sendiri sejak 2026"
+      },
+      "fairUse": {
+        "title": "Memakai OnKey dengan wajar",
+        "sub": "Untuk apa OnKey dibuat, dan cara membagikan nyanyian Anda tanpa membagikan musiknya."
+      },
+      "licences": {
+        "title": "Lisensi sumber terbuka",
+        "sub": "Model, data, font dan pustaka kode yang menjadi dasar OnKey, beserta lisensinya."
+      },
+      "footer": "Untuk latihan pribadi di rumah. Apa yang dipelajari OnKey tetap di {os, select, mac {Mac} other {PC}} ini: simpan untuk diri sendiri, dan jangan unggah take atau rekaman layar yang memuat musiknya."
+    }
+  },
+  "music": {
+    "levels": {
+      "relaxed": {
+        "name": "Santai",
+        "about": "Longgar: nilai penuh dalam setengah semiton. Cocok untuk pemula dan anak-anak."
+      },
+      "steady": {
+        "name": "Mantap",
+        "about": "Nada dan waktu lebih ketat, untuk penyanyi yang umumnya sudah tepat nada."
+      },
+      "pro": {
+        "name": "Pro",
+        "about": "Ketat, untuk penyanyi terlatih: seperempat semiton untuk nilai penuh."
+      }
+    },
+    "offBy": {
+      "cents": "{cents}¢ {dir, select, up {terlalu tinggi} other {terlalu rendah}}",
+      "octaves": "sekitar {count, plural, other {{count} oktaf}} {dir, select, up {lebih tinggi} other {lebih rendah}}",
+      "semitones": "sekitar {count, plural, other {{count} semiton}} {dir, select, up {terlalu tinggi} other {terlalu rendah}}"
+    },
+    "scoreWord": {
+      "superb": "Luar biasa",
+      "great": "Hebat",
+      "good": "Bagus",
+      "gettingThere": "Hampir",
+      "keepAtIt": "Terus berlatih"
+    }
+  },
+  "platform": {
+    "linux": {
+      "os": "Linux",
+      "settings": "Pengaturan Suara",
+      "sound": "pengaturan Suara sistem Anda",
+      "soundInput": "pengaturan Suara sistem Anda → Input",
+      "defaultInput": "input bawaan sistem",
+      "files": "pengelola file Anda",
+      "filesThe": "pengelola file",
+      "apps": "Spotify atau YouTube di browser Anda"
+    },
+    "windows": {
+      "os": "Windows",
+      "settings": "Pengaturan Windows",
+      "sound": "Pengaturan Windows → Sistem → Suara",
+      "soundInput": "Pengaturan Windows → Sistem → Suara → Input",
+      "defaultInput": "input bawaan Windows",
+      "files": "File Explorer",
+      "filesThe": "File Explorer",
+      "apps": "Spotify, Apple Music atau YouTube di browser Anda"
+    },
+    "setupStep": {
+      "welcome": "Selamat datang",
+      "permissions": "Izin",
+      "musicApps": "Aplikasi musik",
+      "micCheck": "Cek mikrofon",
+      "ready": "Siap"
+    },
+    "savedFolder": {
+      "desktop": "Desktop Anda",
+      "home": "folder beranda Anda",
+      "named": "folder {folder}"
+    }
+  },
+  "learn": {
+    "stage": {
+      "playing": "Mempelajari sambil diputar",
+      "waiting": "Menunggu giliran",
+      "queued": "Menunggu dipelajari",
+      "paused": "Menunggu selagi Anda bernyanyi",
+      "separating": "Memisahkan suara penyanyi",
+      "pitch": "Mengikuti melodi",
+      "scoring": "Menilai take Anda",
+      "words": "Mengatur waktu kata",
+      "bars": "Membuat bilah not",
+      "notes": "Mencari setiap not",
+      "saving": "Menyimpan",
+      "other": "Mempelajari"
+    },
+    "label": {
+      "queued": "Menunggu dipelajari",
+      "going": "Mempelajari…",
+      "percent": "Mempelajari… {pct}%"
+    }
+  },
+  "starting": {
+    "yourApp": "aplikasi musik Anda",
+    "theSong": "lagu ini",
+    "noId": {
+      "title": "OnKey tidak dapat memulai {song} di {app}",
+      "sub": "OnKey belum mengenal lagu ini di {app} (lagu ini dipelajari dari aplikasi lain, atau dengan mendengarkan). Buka di {app} dan tekan putar: OnKey mengikutinya, dan setelah itu dapat memulainya untuk Anda."
+    },
+    "failed": {
+      "title": "Gagal memulai {song} di {app}",
+      "subMusic": "OnKey dapat memulai lagu yang ada di pustaka Apple Music Anda. Buka di Apple Music dan tekan putar di sana: OnKey mengikutinya.",
+      "sub": "Buka di {app} dan tekan putar di sana: OnKey mengikutinya."
+    },
+    "going": {
+      "title": "Memulai {song} di {app}…",
+      "sub": "Jalur muncul begitu lagu diputar."
+    }
+  },
+  "errors": {
+    "deleteFailed": "Tidak dapat dihapus.",
+    "readFailed": "Tidak dapat membaca {what, select, takes {take} songs {lagu} other {{what}}} Anda",
+    "reportsInApp": "Laporan dibuat di aplikasi OnKey."
+  },
+  "sing": {
+    "header": {
+      "miniTitle": "Mode mini: bilah lirik kecil yang tetap di atas aplikasi lain (M)"
+    },
+    "learning": {
+      "badge": "Mempelajari lagu ini",
+      "title": "Take Anda tanpa not",
+      "body": "Ikut bernyanyi, tanpa petunjuk. Lain kali Anda akan melihat setiap not yang datang.",
+      "scoreAfter": "<time>{clock}</time> · skor setelah lagu selesai"
+    },
+    "learningLine": {
+      "waiting": "Menunggu untuk mempelajari <hl>{name}</hl>",
+      "learning": "Mempelajari <hl>{name}</hl>: {stage}",
+      "stage": {
+        "playing": "mempelajari sambil diputar",
+        "waiting": "menunggu giliran",
+        "queued": "menunggu dipelajari",
+        "paused": "menunggu selagi Anda bernyanyi",
+        "separating": "memisahkan suara penyanyi",
+        "pitch": "mengikuti melodi",
+        "scoring": "menilai take Anda",
+        "words": "mengatur waktu kata",
+        "bars": "membuat bilah not",
+        "notes": "mencari setiap not",
+        "saving": "menyimpan",
+        "other": "mempelajari"
+      }
+    },
+    "lineSub": {
+      "mac": {
+        "finding": "OnKey menamai lagu dari suaranya. Perlu beberapa detik, dan take dimulai dari awal lagu.",
+        "new_song": "OnKey menamai lagu berikutnya. Take-nya dimulai dari awal lagu.",
+        "unnamed": "Lagu ini tidak dikenal OnKey maupun Shazam. OnKey bertanya lagi saat suaranya berubah.",
+        "no_shazam": "Shazam tidak dapat dihubungi saat ini, jadi hanya lagu yang sudah dipelajari di Mac ini yang dikenali. OnKey terus mencoba.",
+        "shazam_off": "Shazam dimatikan (Pengaturan), jadi dari suaranya saja OnKey hanya mengenali lagu yang sudah dipelajari di Mac ini. Aktifkan Shazam untuk menamai lagu baru.",
+        "podcast": "Putar lagu dan OnKey akan mengikutinya.",
+        "stopped": "Anda menghentikan pembelajarannya, jadi OnKey membiarkannya. Putar lagu lain dan OnKey akan mengikutinya.",
+        "elsewhere": "OnKey mendengar apa yang diputar di Mac ini. Jika lagunya diputar di perangkat lain (ponsel Anda, speaker), pindahkan ke Mac ini lewat menu perangkat di aplikasi."
+      },
+      "pc": {
+        "unnamed": "Lagu ini belum dipelajari OnKey, dan tidak ada aplikasi musik yang memberi tahu judulnya. OnKey bertanya lagi saat suaranya berubah.",
+        "no_shazam": "Lagu ini belum dipelajari OnKey. Di {os}, lagu baru diberi nama oleh {apps} (dengan YouTube aktif): putar di sana dan OnKey mempelajarinya.",
+        "shazam_off": "Lagu ini belum dipelajari OnKey. Di {os}, lagu baru diberi nama oleh {apps} (dengan YouTube aktif): putar di sana dan OnKey mempelajarinya.",
+        "elsewhere": "OnKey mendengar apa yang diputar di PC ini. Jika lagunya diputar di perangkat lain (ponsel Anda, speaker), pindahkan ke PC ini lewat menu perangkat di aplikasi."
+      }
+    },
+    "waiting": {
+      "title": {
+        "starting": "Memulai OnKey…",
+        "gettingReady": "Bersiap…",
+        "notASong": "Bukan lagu",
+        "stillListening": "Masih mendengarkan",
+        "idle": "Putar lagu dan ikut bernyanyi"
+      },
+      "sub": {
+        "connecting": "Menghubungkan ke mesin di {os, select, pc {PC} other {Mac}} ini.",
+        "listeningTo": "Mendengarkan {name}. Jalur akan muncul sebentar lagi.",
+        "idle": "Di Spotify{youtube, select, yes {, Apple Music atau YouTube} other { atau Apple Music}}. OnKey mengikutinya, dan setiap lagu menjadi take yang dapat Anda tinjau."
+      },
+      "openIn": "Buka di {app}",
+      "notNow": "Nanti saja",
+      "keys": {
+        "playPause": "<kbd>Spasi</kbd> putar / jeda",
+        "startOver": "<kbd>R</kbd> dari awal",
+        "skip": "<kbd>←</kbd><kbd>→</kbd> lompat",
+        "favourite": "<kbd>F</kbd> favorit"
+      },
+      "songsToTry": "Lagu untuk dicoba",
+      "youtube": {
+        "title": "YouTube dan YouTube Music <badge>Eksperimental</badge>",
+        "turnOff": "Matikan",
+        "turnOn": "Aktifkan",
+        "pcOn": "Aktif. OnKey mengikuti lagu di browser Anda dari apa yang dilaporkan browser ke {os} sebagai sedang diputar.",
+        "pcOff": "Mati, jadi lagu yang diputar di browser Anda tidak ditangkap. Aktifkan untuk ikut bernyanyi di Chrome, Edge, Firefox, Brave, Opera atau Vivaldi.",
+        "macOn": "Aktif. macOS bertanya sekali untuk mengizinkan OnKey mengontrol browser Anda, supaya OnKey dapat membaca posisi video.",
+        "macOff": "Mati, jadi lagu yang diputar di browser Anda tidak ditangkap. Aktifkan untuk ikut bernyanyi di Chrome, Safari, Brave atau Edge: macOS bertanya sekali untuk mengizinkan OnKey mengontrol browser."
+      }
+    },
+    "paused": {
+      "text": "Mendengarkan dijeda. Lanjutkan untuk ikut bernyanyi.",
+      "resumeTitle": "Lanjutkan mendengarkan (⌘⇧P)",
+      "resume": "Lanjutkan"
+    },
+    "rename": {
+      "saveFailed": "Nama tidak dapat disimpan.",
+      "buttonTitle": "Nama lagu salah? Perbaiki artis dan judul (dipakai untuk mencari lirik)",
+      "title": "Perbaiki nama lagu",
+      "about": "Dibaca dari video YouTube. OnKey mencari lirik berdasarkan nama ini.",
+      "artist": "Artis",
+      "songTitle": "Judul",
+      "cancel": "Batal",
+      "save": "Simpan"
+    },
+    "notices": {
+      "dismiss": "Tutup",
+      "openWindowsSettings": "Buka Pengaturan Windows",
+      "openSystemSettings": "Buka Pengaturan Sistem",
+      "mic": {
+        "title": "OnKey tidak dapat mendengar mikrofon Anda",
+        "deniedPc": "Nyanyian Anda tidak didengar atau dinilai sampai mikrofon diizinkan. Di <b>Pengaturan Windows → Privasi & keamanan → Mikrofon</b>, aktifkan <b>Akses mikrofon</b> dan <b>Izinkan aplikasi desktop mengakses mikrofon Anda</b>.",
+        "deniedMac": "Nyanyian Anda tidak didengar atau dinilai sampai mikrofon diizinkan. Di <b>Pengaturan Sistem → Privasi & Keamanan → Mikrofon</b>, aktifkan OnKey.",
+        "restrictedPc": "Pengaturan PC ini tidak mengizinkan OnKey memakai mikrofon. Tanyakan kepada pengelola PC ini.",
+        "restrictedMac": "Pengaturan Mac Anda tidak mengizinkan OnKey memakai mikrofon. Tanyakan kepada pengelola Mac ini.",
+        "noneMac": "Tidak ada mikrofon yang terhubung, jadi nyanyian Anda tidak didengar atau dinilai. Hubungkan satu, atau pilih di <b>Pengaturan Sistem → Bunyi → Input</b>.",
+        "nonePc": "Tidak ada mikrofon yang terhubung, jadi nyanyian Anda tidak didengar atau dinilai. Hubungkan satu, atau pilih di <b>{soundInput}</b>."
+      },
+      "musicQuiet": {
+        "title": "Volume {app} sangat rendah",
+        "body": "OnKey tidak dapat mendengar lagunya dengan baik{at, select, yes { (volume {app} di {volume}%)} other {}}, jadi nyanyian Anda tidak dinilai. Besarkan volume {app} dan atur kerasnya lewat volume {os, select, pc {PC} other {Mac Anda}}."
+      },
+      "automation": {
+        "title": "OnKey tidak diizinkan mengontrol {app}",
+        "body": "{listening, select, yes {OnKey mengikutinya dengan mendengarkan saja, dan tidak dapat memulai, menjeda atau melompati lagu di sana.} other {Jadi OnKey tidak tahu apa yang diputar di sana.}} Di <b>Pengaturan Sistem → Privasi & Keamanan → Automasi → OnKey</b>, aktifkan {app}{listening, select, yes {, atau matikan di Pengaturan OnKey} other {}}."
+      },
+      "notAnswering": {
+        "title": "{app} tidak menjawab OnKey",
+        "body": "macOS mungkin sedang bertanya apakah OnKey boleh mengontrol {app}, di jendela yang tersembunyi di belakang jendela lain: cari dan pilih <b>Izinkan</b>. Atau aktifkan {app} di <b>Pengaturan Sistem → Privasi & Keamanan → Automasi → OnKey</b>. OnKey mencoba lagi dalam satu menit."
+      },
+      "lyricsDown": {
+        "title": "Lirik tidak tersedia saat ini",
+        "body": "LRCLIB, layanan lirik gratis yang dipakai OnKey, sedang tidak berfungsi. Not tetap ditampilkan, dan liriknya menyusul jika layanan pulih selama lagu berjalan. Lagu yang dipelajari selama itu mendapat liriknya saat Anda menyanyikannya lagi."
+      },
+      "models": {
+        "title": "OnKey tidak dapat mempelajari lagu baru saat ini",
+        "body": "Model pembelajarannya, yang disertakan di dalam aplikasi, hilang atau rusak{hasError, select, yes { ({error})} other {}}. Lagu yang sudah dipelajari tetap berfungsi. Untuk memperbaikinya, unduh OnKey lagi dan {os, select, pc {pasang di atas yang ini} other {ganti aplikasinya di folder Aplikasi}}: lagu dan take Anda tetap tersimpan."
+      },
+      "modelsBroken": {
+        "title": "OnKey tidak dapat mendengar nyanyian Anda saat ini",
+        "body": "Model nadanya, yang disertakan di dalam aplikasi, tidak dapat dimuat{hasError, select, yes { ({error})} other {}}. Untuk memperbaikinya, unduh OnKey lagi dan ganti aplikasinya di folder Aplikasi: lagu dan take Anda tetap tersimpan."
+      },
+      "youtubeBlocked": {
+        "title": "Untuk ikut bernyanyi dengan YouTube, izinkan OnKey membaca video di {browser}",
+        "body": "Di {browser}, pilih <b>{setting}</b>. OnKey hanya membaca posisi video dan judul lagu, tidak ada yang lain di halaman itu."
+      },
+      "youtubeOff": {
+        "title": "Memutar YouTube atau YouTube Music di {browser}?",
+        "turnOn": "Aktifkan YouTube",
+        "pc": "OnKey hanya menangkap lagu di browser Anda setelah YouTube diaktifkan. OnKey lalu mengikuti lagu yang dilaporkan {browser} ke {os} sebagai sedang diputar, dan mempelajarinya seperti lagu lain.",
+        "mac": "OnKey hanya menangkap lagu di browser Anda setelah YouTube diaktifkan. macOS lalu bertanya sekali untuk mengizinkan OnKey mengontrol {browser}, supaya OnKey dapat membaca posisi video.",
+        "cantFollow": "OnKey tidak dapat mengikuti lagu di {browser}. Putar di <b>Chrome, Safari, Brave atau Edge</b> dan aktifkan YouTube (di sini, atau di Pengaturan), atau aktifkan <b>mode mendengarkan</b> di Pengaturan, yang berfungsi di browser apa pun."
+      }
+    },
+    "notASong": {
+      "text": "<hl>{name}</hl> terdengar seperti percakapan, bukan lagu, jadi OnKey berhenti mempelajarinya.",
+      "dismiss": "Tutup",
+      "learnIt": "Ini lagu: pelajari saat diputar lagi"
+    },
+    "speakerHint": {
+      "text": "OnKey tidak dapat mendengar Anda karena musiknya terlalu keras. Jika Anda bernyanyi, kecilkan sedikit atau pakai headphone supaya skornya adil.",
+      "dismiss": "Tutup",
+      "never": "Jangan tampilkan lagi"
+    },
+    "ended": {
+      "title": "Sesi selesai",
+      "howYouDid": "Ini hasil Anda.",
+      "noTakes": "Kali ini tidak ada take yang cukup panjang untuk dinilai."
+    },
+    "permission": {
+      "yourApp": "aplikasi musik Anda",
+      "title": "OnKey belum dapat mendengar {app}",
+      "body": "Untuk mengikuti lagu, OnKey mendengarkan audio {app} di Mac ini. Audionya tidak disimpan atau dikirim; dalam mode mendengarkan, sidik jari singkat dari audio itu (bukan audionya) dikirim ke Shazam milik Apple untuk menamai lagu.",
+      "step1": "1. Buka <b>Pengaturan Sistem → Privasi & Keamanan</b>",
+      "step2": "2. Pilih <b>Rekaman Layar & Audio Sistem</b>",
+      "step3": "3. Di bawah <b>Hanya Rekaman Audio Sistem</b>, aktifkan OnKey",
+      "open": "Buka Pengaturan Sistem"
+    },
+    "mini": {
+      "playASong": "Putar lagu di Spotify atau Apple Music",
+      "score": "skor",
+      "hideDancer": "Sembunyikan penari di sini",
+      "expand": "Buka jendela penuh (M)",
+      "showDancer": "Tampilkan penari",
+      "progress": "Posisi dalam lagu"
+    }
+  },
+  "live": {
+    "lyrics": {
+      "none": "Tidak ada lirik tersinkron untuk lagu ini",
+      "off": "Lirik dimatikan (Pengaturan)",
+      "findingPlace": "Mencari posisi Anda…",
+      "countdown": "♪ <num>{which, select, next {Baris berikutnya} other {Baris pertama}} dalam {secs} dtk</num>"
+    },
+    "score": {
+      "label": "Skor",
+      "afterSong": "setelah lagu selesai",
+      "onPitch": "✓ Pas di nada",
+      "higher": "▲ Naikkan nada",
+      "lower": "▼ Turunkan nada"
+    },
+    "transport": {
+      "restart": "Mulai lagu dari awal (R)",
+      "previous": "Sebelumnya (←)",
+      "pause": "Jeda (spasi)",
+      "play": "Putar (spasi)",
+      "skipToSinging": "Lompat ke bagian nyanyian (→)",
+      "next": "Lagu berikutnya (→)"
+    },
+    "take": {
+      "done": "{blind, select, yes {tanpa not · } other {}}{hasNotes, select, yes {{hit}/{total} not} other {lihat}} →",
+      "couldntScore": "tidak dapat dinilai",
+      "singNow": "Nyanyikan sekarang",
+      "learnedPct": "{pct}% dipelajari",
+      "playThrough": "putar sampai selesai",
+      "learningPct": "mempelajari… {pct}%",
+      "waiting": "menunggu dipelajari",
+      "learning": "mempelajari…",
+      "scoring": "menilai…",
+      "learned": "Sudah dipelajari · siap dinyanyikan"
+    },
+    "timing": {
+      "title": "Lirik terlalu cepat atau terlambat di perangkat ini? Ketuk mengikuti bunyi klik untuk mengukur jedanya",
+      "check": "Cek ketepatan waktu di <hl>{name}</hl> ›",
+      "theseHeadphones": "headphone ini",
+      "dismiss": "Jangan sarankan lagi"
+    },
+    "chips": {
+      "connectionTitle": "Koneksi ke mesin",
+      "reconnecting": "Menghubungkan ulang",
+      "resumeTitle": "Lanjutkan mendengarkan (⌘⇧P)",
+      "paused": "Mendengarkan dijeda",
+      "pauseTitle": "Jeda mendengarkan (⌘⇧P)",
+      "live": "Langsung",
+      "outputTitle": "Suara keluar di {device}. Anda mendengarnya {ms} md setelah aplikasi musik memutarnya; penilaian memperhitungkan itu{checked, select, yes { (dari cek ketepatan waktu Anda di Pengaturan)} other {}}.",
+      "thisDevice": "perangkat ini",
+      "bluetooth": "Bluetooth",
+      "headphones": "Headphone atau speaker",
+      "micTitle": "Mikrofon yang didengarkan OnKey (pilih yang lain di Pengaturan)",
+      "noMic": "Tidak ada mikrofon"
+    },
+    "switches": {
+      "blindTitle": "Sembunyikan not untuk menguji diri: Take tanpa not (B)",
+      "showNotes": "Tampilkan not",
+      "echoTitle": "Menghilangkan suara musik dari mikrofon Anda. Matikan untuk menguji dengan lagu yang diputar lewat speaker.",
+      "echo": "Peredam gema",
+      "dancerTitle": "Figur garis yang menari mengikuti lagu selagi Anda bernyanyi",
+      "dancer": "Penari"
+    },
+    "finish": {
+      "lastLine": "Itu baris terakhir",
+      "seeScore": "Selesai dan lihat skor Anda",
+      "now": "Selesai sekarang",
+      "paused": "Dijeda",
+      "pausedIn": "{learning, select, yes {dipelajari} other {dinilai}} dalam {time}",
+      "learning": "mempelajari…",
+      "scoring": "menilai…"
+    },
+    "openTake": {
+      "countdown": "Dijeda · {learning, select, yes {dipelajari} other {dinilai}} dalam {time}",
+      "learning": "Mempelajari…",
+      "scoring": "Menilai…",
+      "state": "{state, select, paused {Dijeda} learning {Mempelajari sambil diputar} other {Sedang bernyanyi}} · {learning, select, yes {dipelajari} other {dinilai}} saat lagu selesai",
+      "paused": "dijeda",
+      "now": "sekarang",
+      "finish": "Selesai sekarang"
+    },
+    "skip": {
+      "singingIn": "Nyanyian dimulai dalam {secs} dtk",
+      "skipAhead": "Lompat ke depan"
+    },
+    "pitchTitle": "Nada Anda terhadap not saat ini",
+    "toast": {
+      "view": "Lihat",
+      "learned": "Sudah dipelajari · not siap untuk lain kali"
+    }
+  },
+  "lane": {
+    "verdict": {
+      "perfect": "Sempurna",
+      "excellent": "Istimewa",
+      "great": "Hebat",
+      "good": "Bagus",
+      "ok": "Oke"
+    },
+    "blind": "Take tanpa not · not disembunyikan · tekan B untuk menampilkan",
+    "findingPlace": "Mencari posisi Anda dalam lagu…",
+    "liningUp": "Menyelaraskan dengan lagu…",
+    "singingStarts": "Nyanyian dimulai dalam {secs} dtk"
+  },
+  "take": {
+    "allTakes": "← Semua take",
+    "notFound": "Take ini tidak ditemukan.",
+    "header": {
+      "singAgainBlocked": "Dapat dinyanyikan setelah dipelajari",
+      "singAgain": "Nyanyikan lagi",
+      "shareTitle": "Video 20 detik berisi suara Anda dan not-notnya, untuk Instagram",
+      "share": "Bagikan",
+      "within50Title": "{pct}% nyanyian Anda berada dalam 50 sen dari penyanyi.",
+      "sungLevelTitle": "Dinilai ulang dari nyanyian Anda yang tersimpan, pada tingkat yang dipilih di Pengaturan",
+      "sungLevel": "Ditampilkan pada tingkat {level}. Dinyanyikan pada tingkat {sungLevel}, skornya {score}.",
+      "leftOut": "Dinilai tanpa {count, plural, other {bagian}} yang ditandai bukan melodi{changed, select, yes { (sebelumnya {first})} other {}}."
+    },
+    "mode": {
+      "firstPlay": "Putaran pertama",
+      "firstPlayWhy": "Pertama kali lagu ini diputar: OnKey mempelajari melodinya, tanpa not ditampilkan",
+      "blind": "Tanpa not",
+      "blindWhy": "Dinyanyikan tanpa not ditampilkan"
+    },
+    "story": {
+      "none": "Anda tidak ikut menyanyikan bagian penyanyi, jadi tidak ada yang dapat dinilai.",
+      "main": "Anda menyanyikan <n>{sang}%</n> dari bagian penyanyi, dan yang Anda nyanyikan <n>{tune}%</n> tepat nada. {full, select, yes {Itulah skor Anda.} other {Skor Anda menghitungnya penuh setelah Anda menyanyikan 40% atau lebih dari bagian itu.}}"
+    },
+    "verdict": {
+      "great": "Tepat nada dengan indah.",
+      "mostly": "Umumnya tepat nada, dengan beberapa bagian yang goyah.",
+      "often": "Sering dekat dengan not, kadang melenceng.",
+      "away": "Melodinya lepas dari Anda di beberapa bagian.",
+      "bias": "Rata-rata Anda berada {off}.",
+      "worstLine": "Layak dicoba lagi: “{text}”.",
+      "worstAt": "Layak dicoba lagi: baris pada {time}."
+    },
+    "proud": {
+      "share": "Bagikan take ini",
+      "notNow": "Nanti saja"
+    },
+    "player": {
+      "notKept": "Rekaman take ini sudah tidak disimpan: OnKey menyimpan rekaman setiap take sampai totalnya melewati 2 GB, lalu melepas yang paling lama (tidak pernah favorit Anda atau take terbaik sebuah lagu). Skornya tetap ada.",
+      "stop": "Berhenti",
+      "play": "Putar",
+      "playWithSong": "Putar rekaman Anda bersama lagunya",
+      "playVoice": "Putar rekaman Anda",
+      "whatPlays": "Yang diputar",
+      "withSong": "Bersama lagu",
+      "voiceOnly": "Suara Anda saja",
+      "backToStart": "Kembali ke awal",
+      "lining": "Menyelaraskan dengan lagu…",
+      "voiceTitle": "Seberapa keras suara Anda diputar, dibanding lagunya",
+      "yourVoice": "Suara Anda",
+      "voiceNormal": "normal",
+      "voiceDb": "{db} dB",
+      "aboutJoin": "OnKey menyimpan suara Anda, bukan musiknya. “Bersama lagu” memutar rekaman Anda selaras dengan {song} saat Anda memutarnya di {app}. Latensi mikrofon Anda ({ms} md) sudah diperhitungkan secara otomatis.",
+      "aboutPlay": "OnKey menyimpan suara Anda, bukan musiknya. “Bersama lagu” memutar lagunya di {app} berbarengan dengan rekaman Anda. Latensi mikrofon Anda ({ms} md) sudah diperhitungkan secara otomatis."
+    },
+    "join": {
+      "play": "Putar {song} di {app}. OnKey akan ikut masuk.",
+      "playFromStart": "Putar {song} di {app} dari awal. OnKey akan ikut masuk.",
+      "goTo": "Pergi ke {time} di {app} untuk bagian ini.",
+      "letStart": "Biar OnKey memulainya untuk Anda"
+    },
+    "graph": {
+      "singer": "Not penyanyi",
+      "within50": "Anda, dalam 50¢",
+      "within100": "Dalam 100¢",
+      "further": "Lebih jauh",
+      "heldTitle": "Not yang Anda tahan dalam satu semiton setidaknya separuh panjangnya. Bilahnya menyala hijau.",
+      "held": "<n>{hit}</n> dari {total} not tertahan",
+      "biasTitle": "Posisi rata-rata nada Anda terhadap nada penyanyi",
+      "centred": "Rata-rata di tengah",
+      "bias": "{off} secara rata-rata",
+      "notMelody": "Bukan melodi"
+    },
+    "notMelody": {
+      "buttonTitle": "Keluarkan bagian yang not-notnya mengikuti vokal latar atau harmoni, bukan melodi",
+      "button": "Bukan melodi?",
+      "span": "{from} sampai {to}",
+      "saving": "Menilai ulang…",
+      "leaveOut": "Keluarkan dari skor",
+      "drag": "Seret melintasi bagian yang not-notnya mengikuti vokal latar atau harmoni, bukan melodi.",
+      "cancel": "Batal",
+      "note": "Bagian ini dikeluarkan dari skor setiap take lagu ini, dan saat Anda menyanyikannya lagi.",
+      "leftOut": "Dikeluarkan dari skor, bukan melodi:",
+      "putBack": "Kembalikan",
+      "notLearned": "Lagu ini belum dipelajari, jadi tidak ada yang dikeluarkan.",
+      "noChange": "Tidak ada skor take yang berubah.",
+      "rescored": "{count, plural, other {{count} take}} lagu ini dinilai ulang."
+    },
+    "report": "Laporkan masalah pada take ini",
+    "lines": {
+      "title": "Baris demi baris",
+      "lyricsOff": "Lirik dimatikan (Pengaturan), jadi take ini tidak punya laporan baris demi baris.",
+      "none": "Tidak ditemukan lirik tersinkron untuk lagu ini.",
+      "playFrom": "Putar dari {time}",
+      "line": "Baris {n}",
+      "noLead": "tidak ada vokal utama",
+      "notSung": "tidak dinyanyikan"
+    }
+  },
+  "share": {
+    "saved": "Disimpan ke Unduhan. Di Instagram, tambahkan {song} dan mulai dari {at} (sudah disalin).",
+    "failed": "Video tidak dapat dibuat: {error}",
+    "clip": "<b>{at}–{to}</b><dim> · {hits} dari {notes} not tercapai</dim>",
+    "cantShare": "Take ini tidak dapat dibagikan",
+    "finding": "Mencari klip…",
+    "which": "20 detik yang mana",
+    "fromPlayhead": "Dari posisi pemutaran",
+    "best": "Bagian terbaik",
+    "playIt": "Putar",
+    "making": "Membuat video…",
+    "make": "Buat video",
+    "close": "Tutup",
+    "noBest": "Tidak ada not yang tercapai di take ini, jadi tidak ada bagian terbaik: video dimulai dari posisi pemutaran.",
+    "about": "Suara Anda apa adanya, not-notnya dan skor Anda, tanpa musik. Tambahkan lagunya di Instagram dari pustaka musiknya sendiri, mulai dari waktu yang ditampilkan. Bernyanyi dengan lagu lewat speaker? Sebagian lagunya ikut masuk ke rekaman Anda: take dengan headphone paling cocok untuk dibagikan. <why>{open, select, yes {Sembunyikan} other {Mengapa headphone?}}</why> Jangan unggah rekaman layar dengan musiknya berbunyi."
+  },
+  "challenge": {
+    "button": "Tantang teman",
+    "says": "Tautan yang menyebut skor Anda <b>{score}</b> pada {song}, dan mengajak mereka mengalahkannya.",
+    "nameLabel": "Nama depan Anda (opsional)",
+    "namePlaceholder": "Kosongkan untuk tetap anonim",
+    "copied": "Disalin: tempelkan ke teman",
+    "failed": "Tidak dapat menyalin",
+    "copy": "Salin tautan",
+    "holds": "Isinya hanya nama lagu, artis dan skor Anda. Tanpa rekaman, not atau lirik.",
+    "holdsNamed": "Isinya hanya nama lagu, artis, skor dan nama Anda. Tanpa rekaman, not atau lirik."
+  },
+  "voiceRange": {
+    "title": "Rentang suara Anda",
+    "working": "Menghitung dari take Anda…",
+    "empty": "Nyanyikan beberapa lagu dan OnKey menampilkan rentang suara Anda di sini.",
+    "from": "dari {count, plural, other {{count} take}}",
+    "fromPending": "dari {count, plural, other {{count} take}}; {pending} yang lebih lama masih diukur",
+    "summary": "<range>{low}–{high}</range><dim>, paling nyaman sekitar </dim><mid>{midLo}–{midHi}</mid>",
+    "aria": "Rentang suara Anda {low} sampai {high}, paling nyaman {midLo} sampai {midHi}",
+    "note": "Not yang paling sering Anda nyanyikan, dari take Anda (5% terendah dan tertinggi dikesampingkan). Rentang ini bertambah seiring Anda menyanyikan lebih banyak lagu."
+  },
+  "voiceBreak": {
+    "text": "Anda sudah bernyanyi selama {minutes} menit. Istirahatkan suara Anda beberapa menit, dan minum air.",
+    "dismiss": "Tutup",
+    "ok": "Oke"
+  },
+  "takeTags": {
+    "firstPlay": "Putaran pertama",
+    "blind": "Tanpa not"
+  },
+  "timingCheck": {
+    "macOs": "macOS",
+    "title": "Output Anda",
+    "experimental": "Eksperimental",
+    "checkOn": "Cek ketepatan waktu di {name}",
+    "thisOutput": "output ini",
+    "thisOutputCap": "Output ini",
+    "checked": "Dicek oleh Anda: OnKey memperhitungkan {heard} md untuk musik sampai ke telinga Anda di sini ({os} menyebut {reported} md).",
+    "unchecked": "OnKey memperhitungkan {reported} md untuk musik sampai ke telinga Anda di sini, sesuai yang disebut {os}. Headphone Bluetooth sering lebih lambat daripada yang dilaporkan {os}, sehingga lirik dan not tampil terlalu cepat. Ketuk mengikuti bunyi klik untuk mengukurnya (dua kali: keduanya harus cocok).",
+    "how": "Ketuk mengikuti irama, seperti bertepuk tangan mengikuti ketukan. Jangan menunggu setiap klik terdengar: jaga temponya.",
+    "pauseFirst": "Jeda musiknya dulu.",
+    "reset": "Atur ulang",
+    "checkAgain": "Cek lagi",
+    "redo": "Ulangi",
+    "check": "Cek ketepatan waktu",
+    "tapAria": "Ketuk bersama setiap klik",
+    "tapTitle": "Tekan Spasi (atau klik di sini) mengikuti bunyi klik, sesuai irama",
+    "keepTime": "Jaga tempo sampai akhir, dengan mendengarkan bukan melihat. Esc untuk berhenti.",
+    "cancel": "Batal",
+    "cantPlay": "Pengecekan tidak dapat memutar bunyi kliknya ({error}).",
+    "said": {
+      "confirmBefore": "Hasilnya {measured} md, tidak cocok dengan pengecekan sebelumnya ({before} md). Sekali lagi untuk memastikan.",
+      "confirm": "Anda mendengarnya {measured} md setelah diputar ({os} menyebut {reported} md). Sekali lagi untuk memastikan.",
+      "onTime": "{name} {plural, select, yes {} other {}}tepat waktu: dalam {ms} md dari perkiraan OnKey.",
+      "behind": "{name} {plural, select, yes {} other {}}{ms} md lebih lambat dari perkiraan OnKey; sudah disesuaikan.",
+      "ahead": "{name} {plural, select, yes {} other {}}{ms} md lebih cepat dari perkiraan OnKey; sudah disesuaikan."
+    }
+  },
+  "setup": {
+    "dialogLabel": "Siapkan OnKey",
+    "stepsLabel": "Langkah penyiapan",
+    "welcome": {
+      "title": "Selamat datang di OnKey",
+      "lead": "Belajar menyanyikan lagu yang Anda sukai, dengan musik yang biasa Anda putar.",
+      "play": "Putar lagu di aplikasi musik Anda, seperti biasa. OnKey mendengarkan musik yang diputar di {os, select, mac {Mac} other {PC}} Anda dan mengikutinya sendiri.",
+      "learn": "Saat sebuah lagu diputar pertama kali, OnKey mempelajari melodi penyanyinya. Setelah itu Anda melihat setiap not yang datang, dan di mana nada Anda terlalu tinggi atau terlalu rendah.",
+      "privacyPc": "OnKey tidak pernah menyimpan musik yang didengarnya. Rekaman nyanyian Anda tetap di PC ini supaya Anda dapat mendengarkan take Anda lagi. Lagu juga diberi nama di PC ini, dari apa yang dilaporkan aplikasi musik Anda sedang diputar: tidak ada yang dikirim untuk menamainya.",
+      "privacyMac": "OnKey tidak pernah menyimpan musik yang didengarnya. Rekaman nyanyian Anda tetap di Mac ini supaya Anda dapat mendengarkan take Anda lagi. Untuk menamai lagu baru, mode mendengarkan mengirim sidik jari singkat dari suara aplikasi musik (bukan audionya) ke Shazam milik Apple.",
+      "entitled": "OnKey untuk berlatih di rumah dengan musik yang berhak Anda putar. Melodi yang dipelajarinya untuk latihan Anda sendiri, jadi simpan untuk diri sendiri.",
+      "macosOld": "OnKey memerlukan macOS 14.2 atau lebih baru untuk mendengar aplikasi lain. Perbarui macOS di Pengaturan Sistem → Umum → Pembaruan Perangkat Lunak.",
+      "later": "Atur nanti",
+      "start": "Mulai"
+    },
+    "permissions": {
+      "title": "Dua izin",
+      "sub": "macOS bertanya sekali untuk masing-masing. Anda dapat mengubahnya nanti di Pengaturan Sistem → Privasi & Keamanan.",
+      "mic": {
+        "title": "Mikrofon",
+        "why": "Untuk mendengar Anda bernyanyi.",
+        "hint": "Aktifkan OnKey di bawah Mikrofon."
+      },
+      "audio": {
+        "title": "Rekaman audio sistem",
+        "why": "Untuk mendengar musik yang diputar di Mac Anda, supaya OnKey dapat mempelajari melodinya. OnKey tidak pernah menyimpan atau mengirim musiknya; untuk menamai lagu yang belum dikenal, sidik jari singkat dari musik itu (bukan audionya) dapat dikirim ke Shazam milik Apple.",
+        "hint": "Buka Rekaman Layar & Audio Sistem dan aktifkan OnKey di bawah Hanya Rekaman Audio Sistem."
+      },
+      "reopen": "Jika macOS meminta OnKey keluar dan dibuka kembali setelah Anda mengizinkan sesuatu, ikuti saja. Penyiapan berlanjut dari tempat Anda berhenti.",
+      "skip": "Lewati dulu",
+      "continue": "Lanjutkan",
+      "allowed": "Diizinkan",
+      "openSettings": "Buka Pengaturan Sistem",
+      "asking": "Meminta…",
+      "allow": "Izinkan",
+      "restricted": "Pengaturan Mac Anda tidak mengizinkan ini. Tanyakan kepada pengelolanya."
+    },
+    "musicApps": {
+      "title": "Izinkan OnKey mengikuti Spotify dan Apple Music",
+      "recommended": "Disarankan",
+      "why": "Supaya lirik dan not berada di tempat yang tepat sejak detik pertama, dan OnKey dapat memutar dan mengulang lagu untuk Anda.",
+      "scope": "OnKey dapat membaca lagu yang diputar dan posisinya, serta memutar, menjeda dan menggeser. Tidak lebih. macOS bertanya sekali untuk setiap aplikasi.",
+      "waitingMac": "Menunggu macOS. Jika macOS bertanya soal Spotify atau Apple Music (pertanyaannya bisa muncul di belakang jendela ini), jawablah. Tidak ada pertanyaan? Lanjutkan: macOS bertanya saat Anda pertama kali memutar lagu di sana.",
+      "noAnswer": "macOS belum mendapat jawaban. Jika pertanyaannya tampil, jawablah; jika tidak, macOS bertanya saat Anda pertama kali memutar lagu di sana.",
+      "listenOnly": "Hanya mendengarkan",
+      "continue": "Lanjutkan",
+      "carryOn": "Lanjutkan",
+      "asking": "Meminta…",
+      "allow": "Izinkan",
+      "appSpotify": "Spotify",
+      "appAppleMusic": "Apple Music",
+      "state": {
+        "allowed": "Diizinkan",
+        "notAllowed": "Tidak diizinkan",
+        "notRunning": "macOS bertanya saat Anda pertama kali memutar lagu di sana",
+        "waiting": "Belum ada jawaban",
+        "ask": "Belum ditanyakan"
+      },
+      "openSettings": "Buka Pengaturan Sistem"
+    },
+    "micCheck": {
+      "title": "Apakah OnKey mendengar Anda?",
+      "micOffPc": "Windows mematikan mikrofon untuk aplikasi. Di <b>Pengaturan Windows → Privasi & keamanan → Mikrofon</b>, aktifkan <b>Akses mikrofon</b> dan <b>Izinkan aplikasi desktop mengakses mikrofon Anda</b>.",
+      "micFirst": "OnKey memerlukan mikrofon dulu: kembali untuk mengizinkannya.",
+      "noMicDevice": "Tidak ada mikrofon yang terhubung. Hubungkan satu, atau pilih di {soundInput}.",
+      "macSoundInput": "Pengaturan Sistem → Bunyi → Input",
+      "say": "Ucapkan sesuatu, atau nyanyikan satu nada.",
+      "device": "Mendengarkan {device}. Anda dapat memilih yang lain di Pengaturan.",
+      "meterLabel": "Level mikrofon",
+      "heard": "Terdengar",
+      "listening": "Mendengarkan…",
+      "notAllowed": "Tidak diizinkan",
+      "starting": "Memulai…",
+      "noMic": "Tidak ada mikrofon",
+      "headphones": "Headphone memberi skor yang paling stabil. Speaker laptop juga bisa: OnKey menyingkirkan musik dari apa yang didengar mikrofon.",
+      "skip": "Lewati",
+      "continue": "Lanjutkan",
+      "openSettings": "Buka {settings}",
+      "back": "Kembali ke izin"
+    },
+    "ready": {
+      "title": "Semua siap",
+      "lead": "Putar lagu di aplikasi musik Anda dan mulai bernyanyi. Putaran pertama setiap lagu mengajarkan melodinya ke OnKey.",
+      "tipsLabel": "Cara kerja pembelajaran",
+      "tip": {
+        "toEnd": "Biarkan lagu diputar sampai selesai. Jika OnKey hanya mendengar sebagian, sisanya dipelajari saat lagu diputar lagi.",
+        "talk": "Bicara atau ikut bernyanyi sesuka Anda. OnKey belajar dari suara aplikasi musik, bukan dari mikrofon Anda.",
+        "volumePc": "Jaga volume aplikasi musik itu sendiri di sekitar seperempat atau lebih.",
+        "learnPc": "Pembelajaran berjalan di PC ini selama beberapa menit setelah lagu selesai. Teruskan mendengarkan sementara itu.",
+        "volumeMac": "Jaga volume aplikasi musik itu sendiri di sekitar seperempat atau lebih. Volume Mac Anda boleh berapa saja, bahkan nol.",
+        "learnMac": "Pembelajaran berjalan di Mac Anda selama beberapa menit setelah lagu selesai, lebih lama di Mac dengan memori 8 GB. Teruskan mendengarkan sementara itu."
+      },
+      "quickest": "<b>Cara tercepat:</b> putar playlist pembuka OnKey dan biarkan berjalan setengah jam.",
+      "openPlaylist": "Buka playlist di {app}",
+      "playIn": "Putar di {app}",
+      "comfortable": "Bernyanyilah dengan volume yang nyaman: OnKey menilai nada Anda, bukan kerasnya. Istirahat saat suara Anda lelah, dan berhenti jika tenggorokan sakit.",
+      "start": "Mulai bernyanyi"
+    }
+  },
+  "controlPrompt": {
+    "titleAllow": "Izinkan OnKey mengontrol {app}?",
+    "titleCant": "OnKey tidak dapat mengontrol {app}",
+    "bodyAllow": "OnKey mendengarkan {app}, bukan mengontrolnya. Untuk memulai lagu, melompat ke bagian nyanyian dan menjeda dari OnKey, OnKey memerlukan izin Anda.{os, select, mac { macOS juga akan bertanya sekali.} other {}}",
+    "bodyCant": "OnKey mengikuti {app} hanya dengan mendengarkan. Putar, jeda dan lompati lagu di sana.",
+    "browserPc": "OnKey lalu dapat mengikuti lagu di browser Anda, serta memutar, menjeda dan menggesernya di sana.",
+    "browserMac": "Ini izin yang lebih besar: OnKey lalu dapat membaca dan mengontrol tab YouTube di browser Anda, dan mendengarkan semua suara dari browser Anda (termasuk panggilan): suara yang tidak dikenalinya dapat dikirim ke Shazam sebagai sidik jari singkat, bukan audionya. Browser Anda juga perlu “Izinkan JavaScript dari Apple Events” diaktifkan.",
+    "notNow": "Nanti saja",
+    "yourBrowser": "browser Anda",
+    "openIn": "Buka di {app}",
+    "allow": "Izinkan kontrol",
+    "changeLater": "Anda dapat mengubahnya kapan saja di Pengaturan."
+  },
+  "starters": {
+    "label": "Lagu untuk dicoba",
+    "heading": "Coba ini <dim>· lagu yang diikuti OnKey dengan baik</dim>",
+    "hide": "Sembunyikan saran",
+    "close": "Tutup",
+    "earlier": "Lagu sebelumnya",
+    "more": "Lagu lainnya",
+    "why": {
+      "en": {
+        "standByMe": "Mudah: melodi mantap dan sederhana",
+        "wonderwall": "Lagu nyanyi bersama yang semua orang tahu",
+        "fastCar": "Rendah dan mantap, mudah diikuti",
+        "youngAndBeautiful": "Not panjang untuk ditahan dengan stabil",
+        "someoneYouLoved": "Bait lembut, refrain besar",
+        "someoneLikeYou": "Satu suara jernih, refrain yang naik",
+        "hallelujah": "Lambat dan ekspresif: bagus untuk melatih nada",
+        "iWillAlwaysLoveYou": "Tantangan: rentang nada sangat luas"
+      },
+      "es": {
+        "laCamisaNegra": "Mudah: melodi sempit dan mudah diingat",
+        "meVoy": "Ringan dan mantap, mudah diikuti",
+        "deMusicaLigera": "Lagu rock nyanyi bersama yang semua orang tahu",
+        "comoLaFlor": "Klasik manis yang mengayun",
+        "rayandoElSol": "Bait lembut, refrain besar",
+        "rosas": "Satu suara jernih, refrain yang naik",
+        "hijoDeLaLuna": "Lambat dan menghanyutkan: bagus untuk melatih nada",
+        "volverVolver": "Tantangan: not ranchera yang besar"
+      },
+      "pt": {
+        "comoUmaOnda": "Mudah: melodi mantap dan sederhana",
+        "velhaInfancia": "Lembut dan manis, mudah diikuti",
+        "gostavaTantoDeVoce": "Klasik soul, refrain yang semua orang nyanyikan",
+        "tempoPerdido": "Anthem rock yang semua orang tahu",
+        "comoEuQuero": "Pop ringan dengan melodi jernih",
+        "infiel": "Patah hati sertanejo, dibuat untuk nyanyi bersama",
+        "amarPelosDois": "Lambat dan lembut: bagus untuk melatih nada",
+        "oceano": "Tantangan: melodi panjang dan berliku"
+      },
+      "it": {
+        "azzurro": "Mudah: melodi mantap dan sederhana",
+        "lItaliano": "Lagu nyanyi bersama yang semua orang tahu",
+        "saraPercheTiAmo": "Riang dan seru, cocok untuk ramai-ramai",
+        "albachiara": "Rendah dan mantap, mudah diikuti",
+        "laSolitudine": "Satu suara jernih, refrain yang naik",
+        "emozioni": "Lambat dan ekspresif: bagus untuk melatih nada",
+        "grandeGrandeGrande": "Membangun dari lembut ke besar",
+        "caruso": "Tantangan: refrain membumbung bergaya opera"
+      },
+      "fr": {
+        "lesChampsElysees": "Mudah: melodi mantap dan sederhana",
+        "jeLAimeAMourir": "Lembut dan rendah, mudah diikuti",
+        "laVieEnRose": "Klasik yang semua orang tahu",
+        "avenir": "Pop ringan, jernih dan mudah diingat",
+        "jeVeux": "Cerah dan berayun, seru dinyanyikan",
+        "derniereDanse": "Not panjang untuk ditahan dengan stabil",
+        "laBoheme": "Lambat dan ekspresif: bagus untuk melatih nada",
+        "pourQueTuMAimesEncore": "Tantangan: membangun ke not-not besar"
+      },
+      "de": {
+        "uberDenWolken": "Mudah: melodi folk yang mantap",
+        "n99Luftballons": "Lagu nyanyi bersama yang semua orang tahu",
+        "perfekteWelle": "Bait mantap, refrain besar",
+        "atemlosDurchDieNacht": "Schlager ceria, dibuat untuk nyanyi bersama",
+        "griechischerWein": "Klasik yang dikenal setiap generasi",
+        "dasBeste": "Satu suara jernih, refrain yang naik",
+        "aufUns": "Refrain besar dan terbuka untuk dinyanyikan lantang",
+        "derWeg": "Tantangan: lambat, mentah dan ekspresif"
+      }
+    },
+    "in": "di",
+    "appSpotify": "Spotify",
+    "appAppleMusic": "Apple Music",
+    "searchIn": "Cari di {app}",
+    "openItInAppleMusic": "Buka di Apple Music",
+    "openInAppleMusic": "Buka di Apple Music",
+    "openSongInAppleMusic": "Buka {title} oleh {artist} di Apple Music",
+    "playlist": {
+      "title": "Putar playlist pembuka OnKey",
+      "sub": "Semua lagu ini dan lainnya, dari mudah sampai menantang: tekan putar dan bernyanyi",
+      "orAppleMusic": "atau Apple Music",
+      "openInAppleMusic": "Buka playlist di Apple Music",
+      "open": "Buka playlist di {app}",
+      "playIn": "Putar di {app}"
+    }
+  },
+  "demo": {
+    "title": "Coba sekarang: nyanyikan lagu demo",
+    "starting": "Memulai…",
+    "tryIt": "Coba sekarang",
+    "about": "Lagu contoh supaya Anda melihat cara kerja OnKey. Lagu Anda sendiri perlu diputar sekali dulu untuk dipelajari."
+  },
+  "guides": {
+    "systemAudio": {
+      "summary": "Cara mengizinkan OnKey merekam audio sistem di Mac. Di Pengaturan Sistem, buka Privasi & Keamanan, pilih Rekaman Layar & Audio Sistem, dan aktifkan OnKey di bawah Hanya Rekaman Audio Sistem. Jika macOS bertanya, pilih Tutup & Buka Ulang. OnKey terbuka lagi dengan rekaman audio sistem tercentang dan penyiapan berlanjut.",
+      "step": {
+        "openPrivacy": "Buka Privasi & Keamanan",
+        "screenRecording": "Rekaman Layar & Audio Sistem",
+        "turnOn": "Aktifkan OnKey di bawah Hanya Rekaman Audio Sistem",
+        "quitReopen": "Jika macOS bertanya, tutup dan buka ulang. Penyiapan berlanjut"
+      },
+      "dots": "Langkah",
+      "stepOf": "Langkah {step} dari {count}: {caption}",
+      "mock": {
+        "privacySecurity": "Privasi & Keamanan",
+        "screenRecording": "Rekaman Layar & Audio Sistem",
+        "audioOnly": "Hanya Rekaman Audio Sistem",
+        "appName": "OnKey",
+        "quitReopenQuestion": "Tutup & Buka Ulang?",
+        "later": "Nanti",
+        "quitReopen": "Tutup & Buka Ulang",
+        "setup": "Penyiapan",
+        "systemAudioRow": "Rekaman audio sistem"
+      }
+    },
+    "musicApps": {
+      "caption": {
+        "ask": "macOS bertanya sekali untuk setiap aplikasi",
+        "allow": "Pilih Izinkan",
+        "done": "Lalu OnKey dapat mengikuti lagu yang diputar",
+        "behind": "Pertanyaannya bisa muncul di belakang jendela ini: carilah"
+      },
+      "labelOne": "Animasi: pertanyaan macOS menanyakan apakah OnKey boleh mengontrol {app}. Penunjuk memilih Izinkan, pertanyaannya tertutup dan aplikasi itu muncul dengan tanda centang di jendela OnKey. Terakhir, pertanyaannya ditampilkan setengah tersembunyi di belakang jendela OnKey, dengan pengingat untuk mencarinya di sana.",
+      "labelTwo": "Animasi: pertanyaan macOS menanyakan apakah OnKey boleh mengontrol {first} lalu {second}. Penunjuk memilih Izinkan, pertanyaannya tertutup dan aplikasi itu muncul dengan tanda centang di jendela OnKey. Terakhir, pertanyaannya ditampilkan setengah tersembunyi di belakang jendela OnKey, dengan pengingat untuk mencarinya di sana.",
+      "app": {
+        "spotify": "Spotify",
+        "appleMusic": "Apple Music"
+      },
+      "asked": {
+        "spotify": "Spotify",
+        "appleMusic": "Musik"
+      },
+      "alert": {
+        "wantsAccess": "“OnKey” ingin akses untuk",
+        "control": "mengontrol “{app}”",
+        "allowing": "Jika kontrol diizinkan, akses ke “{app}” akan diberikan.",
+        "dontAllow": "Jangan Izinkan",
+        "allow": "Izinkan"
+      },
+      "window": {
+        "title": "OnKey",
+        "note": "A4",
+        "musicApps": "APLIKASI MUSIK"
+      },
+      "menuBar": {
+        "appName": "OnKey"
+      },
+      "dots": "Langkah",
+      "stepOf": "Langkah {step} dari {count}: {caption}",
+      "stepOfApp": "Langkah {step} dari {count}: {caption} ({app})"
+    },
+    "stillSteps": {
+      "dots": "Langkah",
+      "stepOf": "Langkah {step} dari {count}",
+      "again": "Lagi",
+      "next": "Berikutnya"
+    },
+    "learnSong": {
+      "steps": {
+        "s0": "Putar lagu sekali sampai selesai",
+        "s1": "OnKey mempelajari melodi dari musiknya, bukan dari mikrofon Anda",
+        "s2": "Beberapa menit setelah lagu selesai",
+        "s3": "Lain kali, nyanyikan dengan not-notnya"
+      },
+      "summary": "OnKey mempelajari sebuah lagu. Lagu diputar sekali sampai selesai di pemutar musik sementara gelombang suara mengalir ke OnKey dan melodinya digambar sebagai bilah not. Beberapa menit setelah selesai, cincin Mempelajari berubah menjadi centang hijau: Sudah dipelajari. Saat lagu diputar lagi, not-not bergulir lewat dengan garis nada hijau penyanyi menumpang di atasnya dan lirik di bawahnya.",
+      "learning": "Mempelajari…",
+      "learned": "Sudah dipelajari",
+      "appName": "OnKey",
+      "melody": "MELODI",
+      "you": "ANDA",
+      "lyric": {
+        "w0": "ta-",
+        "w1": "han",
+        "w2": "ca-",
+        "w3": "ha-",
+        "w4": "ya",
+        "w5": "sam-",
+        "w6": "pai",
+        "w7": "ma-",
+        "w8": "lam",
+        "w9": "ti-",
+        "w10": "ba"
+      },
+      "stepsGroup": "Langkah animasi",
+      "stepLabel": "Langkah {n} dari {count}: {caption}"
+    },
+    "leaveOut": {
+      "steps": {
+        "s0": "Not mengikuti vokal latar?",
+        "s1": "Seret melintasi bagian itu",
+        "s2": "Bagian itu dikeluarkan dari skor, untuk setiap take lagu ini"
+      },
+      "ariaLabel": "Animasi grafik nada untuk satu take sebuah lagu. Bilah ungu menunjukkan not yang diharapkan skor dan sebuah garis menunjukkan apa yang dinyanyikan penyanyi, hijau jika cocok. Pada satu bagian bilah ungu melompat tinggi, mengikuti vokal latar, sementara penyanyi tetap di melodi dan garisnya menjadi kuning. Kursor menyeret melintasi bagian itu untuk memilihnya dan mengklik “Keluarkan dari skor”. Bagian itu berubah menjadi garis-garis abu-abu, skor naik dari {before} ke {after}, dan bagian yang sama dikeluarkan untuk setiap take lagu ini.",
+      "score": "Skor",
+      "take": "Take {n}",
+      "leftOut": "Dikeluarkan",
+      "leaveOutButton": "Keluarkan dari skor",
+      "stepsGroup": "Langkah animasi",
+      "stepLabel": "Langkah {n}: {caption}"
+    },
+    "speakers": {
+      "steps": {
+        "s0": "Lewat speaker, lagunya ikut masuk ke rekaman Anda",
+        "s1": "Dengan headphone, hanya suara Anda"
+      },
+      "label": "Dua adegan singkat. Lewat speaker laptop, lagu pengiring menyebar dan masuk ke mikrofon, sehingga rekaman mencampur suara Anda dengan musiknya. Dengan headphone, musik tetap di telinga Anda dan rekaman hanya berisi suara Anda.",
+      "rec": "REC",
+      "voice": "Suara",
+      "song": "Lagu",
+      "stepsGroup": "Langkah",
+      "stepLabel": "Langkah {n} dari {count}: {caption}"
+    },
+    "fadeDemo": {
+      "captions": {
+        "c0": "Setelah Anda menyanyikan sebuah lagu dengan baik",
+        "c1": "Garis Anda memudar selama Anda tepat nada",
+        "c2": "Melenceng, dan garis tampil seperti biasa",
+        "c3": "Munculkan panduan penuh lagi untuk take mana pun"
+      },
+      "take": "Take {n}",
+      "ariaLabel": "Empat take dari lagu yang sama sebagai jalur not: Take 1, 3, 5 dan 8. Not ungu tetap sama di setiap take. Garis nada hijau Anda terang di Take 1 dan makin pudar di setiap take selama tepat nada; di Take 5 garis melenceng lebih dari satu semiton sesaat dan bagian itu tampil penuh, berwarna merah. Tombol Panduan penuh memunculkan seluruh garis kembali.",
+      "fullGuide": "Panduan penuh",
+      "stepsGroup": "Langkah animasi",
+      "stepLabel": "Langkah {n} dari {count}: {caption}"
+    }
+  },
+  "guideFade": {
+    "title": "Garis nada suara Anda memudar selama Anda tepat nada ({amount, select, little {sedikit} more {lebih banyak} other {sepenuhnya}}), dan tampil saat Anda melenceng lebih dari satu semiton. Matikan di Pengaturan.",
+    "note": "Panduan dipudarkan: Anda sudah hafal lagu ini",
+    "showFull": "Tampilkan panduan penuh"
+  },
+  "update": {
+    "failed": {
+      "text": "Tidak dapat memperbarui ke OnKey {version}",
+      "why": "Sebab: {error}. Pengaturan → Periksa sekarang akan mencoba lagi.",
+      "again": "Pengaturan → Periksa sekarang akan mencoba lagi."
+    },
+    "official": {
+      "text": "OnKey {version} sudah dirilis oleh proyek aslinya",
+      "why": "OnKey ini dibangun dari kode sumber, jadi tidak memperbarui dirinya sendiri.",
+      "download": "Unduh"
+    },
+    "ready": {
+      "why": "OnKey {version} sudah siap. Jika Anda tidak mulai ulang sekarang, pembaruan dipasang saat Anda keluar.",
+      "waiting": "Memperbarui setelah lagu ini…",
+      "available": "Pembaruan tersedia",
+      "restart": "Mulai ulang untuk memperbarui",
+      "later": "Nanti",
+      "laterWhy": "Nanti (dipasang saat Anda keluar)"
+    },
+    "hide": "Sembunyikan"
+  },
+  "report": {
+    "title": "Laporkan masalah",
+    "titleTake": "Laporkan masalah pada take ini",
+    "savedPc": "Disimpan ke {folder} sebagai <file>{name}</file>, dan ditampilkan di {files}. Lampirkan satu file itu ke pesan Anda (atau ke issue GitHub). Tidak ada yang dikirim ke mana pun.",
+    "savedMac": "Disimpan ke <file>{path}</file>. Untuk mengirimnya, buka issue di GitHub dan lampirkan zip-nya (seret ke dalam kotak). Tidak ada yang dikirim ke mana pun.",
+    "showInPc": "Tampilkan di {files}",
+    "showInFinder": "Tampilkan di Finder",
+    "openIssue": "Buka issue GitHub",
+    "done": "Selesai",
+    "introPc": "OnKey mengumpulkan catatannya dalam satu file zip di Desktop Anda untuk dilampirkan ke pesan: log tiga hari terakhir, ringkasan setiap pemutaran, dan ringkasan PC ini, suaranya dan aplikasi musik yang diikutinya. Tanpa lirik, tanpa audio, tanpa file lagu, dan tanpa nama pengguna atau folder beranda. Tidak ada yang diunggah.",
+    "introMac": "OnKey mengumpulkan catatannya dalam satu zip untuk Anda simpan dan lampirkan ke laporan bug: log tiga hari terakhir dan ringkasan setiap pemutaran (waktu, CPU, build mana, Mac mana). Tanpa lirik, tanpa audio, tanpa file lagu, dan tanpa nama pengguna atau folder beranda. Tidak ada yang diunggah.",
+    "askLabel": "Apa yang salah? <muted>(opsional)</muted>",
+    "placeholder": "mis. liriknya terlambat di Bad Day, atau macet di Memulai OnKey",
+    "preparing": "Menyusun…",
+    "inZip": "Isi zip ({count} file, {size}):",
+    "logs": "Log OnKey {count, plural, other {{count} hari}} ({size})",
+    "size": {
+      "b": "{n} B",
+      "kb": "{n} KB",
+      "mb": "{n} MB"
+    },
+    "showFiles": "Tampilkan file",
+    "cancel": "Batal",
+    "saveMac": "Simpan…",
+    "savePc": "Simpan ke Desktop"
+  },
+  "nav": {
+    "appName": "OnKey",
+    "songsToTry": "Lagu untuk dicoba",
+    "sing": "Nyanyi",
+    "library": "Pustaka",
+    "history": "Riwayat",
+    "settings": "Pengaturan",
+    "paused": "Mendengarkan dijeda",
+    "resume": "Lanjutkan",
+    "resumeWhy": "Lanjutkan mendengarkan (⌘⇧P)",
+    "whatsNew": "Yang baru di OnKey",
+    "whatsNewFresh": "Yang baru di OnKey (baru)",
+    "testBuild": "Versi uji",
+    "testBuildTitle": "Versi uji OnKey untuk Windows atau Linux: pasang versi berikutnya di atasnya saat sudah keluar"
+  },
+  "licences": {
+    "back": "← Pengaturan",
+    "title": "Lisensi sumber terbuka",
+    "intro": "OnKey gratis dan bersumber terbuka di bawah Lisensi MIT. OnKey dibangun di atas model, data, font dan pustaka kode di bawah ini.",
+    "error": "Pemberitahuan tidak dapat dibuka: {error}",
+    "missing": "Pemberitahuannya ada di THIRD_PARTY_NOTICES.md, di samping kode sumber."
+  },
+  "fairUse": {
+    "back": "← Pengaturan",
+    "title": "Memakai OnKey dengan wajar",
+    "intro": "OnKey untuk berlatih di rumah, dengan musik yang berhak Anda putar. Mohon:",
+    "keep": {
+      "title": "Simpan apa yang dipelajarinya untuk diri sendiri.",
+      "body": "Transkripsi melodi setiap lagu untuk latihan Anda, jadi jangan dibagikan atau diterbitkan. Membagikan OnKey sendiri sangat dipersilakan."
+    },
+    "share": {
+      "title": "Untuk membagikan take, pakai Bagikan di halamannya.",
+      "body": "Fitur ini membuat video singkat berisi suara Anda dan garis nada Anda, tanpa musik, dan Anda dapat menambahkan lagunya dari pustaka musik Instagram sendiri, yang berlisensi untuk ini. Take dengan headphone paling cocok: jika dinyanyikan lewat speaker, sebagian lagunya ikut masuk ke rekaman Anda. Jangan unggah rekaman layar dengan musiknya berbunyi."
+    },
+    "venue": {
+      "title": "Pakai layanan karaoke berlisensi untuk bar atau acara.",
+      "body": "Lirik OnKey berasal dari basis data komunitas yang gratis."
+    },
+    "modify": {
+      "title": "Jangan memodifikasi OnKey untuk menyimpan musik."
+    },
+    "contact": "OnKey tidak pernah menyimpan musik yang didengarnya. Pemegang hak dapat menghubungi saya di <email>hello@singonkey.app</email>."
+  },
+  "library": {
+    "title": "Pustaka",
+    "intro": "Lagu yang sudah dipelajari OnKey. Pilih satu untuk menyanyikannya dengan setiap not ditampilkan di depan.",
+    "search": "Cari lagu",
+    "empty": {
+      "title": "Belum ada yang dipelajari",
+      "body": "Putar lagu sampai selesai selagi OnKey terbuka dan OnKey mempelajari melodinya. Satu playlist penuh juga bisa: biarkan saja diputar.",
+      "start": "Mulai",
+      "showStarters": "Tampilkan lagu untuk dicoba"
+    },
+    "filter": {
+      "label": "Tampilkan",
+      "all": "Semua",
+      "favorites": "Favorit",
+      "unscored": "Belum dinilai",
+      "partial": "Sebagian dipelajari",
+      "count": "{count, plural, other {{count} lagu}}"
+    },
+    "inRange": {
+      "title": "Lagu yang pas dengan rentang suara Anda, apa adanya atau dinyanyikan satu oktaf lebih rendah atau lebih tinggi (oktaf dimaafkan): {count, plural, other {{count} lagu}}",
+      "label": "Pas untuk suara Anda"
+    },
+    "sort": {
+      "recent": "Terbaru",
+      "easy": "Termudah dulu",
+      "hard": "Tersulit dulu",
+      "best": "Skor terbaik",
+      "most": "Paling sering dinyanyikan",
+      "az": "A–Z"
+    },
+    "shownPartly": "{count} sebagian dipelajari",
+    "shownLearned": "{count} sudah dipelajari",
+    "partlyNote": "OnKey hanya mendengar sebagian dari lagu-lagu ini. Putar satu sampai selesai dan OnKey menuntaskan pembelajarannya, lalu lagu itu pindah ke Semua.",
+    "noFavourites": "Ketuk ♥ pada sebuah lagu untuk menyimpannya di sini.",
+    "none": {
+      "partly": "Tidak ada yang sebagian dipelajari: setiap lagu sudah siap.",
+      "unscored": "Setiap lagu sudah punya skor. Bagus.",
+      "search": "Tidak ada lagu yang cocok dengan “{q}”.",
+      "filters": "Tidak ada lagu yang cocok dengan filter ini.",
+      "clear": "Bersihkan"
+    },
+    "card": {
+      "sing": "Nyanyikan {name} oleh {artist}",
+      "whenLearned": "Dapat dinyanyikan setelah dipelajari",
+      "playThrough": "Putar sampai selesai untuk menuntaskan pembelajaran",
+      "learning": "Mempelajari",
+      "learnsAgain": "Dipelajari lagi di putaran berikutnya",
+      "learnsAgainTitle": "Putaran berikutnya mempelajarinya dari awal; sampai saat itu lagu dinyanyikan seperti sebelumnya",
+      "pctLearned": "{pct}% dipelajari",
+      "relearn": "Disarankan dipelajari lagi",
+      "relearnTitle": "Liriknya bergeser pada {at} di pemutaran Anda: mempelajarinya lagi seharusnya memperbaiki itu (menu ⋯)",
+      "notScored": "Belum dinilai",
+      "notScoredTitle": "Anda belum menyanyikannya dengan OnKey",
+      "playsTitle": "Pemutaran lagu ini oleh Anda",
+      "plays": "{count, plural, other {{count} putaran}}",
+      "playsBest": "{count, plural, other {{count} putaran}} · terbaik <n>{best}</n>",
+      "demo": "lagu demo",
+      "demoTitle": "Lagu contoh yang disertakan bersama OnKey",
+      "fitTitle": "{label}. Not-notnya: {low}–{high}",
+      "starting": "Memulai…",
+      "singButton": "Nyanyi"
+    },
+    "menu": {
+      "more": "Lainnya untuk {name}",
+      "openIn": "Buka di {app} ↗",
+      "learnAgain": "Pelajari lagi",
+      "dontLearnAgain": "Jangan pelajari lagi",
+      "deleteWhat": "Hapus lagu ini (take Anda tetap di Riwayat; lagu dipindah ke Tong Sampah)",
+      "deleteConfirm": "Hapus lagu ini?",
+      "stopWhat": "Berhenti mempelajari ini dan hapus (misalnya karena bukan lagu)",
+      "stopConfirm": "Berhenti mempelajari dan hapus?",
+      "stop": "Berhenti mempelajari dan hapus",
+      "delete": "Hapus"
+    },
+    "startersLink": "Lagu untuk dicoba",
+    "footer": "OnKey tidak pernah menyimpan musik: ia hanya menyimpan not yang dipelajarinya dan suara Anda sendiri. Lirik berasal dari <link>LRCLIB</link>. OnKey tidak berafiliasi dengan atau didukung oleh Spotify, Apple atau Google; nama mereka adalah merek dagang pemiliknya masing-masing.",
+    "difficulty": {
+      "label": "Tingkat kesulitan {level} dari 5: {word}",
+      "title": "Tingkat kesulitan {level} dari 5: {word}. Terutama dari seberapa lebar rentang melodinya."
+    },
+    "clearPartly": {
+      "button": "Hapus semua {count}",
+      "label": "Hapus semua lagu yang sebagian dipelajari",
+      "ask": "Hapus {count, plural, other {{count} lagu {shown, select, yes {yang ditampilkan dan } other {yang }}sebagian dipelajari}}? Take tetap di Riwayat{hearted, plural, =0 {} other {; {hearted} favorit tetap disimpan}}.",
+      "deleting": "Menghapus…",
+      "tryAgain": "Coba lagi",
+      "deleteAll": "Hapus semua",
+      "cancel": "Batal"
+    }
+  },
+  "history": {
+    "title": "Nyanyian Anda",
+    "intro": "Setiap lagu yang Anda nyanyikan menjadi take. Begini perkembangannya.",
+    "scoresAt": "Skor pada tingkat {level} · <link>ubah</link>",
+    "search": "Cari lagu",
+    "pending": {
+      "learning": "Mempelajari lagunya, lalu menilai take Anda…",
+      "scoring": "Menilai…"
+    },
+    "stat": {
+      "takes": "Take",
+      "average": "Rata-rata, 10 terakhir",
+      "best": "Terbaik",
+      "songs": "Lagu dinyanyikan"
+    },
+    "chart": {
+      "title": "Skor per take",
+      "axis": "terlama → terbaru"
+    },
+    "view": {
+      "label": "Tampilan",
+      "songs": "Lagu",
+      "takes": "Semua take"
+    },
+    "show": {
+      "label": "Tampilkan",
+      "all": "Semua",
+      "favorites": "Favorit"
+    },
+    "clearFilters": "Bersihkan filter",
+    "sort": {
+      "recent": "Terbaru",
+      "best": "Skor terbaik",
+      "most": "Paling sering dinyanyikan",
+      "improved": "Paling meningkat",
+      "easy": "Termudah dulu",
+      "hard": "Tersulit dulu",
+      "az": "A–Z"
+    },
+    "counts": "{songs, plural, other {{songs} lagu}} dinyanyikan · {takes, plural, other {{takes} take}}",
+    "none": {
+      "search": "Tidak ada lagu yang cocok dengan “{q}”.",
+      "favourites": "Ketuk ♥ pada sebuah lagu untuk menyimpannya di sini.",
+      "filters": "Tidak ada lagu yang cocok dengan filter ini.",
+      "clear": "Bersihkan"
+    },
+    "col": {
+      "song": "Lagu",
+      "when": "Kapan",
+      "sung": "Dinyanyikan",
+      "pitch": "Nada",
+      "score": "Skor"
+    },
+    "rescored": "Dinilai ulang",
+    "rescoredTitle": "Dinilai ulang, tanpa bagian lagu yang ditandai bukan melodi",
+    "deleteWhat": "Hapus take ini (dipindah ke Tong Sampah)",
+    "deleteConfirm": "Hapus take ini?",
+    "showMore": "Tampilkan lebih banyak <n>({left} lagi)</n>",
+    "card": {
+      "best": "terbaik",
+      "scores": "Skor: {list}",
+      "plays": "{count, plural, other {{count} putaran}} · terakhir {last}",
+      "whenLearned": "{label} Dapat dinyanyikan setelah dipelajari",
+      "singAgain": "Nyanyikan lagi"
+    },
+    "empty": {
+      "title": "Belum ada take",
+      "body": "Ikut nyanyikan sebuah lagu setidaknya 20 detik dan take-nya muncul di sini.",
+      "start": "Mulai bernyanyi"
+    }
+  },
+  "song": {
+    "back": "← Nyanyian Anda",
+    "none": "Lagu ini belum pernah diputar.",
+    "scoresAt": "Skor pada tingkat {level} · <link>ubah</link>",
+    "whenLearned": "Dapat dinyanyikan setelah dipelajari",
+    "singAgain": "Nyanyikan lagi",
+    "learnsAgain": "Dipelajari lagi di putaran berikutnya · <cancel>Batal</cancel>",
+    "learnAgain": "Pelajari lagi",
+    "learnAgainTitle": "Memutarnya sekarang dan mempelajarinya dari awal, seperti pada putaran pertama. Pemutaran dan skor Anda tetap ada; jika dihentikan lebih awal, lagu dibiarkan seperti semula.",
+    "relearn": "Liriknya bergeser sekitar {by} dtk pada {at} setiap kali Anda memutarnya. Mempelajarinya lagi seharusnya memperbaiki itu.",
+    "learnItAgain": "Pelajari lagi",
+    "stat": {
+      "plays": "Putaran",
+      "best": "Terbaik",
+      "latest": "Terakhir",
+      "gainBoth": "3 terakhir vs 3 pertama",
+      "gainOne": "Terakhir vs putaran pertama",
+      "fromTo": "dari {from} ke {to}",
+      "fromToAverage": "rata-rata dari {from} ke {to}",
+      "singToSee": "nyanyikan lagi untuk melihat"
+    },
+    "chart": {
+      "title": "Skor per putaran",
+      "axis": "putaran pertama → terakhir"
+    },
+    "table": {
+      "title": "Setiap putaran",
+      "play": "Putaran",
+      "when": "Kapan",
+      "sung": "Dinyanyikan",
+      "sungTitle": "Seberapa banyak bagian lagu yang Anda nyanyikan",
+      "pitch": "Nada",
+      "score": "Skor"
+    },
+    "deleteWhat": "Hapus putaran ini (dipindah ke Tong Sampah)",
+    "deleteConfirm": "Hapus putaran ini?"
+  },
+  "noLyrics": {
+    "line": "Lagu ini belum punya lirik. Lirik berasal dari <link>LRCLIB</link>, pustaka gratis yang bisa ditambahi siapa saja.",
+    "lookAgain": "Cari lagi",
+    "looking": "Mencari…",
+    "found": "Ditemukan",
+    "stillNone": "Masih belum ada",
+    "notAnswering": "LRCLIB tidak merespons"
+  },
+  "cover": {
+    "openApple": "Buka di Apple Music",
+    "openAppleNamed": "Buka {name} di Apple Music",
+    "openIn": "Buka di {app}",
+    "inAppLink": "di {app} ↗",
+    "inApp": "di {app}",
+    "following": "Aplikasi yang diikuti OnKey",
+    "otherLink": "{app} ↗",
+    "appleMusicLink": "Apple Music ↗"
+  },
+  "recent": {
+    "title": "Lanjutkan dari yang terakhir",
+    "last": "terakhir <n>{score}</n>",
+    "whenLearned": "Dapat dinyanyikan setelah dipelajari",
+    "singNamed": "Nyanyikan {name}",
+    "starting": "Memulai…",
+    "sing": "Nyanyi"
+  },
+  "trend": {
+    "legend": "{unit, select, play {Garis: rata-rata Anda dari {avg} putaran · titik: setiap putaran} other {Garis: rata-rata Anda dari {avg} take · titik: setiap take}}",
+    "tipScore": "Skor <n>{score}</n> · dinyanyikan {pct}%",
+    "tipAverage": "Rata-rata saat itu <n>{avg}</n>"
+  },
+  "listControls": {
+    "sort": "Urutkan",
+    "difficultyLabel": "Tingkat kesulitan",
+    "difficulty": {
+      "easy": "Mudah",
+      "moderate": "Cukup mudah",
+      "medium": "Sedang",
+      "hard": "Sulit",
+      "veryHard": "Sangat sulit"
+    },
+    "levelTitle": "{level}: {count, plural, other {{count} lagu}}",
+    "levelLabel": "{level} ({n} dari 5)",
+    "clear": "Bersihkan"
+  },
+  "deleteButton": {
+    "tryAgain": "Coba lagi",
+    "delete": "Hapus",
+    "cancel": "Batal"
+  },
+  "readError": {
+    "body": "Kemungkinan besar masih ada: OnKey hanya tidak dapat membukanya kali ini. Tidak ada yang diubah atau dihapus.",
+    "tryAgain": "Coba lagi"
+  },
+  "levelTag": {
+    "title": "Dinilai pada tingkat {level}: {about}"
+  },
+  "learnBar": {
+    "label": "Mempelajari {name}",
+    "valueText": "{stage}, {pct}%"
+  },
+  "heart": {
+    "remove": "Hapus dari favorit",
+    "add": "Tambahkan ke favorit"
+  },
+  "engine": {
+    "line": {
+      "finding": "Mendengar musik… mencari lagunya",
+      "new_song": "Lagu baru… mencarinya",
+      "unnamed": "Lagu ini tidak dapat dinamai",
+      "no_shazam": "Shazam tidak tersedia: hanya lagu yang dipelajari di sini yang dikenali",
+      "shazam_off": "Bukan lagu yang dipelajari di sini: Shazam dimatikan di Pengaturan",
+      "elsewhere": "{app} sedang memutar, tetapi bukan di Mac ini",
+      "learning": "Mempelajari: ikut bernyanyi, dinilai mulai putaran berikutnya",
+      "stopped": "Tidak mempelajari {song}",
+      "podcast": "Podcast diputar: OnKey ikut bernyanyi untuk musik"
+    },
+    "share": {
+      "first": "{score} pada percobaan pertama Anda di {song}",
+      "over80": "Skor pertama Anda di atas {over} pada {song}",
+      "best": "Rekor terbaik Anda di {song}, naik {points, plural, other {{points} poin}}",
+      "up": "Naik {points, plural, other {{points} poin}} dari take terakhir Anda di {song}"
+    },
+    "timing": {
+      "output_changed": "Output berubah selama pengecekan. Coba lagi.",
+      "few_taps": "Ketukan yang sesuai bunyi klik tidak cukup. Ketuk mengikuti irama, sekali pada setiap klik.",
+      "uneven": "Ketukan Anda terlalu tidak rata untuk diukur. Coba lagi, ketuk mengikuti irama, seperti bertepuk tangan mengikuti ketukan.",
+      "reacting": "Tampaknya Anda menunggu setiap klik. Coba ketuk mengikuti irama saja.",
+      "unbelievable": "Hasilnya tidak masuk akal: apakah Anda menunggu setiap klik? Coba lagi, ketuk mengikuti irama, seperti bertepuk tangan mengikuti ketukan.",
+      "untimed": "Pengecekan tidak dapat mengukur waktu bunyi kliknya. Coba lagi.",
+      "stalled": "Suara tersendat atau dimulai ulang selama pengecekan, jadi tidak dapat diukur. Coba lagi."
+    },
+    "settingUnsaved": "Pengaturan tidak dapat disimpan ({error}). Pengaturan ini berlaku sampai OnKey keluar.",
+    "fit": {
+      "fits": "Pas dengan rentang suara Anda",
+      "few_above": "Beberapa not di atas rentang suara Anda",
+      "few_below": "Beberapa not di bawah rentang suara Anda",
+      "octave_lower": "Sebagian besar di atas Anda: nyanyikan satu oktaf lebih rendah",
+      "octave_higher": "Sebagian besar di bawah Anda: nyanyikan satu oktaf lebih tinggi",
+      "above": "Sebagian besar di atas rentang suara Anda",
+      "below": "Sebagian besar di bawah rentang suara Anda",
+      "wider": "Lebih lebar dari rentang suara Anda"
+    },
+    "reportWhat": {
+      "log": "log OnKey untuk hari itu",
+      "take": "ringkasan sebuah take: {artist} - {name}",
+      "take_reported": "take yang dilaporkan: ringkasan sebuah take: {artist} - {name}",
+      "builds": "build OnKey yang pernah berjalan di {os, select, pc {PC} other {Mac}} ini",
+      "summary": "rangkuman log: {os, select, pc {PC} other {komputer}} ini, audio, aplikasi musik, pembelajaran, take, kesalahan",
+      "about": "versi OnKey, {os, select, pc {PC} other {Mac}} ini, pengaturan, dan apa yang Anda tulis"
+    },
+    "models": {
+      "unloadable": "tidak dapat dimuat"
+    },
+    "youtubeSetting": {
+      "safari": "Safari ▸ Pengaturan ▸ Lanjutan: centang “Tampilkan fitur untuk pengembang web”, lalu Develop ▸ Izinkan JavaScript dari Apple Events",
+      "chromium": "Tampilan ▸ Pengembang ▸ Izinkan JavaScript dari Apple Events"
+    },
+    "app": {
+      "music_app": "aplikasi musik Anda",
+      "browser": "browser Anda"
+    }
+  }
+}

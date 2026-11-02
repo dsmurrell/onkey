@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "About OnKey",
+      "services": "Services",
+      "pauseListening": "Pause Listening",
+      "resumeListening": "Resume Listening",
+      "hide": "Hide OnKey",
+      "hideOthers": "Hide Others",
+      "quit": "Quit OnKey"
+    },
+    "file": {
+      "title": "File",
+      "closeWindow": "Close Window"
+    },
+    "edit": {
+      "title": "Edit",
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "selectAll": "Select All"
+    },
+    "view": {
+      "title": "View",
+      "fullScreen": "Toggle Full Screen"
+    },
+    "window": {
+      "title": "Window",
+      "minimize": "Minimize",
+      "zoom": "Zoom",
+      "closeWindow": "Close Window"
+    },
+    "help": {
+      "title": "Help",
+      "reportProblem": "Report a Problem…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "OnKey's records for a bug report: logs and numbers, no lyrics or audio."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "Sing on key",
+      "free": "Free for Mac"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey listens to your singing to show how in tune you are. Your recordings stay on your Mac.",
+    "NSAudioCaptureUsageDescription": "OnKey listens to the music playing on your Mac to learn the singer's melody. It never saves the music or sends it. In listening mode a short fingerprint of it (not the audio) goes to Apple's Shazam to name the song.",
+    "NSAppleEventsUsageDescription": "OnKey asks Spotify, Music or your browser (for YouTube) what's playing and controls playback when you press play, skip or start over."
+  }
+}

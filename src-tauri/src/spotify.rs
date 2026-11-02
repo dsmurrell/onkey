@@ -1,13 +1,8 @@
-//! Spotify, through its AppleScript interface: what's playing and where, and playback control. No login,
-//! no web API, and it works with free accounts.
-
+//! Spotify: what's playing and where, and playback control. No login, no web API, and it works with free
+//! accounts. How it's asked is the platform's: AppleScript on macOS (platform/mac/spotify.rs), the system media
+//! session on Windows (platform/windows/media.rs).
 use std::sync::Mutex;
 pub use crate::source::{State, Track};
-use crate::source::Source;
-
-fn osa(script: &str) -> Option<String> {
-    crate::source::osa("Spotify", script)
-}
 
 pub fn running() -> bool {
     if crate::devtest::sim_app() {
@@ -17,7 +12,8 @@ pub fn running() -> bool {
 }
 
 /// Spotify's own volume (0-100) as last read, when OnKey may control Spotify; read again in the background at
-/// most every 20 s (an AppleScript call: never on the engine's thread). None until read, or when not allowed.
+/// most every 20 s (an AppleScript call: never on the engine's thread). None until read, or when not allowed
+/// (or not known: Windows' media session doesn't say it).
 pub fn volume_now() -> Option<u32> {
     use std::sync::atomic::{AtomicBool, AtomicI32, AtomicU64, Ordering};
     static VOLUME: AtomicI32 = AtomicI32::new(-1);
@@ -31,8 +27,7 @@ pub fn volume_now() -> Option<u32> {
         READ_AT.store(now, Ordering::Relaxed);
         std::thread::spawn(|| {
             // (only if it's running: asking a closed Spotify would open it)
-            let v = running().then(|| osa(r#"tell application "Spotify" to sound volume"#)).flatten()
-                .and_then(|v| v.trim().parse::<i32>().ok());
+            let v = running().then(crate::platform::spotify::volume).flatten();
             VOLUME.store(v.unwrap_or(-1), Ordering::Relaxed);
             READING.store(false, Ordering::SeqCst);
         });
@@ -40,7 +35,7 @@ pub fn volume_now() -> Option<u32> {
     u32::try_from(VOLUME.load(Ordering::Relaxed)).ok()
 }
 
-/// What Spotify is playing (fields separated by a character that can't appear in titles).
+/// What Spotify is playing.
 pub fn state() -> Option<State> {
     if !running() {
         return None;
@@ -50,42 +45,22 @@ pub fn state() -> Option<State> {
         crate::devtest::sim_osa_cost();
         return sim;
     }
-    let out = osa(r#"tell application "Spotify"
-        set d to ASCII character 31
-        return (player state as string) & d & (id of current track) & d & (name of current track) & d & ¬
-            (artist of current track) & d & (album of current track) & d & (duration of current track) & d & (player position) & d & (artwork url of current track)
-    end tell"#)?;
-    let f: Vec<&str> = out.split('\u{1f}').collect();
-    if f.len() < 7 {
-        return None;
+    crate::platform::spotify::state()
+}
+
+/// Is Spotify's answer (its track's id, name and length) to be believed? As one song gives way to the next,
+/// Spotify can answer with the old song's id and the new one's name and length (live, 20 Oct: Californication
+/// learned under Get On Top's id, so its Library card played Get On Top). Such an answer isn't believed for a few
+/// polls, until the id catches up. (macOS: AppleScript's answers; Windows' ids are made from the names.)
+pub fn fresh(id: &str, name: &str, duration: f64) -> bool {
+    static LAST: Mutex<(Option<(String, String, f64)>, u32)> = Mutex::new((None, 0));
+    let mut last = LAST.lock().unwrap_or_else(|e| e.into_inner());
+    if stale_id(last.0.as_ref(), id, name, duration) && last.1 < STALE_POLLS {
+        last.1 += 1;
+        return false;
     }
-    let duration = f[5].replace(',', ".").parse::<f64>().unwrap_or(0.0) / 1000.0;
-    // as one song gives way to the next, Spotify can answer with the old song's id and the new one's name and
-    // length (live, 20 Oct: Californication learned under Get On Top's id, so its Library card played Get On
-    // Top). Such an answer isn't believed for a few polls, until the id catches up
-    {
-        static LAST: Mutex<(Option<(String, String, f64)>, u32)> = Mutex::new((None, 0));
-        let mut last = LAST.lock().unwrap_or_else(|e| e.into_inner());
-        if stale_id(last.0.as_ref(), f[1], f[2], duration) && last.1 < STALE_POLLS {
-            last.1 += 1;
-            return None;
-        }
-        *last = (Some((f[1].to_string(), f[2].to_string(), duration)), 0);
-    }
-    Some(State {
-        playing: f[0] == "playing",
-        track: Track {
-            id: f[1].to_string(),
-            name: f[2].to_string(),
-            artist: f[3].to_string(),
-            album: f[4].to_string(),
-            duration,
-            art: f.get(7).map(|a| a.trim().to_string()).filter(|a| a.starts_with("https://")),
-            link: None,
-        },
-        position: f[6].replace(',', ".").parse().unwrap_or(0.0),
-        source: Source::Spotify,
-    })
+    *last = (Some((id.to_string(), name.to_string(), duration)), 0);
+    true
 }
 
 /// Polls an answer whose id doesn't match its song is skipped for (about 3 s), before it's taken as it is.
@@ -96,61 +71,21 @@ fn stale_id(last: Option<&(String, String, f64)>, id: &str, name: &str, duration
     last.is_some_and(|(lid, lname, ldur)| lid == id && (lname != name || (ldur - duration).abs() > 1.0))
 }
 
+/// "restart", "next", "previous", "playpause", "pause" or "play".
 pub fn control(action: &str) {
-    let cmd = match action {
-        "restart" => "set player position to 0",
-        "next" => "next track",
-        "previous" => "previous track",
-        "playpause" => "playpause",
-        "pause" => "pause",
-        "play" => "play",
-        _ => return,
-    };
-    osa(&format!(r#"tell application "Spotify" to {cmd}"#));
+    crate::platform::spotify::control(action);
 }
 
 /// Jump to a position in the current track (seconds).
 pub fn seek(seconds: f64) {
-    osa(&format!("tell application \"Spotify\" to set player position to {:.2}", seconds.max(0.0)));
+    crate::platform::spotify::seek(seconds);
 }
 
-/// Play a track by its id; false when Spotify didn't (not installed, refused, or no answer).
+/// Play a track by its id; false when Spotify didn't (not installed, refused, or no answer). On Windows the track
+/// is opened by its spotify:track: link (the media session can't start a given track), and it's done once Spotify's
+/// media session names it (platform/windows/media.rs). A made-up id (trackids.rs) is never opened: false.
 pub fn play_track(id: &str) -> bool {
-    if !(id.starts_with("spotify:track:") && id.chars().all(|c| c.is_ascii_alphanumeric() || c == ':')) {
-        return false;
-    }
-    // The song already in Spotify (paused, say) is started over from the top instead: asked to play it again,
-    // Spotify resumes it for a split second and then starts it over (live, 29 Oct), which sounds like a double start.
-    let done = osa(&play_script(id)).is_some();
-    if !done {
-        crate::engine::log(&format!("Spotify didn't play {id} (not installed, or it didn't answer)"));
-    }
-    done
-}
-
-fn play_script(id: &str) -> String {
-    format!(r#"tell application "Spotify"
-set same to false
-try
-set same to ((id of current track) is "{id}")
-end try
-if same then
-set player position to 0
-play
-else
-play track "{id}"
-end if
-end tell"#)
-}
-
-#[cfg(test)]
-mod play_tests {
-    #[test]
-    fn the_song_already_there_is_started_over_not_played_again() {
-        let s = super::play_script("spotify:track:3JvKfv6T31zO0ini8iNItO");
-        assert!(s.contains(r#"(id of current track) is "spotify:track:3JvKfv6T31zO0ini8iNItO""#));
-        assert!(s.contains("set player position to 0\nplay\nelse\nplay track"));
-    }
+    crate::platform::spotify::play_track(id)
 }
 
 #[cfg(test)]

@@ -1,0 +1,73 @@
+{
+  "_": "Exceptions to lib/untranslated.test.mjs, each with why. files: whole files left in English. text: one piece of text in a file (or \"*\": any file).",
+  "files": [
+    {
+      "file": "components/Dev.tsx",
+      "why": "dev-only tools (./run's ONKEY_DEV_TOOLS, marked purple): never in a release, stay English"
+    },
+    {
+      "file": "components/DevDrive.tsx",
+      "why": "dev-only (as above)"
+    },
+    {
+      "file": "components/devhooks-none/hooks.tsx",
+      "why": "dev-only hooks' release stub (as above)"
+    },
+    {
+      "file": "components/MirrorBadge.tsx",
+      "why": "dev-only: the live mirror's badge, shown in a browser tab watching the running app (?mirror / __ONKEY_MIRROR__), never in the app window"
+    }
+  ],
+  "text": [
+    {
+      "file": "app/take/page.tsx",
+      "text": "Development tools (not in releases)",
+      "why": "dev-only (useDevTools, purple dashed, ./run's ONKEY_DEV_TOOLS): never in a release, stays English"
+    },
+    {
+      "file": "app/take/page.tsx",
+      "text": "dev",
+      "why": "dev-only (useDevTools, purple dashed, ./run's ONKEY_DEV_TOOLS): never in a release, stays English"
+    },
+    {
+      "file": "app/take/page.tsx",
+      "text": "Development tool (not in releases): line your voice up with the song by ear; the log keeps it next to the ear's gap",
+      "why": "dev-only (useDevTools, purple dashed, ./run's ONKEY_DEV_TOOLS): never in a release, stays English"
+    },
+    {
+      "file": "app/take/page.tsx",
+      "text": "Shift",
+      "why": "dev-only (useDevTools, purple dashed, ./run's ONKEY_DEV_TOOLS): never in a release, stays English"
+    },
+    {
+      "file": "app/take/page.tsx",
+      "text": "`${shiftMs > 0 ? \"+\" : \"\"}${shiftMs} ms`",
+      "why": "dev-only (useDevTools, purple dashed, ./run's ONKEY_DEV_TOOLS): never in a release, stays English"
+    },
+    {
+      "file": "app/take/page.tsx",
+      "text": " later",
+      "why": "dev-only (useDevTools, purple dashed, ./run's ONKEY_DEV_TOOLS): never in a release, stays English"
+    },
+    {
+      "file": "app/take/page.tsx",
+      "text": " earlier",
+      "why": "dev-only (useDevTools, purple dashed, ./run's ONKEY_DEV_TOOLS): never in a release, stays English"
+    },
+    {
+      "file": "app/take/page.tsx",
+      "text": "Marked: it sounds in sync at this shift (click to unmark)",
+      "why": "dev-only (useDevTools, purple dashed, ./run's ONKEY_DEV_TOOLS): never in a release, stays English"
+    },
+    {
+      "file": "app/take/page.tsx",
+      "text": "Mark it: it sounds in sync at this shift",
+      "why": "dev-only (useDevTools, purple dashed, ./run's ONKEY_DEV_TOOLS): never in a release, stays English"
+    },
+    {
+      "file": "components/ReportProblem.tsx",
+      "text": "logs/",
+      "why": "the folder's name inside the report's zip, not words"
+    }
+  ]
+}

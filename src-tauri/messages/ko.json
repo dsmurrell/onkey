@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "OnKey에 관하여",
+      "services": "서비스",
+      "pauseListening": "듣기 일시정지",
+      "resumeListening": "듣기 다시 시작",
+      "hide": "OnKey 가리기",
+      "hideOthers": "기타 가리기",
+      "quit": "OnKey 종료"
+    },
+    "file": {
+      "title": "파일",
+      "closeWindow": "윈도우 닫기"
+    },
+    "edit": {
+      "title": "편집",
+      "undo": "실행 취소",
+      "redo": "실행 복귀",
+      "cut": "오려두기",
+      "copy": "복사하기",
+      "paste": "붙여넣기",
+      "selectAll": "전체 선택"
+    },
+    "view": {
+      "title": "보기",
+      "fullScreen": "전체 화면 시작/종료"
+    },
+    "window": {
+      "title": "윈도우",
+      "minimize": "최소화",
+      "zoom": "확대/축소",
+      "closeWindow": "윈도우 닫기"
+    },
+    "help": {
+      "title": "도움말",
+      "reportProblem": "문제 신고…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "버그 신고용 OnKey 기록: 로그와 수치만 있고, 가사나 오디오는 없어요."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "음정을 맞춰 노래해요",
+      "free": "Mac용 무료"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey는 노래를 듣고 음정이 얼마나 맞는지 보여 줘요. 녹음은 Mac에만 남아요.",
+    "NSAudioCaptureUsageDescription": "OnKey는 Mac에서 재생되는 음악을 듣고 가수의 멜로디를 익혀요. 음악을 저장하거나 보내는 일은 절대 없어요. 듣기 모드에서는 노래 이름을 알아내기 위해 짧은 지문(오디오가 아니에요)이 Apple의 Shazam에 보내져요.",
+    "NSAppleEventsUsageDescription": "OnKey는 Spotify, 음악 또는 브라우저(YouTube용)에 무엇이 재생 중인지 묻고, 재생·건너뛰기·처음부터를 누르면 재생을 제어해요."
+  }
+}

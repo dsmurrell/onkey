@@ -32,7 +32,8 @@ pub const MODELS: [Model; 8] = [
             sha256: "7724db4ba59a388fff5aba2f08f0ac025d4ca59caef80e7f474053a1455c88e5", bytes: 20_906_659 },
 ];
 
-/// Whether new songs can be learned, for the window: {"state": "ready"} or {"state": "missing", "error"}.
+/// Whether new songs can be learned, for the window: {"state": "ready"}, or {"state": "missing" | "broken", "code",
+/// "error"} (the code: src-tauri/messages/KINDS.md; the error: the English details, for the log and a report).
 static STATE: std::sync::Mutex<Option<serde_json::Value>> = std::sync::Mutex::new(None);
 
 pub fn set_state(v: serde_json::Value) {

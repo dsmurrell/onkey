@@ -17,7 +17,15 @@
 #                                           signs the updater bundle and latest.json, prints the git, gh and
 #                                           network checks it would run, and puts the version files back
 #   scripts/release.sh <X.Y.Z>              the release: commits "[release] vX.Y.Z", tags it, builds, pushes and
-#                                           runs `gh release create`
+#                                           runs `gh release create` (the Mac alone: latest.json with darwin-aarch64
+#                                           only, as 0.1.0 and 0.2.0 shipped)
+#   scripts/release.sh <X.Y.Z> --stage      a release for all three platforms (docs/RELEASING.md "Windows and
+#                                           Linux"): as above up to the rehearsal, then tags, pushes, makes the
+#                                           release as a DRAFT with the Mac files (no latest.json yet) and starts the
+#                                           Windows and Linux CI builds of this tag on the development repo, which
+#                                           sign their updater files, rehearse the update and upload to the draft;
+#                                           scripts/release-publish.sh then checks everything, writes latest.json
+#                                           for all three and publishes
 # Options:
 #   --notarise        in a dry run, sign with the Developer ID and notarise as a release does (calls Apple), so
 #                     the release can then publish exactly these files with --no-build
@@ -27,35 +35,43 @@
 #   ONKEY_UPDATER_KEY            the updater's private key (default ~/.tauri/onkey-updater.key)
 #   ONKEY_UPDATER_KEY_PASSWORD   its password (default: from the login Keychain, service "onkey-updater-key")
 #   ONKEY_REPO                   owner/repo (default dsmurrell/onkey)
+#   ONKEY_DEV_REPO               the development repo whose CI builds Windows and Linux (default dsmurrell/onkey-dev)
+#   ONKEY_CI_REF                 its branch holding the workflows to run, for --stage (default master; push it first)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT=$PWD
 
-V=""; DRY=0; BUILD=1; NOTARISE=0; PREP=0
+V=""; DRY=0; BUILD=1; NOTARISE=0; PREP=0; STAGE=0
 for a in "$@"; do
   case "$a" in
     --dry-run) DRY=1 ;;
     --no-build) BUILD=0 ;;
     --notarise) NOTARISE=1 ;;
     --prepare) PREP=1 ;;
+    --stage) STAGE=1 ;;
     -h|--help) sed -n '2,30p' "$0"; exit 0 ;;
     -*) echo "unknown option $a" >&2; exit 2 ;;
     *) V=$a ;;
   esac
 done
-[[ "$V" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "usage: scripts/release.sh <X.Y.Z> [--prepare | --dry-run [--notarise] | --no-build]" >&2; exit 2; }
+[[ "$V" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "usage: scripts/release.sh <X.Y.Z> [--prepare | --dry-run [--notarise] | --no-build] [--stage]" >&2; exit 2; }
 [ $PREP = 1 ] && [ $DRY = 1 ] && { echo "--prepare commits only locally: no --dry-run needed" >&2; exit 2; }
+[ $PREP = 1 ] && [ $STAGE = 1 ] && { echo "--prepare builds nothing: --stage comes after the export" >&2; exit 2; }
 TAG="v$V"
 REPO=${ONKEY_REPO:-dsmurrell/onkey}
+DEV_REPO=${ONKEY_DEV_REPO:-dsmurrell/onkey-dev}
+CI_REF=${ONKEY_CI_REF:-master}
 KEY=${ONKEY_UPDATER_KEY:-$HOME/.tauri/onkey-updater.key}
 export CARGO_TARGET_DIR="$ROOT/src-tauri/target-dist"     # make-dmg.sh's
+# an official build: the only kind that installs updates (updater.rs OFFICIAL); the rehearsal below checks it is
+export ONKEY_OFFICIAL=1
 APP="$CARGO_TARGET_DIR/release/bundle/macos/OnKey.app"
 DIST="$CARGO_TARGET_DIR/release-$TAG"
 say() { printf '\n== %s\n' "$*"; }
 die() { echo "release: $*" >&2; exit 1; }
 
 # ---- before anything changes
-say "OnKey $V$([ $DRY = 1 ] && echo " (dry run)")$([ $PREP = 1 ] && echo " (prepare)")"
+say "OnKey $V$([ $DRY = 1 ] && echo " (dry run)")$([ $PREP = 1 ] && echo " (prepare)")$([ $STAGE = 1 ] && echo " (stage: a draft, Windows and Linux to follow)")"
 if [ $PREP = 0 ]; then
   [ -f "$KEY" ] || die "no updater key at $KEY (docs/RELEASING.md: the key)"
   PW=${ONKEY_UPDATER_KEY_PASSWORD:-$(security find-generic-password -a onkey -s onkey-updater-key -w 2>/dev/null || true)}
@@ -236,25 +252,59 @@ print("  latest.json:", ", ".join(platforms), "->", url)
 EOF
 (cd "$DIST" && shasum -a 256 OnKey.dmg "$TARBALL" 2>/dev/null > SHA256SUMS || true)
 
-# ---- publish
+# ---- the update rehearsal: the exact app about to ship must update itself, or nothing is published
+say "update rehearsal"
+ONKEY_UPDATER_KEY="$KEY" ONKEY_UPDATER_KEY_PASSWORD="$PW" scripts/update-rehearsal.sh "$APP" || die "the update rehearsal failed (above): not published"
+
+# ---- publish (or, with --stage, a draft: Windows and Linux are built from this tag by CI, then release-publish.sh)
 ASSETS=()
-for f in OnKey.dmg "$TARBALL" "$TARBALL.sig" latest.json SHA256SUMS; do [ -f "$DIST/$f" ] && ASSETS+=("$DIST/$f"); done
+if [ $STAGE = 1 ]; then
+  # the Mac files only: latest.json and SHA256SUMS come with release-publish.sh, once all three platforms are there
+  for f in OnKey.dmg "$TARBALL" "$TARBALL.sig"; do [ -f "$DIST/$f" ] && ASSETS+=("$DIST/$f"); done
+  rm -f "$DIST/latest.json" "$DIST/SHA256SUMS"     # (Mac-only ones: release-publish.sh writes the real ones)
+else
+  for f in OnKey.dmg "$TARBALL" "$TARBALL.sig" latest.json SHA256SUMS; do [ -f "$DIST/$f" ] && ASSETS+=("$DIST/$f"); done
+fi
 PUSH=(git push origin "$BRANCH" "$TAG")
-CREATE=(gh release create "$TAG" --repo "$REPO" --verify-tag --latest --title "OnKey $V" --notes-file "$DIST/notes.md" "${ASSETS[@]}")
+if [ $STAGE = 1 ]; then
+  CREATE=(gh release create "$TAG" --repo "$REPO" --verify-tag --draft --title "OnKey $V" --notes-file "$DIST/notes.md" "${ASSETS[@]}")
+else
+  CREATE=(gh release create "$TAG" --repo "$REPO" --verify-tag --latest --title "OnKey $V" --notes-file "$DIST/notes.md" "${ASSETS[@]}")
+fi
+HEADSHA=$(git rev-parse HEAD)
+CI_WIN=(gh workflow run windows.yml --repo "$DEV_REPO" --ref "$CI_REF" -f "public_tag=$TAG" -f "public_commit=$HEADSHA" -f updater=release)
+CI_LINUX=(gh workflow run linux.yml --repo "$DEV_REPO" --ref "$CI_REF" -f "public_tag=$TAG" -f "public_commit=$HEADSHA" -f updater=release)
 q() { printf '%q ' "$@"; }
-say "publish"
+say "$([ $STAGE = 1 ] && echo stage || echo publish)"
 if [ $DRY = 1 ]; then
   echo "dry run: would run"
   [ $PREPARED = 1 ] || echo "  git commit -m \"[release] $TAG\"   (the version files and CHANGELOG.md above)"
   echo "  git tag -a $TAG -m \"OnKey $V\""
   echo "  $(q "${PUSH[@]}")"
   echo "  $(q "${CREATE[@]}")"
+  if [ $STAGE = 1 ]; then
+    echo "  $(q "${CI_WIN[@]}")"
+    echo "  $(q "${CI_LINUX[@]}")"
+    echo "  (then, when both CI runs are green: scripts/release-publish.sh $V)"
+  fi
   echo "artifacts: $DIST"; ls -lh "$DIST" | tail -n +2 | sed 's/^/  /'
   exit 0
 fi
 git tag -a "$TAG" -m "OnKey $V"
 "${PUSH[@]}"
 "${CREATE[@]}"
+if [ $STAGE = 1 ]; then
+  echo "draft release $TAG made: https://github.com/$REPO/releases/tag/$TAG (not published: no latest.json yet)"
+  # the Windows and Linux builds of exactly this commit, on the development repo's CI (its workflows at $CI_REF)
+  "${CI_WIN[@]}"
+  "${CI_LINUX[@]}"
+  echo
+  echo "staged $TAG at $HEADSHA. CI is building Windows and Linux from the public tag:"
+  echo "  gh run list --repo $DEV_REPO --workflow windows.yml -L 1; gh run list --repo $DEV_REPO --workflow linux.yml -L 1"
+  echo "  (gh run watch <id> --repo $DEV_REPO)"
+  echo "When both are green (each rehearsed its update and uploaded to the draft): scripts/release-publish.sh $V"
+  exit 0
+fi
 echo "published $TAG: https://github.com/$REPO/releases/tag/$TAG"
 # what every OnKey will read within a day
 sleep 5

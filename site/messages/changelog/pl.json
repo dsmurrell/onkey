@@ -1,0 +1,176 @@
+{
+  "page": {
+    "title": "Co nowego",
+    "description": "Każda funkcja i poprawka OnKey, od najnowszych, z wydaniem, które ją przyniosło.",
+    "kicker": "Lista zmian",
+    "heading": "Co nowego w OnKey",
+    "intro": "Każda funkcja i poprawka, od najnowszych, oraz wydanie, które ją przyniosło. OnKey aktualizuje się sam, więc wszystko to dociera do Ciebie samo.",
+    "release": "OnKey {version}",
+    "latest": "Najnowsze",
+    "kind": {
+      "new": "Nowe",
+      "better": "Lepsze",
+      "fix": "Naprawione"
+    },
+    "github": "Każda zmiana jest na <link>GitHub</link>, gdzie OnKey ma otwarty kod."
+  },
+  "releases": {
+    "0-3-0": {
+      "note": "OnKey w 19 językach, a teksty po hiszpańsku, portugalsku, włosku, francusku i niemiecku trzymają tempo piosenki."
+    },
+    "0-2-0": {
+      "note": "Pobiera się i instaluje sam na Macach, na których OnKey już działa."
+    },
+    "0-1-0": {
+      "note": "Pierwsze publiczne wydanie.",
+      "link": "Premiera na Hacker News"
+    }
+  },
+  "entries": {
+    "onkey-in-your-language": {
+      "title": "OnKey w Twoim języku",
+      "summary": "OnKey mówi teraz w 19 językach. Sam podąża za językiem Twojego Maca, albo wybierz język z globusa na górnym pasku, na ekranie powitalnym lub w Ustawieniach.",
+      "p1": "Sześć ma pełne wsparcie, z tekstami piosenek: hiszpański (Ameryka Łacińska i Hiszpania), portugalski, włoski, francuski i niemiecki",
+      "p2": "Dwanaście kolejnych to wczesne tłumaczenia: niderlandzki, japoński, chiński (uproszczony i tradycyjny), koreański, hindi, rosyjski, turecki, polski, indonezyjski, wietnamski i tajski. Każde o tym informuje, z linkiem do poprawiania",
+      "p3": "Na razie wszystkie są tłumaczeniami maszynowymi: jeśli coś brzmi dziwnie, link w Ustawieniach otwiera tekst do poprawy",
+      "p4": "Menu OnKey, prośby Maca o uprawnienia i okno zapisu też są w Twoim języku, a okładki pochodzą ze sklepu w Twoim kraju",
+      "p5": "Tak samo ta strona, jej poradniki i ta lista zmian: podąża za językiem przeglądarki, a globus w nagłówku go przełącza"
+    },
+    "lyrics-keep-time-in-more-languages": {
+      "title": "Teksty trzymają tempo w kolejnych językach",
+      "summary": "Słowa po hiszpańsku, portugalsku, włosku, francusku i niemiecku podświetlają się teraz w chwili, gdy są śpiewane. Litery z akcentami (corazón, Straße, cœur) są czytane poprawnie, a sylaby liczone według zasad każdego języka, a nie angielskiego.",
+      "p1": "Piosenki po japońsku, chińsku, koreańsku, w hindi, po rosyjsku, tajsku i w innych pismach pokazują całe wersy, w rytm piosenki, na razie bez dopasowania słowo po słowie",
+      "p2": "Angielskie teksty są dokładnie takie jak dotąd"
+    },
+    "songs-to-try-in-your-language": {
+      "title": "Piosenki na start w Twoim języku",
+      "summary": "Gdy wybrany jest hiszpański, portugalski, włoski, francuski lub niemiecki, strona Śpiewaj proponuje osiem piosenek w tym języku, od łatwych do trudnych, każdą z uzasadnieniem.",
+      "p1": "Kliknij proponowaną piosenkę, a zacznie się w Spotify, tak jak z karty w Bibliotece",
+      "p2": "Linki do znalezienia jej w Apple Music nadal są"
+    },
+    "when-a-song-has-no-lyrics": {
+      "title": "Gdy piosenka nie ma tekstu",
+      "summary": "Teksty pochodzą z LRCLIB, darmowej biblioteki, którą każdy może uzupełniać. Piosenka, dla której nic tam nie ma, mówi to teraz pod torem i na swojej stronie, z przyciskiem Szukaj ponownie, który od razu pyta LRCLIB.",
+      "p1": "Wcześniej OnKey pamiętał odpowiedź „brak” przez dobę, więc tekst, który ktoś właśnie dodał, pokazywał się dopiero następnego dnia",
+      "p2": "Gdy nie działa sam LRCLIB, strona Śpiewaj o tym mówi: nuty idą dalej, słowa dołączą, jeśli wróci, a piosenka nauczona w tym czasie dostanie tekst, gdy zaśpiewasz ją następnym razem"
+    },
+    "smoother-switching-in-spotify": {
+      "title": "Płynniejsze przełączanie w Spotify",
+      "summary": "Prośba o inną piosenkę, gdy jedna gra, wstrzymuje teraz pierwszą na chwilę, zanim zacznie się następna, więc zmiana jest czystsza."
+    },
+    "a-clearer-settings-page": {
+      "title": "Czytelniejsza strona Ustawienia",
+      "summary": "Mikrofon wybierasz z własnego menu OnKey, w którym urządzenia wirtualne i odłączony mikrofon są wymienione osobno. Menu otwierają się nad stroną, więc długa lista nigdy nie jest ucięta.",
+      "p1": "Na kartach w Bibliotece linia skali piosenki jest zielona, gdy piosenka do Ciebie pasuje, i brzoskwiniowa, gdy nie pasuje wprost (oktawę dalej, kilka nut poza skalą albo szersza)",
+      "p2": "Paski kroków w Konfiguracji pozostają równe, gdy nazwa kroku zajmuje dwie linie"
+    },
+    "small-fixes-0-3-0": {
+      "title": "Drobne poprawki",
+      "summary": "Rzeczy, które były trochę nie tak, teraz w porządku.",
+      "p1": "Kropka przy Co nowego pokazuje się po aktualizacji, aż je otworzysz, i nigdy po świeżej instalacji",
+      "p2": "Zgłoś problem zachowuje pole tekstowe na pełnej wysokości, a okno jest nieprzezroczyste nad Ustawieniami",
+      "p3": "Licznik powiadomień karty YouTube, „(3) Wykonawca - Tytuł”, nie przeszkadza już w nazwaniu piosenki"
+    },
+    "pause-listening": {
+      "title": "Wstrzymaj słuchanie",
+      "summary": "Oglądasz stream albo słuchasz podcastu? Wstrzymaj słuchanie OnKey, a przestanie słyszeć cokolwiek, aż je wznowisz. W tym czasie nic nie jest śledzone, rozpoznawane ani uczone.",
+      "p1": "Naciśnij ⌘⇧P, kliknij znaczek Na żywo na stronie Śpiewaj albo wybierz OnKey → Wstrzymaj słuchanie",
+      "p2": "Mała plakietka „Słuchanie wstrzymane · Wznów” zostaje u góry każdej strony, żeby nie zapomnieć",
+      "p3": "Po ponownym uruchomieniu słuchanie pozostaje wstrzymane, aż je wznowisz"
+    },
+    "see-when-a-paused-take-will-be-scored": {
+      "title": "Zobacz, kiedy wstrzymane podejście zostanie ocenione",
+      "summary": "Po pauzie w środku piosenki OnKey czeka minutę, na wypadek gdyby śpiew miał trwać dalej. Teraz o tym mówi i pozwala pominąć czekanie.",
+      "p1": "Strona Śpiewaj odlicza: „Wstrzymane · ocena za 0:45 · Zakończ teraz”",
+      "p2": "Historia pokazuje śpiewaną właśnie piosenkę jako pierwszą kartę, więc dopiero co wstrzymane odtworzenie nigdy nie wygląda na zgubione",
+      "p3": "Każda karta piosenki w Historii rysuje Twoje wyniki od drugiego odtworzenia"
+    },
+    "audio-interfaces-and-your-microphone-list": {
+      "title": "Interfejsy audio i lista mikrofonów",
+      "summary": "OnKey bierze teraz Twój głos z wejścia, na którym naprawdę jest, więc mikrofon na wejściu 2 interfejsu Focusrite (lub dowolnego z kilkoma wejściami) po prostu działa.",
+      "p1": "Bez żadnego ustawienia: OnKey podąża za wejściem, na którym jest Twój głos",
+      "p2": "Urządzenia wirtualne dodawane przez inne aplikacje (Krisp, Loopback, BlackHole, Zoom) są wymienione osobno od prawdziwych mikrofonów"
+    },
+    "listening-back-stays-in-step-after-a-skip": {
+      "title": "Odsłuch trzyma rytm po przeskoku",
+      "summary": "Po przeskoku w przód w trakcie śpiewania „Z piosenką” mogło odtwarzać część sprzed przeskoku nie w rytm. Teraz każda część podejścia gra równo z piosenką."
+    },
+    "reliability-fixes": {
+      "title": "Poprawki niezawodności",
+      "summary": "Rzeczy, które mogły pójść źle w środku piosenki, teraz naprawione.",
+      "p1": "Zakończ nie odrzuca już podejścia, gdy naciśniesz je w chwili, gdy OnKey sprawdza odtwarzacz",
+      "p2": "Piosenka nie może już na zawsze utknąć na „Czeka” lub „Ocenianie” po rzadkim błędzie",
+      "p3": "„Usuń wszystkie” w Bibliotece już się nie zawiesza, a „Przerwij naukę i usuń” usuwa tylko wybraną piosenkę",
+      "p4": "Skróty klawiszowe nie docierają już do muzyki za oknami dialogowymi",
+      "p5": "Wynik pojawia się od razu, gdy piosenka kończy się wstrzymana",
+      "p6": "Strumień radiowy lub wielogodzinny miks zatrzymuje się po 20 minutach, zamiast ciągnąć się jako jedno podejście",
+      "p7": "Zamykanie jest natychmiastowe: OnKey znika od razu, a to, czego się nauczył, dopisuje w tle"
+    },
+    "songs-start-cleanly": {
+      "title": "Piosenki startują czysto",
+      "summary": "Naciśnięcie Śpiewaj na karcie mogło uruchomić muzykę dwa razy albo odegrać urywek piosenki, zanim zaczęła się od nowa. Jedno naciśnięcie to teraz jeden czysty start."
+    },
+    "guides-and-help-and-beyond-pitch": {
+      "title": "Poradniki i pomoc oraz Nie tylko czystość",
+      "summary": "Ustawienia prowadzą teraz do tej dokumentacji. Nowy poradnik, Nie tylko czystość, opisuje to, czego OnKey nie słyszy (barwa, oddech, styl), i darmowych nauczycieli, od których można się tego uczyć."
+    },
+    "smoother-setup-and-youtube": {
+      "title": "Płynniejsza konfiguracja i YouTube",
+      "summary": "Poprawki pierwszych rzeczy, na które natknęli się nasi testerzy.",
+      "p1": "Krok aplikacji muzycznych w konfiguracji przechodzi dalej od razu, gdy macOS nie ma o co pytać",
+      "p2": "Karta YouTube uśpiona przez Chrome nie blokuje już OnKey",
+      "p3": "Niezainstalowana aplikacja muzyczna pokazuje się jako wyłączona, a nie włączona"
+    },
+    "learn-a-song-again": {
+      "title": "Naucz się piosenki jeszcze raz",
+      "summary": "Jeśli tekst lub nuty piosenki się rozjadą, pozwól OnKey nauczyć się jej od nowa: następne odtworzenie uczy jej na nowo i zastępuje starą kopię, gdy usłyszy wystarczająco dużo.",
+      "p1": "Wybierz Naucz się jeszcze raz z menu ⋯ w Bibliotece albo na stronie piosenki",
+      "p2": "OnKey sam to proponuje, gdy słowa piosenki rozjeżdżają się tak samo przy dwóch odtworzeniach"
+    },
+    "a-tidier-app-page-by-page": {
+      "title": "Porządniejsza aplikacja, strona po stronie",
+      "summary": "Każde podejście dostaje czytelniejszy raport, a po stronach Śpiewaj, Historia, Biblioteka i Ustawienia łatwiej się poruszać.",
+      "p1": "Śpiewaj proponuje „Wróć do ostatnio śpiewanych”: kilka ostatnich piosenek, każda z ostatnim wynikiem i przyciskiem Śpiewaj",
+      "p2": "Odtwórz w Bibliotece włącza piosenkę za Ciebie, a Śpiewaj pokazuje, że startuje (albo mówi, dlaczego nie może)"
+    },
+    "scoring-levels-relaxed-steady-and-pro": {
+      "title": "Poziomy oceniania: Łagodny, Pewny i Pro",
+      "summary": "Wybierz w Ustawieniach, jak surowo oceniane są Twoje podejścia. Łagodny to sposób, w jaki OnKey oceniał od zawsze; Pewny i Pro wymagają więcej.",
+      "p1": "Wibrato jest oceniane po środku nuty, więc dobre wibrato nie traci punktów na żadnym poziomie",
+      "p2": "Każde podejście pokazuje poziom, na którym zostało ocenione"
+    },
+    "leave-out-what-isn-t-the-melody": {
+      "title": "Pomiń to, co nie jest melodią",
+      "summary": "Jeśli OnKey złapał chórek albo wstawkę zamiast melodii, oznacz ten fragment jako „Nie melodia” na stronie podejścia. Zostanie pominięty w każdym wyniku dla tej piosenki, także we wcześniejszych podejściach."
+    },
+    "your-vocal-range": {
+      "title": "Twoja skala głosu",
+      "summary": "OnKey ustala Twoją skalę z piosenek, które śpiewasz, i pokazuje, jak każda piosenka do niej pasuje.",
+      "p1": "Historia pokazuje Twoją skalę na pasku klawiszy, z zaznaczonym wygodnym środkiem",
+      "p2": "Biblioteka pokazuje dopasowanie każdej piosenki, z filtrem piosenek w Twojej skali",
+      "p3": "Gdy piosenka leży wysoko lub nisko, OnKey mówi, czy śpiewanie jej oktawę dalej pasowałoby lepiej"
+    },
+    "challenge-a-friend-and-share-your-best-takes": {
+      "title": "Rzuć wyzwanie znajomemu i dziel się najlepszymi podejściami",
+      "summary": "Z podejścia skopiuj link, który mówi, jaki masz wynik, i prosi znajomego o pobicie go. Zawiera tylko piosenkę, wykonawcę, Twój wynik i, jeśli chcesz, Twoje imię.",
+      "p1": "Po najlepszym wyniku w piosence albo dużym skoku strona podejścia proponuje „Udostępnij to podejście”",
+      "p2": "Udostępniony klip kończy się kartą OnKey: Twój głos, nigdy muzyka"
+    },
+    "fade-the-guide": {
+      "title": "Wygaszaj podpowiedzi",
+      "summary": "Włącz w Ustawieniach, a w piosenkach, które już dobrze śpiewasz, Twoja linia głosu blednie, gdy trzymasz nutę, więc śpiewasz ze słuchu, nie z ekranu. Wraca w chwili, gdy odpływasz."
+    },
+    "lyrics-line-up-better": {
+      "title": "Tekst lepiej trzyma rytm",
+      "summary": "Wersy i słowa rozświetlają się teraz bliżej momentu, w którym są śpiewane, także wersy zaczynające się od „oh” lub „whoa”."
+    },
+    "onkey-s-first-release": {
+      "title": "Pierwsze wydanie OnKey",
+      "summary": "Darmowy, z otwartym kodem i wszystko na Twoim Macu.",
+      "p1": "Uczy się melodii każdej piosenki, którą włączysz w Spotify, Apple Music lub YouTube, już przy pierwszym odtworzeniu",
+      "p2": "Linia głosu na żywo nad nutami wokalisty, ze zsynchronizowanym tekstem i wynikiem za każde podejście",
+      "p3": "Podejścia do odsłuchania i krótki film z podejścia do udostępnienia: Twój głos, bez muzyki",
+      "p4": "Piosenki na start, biblioteka nauczonych piosenek i aktualizacje, które instalują się same"
+    }
+  }
+}

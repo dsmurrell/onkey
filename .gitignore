@@ -30,3 +30,6 @@ src-tauri/.source-commit
 
 # the demo video is hosted outside the repo; a local copy for previewing the site
 site/public/demo.mp4
+
+# DirectML.dll for the Windows build (scripts/fetch-directml.sh)
+src-tauri/directml/

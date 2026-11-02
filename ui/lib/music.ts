@@ -1,4 +1,6 @@
 // Pitch helpers shared by the lane, the take page and history. MIDI note numbers throughout (60 = C4).
+import { CLOSE, GOOD, INK, OFF } from "./colors";
+import { dateLocale, t } from "./i18n";
 export const NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 export const BLACK_KEYS = new Set([1, 3, 6, 8, 10]);
 
@@ -11,13 +13,18 @@ export const fold = (cents: number) => ((((cents + 600) % 1200) + 1200) % 1200) 
 export const credit = (err: number) => Math.max(0, Math.min(1, (150 - Math.abs(err)) / 100));
 
 /** How strictly takes are scored: the engine's table (dsp.rs LEVELS). `full`/`zero`: cents for full and no credit;
- *  `centre`: frames your pitch's centre is judged over (vibrato averages out); 0: exact pitch. */
+ *  `centre`: frames your pitch's centre is judged over (vibrato averages out); 0: exact pitch. Its name and what it
+ *  means are words (levelName, levelAbout), read when shown so they follow the window's language. */
 export type Level = "relaxed" | "steady" | "pro";
-export const LEVELS: Record<Level, { name: string; full: number; zero: number; centre: number; about: string }> = {
-  relaxed: { name: "Relaxed", full: 50, zero: 150, centre: 0, about: "Forgiving: full credit within half a semitone. Good for beginners and children." },
-  steady: { name: "Steady", full: 35, zero: 100, centre: 17, about: "Tighter pitch and timing, for singers who are mostly in tune." },
-  pro: { name: "Pro", full: 25, zero: 70, centre: 17, about: "Tight, for trained singers: a quarter of a semitone for full credit." },
+export const LEVELS: Record<Level, { full: number; zero: number; centre: number }> = {
+  relaxed: { full: 50, zero: 150, centre: 0 },
+  steady: { full: 35, zero: 100, centre: 17 },
+  pro: { full: 25, zero: 70, centre: 17 },
 };
+/** A level's name ("Relaxed"). */
+export const levelName = (l: Level) => t(`music.levels.${l}.name`);
+/** What a level means, in a sentence. */
+export const levelAbout = (l: Level) => t(`music.levels.${l}.about`);
 export const levelOf = (l: unknown): Level => (l === "steady" || l === "pro" ? l : "relaxed");
 /** The best score of these takes, like with like: of the ones at the same level as the latest. */
 export function bestAtLatestLevel<T extends { score: number; recorded: string; level?: string | null }>(takes: T[]): { best: number; level: string } | null {
@@ -60,17 +67,14 @@ export const lineGrade = (accuracy: number, level: Level): Grade => {
 
 /** How far off, in plain words: "35¢ flat" under a semitone, then "about 4 semitones flat", "about an octave low". */
 export function offBy(cents: number) {
-  const c = Math.round(Math.abs(cents)), up = cents > 0;
-  if (c < 100) return `${c}¢ ${up ? "sharp" : "flat"}`;
+  const c = Math.round(Math.abs(cents)), dir = cents > 0 ? "up" : "down";
+  if (c < 100) return t("music.offBy.cents", { cents: c, dir });
   const semis = Math.round(c / 100);
-  if (semis >= 11) {
-    const oct = Math.round(semis / 12);
-    return `about ${oct === 1 ? "an octave" : `${oct} octaves`} ${up ? "high" : "low"}`;
-  }
-  return `about ${semis === 1 ? "a semitone" : `${semis} semitones`} ${up ? "sharp" : "flat"}`;
+  if (semis >= 11) return t("music.offBy.octaves", { count: Math.round(semis / 12), dir });
+  return t("music.offBy.semitones", { count: semis, dir });
 }
 
-export const COLORS: Record<Grade, string> = { good: "#34d27b", close: "#f5b83d", off: "#f2626b", none: "#8b94ab" };
+export const COLORS: Record<Grade, string> = { good: GOOD, close: CLOSE, off: OFF, none: INK[300] };
 
 /** The app a track plays in, from its id. */
 export const sourceName = (trackId: string) =>
@@ -94,11 +98,12 @@ export function smoothed(get: (f: number) => number, f: number, w = 3) {
 }
 
 export function scoreWord(score: number) {
-  return score >= 90 ? "Superb" : score >= 80 ? "Great" : score >= 65 ? "Good" : score >= 45 ? "Getting there" : "Keep at it";
+  return t(`music.scoreWord.${score >= 90 ? "superb" : score >= 80 ? "great" : score >= 65 ? "good" : score >= 45 ? "gettingThere" : "keepAtIt"}`);
 }
 
+/** When a take was sung ("1 Nov, 14:05"), in the window's language (English: the computer's own date style). */
 export function when(iso: string) {
-  const d = new Date(iso);
-  return d.toLocaleDateString(undefined, { day: "numeric", month: "short" }) + ", " +
-    d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+  const d = new Date(iso), loc = dateLocale();
+  return d.toLocaleDateString(loc, { day: "numeric", month: "short" }) + ", " +
+    d.toLocaleTimeString(loc, { hour: "2-digit", minute: "2-digit" });
 }

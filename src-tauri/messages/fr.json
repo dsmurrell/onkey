@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "À propos d’OnKey",
+      "services": "Services",
+      "pauseListening": "Mettre l’écoute en pause",
+      "resumeListening": "Reprendre l’écoute",
+      "hide": "Masquer OnKey",
+      "hideOthers": "Masquer les autres",
+      "quit": "Quitter OnKey"
+    },
+    "file": {
+      "title": "Fichier",
+      "closeWindow": "Fermer la fenêtre"
+    },
+    "edit": {
+      "title": "Édition",
+      "undo": "Annuler",
+      "redo": "Rétablir",
+      "cut": "Couper",
+      "copy": "Copier",
+      "paste": "Coller",
+      "selectAll": "Tout sélectionner"
+    },
+    "view": {
+      "title": "Présentation",
+      "fullScreen": "Activer/désactiver le mode plein écran"
+    },
+    "window": {
+      "title": "Fenêtre",
+      "minimize": "Minimiser",
+      "zoom": "Réduire/agrandir",
+      "closeWindow": "Fermer la fenêtre"
+    },
+    "help": {
+      "title": "Aide",
+      "reportProblem": "Signaler un problème…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "Les données d’OnKey pour un rapport de bug : journaux et chiffres, sans paroles ni audio."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "Chantez juste",
+      "free": "Gratuit pour Mac"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey écoute votre chant pour montrer votre justesse. Vos enregistrements restent sur votre Mac.",
+    "NSAudioCaptureUsageDescription": "OnKey écoute la musique qui joue sur votre Mac pour apprendre la mélodie de la voix. Il n’enregistre jamais la musique et ne l’envoie pas. En mode écoute, une courte empreinte (pas l’audio) part vers Shazam d’Apple pour nommer la chanson.",
+    "NSAppleEventsUsageDescription": "OnKey demande à Spotify, Musique ou votre navigateur (pour YouTube) ce qui joue et contrôle la lecture quand vous appuyez sur lecture, passez ou reprenez du début."
+  }
+}

@@ -57,7 +57,7 @@ export function FlowMyna() {
         }
       }
     }, { rootMargin: "0px 0px -75% 0px" });   // a topic is being read when its heading sits in the top quarter
-    if (path.replace(/\/+$/, "") === "/docs/troubleshooting") {
+    if (/^(\/[^/]+)?\/docs\/troubleshooting$/.test(path.replace(/\/+$/, ""))) {   // in any language: /es/docs/…
       document.querySelectorAll("main h2").forEach((h) => topics.observe(h));
     }
     return () => { window.removeEventListener("scroll", watch); seen.disconnect(); topics.disconnect(); timers.forEach((t) => clearTimeout(t)); };

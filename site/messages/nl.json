@@ -1,0 +1,831 @@
+{
+  "meta": {
+    "title": "OnKey: leer de nummers zingen waar je van houdt",
+    "description": "OnKey is een gratis, opensource zangtrainer voor de Mac. Het luistert naar de muziek die op je Mac speelt, leert de melodie van de zanger en toont een notenhulp terwijl je zingt, zodat je ziet waar je te hoog of te laag zit. Het bewaart de muziek nooit."
+  },
+  "common": {
+    "skip": "Ga naar de inhoud",
+    "joke": "Redt douchezangers van zichzelf sinds 2026",
+    "sourceOnGitHub": "Broncode op GitHub",
+    "stars": "{n, plural, one {# ster op GitHub} other {# sterren op GitHub}}",
+    "requirements": {
+      "silicon": "Een Mac met Apple Silicon (M1 of nieuwer)",
+      "macos": "macOS 14.2 of nieuwer"
+    },
+    "early": "{language} is nieuw in OnKey: bij nummers die in het {language} gezongen worden, verschijnt de songtekst voorlopig per regel, zonder timing per woord."
+  },
+  "header": {
+    "home": "OnKey startpagina",
+    "label": "Hoofdmenu",
+    "docs": "Documentatie",
+    "faq": "FAQ",
+    "whatsNew": "Wat is er nieuw",
+    "github": "GitHub",
+    "discord": "Discord"
+  },
+  "footer": {
+    "license": "· gratis en open source (MIT)",
+    "madeBy": "Gemaakt door <link>Daniel Murrell</link>",
+    "notAffiliated": "Niet verbonden met Spotify, Apple of Google.",
+    "label": "Voettekst",
+    "gettingStarted": "Aan de slag",
+    "howItWorks": "Hoe het werkt",
+    "privacy": "Privacy en juridisch",
+    "faq": "FAQ",
+    "whatsNew": "Wat is er nieuw",
+    "github": "GitHub",
+    "discord": "Discord",
+    "language": "Taal",
+    "improve": "Verbeter deze vertaling"
+  },
+  "download": {
+    "mac": "Download voor Mac",
+    "macsOnly": "OnKey draait voorlopig alleen op Macs. <link>Wil je Windows? Stem hier</link>.",
+    "send": "Stuur het naar je Mac",
+    "sent": "Verstuurd",
+    "phones": "OnKey draait op Macs, niet op telefoons. Stuur jezelf de link voor later.",
+    "shareText": "OnKey, een zangtrainer voor de Mac: download het op je Mac via",
+    "mailSubject": "OnKey voor mijn Mac"
+  },
+  "docsNav": {
+    "label": "Documentatie",
+    "heading": "Documentatie",
+    "inEnglish": "{title} (Engels)",
+    "pages": {
+      "start": "Aan de slag",
+      "howItWorks": "Hoe OnKey werkt",
+      "scoring": "Hoe de score werkt",
+      "privacy": "Privacy en juridisch",
+      "faq": "FAQ",
+      "yourVoice": "Comfortabel zingen",
+      "beyondPitch": "Meer dan zuiverheid",
+      "troubleshooting": "Problemen oplossen",
+      "credits": "Credits"
+    }
+  },
+  "home": {
+    "kicker": "Een gratis, opensource zangtrainer voor de Mac",
+    "title": "Leer de nummers zingen waar je van houdt.",
+    "intro": "OnKey luistert naar de muziek die op je Mac speelt en leert de melodie van de zanger. Daarna toont het een notenhulp terwijl je zingt, zodat je ziet waar je te hoog of te laag zit.",
+    "howLink": "Hoe het werkt →",
+    "languages": "Beschikbaar in {names} en <more>{n, plural, one {# andere taal} other {# andere talen}}</more>",
+    "factsLabel": "In één oogopslag",
+    "facts": {
+      "free": "Gratis en open source (MIT)",
+      "macs": "Apple Silicon, macOS 14.2+",
+      "local": "Draait op je Mac, geen account",
+      "music": "Bewaart de muziek waarnaar het luistert nooit"
+    },
+    "laneTitle": "Geleerd nummer · score 82",
+    "videoCaption": "Ik zing mee, en word al zingend gescoord.",
+    "video": {
+      "label": "1:35 · geluid aan",
+      "video": "OnKey in gebruik: Daniel zingt mee, de noten schuiven naar hem toe en zijn toonhoogte wordt eroverheen getekend",
+      "play": "Speel de demovideo af, met geluid",
+      "dialog": "Demovideo",
+      "close": "Sluit de video"
+    },
+    "artCaption": "Illustratie van de notenbaan. Demovideo komt binnenkort.",
+    "how": {
+      "title": "Hoe het werkt",
+      "step": "Stap {n}",
+      "steps": {
+        "play": {
+          "title": "Speel een nummer af",
+          "body": "In Spotify, Apple Music of YouTube, zoals je al doet. OnKey luistert mee. Het speelt of downloadt zelf geen muziek."
+        },
+        "learn": {
+          "title": "De eerste keer leert het",
+          "body": "Als het nummer afloopt, neemt OnKey een paar minuten om de noten van de zanger te leren en de songtekst erbij te leggen."
+        },
+        "sing": {
+          "title": "Zing met de notenhulp",
+          "body": "De volgende keer schuiven de noten naar je toe en wordt je stem eroverheen getekend. Groen is op de noot, rood ernaast."
+        },
+        "review": {
+          "title": "Bekijk hoe het ging",
+          "body": "Je krijgt een score, de noten die je raakte en miste, en je opname om terug te luisteren met het nummer."
+        }
+      },
+      "more": "Wil je de details? <link>Lees precies hoe OnKey werkt</link>, met tekeningen."
+    },
+    "privacy": {
+      "title": "Het luistert, maar bewaart de muziek nooit",
+      "body": "OnKey luistert naar de muziek alleen om de melodie te leren en de noten in de maat te houden. Het bewaart of uploadt de muziek nooit. Wat op je Mac blijft, zijn de noten die het leert en een opname van je microfoon voor elke take, zodat je jezelf kunt terugluisteren.",
+      "link": "Privacy en juridisch",
+      "cards": {
+        "network": {
+          "title": "Geen account, geen server, geen analytics",
+          "body": "Wat je Mac verlaat: een Shazam-signatuur (geen audio) om een nieuw nummer te herkennen, de naam van het nummer naar LRCLIB voor de songtekst en naar Apple voor hoezen, en een dagelijkse updatecontrole op GitHub."
+        },
+        "fair": {
+          "title": "Eerlijke score",
+          "body": "Een octaaf lager zingen telt gewoon mee, en je timing krijgt 80 ms speling. Te hoog of te laag zingen is wat je punten kost."
+        },
+        "headphones": {
+          "title": "Koptelefoon of speakers",
+          "body": "Een koptelefoon geeft de betrouwbaarste scores. Met speakers hoort je microfoon het nummer én jou, dus OnKey filtert het nummer eruit."
+        }
+      }
+    },
+    "questions": {
+      "title": "Vragen",
+      "body": "De vragen die mensen het eerst stellen. <link>Alle vragen</link>."
+    },
+    "get": {
+      "title": "Download OnKey",
+      "body": "Gratis en open source onder de MIT-licentie. {requirements}.",
+      "discord": "Kom bij de Discord"
+    }
+  },
+  "start": {
+    "title": "Aan de slag",
+    "lede": "Installeer OnKey, geef het twee toestemmingen en speel een nummer af.",
+    "need": {
+      "title": "Wat je nodig hebt",
+      "music": "Muziek die speelt in Spotify of Apple Music, of YouTube in Chrome, Brave, Edge of Safari.",
+      "mic": "Een microfoon (de ingebouwde werkt). Een koptelefoon geeft de betrouwbaarste scores.",
+      "why": "macOS 14.2 is de eerste versie waarin een app het geluid van een andere app kan horen zonder extra drivers, en de modellen hebben Apple Silicon nodig om snel genoeg te draaien."
+    },
+    "install": {
+      "title": "Installeren",
+      "download": "Download <code>OnKey.dmg</code> van de <link>releasepagina</link>. Het is ongeveer 350 MB (ongeveer 420 MB geïnstalleerd) omdat de modellen in de app zitten, zodat het verder nooit iets downloadt.",
+      "drag": "Open het en sleep OnKey naar de map Apps.",
+      "open": "Open OnKey. Het is ondertekend en door Apple genotariseerd, dus het opent zoals elke andere app.",
+      "openAnyway": "Open OnKey. Deze build is nog niet genotariseerd, dus macOS zegt de eerste keer dat het de app niet kan controleren. Ga naar <strong>Systeeminstellingen → Privacy en beveiliging</strong>, scrol omlaag en klik op <strong>Open toch</strong>. Dit hoef je maar één keer te doen.",
+      "updates": "Daarna controleert OnKey één keer per dag op GitHub of er een nieuwe versie is, downloadt die op de achtergrond (ongeveer 350 MB) en installeert die als je herstart of stopt, nooit midden in een nummer. Je kunt dit uitzetten in <strong>Instellingen</strong>."
+    },
+    "permissions": {
+      "title": "Toestemmingen",
+      "permission": "Toestemming",
+      "why": "Waarom OnKey het nodig heeft",
+      "mic": "<strong>Microfoon</strong>",
+      "micWhy": "Om je te horen zingen.",
+      "audio": "<strong>Systeemaudio-opname</strong>",
+      "audioWhy": "Om de muziekapp te horen, zodat OnKey de melodie kan leren en de noten in de maat kan houden. macOS noemt het opnemen, maar OnKey analyseert het geluid terwijl het speelt en bewaart het nooit.",
+      "control": "<strong>Spotify en Muziek bedienen</strong> (gevraagd tijdens de configuratie)",
+      "controlWhy": "Om te lezen wat er speelt en waar, en om af te spelen, te pauzeren en door te spoelen voor ‘Zing het opnieuw’ en overslaan. De configuratie vraagt macOS om toestemming voor elke app die open is. Een app die niet open is, vraagt het de eerste keer dat je er een nummer afspeelt. Kies ‘Alleen luisteren’ en OnKey stuurt Spotify of Muziek nooit iets, en volgt het nummer op zijn geluid.",
+      "browser": "<strong>Je browser bedienen</strong> (optioneel, voor YouTube)",
+      "browserWhy": "Alleen als je YouTube aanzet, in Instellingen of op de pagina Zingen: om de tijd en titel van de YouTube-tab te lezen, en die af te spelen, te pauzeren en door te spoelen.",
+      "after": "Nummers die je eerder zong, worden op je Mac herkend, nieuwe door Shazam. Heb je per ongeluk nee gezegd tegen een toestemming, ga dan naar <strong>Systeeminstellingen → Privacy en beveiliging</strong>, zoek het onderdeel op en zet OnKey aan."
+    },
+    "first": {
+      "title": "Je eerste nummer",
+      "play": "Open OnKey en speel een nummer af in Spotify, Apple Music of YouTube. Weet je niet wat je moet zingen? Klik op het OnKey-logo op de pagina Zingen voor suggesties.",
+      "lyrics": "De eerste keer zijn er nog geen noten. Je ziet de songtekst regel voor regel, gelijk met de zanger voor ongeveer de eerste anderhalve minuut (behalve op Macs met 8 GB). Zing gerust mee, want deze take wordt wel gescoord.",
+      "learns": "Als het nummer afloopt, <strong>leert OnKey het</strong>. Dat duurde op mijn Mac twee tot drie minuten, en de knop Zing zegt ‘Aan het leren…’ tot het klaar is. Er wordt één nummer tegelijk geleerd, dus nummers die na elkaar speelden zeggen ‘Wachten om te leren’ tot het hun beurt is.",
+      "again": "Speel het opnieuw af. De noten blijven een paar seconden gedimd (‘Gelijkzetten met het nummer…’) tot OnKey weet waar je bent. Dan schuiven ze naar je toe met de woorden erop, en wordt je toonhoogte live getekend.",
+      "score": "Als het afloopt, krijg je een score, een rapport over elke noot en regel, en je opname om terug te luisteren met het nummer.",
+      "learned": "Een nummer geldt als geleerd zodra OnKey ongeveer 70% ervan heeft gehoord. Als je heen en weer springt, wordt de rest geleerd de volgende keer dat je die delen afspeelt.",
+      "rest": "Zing je veel? Lees dan <link>comfortabel zingen</link>. Na ongeveer 35 minuten herinnert OnKey je eraan je stem te laten rusten.",
+      "next": "Volgende: <how>hoe OnKey werkt</how>, <scoring>hoe de score werkt</scoring>, of <troubleshooting>problemen oplossen</troubleshooting>."
+    }
+  },
+  "faqPage": {
+    "title": "FAQ",
+    "before": "Voor je downloadt",
+    "using": "OnKey gebruiken"
+  },
+  "faq": {
+    "network": {
+      "q": "Verlaat er iets mijn Mac?",
+      "intro": "OnKey bewaart of uploadt de muziek waarnaar het luistert nooit. Je opnamen en geleerde nummers blijven op je Mac. Wat wel naar buiten gaat:",
+      "shazam": "<strong>Shazam</strong> (Apple): een signatuur van maximaal 5 seconden van het geluid van de muziekapp (geen audio, en nooit je microfoon) om een nieuw nummer te herkennen als niets anders kan zeggen wat er speelt. Dat is bij YouTube, andere apps of Alleen luisteren. Spotify en Apple Music benoemen hun eigen nummers, en nummers die je eerder zong worden op je Mac herkend. Je kunt Shazam uitzetten in Instellingen.",
+      "lrclib": "<strong>LRCLIB</strong>: de artiest, titel, het album en de lengte van het nummer, om de gesynchroniseerde songtekst op te halen (tenzij Toon songteksten uitstaat).",
+      "apple": "<strong>Apple</strong>: de artiest en titel om albumhoezen te vinden, en het Apple Music-id van een herkend nummer om de lengte op te halen. De hoezen zelf laden van de beeldservers van Spotify, Apple of YouTube.",
+      "github": "<strong>GitHub</strong>: een dagelijkse controle op een nieuwe versie, en de download ervan. Je kunt dit uitzetten in Instellingen.",
+      "outro": "Er is geen account, geen analytics en geen server van mij. ‘Meld een probleem’ bewaart alleen een bestand op je Mac, dat je zelf bij een GitHub-issue kunt voegen als je wilt. <link>Privacy, volledig</link>."
+    },
+    "music": {
+      "q": "Levert of downloadt OnKey muziek?",
+      "a": "Nee. Je eigen muziekapp speelt het nummer (Spotify, Apple Music of YouTube in een browser). OnKey luistert om de noten van de zanger te leren en bewaart de muziek nooit."
+    },
+    "kept": {
+      "q": "Wat bewaart het op mijn Mac?",
+      "a": "Per nummer: de noten, een vingerafdruk en Shazam-signatuur, en de songtekst met timing. Per take: een <strong>opname van je microfoon</strong> (ongeveer 0,5 MB per minuut), je scores en de songtekst die je zong, zodat je het kunt terugluisteren. Het staat allemaal in <code>{dataDir}</code> (behalve een take die je deelt, die als video in Downloads wordt bewaard), en een take of nummer verwijderen verplaatst het naar de prullenmand. Het bewaart de muziek nooit, al pikt een take die met speakers is gezongen er wel iets van op."
+    },
+    "permissions": {
+      "q": "Welke toestemmingen vraagt het?",
+      "mic": "<strong>Microfoon</strong>: om je te horen zingen.",
+      "audio": "<strong>Systeemaudio-opname</strong>: om de muziekapp of browser te horen die speelt. macOS noemt het opnemen, maar OnKey analyseert het geluid terwijl het speelt en bewaart het niet.",
+      "control": "<strong>Bediening van Spotify en Muziek</strong> (gevraagd tijdens de configuratie): om te lezen wat er speelt en waar, en om af te spelen, te pauzeren en door te spoelen voor ‘Zing het opnieuw’. Kies ‘Alleen luisteren’ in de configuratie, of zet ze uit onder ‘Laat OnKey bedienen’ in Instellingen, en OnKey stuurt ze nooit iets.",
+      "browser": "<strong>Bediening van je browser</strong> (alleen als je YouTube aanzet): hetzelfde voor een YouTube-tab."
+    },
+    "macs": {
+      "q": "Op welke Macs draait het?",
+      "a": "Apple Silicon (M1 of nieuwer) met macOS 14.2 of nieuwer. 14.2 is de eerste versie waarin een app het geluid van een andere app kan horen zonder extra drivers, en de modellen hebben Apple Silicon nodig om het bij te houden. 8 GB geheugen is genoeg. Intel Macs worden niet ondersteund."
+    },
+    "windows": {
+      "q": "Waarom geen versie voor Windows, Linux of telefoons?",
+      "a": "OnKey is gebouwd op de audio-opname per app en Core ML van macOS. Windows kan ook het geluid van één app horen, dus een port is mogelijk, maar ik ben er nog niet aan begonnen. Zou je het gebruiken, zeg het dan in de <link>Windows-issue</link>. Telefoons laten een app niet naar een andere luisteren, dus een telefoonversie zou een andere aanpak nodig hebben."
+    },
+    "browser": {
+      "q": "Hoe verhoudt het zich tot andere apps? En waarom niet in de browser?",
+      "compare": "De meeste zangapps hebben hun eigen catalogus, backingtracks of handgemaakte notenkaarten nodig. OnKey leert van de muziek die je al afspeelt, dus je oefent met de originele artiest. Nummers met een duidelijke leadzang werken het beste.",
+      "web": "Een webpagina kan de Spotify- of Apple Music-app niet horen, kan ze niet vragen wat er speelt, en kan ShazamKit of Core ML niet gebruiken. Daarom is het een Mac-app."
+    },
+    "scoring": {
+      "q": "Hoe wordt de score berekend?",
+      "a": "Elke 10 ms dat jij en de zanger beiden zingen, wordt je toonhoogte met die van de zanger vergeleken. Binnen een kwarttoon krijg je volle punten, aflopend naar nul bij driekwart toon. Octaven tellen niet tegen je, en je timing krijgt 80 ms speling. De score is je zuiverheid, geschaald naar hoeveel van de zangpartij je zong. Meer in <link>Hoe de score werkt</link>."
+    },
+    "licence": {
+      "q": "Wat is de licentie?",
+      "a": "MIT. Het is gratis en de broncode staat op GitHub. De modellen hebben hun eigen licenties, vermeld onder <link>Credits</link>."
+    },
+    "firstPlay": {
+      "q": "Waarom toont de eerste keer geen noten?",
+      "a": "OnKey leert een nummer nadat het de eerste keer is afgelopen, dus er zijn nog geen noten. In plaats daarvan zie je de songtekst, regel voor regel (gelijk met de zanger voor ongeveer de eerste anderhalve minuut, behalve op Macs met 8 GB). Zing toch mee, want die take wordt wel gescoord. Vanaf de tweede keer schuiven de noten naar je toe met de woorden erop."
+    },
+    "learning": {
+      "q": "Waarom kan ik een nummer nog niet zingen? Er staat ‘Aan het leren…’",
+      "a": "Het leren gebeurt nadat het nummer is afgelopen en duurde op mijn Mac twee tot drie minuten. De knop ‘Zing het opnieuw’ toont de voortgang en komt terug als het klaar is. Andere nummers blijven intussen te zingen. Er wordt één nummer tegelijk geleerd, dus nummers die na elkaar speelden zeggen ‘Wachten om te leren’ tot het hun beurt is. Het leren pauzeert ook terwijl je een nummer zingt dat OnKey al kent."
+    },
+    "starters": {
+      "q": "Wat zal ik eerst zingen?",
+      "a": "OnKey stelt nummers voor die het goed volgt. Ze staan op de pagina Zingen als er niets speelt, onderaan de Bibliotheek, en als je op het OnKey-logo op de pagina Zingen klikt. Elk nummer heeft links naar Spotify en Apple Music."
+    },
+    "busy": {
+      "q": "Maakt het mijn Mac traag?",
+      "a": "Een geleerd nummer zingen is licht: 15 tot 19% van één CPU-kern op mijn Mac. Het leren is het zware deel, dus OnKey doet dat nadat het nummer is afgelopen, één nummer tegelijk, met lage prioriteit. Tijdens het leren gebruikte het ongeveer 1,7 GB geheugen (hoogstens 2,4 GB). Op Macs met minder dan 32 GB worden de modellen na elk nummer weer vrijgegeven."
+    },
+    "headphones": {
+      "q": "Heb ik een koptelefoon nodig?",
+      "a": "Nee, maar die geeft wel de betrouwbaarste scores. Met speakers haalt echo-onderdrukking het nummer weer uit je microfoon: 20 dB of meer bij de speakers van een MacBook, 8 tot 14 dB bij externe speakers. Harde muziek kan er nog steeds doorheen lekken."
+    },
+    "octave": {
+      "q": "Kan ik een octaaf lager of hoger zingen?",
+      "a": "Ja. Een octaaf van de zanger af telt als op de noot."
+    },
+    "apps": {
+      "q": "Welke muziekapps werken?",
+      "a": "Spotify, Apple Music en YouTube in Chrome, Brave, Edge of Safari. Standaard vraagt OnKey Spotify en Apple Music wat er speelt, dus de posities zijn exact, en het kan ze vanuit zijn eigen venster afspelen en pauzeren. Met ‘Alleen luisteren’ (elke app uit onder ‘Laat OnKey bedienen’ in Instellingen) herkent het nummers aan hun geluid. YouTube wordt op zijn geluid gevolgd, tenzij je OnKey je browser laat bedienen."
+    },
+    "shazam": {
+      "q": "Waarom Shazam? Stuurt dat geen audio naar Apple?",
+      "a": "ShazamKit stuurt een signatuur (een vingerafdruk die op je Mac wordt berekend), niet de audio, en nooit je microfoon. OnKey vraagt het Shazam alleen als niets anders het nummer kan benoemen: bij YouTube, andere apps of Alleen luisteren. Nummers die je eerder zong, worden eerst op je Mac herkend. Zet Instellingen → ‘Gebruik Shazam om nieuwe nummers te herkennen’ uit en er gaat niets naar Apple, maar dan worden op geluid alleen nummers herkend die je al geleerd hebt."
+    },
+    "lyricsOff": {
+      "q": "Kan ik de songteksten uitzetten?",
+      "a": "Ja, in Instellingen → ‘Toon songteksten’. Staat het uit, dan vraagt OnKey LRCLIB om niets en toont het geen woorden. Songteksten die al op je Mac staan, worden verborgen, niet verwijderd. De noten en score werken zoals gewoonlijk, en nummers die met songteksten uit worden geleerd, halen hun noten alleen uit de melodie."
+    },
+    "oddScores": {
+      "q": "Sommige nummers scoren vreemd. Waarom?",
+      "a": "Gerapte of gesproken nummers hebben nauwelijks een melodie om te scoren, en harmonieën of koren kunnen in de war brengen welke stem de melodie is. Zie <link>de beperkingen</link>."
+    },
+    "report": {
+      "q": "Er ging iets mis. Hoe meld ik het?",
+      "a": "Gebruik <strong>Meld een probleem</strong> in Instellingen, het Help-menu of de pagina van een take. Het toont je wat er in de zip gaat (het logboek van de laatste drie dagen en een samenvatting van elke afspeelbeurt, met namen van nummers maar zonder songteksten, audio of opnamen) en bewaart die op je Mac. Er wordt niets geüpload. Open dan een issue op <github>GitHub</github> en voeg de zip toe als je dat wilt. Kijk eerst even bij <link>Problemen oplossen</link>."
+    },
+    "updates": {
+      "q": "Hoe krijg ik updates?",
+      "a": "Automatisch. Eén keer per dag controleert OnKey op GitHub of er een nieuwe versie is en downloadt die op de achtergrond (ongeveer 350 MB, omdat de modellen in de app zitten). Hij wordt geïnstalleerd als je Herstart om bij te werken kiest of als je stopt, nooit midden in een nummer. Je kunt de controles uitzetten in Instellingen."
+    }
+  },
+  "troubleshooting": {
+    "title": "Problemen oplossen",
+    "lede": "Wat te doen als OnKey niet start, niets hoort, een nummer niet herkent, of niet gelijkloopt met je koptelefoon.",
+    "starting": {
+      "title": "Het blijft op ‘OnKey starten…’ staan",
+      "body": "Dit duurt normaal een paar seconden. Staat het er na een minuut nog, stop OnKey dan (<strong>⌘Q</strong>) en open het opnieuw. Helpt dat niet, <link>meld dan een probleem</link>."
+    },
+    "permissions": {
+      "title": "Vragen over toestemmingen",
+      "intro": "OnKey vraagt drie dingen tijdens de configuratie:",
+      "mic": "<strong>Microfoon</strong>: heb je nee gezegd, ga dan naar <strong>Systeeminstellingen → Privacy en beveiliging → Microfoon</strong> en zet OnKey aan.",
+      "audio": "<strong>Systeemaudio-opname</strong>: nodig om de muziekapp te horen. Heb je nee gezegd, of zegt OnKey dat het ‘… nog niet’ hoort, ga dan naar <strong>Systeeminstellingen → Privacy en beveiliging → Scherm- en systeemaudio-opname</strong> en zet OnKey aan onder <strong>Alleen systeemaudio-opname</strong>.",
+      "control": "<strong>Bediening van Spotify en Apple Music</strong>: de configuratie vraagt macOS om toestemming voor elke app die open is. Een app die niet open is, vraagt het de eerste keer dat je er een nummer afspeelt. Verschijnt de vraag niet, klik dan op <strong>Ga verder</strong>. macOS vraagt het de eerste keer dat je daar een nummer afspeelt. Om je antwoord te wijzigen, ga je naar <strong>Systeeminstellingen → Privacy en beveiliging → Automatisering → OnKey</strong>, of gebruik je <strong>Laat OnKey bedienen</strong> in de instellingen van OnKey.",
+      "buttons": "De knoppen in de meldingen van OnKey openen de juiste pagina van Systeeminstellingen. macOS kan je vragen OnKey opnieuw te openen nadat je een toestemming wijzigt."
+    },
+    "naming": {
+      "title": "Een nieuw nummer wordt pas laat herkend",
+      "body": "Nieuwe nummers worden herkend door Shazam, dat een internetverbinding nodig heeft, en het eerste antwoord na installatie kan traag zijn. Laat het nummer spelen, want OnKey blijft het vragen. Zegt het dat Shazam niet bereikbaar is, controleer dan je verbinding. Nummers die je al geleerd hebt, worden nog steeds op je Mac herkend. Bediening van Spotify of Apple Music toestaan gaat sneller, omdat OnKey de app dan kan vragen wat er speelt."
+    },
+    "noNotes": {
+      "title": "Geen noten bij een nummer",
+      "body": "OnKey leert een nummer nadat het de eerste keer is afgelopen, en de knop Zing zegt ‘Aan het leren…’ tot het klaar is. Er wordt één nummer tegelijk geleerd, dus andere zeggen ‘Wachten om te leren’. Het leren pauzeert ook terwijl je een nummer zingt dat OnKey al kent (‘Wachten terwijl je zingt’), zodat de noten vloeiend blijven. Een nummer geldt als geleerd zodra OnKey ongeveer 70% ervan heeft gehoord, dus als je heen en weer sprong, speel het dan nog één keer helemaal af."
+    },
+    "dim": {
+      "title": "De noten zijn gedimd en zeggen ‘Gelijkzetten met het nummer…’",
+      "body": "OnKey houdt de noten gedimd tot de muziek bevestigt waar je bent, zodat je nooit zingt op noten die op de verkeerde plek staan. Dat duurt meestal een paar seconden nadat een nummer begint of nadat je springt. Blijft het gedimd, controleer dan of het eigen volume van de muziekapp niet helemaal laag staat, want OnKey moet het horen. Zet de app harder en regel het volume met je Mac."
+    },
+    "wholeLine": {
+      "title": "Bij een eerste keer toont de songtekst een hele regel tegelijk",
+      "body": "Dat is normaal. Tot een nummer geleerd is, weet OnKey niet wanneer elk woord gezongen wordt, dus toont het de hele regel. Vanaf de volgende keer staan de woorden op de lettergreepbalkjes."
+    },
+    "timing": {
+      "title": "Songtekst te vroeg of te laat met een koptelefoon?",
+      "latency": "OnKey houdt rekening met hoe lang je koptelefoon of speakers nodig hebben om het geluid af te spelen, met het getal dat macOS voor elke uitvoer meldt. In mijn tests zat dat dicht genoeg bij de werkelijkheid, Bluetooth inbegrepen, dus er valt niets in te stellen.",
+      "still": "Lijken de noten toch te vroeg of te laat, dan is OnKey misschien nog niet gelijkgezet met het nummer. Geef het een paar seconden, of spring een beetje terug. Je score heeft er in geen geval last van, want OnKey berekent je vertraging na elk nummer. Blijft het gebeuren met één koptelefoon, <link>laat me dan weten</link> welke."
+    },
+    "lyrics": {
+      "title": "Geen songtekst, of de verkeerde",
+      "body": "Songteksten komen van <link>LRCLIB</link>, een gratis database die door de community wordt beheerd. Sommige nummers staan er niet in, of alleen in een andere versie. Vindt het niets, dan vraagt OnKey het na een dag opnieuw."
+    },
+    "busy": {
+      "title": "Je Mac voelt druk",
+      "intro": "Een nieuw nummer leren is het zware deel, dus OnKey doet dat nadat het nummer is afgelopen, met lage prioriteit. Een geleerd nummer zingen is licht. Twee instellingen helpen:",
+      "battery": "<strong>Spaar de batterij tijdens het zingen</strong> (standaard aan): op de batterij worden de noten 30 keer per seconde getekend in plaats van 60.",
+      "models": "<strong>Houd de leermodellen klaar</strong> (standaard alleen aan met 32 GB of meer): zet het uit en de modellen (ongeveer 1,5 GB) worden na elk nummer vrijgegeven. Op Macs met 8 GB wordt het niet getoond, omdat ze daar altijd worden vrijgegeven."
+    },
+    "logs": {
+      "title": "Waar de logboeken staan",
+      "where": "OnKey schrijft een logboek in platte tekst naar <code>$TMPDIR/onkey.log</code>. Om het te openen, voer je dit uit in Terminal:",
+      "records": "Het bewaart ook het logboek van elke dag en een korte samenvatting van elke afspeelbeurt (timings, CPU, geheugen, build en Mac) in de map<code> records/</code> van zijn gegevensmap, 30 dagen lang en hoogstens 200 MB. Ze bevatten geen audio of songteksten, maar wel de namen van de nummers die je speelde."
+    },
+    "report": {
+      "title": "Meld een probleem",
+      "choose": "Kies <strong>Meld een probleem</strong> in Instellingen of <strong>Help → Meld een probleem…</strong>, of <strong>Meld een probleem met deze take</strong> op de pagina van een take.",
+      "zip": "OnKey toont je wat er in de zip gaat: het logboek van de laatste drie dagen en een samenvatting van elke afspeelbeurt. Geen songteksten, audio, opnamen, gebruikersnaam of thuismap. Voeg desgewenst een opmerking toe en <strong>bewaar</strong> het op je Mac. Er wordt niets geüpload.",
+      "issue": "Kies <strong>Open een GitHub-issue</strong> (of ga naar <link>GitHub</link>), vertel wat er gebeurde en met welk nummer, en voeg de zip toe als je dat wilt."
+    },
+    "more": "Meer antwoorden in de <link>FAQ</link>.",
+    "discord": "Of vraag het in <link>de Discord van OnKey</link>."
+  },
+  "docs": {
+    "diagrams": {
+      "legend": {
+        "label": "Kleuren in de tekeningen",
+        "music": "De muziek",
+        "musicNote": "wat je muziekapp afspeelt",
+        "singer": "De zanger",
+        "singerNote": "de originele zang, met noten en songtekst",
+        "you": "Jij",
+        "youNote": "je stem, via de microfoon",
+        "score": "Je score",
+        "scoreNote": "hoe dicht je erbij zit"
+      },
+      "stepOf": "Stap {n} van {total}",
+      "phrase": "Zing dit re- gel- tje maar mee",
+      "big": {
+        "label": "Hoe OnKey werkt, van begin tot eind",
+        "all": "Muziek erin, je score eruit. Alles op je Mac.",
+        "steps": {
+          "play": "Je muziekapp speelt een nummer",
+          "hears": "OnKey hoort het, op je Mac",
+          "learns": "De eerste keer leert het het nummer",
+          "sing": "Jij zingt mee met de noten",
+          "score": "Je krijgt een score en een rapport"
+        },
+        "onMac": "OnKey, op je Mac",
+        "musicApp": "Muziekapp",
+        "musicAppSub": "Spotify, Muziek…",
+        "hears": "Hoort het",
+        "hearsSub": "nooit opgeslagen",
+        "learns": "Leert het",
+        "learnsSub": "noten en songtekst",
+        "sing": "Jij zingt",
+        "singSub": "je microfoon",
+        "score": "Je score",
+        "scoreSub": "en een rapport"
+      },
+      "hearing": {
+        "label": "Hoe OnKey de muziek hoort",
+        "steps": {
+          "apps": "Veel apps maken geluid op je Mac",
+          "one": "OnKey luistert alleen naar de muziekapp",
+          "mic": "Je microfoon komt binnen op dezelfde klok",
+          "memory": "Geanalyseerd terwijl het speelt, nooit opgeslagen"
+        },
+        "musicApp": "Muziekapp",
+        "browser": "Browser",
+        "messages": "Berichten",
+        "yourMic": "Je microfoon",
+        "oneClock": "één klok",
+        "disk": "schijf",
+        "noMusicSaved": "geen muziek opgeslagen",
+        "notHeard": "niet gehoord"
+      },
+      "learning": {
+        "label": "Hoe OnKey een nummer leert",
+        "steps": {
+          "mixed": "Het nummer komt binnen: muziek en zanger door elkaar",
+          "separation": "Scheiding haalt de stem van de zanger eruit, in het geheugen",
+          "pitch": "De toonhoogtevolger volgt de zanger, elke 10 ms",
+          "notes": "Elke aangehouden toon wordt een balkje",
+          "lyrics": "Tekstregels verschuiven naar waar de woorden klinken",
+          "bars": "Eén balkje per lettergreep: klaar om te zingen"
+        },
+        "singer": "de zanger",
+        "everythingElse": "al het andere",
+        "mix": "de mix",
+        "timing": "timing uit het tekstbestand, op het gehoor gecorrigeerd"
+      },
+      "placement": {
+        "label": "Hoe OnKey je plek in het nummer vindt",
+        "steps": {
+          "fingerprint": "Een geleerd nummer bewaart een vingerafdruk van zijn muziek",
+          "slide": "Een paar seconden van wat er speelt, schuiven erlangs",
+          "match": "Waar ze passen, ben jij precies",
+          "skip": "Spring vooruit, en het vindt je terug",
+          "listening": "Luistermodus: Shazam benoemt nummers die het nog niet geleerd heeft"
+        },
+        "fingerprint": "de vingerafdruk van het geleerde nummer (8 banden, elke 10 ms)",
+        "match": "match",
+        "playingNow": "wat er nu speelt",
+        "skipped": "je sprong vooruit",
+        "shazam": "Shazam: ‘een nieuw nummer’, 0:42",
+        "shazamNote": "alleen voor nog niet geleerde nummers"
+      },
+      "echo": {
+        "label": "Hoe echo-onderdrukking werkt",
+        "steps": {
+          "speakers": "Zonder koptelefoon hoort de microfoon jou en het nummer",
+          "copy": "OnKey weet precies hoe het nummer klinkt",
+          "learns": "Het leert hoe dat geluid de microfoon bereikt",
+          "subtracts": "…en haalt het weg, zodat je stem overblijft",
+          "headphones": "Met een koptelefoon valt er niets weg te halen"
+        },
+        "speakers": "speakers",
+        "headphones": "koptelefoon",
+        "yourMic": "je microfoon",
+        "whatsLeft": "wat overblijft: jij",
+        "micHears": "wat de microfoon hoort",
+        "copy": "de kopie van het nummer bij OnKey (zelfde klok)",
+        "room": "hoe de kamer het verandert: vertraging, echo, klank",
+        "minusSong": "− nummer"
+      },
+      "scoring": {
+        "label": "Hoe OnKey je zang scoort",
+        "steps": {
+          "compare": "Elke 10 ms wordt je toonhoogte vergeleken met die van de zanger",
+          "credit": "Binnen een kwarttoon zijn het volle punten",
+          "octaves": "Een octaaf hoger of lager telt als op de noot",
+          "slack": "Iets te vroeg of te laat wordt niet afgestraft",
+          "hit": "Elke noot: geraakt als je haar de helft van haar lengte hield",
+          "score": "De score: je zuiverheid, geschaald naar hoeveel je zong"
+        },
+        "flat60": "60 cent te laag: 90% van de punten",
+        "octaveLower": "een octaaf lager: nog steeds groen",
+        "slack80": "tot 80 ms ernaast: mag",
+        "summary": "86% zuiver · 80% gezongen"
+      },
+      "credit": {
+        "title": "Probeer het: hoe ver mag je ernaast zitten?",
+        "aria": "Puntencurve. Je noot is {n} cent {dir, select, flat {te laag} other {te hoog}} en levert {p}% van de punten op.",
+        "axis": "cent vanaf de noot (100 cent = 1 halve toon)",
+        "credit": "{p}% punten",
+        "yourNote": "Je noot",
+        "onTheNote": "op de noot",
+        "off": "{n}¢ {dir, select, flat {te laag} other {te hoog}}",
+        "octave": "Zing het een octaaf lager"
+      },
+      "coverage": {
+        "title": "Probeer het: hoeveel van het nummer moet je zingen?",
+        "aria": "{p}% van de zangpartij zingen met 86% zuiverheid geeft score {s}.",
+        "axis": "aandeel van de zangpartij dat je zong",
+        "score": "score {s} bij 86% zuiverheid",
+        "youSang": "Je zong"
+      },
+      "privacy": {
+        "label": "Wat OnKey bewaart en verstuurt",
+        "all": "OnKey bewaart nooit de muziek waarnaar het luistert",
+        "steps": {
+          "kept": "Bewaard op je Mac: wat OnKey leerde, en je takes",
+          "never": "Nooit bewaard of verstuurd: de audio van de muziek",
+          "lookups": "Verstuurd: opvragingen op naam, voor songteksten en hoezen",
+          "shazam": "Om een nieuw nummer te benoemen: een signatuur naar Shazam"
+        },
+        "yourMac": "Je Mac",
+        "kept": {
+          "notes": "De noten en balkjes van elk nummer",
+          "fingerprint": "Zijn vingerafdruk en signatuur",
+          "lyrics": "De songtekst en haar timing",
+          "takes": "Takes: je microfoon, scores, songtekst"
+        },
+        "audio": "De audio van de muziek: geanalyseerd\nterwijl ze speelt, nooit bewaard of verstuurd",
+        "lrclib": "artiest, titel, album,\nlengte: voor songtekst",
+        "itunes": "artiest, titel: hoes",
+        "shazam": "een signatuur van de\nmuziek, nooit de microfoon;\nuit te zetten"
+      }
+    },
+    "howItWorks": {
+      "title": "Hoe OnKey werkt",
+      "lede": "Zeven delen, van het grote plaatje tot de exacte getallen. Alle analyse gebeurt op je Mac.",
+      "exactNumbers": "De exacte getallen",
+      "big": {
+        "title": "1. Het grote plaatje",
+        "steps": {
+          "play": "Je speelt muziek af zoals je dat al doet, in <strong>Spotify, Apple Music of YouTube</strong>. OnKey speelt zelf niets af.",
+          "hears": "OnKey <strong>hoort de muziekapp</strong> <wave></wave> via macOS. Het geluid wordt geanalyseerd terwijl het speelt en nooit opgeslagen.",
+          "learns": "Na de eerste keer dat een nummer speelt, <strong>leert OnKey het</strong>: het haalt de stem van de zanger eruit <separate></separate>, bepaalt de noten en zet de songtekst op zijn plek.",
+          "sing": "Vanaf de volgende keer zie je de <strong>lettergreepbalkjes</strong> <lane></lane> naar je toe komen, met je stem <mic></mic> eroverheen getekend.",
+          "score": "Als het nummer afloopt, krijg je een <strong>score</strong> <score></score> en een rapport per regel, plus of je meestal te hoog of te laag zingt."
+        },
+        "hood": {
+          "app": "Een Mac-app: een Rust-engine (audio, modellen, score) in een Tauri-venster met een React-interface. <engine>engine.rs</engine> stuurt alles aan.",
+          "local": "Alles gebeurt op je Mac. De modellen draaien met ONNX Runtime, op Core ML (GPU en Neural Engine) waar dat helpt.",
+          "frames": "Audio wordt geanalyseerd op 16 kHz in frames van 10 ms, de eenheid die elk getal hieronder gebruikt (<dsp>dsp.rs</dsp>, <code>FRAME_S</code>).",
+          "learned": "Een nummer telt als geleerd zodra 70% ervan gehoord is (<code>READY_COVERAGE</code> in <store>store.rs</store>). Een deels gehoord nummer leert verder bij latere beurten."
+        }
+      },
+      "hearing": {
+        "title": "2. De muziek horen",
+        "steps": {
+          "apps": "Je Mac speelt geluid van veel apps tegelijk.",
+          "one": "OnKey vraagt macOS (met jouw toestemming) om het geluid van <strong>één app</strong>, de muziekapp, en negeert de rest.",
+          "mic": "Je <strong>microfoon</strong> <mic></mic> wordt tegelijk opgenomen, op <strong>dezelfde klok</strong>, zodat OnKey weet tegen welk moment van het nummer je zong.",
+          "memory": "De muziek wordt geanalyseerd <strong>terwijl ze speelt</strong>, in het geheugen (een nummer dat geleerd wordt, blijft in het geheugen tot het afloopt). Ze wordt nooit naar schijf geschreven, geüpload of gedeeld."
+        },
+        "hood": {
+          "capture": "De opname gebruikt Core Audio process taps (macOS 14.2+), samen met je microfoon, op de eigen frequentie van je uitvoerapparaat (meestal 48 kHz), op één klok (<captureSwift>capture.swift</captureSwift>, <captureRs>capture.rs</captureRs>).",
+          "tapped": "Alleen de processen van de muziekapp worden afgetapt, gekozen op bundle-id (<source>source.rs</source>).",
+          "resampled": "Alles wordt geresampled naar 16 kHz mono voor de analyse. Release-builds schrijven de audio van de muziek nooit ergens weg. Alleen je eigen stem wordt bij elke take bewaard.",
+          "permissions": "Toestemmingen: systeemaudio-opname en de microfoon. Spotify en Muziek bedienen (wat er speelt en waar, ‘Zing het opnieuw’, overslaan en pauzeren) is een aparte toestemming, gevraagd bij het instellen, en ‘Alleen luisteren’ zet die uit. Het bedienen van de YouTube-tab staat uit tot je het aanzet."
+        }
+      },
+      "learning": {
+        "title": "3. Een nummer leren",
+        "steps": {
+          "mixed": "Het nummer bereikt OnKey als één geluid: <strong>de zanger en de band door elkaar</strong>.",
+          "separation": "Zodra het nummer is afgelopen, haalt een <strong>scheidingsmodel</strong> <separate></separate> de hoofdstem uit de mix, stuk voor stuk. (Dit doen terwijl je zingt zou de noten laten haperen.)",
+          "pitch": "Een <strong>toonhoogtevolger</strong> volgt de stem van de zanger <strong>elke 10 ms</strong>. Dat geeft een kronkelige lijn met de exacte melodie, inclusief glijders en vibrato.",
+          "notes": "Een notenmodel maakt van die lijn <strong>noten</strong>, met waar elke noot begint en eindigt.",
+          "lyrics": "De <strong>songtekst</strong> komt van LRCLIB met grove timing. Een spraakmodel luistert naar de zanger en verschuift elke regel naar <strong>waar de woorden gezongen worden</strong>. Bij een eerste keer doet het dit voor ongeveer de eerste anderhalve minuut, zodat die regels ook op tijd lopen.",
+          "bars": "Elke regel wordt in lettergrepen gesplitst, en elke lettergreep krijgt haar eigen <strong>balkje</strong> <lane></lane> op haar noot. Dat is de notenbaan waarop je zingt."
+        },
+        "hood": {
+          "separation": "<strong>Scheiding:</strong> UVR MDX-Net Karaoke 2 (ONNX, op Core ML), gedraaid op stukken van 20 s met 2 s context aan elke kant. De muziek blijft in het geheugen terwijl het nummer speelt en wordt na afloop gescheiden, met lage prioriteit. Er wordt één nummer tegelijk geleerd. Andere wachten op hun beurt (‘Wachten om te leren’), en het leren pauzeert terwijl je een geleerd nummer zingt met het venster zichtbaar (<learn>learn.rs</learn>, <mdx>mdx.rs</mdx>).",
+          "firstPlay": "<strong>Eerste keer:</strong> tot de eerste 90 s worden gescheiden terwijl ze spelen, 5 s per keer, tot de tekstregels gelijk lopen met de zanger. De rest wacht tot het nummer afloopt. Dit wordt overgeslagen op Macs met 8 GB en terwijl een ander nummer geleerd wordt. In mijn bibliotheek zat zo 60% van de regels bij een eerste keer binnen 0,3 s van de zang, tegen 13% met de eigen tijden van LRCLIB.",
+          "memory": "<strong>Geheugen:</strong> met 8 GB wordt één model tegelijk geladen en na zijn stap weer uit het geheugen gehaald. Onder 32 GB worden de leermodellen (ongeveer 1,5 GB) uit het geheugen gehaald zodra een nummer geleerd is, tenzij Instellingen → Houd de leermodellen klaar aanstaat (<lowmem>lowmem.rs</lowmem>).",
+          "pitch": "<strong>Toonhoogte:</strong> CREPE ‘full’ op de gescheiden zang, 16 kHz, stappen van 10 ms, vensters van 1024 samples, 50 tot 1100 Hz. Een frame telt als gezongen als de zekerheid boven 0,45 ligt (<pitch>pitch.rs</pitch>).",
+          "notes": "<strong>Noten:</strong> GAME (OpenVPI) transcribeert de noten uit de zang. Elk lettergreepbalkje neemt zijn noot over, en balkjes zonder gezongen noot eronder vallen weg (<game>game.rs</game>, <syllables>syllables.rs</syllables>).",
+          "lyrics": "<strong>Songtekst:</strong> gesynchroniseerde songteksten van LRCLIB (opgezocht op artiest, titel, album en lengte, daarna op naam als dat niets oplevert). De regels worden opnieuw geplaatst door de woorden van het hele nummer uit te lijnen met wav2vec 2.0 (CTC), en in lettergrepen gesplitst met het CMU-uitspraakwoordenboek (<lyrics>lyrics.rs</lyrics>, <ctc>ctc.rs</ctc>).",
+          "measured": "<strong>Gemeten:</strong> op 18 met de hand gemarkeerde nummers wordt 98% van de gezongen noten door een balkje gedekt, 92% op de juiste noot, en 73% begint binnen 0,1 s. 94% van de tekstregels zit binnen 0,3 s.",
+          "kept": "<strong>Bewaard bij het nummer:</strong> de toonhoogtelijn, de balkjes, een ritmische vingerafdruk, een Shazam-signatuur en de timing van de songtekst, plus de LRCLIB-tekst waarvoor die tijden gemaakt zijn (bewaard op de Mac, nooit geüpload), zodat elke keer dezelfde woorden op dezelfde balkjes staan. De muziek en de gescheiden zang worden niet bewaard."
+        }
+      },
+      "placement": {
+        "title": "4. Weten waar je bent",
+        "steps": {
+          "fingerprint": "Als een nummer geleerd wordt, bewaart OnKey ook een <strong>vingerafdruk</strong> <fingerprint></fingerprint>: hoeveel het geluid verandert in elke frequentieband, elke 10 ms.",
+          "slide": "Muziekapps melden maar ruwweg waar het nummer is, dus OnKey schuift <strong>een paar seconden van wat het hoort</strong> langs de vingerafdruk.",
+          "match": "Waar ze passen, is <strong>precies waar jij bent</strong>. Tot dan zijn de noten gedimd (‘Gelijkzetten met het nummer…’). Ze lichten meestal een paar seconden na het begin op.",
+          "skip": "Sla over, spoel of begin opnieuw, en het <strong>vindt je terug</strong> binnen een paar seconden. OnKey houdt een paar mogelijke plekken in gedachten en verschuift de noten alleen als de muziek het duidelijk bevestigt.",
+          "listening": "Dit is de <strong>luistermodus</strong>. Nummers die je eerder zong, worden op je Mac herkend, en Shazam benoemt nieuwe, zodat OnKey de muziek kan volgen zonder de app te bedienen. Het bedienen van Spotify en Apple Music geeft exacte posities en staat standaard aan (‘Alleen luisteren’ zet het uit). YouTube bedienen zet je zelf aan."
+        },
+        "hood": {
+          "fingerprint": "<strong>Vingerafdruk:</strong> hoeveel het geluid toeneemt in elk van 8 banden van ongeveer 60 Hz tot 7 kHz, elke 10 ms (<code>FP_BANDS</code> in <dsp>dsp.rs</dsp>).",
+          "placement": "<strong>Plaatsbepaling:</strong> één volger plaatst elke beurt (<tracker>tracker.rs</tracker>, naar de ‘any-time’ muziekvolger van Arzt en Widmer). Elke controle vergelijkt de laatste paar seconden muziek, hoogstens 8 s, met de vingerafdruk, tot op een frame van 10 ms, en houdt de beste paar plekken als gewogen kandidaten, zodat een repeterende intro die een tel verschoven past hem niet misleidt. De positie van de muziekapp en de antwoorden van het luisteren duwen alleen de kandidaten in hun buurt een beetje bij. De getoonde plek springt pas naar een andere kandidaat als die over ongeveer 4 s muziek duidelijk voorligt.",
+          "measured": "<strong>Gemeten:</strong> bij het naspelen van 153 echte beurten met een verkeerde positie van de muziekapp (0,73 s of 1,7 s ernaast, of een sprong die 3,5 s verderop landt) zat de getoonde plek ongeveer 91% van de tijd binnen 0,1 s van de muziek. De regels van daarvoor haalden 75%, 0% en 0%.",
+          "listening": "<strong>Luistermodus</strong> (altijd aan, <listen>listen.rs</listen>, <recognize>recognize.rs</recognize>): na 3 s geluid vraagt het, in deze volgorde, de eigen catalogus van geleerde nummers van OnKey (ShazamKit, op de Mac, nauwkeurig tot ongeveer 10 ms), de vingerafdrukken, en dan de catalogus van Shazam. Het controleert elke 3 s opnieuw voor geleerde nummers en ongeveer elke 12 s voor nummers die alleen Shazam kent. Shazam krijgt een signatuur van hoogstens 5 s van het geluid van de muziekapp, nooit de microfoon. Een nieuw antwoord van Shazam heeft een tweede nodig dat ermee overeenkomt. Een pauze is 0,15 s digitale stilte.",
+          "shazamTest": "Eerste test van de catalogus van Shazam: het benoemde 25 van 30 testnummers uit hun eerste 5 s, in een mediaan van 0,24 s."
+        }
+      },
+      "you": {
+        "title": "5. Jou horen",
+        "steps": {
+          "speakers": "Via laptopspeakers hoort je microfoon <strong>jou en het nummer</strong>, zanger inbegrepen. Zonder ingrijpen zou de zanger punten voor jou scoren.",
+          "copy": "Maar OnKey heeft zijn eigen kopie van het nummer <wave></wave>, op dezelfde klok als de microfoon.",
+          "learns": "Het <strong>leert hoe dat geluid de microfoon bereikt</strong>, met de vertraging, de echo van de kamer en de klank van je speakers. Videogesprekken doen hetzelfde.",
+          "subtracts": "Dan <strong>trekt het</strong> <echo></echo> zijn voorspelling van het nummer eraf, en wat overblijft is <strong>jouw stem</strong>.",
+          "headphones": "Met een <strong>koptelefoon</strong> hoort de microfoon het nummer niet, dus valt er niets af te trekken. Dat blijft de betrouwbaarste opstelling."
+        },
+        "hood": {
+          "livePitch": "<strong>Live toonhoogte:</strong> CREPE ‘tiny’, op je microfoon na echo-onderdrukking, elke 10 ms, gedraaid op de CPU-kernels van Core ML: de toonhoogtestip loopt 2 tot 4 ms achter op je stem, en een geleerd nummer zingen kost OnKey 15 tot 19% van één CPU-kern op mijn Mac (<pitch>pitch.rs</pitch>).",
+          "canceller": "<strong>Echo-onderdrukker:</strong> een gepartitioneerd adaptief filter in het frequentiedomein: 16 partities van 256 samples op 16 kHz, dus het modelleert 256 ms echo (<bleed>bleed.rs</bleed>). Sommige uitgangen leveren de echo later dan dat, dus elke 2 s wordt de vertraging van de echo gemeten (GCC-PHAT, tot 800 ms) en krijgt het filter het nummer met die vertraging aangeboden. Het past zich alleen aan terwijl het nummer de microfoon duidelijk bereikt, en als zijn uitvoer luider uitkomt dan de microfoon, gaat de microfoon onveranderd door.",
+          "measured": "<strong>Gemeten:</strong> ingebouwde MacBook-speakers (echo ongeveer 24 ms laat): 20 dB of meer verwijderd. Externe speakers met de echo ongeveer 290 ms laat: 8 tot 14 dB, tegen 1 tot 2 dB voordat de vertraging gemeten werd.",
+          "limit": "<strong>Grens:</strong> 8 tot 14 dB laat nog wat van een luid nummer in de microfoon over, en dat kan voor zang worden aangezien. Een koptelefoon is betrouwbaarder."
+        }
+      },
+      "scoring": {
+        "title": "6. De score",
+        "steps": {
+          "compare": "Elke 10 ms waarin jij en de zanger allebei zingen, wordt je toonhoogte vergeleken met de lijn van de zanger en met het lettergreepbalkje, <strong>wat je het dichtst benadert</strong>.",
+          "credit": "Binnen <strong>50 cent</strong> (een kwarttoon) krijg je de volle punten. Daarna lopen de punten af tot nul bij 150 cent.",
+          "octaves": "<strong>Octaven worden vergeven</strong>, zodat je in je eigen bereik kunt zingen.",
+          "slack": "Elke halve seconde mag tot <strong>80 ms</strong> verschuiven om gelijk te lopen met de zanger, dus iets te vroeg of te laat zijn kost je niets.",
+          "hit": "Elke noot is <strong>geraakt</strong> als je haar de helft van haar lengte binnen een halve toon houdt. De eerste 80 ms tellen niet mee: zangers glijden een noot in.",
+          "score": "Je score <score></score> is je <strong>zuiverheid</strong>, geschaald naar <strong>hoeveel van de zangpartij je gezongen hebt</strong>, zodat één goede regel geen goede score oplevert."
+        },
+        "lenient": "Standaard is de score bewust mild, afgestemd op beginners zoals ik. Goede zangers kunnen in Instellingen een strenger niveau kiezen, Stabiel of Pro (vibrato wordt op geen van beide afgestraft).",
+        "explained": "De getallen in je rapport worden uitgelegd in <link>Hoe de score werkt</link>.",
+        "hood": {
+          "credit": "<strong>Punten:</strong> <code>clamp((150 − |error|) / 100, 0, 1)</code>, met de fout in cent gevouwen tot ±600, zodat octaven niet meetellen (<code>credit</code>, <code>fold</code> in <dsp>dsp.rs</dsp>).",
+          "slack": "<strong>Timingspeling:</strong> elk venster van 0,5 s krijgt de ene verschuiving binnen ±80 ms (<code>TOL</code> = 8 frames) die je het best uitlijnt (<code>tolerant_error</code>).",
+          "delay": "<strong>Je vertraging:</strong> na het nummer zoekt een zoekslag van 0,3 s te vroeg tot 1,5 s te laat de vertraging die het best past (<analysis>analysis.rs</analysis>).",
+          "notesHit": "<strong>Geraakte noten:</strong> minstens de helft van de noot binnen 100 cent gehouden, zonder de eerste 80 ms. Noten korter dan 0,15 s tellen niet mee.",
+          "score": "<strong>Score:</strong> <code>100 × accuracy × (0.3 × min(1, sung / 0.1) + 0.7 × min(1, sung / 0.4))</code>: volle punten vanaf 40% van de zangpartij gezongen.",
+          "experts": "<strong>Getoetst aan experts:</strong> op 20 beoordeelde opnamen komt ‘geraakte noten’ met 0,77 overeen met de rangorde van experts en de score met 0,61 (experts komen onderling op 0,88 overeen)."
+        }
+      },
+      "privacy": {
+        "title": "7. Privacy",
+        "steps": {
+          "kept": "Op je Mac bewaart OnKey wat het over elk nummer <strong>geleerd</strong> heeft, en voor elke take <strong>een opname van je microfoon</strong> <lock></lock> (ongeveer 0,5 MB per minuut), je scores en de songtekst die je zong, zodat je het kunt terugluisteren. Verwijder een take en hij gaat naar de prullenmand.",
+          "never": "Het <strong>bewaart of verstuurt nooit de audio van de muziek</strong>, of de gescheiden zang. (Stond de muziek op speakers, dan zit er wel wat van in je microfoonopname.)",
+          "lookups": "Om de songtekst te vinden stuurt het de <strong>artiest, titel, het album en de lengte</strong> van het nummer naar LRCLIB, een gratis songtekstdatabase van de community (tenzij Toon songteksten uitstaat). Voor hoezen vraagt het Apple’s iTunes Search op artiest en titel.",
+          "shazam": "Om een nummer te benoemen dat het niet geleerd heeft, stuurt de <strong>luistermodus</strong> Shazam een <strong>signatuur</strong> van hoogstens 5 seconden van het geluid van de muziekapp (niet de audio, en nooit je microfoon). Nummers die je eerder zong, worden op je Mac herkend, dus daarvoor gaat er niets naar Shazam. Shazam wordt alleen gevraagd als Spotify of Apple Music niet zegt wat er speelt, en je kunt het uitzetten in Instellingen."
+        },
+        "hood": {
+          "stored": "Opgeslagen in <code>{dataDir}</code>: <code>songs/</code> (toonhoogtelijn, balkjes, vingerafdruk, tekstregeltiming en een Shazam-signatuur, bewaard voor elk geleerd nummer in beide modi), <code>takes/</code> (<code>mic.m4a</code>: je microfoon, AAC mono op ongeveer 64 kbps, ongeveer 0,5 MB per minuut, alles samen tot 2 GB, plus scores en het rapport met de tekstregels) en <code>records/</code> (logboeken en een samenvatting van elke beurt, alleen getallen, 30 dagen bewaard, hoogstens 200 MB). Een nummer of take verwijderen verplaatst het naar de prullenmand.",
+          "network": "Netwerk: Shazam (luistermodus, uit te zetten) voor nog niet geleerde nummers, songtekstopvragingen bij LRCLIB (tenzij Toon songteksten uitstaat), iTunes Search voor hoezen, iTunes Lookup voor de lengte van een herkend nummer, de hoesafbeeldingen (van Apple, of de miniatuur van YouTube), en een dagelijkse controle van GitHub Releases op updates. Geen account, geen analytics en geen server van mij.",
+          "more": "Meer in <link>Privacy en juridisch</link>."
+        }
+      }
+    },
+    "scoring": {
+      "title": "Hoe de score werkt",
+      "lede": "Wat elk getal betekent, hoe het berekend wordt en waar het tekortschiet.",
+      "rules": {
+        "title": "De regels",
+        "every": "<strong>Elke 10 ms telt.</strong> Steeds als jij en de zanger allebei zingen, wordt je toonhoogte vergeleken met de stemlijn van de zanger en met het lettergreepbalkje, wat je het dichtst benadert.",
+        "credit": "<strong>Punten voor toonhoogte.</strong> Binnen 50 cent (een kwarttoon) krijg je de volle punten. Daarna lopen ze in een rechte lijn af tot nul bij 150 cent.",
+        "octaves": "<strong>Octaven worden vergeven.</strong> Een octaaf boven of onder de zanger telt als op de noot, zodat je in je eigen bereik kunt zingen.",
+        "slack": "<strong>Timingspeling.</strong> Elke halve seconde kan tot 80 ms verschuiven om gelijk te lopen met de zanger, dus een tikje te vroeg of te laat kost je niets.",
+        "delay": "<strong>Je vertraging wordt voor je gevonden.</strong> Na het nummer probeert OnKey vertragingen van 0,3 s te vroeg tot 1,5 s te laat en gebruikt de vertraging die je het best uitlijnt (je hoort het nummer een beetje later).",
+        "relaxed": "Dit zijn de regels bij <strong>Ontspannen</strong>, het standaardniveau. Ze zijn bewust mild, voor beginners (zoals ik) en kinderen, dus als je goed zingt, scoor je hoog."
+      },
+      "levels": {
+        "title": "Niveaus",
+        "intro": "Is Ontspannen te vriendelijk, kies dan een strenger niveau in Instellingen → Score. Het geldt vanaf je volgende take, en elke take houdt het niveau waarop hij gescoord is: takes die niet op Ontspannen zijn, tonen een klein label, en de beste score van een nummer vergelijkt alleen takes op hetzelfde niveau.",
+        "level": "Niveau",
+        "fullWithin": "Volle punten binnen",
+        "noneFrom": "Geen punten vanaf",
+        "slack": "Timingspeling",
+        "relaxed": "<strong>Ontspannen</strong> (standaard)",
+        "steady": "<strong>Stabiel</strong>",
+        "pro": "<strong>Pro</strong>",
+        "cents": "{n} cent",
+        "ms": "{n} ms",
+        "vibrato": "<strong>Vibrato wordt niet afgestraft.</strong> Bij Stabiel en Pro wordt je toonhoogte beoordeeld op het midden van haar trilling, gemiddeld over 0,17 s (ongeveer één slag van een gewoon vibrato, dat 5 tot 7 keer per seconde heen en weer gaat). Een gelijkmatig vibrato rond de juiste noot scoort bijna vol; een noot die te hoog of te laag wordt aangehouden, blijft te hoog of te laag. Bij Ontspannen wordt je exacte toonhoogte gebruikt, zoals altijd, en een breed vibrato (±80 cent) verliest ongeveer een tiende van zijn punten. Octaven worden op elk niveau vergeven."
+      },
+      "report": {
+        "title": "De getallen in je rapport",
+        "number": "Getal",
+        "meaning": "Wat het betekent",
+        "score": "<strong>Score</strong> (0–100)",
+        "scoreMeaning": "Je gemiddelde punten voor toonhoogte, geschaald naar hoeveel van de zangpartij je gezongen hebt (zie hieronder).",
+        "accuracy": "<strong>Zuiverheid</strong>",
+        "accuracyMeaning": "Je gemiddelde punten voor toonhoogte terwijl je zong.",
+        "notesHit": "<strong>Geraakte noten</strong>",
+        "notesHitMeaning": "Noten die je minstens de helft van hun lengte binnen een halve toon hield, met dezelfde speling van 80 ms. De eerste 80 ms van elke noot worden overgeslagen, omdat zangers een noot inglijden, en noten korter dan 0,15 s tellen niet mee.",
+        "sangAlong": "<strong>Meegezongen</strong>",
+        "sangAlongMeaning": "Het aandeel van de zangpartij waarin jij ook zong.",
+        "tendency": "<strong>Neiging</strong>",
+        "tendencyMeaning": "Of je meestal te hoog of te laag zit, in cent (de mediaan van je afwijkingen).",
+        "latency": "<strong>Vertraging</strong>",
+        "latencyMeaning": "De vertraging die OnKey vond en waarvoor het corrigeerde.",
+        "sangTitle": "Hoe ‘meegezongen’ de score beïnvloedt",
+        "sangBody": "Score = 100 × zuiverheid × een factor voor hoeveel je zong. Een tiende van de zangpartij zingen levert 30% van die factor op, en de rest bouwt op tot je 40% ervan gezongen hebt (een deel van de zang is achtergrondzang of ad-libs die niemand meezingt). Dus één goede regel levert geen goede score op, en wie alleen luistert scoort bijna niets. De live score gebruikt dezelfde formule."
+      },
+      "checks": {
+        "title": "Hoe ik controleer of de score klopt",
+        "intro": "Elke verandering aan OnKey wordt gemeten voordat ze blijft. Lettergreepbalkjes worden getoetst aan met de hand gemarkeerde noten, de tekstregeltiming aan met de hand getimede songteksten, en de score aan gesimuleerde zangers (perfect, wankel, te hoog, en stil met het nummer lekkend in de microfoon) en aan de originele zangers, gescoord alsof zij jou waren.",
+        "check": "Controle",
+        "result": "Resultaat",
+        "covered": "Met de hand gemarkeerde noten die een balkje dekt",
+        "rightNote": "…waarvan het balkje op de juiste noot staat",
+        "starts": "…waarvan het balkje binnen 0,1 s begint",
+        "noNote": "Balkjes zonder gezongen noot eronder",
+        "lyricLines": "Tekstregels binnen 0,3 s geplaatst",
+        "expertsTitle": "Is de score het eens met experts?",
+        "expertsIntro": "Ik liet OnKey 20 opnamen van zingende mensen scoren, van zwak tot professioneel, die muziekexperts al beoordeeld hadden (de PESnQ-onderzoeksset), om te zien of OnKey ze in dezelfde volgorde zet. Op een schaal waarop 1 volledige overeenstemming is:",
+        "measure": "Maat",
+        "agreement": "Overeenstemming met experts",
+        "expertsEachOther": "Experts onderling (het realistische maximum)",
+        "notesHit": "Geraakte noten van OnKey",
+        "score": "Score van OnKey",
+        "expertsOutro": "Geraakte noten volgt de experts al goed, en de score zou er meer op kunnen leunen. Het zijn maar 20 opnamen, gezongen zonder begeleiding, dus zie het eerder als een goed teken dan als bewijs."
+      },
+      "limits": {
+        "title": "Grenzen",
+        "rap": "<strong>Gerapte of gesproken nummers:</strong> een score op toonhoogte zegt hier weinig.",
+        "harmonies": "<strong>Harmonieën en koren:</strong> het is niet altijd duidelijk welke stem de melodie is, dus sommige balkjes volgen misschien een harmonie.",
+        "speakers": "<strong>Zingen zonder koptelefoon:</strong> echo-onderdrukking haalt 20 dB of meer van het nummer weg via de speakers van een MacBook, en 8 tot 14 dB via externe speakers. Wat van een luid nummer overblijft, kan voor zang worden aangezien, dus een koptelefoon is betrouwbaarder.",
+        "firstPlay": "<strong>De eerste keer</strong> zijn er geen noten. Ze verschijnen vanaf de tweede keer."
+      }
+    },
+    "privacy": {
+      "title": "Privacy en juridisch",
+      "translationNote": "Dit is een vertaling. Als ze afwijkt van <link>de Engelse versie</link>, geldt de Engelse versie.",
+      "lede": "OnKey draait op je Mac en bewaart nooit de muziek waarnaar het luistert. Je opnamen en geleerde nummers blijven op je Mac. Deze pagina somt alles op wat het bewaart en alles wat het verstuurt.",
+      "keeps": {
+        "title": "Wat OnKey op je Mac bewaart",
+        "intro": "Alles staat in <code>{dataDir}</code>.",
+        "songs": "<strong>Geleerde nummers</strong> (<code>songs/</code>): de stemlijn en lettergreepbalkjes van de zanger, een ritmische vingerafdruk en een Shazam-signatuur van de muziek (om het nummer te herkennen en je plek te vinden), wanneer elke tekstregel begint, en wanneer elk woord gezongen gehoord is (alleen tijden, niet de woorden).",
+        "lyrics": "<strong>Songteksten</strong> (<code>lrclib/</code>): de antwoorden van LRCLIB, tot 30 dagen bewaard (één dag als er geen waren). Een geleerd nummer houdt de songtekst waarvoor zijn timing gemaakt is, zodat elke keer dezelfde woorden verschijnen. Songteksten worden nooit geüpload. Met Instellingen → ‘Toon songteksten’ uit worden bewaarde songteksten verborgen (niet verwijderd) en worden er geen opgehaald.",
+        "takes": "<strong>Takes</strong> (<code>takes/</code>): <strong>een opname van je microfoon</strong> (<code>mic.m4a</code>, ongeveer 0,5 MB per minuut) zodat je hem kunt terugluisteren, je scores en het rapport, met daarin de songtekst en haar tijden. Een take wordt alleen bewaard als je met minstens 10% van de zangpartij hebt meegezongen. Stond de muziek op speakers, dan zit er ook wat van in de opname. Opnamen worden tot in totaal 2 GB bewaard. Daarboven gaan de oudste eerst, maar nooit die van een favoriet nummer of de beste take van een nummer.",
+        "records": "<strong>Logboeken</strong> (<code>records/</code>), om problemen op te sporen: één logbestand per dag en een samenvatting van elke beurt (timing, CPU, geheugen, de build en de Mac). Dit zijn getallen en id’s, zonder audio of songtekst, al noemt het logboek wel de nummers die je speelde. 30 dagen bewaard, hoogstens 200 MB. Ze verlaten je Mac alleen als je zelf een rapport aan een issue toevoegt.",
+        "settings": "Je instellingen, een artiest en titel die je voor een YouTube-video hebt ingetypt, de hoezen van de startnummers, en een cache van de gecompileerde modellen.",
+        "remove": "Vergeet een nummer in Bibliotheek of verwijder een take in Geschiedenis en de bestanden gaan naar de prullenmand. Om alles te verwijderen, stop je OnKey en verwijder je de map hierboven."
+      },
+      "never": {
+        "title": "Wat OnKey nooit bewaart",
+        "body": "De audio van de muziek, of de stem van de zanger die eruit gescheiden is. Die wordt in het geheugen geanalyseerd terwijl ze speelt en nooit opgeslagen, geüpload, gedeeld of geëxporteerd. (Je microfoonopname kan er wel iets van bevatten als je met de muziek op speakers zong.)"
+      },
+      "leaves": {
+        "title": "Wat je Mac verlaat",
+        "sentTo": "Naar",
+        "what": "Wat, en wanneer",
+        "shazam": "<strong>Shazam</strong> (Apple, via ShazamKit)",
+        "shazamWhat": "Een signatuur van hoogstens 5 seconden van het geluid van de <strong>muziekapp</strong> (nooit je microfoon), niet de audio zelf. Ze wordt alleen verstuurd om een nummer te benoemen dat OnKey niet geleerd heeft, als geen muziekapp zegt wat er speelt: YouTube, andere apps of Alleen luisteren. Spotify en Apple Music benoemen hun eigen nummers, en nummers die je eerder zong worden op je Mac herkend zonder dat er iets wordt verstuurd. Instellingen → ‘Gebruik Shazam om nieuwe nummers te herkennen’ zet het uit, en dan worden alleen al geleerde nummers herkend.",
+        "lrclibWhat": "De artiest, titel, het album en de lengte van het nummer als een nummer begint, om de gesynchroniseerde songtekst op te halen, en daarna een zoekopdracht op naam als dat niets oplevert. Antwoorden worden tot 30 dagen op je Mac bewaard (één dag als er geen waren), zodat een nummer dat opnieuw speelt niet opnieuw wordt opgevraagd. LRCLIB is een gratis songtekstdatabase van de community. Met ‘Toon songteksten’ uit wordt niets verstuurd.",
+        "itunes": "<strong>iTunes Search en Lookup</strong> (Apple)",
+        "itunesWhat": "De artiest en titel, om een albumhoes te vinden (die naar de Apple Music-pagina linkt), ook voor oudere nummers die van Spotify geleerd zijn. En de Apple Music-id die Shazam teruggaf, voor de lengte en het album van het nummer. De hoezen van ‘Probeer deze’ worden elk één keer opgezocht, gespreid, en bewaard, zodat latere bezoeken niets versturen.",
+        "covers": "<strong>Hoesafbeeldingen</strong>",
+        "coversWhat": "Gewone afbeeldingsverzoeken aan de afbeeldingsservers van Spotify, Apple of YouTube als een hoes wordt getoond.",
+        "githubWhat": "Een controle op een nieuwere versie van OnKey een minuut na het starten en daarna één keer per dag, en de download als die er is. Met <strong>Controleer automatisch op updates</strong> uit in Instellingen controleert het alleen als je op <strong>Controleer nu</strong> drukt.",
+        "nothingElse": "Verder gaat er niets naar buiten: er is geen account, geen analytics, geen crashrapportage en geen server van mij. Je opnamen worden nooit geüpload. ‘Meld een probleem’ toont je wat er in zijn zip met getallen en logboeken zit, bewaart die op je Mac en verstuurt niets. Jij kiest of je hem aan een GitHub-issue toevoegt. De modellen zitten in de app, dus die downloadt ze nooit.",
+        "website": "Deze website (niet de app) telt bezoeken met Plausible. Dat gebruikt geen cookies en niets dat jou identificeert, en houdt alleen totalen bij, zoals hoeveel mensen bezochten, waarvandaan, en hoeveel op Downloaden klikten.",
+        "flowMyna": "Anonieme bezoekpaden gaan ook naar Flow Myna, mijn eigen analysetool: welke delen van de site een bezoek las, in welke volgorde, en de grove locatie waar de verbinding vandaan kwam (zoals het land). Geen cookies, en je IP-adres wordt niet bewaard.",
+        "stars": "Het aantal sterren op de GitHub-knoppen komt rechtstreeks van GitHub, dus je browser vraagt het aan GitHub."
+      },
+      "streaming": {
+        "title": "Streamingdiensten",
+        "noMusic": "OnKey levert, streamt of downloadt geen muziek. Je eigen muziekapp speelt die af, en OnKey luistert via de audio-opnametoestemming van macOS. Het gebruikt geen SDK of ontwikkelaars-API van een streamingdienst, en raakt de bestanden, het geheugen of de encryptie van geen enkele app aan.",
+        "control": "Standaard volgt het Spotify en Apple Music via de toestemming Automatisering van macOS (gevraagd bij het instellen): het leest wat er speelt en waar, en speelt af, pauzeert, spoelt en start nummers. Zet je ‘YouTube in je browser’ aan in Instellingen (het staat eerst uit), dan leest en bedient OnKey ook de YouTube-tab in Chrome, Brave, Edge of Safari. Kies ‘Alleen luisteren’ bij het instellen, of zet ze uit onder ‘Laat OnKey bedienen’ in Instellingen, en OnKey stuurt die apps nooit iets.",
+        "terms": "OnKey bewaart of exporteert nooit de muziek die het hoort. De eigen voorwaarden van je muziekdienst blijven gelden voor hoe je die gebruikt."
+      },
+      "rights": {
+        "title": "Rechthebbenden",
+        "body": "Vertegenwoordig je een rechthebbende of een dienst en heb je een bezwaar tegen OnKey, mail dan naar <email>{address}</email>. Ik lees elk bericht en antwoord snel. Is een bezwaar terecht, dan pas ik de betreffende functie aan of haal ik ze weg. Zie ook <legal>LEGAL.md</legal>.",
+        "noAddress": "(adres volgt)"
+      },
+      "trademarks": {
+        "title": "Handelsmerken",
+        "body": "OnKey is niet verbonden met of goedgekeurd door Spotify, Apple of Google. Hun namen zijn handelsmerken van hun eigenaren en worden alleen gebruikt om te zeggen met welke apps OnKey werkt."
+      },
+      "licence": {
+        "title": "Licentie",
+        "body": "OnKey is gratis en open source onder de MIT-licentie."
+      }
+    },
+    "yourVoice": {
+      "title": "Comfortabel zingen",
+      "lede": "Met OnKey zing je makkelijk nummer na nummer, dus je stem heeft wat zorg nodig.",
+      "volume": {
+        "title": "Zing op een prettig volume",
+        "body": "OnKey scoort alleen je toonhoogte, dus je hoeft niet over de muziek heen te zingen. Zacht zingen scoort hetzelfde. Een koptelefoon helpt, omdat je dan niet tegen de speakers op hoeft om jezelf te horen."
+      },
+      "octave": {
+        "title": "Ga een octaaf omlaag als een noot te hoog ligt",
+        "body": "Ligt een nummer te hoog of te laag voor je, zing het dan een octaaf lager of hoger. OnKey telt de juiste noot in elk octaaf, dus je verliest niets. Forceren aan de rand van je bereik is de snelste manier om je stem te vermoeien."
+      },
+      "warmUp": {
+        "title": "Warm op en neem pauzes",
+        "easy": "Begin met een paar makkelijke nummers, of neurie een minuut of twee zachtjes op en neer door je bereik.",
+        "water": "Houd water bij de hand.",
+        "rest": "Na ongeveer 35 minuten zingen herinnert OnKey je eraan om te rusten (uit te zetten in <strong>Instellingen → Je stem</strong>).",
+        "gradually": "Bouw het geleidelijk op. Een paar uur op je eerste dag is veel meer dan de meeste stemmen gewend zijn."
+      },
+      "pain": {
+        "title": "Stop als het pijn doet",
+        "body": "Pijn, een rauwe keel, of een stem die de volgende dag nog hees is, betekenen dat het tijd is om te rusten. Houdt het langer dan een paar weken aan, ga dan naar een arts of een stemspecialist."
+      },
+      "technique": "Voor techniek (adem, registers, zingen zonder forceren), zie <link>Meer dan zuiverheid</link>.",
+      "disclaimer": "Deze pagina is algemeen advies over zingen, geen medisch advies."
+    },
+    "beyondPitch": {
+      "title": "Meer dan zuiverheid",
+      "lede": "OnKey laat zien of je op de noot zit. Goed zingen vraagt meer dan dat, en de rest leer je het best van een docent.",
+      "hear": {
+        "title": "Wat OnKey wel en niet kan horen",
+        "body": "OnKey volgt je toonhoogte tegenover die van de zanger, regel voor regel. Het is een snelle manier om te horen, en te zien, waar je afdrijft. Het kan niet horen hoe je het geluid maakte: of je goed ademt, forceert, of met gevoel zingt. Een hoge score betekent dat je de noten raakte, niet dat je het nummer goed zong."
+      },
+      "learn": {
+        "title": "Wat je nog meer kunt leren",
+        "breath": "<strong>Ademsteun:</strong> een gelijkmatige luchtstroom achter het geluid, zodat lange regels niet opraken of wankelen.",
+        "tension": "<strong>Minder spanning:</strong> een vrije keel, kaak en tong. Naar hoge noten reiken met kracht is de gewone manier waarop stemmen moe raken of pijn gaan doen.",
+        "registers": "<strong>Registers:</strong> borststem, kopstem en de mix ertussen, zodat je zonder breuk door je bereik kunt bewegen.",
+        "vowels": "<strong>Klinkers:</strong> ze zo vormen dat noten klinken en hoge noten makkelijker worden.",
+        "phrasing": "<strong>Frasering en ritme:</strong> waar je ademt, op welke woorden je leunt, en met de beat landen."
+      },
+      "teachers": {
+        "title": "Gratis docenten om mee te beginnen",
+        "callaway": "<link>Dan Callaway</link> geeft les in musicalzang aan het Boston Conservatory at Berklee. Heldere lessen over techniek, van adem tot belten.",
+        "rolka": "<link>Jeff Rolka</link>: warming-ups, zuiver zingen, hoge noten, runs en riffs.",
+        "suggested": "Beiden werden aangeraden door zangers in de discussie toen OnKey uitkwam. Er zijn meer goede docenten, en een suggestie is welkom op <link>GitHub</link>."
+      },
+      "lessons": {
+        "title": "Les bij een docent",
+        "body": "Neem als het kan een paar lessen. Een docent hoort in seconden wat jij pas na maanden zou merken, en geeft je oefeningen voor jouw stem. OnKey kan dan je manier zijn om tussendoor te oefenen: meezingen met de nummers die je leuk vindt, en je toonhoogte stabieler zien worden."
+      },
+      "voice": "Voor het verzorgen van je stem tijdens het oefenen, zie <link>Comfortabel zingen</link>."
+    },
+    "credits": {
+      "title": "Credits",
+      "lede": "OnKey is gebouwd op deze open projecten en diensten.",
+      "component": "Onderdeel",
+      "usedFor": "Gebruikt voor",
+      "licence": "Licentie",
+      "uses": {
+        "crepe": "Toonhoogte: het volledige model bij het leren, het kleine model live",
+        "game": "De noot van elke lettergreep",
+        "wav2vec": "Wanneer elk woord gezongen wordt",
+        "uvr": "De hoofdstem scheiden",
+        "cmudict": "Aantal lettergrepen",
+        "lrclib": "Gesynchroniseerde songteksten, opgehaald tijdens gebruik",
+        "shazamkit": "Nieuwe nummers herkennen",
+        "itunes": "Albumhoezen en nummerlengtes",
+        "hyphenation": "Woorden in lettergrepen splitsen",
+        "onnx": "De modellen draaien",
+        "tauri": "De app"
+      },
+      "licences": {
+        "service": "Dienst",
+        "macos": "Onderdeel van macOS"
+      },
+      "notices": "OnKey zelf is gratis en open source onder de MIT-licentie. De volledige vermeldingen staan in <link>THIRD_PARTY_NOTICES.md</link>."
+    }
+  }
+}

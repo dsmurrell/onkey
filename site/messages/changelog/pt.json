@@ -1,0 +1,176 @@
+{
+  "page": {
+    "title": "Novidades",
+    "description": "Cada recurso e correção do OnKey, do mais recente ao mais antigo, com a versão que o trouxe.",
+    "kicker": "Histórico de mudanças",
+    "heading": "Novidades no OnKey",
+    "intro": "Cada recurso e correção, do mais recente ao mais antigo, e a versão que o trouxe. O OnKey se atualiza sozinho, então isso chega até você por conta própria.",
+    "release": "OnKey {version}",
+    "latest": "Mais recente",
+    "kind": {
+      "new": "Novo",
+      "better": "Melhorado",
+      "fix": "Corrigido"
+    },
+    "github": "Toda mudança está no <link>GitHub</link>, onde o OnKey é código aberto."
+  },
+  "releases": {
+    "0-3-0": {
+      "note": "OnKey em 19 idiomas, e letras que acompanham o ritmo em espanhol, português, italiano, francês e alemão."
+    },
+    "0-2-0": {
+      "note": "Baixa e instala sozinho em Macs que já rodam o OnKey."
+    },
+    "0-1-0": {
+      "note": "A primeira versão pública.",
+      "link": "Lançado no Hacker News"
+    }
+  },
+  "entries": {
+    "onkey-in-your-language": {
+      "title": "OnKey no seu idioma",
+      "summary": "O OnKey agora fala 19 idiomas. Ele segue o idioma do seu Mac sozinho, ou escolha um no globo da barra superior, na tela de boas-vindas ou em Ajustes.",
+      "p1": "Seis têm tradução completa, letras incluídas: espanhol (América Latina e Espanha), português, italiano, francês e alemão",
+      "p2": "Outros doze são traduções iniciais: holandês, japonês, chinês (simplificado e tradicional), coreano, hindi, russo, turco, polonês, indonésio, vietnamita e tailandês. Cada um avisa isso, com um link para melhorá-la",
+      "p3": "Por enquanto todas são traduções automáticas: se algo soar estranho, o link em Ajustes abre a tradução para corrigir",
+      "p4": "O menu do OnKey, os pedidos de permissão do Mac e a caixa de salvar também estão no seu idioma, e as capas vêm da loja do seu próprio país",
+      "p5": "Este site, os guias e este histórico de mudanças também: ele segue o idioma do seu navegador, e um globo no cabeçalho troca o idioma"
+    },
+    "lyrics-keep-time-in-more-languages": {
+      "title": "A letra acompanha o ritmo em mais idiomas",
+      "summary": "Palavras em espanhol, português, italiano, francês e alemão agora acendem na hora em que são cantadas. Caracteres acentuados (corazón, Straße, cœur) são lidos direito, e as sílabas são contadas pelas regras de cada idioma, não pelas do inglês.",
+      "p1": "Músicas em japonês, chinês, coreano, hindi, russo, tailandês e outras escritas mostram as linhas inteiras, no tempo da música, por enquanto sem sincronia palavra por palavra",
+      "p2": "Letras em inglês estão exatamente como antes"
+    },
+    "songs-to-try-in-your-language": {
+      "title": "Músicas para experimentar no seu idioma",
+      "summary": "Com espanhol, português, italiano, francês ou alemão escolhido, a página Cantar sugere oito músicas nesse idioma, da mais fácil à mais difícil, com um motivo para cada uma.",
+      "p1": "Clique em uma música sugerida e ela começa no Spotify, como um card da Biblioteca faz",
+      "p2": "Os links para encontrá-la no Apple Music continuam lá"
+    },
+    "when-a-song-has-no-lyrics": {
+      "title": "Quando uma música não tem letra",
+      "summary": "As letras vêm do LRCLIB, uma biblioteca gratuita com a qual qualquer pessoa pode contribuir. Uma música para a qual ele não tem nada agora avisa isso embaixo da pista e na página da música, com um botão Procurar de novo que pergunta ao LRCLIB na hora.",
+      "p1": "Antes, o OnKey lembrava uma resposta “nenhuma” por um dia, então uma letra que alguém tinha acabado de adicionar só aparecia no dia seguinte",
+      "p2": "Quando o próprio LRCLIB está fora do ar, a página Cantar avisa: as notas continuam, a letra entra se ele voltar, e uma música aprendida nesse meio-tempo ganha a letra na próxima vez que você cantá-la"
+    },
+    "smoother-switching-in-spotify": {
+      "title": "Troca mais suave no Spotify",
+      "summary": "Pedir outra música enquanto uma toca agora pausa a primeira por um instante antes de começar a próxima, então a troca fica mais limpa."
+    },
+    "a-clearer-settings-page": {
+      "title": "Uma página de Ajustes mais clara",
+      "summary": "O microfone é escolhido no menu do próprio OnKey, com dispositivos virtuais e um microfone desconectado listados à parte. Os menus abrem sobre a página, então uma lista longa nunca é cortada.",
+      "p1": "Nos cards da Biblioteca, a linha de extensão de uma música fica verde quando ela cabe na sua voz e cor de pêssego quando não cabe direto (uma oitava de distância, algumas notas fora, ou mais ampla)",
+      "p2": "As barras de etapas da configuração ficam alinhadas quando o nome de uma etapa ocupa duas linhas"
+    },
+    "small-fixes-0-3-0": {
+      "title": "Pequenas correções",
+      "summary": "Coisas que estavam um pouco fora do lugar, agora no lugar.",
+      "p1": "O ponto de Novidades aparece depois de uma atualização até você abrir, e nunca em uma instalação nova",
+      "p2": "Relatar um problema mantém a caixa de texto em altura total, e a janela fica opaca sobre Ajustes",
+      "p3": "A contagem de notificações de uma aba do YouTube, “(3) Artista - Título”, não atrapalha mais na hora de identificar a música"
+    },
+    "pause-listening": {
+      "title": "Pausar a escuta",
+      "summary": "Assistindo a uma stream ou ouvindo um podcast? Pause a escuta do OnKey, e ele para de ouvir qualquer coisa até você retomar. Nada é acompanhado, identificado ou aprendido nesse meio-tempo.",
+      "p1": "Pressione ⌘⇧P, clique no chip Ao vivo na página Cantar ou escolha OnKey → Pausar Escuta",
+      "p2": "Uma pequena pílula “Escuta pausada · Retomar” fica no topo de todas as páginas, para você não esquecer",
+      "p3": "Continua pausado depois de reiniciar, até você retomar"
+    },
+    "see-when-a-paused-take-will-be-scored": {
+      "title": "Veja quando um take pausado será pontuado",
+      "summary": "Pause no meio da música e o OnKey espera um minuto, caso você continue. Agora ele avisa, e deixa você pular a espera.",
+      "p1": "A página Cantar faz a contagem: “Pausado · pontuado em 0:45 · Terminar agora”",
+      "p2": "O Histórico mostra a música que você está cantando como primeiro card, então uma vez que você acabou de pausar nunca parece perdida",
+      "p3": "Todo card de música no Histórico desenha as suas pontuações a partir da segunda vez"
+    },
+    "audio-interfaces-and-your-microphone-list": {
+      "title": "Interfaces de áudio e a sua lista de microfones",
+      "summary": "O OnKey agora pega a sua voz da entrada em que ela realmente está, então um microfone na entrada 2 de uma Focusrite (ou de qualquer interface com várias entradas) simplesmente funciona.",
+      "p1": "Sem ajuste nenhum: o OnKey segue a entrada em que a sua voz está",
+      "p2": "Dispositivos virtuais que outros apps adicionam (Krisp, Loopback, BlackHole, Zoom) aparecem separados dos seus microfones de verdade"
+    },
+    "listening-back-stays-in-step-after-a-skip": {
+      "title": "Ouvir de volta continua no tempo depois de um pulo",
+      "summary": "Se você pulou para a frente enquanto cantava, “Com a música” podia tocar a parte antes do pulo fora do tempo. Agora toda parte do take toca no tempo com a música."
+    },
+    "reliability-fixes": {
+      "title": "Correções de confiabilidade",
+      "summary": "Coisas que podiam dar errado no meio da música, agora corrigidas.",
+      "p1": "Terminar não joga mais um take fora se for clicado enquanto o OnKey verifica o player",
+      "p2": "Uma música não fica mais em “Esperando” ou “Pontuando” para sempre depois de uma falha rara",
+      "p3": "Apagar todas na Biblioteca não trava mais, e “Parar de aprender e apagar” só apaga a música que você escolheu",
+      "p4": "Atalhos de teclado não chegam mais à música atrás das caixas de diálogo",
+      "p5": "A pontuação chega na hora quando uma música termina pausada",
+      "p6": "Uma rádio ou um mix de horas para aos 20 minutos, em vez de seguir como um take só",
+      "p7": "Encerrar é instantâneo: o OnKey some na hora e termina de salvar o que aprendeu sem você ver"
+    },
+    "songs-start-cleanly": {
+      "title": "As músicas começam limpas",
+      "summary": "Clicar em Cantar em um card podia iniciar a música duas vezes, ou tocar um pedacinho da música antes de recomeçar. Agora um clique é um só começo limpo."
+    },
+    "guides-and-help-and-beyond-pitch": {
+      "title": "Guias e ajuda, e Além da afinação",
+      "summary": "Ajustes agora tem links para estes guias. Um guia novo, Além da afinação, cobre o que o OnKey não consegue ouvir (timbre, respiração, estilo) e professores gratuitos para aprender isso."
+    },
+    "smoother-setup-and-youtube": {
+      "title": "Configuração mais tranquila e YouTube",
+      "summary": "Correções para as primeiras coisas em que quem testou esbarrou.",
+      "p1": "O passo dos apps de música na configuração segue direto quando o macOS não tem nada para perguntar",
+      "p2": "Uma aba do YouTube que o Chrome pôs para dormir não segura mais o OnKey",
+      "p3": "Um app de música que você não tem instalado aparece desativado, em vez de ativado"
+    },
+    "learn-a-song-again": {
+      "title": "Aprender uma música de novo",
+      "summary": "Se a letra ou as notas de uma música escorregarem, peça ao OnKey para aprendê-la do zero: a próxima vez que ela tocar a aprende, e substitui a cópia antiga quando tiver ouvido o bastante.",
+      "p1": "Escolha Aprender de novo no menu ⋯ da Biblioteca ou na página da música",
+      "p2": "O OnKey sugere isso quando as palavras de uma música desviam do mesmo jeito em duas vezes"
+    },
+    "a-tidier-app-page-by-page": {
+      "title": "Um app mais arrumado, página por página",
+      "summary": "Cada take ganha um relatório mais claro, e fica mais fácil se achar em Cantar, Histórico, Biblioteca e Ajustes.",
+      "p1": "Cantar oferece “Continue de onde parou”: suas últimas músicas, cada uma com a última pontuação e um botão Cantar",
+      "p2": "Tocar na Biblioteca inicia a música para você, e Cantar mostra ela começando (ou diz por que não consegue)"
+    },
+    "scoring-levels-relaxed-steady-and-pro": {
+      "title": "Níveis de pontuação: Relaxado, Firme e Pro",
+      "summary": "Escolha em Ajustes com que rigor seus takes são pontuados. Relaxado é como o OnKey sempre pontuou; Firme e Pro pedem mais.",
+      "p1": "O vibrato é julgado pelo centro da nota, então um bom vibrato não perde pontos em nenhum nível",
+      "p2": "Cada take mostra o nível em que foi pontuado"
+    },
+    "leave-out-what-isn-t-the-melody": {
+      "title": "Deixe de fora o que não é a melodia",
+      "summary": "Se o OnKey pegou um backing vocal ou um improviso em vez da melodia, marque esse trecho como “Não é a melodia” na página do take. Ele fica de fora de toda pontuação dessa música, takes antigos incluídos."
+    },
+    "your-vocal-range": {
+      "title": "Sua extensão vocal",
+      "summary": "O OnKey descobre a sua extensão pelas músicas que você canta, e mostra como cada música se encaixa nela.",
+      "p1": "O Histórico mostra a sua extensão em uma faixa de teclas, com o seu meio confortável marcado",
+      "p2": "A Biblioteca mostra o encaixe de cada música, com um filtro para músicas na sua extensão",
+      "p3": "Quando uma música fica alta ou baixa, ele diz se cantar uma oitava de distância encaixaria melhor em você"
+    },
+    "challenge-a-friend-and-share-your-best-takes": {
+      "title": "Envie um desafio e compartilhe seus melhores takes",
+      "summary": "A partir de um take, copie um link que diz quanto você fez e desafia alguém a superar. Ele leva só a música, o artista, a sua pontuação e, se quiser, o seu primeiro nome.",
+      "p1": "Depois de um recorde em uma música ou de um grande salto, a página do take oferece “Compartilhar este take”",
+      "p2": "Um clipe compartilhado termina em um card do OnKey: a sua voz, nunca a música"
+    },
+    "fade-the-guide": {
+      "title": "Esmaecer o guia",
+      "summary": "Ative em Ajustes e, nas músicas que você já canta bem, a linha da sua voz esmaece enquanto você está na nota, para você cantar de ouvido, e não pelos olhos. Ela volta no momento em que você desvia."
+    },
+    "lyrics-line-up-better": {
+      "title": "A letra alinha melhor",
+      "summary": "Linhas e palavras agora acendem mais perto de quando são cantadas, incluindo linhas que abrem com um “oh” ou “uou”."
+    },
+    "onkey-s-first-release": {
+      "title": "A primeira versão do OnKey",
+      "summary": "Gratuito, código aberto e tudo no seu Mac.",
+      "p1": "Aprende a melodia de qualquer música que você toca no Spotify, no Apple Music ou no YouTube, na primeira vez que ela toca",
+      "p2": "Uma linha de afinação ao vivo sobre as notas de quem canta, com letra sincronizada e uma pontuação para cada take",
+      "p3": "Takes para ouvir de volta, e um vídeo curto de um take para compartilhar: a sua voz, sem a música",
+      "p4": "Músicas iniciais, uma biblioteca do que você aprendeu e atualizações que se instalam sozinhas"
+    }
+  }
+}

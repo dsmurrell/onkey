@@ -1,0 +1,831 @@
+{
+  "meta": {
+    "title": "OnKey: learn to sing the songs you love",
+    "description": "OnKey is a free, open-source singing trainer for the Mac. It listens to the music playing on your Mac, learns the singer's melody, and shows you a pitch guide as you sing, so you can see where you're sharp or flat. It never saves the music."
+  },
+  "common": {
+    "skip": "Skip to content",
+    "joke": "Saving shower singers from themselves since 2026",
+    "sourceOnGitHub": "Source on GitHub",
+    "stars": "{n, plural, one {# star on GitHub} other {# stars on GitHub}}",
+    "requirements": {
+      "silicon": "A Mac with Apple Silicon (M1 or later)",
+      "macos": "macOS 14.2 or later"
+    },
+    "early": "{language} is new in OnKey: songs sung in {language} show their lyrics a line at a time, without word-by-word timing, for now."
+  },
+  "header": {
+    "home": "OnKey home",
+    "label": "Main",
+    "docs": "Docs",
+    "faq": "FAQ",
+    "whatsNew": "What’s new",
+    "github": "GitHub",
+    "discord": "Discord"
+  },
+  "footer": {
+    "license": "· free and open source (MIT)",
+    "madeBy": "Made by <link>Daniel Murrell</link>",
+    "notAffiliated": "Not affiliated with Spotify, Apple or Google.",
+    "label": "Footer",
+    "gettingStarted": "Getting started",
+    "howItWorks": "How it works",
+    "privacy": "Privacy & legal",
+    "faq": "FAQ",
+    "whatsNew": "What’s new",
+    "github": "GitHub",
+    "discord": "Discord",
+    "language": "Language",
+    "improve": "Improve this translation"
+  },
+  "download": {
+    "mac": "Download for Mac",
+    "macsOnly": "OnKey runs on Macs only for now. <link>Want Windows? Vote here</link>.",
+    "send": "Send it to your Mac",
+    "sent": "Sent",
+    "phones": "OnKey runs on Macs, not phones. Send yourself the link for later.",
+    "shareText": "OnKey, a singing trainer for the Mac: download it on your Mac from",
+    "mailSubject": "OnKey for my Mac"
+  },
+  "docsNav": {
+    "label": "Docs",
+    "heading": "Docs",
+    "inEnglish": "{title} (English)",
+    "pages": {
+      "start": "Getting started",
+      "howItWorks": "How OnKey works",
+      "scoring": "Scoring explained",
+      "privacy": "Privacy & legal",
+      "faq": "FAQ",
+      "yourVoice": "Singing comfortably",
+      "beyondPitch": "Beyond pitch",
+      "troubleshooting": "Troubleshooting",
+      "credits": "Credits"
+    }
+  },
+  "home": {
+    "kicker": "A free, open-source singing trainer for Mac",
+    "title": "Learn to sing the songs you love.",
+    "intro": "OnKey listens to the music playing on your Mac and learns the singer's melody. Then it shows you a pitch guide as you sing, so you can see where you're sharp or flat.",
+    "howLink": "How it works →",
+    "languages": "Available in {names} and <more>{n, plural, one {# more} other {# more}}</more>",
+    "factsLabel": "At a glance",
+    "facts": {
+      "free": "Free and open source (MIT)",
+      "macs": "Apple Silicon, macOS 14.2+",
+      "local": "Runs on your Mac, no account",
+      "music": "Never saves the music it listens to"
+    },
+    "laneTitle": "Learned song · score 82",
+    "videoCaption": "Me singing along, scored as I go.",
+    "video": {
+      "label": "1:35 · sound on",
+      "video": "OnKey in use: Daniel sings along, the notes scroll towards him and his pitch is drawn over them",
+      "play": "Play the demo video, with sound",
+      "dialog": "Demo video",
+      "close": "Close the video"
+    },
+    "artCaption": "Illustration of the singing lane. Demo video coming soon.",
+    "how": {
+      "title": "How it works",
+      "step": "Step {n}",
+      "steps": {
+        "play": {
+          "title": "Play a song",
+          "body": "In Spotify, Apple Music, or YouTube, the way you already do. OnKey listens along. It doesn't play or download music itself."
+        },
+        "learn": {
+          "title": "The first play teaches it",
+          "body": "When the song ends, OnKey takes a couple of minutes to learn the singer's notes and line up the lyrics."
+        },
+        "sing": {
+          "title": "Sing with the pitch guide",
+          "body": "Next time, the notes scroll towards you and your voice is drawn over them. Green is on the note, red is off."
+        },
+        "review": {
+          "title": "See how you did",
+          "body": "You get a score, the notes you hit and missed, and your recording to play back with the song."
+        }
+      },
+      "more": "Want the details? <link>Read exactly how OnKey works</link>, with diagrams."
+    },
+    "privacy": {
+      "title": "It listens, but never saves the music",
+      "body": "OnKey listens to the music only to learn the melody and keep the notes in time. It never saves or uploads it. What stays on your Mac is the notes it learns and a recording of your mic for each take, so you can hear yourself back.",
+      "link": "Privacy & legal",
+      "cards": {
+        "network": {
+          "title": "No account, no server, no analytics",
+          "body": "What leaves your Mac: a Shazam signature (not audio) to name a new song, the song's name to LRCLIB for lyrics and to Apple for covers, and a daily update check on GitHub."
+        },
+        "fair": {
+          "title": "Fair scoring",
+          "body": "Singing an octave lower still counts, and your timing gets 80 ms of slack. Being sharp or flat is what costs you."
+        },
+        "headphones": {
+          "title": "Headphones or speakers",
+          "body": "Headphones give the most reliable scores. On speakers, your mic hears the song as well as you, so OnKey filters the song out."
+        }
+      }
+    },
+    "questions": {
+      "title": "Questions",
+      "body": "The ones people ask first. <link>All questions</link>."
+    },
+    "get": {
+      "title": "Get OnKey",
+      "body": "Free and open source under the MIT licence. {requirements}.",
+      "discord": "Join the Discord"
+    }
+  },
+  "start": {
+    "title": "Getting started",
+    "lede": "Install OnKey, give it two permissions, and play a song.",
+    "need": {
+      "title": "What you need",
+      "music": "Music playing in Spotify or Apple Music, or YouTube in Chrome, Brave, Edge, or Safari.",
+      "mic": "A microphone (the built-in one works). Headphones give the most reliable scores.",
+      "why": "macOS 14.2 is the first version that lets one app hear another app's sound without extra drivers, and the models need Apple Silicon to run fast enough."
+    },
+    "install": {
+      "title": "Install",
+      "download": "Download <code>OnKey.dmg</code> from the <link>releases page</link>. It’s about 350 MB (about 420 MB installed) because the models come inside the app, so it never downloads anything else.",
+      "drag": "Open it and drag OnKey into Applications.",
+      "open": "Open OnKey. It's signed and notarised by Apple, so it opens like any other app.",
+      "openAnyway": "Open OnKey. This build isn't notarised yet, so macOS says it can't check the app the first time. Go to <strong>System Settings → Privacy & Security</strong>, scroll down, and click <strong>Open Anyway</strong>. You only need to do this once.",
+      "updates": "After that, OnKey checks GitHub for a new version once a day, downloads it in the background (about 350 MB), and installs it when you restart or quit, never mid-song. You can turn this off in <strong>Settings</strong>."
+    },
+    "permissions": {
+      "title": "Permissions",
+      "permission": "Permission",
+      "why": "Why OnKey needs it",
+      "mic": "<strong>Microphone</strong>",
+      "micWhy": "To hear you sing.",
+      "audio": "<strong>System audio recording</strong>",
+      "audioWhy": "To hear the music app, so OnKey can learn the melody and keep the notes in time. macOS calls it recording, but OnKey analyses the sound as it plays and never saves it.",
+      "control": "<strong>Control Spotify and Music</strong> (asked in setup)",
+      "controlWhy": "To read what's playing and where, and to play, pause, and seek for \"Sing it again\" and skipping. Setup asks macOS for each app that's open. An app that isn't open asks the first time you play a song in it. Choose \"Listen only\" and OnKey never sends Spotify or Music anything, and follows the song by its sound.",
+      "browser": "<strong>Control your browser</strong> (optional, for YouTube)",
+      "browserWhy": "Only if you turn YouTube on, in Settings or on the Sing page: to read the YouTube tab's time and title, and play, pause, and seek it.",
+      "after": "Songs you've sung before are recognised on your Mac, new ones by Shazam. If you said no to a permission by mistake, go to <strong>System Settings → Privacy & Security</strong>, find the section, and switch OnKey on."
+    },
+    "first": {
+      "title": "Your first song",
+      "play": "Open OnKey and play a song in Spotify, Apple Music, or YouTube. Not sure what to sing? Click the OnKey logo on the Sing page for suggestions.",
+      "lyrics": "The first time, there are no notes yet. You see the lyrics a line at a time, in time with the singer for the first minute and a half or so (except on 8 GB Macs). Sing along if you like, as this take is still scored.",
+      "learns": "When the song ends, OnKey <strong>learns it</strong>. That took two to three minutes on my Mac, and the Sing button says \"Learning…\" until it's done. One song is learned at a time, so songs played back to back say \"Waiting to learn\" until their turn.",
+      "again": "Play it again. The notes stay dimmed (\"Lining up with the song…\") for a few seconds until OnKey knows where you are. Then they scroll towards you with the words on them, and your pitch is drawn live.",
+      "score": "When it ends, you get a score, a report on every note and line, and your recording to play back with the song.",
+      "learned": "A song counts as learned once OnKey has heard about 70% of it. If you skip around, the rest is learned the next time you play those parts.",
+      "rest": "Singing a lot? Have a read of <link>singing comfortably</link>. After about 35 minutes, OnKey reminds you to rest your voice.",
+      "next": "Next: <how>how OnKey works</how>, <scoring>how the score works</scoring>, or <troubleshooting>troubleshooting</troubleshooting>."
+    }
+  },
+  "faqPage": {
+    "title": "FAQ",
+    "before": "Before you download",
+    "using": "Using OnKey"
+  },
+  "faq": {
+    "network": {
+      "q": "Does anything leave my Mac?",
+      "intro": "OnKey never saves or uploads the music it listens to. Your recordings and learned songs stay on your Mac. What does go out:",
+      "shazam": "<strong>Shazam</strong> (Apple): a signature of up to 5 seconds of the music app's sound (not the audio, and never your mic) to name a new song when nothing else can say what's playing. That's YouTube, other apps, or Listen only. Spotify and Apple Music name their own songs, and songs you've sung before are recognised on your Mac. You can turn Shazam off in Settings.",
+      "lrclib": "<strong>LRCLIB</strong>: the song's artist, title, album, and length, to fetch synced lyrics (unless Show lyrics is off).",
+      "apple": "<strong>Apple</strong>: the artist and title to find album covers, and a recognised song's Apple Music id to get its length. The covers themselves load from Spotify's, Apple's, or YouTube's image servers.",
+      "github": "<strong>GitHub</strong>: a daily check for a new version, and its download. You can turn this off in Settings.",
+      "outro": "There's no account, no analytics, and no server of mine. \"Report a problem\" only saves a file on your Mac, for you to attach to a GitHub issue if you want to. <link>Privacy in full</link>."
+    },
+    "music": {
+      "q": "Does OnKey provide or download music?",
+      "a": "No. Your own music app plays the song (Spotify, Apple Music, or YouTube in a browser). OnKey listens to learn the singer's notes and never saves the music."
+    },
+    "kept": {
+      "q": "What does it keep on my Mac?",
+      "a": "For each song: the notes, a fingerprint and Shazam signature, and the lyrics with their timing. For each take: a <strong>recording of your mic</strong> (about 0.5 MB a minute), your scores, and the lyrics you sang, so you can play it back. It's all in <code>{dataDir}</code> (except a take you share, which is saved as a video in Downloads), and deleting a take or song moves it to the Trash. It never keeps the music, though a take sung over speakers will pick up some of it."
+    },
+    "permissions": {
+      "q": "Which permissions does it ask for?",
+      "mic": "<strong>Microphone</strong>: to hear you sing.",
+      "audio": "<strong>System audio recording</strong>: to hear the music app or browser that's playing. macOS calls it recording, but OnKey analyses the sound as it plays and doesn't save it.",
+      "control": "<strong>Control of Spotify and Music</strong> (asked in setup): to read what's playing and where, and to play, pause, and seek for \"Sing it again\". Choose \"Listen only\" in setup, or turn them off under \"Let OnKey control\" in Settings, and OnKey never sends them anything.",
+      "browser": "<strong>Control of your browser</strong> (only if you turn YouTube on): the same for a YouTube tab."
+    },
+    "macs": {
+      "q": "Which Macs does it run on?",
+      "a": "Apple Silicon (M1 or later) on macOS 14.2 or later. 14.2 is the first version that lets one app hear another app's sound without extra drivers, and the models need Apple Silicon to keep up. 8 GB of memory is enough. Intel Macs aren't supported."
+    },
+    "windows": {
+      "q": "Why no Windows, Linux, or phone version?",
+      "a": "OnKey is built on macOS's per-app audio capture and Core ML. Windows can also hear one app's sound, so a port is possible, but I haven't started one. If you'd use it, say so on the <link>Windows issue</link>. Phones don't let one app hear another, so a phone version would need a different approach."
+    },
+    "browser": {
+      "q": "How does it compare? And why not in the browser?",
+      "compare": "Most singing apps need their own catalogue, backing tracks, or hand-made note charts. OnKey learns from the music you already play, so you practise with the original artist. Songs with a clear lead vocal work best.",
+      "web": "A web page can't hear the Spotify or Apple Music app, can't ask them what's playing, and can't use ShazamKit or Core ML. So it's a Mac app."
+    },
+    "scoring": {
+      "q": "How is the score worked out?",
+      "a": "Every 10 ms that you and the singer both sing, your pitch is compared with theirs. Within half a semitone gets full credit, fading to none at a semitone and a half. Octaves don't count against you, and your timing gets 80 ms of slack. The score is your accuracy, scaled by how much of the singer's part you sang. More in <link>Scoring explained</link>."
+    },
+    "licence": {
+      "q": "What's the licence?",
+      "a": "MIT. It's free and the source is on GitHub. The models have their own licences, listed in <link>Credits</link>."
+    },
+    "firstPlay": {
+      "q": "Why does the first play not show any notes?",
+      "a": "OnKey learns a song after its first play ends, so there are no notes yet. You see the lyrics instead, a line at a time (in time with the singer for the first minute and a half or so, except on 8 GB Macs). Sing along anyway, as that take is still scored. From the second play, the notes scroll towards you with the words on them."
+    },
+    "learning": {
+      "q": "Why can't I sing a song yet? It says \"Learning…\"",
+      "a": "Learning happens after the song ends and took two to three minutes on my Mac. The \"Sing it again\" button shows the progress and comes back when it's done. Other songs stay singable meanwhile. One song is learned at a time, so songs played back to back say \"Waiting to learn\" until their turn. Learning also pauses while you sing a song OnKey already knows."
+    },
+    "starters": {
+      "q": "What should I sing first?",
+      "a": "OnKey suggests songs it follows well. They show on the Sing page when nothing's playing, at the bottom of the Library, and when you click the OnKey logo on the Sing page. Each has links to Spotify and Apple Music."
+    },
+    "busy": {
+      "q": "Will it slow my Mac down?",
+      "a": "Singing a learned song is light: 15 to 19% of one CPU core on my Mac. Learning is the heavy part, so OnKey does it after the song ends, one song at a time, at low priority. While learning, it used about 1.7 GB of memory (2.4 GB at most). On Macs with less than 32 GB, the models are unloaded after each song."
+    },
+    "headphones": {
+      "q": "Do I need headphones?",
+      "a": "No, but they give the most reliable scores. On speakers, echo cancelling takes the song back out of your mic: 20 dB or more on a MacBook's speakers, 8 to 14 dB on external speakers. Loud music can still leak through."
+    },
+    "octave": {
+      "q": "Can I sing in a lower or higher octave?",
+      "a": "Yes. An octave away from the singer counts as on the note."
+    },
+    "apps": {
+      "q": "Which music apps work?",
+      "a": "Spotify, Apple Music, and YouTube in Chrome, Brave, Edge, or Safari. By default, OnKey asks Spotify and Apple Music what's playing, so positions are exact, and it can play and pause them from its own window. With \"Listen only\" (every app off under \"Let OnKey control\" in Settings), it recognises songs by their sound. YouTube is followed by its sound unless you let OnKey control your browser."
+    },
+    "shazam": {
+      "q": "Why use Shazam? Isn't that sending audio to Apple?",
+      "a": "ShazamKit sends a signature (a fingerprint worked out on your Mac), not the audio, and never your mic. OnKey only asks Shazam when nothing else can name the song: YouTube, other apps, or Listen only. Songs you've sung before are recognised on your Mac first. Turn off Settings → “Use Shazam to name new songs” and nothing goes to Apple, but only songs you've already learned are recognised by sound."
+    },
+    "lyricsOff": {
+      "q": "Can I turn the lyrics off?",
+      "a": "Yes, in Settings → “Show lyrics”. With it off, OnKey asks LRCLIB for nothing and shows no words. Lyrics already on your Mac are hidden, not deleted. The notes and score work as usual, and songs learned with lyrics off get their notes from the melody alone."
+    },
+    "oddScores": {
+      "q": "Some songs score oddly. Why?",
+      "a": "Rapped or spoken songs barely have a melody to score, and harmonies or choirs can confuse which voice is the tune. See <link>the limits</link>."
+    },
+    "report": {
+      "q": "Something went wrong. How do I report it?",
+      "a": "Use <strong>Report a problem</strong> in Settings, the Help menu, or a take's page. It shows you what goes in the zip (the last three days of OnKey's log and a summary of each play, with song names but no lyrics, audio, or recordings) and saves it on your Mac. Nothing is uploaded. Then open an issue on <github>GitHub</github> and attach the zip if you're happy to. Have a look at <link>Troubleshooting</link> first."
+    },
+    "updates": {
+      "q": "How do I get updates?",
+      "a": "Automatically. Once a day OnKey checks GitHub for a new version and downloads it in the background (about 350 MB, as the models are inside the app). It installs when you choose Restart to update or when you quit, never mid-song. You can turn the checks off in Settings."
+    }
+  },
+  "troubleshooting": {
+    "title": "Troubleshooting",
+    "lede": "What to do when OnKey won't start, can't hear, can't name a song, or is out of time with your headphones.",
+    "starting": {
+      "title": "It stays on \"Starting OnKey…\"",
+      "body": "This normally takes a few seconds. If it's still there after a minute, quit OnKey (<strong>⌘Q</strong>) and open it again. If that doesn't help, <link>report a problem</link>."
+    },
+    "permissions": {
+      "title": "Permission questions",
+      "intro": "OnKey asks for three things in setup:",
+      "mic": "<strong>Microphone</strong>: if you said no, go to <strong>System Settings → Privacy & Security → Microphone</strong> and turn OnKey on.",
+      "audio": "<strong>System audio recording</strong>: needed to hear the music app. If you said no, or OnKey says it \"can't hear … yet\", go to <strong>System Settings → Privacy & Security → Screen & System Audio Recording</strong> and turn OnKey on under <strong>System Audio Recording Only</strong>.",
+      "control": "<strong>Control of Spotify and Apple Music</strong>: setup asks macOS for each app that's open. An app that isn't open asks the first time you play a song in it. If the question doesn't appear, click <strong>Carry on</strong>. macOS asks the first time you play a song there. To change your answer, go to <strong>System Settings → Privacy & Security → Automation → OnKey</strong>, or use <strong>Let OnKey control</strong> in OnKey's Settings.",
+      "buttons": "The buttons in OnKey's messages open the right page of System Settings. macOS may ask you to reopen OnKey after you change a permission."
+    },
+    "naming": {
+      "title": "A new song takes a while to be named",
+      "body": "New songs are named by Shazam, which needs an internet connection, and the first answer after installing can be slow. Keep the song playing, as OnKey keeps asking. If it says Shazam can't be reached, check your connection. Songs you've already learned are still recognised on your Mac. Allowing control of Spotify or Apple Music is quicker, as OnKey can ask the app what's playing."
+    },
+    "noNotes": {
+      "title": "No notes on a song",
+      "body": "OnKey learns a song after its first play ends, and the Sing button says \"Learning…\" until it's done. One song is learned at a time, so others say \"Waiting to learn\". Learning also pauses while you sing a song OnKey already knows (\"Waiting while you sing\"), so the notes stay smooth. A song counts as learned once OnKey has heard about 70% of it, so if you skipped around, play it through once more."
+    },
+    "dim": {
+      "title": "The notes are dim and say \"Lining up with the song…\"",
+      "body": "OnKey keeps the notes dimmed until the music confirms where you are, so you never sing to notes in the wrong place. It usually takes a few seconds after a song starts or after you skip. If it stays dim, check the music app's own volume isn't turned right down, as OnKey needs to hear it. Turn the app up and use your Mac's volume instead."
+    },
+    "wholeLine": {
+      "title": "On a first play the lyrics show a whole line at a time",
+      "body": "That's expected. Until a song is learned, OnKey doesn't know when each word is sung, so it shows the whole line. From the next play the words are on the note bars."
+    },
+    "timing": {
+      "title": "Lyrics early or late on headphones?",
+      "latency": "OnKey allows for how long your headphones or speakers take to play the sound, using the figure macOS reports for each output. In my tests that was close enough, Bluetooth included, so there’s nothing to set.",
+      "still": "If the notes still look early or late, OnKey may not have lined up with the song yet. Give it a few seconds, or skip back a little. Your score isn’t affected either way, as OnKey works out your delay after each song. If it keeps happening on one pair of headphones, please <link>tell me</link> which ones."
+    },
+    "lyrics": {
+      "title": "No lyrics, or the wrong ones",
+      "body": "Lyrics come from <link>LRCLIB</link>, a free, community-run database. Some songs aren't in it, or only in a different version. When it finds nothing, OnKey asks again after a day."
+    },
+    "busy": {
+      "title": "Your Mac feels busy",
+      "intro": "Learning a new song is the heavy part, so OnKey does it after the song ends, at low priority. Singing a learned song is light. Two settings help:",
+      "battery": "<strong>Save battery while singing</strong> (on by default): on battery, the notes are drawn 30 times a second instead of 60.",
+      "models": "<strong>Keep learning models ready</strong> (on by default only with 32 GB or more): turn it off and the models (about 1.5 GB) are unloaded after each song. On 8 GB Macs it isn't shown, as they're always unloaded."
+    },
+    "logs": {
+      "title": "Where the logs are",
+      "where": "OnKey writes a plain-text log to <code>$TMPDIR/onkey.log</code>. To open it, run this in Terminal:",
+      "records": "It also keeps each day's log and a short summary of each play (timings, CPU, memory, build, and Mac) in the<code> records/</code> folder of its data folder, for 30 days and at most 200 MB. They hold no audio or lyrics, but they do name the songs you played."
+    },
+    "report": {
+      "title": "Report a problem",
+      "choose": "Choose <strong>Report a problem</strong> in Settings or <strong>Help → Report a Problem…</strong>, or <strong>Report a problem with this take</strong> on a take's page.",
+      "zip": "OnKey shows you what goes in the zip: the last three days of its log and a summary of each play. No lyrics, audio, recordings, user name, or home folder. Add a note if you like, then <strong>Save</strong> it on your Mac. Nothing is uploaded.",
+      "issue": "Choose <strong>Open a GitHub issue</strong> (or go to <link>GitHub</link>), say what happened and with which song, and attach the zip if you're happy to."
+    },
+    "more": "More answers in the <link>FAQ</link>.",
+    "discord": "Or ask in <link>OnKey's Discord</link>."
+  },
+  "docs": {
+    "diagrams": {
+      "legend": {
+        "label": "Colours used in the diagrams",
+        "music": "The music",
+        "musicNote": "what your music app plays",
+        "singer": "The singer",
+        "singerNote": "the original vocal, its notes and lyrics",
+        "you": "You",
+        "youNote": "your voice, from the mic",
+        "score": "Your score",
+        "scoreNote": "how close you are"
+      },
+      "stepOf": "Step {n} of {total}",
+      "phrase": "Here's a line you sing a- long",
+      "big": {
+        "label": "How OnKey works, end to end",
+        "all": "Music in, your score out. All on your Mac.",
+        "steps": {
+          "play": "Your music app plays a song",
+          "hears": "OnKey hears it, on your Mac",
+          "learns": "The first time, it learns the song",
+          "sing": "You sing along with the notes",
+          "score": "You get a score and a report"
+        },
+        "onMac": "OnKey, on your Mac",
+        "musicApp": "Music app",
+        "musicAppSub": "Spotify, Music…",
+        "hears": "Hears it",
+        "hearsSub": "never saved",
+        "learns": "Learns it",
+        "learnsSub": "notes and lyrics",
+        "sing": "You sing",
+        "singSub": "your mic",
+        "score": "Your score",
+        "scoreSub": "and a report"
+      },
+      "hearing": {
+        "label": "How OnKey hears the music",
+        "steps": {
+          "apps": "Lots of apps make sound on your Mac",
+          "one": "OnKey listens to the music app only",
+          "mic": "Your mic arrives on the same clock",
+          "memory": "Analysed as it plays, never saved"
+        },
+        "musicApp": "Music app",
+        "browser": "Browser",
+        "messages": "Messages",
+        "yourMic": "Your mic",
+        "oneClock": "one clock",
+        "disk": "disk",
+        "noMusicSaved": "no music saved",
+        "notHeard": "not heard"
+      },
+      "learning": {
+        "label": "How OnKey learns a song",
+        "steps": {
+          "mixed": "The song arrives: music and singer mixed",
+          "separation": "Separation picks out the singer's voice, in memory",
+          "pitch": "Pitch tracking follows the singer, every 10 ms",
+          "notes": "Each held pitch becomes a note bar",
+          "lyrics": "Lyric lines move to where the words are heard",
+          "bars": "One bar per syllable: ready to sing"
+        },
+        "singer": "the singer",
+        "everythingElse": "everything else",
+        "mix": "the mix",
+        "timing": "timing from the lyric file, corrected by ear"
+      },
+      "placement": {
+        "label": "How OnKey finds your place in the song",
+        "steps": {
+          "fingerprint": "A learned song keeps a fingerprint of its music",
+          "slide": "A few seconds of what's playing slide along it",
+          "match": "Where they match is exactly where you are",
+          "skip": "Skip ahead, and it finds you again",
+          "listening": "Listening mode: Shazam names songs it hasn't learned"
+        },
+        "fingerprint": "the learned song's fingerprint (8 bands, every 10 ms)",
+        "match": "match",
+        "playingNow": "what's playing now",
+        "skipped": "you skipped",
+        "shazam": "Shazam: “a new song”, 0:42",
+        "shazamNote": "only for songs not learned yet"
+      },
+      "echo": {
+        "label": "How echo cancelling works",
+        "steps": {
+          "speakers": "Without headphones, the mic hears you and the song",
+          "copy": "OnKey knows exactly what the song sounds like",
+          "learns": "It learns how that sound reaches the mic",
+          "subtracts": "…and takes it away, leaving your voice",
+          "headphones": "With headphones, there's nothing to take away"
+        },
+        "speakers": "speakers",
+        "headphones": "headphones",
+        "yourMic": "your mic",
+        "whatsLeft": "what's left: you",
+        "micHears": "what the mic hears",
+        "copy": "OnKey's copy of the song (same clock)",
+        "room": "how the room changes it: delay, echo, tone",
+        "minusSong": "− song"
+      },
+      "scoring": {
+        "label": "How OnKey scores your singing",
+        "steps": {
+          "compare": "Every 10 ms, your pitch is compared with the singer's",
+          "credit": "Within half a semitone is full credit",
+          "octaves": "An octave up or down counts as on the note",
+          "slack": "A little early or late isn't punished",
+          "hit": "Each note: hit if you held it for half its length",
+          "score": "The score: your accuracy, scaled by how much you sang"
+        },
+        "flat60": "60 cents flat: 90% credit",
+        "octaveLower": "an octave lower: still green",
+        "slack80": "up to 80 ms off: allowed",
+        "summary": "86% accurate · sang 80%"
+      },
+      "credit": {
+        "title": "Try it: how far off can you be?",
+        "aria": "Credit curve. Your note is {n} cents {dir, select, flat {flat} other {sharp}}, earning {p}% credit.",
+        "axis": "cents from the note (100 cents = 1 semitone)",
+        "credit": "{p}% credit",
+        "yourNote": "Your note",
+        "onTheNote": "on the note",
+        "off": "{n}¢ {dir, select, flat {flat} other {sharp}}",
+        "octave": "Sing it an octave lower"
+      },
+      "coverage": {
+        "title": "Try it: how much of the song do you need to sing?",
+        "aria": "Singing {p}% of the singer's part at 86% accuracy scores {s}.",
+        "axis": "share of the singer's part you sang",
+        "score": "score {s} at 86% accuracy",
+        "youSang": "You sang"
+      },
+      "privacy": {
+        "label": "What OnKey keeps and sends",
+        "all": "OnKey never saves the music it listens to",
+        "steps": {
+          "kept": "Kept on your Mac: what OnKey learned, and your takes",
+          "never": "Never saved or sent: the music's audio",
+          "lookups": "Sent out: lookups by name, for lyrics and covers",
+          "shazam": "To name a new song: a signature to Shazam"
+        },
+        "yourMac": "Your Mac",
+        "kept": {
+          "notes": "Each song's notes and bars",
+          "fingerprint": "Its fingerprint and signature",
+          "lyrics": "The lyrics and their timing",
+          "takes": "Takes: your mic, scores, lyrics"
+        },
+        "audio": "The music's audio: analysed as\nit plays, never saved or sent",
+        "lrclib": "artist, title, album,\nlength: for lyrics",
+        "itunes": "artist, title: cover",
+        "shazam": "a signature of the\nmusic, never the mic;\ncan be turned off"
+      }
+    },
+    "howItWorks": {
+      "title": "How OnKey works",
+      "lede": "Seven sections, from the big picture down to the exact numbers. All the analysis happens on your Mac.",
+      "exactNumbers": "The exact numbers",
+      "big": {
+        "title": "1. The big picture",
+        "steps": {
+          "play": "You play music the way you already do, in <strong>Spotify, Apple Music, or YouTube</strong>. OnKey doesn't play anything itself.",
+          "hears": "OnKey <strong>hears the music app</strong> <wave></wave> through macOS. The sound is analysed as it plays and never saved.",
+          "learns": "After a song's first play, OnKey <strong>learns it</strong>: it pulls out the singer's voice <separate></separate>, works out the notes, and lines up the lyrics.",
+          "sing": "From the next play, you see the <strong>note bars</strong> <lane></lane> coming towards you, and your voice <mic></mic> drawn on top.",
+          "score": "When the song ends you get a <strong>score</strong> <score></score> and a report on each line, and whether you tend to sing sharp or flat."
+        },
+        "hood": {
+          "app": "A Mac app: a Rust engine (audio, models, scoring) inside a Tauri window with a React interface. <engine>engine.rs</engine> runs everything.",
+          "local": "Everything happens on your Mac. Models run with ONNX Runtime, on Core ML (GPU and Neural Engine) where it helps.",
+          "frames": "Audio is analysed at 16 kHz in 10 ms frames, the unit every number below uses (<dsp>dsp.rs</dsp>, <code>FRAME_S</code>).",
+          "learned": "A song counts as learned once 70% of it has been heard (<code>READY_COVERAGE</code> in <store>store.rs</store>). A partly heard song keeps learning on later plays."
+        }
+      },
+      "hearing": {
+        "title": "2. Hearing the music",
+        "steps": {
+          "apps": "Your Mac plays sound from lots of apps at once.",
+          "one": "OnKey asks macOS (with your permission) for the sound of <strong>one app</strong>, the music app, and ignores the rest.",
+          "mic": "Your <strong>mic</strong> <mic></mic> is recorded alongside, on the <strong>same clock</strong>, so OnKey knows which moment of the song you sang against.",
+          "memory": "The music is analysed <strong>as it plays</strong>, in memory (a song being learned stays in memory until it ends). It's never written to disk, uploaded, or shared."
+        },
+        "hood": {
+          "capture": "Capture uses Core Audio process taps (macOS 14.2+), with your mic, at your output device's own rate (usually 48 kHz), on one clock (<captureSwift>capture.swift</captureSwift>, <captureRs>capture.rs</captureRs>).",
+          "tapped": "Only the processes of the music app are tapped, chosen by its bundle id (<source>source.rs</source>).",
+          "resampled": "Everything is resampled to 16 kHz mono for analysis. Release builds never write the music's audio anywhere. Only your own voice is kept with each take.",
+          "permissions": "Permissions: system audio recording and the microphone. Controlling Spotify and Music (what's playing and where, \"Sing it again\", skip, and pause) is a separate permission, asked in setup, and \"Listen only\" turns it off. Controlling the YouTube tab is off until you switch it on."
+        }
+      },
+      "learning": {
+        "title": "3. Learning a song",
+        "steps": {
+          "mixed": "The song reaches OnKey as one sound: <strong>the singer and the band mixed together</strong>.",
+          "separation": "Once the song has ended, a <strong>separation</strong> model <separate></separate> pulls the lead singer out of the mix, a chunk at a time. (Doing this while you sing would make the notes stutter.)",
+          "pitch": "A <strong>pitch tracker</strong> follows the singer's voice <strong>every 10 ms</strong>. That gives a wiggly line with the exact tune, slides and vibrato included.",
+          "notes": "A note model turns that line into <strong>notes</strong>, with where each one starts and ends.",
+          "lyrics": "The <strong>lyrics</strong> come from LRCLIB with rough timings. A speech model listens to the singer and moves each line to <strong>where its words are sung</strong>. On a first play it does this for the first minute and a half or so, so those lines are in time too.",
+          "bars": "Each line is split into syllables, and each syllable gets its own <strong>bar</strong> <lane></lane> at its note. That's the lane you sing to."
+        },
+        "hood": {
+          "separation": "<strong>Separation:</strong> UVR MDX-Net Karaoke 2 (ONNX, on Core ML), run on 20 s chunks with 2 s of context either side. The music is held in memory while the song plays and separated after it ends, at a low priority. One song is learned at a time. Others wait their turn (\"Waiting to learn\"), and learning pauses while you sing a learned song with the window showing (<learn>learn.rs</learn>, <mdx>mdx.rs</mdx>).",
+          "firstPlay": "<strong>First play:</strong> up to its first 90 s are separated as they play, 5 s at a time, until the lyric lines are lined up with the singer. The rest waits for the song to end. This is skipped on 8 GB Macs and while another song is being learned. Across my library, 60% of first-play lines were within 0.3 s of the singing this way, against 13% at LRCLIB's own times.",
+          "memory": "<strong>Memory:</strong> with 8 GB, one model is loaded at a time and unloaded after its step. Below 32 GB, the learning models (about 1.5 GB) are unloaded once a song is learned, unless Settings → Keep learning models ready is on (<lowmem>lowmem.rs</lowmem>).",
+          "pitch": "<strong>Pitch:</strong> CREPE \"full\" on the separated vocal, 16 kHz, 10 ms hop, 1024-sample windows, 50 to 1100 Hz. A frame counts as sung when its confidence is over 0.45 (<pitch>pitch.rs</pitch>).",
+          "notes": "<strong>Notes:</strong> GAME (OpenVPI) transcribes notes from the vocal. Each syllable bar takes its note, and bars with no sung note under them are dropped (<game>game.rs</game>, <syllables>syllables.rs</syllables>).",
+          "lyrics": "<strong>Lyrics:</strong> synced lyrics from LRCLIB (looked up by artist, title, album, and length, then by name if that finds nothing). Lines are re-placed by aligning the whole song's words with wav2vec 2.0 (CTC), and split into syllables with the CMU pronouncing dictionary (<lyrics>lyrics.rs</lyrics>, <ctc>ctc.rs</ctc>).",
+          "measured": "<strong>Measured:</strong> on 18 hand-marked songs, 98% of sung notes are covered by a bar, 92% on the right note, and 73% starting within 0.1 s. 94% of lyric lines are within 0.3 s.",
+          "kept": "<strong>Kept with the song:</strong> the pitch line, the bars, a rhythm fingerprint, a Shazam signature and the lyrics' timing, plus the LRCLIB entry those times were made for (kept on the Mac, never uploaded), so the same words show on the same bars every play. The music and the separated vocal aren't kept."
+        }
+      },
+      "placement": {
+        "title": "4. Knowing where you are",
+        "steps": {
+          "fingerprint": "When a song is learned, OnKey also keeps a <strong>fingerprint</strong> <fingerprint></fingerprint>: how much the sound changes in each band of frequencies, every 10 ms.",
+          "slide": "Music apps only roughly report where the song is, so OnKey slides <strong>a few seconds of what it's hearing</strong> along the fingerprint.",
+          "match": "Where they fit is <strong>exactly where you are</strong>. Until then the notes are dimmed (\"Lining up with the song…\"). They usually light up a few seconds into the song.",
+          "skip": "Skip, seek, or restart, and it <strong>finds you again</strong> within a few seconds. OnKey keeps a few possible places in mind and only moves the notes when the music clearly agrees.",
+          "listening": "This is <strong>listening mode</strong>. Songs you've sung before are recognised on your Mac, and Shazam names new ones, so OnKey can follow the music without controlling the app. Control of Spotify and Apple Music gives exact positions and is on by default (\"Listen only\" turns it off). YouTube control is opt-in."
+        },
+        "hood": {
+          "fingerprint": "<strong>Fingerprint:</strong> how much the sound rises in each of 8 bands from about 60 Hz to 7 kHz, every 10 ms (<code>FP_BANDS</code> in <dsp>dsp.rs</dsp>).",
+          "placement": "<strong>Placement:</strong> one tracker places every play (<tracker>tracker.rs</tracker>, after Arzt and Widmer's \"any-time\" music tracker). Each check matches the last few seconds of music, at most 8 s, against the fingerprint, to within a 10 ms frame, and keeps the best few places as weighted candidates, so a repetitive intro that matches a beat off doesn't fool it. The music app's position and listening's answers only nudge the candidates near them. The shown place moves to another candidate only when that one clearly leads over about 4 s of music.",
+          "measured": "<strong>Measured:</strong> replaying 153 real plays with the music app's position wrong (0.73 s or 1.7 s off, or a skip landing 3.5 s away), the shown place was within 0.1 s of the music about 91% of the time. The rules before managed 75%, 0%, and 0%.",
+          "listening": "<strong>Listening mode</strong> (always on, <listen>listen.rs</listen>, <recognize>recognize.rs</recognize>): after 3 s of sound it asks, in order, OnKey's own catalogue of learned songs (ShazamKit, on the Mac, exact to about 10 ms), the fingerprints, and then Shazam's catalogue. It checks again every 3 s for learned songs and about every 12 s for songs only Shazam knows. Shazam gets a signature of at most 5 s of the music app's sound, never the mic. A new Shazam answer needs a second one that agrees. A pause is 0.15 s of digital silence.",
+          "shazamTest": "First test of Shazam's catalogue: it named 25 of 30 test songs from their first 5 s, in a median 0.24 s."
+        }
+      },
+      "you": {
+        "title": "5. Hearing you",
+        "steps": {
+          "speakers": "On laptop speakers, your mic hears <strong>you and the song</strong>, singer included. Left alone, the singer would score points for you.",
+          "copy": "But OnKey has its own copy of the song <wave></wave>, on the same clock as the mic.",
+          "learns": "It <strong>learns how that sound reaches the mic</strong>, with the delay, the room's echo, and your speakers' tone. Video calls do the same.",
+          "subtracts": "Then it <strong>subtracts</strong> <echo></echo> its prediction of the song, and what's left is <strong>your voice</strong>.",
+          "headphones": "With <strong>headphones</strong>, the mic doesn't hear the song, so there's nothing to take away. It's still the most reliable setup."
+        },
+        "hood": {
+          "livePitch": "<strong>Live pitch:</strong> CREPE \"tiny\", on your echo-cancelled mic, every 10 ms, run on Core ML's CPU kernels: the pitch dot is 2 to 4 ms behind your voice, and singing a learned song costs OnKey 15 to 19% of one CPU core on my Mac (<pitch>pitch.rs</pitch>).",
+          "canceller": "<strong>Echo canceller:</strong> a partitioned frequency-domain adaptive filter: 16 partitions of 256 samples at 16 kHz, so it models 256 ms of echo (<bleed>bleed.rs</bleed>). Some outputs put the echo later than that, so every 2 s the echo's delay is measured (GCC-PHAT, up to 800 ms) and the song is fed to the filter that late. It only adapts while the song is clearly reaching the mic, and if its output comes out louder than the mic, the mic is passed through unchanged.",
+          "measured": "<strong>Measured:</strong> built-in MacBook speakers (echo about 24 ms late): 20 dB or more removed. External speakers with the echo about 290 ms late: 8 to 14 dB, up from 1 to 2 dB before the delay was measured.",
+          "limit": "<strong>Limit:</strong> 8 to 14 dB still leaves some of a loud song in the mic, and that can be mistaken for singing. Headphones are more reliable."
+        }
+      },
+      "scoring": {
+        "title": "6. Scoring",
+        "steps": {
+          "compare": "Every 10 ms that you and the singer both sing, your pitch is compared with the singer's line and the note bar, <strong>whichever you're closer to</strong>.",
+          "credit": "Within <strong>50 cents</strong> (half a semitone) earns full credit. Credit then fades to nothing at 150 cents.",
+          "octaves": "<strong>Octaves are forgiven</strong>, so you can sing in your own range.",
+          "slack": "Each half-second may shift up to <strong>80 ms</strong> to line up with the singer, so being a little early or late doesn't cost you.",
+          "hit": "Each note is <strong>hit</strong> if you hold it within a semitone for half its length. Its first 80 ms don't count: singers scoop up into notes.",
+          "score": "Your score <score></score> is your <strong>accuracy</strong>, scaled by <strong>how much of the singer's part you sang</strong>, so one good line won't get a good score."
+        },
+        "lenient": "By default the scoring is lenient on purpose, set for beginners like me. Good singers can pick a stricter level, Steady or Pro, in Settings (vibrato isn’t marked down at either).",
+        "explained": "The numbers in your report are explained in <link>Scoring explained</link>.",
+        "hood": {
+          "credit": "<strong>Credit:</strong> <code>clamp((150 − |error|) / 100, 0, 1)</code>, with the error in cents folded into ±600 so octaves don't count (<code>credit</code>, <code>fold</code> in <dsp>dsp.rs</dsp>).",
+          "slack": "<strong>Timing slack:</strong> each 0.5 s window gets the one shift within ±80 ms (<code>TOL</code> = 8 frames) that lines you up best (<code>tolerant_error</code>).",
+          "delay": "<strong>Your delay:</strong> after the song, a search from 0.3 s early to 1.5 s late finds the lag that fits best (<analysis>analysis.rs</analysis>).",
+          "notesHit": "<strong>Notes hit:</strong> held within 100 cents for at least half the note, ignoring its first 80 ms. Notes under 0.15 s aren't counted.",
+          "score": "<strong>Score:</strong> <code>100 × accuracy × (0.3 × min(1, sung / 0.1) + 0.7 × min(1, sung / 0.4))</code>: full credit from 40% of the singer's part sung.",
+          "experts": "<strong>Checked against experts:</strong> on 20 rated recordings, notes hit agrees with expert rankings at 0.77 and the score at 0.61 (experts agree with each other at 0.88)."
+        }
+      },
+      "privacy": {
+        "title": "7. Privacy",
+        "steps": {
+          "kept": "On your Mac, OnKey keeps what it <strong>learned</strong> about each song, and for each take <strong>a recording of your mic</strong> <lock></lock> (about 0.5 MB a minute), your scores and the lyrics you sang, so you can play it back. Delete a take and it goes to the Trash.",
+          "never": "It <strong>never saves or sends the music's audio</strong>, or the separated vocal. (If the music was on speakers, your mic recording will have some of it.)",
+          "lookups": "To find lyrics it sends the song's <strong>artist, title, album and length</strong> to LRCLIB, a free, community-run lyrics database (unless Show lyrics is off). For covers, it asks Apple's iTunes Search by artist and title.",
+          "shazam": "To name a song it hasn't learned, <strong>listening mode</strong> sends Shazam a <strong>signature</strong> of up to 5 seconds of the music app's sound (not the audio, and never your mic). Songs you've sung before are recognised on your Mac, so nothing goes to Shazam for them. Shazam is only asked when Spotify or Apple Music isn't saying what's playing, and you can turn it off in Settings."
+        },
+        "hood": {
+          "stored": "Stored in <code>{dataDir}</code>: <code>songs/</code> (pitch line, bars, fingerprint, lyric timings and a Shazam signature, saved for every learned song in either mode), <code>takes/</code> (<code>mic.m4a</code>: your microphone, AAC mono at about 64 kbps, about 0.5 MB a minute, all kept up to 2 GB in total, plus scores and the report with the lyric lines) and <code>records/</code> (logs and a summary of each play, numbers only, kept 30 days, at most 200 MB). Deleting a song or take moves it to the Trash.",
+          "network": "Network: Shazam (listening mode, can be turned off) for songs not yet learned, LRCLIB lyric lookups (unless Show lyrics is off), iTunes Search for covers, iTunes Lookup for a recognised song's length, the cover images (from Apple, or YouTube's thumbnail), and a daily check of GitHub Releases for updates. No account, no analytics, and no server of mine.",
+          "more": "More in <link>Privacy & legal</link>."
+        }
+      }
+    },
+    "scoring": {
+      "title": "Scoring explained",
+      "lede": "What each number means, how it's worked out, and where it falls short.",
+      "rules": {
+        "title": "The rules",
+        "every": "<strong>Every 10 ms counts.</strong> Whenever you and the singer are both singing, your pitch is compared with the singer's pitch line and the note bar, whichever you're closer to.",
+        "credit": "<strong>Pitch credit.</strong> Within 50 cents (half a semitone) gets full credit. It then falls in a straight line to nothing at 150 cents.",
+        "octaves": "<strong>Octaves are forgiven.</strong> An octave above or below the singer counts as on the note, so you can sing in your own range.",
+        "slack": "<strong>Timing slack.</strong> Each half-second can shift up to 80 ms to line up with the singer, so being a touch early or late doesn't cost you anything.",
+        "delay": "<strong>Your delay is found for you.</strong> After the song, OnKey tries delays from 0.3 s early to 1.5 s late and uses the one that lines you up best (you hear the song a little late).",
+        "relaxed": "These are the rules at <strong>Relaxed</strong>, the default level. They're forgiving on purpose, for beginners (I'm one) and children, so if you sing well you'll score high."
+      },
+      "levels": {
+        "title": "Levels",
+        "intro": "If Relaxed is too kind, pick a stricter level in Settings → Scoring. It applies from your next take, and each take keeps the level it was scored at: takes not at Relaxed show a small tag, and a song's best score only compares takes at the same level.",
+        "level": "Level",
+        "fullWithin": "Full credit within",
+        "noneFrom": "No credit from",
+        "slack": "Timing slack",
+        "relaxed": "<strong>Relaxed</strong> (default)",
+        "steady": "<strong>Steady</strong>",
+        "pro": "<strong>Pro</strong>",
+        "cents": "{n} cents",
+        "ms": "{n} ms",
+        "vibrato": "<strong>Vibrato isn't penalised.</strong> At Steady and Pro your pitch is judged by the middle of its wobble, averaged over 0.17 s (about one cycle of a typical vibrato, which swings 5 to 7 times a second). A steady vibrato around the right note scores close to full; a note held sharp or flat is still sharp or flat. At Relaxed your exact pitch is used, as it always was, and a wide vibrato (±80 cents) loses about a tenth of its credit. Octaves are forgiven at every level."
+      },
+      "report": {
+        "title": "The numbers in your report",
+        "number": "Number",
+        "meaning": "What it means",
+        "score": "<strong>Score</strong> (0–100)",
+        "scoreMeaning": "Your average pitch credit, scaled by how much of the singer's part you sang (see below).",
+        "accuracy": "<strong>Pitch accuracy</strong>",
+        "accuracyMeaning": "Your average pitch credit while you were singing.",
+        "notesHit": "<strong>Notes hit</strong>",
+        "notesHitMeaning": "Notes you held within a semitone for at least half their length, with the same 80 ms slack. Each note's first 80 ms is ignored, as singers scoop up into notes, and notes under 0.15 s aren't counted.",
+        "sangAlong": "<strong>Sang along</strong>",
+        "sangAlongMeaning": "The share of the singer's part where you were singing too.",
+        "tendency": "<strong>Tendency</strong>",
+        "tendencyMeaning": "Whether you tend to sit sharp or flat, in cents (the median of your errors).",
+        "latency": "<strong>Latency</strong>",
+        "latencyMeaning": "The delay OnKey found and allowed for.",
+        "sangTitle": "How \"sang along\" affects the score",
+        "sangBody": "Score = 100 × pitch accuracy × a factor for how much you sang. Singing a tenth of the singer's part earns 30% of that factor, and the rest builds up until you've sung 40% of it (some of the vocal is backing vocals or ad-libs nobody sings). So one good line won't get a good score, and someone who just listens scores close to nothing. The live score uses the same formula."
+      },
+      "checks": {
+        "title": "How I check the score is right",
+        "intro": "Every change to OnKey is measured before it's kept. Note bars are checked against hand-marked notes, lyric timing against hand-timed lyrics, and the score against simulated singers (perfect, wobbly, sharp, and silent with the song leaking into the mic) and against the original singers scored as if they were you.",
+        "check": "Check",
+        "result": "Result",
+        "covered": "Hand-marked notes that a note bar covers",
+        "rightNote": "…whose bar is on the right note",
+        "starts": "…whose bar starts within 0.1 s",
+        "noNote": "Bars with no sung note under them",
+        "lyricLines": "Lyric lines placed within 0.3 s",
+        "expertsTitle": "Does the score agree with experts?",
+        "expertsIntro": "I scored 20 recordings of people singing, from poor to professional, that music experts had already rated (the PESnQ research set), to see if OnKey ranks them in the same order. On a scale where 1 is perfect agreement:",
+        "measure": "Measure",
+        "agreement": "Agreement with experts",
+        "expertsEachOther": "Experts with each other (the realistic ceiling)",
+        "notesHit": "OnKey's notes hit",
+        "score": "OnKey's score",
+        "expertsOutro": "Notes hit already follows the experts well, and the score could lean on it more. It's only 20 recordings, sung without backing tracks, so take it as a good sign more than proof."
+      },
+      "limits": {
+        "title": "Limits",
+        "rap": "<strong>Rapped or spoken songs:</strong> pitch scoring barely applies.",
+        "harmonies": "<strong>Harmonies and choirs:</strong> it isn't always clear which voice is the tune, so some bars may follow a harmony.",
+        "speakers": "<strong>Singing without headphones:</strong> echo cancelling removes 20 dB or more of the song on a MacBook's speakers, and 8 to 14 dB on external speakers. What's left of a loud song can be mistaken for singing, so headphones are more reliable.",
+        "firstPlay": "<strong>The first play</strong> has no notes. They appear from the second play."
+      }
+    },
+    "privacy": {
+      "title": "Privacy & legal",
+      "translationNote": "This is a translation. If it differs from <link>the English version</link>, the English version applies.",
+      "lede": "OnKey runs on your Mac and never saves the music it listens to. Your recordings and learned songs stay on your Mac. This page lists everything it keeps and everything it sends.",
+      "keeps": {
+        "title": "What OnKey keeps on your Mac",
+        "intro": "Everything is in <code>{dataDir}</code>.",
+        "songs": "<strong>Learned songs</strong> (<code>songs/</code>): the singer's pitch line and note bars, a rhythm fingerprint and a Shazam signature of the music (to recognise the song and find your place), when each lyric line starts, and when each word was heard sung (times only, not the words).",
+        "lyrics": "<strong>Lyrics</strong> (<code>lrclib/</code>): LRCLIB's answers, kept up to 30 days (a day if there were none). A learned song keeps the lyrics its timings were made for, so the same words show every play. Lyrics are never uploaded. With Settings → “Show lyrics” off, kept lyrics are hidden (not deleted) and none are fetched.",
+        "takes": "<strong>Takes</strong> (<code>takes/</code>): <strong>a recording of your microphone</strong> (<code>mic.m4a</code>, about 0.5 MB a minute) so you can play it back, your scores, and the report, which includes the lyrics and their times. A take is only saved if you sang along with at least 10% of the singer's part. If the music was on speakers, some of it is in the recording too. Recordings are kept up to 2 GB in total. Past that the oldest go first, but never a favourite song's or a song's best take.",
+        "records": "<strong>Records</strong> (<code>records/</code>), for diagnosing problems: a log file a day and a summary of each play (timings, CPU, memory, the build and the Mac). These are numbers and ids, with no audio or lyrics, though the log names the songs you played. Kept 30 days, at most 200 MB. They only leave your Mac if you attach a report to an issue yourself.",
+        "settings": "Your settings, any artist and title you typed for a YouTube video, the starter songs' covers, and a cache of the compiled models.",
+        "remove": "Forget a song in Library or delete a take in History and its files go to the Trash. To remove everything, quit OnKey and delete the folder above."
+      },
+      "never": {
+        "title": "What OnKey never keeps",
+        "body": "The music's audio, or the singer's voice separated from it. It's analysed in memory as it plays and never saved, uploaded, shared, or exported. (Your mic recording can contain it if you sang with the music on speakers.)"
+      },
+      "leaves": {
+        "title": "What leaves your Mac",
+        "sentTo": "Sent to",
+        "what": "What, and when",
+        "shazam": "<strong>Shazam</strong> (Apple, via ShazamKit)",
+        "shazamWhat": "A signature of up to 5 seconds of the <strong>music app's</strong> sound (never your microphone), not the audio itself. It's only sent to name a song OnKey hasn't learned when no music app says what's playing: YouTube, other apps, or Listen only. Spotify and Apple Music name their own songs, and songs you've sung before are recognised on your Mac with nothing sent. Settings → “Use Shazam to name new songs” turns it off, and then only songs already learned are recognised.",
+        "lrclibWhat": "The song's artist, title, album and length when a song starts, to fetch synced lyrics, then a search by name if that finds nothing. Answers are kept on your Mac for up to 30 days (a day if there were none), so a song played again isn't asked about again. LRCLIB is a free, community-run lyrics database. Nothing is sent with “Show lyrics” off.",
+        "itunes": "<strong>iTunes Search and Lookup</strong> (Apple)",
+        "itunesWhat": "The artist and title, to find an album cover (which links to its Apple Music page), also for older songs learned from Spotify. And the Apple Music id Shazam returned, for the song's length and album. The “Try these” starter covers are looked up once each, spaced out, and kept, so later visits send nothing.",
+        "covers": "<strong>Cover images</strong>",
+        "coversWhat": "Ordinary image requests to Spotify's, Apple's or YouTube's image servers when a cover is shown.",
+        "githubWhat": "A check for a newer version of OnKey a minute after launch and then once a day, and the download if there is one. With <strong>Check for updates automatically</strong> off in Settings, it only checks when you press <strong>Check now</strong>.",
+        "nothingElse": "Nothing else goes out: there's no account, no analytics, no crash reporting, and no server of mine. Your recordings are never uploaded. “Report a problem” shows you what's in its zip of numbers and logs, saves it on your Mac, and sends nothing. You choose whether to attach it to a GitHub issue. The models come inside the app, so it never downloads them.",
+        "website": "This website (not the app) counts visits with Plausible. It uses no cookies and nothing that identifies you, and only keeps totals, such as how many people visited, where from, and how many clicked Download.",
+        "flowMyna": "Anonymous visit paths also go to Flow Myna, my own analytics tool: which parts of the site a visit read, in order, and the rough location the connection came from (such as the country). No cookies, and your IP address isn't kept.",
+        "stars": "The star count on the GitHub buttons comes straight from GitHub, so your browser asks GitHub for it."
+      },
+      "streaming": {
+        "title": "Streaming services",
+        "noMusic": "OnKey doesn't provide, stream, or download music. Your own music app plays it, and OnKey listens through macOS's audio-capture permission. It doesn't use any streaming service's SDK or developer API, and doesn't touch any app's files, memory, or encryption.",
+        "control": "By default it follows Spotify and Apple Music through macOS's Automation permission (asked in setup): it reads what's playing and where, and plays, pauses, seeks and starts songs. If you turn on “YouTube in your browser” in Settings (it's off at first), OnKey also reads and controls the YouTube tab in Chrome, Brave, Edge or Safari. Choose “Listen only” in setup, or turn them off under “Let OnKey control” in Settings, and OnKey never sends those apps anything.",
+        "terms": "OnKey never saves or exports the music it hears. Your music service's own terms still apply to how you use it."
+      },
+      "rights": {
+        "title": "Rights holders",
+        "body": "If you represent a rights holder or a service and have a concern about OnKey, email <email>{address}</email>. I read every message and will reply quickly. Where a concern is valid, I'll change or remove the feature involved. See also <legal>LEGAL.md</legal>.",
+        "noAddress": "(address to come)"
+      },
+      "trademarks": {
+        "title": "Trademarks",
+        "body": "OnKey isn't affiliated with or endorsed by Spotify, Apple or Google. Their names are trademarks of their owners and are used only to say which apps OnKey works with."
+      },
+      "licence": {
+        "title": "Licence",
+        "body": "OnKey is free and open source under the MIT licence."
+      }
+    },
+    "yourVoice": {
+      "title": "Singing comfortably",
+      "lede": "OnKey makes it easy to sing song after song, so your voice needs a little looking after.",
+      "volume": {
+        "title": "Sing at a comfortable volume",
+        "body": "OnKey only scores your pitch, so there's no need to sing over the music. Singing softly scores the same. Headphones help, as you don't have to compete with the speakers to hear yourself."
+      },
+      "octave": {
+        "title": "Drop an octave when a note is out of reach",
+        "body": "If a song sits too high or low for you, sing it an octave lower or higher. OnKey counts the right note in any octave, so you lose nothing. Straining at the edge of your range is the quickest way to tire your voice."
+      },
+      "warmUp": {
+        "title": "Warm up and take breaks",
+        "easy": "Start with a few easy songs, or hum gently up and down your range for a minute or two.",
+        "water": "Keep water nearby.",
+        "rest": "After about 35 minutes of singing, OnKey reminds you to rest (you can turn this off in <strong>Settings → Your voice</strong>).",
+        "gradually": "Build up gradually. A few hours on your first day is a lot more than most voices are used to."
+      },
+      "pain": {
+        "title": "Stop if it hurts",
+        "body": "Pain, a scratchy throat, or a voice that's still hoarse the next day mean it's time to rest. If it lasts more than a couple of weeks, see a doctor or a voice specialist."
+      },
+      "technique": "For technique (breath, registers, singing without strain), see <link>Beyond pitch</link>.",
+      "disclaimer": "This page is general advice about singing, not medical advice."
+    },
+    "beyondPitch": {
+      "title": "Beyond pitch",
+      "lede": "OnKey shows whether you're on the note. Singing well takes more than that, and the rest is best learned from a teacher.",
+      "hear": {
+        "title": "What OnKey can and can't hear",
+        "body": "OnKey tracks your pitch against the singer's, line by line. It's a quick way to hear, and see, where you drift. It can't tell how you made the sound: whether you're breathing well, straining, or singing with feeling. A high score means you hit the notes, not that you sang the song well."
+      },
+      "learn": {
+        "title": "What else to learn",
+        "breath": "<strong>Breath support:</strong> steady air behind the sound, so long lines don't run out or wobble.",
+        "tension": "<strong>Less tension:</strong> a free throat, jaw and tongue. Reaching for high notes with strain is the usual way voices get tired or hurt.",
+        "registers": "<strong>Registers:</strong> chest voice, head voice and the mix between them, so you can move through your range without a break.",
+        "vowels": "<strong>Vowels:</strong> shaping them so notes ring and high ones get easier.",
+        "phrasing": "<strong>Phrasing and rhythm:</strong> where to breathe, which words to lean on, and landing with the beat."
+      },
+      "teachers": {
+        "title": "Free teachers to start with",
+        "callaway": "<link>Dan Callaway</link> teaches musical theatre voice at Boston Conservatory at Berklee. Clear lessons on technique, from breath to belting.",
+        "rolka": "<link>Jeff Rolka</link>: warm-ups, singing in tune, high notes, runs and riffs.",
+        "suggested": "Both were suggested by singers in the discussion when OnKey launched. Other good teachers are out there, and a suggestion is welcome on <link>GitHub</link>."
+      },
+      "lessons": {
+        "title": "Lessons with a teacher",
+        "body": "If you can, have a few lessons. A teacher hears in seconds what you'd take months to notice yourself, and sets you exercises for your voice. OnKey can then be how you practise in between: singing along to the songs you like, and seeing your pitch get steadier."
+      },
+      "voice": "For looking after your voice while you practise, see <link>Singing comfortably</link>."
+    },
+    "credits": {
+      "title": "Credits",
+      "lede": "OnKey is built on these open projects and services.",
+      "component": "Component",
+      "usedFor": "Used for",
+      "licence": "Licence",
+      "uses": {
+        "crepe": "Pitch: full model when learning, tiny model live",
+        "game": "Each syllable's note",
+        "wav2vec": "When each word is sung",
+        "uvr": "Separating the lead vocal",
+        "cmudict": "Syllable counts",
+        "lrclib": "Synced lyrics, fetched at runtime",
+        "shazamkit": "Naming new songs",
+        "itunes": "Album covers and song lengths",
+        "hyphenation": "Splitting words into syllables",
+        "onnx": "Running the models",
+        "tauri": "The app"
+      },
+      "licences": {
+        "service": "Service",
+        "macos": "Part of macOS"
+      },
+      "notices": "OnKey itself is free and open source under the MIT licence. Full notices are in <link>THIRD_PARTY_NOTICES.md</link>."
+    }
+  }
+}

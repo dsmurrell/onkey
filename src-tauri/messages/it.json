@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "Informazioni su OnKey",
+      "services": "Servizi",
+      "pauseListening": "Metti in pausa l’ascolto",
+      "resumeListening": "Riprendi l’ascolto",
+      "hide": "Nascondi OnKey",
+      "hideOthers": "Nascondi altre",
+      "quit": "Esci da OnKey"
+    },
+    "file": {
+      "title": "File",
+      "closeWindow": "Chiudi finestra"
+    },
+    "edit": {
+      "title": "Modifica",
+      "undo": "Annulla",
+      "redo": "Ripeti",
+      "cut": "Taglia",
+      "copy": "Copia",
+      "paste": "Incolla",
+      "selectAll": "Seleziona tutto"
+    },
+    "view": {
+      "title": "Vista",
+      "fullScreen": "Attiva/disattiva schermo intero"
+    },
+    "window": {
+      "title": "Finestra",
+      "minimize": "Contrai",
+      "zoom": "Zoom",
+      "closeWindow": "Chiudi finestra"
+    },
+    "help": {
+      "title": "Aiuto",
+      "reportProblem": "Segnala un problema…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "I dati di OnKey per una segnalazione: log e numeri, niente testi né audio."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "Canta intonato",
+      "free": "Gratuito per Mac"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey ascolta il tuo canto per mostrarti quanto sei intonato. Le registrazioni restano sul tuo Mac.",
+    "NSAudioCaptureUsageDescription": "OnKey ascolta la musica che suona sul tuo Mac per imparare la melodia della voce. Non salva né invia mai la musica. In modalità ascolto, una breve impronta (non l’audio) va a Shazam di Apple per riconoscere il brano.",
+    "NSAppleEventsUsageDescription": "OnKey chiede a Spotify, Musica o al browser (per YouTube) cosa sta suonando e controlla la riproduzione quando premi play, salti o ricominci."
+  }
+}

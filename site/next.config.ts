@@ -9,7 +9,11 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   images: { unoptimized: true },
   basePath,
+  // the other languages' pages are app/[locale]/, files named *.i18n.tsx (one page per catalog in messages/)
+  pageExtensions: ["tsx", "ts", "i18n.tsx"],
   env: { NEXT_PUBLIC_BASE_PATH: basePath },
+  // app/global-not-found.tsx is the 404 page, as each language has its own root layout
+  experimental: { globalNotFound: true },
 };
 
 export default nextConfig;

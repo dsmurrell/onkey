@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "OnKey Hakkında",
+      "services": "Servisler",
+      "pauseListening": "Dinlemeyi Duraklat",
+      "resumeListening": "Dinlemeye Devam Et",
+      "hide": "OnKey’i Gizle",
+      "hideOthers": "Diğerlerini Gizle",
+      "quit": "OnKey’den Çık"
+    },
+    "file": {
+      "title": "Dosya",
+      "closeWindow": "Pencereyi Kapat"
+    },
+    "edit": {
+      "title": "Düzen",
+      "undo": "Geri Al",
+      "redo": "Yinele",
+      "cut": "Kes",
+      "copy": "Kopyala",
+      "paste": "Yapıştır",
+      "selectAll": "Tümünü Seç"
+    },
+    "view": {
+      "title": "Görüntü",
+      "fullScreen": "Tam Ekrana Geç"
+    },
+    "window": {
+      "title": "Pencere",
+      "minimize": "Simge Durumuna Küçült",
+      "zoom": "Büyüt/Küçült",
+      "closeWindow": "Pencereyi Kapat"
+    },
+    "help": {
+      "title": "Yardım",
+      "reportProblem": "Sorun Bildir…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "OnKey’in hata raporu için kayıtları: günlükler ve sayılar; şarkı sözü veya ses yok."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "Doğru tonda söyle",
+      "free": "Mac için ücretsiz"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey, ne kadar doğru tonda olduğunuzu göstermek için şarkı söylemenizi dinler. Kayıtlarınız Mac’inizde kalır.",
+    "NSAudioCaptureUsageDescription": "OnKey, şarkıcının melodisini öğrenmek için Mac’inizde çalan müziği dinler. Müziği hiçbir zaman kaydetmez veya göndermez. Dinleme modunda şarkıyı adlandırmak için müziğin kısa bir parmak izi (ses değil) Apple’ın Shazam servisine gider.",
+    "NSAppleEventsUsageDescription": "OnKey; Spotify’a, Müzik’e veya tarayıcınıza (YouTube için) ne çaldığını sorar ve oynat, atla veya baştan başlat dediğinizde çalmayı yönetir."
+  }
+}

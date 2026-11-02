@@ -149,13 +149,77 @@ pub fn entries(track: &Track) -> Result<Vec<Vec<(f64, String)>>, Unanswered> {
         .filter_map(|h| h["syncedLyrics"].as_str().map(parse)).filter(|l| !l.is_empty()).collect())
 }
 
+/// What "Look again" (the window's button under "No lyrics for this song yet") got.
+#[derive(Debug, Clone, PartialEq)]
+pub enum LookAgain {
+    Found(Vec<(f64, String)>),
+    /// LRCLIB answered, and still has none that fit
+    None,
+    /// LRCLIB couldn't be asked (busy, unreachable)
+    Unreachable,
+}
+
+/// Ask LRCLIB about a song again now, forgetting the "none" answers kept for it (`forget_none`): lyrics someone
+/// has added to LRCLIB since show up at once instead of in a day. A kept answer with lyrics is kept (and given
+/// back without asking). With "Show lyrics" off: None, and LRCLIB isn't asked.
+pub fn look_again(track: &Track) -> LookAgain {
+    if !crate::settings::show_lyrics() {
+        return LookAgain::None;
+    }
+    forget_none(track);
+    match fetch_answered(track) {
+        Ok(l) if !l.is_empty() => LookAgain::Found(l),
+        Ok(_) => LookAgain::None,
+        Err(Unanswered) => LookAgain::Unreachable,
+    }
+}
+
+/// Forget the answers kept for a song that found nothing (its own, and those of the searches made for it); an
+/// answer with synced lyrics stays. How many were forgotten.
+pub fn forget_none(track: &Track) -> usize {
+    let mut n = 0;
+    for key in none_keys(track) {
+        if let Some(e) = cache_get(&key).filter(|e| !found(&e.body)) {
+            if let Some(p) = cache_path(&e.key) {
+                let _ = std::fs::remove_file(p);
+                n += 1;
+            }
+        }
+    }
+    n
+}
+
+/// Where a song's answers are kept: under the track itself, and under each request made for it (`request` keeps
+/// the answer to each URL).
+fn none_keys(track: &Track) -> Vec<String> {
+    let title = strip_version(&track.name);
+    std::iter::once(track_key(track))
+        .chain(std::iter::once(get_url(track, &title)).chain(search_urls(track, &title)).map(|u| format!("get {u}")))
+        .collect()
+}
+
+fn get_url(track: &Track, title: &str) -> String {
+    format!("https://lrclib.net/api/get?artist_name={}&track_name={}&album_name={}&duration={}",
+            urlencoding::encode(&track.artist), urlencoding::encode(title), urlencoding::encode(&track.album),
+            track.duration.round() as i64)
+}
+
+/// The searches made for a song, narrow to wide (see `search`).
+fn search_urls(track: &Track, title: &str) -> Vec<String> {
+    let mut urls = vec![
+        format!("https://lrclib.net/api/search?artist_name={}&track_name={}", urlencoding::encode(&track.artist), urlencoding::encode(title)),
+        format!("https://lrclib.net/api/search?q={}", urlencoding::encode(&format!("{} {title}", track.artist))),
+        format!("https://lrclib.net/api/search?track_name={}", urlencoding::encode(title)),
+    ];
+    if !track.album.trim().is_empty() {
+        urls.push(format!("https://lrclib.net/api/search?q={}", urlencoding::encode(&format!("{title} {}", track.album))));
+    }
+    urls
+}
+
 fn fetch_from_lrclib(track: &Track) -> Result<Option<String>, Unanswered> {
     let title = strip_version(&track.name);
-    let get = format!(
-        "https://lrclib.net/api/get?artist_name={}&track_name={}&album_name={}&duration={}",
-        urlencoding::encode(&track.artist), urlencoding::encode(&title), urlencoding::encode(&track.album),
-        track.duration.round() as i64);
-    let synced = request(&get)?.and_then(|v| v["syncedLyrics"].as_str().map(String::from));
+    let synced = request(&get_url(track, &title))?.and_then(|v| v["syncedLyrics"].as_str().map(String::from));
     if synced.is_some() {
         return Ok(synced);
     }
@@ -172,14 +236,7 @@ fn fetch_from_lrclib(track: &Track) -> Result<Option<String>, Unanswered> {
 /// singing anyway.
 fn search(track: &Track, title: &str, max_off: f64) -> Result<Option<String>, Unanswered> {
     let mut hits = Vec::new();
-    let mut urls = vec![
-        format!("https://lrclib.net/api/search?artist_name={}&track_name={}", urlencoding::encode(&track.artist), urlencoding::encode(title)),
-        format!("https://lrclib.net/api/search?q={}", urlencoding::encode(&format!("{} {title}", track.artist))),
-        format!("https://lrclib.net/api/search?track_name={}", urlencoding::encode(title)),
-    ];
-    if !track.album.trim().is_empty() {
-        urls.push(format!("https://lrclib.net/api/search?q={}", urlencoding::encode(&format!("{title} {}", track.album))));
-    }
+    let urls = search_urls(track, title);
     let album = (!track.id.starts_with(crate::youtube::ID_PREFIX)).then_some(track.album.as_str());
     let mut unanswered = false;
     for url in urls {
@@ -261,6 +318,27 @@ pub fn best_match(hits: &[serde_json::Value], artist: &str, title: &str, duratio
     }).max_by(|a, b| a.1.total_cmp(&b.1)).map(|(i, _)| i)
 }
 
+/// When LRCLIB last failed (a server error or no answer, while online) and last answered: unix seconds.
+static LAST_FAIL: Mutex<u64> = Mutex::new(0);
+static LAST_ANSWER: Mutex<u64> = Mutex::new(0);
+
+/// How long after its last failure LRCLIB still counts as down, with no answer since (a song being learned asks
+/// again at least every minute, so it stays down while one is).
+const DOWN_FOR_S: u64 = 180;
+
+fn noted(answered: bool) {
+    *(if answered { &LAST_ANSWER } else { &LAST_FAIL }).lock().unwrap() = now_s();
+}
+
+/// LRCLIB isn't working right now (the window says so: songs learned meanwhile have no words yet).
+pub fn service_down() -> bool {
+    down(*LAST_FAIL.lock().unwrap(), *LAST_ANSWER.lock().unwrap(), now_s())
+}
+
+fn down(last_fail: u64, last_answer: u64, now: u64) -> bool {
+    last_fail > 0 && last_fail >= last_answer && now.saturating_sub(last_fail) < DOWN_FOR_S
+}
+
 /// LRCLIB's answer to `url` (Ok(None): not found), from what's kept if it's fresh. Asked one at a time app-wide,
 /// at most every 0.3 s, never while LRCLIB has asked to wait (then Err after waiting up to 10 s); a request that
 /// doesn't get through is tried once more, as a song learned without lyrics never gets syllable bars.
@@ -290,6 +368,7 @@ fn request(url: &str) -> Result<Option<serde_json::Value>, Unanswered> {
         match ureq::get(url).set("User-Agent", &user_agent()).timeout(Duration::from_secs(10)).call() {
             Ok(r) => {
                 gate.fails = 0;
+                noted(true);
                 let v: Option<serde_json::Value> = r.into_json().ok();
                 cache_put(&key, v.clone().unwrap_or(serde_json::Value::Null));
                 return Ok(v);
@@ -298,6 +377,7 @@ fn request(url: &str) -> Result<Option<serde_json::Value>, Unanswered> {
             // asking again won't change (it isn't "can't be asked now")
             Err(ureq::Error::Status(400 | 404, _)) => {
                 gate.fails = 0;
+                noted(true);
                 cache_put(&key, serde_json::Value::Null);
                 return Ok(None);
             }
@@ -306,10 +386,16 @@ fn request(url: &str) -> Result<Option<serde_json::Value>, Unanswered> {
                 let wait = back_off(r.header("Retry-After"), gate.fails, jitter());
                 gate.fails += 1;
                 gate.next = Some(Instant::now() + wait);
+                if code == 503 {
+                    noted(false);
+                }
                 crate::engine::log(&format!("lyrics: LRCLIB says {code}: asking again in {:.1} s", wait.as_secs_f64()));
             }
             Err(ureq::Error::Status(code, _)) => {
                 crate::engine::log(&format!("lyrics: LRCLIB answered {code}"));
+                if code >= 500 {
+                    noted(false);
+                }
                 return Err(Unanswered);
             }
             Err(e) if attempt == 0 => {
@@ -318,6 +404,7 @@ fn request(url: &str) -> Result<Option<serde_json::Value>, Unanswered> {
             }
             Err(e) => {
                 crate::engine::log(&format!("lyrics: LRCLIB didn't answer ({e})"));
+                noted(false);
                 return Err(Unanswered);
             }
         }
@@ -363,12 +450,16 @@ fn fresh(e: &Kept, now: u64) -> bool {
     if e.key.starts_with("learned ") {
         return true;                    // a learned song's lyrics: kept while it's in the library
     }
+    now.saturating_sub(e.at) < if found(&e.body) { KEEP_FOUND } else { KEEP_NONE }
+}
+
+/// Whether a kept answer has synced lyrics in it: LRC text, an entry with some, or a search with such an entry.
+fn found(body: &serde_json::Value) -> bool {
     let synced = |v: &serde_json::Value| v.is_string() || v["syncedLyrics"].is_string();
-    let found = match &e.body {
+    match body {
         serde_json::Value::Array(a) => a.iter().any(synced),
         v => synced(v),
-    };
-    now.saturating_sub(e.at) < if found { KEEP_FOUND } else { KEEP_NONE }
+    }
 }
 
 fn cache_path(key: &str) -> Option<PathBuf> {
@@ -415,6 +506,16 @@ fn strip_version(name: &str) -> String {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn lyrics_service_down_until_it_answers_or_a_while_passes() {
+        use super::{down, DOWN_FOR_S};
+        assert!(!down(0, 0, 1000), "never failed");
+        assert!(down(1000, 0, 1010), "failed, no answer since");
+        assert!(down(1000, 900, 1000 + DOWN_FOR_S - 1), "still down just inside the window");
+        assert!(!down(1000, 900, 1000 + DOWN_FOR_S), "no news for a while: not said any more");
+        assert!(!down(1000, 1005, 1010), "answered after the failure");
+    }
+
     use super::*;
     use serde_json::json;
 
@@ -468,10 +569,28 @@ mod tests {
         assert_eq!(kept_entries(&track), vec![vec![(12.5, "made-up words".to_string()), (15.0, "more of them".to_string())],
                                               vec![(13.0, "made-up words, live".to_string())]]);
         assert!(cache_get("another key").is_none());
+        // "Look again" forgets only the answers that found nothing: the track's own (not this one, which has
+        // lyrics), and each search's (a search with no synced hit goes; the one with a synced hit stays)
+        let found_search = "get https://lrclib.net/api/search?artist_name=Velvet%20Harbour&track_name=Paper%20Lanterns";
+        let none_get = format!("get {}", get_url(&track, "Paper Lanterns"));
+        let plain_search = "get https://lrclib.net/api/search?q=Velvet%20Harbour%20Paper%20Lanterns";
+        cache_put(&none_get, serde_json::Value::Null);
+        cache_put(plain_search, json!([{"trackName": "Paper Lanterns", "plainLyrics": "la"}]));
+        assert_eq!(forget_none(&track), 2);
+        assert!(cache_get(&key).is_some(), "the track's answer has lyrics: kept");
+        assert!(cache_get(found_search).is_some(), "a search that found some: kept");
+        assert!(cache_get(&none_get).is_none(), "the not-found answer: forgotten");
+        assert!(cache_get(plain_search).is_none(), "a search with plain lyrics only: forgotten");
+        assert_eq!(forget_none(&track), 0, "nothing left to forget");
+        let mut none_track = track.clone();
+        none_track.id = "isrc:TEST00000002".into();
+        cache_put(&track_key(&none_track), serde_json::Value::Null);
+        assert_eq!(forget_none(&none_track), 1, "a track's own not-found answer goes too");
         // "Show lyrics" off: none, and nothing asked of LRCLIB (a song with nothing kept is never looked up)
         crate::settings::set("show_lyrics", false);
         assert_eq!(fetch_answered(&track), Ok(Vec::new()));
         assert_eq!(entries(&track), Ok(Vec::new()));
+        assert_eq!(look_again(&none_track), LookAgain::None);
         assert_eq!(request("https://lrclib.net/api/get?track_name=Never%20Asked"), Ok(None));
         crate::settings::set_value("show_lyrics", serde_json::Value::Null);
         // a learned song's lyrics: kept with no expiry (however old), until it's forgotten
@@ -536,6 +655,30 @@ mod tests {
         // "- From ..." in the hit's title still matches
         let hits = [hit("Writers/Ada Wren", "Lantern Song - From \"The Show\"", 246.0)];
         assert_eq!(best_match(&hits, "Ada Wren", "Lantern Song", 247.0, 12.0, show), Some(0));
+    }
+
+    #[test]
+    fn look_again_covers_every_question_asked_for_a_song() {
+        let track = Track { id: "yt:abc".into(), name: "Night Drive (feat. Mira Sol)".into(), artist: "Juno Hale".into(),
+                            album: "Late".into(), duration: 200.4, art: None, link: None };
+        let keys = none_keys(&track);
+        // the track's own answer, LRCLIB's exact look-up, and the four searches (the album's included)
+        assert_eq!(keys.len(), 6);
+        assert_eq!(keys[0], track_key(&track));
+        assert_eq!(keys[1], "get https://lrclib.net/api/get?artist_name=Juno%20Hale&track_name=Night%20Drive&album_name=Late&duration=200");
+        assert!(keys[2..].iter().all(|k| k.starts_with("get https://lrclib.net/api/search?")));
+        assert!(keys.iter().any(|k| k.ends_with("q=Night%20Drive%20Late")));
+        // no album: three searches
+        let no_album = Track { album: String::new(), ..track };
+        assert_eq!(none_keys(&no_album).len(), 5);
+        // what counts as found: LRC text, an entry with synced lyrics, a search with one; not plain lyrics or nothing
+        assert!(found(&json!("[00:01.00] la")));
+        assert!(found(&json!({"syncedLyrics": "[00:01.00] la"})));
+        assert!(found(&json!([{"plainLyrics": "la"}, {"syncedLyrics": "[00:01.00] la"}])));
+        assert!(!found(&json!([{"plainLyrics": "la"}])));
+        assert!(!found(&json!({"plainLyrics": "la"})));
+        assert!(!found(&serde_json::Value::Null));
+        assert!(!found(&json!([])));
     }
 
     #[test]

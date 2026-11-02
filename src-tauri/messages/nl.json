@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "Over OnKey",
+      "services": "Voorzieningen",
+      "pauseListening": "Pauzeer luisteren",
+      "resumeListening": "Hervat luisteren",
+      "hide": "Verberg OnKey",
+      "hideOthers": "Verberg andere",
+      "quit": "Stop OnKey"
+    },
+    "file": {
+      "title": "Archief",
+      "closeWindow": "Sluit venster"
+    },
+    "edit": {
+      "title": "Wijzig",
+      "undo": "Herstel",
+      "redo": "Opnieuw",
+      "cut": "Knip",
+      "copy": "Kopieer",
+      "paste": "Plak",
+      "selectAll": "Selecteer alles"
+    },
+    "view": {
+      "title": "Weergave",
+      "fullScreen": "Schakel schermvullende weergave in"
+    },
+    "window": {
+      "title": "Venster",
+      "minimize": "Minimaliseer",
+      "zoom": "Vergroot/verklein",
+      "closeWindow": "Sluit venster"
+    },
+    "help": {
+      "title": "Help",
+      "reportProblem": "Meld een probleem…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "De gegevens van OnKey voor een bugrapport: logboeken en cijfers, geen songteksten of audio."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "Zing zuiver",
+      "free": "Gratis voor Mac"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey luistert naar je zang om te tonen hoe zuiver je zingt. Je opnamen blijven op je Mac.",
+    "NSAudioCaptureUsageDescription": "OnKey luistert naar de muziek die op je Mac speelt om de melodie van de zanger te leren. Het bewaart of verstuurt de muziek nooit. In luistermodus gaat een korte vingerafdruk ervan (niet de audio) naar Shazam van Apple om het nummer te herkennen.",
+    "NSAppleEventsUsageDescription": "OnKey vraagt Spotify, Muziek of je browser (voor YouTube) wat er speelt, en bedient het afspelen als je op afspelen, overslaan of opnieuw beginnen drukt."
+  }
+}

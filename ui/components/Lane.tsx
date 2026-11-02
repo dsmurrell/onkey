@@ -10,9 +10,11 @@
 import { useEffect, useRef } from "react";
 import { live } from "@/lib/session";
 import { frameDrawn, frameIdle } from "@/lib/perf";
+import { ACCENT, INK, NOTICE } from "@/lib/colors";
 import { BLACK_KEYS, centreAt, COLORS, credit, creditAt, fold, grade, LEVELS, NOTE_NAMES, noteName, smoothed } from "@/lib/music";
 import { drawRibbon, grain, paletteFor, ribbonLive } from "@/components/Ribbon";
 import { guide, pitchAlpha } from "@/lib/guideFade";
+import { getLocale, t, useT } from "@/lib/i18n";
 
 export const KEYS_W = 54;     // keyboard strip on the left
 export const NOW_AT = 0.3;    // the now line, as a fraction of the lane width (same on every play)
@@ -47,10 +49,12 @@ function judge(s: number, e: number, upTo: number): Judged {
 
 // per lyric line, once it has been sung and settled: how it went, graded as the report grades a line (credit
 // over the frames where the singer sings and you do, times how much of the line you sang, full from half)
-type LineVerdict = { word: string; at: number };
+/** A line's rank (its word: lane.verdict.<rank>), and when it appeared. */
+type Rank = "perfect" | "excellent" | "great" | "good" | "ok";
+type LineVerdict = { rank: Rank; at: number };
 let verdictsFor: unknown = null;
 let verdicts = new Map<number, LineVerdict | null>();
-const RANKS: [number, string][] = [[0.95, "Perfect"], [0.9, "Excellent"], [0.8, "Great"], [0.6, "Good"], [0.4, "OK"]];
+const RANKS: [number, Rank][] = [[0.95, "perfect"], [0.9, "excellent"], [0.8, "great"], [0.6, "good"], [0.4, "ok"]];
 function lineScore(f0: number, f1: number) {
   let ref = 0, both = 0, cr = 0;
   const level = live.scoring, win = LEVELS[level].centre;   // at Steady and Pro, your pitch's centre (vibrato evens out)
@@ -84,8 +88,8 @@ function lineVerdict(now: number, perf: number): LineVerdict | null {
     if (!verdicts.has(i)) {
       if (now > end + SETTLE + 150) { verdicts.set(i, null); continue; }   // joined later: no stale pop-ups
       const sc = lineScore(l0, Math.min(nx, end + 10));
-      const word = sc == null ? null : RANKS.find(([t]) => sc > t)?.[1] ?? null;
-      verdicts.set(i, word ? { word, at: live.frozenPerf != null ? perf - 400 : perf } : null);   // (a replay is a still: show it at full)
+      const rank = sc == null ? null : RANKS.find(([min]) => sc > min)?.[1] ?? null;
+      verdicts.set(i, rank ? { rank, at: live.frozenPerf != null ? perf - 400 : perf } : null);   // (a replay is a still: show it at full)
     }
     const v = verdicts.get(i);
     if (v && perf - v.at < 1600) show = v;
@@ -97,7 +101,7 @@ function lineVerdict(now: number, perf: number): LineVerdict | null {
  *  whole 1.6 s it shows, else null. */
 export function lineCheer(now: number, perf: number): number | null {
   const v = lineVerdict(now, perf);
-  return v && (v.word === "Excellent" || v.word === "Perfect") ? v.at : null;
+  return v && (v.rank === "excellent" || v.rank === "perfect") ? v.at : null;
 }
 
 /** The verdict on the bar that ended most recently, if within the last `within` frames (for the dancer). */
@@ -157,6 +161,7 @@ function pickRange(): [number, number] {
 }
 
 export default function Lane() {
+  useT();      // (re-rendered on a language change; the canvas draws with the module's `t`, and the signature has the language)
   const ref = useRef<HTMLCanvasElement>(null);
   const grainRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -197,7 +202,7 @@ export default function Lane() {
       if (fp.v.size > 6000) for (const k of fp.v.keys()) { if (k < newest - 3000) fp.v.delete(k); else break; }
     };
     // the "you" ball: where it is, where it's gliding from/to and since when, how loud and what colour
-    const ball = { y: 0, r: 3.5, a: 0, from: 0, to: 0, t0: 0, level: 8, col: "#e6e9f0", seen: -1e9, on: false, okAt: -1e9, fade: 1 };
+    const ball = { y: 0, r: 3.5, a: 0, from: 0, to: 0, t0: 0, level: 8, col: INK[100] as string, seen: -1e9, on: false, okAt: -1e9, fade: 1 };
     // first play: where the wrapped octave starts, set once per take from your first phrase
     const wrap = { song: null as unknown, lo: WRAP_DEFAULT, set: false, scanned: -1, sung: new Array(12).fill(0), n: 0 };
     const resize = () => {
@@ -222,7 +227,7 @@ export default function Lane() {
       const s = live.song, v = live.viz;
       return !s ? `-|${cv.width}x${cv.height}`
         : `${s.version}|${live.now(perf).toFixed(1)}|${live.usr.length}|${v.length ? v[v.length - 1].f : 0}|${live.showNotes()}|${live.blind}|${guide.level}|`
-          + `${s.cache ? 1 : 0}|${s.cacheBars.length}|${s.track.art}|${live.songOffset}|${cv.width}x${cv.height}|${motion.matches}|${live.lowPower}|${live.draw30}`;
+          + `${s.cache ? 1 : 0}|${s.cacheBars.length}|${s.track.art}|${live.songOffset}|${cv.width}x${cv.height}|${motion.matches}|${live.lowPower}|${live.draw30}|${getLocale()}`;
     };
     const tick = (perfNow: number) => {
       raf = 0;
@@ -326,7 +331,7 @@ export default function Lane() {
           g.restore();
         }
         g.fillStyle = "rgba(185,192,208,.55)"; g.font = `500 13px ${FONT}`; g.textAlign = "center";
-        const why = learning ? "" : live.blind ? "Blind take · notes hidden · press B to show them" : song.cache ? "Finding your place in the song…" : "";
+        const why = learning ? "" : live.blind ? t("lane.blind") : song.cache ? t("lane.findingPlace") : "";
         if (why) g.fillText(why, nowX + (W - nowX) / 2, top + 26);
         g.textAlign = "left";
       }
@@ -368,14 +373,14 @@ export default function Lane() {
         const nail = j ? j.cr / len : 0;
         // (a few soft rings, not a canvas shadow: a shadow blur is redrawn pixel by pixel every frame, the costliest
         // thing on the lane while a song plays)
-        if (active) halo(g, (gg, d) => pill(gg, x0 - d, yy - d, x1 - x0 + 2 * d, h + 2 * d, r + d), hit || hitting ? COLORS.good : "#9b8aff", 10 + 14 * Math.min(1, nail * 1.6));
+        if (active) halo(g, (gg, d) => pill(gg, x0 - d, yy - d, x1 - x0 + 2 * d, h + 2 * d, r + d), hit || hitting ? COLORS.good : ACCENT[400], 10 + 14 * Math.min(1, nail * 1.6));
         else if (past && hit && now - e < 50) halo(g, (gg, d) => pill(gg, x0 - d, yy - d, x1 - x0 + 2 * d, h + 2 * d, r + d), COLORS.good, 22 * nail * (1 - (now - e) / 50));
         if (hit) g.fillStyle = past ? "rgba(52,210,123,.6)" : COLORS.good;
         else if (missed) g.fillStyle = "rgba(240,82,82,.55)";
         else if (past) g.fillStyle = "#232a3a";
         else {
           const gr = g.createLinearGradient(0, yy, 0, yy + h);
-          gr.addColorStop(0, active ? "#c4b9ff" : "#8f80ff"); gr.addColorStop(1, active ? "#9b8aff" : "#6252e0");
+          gr.addColorStop(0, active ? "#c4b9ff" : "#8f80ff"); gr.addColorStop(1, active ? ACCENT[400] : ACCENT[600]);
           g.fillStyle = gr;
         }
         pill(g, x0, yy, x1 - x0, h, r); g.fill();
@@ -395,7 +400,7 @@ export default function Lane() {
       if (dim > 0.01) {
         // what's going on, so a dimmed lane doesn't look broken
         g.globalAlpha = dim; g.fillStyle = "rgba(185,192,208,.75)"; g.font = `500 13px ${FONT}`; g.textAlign = "center";
-        g.fillText("Lining up with the song…", nowX + (W - nowX) / 2, top + 26);
+        g.fillText(t("lane.liningUp"), nowX + (W - nowX) / 2, top + 26);
         g.textAlign = "left"; g.globalAlpha = 1;
       }
 
@@ -512,7 +517,7 @@ export default function Lane() {
             else if (pm > hi + 0.5) pm -= 12 * Math.ceil((pm - hi - 0.5) / 12);
             else pm += 12 * Math.ceil((lo - 0.5 - pm) / 12);
           }
-          col = "#e6e9f0";
+          col = INK[100];
         }
         prevF = f;
         drawn.push({ f, x: xOf(f), y: y(pm), col, a });
@@ -550,7 +555,7 @@ export default function Lane() {
       if (show && !inBar && !recent && nextBar && nextBar[0] - now > 300) {
         const secs = Math.ceil((nextBar![0] - now) / 100);
         g.fillStyle = "rgba(230,233,240,.9)"; g.font = `600 15px ${FONT}`; g.textAlign = "center"; g.textBaseline = "middle";
-        g.fillText(`Singing starts in ${secs}s`, nowX + (W - nowX) * 0.35, top + (bottom - top) * 0.5);
+        g.fillText(t("lane.singingStarts", { secs }), nowX + (W - nowX) * 0.35, top + (bottom - top) * 0.5);
         g.textAlign = "left";
       }
 
@@ -562,10 +567,11 @@ export default function Lane() {
         g.save();
         g.globalAlpha = Math.min(k, age > 1.1 ? Math.max(0, 1 - (age - 1.1) / 0.5) : 1);
         g.translate(L + (nowX - L) * 0.55, top + (bottom - top) * 0.2); g.scale(pop, pop);
-        const hue = /Perfect|Excellent/.test(verdict.word) ? "#fde68a" : /Great|Good/.test(verdict.word) ? COLORS.good : "#c9cfdd";
+        const hue = verdict.rank === "perfect" || verdict.rank === "excellent" ? NOTICE : verdict.rank === "great" || verdict.rank === "good" ? COLORS.good : "#c9cfdd";
+        const word = t(`lane.verdict.${verdict.rank}`);
         g.font = `800 ${Math.round(Math.max(18, Math.min(30, H * 0.07)))}px ${FONT}`; g.textAlign = "center"; g.textBaseline = "middle";
-        g.lineJoin = "round"; g.lineWidth = 5; g.strokeStyle = "rgba(0,0,0,.4)"; g.strokeText(verdict.word, 0, 1.5);
-        g.fillStyle = hue; g.fillText(verdict.word, 0, 0);
+        g.lineJoin = "round"; g.lineWidth = 5; g.strokeStyle = "rgba(0,0,0,.4)"; g.strokeText(word, 0, 1.5);
+        g.fillStyle = hue; g.fillText(word, 0, 0);
         g.restore();
       }
 
@@ -601,7 +607,7 @@ export default function Lane() {
         else if (across(ball.to, ty)) { ball.from = ball.to = ty; ball.t0 = perf; }       // over the wrap: no glide across the lane
         else if (Math.abs(ty - ball.to) > 0.5) { ball.from = ball.y; ball.to = ty; ball.t0 = perf; }
         if (live.level != null) ball.level = live.level;
-        ball.col = show ? COLORS[grade(errNow)] : "#e6e9f0";
+        ball.col = show ? COLORS[grade(errNow)] : INK[100];
         ball.fade = show ? pitchAlpha(fade, errNow) : 1;
         ball.seen = perf;
       }
@@ -626,18 +632,18 @@ export default function Lane() {
         const isTarget = m === target;
         // wrapped: rows are notes in any octave; yours is lit, with its real octave
         const isYou = wrapped && youRow != null && ((youRow % 12) + 12) % 12 === pc;
-        g.fillStyle = isTarget ? (hitting ? COLORS.good : "#9b8aff") : isYou ? "rgba(230,233,240,.85)" : black ? "#1a1f2b" : "#2a3142";
+        g.fillStyle = isTarget ? (hitting ? COLORS.good : ACCENT[400]) : isYou ? "rgba(230,233,240,.85)" : black ? "#1a1f2b" : INK[600];
         g.fillRect(6, y(m) - rowH / 2 + 0.5, black ? KEYS_W - 26 : KEYS_W - 12, rowH - 1);
         if (wrapped) {
           g.textBaseline = "middle";
           g.font = `${isYou ? 650 : 500} ${Math.min(12, rowH * 0.5)}px ${FONT}`;
-          g.fillStyle = isYou ? "#0b0d13" : black ? "rgba(139,148,171,.5)" : "#8b94ab";
+          g.fillStyle = isYou ? INK[900] : black ? "rgba(139,148,171,.5)" : INK[300];
           g.fillText(isYou ? noteName(youRow!) : NOTE_NAMES[pc], 11, y(m) + 0.5);
           continue;
         }
         if (m === youRow && !isTarget) { g.fillStyle = "rgba(255,255,255,.35)"; g.fillRect(KEYS_W - 10, y(m) - rowH / 2 + 1, 3, rowH - 2); }
         if (m % 12 === 0 || isTarget) {
-          g.fillStyle = isTarget ? "#0b0d13" : "#8b94ab";
+          g.fillStyle = isTarget ? INK[900] : INK[300];
           g.font = `${isTarget ? 650 : 500} ${Math.min(11, rowH * 0.8)}px ${FONT}`;
           g.textBaseline = "middle";
           g.fillText(noteName(m), 11, y(m) + 0.5);
@@ -670,7 +676,7 @@ function star(g: CanvasRenderingContext2D, cx: number, cy: number, r: number, gr
     const a = -Math.PI / 2 + (k * Math.PI) / 4, d = k % 2 ? R * 0.38 : R;
     g.lineTo(cx + d * Math.cos(a), cy + d * Math.sin(a));
   }
-  g.closePath(); g.fillStyle = "#fde68a"; g.globalAlpha = 0.5 + 0.5 * grow; g.fill();
+  g.closePath(); g.fillStyle = NOTICE; g.globalAlpha = 0.5 + 0.5 * grow; g.fill();
   g.restore();
 }
 

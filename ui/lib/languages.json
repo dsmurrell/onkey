@@ -1,0 +1,23 @@
+{
+  "source": "en",
+  "languages": [
+    { "code": "es", "name": "Spanish (Latin America)", "native": "Español (Latinoamérica)", "level": "full" },
+    { "code": "es-ES", "name": "Spanish (Spain)", "native": "Español (España)", "level": "full" },
+    { "code": "pt", "name": "Portuguese (Brazil)", "native": "Português", "level": "full" },
+    { "code": "it", "name": "Italian", "native": "Italiano", "level": "full" },
+    { "code": "fr", "name": "French", "native": "Français", "level": "full" },
+    { "code": "de", "name": "German", "native": "Deutsch", "level": "full" },
+    { "code": "ja", "name": "Japanese", "native": "日本語", "level": "early" },
+    { "code": "zh-Hans", "name": "Chinese (Simplified)", "native": "简体中文", "level": "early" },
+    { "code": "zh-Hant", "name": "Chinese (Traditional)", "native": "繁體中文", "level": "early" },
+    { "code": "ko", "name": "Korean", "native": "한국어", "level": "early" },
+    { "code": "hi", "name": "Hindi", "native": "हिन्दी", "level": "early" },
+    { "code": "ru", "name": "Russian", "native": "Русский", "level": "early" },
+    { "code": "tr", "name": "Turkish", "native": "Türkçe", "level": "early" },
+    { "code": "pl", "name": "Polish", "native": "Polski", "level": "early" },
+    { "code": "nl", "name": "Dutch", "native": "Nederlands", "level": "early" },
+    { "code": "id", "name": "Indonesian", "native": "Bahasa Indonesia", "level": "early" },
+    { "code": "vi", "name": "Vietnamese", "native": "Tiếng Việt", "level": "early" },
+    { "code": "th", "name": "Thai", "native": "ไทย", "level": "early" }
+  ]
+}

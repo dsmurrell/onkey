@@ -1,87 +1,44 @@
-//! Apple Music (the Music app), through its AppleScript interface: what's playing and where, and playback
-//! control. Album covers come from Apple's public iTunes Search (only the artist and title are sent).
+//! Apple Music (the Music app): what's playing and where, and playback control; how it's asked is the platform's
+//! (AppleScript on macOS: platform/mac/music.rs; the system media session on Windows: platform/windows/media.rs).
+//! Album covers come from Apple's public iTunes Search (only the artist and title are sent).
 use std::collections::HashMap;
 use std::sync::Mutex;
 
-use crate::source::{Source, State, Track};
+use crate::source::State;
 
 /// Track ids: "music:" and the track's persistent ID.
 pub const ID_PREFIX: &str = "music:";
-
-fn osa(script: &str) -> Option<String> {
-    crate::source::osa("Apple Music", script)
-}
 
 pub fn running() -> bool {
     crate::source::app_running("com.apple.Music")
 }
 
-/// What Music is playing (fields separated by a character that can't appear in titles). Asking a running
-/// Music app never launches it; a stopped player (nothing loaded) is None.
+/// What Music is playing, with its cover. Asking a running Music app never launches it.
 pub fn state() -> Option<State> {
     if !running() {
         return None;
     }
-    let out = osa(r#"tell application "Music"
-        set d to ASCII character 31
-        set s to player state as string
-        if s is "stopped" then return s
-        return s & d & (persistent ID of current track) & d & (name of current track) & d & ¬
-            (artist of current track) & d & (album of current track) & d & (duration of current track) & d & (player position)
-    end tell"#)?;
-    let f: Vec<&str> = out.split('\u{1f}').collect();
-    if f.len() < 7 || f[1].is_empty() {
-        return None;
-    }
-    let id = format!("{ID_PREFIX}{}", f[1]);
-    let (name, artist) = (f[2].to_string(), f[3].to_string());
-    let cover = cover_cached(&id, &artist, &name);
-    Some(State {
-        playing: f[0] == "playing",
-        track: Track {
-            art: cover.as_ref().map(|c| c.art.clone()),
-            link: cover.and_then(|c| c.link),
-            id,
-            name,
-            artist,
-            album: f[4].to_string(),
-            duration: f[5].replace(',', ".").parse().unwrap_or(0.0),
-        },
-        position: f[6].replace(',', ".").parse().unwrap_or(0.0),
-        source: Source::Music,
-    })
+    let mut s = crate::platform::music::state()?;
+    let cover = cover_cached(&s.track.id, &s.track.artist, &s.track.name);
+    s.track.art = cover.as_ref().map(|c| c.art.clone());
+    s.track.link = cover.and_then(|c| c.link);
+    Some(s)
 }
 
+/// "restart", "next", "previous", "playpause", "pause" or "play".
 pub fn control(action: &str) {
-    let cmd = match action {
-        "restart" => "set player position to 0",
-        "next" => "next track",
-        "previous" => "previous track",
-        "playpause" => "playpause",
-        "pause" => "pause",
-        "play" => "play",
-        _ => return,
-    };
-    osa(&format!(r#"tell application "Music" to {cmd}"#));
+    crate::platform::music::control(action);
 }
 
 /// Jump to a position in the current track (seconds).
 pub fn seek(seconds: f64) {
-    osa(&format!("tell application \"Music\" to set player position to {:.2}", seconds.max(0.0)));
+    crate::platform::music::seek(seconds);
 }
 
-/// Play a track from your library by its id (tracks only streamed, not added to the library, can't be found);
-/// false when Music didn't (not found, refused, or no answer). Music is started if it isn't running.
+/// Play a track from your library by its id; false when Music didn't (on Windows never: the media session can't
+/// start a given track).
 pub fn play_track(id: &str) -> bool {
-    let Some(pid) = id.strip_prefix(ID_PREFIX) else { return false };
-    if pid.is_empty() || !pid.chars().all(|c| c.is_ascii_alphanumeric()) {
-        return false;
-    }
-    let done = osa(&format!(r#"tell application "Music" to play (some track of library playlist 1 whose persistent ID is "{pid}")"#)).is_some();
-    if !done {
-        crate::engine::log(&format!("Apple Music didn't play {id} (not in your library, or Music didn't answer)"));
-    }
-    done
+    crate::platform::music::play_track(id)
 }
 
 /// Covers found so far (None: being looked up, or none found), so each track is looked up once.
@@ -89,7 +46,7 @@ static COVERS: Mutex<Option<HashMap<String, Option<Cover>>>> = Mutex::new(None);
 
 /// The cover for a playing track if already found; otherwise starts looking it up in the background (the
 /// state is read every 0.4 s and must not wait on the network).
-fn cover_cached(id: &str, artist: &str, name: &str) -> Option<Cover> {
+pub(crate) fn cover_cached(id: &str, artist: &str, name: &str) -> Option<Cover> {
     let mut covers = COVERS.lock().unwrap();
     let covers = covers.get_or_insert_with(HashMap::new);
     if let Some(c) = covers.get(id) {
@@ -115,14 +72,22 @@ pub struct Cover {
 
 /// An album cover from the iTunes Search API (no login): the best match for this artist and title.
 pub fn cover_lookup(artist: &str, name: &str) -> Option<Cover> {
-    let url = format!("https://itunes.apple.com/search?media=music&entity=song&limit=10&term={}",
-                      urlencoding::encode(&format!("{artist} {name}")));
+    let url = search_url(artist, name, 10, crate::platform::sys::region().as_deref());
     let v: serde_json::Value = ureq::get(&url).timeout(std::time::Duration::from_secs(6)).call().ok()?.into_json().ok()?;
     let hits = v["results"].as_array()?;
     let same = |a: &serde_json::Value, b: &str| a.as_str().is_some_and(|a| a.eq_ignore_ascii_case(b));
     let hit = hits.iter().find(|h| same(&h["trackName"], name) && same(&h["artistName"], artist))
         .or_else(|| hits.iter().find(|h| same(&h["artistName"], artist)))?;
     cover_of(hit)
+}
+
+/// An iTunes Search for a song, in the store of `region` (two letters, e.g. "jp": Mandarin or Japanese songs may be in
+/// no other store, so get no cover or link from the US one); no region, or not a store code: the US store, as before.
+fn search_url(artist: &str, title: &str, limit: u32, region: Option<&str>) -> String {
+    let country = region.filter(|c| c.len() == 2 && c.chars().all(|c| c.is_ascii_alphabetic()))
+        .map(|c| format!("&country={}", c.to_ascii_lowercase())).unwrap_or_default();
+    format!("https://itunes.apple.com/search?media=music&entity=song&limit={limit}{country}&term={}",
+            urlencoding::encode(&format!("{artist} {title}")))
 }
 
 /// The cover and Apple Music page in an iTunes Search result.
@@ -146,13 +111,6 @@ pub fn in_store(page: &str, region: Option<&str>) -> String {
             format!("https://music.apple.com/{}/{tail}", cc.to_ascii_lowercase()),
         _ => page.to_string(),
     }
-}
-
-/// The Mac's region (System Settings → General → Language & Region), as Apple Music's store code ("gb"). Read on
-/// the Mac only: nothing about it is sent anywhere.
-pub fn region() -> Option<String> {
-    let cc = objc2_foundation::NSLocale::currentLocale().countryCode()?.to_string().to_ascii_lowercase();
-    (cc.len() == 2).then_some(cc)
 }
 
 /// How an Apple Music page opens: the Music app first (music://, built into macOS), then the web page, both in the
@@ -226,8 +184,7 @@ fn starter_cover_with(dir: &std::path::Path, artist: &str, title: &str, now: u64
 
 /// iTunes Search for exactly this song: Err if the request failed, Ok(None) if no result matches.
 fn starter_lookup(artist: &str, title: &str) -> Result<Option<Cover>, ()> {
-    let url = format!("https://itunes.apple.com/search?media=music&entity=song&limit=25&term={}",
-                      urlencoding::encode(&format!("{artist} {title}")));
+    let url = search_url(artist, title, 25, crate::platform::sys::region().as_deref());
     let v: serde_json::Value = ureq::get(&url).timeout(std::time::Duration::from_secs(8)).call().map_err(|_| ())?
         .into_json().map_err(|_| ())?;
     Ok(starter_match(v["results"].as_array().map(Vec::as_slice).unwrap_or_default(), artist, title).and_then(cover_of))
@@ -313,6 +270,17 @@ mod tests {
         assert_eq!(in_store("https://music.apple.com/album/x/1", Some("gb")), "https://music.apple.com/album/x/1", "no store in the path");
         assert_eq!(apple_music_opens(us, Some("de")),
                    ["music://music.apple.com/de/album/wonderwall/1?i=2".to_string(), "https://music.apple.com/de/album/wonderwall/1?i=2".to_string()]);
+    }
+
+    #[test]
+    fn itunes_is_searched_in_your_own_store() {
+        assert_eq!(search_url("周杰伦", "晴天", 10, Some("CN")),
+                   "https://itunes.apple.com/search?media=music&entity=song&limit=10&country=cn&term=%E5%91%A8%E6%9D%B0%E4%BC%A6%20%E6%99%B4%E5%A4%A9");
+        assert_eq!(search_url("Coldplay", "Yellow", 25, None),
+                   "https://itunes.apple.com/search?media=music&entity=song&limit=25&term=Coldplay%20Yellow", "no region: the US store");
+        for bad in ["001", "g", "g&b", ""] {
+            assert!(!search_url("a", "b", 10, Some(bad)).contains("country"), "{bad}");
+        }
     }
 
     #[test]

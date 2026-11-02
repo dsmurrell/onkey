@@ -1,10 +1,12 @@
 "use client";
 import { useState, type SyntheticEvent } from "react";
 import { openInApp, openLink } from "@/lib/session";
+import { useT } from "@/lib/i18n";
 
 /** A song's album cover; a tile coloured from the song name when there's no cover (or it can't load). A cover
  *  from Apple (iTunes Search or Shazam) links to the song's Apple Music page (`link`), as Apple's terms ask. */
 export default function Cover({ name, art, link, size = 56, eager = false }: { name: string; art?: string | null; link?: string | null; size?: number; eager?: boolean }) {
+  const t = useT();
   // which cover failed to load (a new one, e.g. found after the song started, gets its own chance), and which loaded
   const [failed, setFailed] = useState<string | null>(null);
   const [loaded, setLoaded] = useState<string | null>(null);
@@ -33,7 +35,7 @@ export default function Cover({ name, art, link, size = 56, eager = false }: { n
     // a span, not a button: covers sit inside cards that are themselves clickable
     const open = (e: SyntheticEvent) => { e.stopPropagation(); e.preventDefault(); void openLink(link); };
     return (
-      <span role="link" tabIndex={0} title="Open in Apple Music" aria-label={`Open ${name} in Apple Music`}
+      <span role="link" tabIndex={0} title={t("cover.openApple")} aria-label={t("cover.openAppleNamed", { name })}
             onClick={open} onKeyDown={e => { if (e.key === "Enter") open(e); }}
             className="shrink-0 cursor-pointer transition hover:opacity-85" style={{ borderRadius: radius }}>
         {img}
@@ -63,6 +65,7 @@ export const spotifySearch = (artist: string, name: string) =>
  *  a plain label. With `trackId`, "in Spotify ↗" opens the song as OnKey does everywhere (openInApp: by its id in
  *  that app when known). */
 export function SourceLinks({ source, artist, name, appleLink, trackId }: { source: string; artist: string; name: string; appleLink?: string | null; trackId?: string }) {
+  const t = useT();
   const spotify = spotifySearch(artist, name);
   const own = trackId && ["Spotify", "Apple Music", "YouTube"].includes(source) ? `#open-${trackId}`
     : source === "Spotify" ? spotify : source === "Apple Music" ? appleLink ?? null : null;
@@ -76,12 +79,12 @@ export function SourceLinks({ source, artist, name, appleLink, trackId }: { sour
   return (
     <>
       {source && (own
-        ? <a href={own} onClick={open(own)} title={`Open in ${source}`} className="text-ink-500 underline-offset-2 transition hover:text-ink-200 hover:underline">in {source} ↗</a>
-        : <span className="text-ink-500" title="The app OnKey is following">in {source}</span>)}
+        ? <a href={own} onClick={open(own)} title={t("cover.openIn", { app: source })} className="text-ink-500 underline-offset-2 transition hover:text-ink-200 hover:underline">{t("cover.inAppLink", { app: source })}</a>
+        : <span className="text-ink-500" title={t("cover.following")}>{t("cover.inApp", { app: source })}</span>)}
       {other && <>
         {source && <span className="text-ink-600">·</span>}
-        <a href={other.href} onClick={open(other.href)} title={`Open in ${other.label}`}
-           className="text-ink-600 underline-offset-2 transition hover:text-ink-300 hover:underline">{other.label} ↗</a>
+        <a href={other.href} onClick={open(other.href)} title={t("cover.openIn", { app: other.label })}
+           className="text-ink-600 underline-offset-2 transition hover:text-ink-300 hover:underline">{t("cover.otherLink", { app: other.label })}</a>
       </>}
     </>
   );
@@ -89,11 +92,12 @@ export function SourceLinks({ source, artist, name, appleLink, trackId }: { sour
 
 /** "Apple Music" as a small link to the song's page (shown with Shazam matches and Apple covers). */
 export function AppleMusicLink({ link, className = "" }: { link?: string | null; className?: string }) {
+  const t = useT();
   if (!link) return null;
   return (
     <a href={link} onClick={e => { e.preventDefault(); e.stopPropagation(); void openLink(link); }}
        className={`text-ink-400 underline decoration-ink-600 underline-offset-2 transition hover:text-white ${className}`}>
-      Apple Music ↗
+      {t("cover.appleMusicLink")}
     </a>
   );
 }

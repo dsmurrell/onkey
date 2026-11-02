@@ -184,6 +184,14 @@ pub fn syllable_bars(store: &Store, track: &crate::source::Track, given: &[(f64,
     if given.len() < 4 {
         return none(&format!("{} lyric lines (4 needed)", given.len()));
     }
+    // [lyrics-ml] lyrics in another script (Mandarin, Japanese, Korean, Hindi...): the word timer hears English
+    // letters only, so no model pass; LRCLIB's lines are kept as they are and shown without bars (lang::alignable)
+    if !crate::lang::alignable(given) {
+        store.save_lyrics(&track.id, given);
+        crate::lyrics::keep_learned(&track.id, given);
+        return none(&format!("the lyrics aren't in Latin letters ({:?}): the word timer hears English letters only; LRCLIB's lines are shown as they are",
+                             crate::lang::song_script(given)));
+    }
     let mut models = word_aligner(WORD_ALIGNER.lock().unwrap());
     let Some(aligner) = models.as_mut() else { return none("the word-alignment model didn't load") };
     let mut syl = SYLLABIFIER.lock().unwrap();
@@ -430,17 +438,7 @@ static STOPPED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::n
 
 /// macOS Low Power Mode is on: the window draws less (lane at 30 frames a second, no glow).
 fn low_power() -> bool {
-    #[cfg(target_os = "macos")]
-    unsafe {
-        use objc2::runtime::AnyObject;
-        let info: *mut AnyObject = objc2::msg_send![objc2::class!(NSProcessInfo), processInfo];
-        if info.is_null() {
-            return false;
-        }
-        objc2::msg_send![info, isLowPowerModeEnabled]
-    }
-    #[cfg(not(target_os = "macos"))]
-    false
+    crate::platform::sys::low_power()
 }
 
 /// The Mac is running on its battery (IOKit's power source; a desktop Mac never is).
@@ -448,29 +446,7 @@ fn on_battery() -> bool {
     if let Some(b) = crate::devtest::force_battery() {
         return b;
     }
-    #[cfg(target_os = "macos")]
-    unsafe {
-        #[link(name = "IOKit", kind = "framework")]
-        extern "C" {
-            fn IOPSCopyPowerSourcesInfo() -> *const std::ffi::c_void;
-            fn IOPSGetProvidingPowerSourceType(blob: *const std::ffi::c_void) -> *const std::ffi::c_void;
-        }
-        extern "C" {
-            fn CFStringGetCString(s: *const std::ffi::c_void, buf: *mut std::ffi::c_char, size: isize, encoding: u32) -> u8;
-            fn CFRelease(cf: *const std::ffi::c_void);
-        }
-        let info = IOPSCopyPowerSourcesInfo();
-        if info.is_null() {
-            return false;
-        }
-        let kind = IOPSGetProvidingPowerSourceType(info);       // (not owned: no release)
-        let mut buf = [0 as std::ffi::c_char; 64];
-        let ok = !kind.is_null() && CFStringGetCString(kind, buf.as_mut_ptr(), 64, 0x0800_0100) != 0;   // UTF-8
-        CFRelease(info);
-        ok && std::ffi::CStr::from_ptr(buf.as_ptr()).to_bytes() == b"Battery Power"
-    }
-    #[cfg(not(target_os = "macos"))]
-    false
+    crate::platform::sys::on_battery()
 }
 
 /// The lane draws at most 30 times a second: Low Power Mode, or on battery unless Settings says otherwise
@@ -674,7 +650,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
         Ok(c) => c,
         Err(e) => {
             log(&format!("the pitch model couldn't load: {e}"));
-            crate::models::set_state(json!({"state": "broken", "error": e.to_string()}));
+            crate::models::set_state(json!({"state": "broken", "code": "pitch_model", "error": e.to_string()}));
             while !quitting() {
                 emit(&app, json!({"type": "status", "models": crate::models::state(), "listening": crate::settings::listening(), "listening_paused": crate::settings::listening_paused()}));
                 std::thread::sleep(Duration::from_secs(1));
@@ -752,8 +728,8 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
     let mut held_for: Option<u64> = None;
     // listening mode: the last seconds captured (as the listener heard them), to start a take from its song's start
     let mut heard_audio: std::collections::VecDeque<f32> = std::collections::VecDeque::new();
-    // listening mode: the status line shown (kind, words)
-    let mut status_line: Option<(&str, String)> = None;
+    // listening mode: the status line shown (kind, params and words: messages.rs `Line`)
+    let mut status_line: Option<crate::messages::Line> = None;
     // the capture let go while nothing played (REST_AFTER), and since when nothing has
     let mut rested = false;
     let mut quiet_since: Option<Instant> = None;
@@ -777,6 +753,15 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             "song_offset": t.song_offset, "lag_ms": t.lag * 10, "output_ms": t.heard * 10, "aligned": t.aligned,
             "fingerprint_placed": t.fingerprint_placed(), "align_conf": t.align_conf, "blind": t.blind, "quiet_s": t.quiet_s,
             "lyric_lines_shown": t.lyrics.len()}));
+        // (Windows, Linux) how far the music app's position was from where the sound placed the song (digest.rs)
+        #[cfg(any(windows, target_os = "linux"))]
+        if let Some((app, g)) = crate::digest::gap_finish(c.version) {
+            if let (Some(line), Some(mut sum)) = (g.line(&t.track.name, app), g.summary()) {
+                log(&line);
+                sum["app"] = json!(app);
+                crate::records::take_set(c.version, "app_vs_sound", sum);
+            }
+        }
         // the times shown at the end (a first play's lyrics move as they're lined up with the singer)
         if !t.lyrics.is_empty() {
             crate::records::take_set(c.version, "lyrics", json!({"times": t.lyrics.iter().map(|l| (l.0 * 100.0).round() / 100.0).collect::<Vec<_>>(),
@@ -885,20 +870,20 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             // so, with Spotify's volume when OnKey may read it
             let quiet_music = (capture.is_some() && music_level.quiet()
                 && (st.as_ref().is_some_and(|(s, _)| s.playing) || capture::app_sounding(capture_from)))
-                .then(|| json!({"app": crate::listen::app_name(capture_from), "level_db": music_level.level_db().round(),
+                .then(|| json!({"app": crate::listen::app_name_known(capture_from), "level_db": music_level.level_db().round(),
                                 "volume": if capture_from == Source::Spotify.bundle() { crate::spotify::volume_now() } else { None }}));
             // (read on its own: a guard taken inside the json! would hold the lock through the slow parts below,
             // the Automation check and browser_unheard's Core Audio queries, and the emit, blocking player_now)
             let echo_cancel = shared.lock().unwrap().echo_cancel;
             emit(&app, json!({"type": "status", "music_quiet": quiet_music, "mic_device": mic_now.map(|m| m.name), "output_ms": crate::timing::heard_ms(), "output": crate::timing::status(), "echo_cancel": echo_cancel, "youtube": crate::youtube::enabled(), "listening": crate::settings::listening(), "listening_paused": crate::settings::listening_paused(), "low_power": low_power(), "draw_30": draw_30(),
-                "line": status_line.as_ref().map(|(k, t)| json!({"kind": k, "text": t})),
-                "mic": mic, "audio": audio, "automation_denied": source::automation_denied(), "not_answering": source::not_answering(), "models": crate::models::state(),
+                "line": status_line.as_ref().map(|l| l.json()),
+                "mic": mic, "audio": audio, "automation_denied": source::automation_denied(), "not_answering": source::not_answering(), "lyrics_down": crate::settings::show_lyrics() && crate::lyrics::service_down(), "models": crate::models::state(),
                 // paused with a take open: when it ends and is scored, unless the song resumes first
                 "pause_ends_ms": pause_ends_ms.filter(|_| cur.is_some()),
                 "player": st.as_ref().map(|(s, _)| json!({"state": if s.playing {"playing"} else {"paused"},
-                    "name": s.track.name, "artist": s.track.artist, "app": s.source.name()})),
+                    "name": s.track.name, "artist": s.track.artist, "app": (s.source != Source::Other).then(|| s.source.name())})),
                 // YouTube is playing in a browser whose page OnKey isn't allowed to read: which setting to turn on
-                "youtube_blocked": crate::youtube::js_blocked().map(|(browser, setting)| json!({"browser": browser, "setting": setting})),
+                "youtube_blocked": crate::youtube::js_blocked().map(|(browser, setting, kind)| json!({"browser": browser, "setting": setting, "setting_kind": kind})),
                 // YouTube off and a browser playing sound: which, so the window can offer to turn YouTube on
                 "browser_sounding": crate::listen::browser_unheard().map(|(browser, works)| json!({"browser": browser, "works": works}))}));
         }
@@ -1131,7 +1116,9 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                 // during this play too, to make them afterwards (the melody learned already is left as it is)
                 // (not with "Show lyrics" off: the bars' syllables come from the lyrics, so none could be made)
                 // none, or a sliver left by an earlier play (store::thin_bars): this play makes them
-                let needs_bars = take.mode == Mode::Sing && store.needs_bars(&take.track.id, take.track.duration) && crate::settings::show_lyrics();
+                // (nor for lyrics in another script, which can't give bars: lang::alignable, syllable_bars)
+                let needs_bars = take.mode == Mode::Sing && store.needs_bars(&take.track.id, take.track.duration) && crate::settings::show_lyrics()
+                    && crate::lyrics::learned(&take.track.id).map_or(true, |l| crate::lang::alignable(&l));
                 // never refused: a song that ended still being learned (or waiting to be: learn::Queued) doesn't
                 // stop this take's learner starting; it keeps the music until its own turn
                 let learner = if take.mode != Mode::Learn && !needs_bars {
@@ -1146,7 +1133,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                         log("no separation model: this song can be sung but not learned");
                         // there but unusable (or not there, which the window already says): the window says why
                         if crate::models::state()["state"] == "ready" {
-                            crate::models::set_state(json!({"state": "missing", "error": "they couldn't be loaded"}));
+                            crate::models::set_state(json!({"state": "missing", "code": "unloadable", "error": "they couldn't be loaded"}));
                         }
                     }
                     if let Some(l) = &l {
@@ -1238,6 +1225,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                         keep_for_take(&LYRICS, v, l);
                     });
                 }
+                *CURRENT_TRACK.lock().unwrap() = Some((version, take.track.clone()));
                 cur = Some(Current { take, version, learner, score: None, score_at: Instant::now(), viz_at: Instant::now(),
                                      lyrics_fixed, lyrics_job: None, lyrics_tried_at: 0.0, lyrics_retry: Instant::now(),
                                      line_ups: Default::default(), lyric_times, place_said: "", said: String::new(),
@@ -1258,6 +1246,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                     && s.track.id.strip_prefix(crate::youtube::ID_PREFIX).and_then(crate::youtube::named).is_some()) {
                 c.take.track.name.clone_from(&s.track.name);
                 c.take.track.artist.clone_from(&s.track.artist);
+                *CURRENT_TRACK.lock().unwrap() = Some((c.version, c.take.track.clone()));
                 emit(&app, json!({"type": "track", "version": c.version, "name": s.track.name, "artist": s.track.artist}));
                 if !c.lyrics_fixed {
                     log(&format!("renamed: {} - {}; looking up its lyrics again", s.track.artist, s.track.name));
@@ -1402,17 +1391,18 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             // still be naming it, and "Couldn't name this song" over a song being learned was wrong)
             let following = cur.as_ref().filter(|c| st.as_ref().is_some_and(|(s, _)| s.track.id == c.take.track.id));
             let stopped = crate::discard::playing_ignored();
+            use crate::messages::Line;
             let line = match following {
-                Some(c) if c.take.mode == Mode::Learn => Some(("learning", "Learning: sing along, it’s scored from the next play".to_string())),     // the title is right above
+                Some(c) if c.take.mode == Mode::Learn => Some(Line::new("learning", "Learning: sing along, it’s scored from the next play")),     // the title is right above
                 Some(_) => None,
                 // a song you stopped learning still playing: not "finding the next song"
-                None if stopped.is_some() => stopped.map(|n| ("stopped", format!("Not learning {n}"))),
-                None if crate::listen::not_song() => Some(("podcast", "Podcast playing: OnKey sings along to music".to_string())),
+                None if stopped.is_some() => stopped.map(|n| Line::new("stopped", format!("Not learning {n}")).with("song", n)),
+                None if crate::listen::not_song() => Some(Line::new("podcast", "Podcast playing: OnKey sings along to music")),
                 None => crate::listen::status_line(),
             };
             if line != status_line {
-                log(&format!("status line: {}", line.as_ref().map_or("(none)", |l| l.1.as_str())));
-                emit(&app, json!({"type": "listen", "line": line.as_ref().map(|(k, t)| json!({"kind": k, "text": t}))}));
+                log(&format!("status line: {}", line.as_ref().map_or("(none)", |l| l.text.as_str())));
+                emit(&app, json!({"type": "listen", "line": line.as_ref().map(|l| l.json())}));
                 status_line = line;
             }
         } else if st.is_none() && cur.is_some() && !tap_heard {
@@ -1509,6 +1499,16 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                 c.take.push(&block);
                 dot.pushed(c.take.clean16.len());
             }
+            // (Windows, Linux) the music app's position against the place the sound found, once a second: "app vs sound"
+            // in the log when the take ends (digest.rs)
+            #[cfg(any(windows, target_os = "linux"))]
+            if let (Some((s, at)), Some(sound)) = (&st, c.take.song_time()) {
+                if s.playing && c.take.fingerprint_placed() && (s.track.id == c.take.track.id || s.track.name.eq_ignore_ascii_case(&c.take.track.name)) {
+                    crate::digest::gap_sample(c.version, s.source.name(), s.position + at.elapsed().as_secs_f64(), sound, crate::records::now());
+                } else {
+                    crate::digest::gap_pause(c.version);
+                }
+            }
             // the app's position against the audio this take has: a better first placement
             if placed_pending && c.take.seconds() > 1.0 {
                 if let Some((s, at)) = &st {
@@ -1576,7 +1576,9 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             // separating models in memory beside the singing there. Not while the song before is being learned
             // (learn::learning_now: one learner at a time); after, only while the play is still in its first 90 s or
             // so, catching up; past that its lyrics are placed by the words heard once it's learned (syllable_bars).
-            if !c.lyrics_fixed && !c.take.lyrics_given.is_empty() {
+            // Nor for lyrics in another script (Mandarin, Japanese...), which the English word timer can't hear
+            // (lang::alignable): LRCLIB's times stay, and the singer is separated at the usual pace.
+            if !c.lyrics_fixed && !c.take.lyrics_given.is_empty() && crate::lang::alignable(&c.take.lyrics_given) {
                 if let Some(l) = &c.learner {
                     l.quick(!c.line_ups.settled() && !crate::lowmem::low_memory());
                 }
@@ -1766,6 +1768,40 @@ fn keep_for_take<T>(list: &Mutex<Vec<(u64, T)>>, v: u64, lyrics: T) {
 fn take_on(version: u64) -> bool {
     use std::sync::atomic::Ordering::Relaxed;
     TAKE_VERSION.load(Relaxed) == version && TAKE_ENDED.load(Relaxed) != version
+}
+
+/// The take playing now: its version and track (as named now: a renamed video changes it), for "Look again".
+static CURRENT_TRACK: Mutex<Option<(u64, crate::source::Track)>> = Mutex::new(None);
+
+/// "Look again" under "No lyrics for this song yet" (the Sing page, a song's page): ask LRCLIB about the song once
+/// more, forgetting the "none" answers kept for it (lyrics::look_again). Found: the play under way shows them as it
+/// would have (the live path: engine loop, LYRICS), and a learned song keeps them (lyrics::keep_learned) so its next
+/// play lines them up and makes its syllable bars (needs_bars). "found", "none", "unreachable" (LRCLIB couldn't be
+/// asked), or "unknown" (no such song: not playing, not learned).
+pub fn look_again(app: &AppHandle, store: &Store, id: &str) -> &'static str {
+    let playing = CURRENT_TRACK.lock().unwrap().clone().filter(|(v, t)| t.id == id && take_on(*v));
+    let learned = store.learned_tracks().into_iter().find(|t| t.id == id);
+    let Some(track) = playing.as_ref().map(|(_, t)| t.clone()).or(learned.clone()) else { return "unknown" };
+    log(&format!("{}: looking for its lyrics again (asked for)", track.name));
+    match crate::lyrics::look_again(&track) {
+        crate::lyrics::LookAgain::Found(l) => {
+            log(&format!("{}: lyrics found on looking again ({} lines)", track.name, l.len()));
+            if let Some((v, _)) = playing {
+                emit(app, json!({"type": "lyrics", "version": v, "lyrics": l}));
+                // (the loop adopts them: the empty answer kept for the take goes first)
+                LYRICS.lock().unwrap().retain(|(x, _)| *x != v);
+                keep_for_take(&LYRICS, v, l.clone());
+            }
+            // a learned song without lyrics: pinned to it, as a song learned with them has (never over the entry a
+            // song with kept times was learned with)
+            if learned.is_some() && store.kept_lyrics(id).is_none() {
+                crate::lyrics::keep_learned(id, &l);
+            }
+            "found"
+        }
+        crate::lyrics::LookAgain::None => "none",
+        crate::lyrics::LookAgain::Unreachable => "unreachable",
+    }
 }
 
 /// A take's lyrics: a learned song's from what's kept with it (no network); otherwise from LRCLIB, asked again

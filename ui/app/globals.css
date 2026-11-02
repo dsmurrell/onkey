@@ -1,6 +1,19 @@
 @import "tailwindcss";
 
-/* OnKey design tokens. Dark, focused, one accent; pitch colours carry meaning (good / close / off). */
+/* OnKey design tokens. Dark, focused, one accent; pitch colours carry meaning (good / close / off).
+   Pick a token, never a stock Tailwind colour (red-*, amber-*…) or a raw hex. Canvas and SVG code, which can't
+   read a CSS var, takes the same values from lib/colors.ts (a test keeps the two in step).
+     ink-950…100   greys, dark to light: 950 page, 900/850 panels and the lane, 800 cards, 700–500 lines and
+                   borders, 400/300 muted text, 200/100 body text
+     accent-300…600  the purple: 300 light text and highlights, 400 links and markers, 500 buttons, 600 deep fills
+     good          green: on the note, a line sung well, a song that fits your range, "connected"
+     close         amber: near the note (within a semitone), a line nearly right; stays amber in the lane
+     off           red: off the note, a line missed, errors, destructive buttons ("delete all")
+     aside         peach: a song's range line when it doesn't simply fit (an octave away, a few notes out, wider)
+     notice        pale amber text: warnings and notices (no mic, an error, "experimental"), the lane's
+                   top-verdict word and its star
+     notice-fill   amber for the tint behind a notice, always at a low opacity (bg-notice-fill/8…/16)
+   Dev-only tools stay stock fuchsia on purpose: purple means "not in releases". */
 @theme {
   --color-ink-950: #07080c;
   --color-ink-900: #0b0d13;
@@ -20,6 +33,9 @@
   --color-good: #34d27b;
   --color-close: #f5b83d;
   --color-off: #f2626b;
+  --color-aside: #f0a088;
+  --color-notice: #fee685;
+  --color-notice-fill: #ffb900;
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --animate-shimmer: shimmer 1.6s linear infinite;

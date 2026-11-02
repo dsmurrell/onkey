@@ -1,0 +1,2738 @@
+{
+  "de": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "65b0324ae89d674c",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "e151b17eabea8dc7",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "19f70029f699ff97",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "cad2db0aae94f5ae",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "340698119ecbb5ab",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "88b7ec9a250ff8ba",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "f48026c70577f9cd",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "7fdbaa624cef7768",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "ff882a0331649dfb",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "a6f5acc69db6b9a0",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "472050b730a60f23",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "b07403190e1b37e7",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "caf2e6d16a0ebe08",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "e0ef009b54561464",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "051da525afd3f2b9",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "84e45ee7341134db",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "d1a9bdb8adc5263a",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "5680f4c53e18e7c9",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "852fe31379e8d1cd",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "9e4f02c299de3f88",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "95472f650a2b647f",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "9814263e47a303fc",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "1da7a3b4eea2f86e",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "5680f4c53e18e7c9",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "7efe2cbb94d00058",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "22c9783f5077bb8d",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "88fd2ad8b7c0326f",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "27a4b26fbaf7c701",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "e72611005b6a94c3",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "34048ff26772a846",
+      "human": false
+    }
+  },
+  "es": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "337e2fe106a9a984",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "3cfb3d764f70b899",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "1e230da3d8a4bd7a",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "a8b710c72c237a70",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "f6164f478ec42e53",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "d5646e54eb39cd5f",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "73cac923ce653213",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "803ad3fc8be2be31",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "80b0d93c995702cb",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "52744fa422de3621",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "39dcf1cbeb5adbd0",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "2f04fbd94be9442b",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "9536d53c4922de14",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "0cfa9a607a45f565",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "f691776fbc8ed669",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "f162950691763a5d",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "29fa864fd744397e",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "5d4bca945e656651",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "75d6b4579e1d29eb",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "48d842f5c4465288",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "32b40035b08043ae",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "ad3b7f21f4e73e91",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "c702af8c1eadd93c",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "5d4bca945e656651",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "3fc5f90b27f1acbc",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "09c101d2650e3dba",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "092b9ccfbf63a6ee",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "8a6e7e5abb12d756",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "313989789ff72fae",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "34e54ba798d4bb4f",
+      "human": false
+    }
+  },
+  "es-ES": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "337e2fe106a9a984",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "3cfb3d764f70b899",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "1e230da3d8a4bd7a",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "a8b710c72c237a70",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "f6164f478ec42e53",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "295087c9c992937e",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "73cac923ce653213",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "803ad3fc8be2be31",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "80b0d93c995702cb",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "52744fa422de3621",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "39dcf1cbeb5adbd0",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "2f04fbd94be9442b",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "9536d53c4922de14",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "0cfa9a607a45f565",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "f691776fbc8ed669",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "f162950691763a5d",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "29fa864fd744397e",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "5d4bca945e656651",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "75d6b4579e1d29eb",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "48d842f5c4465288",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "32b40035b08043ae",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "dfca4a5d5d044170",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "c702af8c1eadd93c",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "5d4bca945e656651",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "3fc5f90b27f1acbc",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "09c101d2650e3dba",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "509c517ede79fef0",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "8a6e7e5abb12d756",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "313989789ff72fae",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "34e54ba798d4bb4f",
+      "human": false
+    }
+  },
+  "fr": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "ca12a19bc8de97b7",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "20b020565090b555",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "0f160625a545bba5",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "c6107eff40944ffb",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "38a01d6561a2b0e1",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "32bf16fe75d1ca5c",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "12a9c58996af4c26",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "b5fc7bbcb0d8e580",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "964dcd7623445171",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "604dce445e326d95",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "84b03702780e4858",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "c0be34aba1f3434f",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "39f83c75c57ae4ce",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "4cf3fd72da6f6f98",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "5b6fef95fb92a910",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "a4944d07071b6457",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "46ad3916f6a09798",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "53d7fef884b94492",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "07ceb51d3a38741e",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "3887c27e42bcfbc9",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "2e3054e12ff491c6",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "4d2d9e75b3be5b9f",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "9e8bf4c5c3cb0c6b",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "53d7fef884b94492",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "06b923346b6a4cb6",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "d77e51438d0ebac4",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "ff7c12e0e55ec7b4",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "788f1aa7f7bd529a",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "a16006e36034c671",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "ca3eca0bb518f9dd",
+      "human": false
+    }
+  },
+  "hi": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "a7aa7e8f7d131a7e",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "16485d537aaa3147",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "fe17bfae031fe182",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "5194332a95637d71",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "fb8e15e3b3a9b282",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "a5f13edabf17274a",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "223df3fa64e04358",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "fae1408bfa5b40cd",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "11e63eafbeb19ae8",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "403c5c2669452471",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "7328906a9a6df4cb",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "d0fd0ca34f40e718",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "45ec49bdc2aef4c0",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "878c479717fb1d50",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "1f883152821a9a45",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "276df67ce13aed6d",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "2f30bb0a67de85fa",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "47c47d86b170ae43",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "e3cfd9fa28ca2237",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "a28544d858eb5c29",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "79ae99145c7fb73c",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "d0186dbc86685bce",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "20b789584f51093c",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "47c47d86b170ae43",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "9591cf27a8668260",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "ecf925b6c542e176",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "d537f056c33060ee",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "01c3d7519532f74d",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "7753ea0cc727e4ca",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "d270b253beb72793",
+      "human": false
+    }
+  },
+  "id": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "fb3aac1129b2bb05",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "e5052adada224a1d",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "9c2090b84fc9a956",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "458d0f8ea94211e8",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "6a64cb4cc8aada81",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "7ec68ecec132b677",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "a9710b4842a8f309",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "1dd5a65502b1096f",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "4e46b711a51e6195",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "3a25a35c57db871f",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "c56b3c6c123243f2",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "b2099f759ee2cdfd",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "bf3bc6aff43f1e7e",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "f15c350431d9e0a5",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "2ab4e6b87574eabf",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "464c4ffd019e1e96",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "5412c9ccce3e4506",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "4708bbdee3161f78",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "50009ce1da4d15e1",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "82b1a80e2aaf6de3",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "70dbe1d80b877be4",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "a3e0a9c5dfab06c1",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "71115c14743d668c",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "4708bbdee3161f78",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "eeaa237979ce1cba",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "cf7e1d46bd2f1a6b",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "509c517ede79fef0",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "86ca0ffef51d57dc",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "a4d268b01cf80912",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "c2050add7e703169",
+      "human": false
+    }
+  },
+  "it": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "81a3cd08de78a780",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "613b682cc8aa4124",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "7dea7a32eb698a16",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "1dc80c74fbf943dc",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "ec4704db6e623829",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "39ecb180bd27798c",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "894ff82614701a35",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "5d8238d21c6a0a88",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "4f6ee2f8ab1f4157",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "e08bc21eb694a15b",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "ebd162e1c0531e20",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "4bbd9643d9d26607",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "c0d46d45b7d1fabb",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "6e88343bf5a7f03e",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "25927af79a660644",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "49e493ba9d9cdaee",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "18c9d912a21072dd",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "e401861324c0e745",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "50009ce1da4d15e1",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "10c4b47a47627051",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "bea1fc1554c55dcf",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "748e4cda2fdfb6c1",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "05df1c8dbf759907",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "e401861324c0e745",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "687bfb85f370c2c9",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "f09b8c768f93319e",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "509c517ede79fef0",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "5908f8f3e22a5299",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "70c869d0cf228b28",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "00714b0125f6ce82",
+      "human": false
+    }
+  },
+  "ja": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "01acc4ca8b0f9293",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "ee81c4e633537055",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "85c9b7219b651c87",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "ee37a29c96b5ebe5",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "dd351a0707d3deae",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "6f826bba6934f87a",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "5797d224b5779bd7",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "0a530445a68dfef5",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "88864f7da85f3026",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "061256ee80e99117",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "70f7ae4afacd9b24",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "41155f0df3d54b6a",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "7e9bec37560e6404",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "bb9965eed1aa97ab",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "81c2d5ee8f73fc42",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "11f9049ddab593ad",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "3804deb71bca18ff",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "286f9ed86097ff81",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "2b39ec3da17eef39",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "43dce778eb1684a8",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "30672835496bc409",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "8e79a22758593c6d",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "17efc6654ed280c7",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "286f9ed86097ff81",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "fab102aae87d5588",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "1a0a641583167075",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "41d21d3af68bb2ff",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "e9ad6c481ddf418c",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "eb17c7bc8c759a9c",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "40d7044175bbd866",
+      "human": false
+    }
+  },
+  "ko": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "8fee67c7a1ca7327",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "877d749285f101ad",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "4e65e806008bf365",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "f089e3da1de818ac",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "5220abef01561094",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "98eead6c5f4d8813",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "740ffc0892e27646",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "e3794d17b4abdc8a",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "79a862f5a157411a",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "06aff97f69dc060d",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "fc6e121b1e157bbb",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "33e6a5c79e94fab2",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "8e45bfbb76052ecd",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "08bfce07df6d9cd3",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "10113e9cb886b2af",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "87b0acef85a79125",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "ce706412fa752a61",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "055d61d24b7491dd",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "0c8354d0e51a08b2",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "aa7f25c0d519f346",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "90241a8d01e451c8",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "de0e1729ed8e0d9d",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "ac5b575fff0fa065",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "055d61d24b7491dd",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "d92ed316d7edf686",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "4c6ff7d5fa8f9f09",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "d50248d531b2c3e0",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "aee0e8af3c93b5e6",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "c49f6a7d262ffc33",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "d0e60a750161878e",
+      "human": false
+    }
+  },
+  "nl": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "ac0115c25a15f765",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "98dae11c41d53633",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "12b62cc661120f7e",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "f92c4bffab919fb2",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "7ce52e31683640cc",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "41f8aa927ab14567",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "8997859fbee525ac",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "0a66280d8c0a8e40",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "544b83dcd701b6c7",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "74a3c2954b98cd5a",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "240fb593e20ecbcf",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "bbbeab93ca42857b",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "0e80e970a0806bd8",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "bd996efd4a923afb",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "1f5a9c3584d4e654",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "a6d012994849ac31",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "b78b88f8216a5bbf",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "5243fbcbbcb52f4a",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "afd09b9e36e51601",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "8765af6fc3bdf7fd",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "b79cac926e0b2e34",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "88a69b8f8a0d3193",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "f91962419f4ebaae",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "5243fbcbbcb52f4a",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "e0863ca30869710f",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "e803878680084e1a",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "b1eb0a951819e8fb",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "af3984b9f696b566",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "749732998121fb6e",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "2807a962318c6c8b",
+      "human": false
+    }
+  },
+  "pl": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "59238ddecde84346",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "1633ab56977d638d",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "5519267088ec20a2",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "c2a6619d18ecbbfe",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "8071d249dbbf304b",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "d39592b8ada69a4f",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "c7ea2f279fa3636e",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "8f2953164932ebf1",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "c4d2d557239872ae",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "f381f5d615d22579",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "8af76074739c6428",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "8c1a705b2cec4710",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "076f9b26fb3ae15f",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "e6fe315193121f89",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "e4ccf5e7105b7f97",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "465a4eb45c50b6ba",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "9234a0683653a982",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "a91ce1f50126b041",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "5956c3e6d7d447ea",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "7a8aab3cabbd94d1",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "fc144bacfd01825b",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "611fbaa029bbf96b",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "3fbb2d88fb9a5dd1",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "a91ce1f50126b041",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "342400bcdd6a9cfd",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "6da0220e26276392",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "509c517ede79fef0",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "0318703310fca538",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "1a04acc865fb926c",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "e081f2f7d6510c40",
+      "human": false
+    }
+  },
+  "pt": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "0b98503d8869f5af",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "0b9cecc7e62f75cb",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "0b8dfa06d358a521",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "ddb0ce42ffbcaca5",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "f6164f478ec42e53",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "a771f00fd97ba310",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "b95fe190fac68d9d",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "d0680ddac8599612",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "f2f57e93b873e09a",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "4944b0b2b62648a3",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "39dcf1cbeb5adbd0",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "b659da7fa50d279b",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "83229f4fb36b8a55",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "7b659c9caa5e03ae",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "4cc0cbb84e2dbcb8",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "2eba946b2e1ee4b6",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "786b4822284896ad",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "46ff37c4de85381a",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "ba8a452f2f839371",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "557157b79b98fac9",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "fe0addd707813a35",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "b1a8af424c34b664",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "1acb4b8fd2aa9e2d",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "46ff37c4de85381a",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "3fc5f90b27f1acbc",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "28014ef3525228e8",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "509c517ede79fef0",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "5d2988c0e8e198a1",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "c699a800f2db79cb",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "3de5861463c43d65",
+      "human": false
+    }
+  },
+  "ru": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "cc623b07e91e1f27",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "1484be175669d242",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "626fe6cf64cd6db7",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "11d6633fb3490d0d",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "a2f1e26fd39a89fa",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "804e1220f7b4fe0d",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "ed55a89d9bb41a43",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "dce4087070585c99",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "7215332b224be68a",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "f556c531064f1bb5",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "f02956c16588a718",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "1ea87aea0a4f1c25",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "ec79f4d0c884351f",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "5189135a6110bd31",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "9a6e498b21abe2a3",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "a97b464eb8c2bce2",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "7c47f7292ba4f2ae",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "db9cc7b22ffdf323",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "f242456b22736979",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "191e1b48b61e1610",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "3e202cd422f5fdfa",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "9a5450a61504bb78",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "9022ba3739723a99",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "db9cc7b22ffdf323",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "2b93aa6c410da7a9",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "9521194df6637753",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "ecb29c0037c5f89d",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "4fa0b6324e673668",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "ecb0e85ee8c793cd",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "ae4d25cb516d6a12",
+      "human": false
+    }
+  },
+  "th": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "24258534917ff608",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "85b0b1256a40f4ee",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "a441d09458f9d85e",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "4f757c295553d7a7",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "8697430ef51b9cbf",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "469abe8605eee43f",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "1351871ccf384ed5",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "2514fefef75ad0e9",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "030e8c321230dd59",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "3a221c686dea652e",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "5f727a4c62572234",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "ac330c862a2669ad",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "dc64ad35d30e09ae",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "6d989dbfd7e15233",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "8bbe465cbba8f5ec",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "461a56987553d6d9",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "eeb6c0d7044552f0",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "bf2e87e2062ae3cd",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "5426c7f07fbd0e4e",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "b6933df64eddfe29",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "52997f37f019d650",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "45cbf73644d82ba2",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "b24eca8fbe62617a",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "bf2e87e2062ae3cd",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "bb831cac6b7953de",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "60be3b55ba56945d",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "4b8714528c81c2e9",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "79f78214cec8ddf3",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "c216c27e88416421",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "a1453a73b95bc1ee",
+      "human": false
+    }
+  },
+  "tr": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "7f69c35befa4011f",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "9ae6b0ad4344f1a2",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "9122539a48e2d6fd",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "384688273a0b85b0",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "f38f7ded1531b667",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "a82e61bafd44b3a8",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "6e1b4021d9ce659d",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "0f0963e2f5221e5f",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "258cc4966c543a8e",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "d806a8b001df6d49",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "a8bcca42d9ce52ed",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "be4542596b23dfed",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "172b43747c762195",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "7b3b9d65c024d862",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "6107727b3f26f1d5",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "0d47994a075ec4a8",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "4d87bf4a4f868d05",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "49a6a9b90eeea56b",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "9cecd7340f24d87e",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "19e41bfe57579cbe",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "a52123b61b26547a",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "8f2e67f60499634f",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "461af90e2417a674",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "49a6a9b90eeea56b",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "3b9f8d5f0d55b858",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "38ed0d380a850956",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "e4466780970be72f",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "58b2c7a0476dd2f2",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "9843779c38f71aef",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "7a75867073c18e28",
+      "human": false
+    }
+  },
+  "vi": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "d601c41a3398f9fd",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "7af49cc948dd97b6",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "b4f9d28321989957",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "3b26296a5ed641ab",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "d58826c655930c98",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "b2e86b9b8effcafa",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "51f6658da4b2c201",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "f309bfe764a4e77b",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "377c7811a2a90f46",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "99785e73d2ef353e",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "68b42cafd63b4604",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "4daf94af7731031a",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "acadb0de99bb27a3",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "8d57880b4fa30f61",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "bb2093dfcaec9167",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "d4e076030c1ee8c4",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "e72ff675217efc5e",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "0aaa65c003e891c9",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "b3ed274aad9bcab9",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "4099fc51a9ccc30b",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "e5d5f1c775eac457",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "997378cc83cea696",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "f6de0ffdbc7645af",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "0aaa65c003e891c9",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "d7896922f281215e",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "c760170ee52b2af0",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "57e34b1225cb3d0b",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "47c1707a23434628",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "5aa4fd7b20d7a65e",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "021beceda5b1aaf5",
+      "human": false
+    }
+  },
+  "zh-Hans": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "23b92d81e2055a44",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "b659316b7530ffba",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "610d4f9367e32e42",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "9cc09611700b71e5",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "3e415175e64428fb",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "d32bd5a0edfe35c3",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "531dc847cc974e5b",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "af434093a3e864a6",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "a5850d724a4ed072",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "ec309ab207ef7fa3",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "d373809ab86ba93b",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "410a8e8a6bf253ac",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "33517926747180e6",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "03717b6f10700f87",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "3a5040b68abf75f9",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "051836569928a9f9",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "926a50b98ece2667",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "1ae6b0a0f8266382",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "39932f24fe11a6ba",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "bf04695e23a687a0",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "a57cfcb8428da408",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "d80dee25aa53422f",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "4e1449e7d5e50593",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "1ae6b0a0f8266382",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "ac29e57a46f41c30",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "9efe01f647d67d91",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "b762aec769a35fff",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "534a55277511e89a",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "bb7ffc1035277043",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "36e30b135c3534e5",
+      "human": false
+    }
+  },
+  "zh-Hant": {
+    "infoPlist.NSAppleEventsUsageDescription": {
+      "en": "8157cc648db47022",
+      "out": "7450daa1e15f2422",
+      "human": false
+    },
+    "infoPlist.NSAudioCaptureUsageDescription": {
+      "en": "39fb2037777660ed",
+      "out": "bcc1e499e70bf4ac",
+      "human": false
+    },
+    "infoPlist.NSMicrophoneUsageDescription": {
+      "en": "7b4b4ca992e6e28f",
+      "out": "9e97e4c6a066dedc",
+      "human": false
+    },
+    "menu.app.about": {
+      "en": "e761cd92a368d01f",
+      "out": "13ae7e4fdbe3ff0a",
+      "human": false
+    },
+    "menu.app.hide": {
+      "en": "30bbd08c0dddfefc",
+      "out": "a9c605452ee6e2f9",
+      "human": false
+    },
+    "menu.app.hideOthers": {
+      "en": "1753e2264a96a94b",
+      "out": "0899a74a09b09163",
+      "human": false
+    },
+    "menu.app.pauseListening": {
+      "en": "81716baf150d3439",
+      "out": "8e09e1c1bcf79576",
+      "human": false
+    },
+    "menu.app.quit": {
+      "en": "f481f833179d0f8d",
+      "out": "011ba3024b0e5d83",
+      "human": false
+    },
+    "menu.app.resumeListening": {
+      "en": "7735ad238c261342",
+      "out": "f9ef8772d068f258",
+      "human": false
+    },
+    "menu.app.services": {
+      "en": "604dce445e326d95",
+      "out": "318bc18e562d6f1b",
+      "human": false
+    },
+    "menu.edit.copy": {
+      "en": "e21f935f11d7e966",
+      "out": "4154afb9554d8fa2",
+      "human": false
+    },
+    "menu.edit.cut": {
+      "en": "1f45f02561f41db9",
+      "out": "116579b89097e469",
+      "human": false
+    },
+    "menu.edit.paste": {
+      "en": "f3380f7b44bd70af",
+      "out": "e279da6ebbeb1362",
+      "human": false
+    },
+    "menu.edit.redo": {
+      "en": "74273989b0966e23",
+      "out": "03717b6f10700f87",
+      "human": false
+    },
+    "menu.edit.selectAll": {
+      "en": "d1ec69e64b9609d0",
+      "out": "1ffe5f02d5b3ad30",
+      "human": false
+    },
+    "menu.edit.title": {
+      "en": "464c4ffd019e1e96",
+      "out": "e0d4485966bd1349",
+      "human": false
+    },
+    "menu.edit.undo": {
+      "en": "a8283ade31856f71",
+      "out": "c07fb8c4d3e4af1d",
+      "human": false
+    },
+    "menu.file.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "511067d6387ecf21",
+      "human": false
+    },
+    "menu.file.title": {
+      "en": "50009ce1da4d15e1",
+      "out": "a11ac5efe91d04d2",
+      "human": false
+    },
+    "menu.help.reportProblem": {
+      "en": "1a43b25b31e99ccd",
+      "out": "bff83bd2bd201e18",
+      "human": false
+    },
+    "menu.help.title": {
+      "en": "b79cac926e0b2e34",
+      "out": "9ada8c2ddd6a7518",
+      "human": false
+    },
+    "menu.view.fullScreen": {
+      "en": "53e63ed06152028c",
+      "out": "44a10be3712dbdad",
+      "human": false
+    },
+    "menu.view.title": {
+      "en": "dcc839a4015c4b7d",
+      "out": "b0352a944f496dc2",
+      "human": false
+    },
+    "menu.window.closeWindow": {
+      "en": "32fd144c1f4b399d",
+      "out": "511067d6387ecf21",
+      "human": false
+    },
+    "menu.window.minimize": {
+      "en": "d72e311c4ddaf4ac",
+      "out": "8ac56578cc98ebe8",
+      "human": false
+    },
+    "menu.window.title": {
+      "en": "19734a1b58cabc22",
+      "out": "0a66d7740c1fc498",
+      "human": false
+    },
+    "menu.window.zoom": {
+      "en": "509c517ede79fef0",
+      "out": "cf077bbe73868b44",
+      "human": false
+    },
+    "report.savePanelMessage": {
+      "en": "2499cdbd8cae8e40",
+      "out": "aec7fc62af32ac2e",
+      "human": false
+    },
+    "share.endCard.free": {
+      "en": "d7a4eb2622c7ff3c",
+      "out": "210844347e2fdda5",
+      "human": false
+    },
+    "share.endCard.tagline": {
+      "en": "332f1070e09a361d",
+      "out": "46afda13c00f4334",
+      "human": false
+    }
+  }
+}

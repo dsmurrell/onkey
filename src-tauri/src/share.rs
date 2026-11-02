@@ -14,11 +14,8 @@ use std::path::{Path, PathBuf};
 
 use serde_json::{json, Value};
 
-extern "C" {
-    fn onkey_share_render(json: *const std::os::raw::c_char, audio: *const std::os::raw::c_char, out: *const std::os::raw::c_char,
-                          icon: *const u8, icon_len: i64) -> i32;
-    fn onkey_media_tracks(path: *const std::os::raw::c_char) -> i32;
-}
+use crate::messages::Line;
+use crate::platform::native::*;
 
 /// How long a clip is (s).
 pub const CLIP_S: f64 = 20.0;
@@ -34,7 +31,11 @@ const PEAK: f32 = 0.89;
 const BIT_RATE: u32 = 128_000;
 /// The end card over the clip's last moments (s; a quarter of a short clip at most): what OnKey is, for what, where.
 const END_S: f64 = 1.5;
-const END: [&str; 3] = ["Sing on key", "Free for Mac", "singonkey.app"];
+/// Its lines: messages/<lang>.json `share.endCard` (in OnKey's language), then the site.
+fn end_card() -> [String; 3] {
+    let t = crate::messages::t;
+    [t("share.endCard.tagline"), t("share.endCard.free"), "singonkey.app".into()]
+}
 /// The footer's icon (the app icon, square: rounded when drawn).
 const ICON: &[u8] = include_bytes!("../../design/share-icon.png");
 
@@ -146,7 +147,7 @@ impl Take {
             json!([t, m, self.err.get(i).copied().flatten().map(f64::abs)])
         }).collect();
         json!({"title": title, "artist": artist, "footer": "SingOnKey.app", "seconds": secs, "lo": lo, "hi": hi,
-               "step": fs, "notes": notes, "line": line, "end": END, "end_s": END_S.min(secs / 4.0)})
+               "step": fs, "notes": notes, "line": line, "end": end_card(), "end_s": END_S.min(secs / 4.0)})
     }
 
     /// `u` (MIDI) moved by octaves next to the singer's line around frame `i` (half a second either way).
@@ -223,19 +224,22 @@ pub fn tracks(path: &Path) -> Option<(i32, i32)> {
     (n >= 0).then_some((n / 10, n % 10))
 }
 
-/// The proud moment to ask for a share at: (kind, reason) for a take scoring `score` on `song`, after `earlier`
+/// The proud moment to ask for a share at: its kind, params and English reason for a take scoring `score` on `song`, after `earlier`
 /// (the scores of that song's earlier sung takes, oldest first). A first score over 80 (on a first go, or the first
 /// time past 80), a personal best, or a clear step up on the last take; nothing for a low score.
-pub fn proud(song: &str, score: i64, earlier: &[i64]) -> Option<(&'static str, String)> {
+pub fn proud(song: &str, score: i64, earlier: &[i64]) -> Option<Line> {
     let pts = |n: i64| format!("{n} point{}", if n == 1 { "" } else { "s" });
+    let line = |kind, text: String| Some(Line::new(kind, text).with("song", song).with("score", score.to_string()));
     let best = earlier.iter().copied().max();
     match (best, earlier.last()) {
-        (None, _) if score > PROUD_FIRST => Some(("first", format!("{score} on your first go at {song}"))),
+        (None, _) if score > PROUD_FIRST => line("first", format!("{score} on your first go at {song}")),
         (None, _) => None,
-        (Some(b), _) if score > PROUD_FIRST && b <= PROUD_FIRST => Some(("over80", format!("Your first score over {PROUD_FIRST} on {song}"))),
+        (Some(b), _) if score > PROUD_FIRST && b <= PROUD_FIRST =>
+            line("over80", format!("Your first score over {PROUD_FIRST} on {song}")).map(|l| l.with("over", PROUD_FIRST.to_string())),
         _ if score < PROUD_FLOOR => None,
-        (Some(b), _) if score > b => Some(("best", format!("Your best on {song} by {}", pts(score - b)))),
-        (_, Some(&l)) if score - l >= PROUD_STEP => Some(("up", format!("{} up on your last take of {song}", pts(score - l)))),
+        (Some(b), _) if score > b => line("best", format!("Your best on {song} by {}", pts(score - b))).map(|l| l.with("points", (score - b).to_string())),
+        (_, Some(&l)) if score - l >= PROUD_STEP =>
+            line("up", format!("{} up on your last take of {song}", pts(score - l))).map(|x| x.with("points", (score - l).to_string())),
         _ => None,
     }
 }
@@ -251,7 +255,7 @@ const PROUD_FRESH_S: u64 = 24 * 3600;
 /// In the take's folder once the ask has been shown: it's never shown again for that take.
 const PROUD_SEEN: &str = "share-prompted";
 
-/// The take page's ask for take `id`: {"kind", "reason"} when it's a proud moment (`proud`) and a clip can be made
+/// The take page's ask for take `id`: {"kind", "params", "reason"} when it's a proud moment (`proud`) and a clip can be made
 /// (its place in the song and its recording are kept), it's the latest sung take of its song, recent, and the ask
 /// hasn't been shown for it before.
 pub fn prompt(store: &crate::store::Store, id: &str) -> Option<Value> {
@@ -281,8 +285,8 @@ pub fn prompt(store: &crate::store::Store, id: &str) -> Option<Value> {
         return None;
     }
     let earlier: Vec<i64> = same.iter().rev().filter(|t| t["id"].as_str().unwrap_or("") < id).filter_map(|t| t["score"].as_i64()).collect();
-    let (kind, reason) = proud(this["track"]["name"].as_str().unwrap_or("this song"), this["score"].as_i64()?, &earlier)?;
-    Some(json!({"kind": kind, "reason": reason}))
+    let p = proud(this["track"]["name"].as_str().unwrap_or("this song"), this["score"].as_i64()?, &earlier)?;
+    Some(json!({"kind": p.kind, "params": p.json()["params"], "reason": p.text}))
 }
 
 /// The ask for take `id` has been shown: never again.
@@ -357,7 +361,8 @@ mod tests {
 
     #[test]
     fn the_share_ask_comes_at_a_proud_moment() {
-        let kind = |score, earlier: &[i64]| proud("Song", score, earlier).map(|p| p.0);
+        let kind = |score, earlier: &[i64]| proud("Song", score, earlier).map(|p| p.kind);
+        let proud = |song, score, earlier: &[i64]| proud(song, score, earlier).map(|p| (p.kind, p.text));
         assert_eq!(proud("Song", 84, &[]), Some(("first", "84 on your first go at Song".into())));
         assert_eq!(kind(80, &[]), None, "80 isn't over 80");
         assert_eq!(proud("Song", 82, &[60, 78]), Some(("over80", "Your first score over 80 on Song".into())));
@@ -365,6 +370,8 @@ mod tests {
         assert_eq!(proud("Song", 61, &[60]), Some(("best", "Your best on Song by 1 point".into())));
         assert_eq!(kind(88, &[90, 85]), None, "past 80 before and not a best: no ask");
         assert_eq!(proud("Song", 70, &[85, 58]), Some(("up", "12 points up on your last take of Song".into())));
+        assert_eq!(super::proud("Song", 72, &[60, 58]).unwrap().json()["params"], json!({"song": "Song", "score": "72", "points": "12"}));
+        assert_eq!(super::proud("Song", 82, &[60, 78]).unwrap().json()["params"], json!({"song": "Song", "score": "82", "over": "80"}));
         assert_eq!(kind(66, &[85, 58]), None, "8 up isn't a clear margin");
         assert_eq!(kind(45, &[30, 20]), None, "a best below 50 isn't asked about");
         assert_eq!(kind(55, &[90, 60]), None, "worse than last time");
@@ -398,6 +405,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(target_os = "linux", ignore = "no share video on Linux yet")]
     fn a_clip_renders_to_a_video_with_its_voice() {
         // a short take: 3 s long, a tone as the voice, rendered for real (AVFoundation)
         let dir = std::env::temp_dir().join(format!("onkey-share-test-{}", std::process::id()));
@@ -433,17 +441,36 @@ mod made_up_take {
         let rate = 16000.0;
         let tone: Vec<i16> = (0..(rate as usize * 24)).map(|i| ((i as f64 * 330.0 * std::f64::consts::TAU / rate).sin() * 6000.0) as i16).collect();
         crate::takeaudio::write_m4a(&tdir.join("mic.m4a"), &tone, rate, crate::takeaudio::TAKE_BIT_RATE).unwrap();
+        let p = super::render(&made_up(), &tdir, 0, &out).unwrap();
+        let _ = std::fs::remove_dir_all(&tdir);
+        eprintln!("{}", p.display());
+    }
+
+    /// The made-up take's result: a rising and falling line of notes, every third missed.
+    pub(crate) fn made_up() -> serde_json::Value {
         let n = 2400;
         let midi = |k: usize| 60.0 + [0.0, 2.0, 4.0, 5.0, 7.0, 5.0, 4.0, 2.0][k % 8];
         let notes: Vec<serde_json::Value> = (0..40).map(|k| serde_json::json!([k * 60, k * 60 + 45, midi(k), if k % 3 == 0 { 0.2 } else { 1.0 }])).collect();
         let refl: Vec<f64> = (0..n).map(|i| midi(i / 60)).collect();
         let usr: Vec<f64> = (0..n).map(|i| midi(i / 60) + 0.3 * ((i as f64) / 7.0).sin()).collect();
         let err: Vec<f64> = (0..n).map(|i| 40.0 + 60.0 * ((i as f64) / 90.0).sin().abs()).collect();
-        let r = serde_json::json!({"song_offset": 0.0, "frame_s": 0.01, "latency_ms": 0, "ref": refl, "usr": usr, "err": err,
-                                   "notes": notes, "track": {"name": "A Made-Up Song", "artist": "Nobody"}});
-        let p = super::render(&r, &tdir, 0, &out).unwrap();
-        let _ = std::fs::remove_dir_all(&tdir);
-        eprintln!("{}", p.display());
+        serde_json::json!({"song_offset": 0.0, "frame_s": 0.01, "latency_ms": 0, "ref": refl, "usr": usr, "err": err,
+                           "notes": notes, "track": {"name": "A Made-Up Song", "artist": "Nobody"}})
+    }
+
+    /// The same clip's frames drawn by share_draw.rs (Windows' drawing), as PNGs, to set beside the Swift video's:
+    /// ONKEY_SHARE_OUT=<dir> cargo test --lib share::made_up_take::draw -- --ignored
+    #[test]
+    #[ignore]
+    fn draw_made_up_frames() {
+        use crate::share_draw::{Fonts, Frames, Spec};
+        let out = std::path::PathBuf::from(std::env::var("ONKEY_SHARE_OUT").expect("ONKEY_SHARE_OUT"));
+        std::fs::create_dir_all(&out).unwrap();
+        let spec = super::Take::from_result(&made_up()).unwrap().spec(0, "A Made-Up Song", "Nobody");
+        let mut f = Frames::new(Spec::parse(&spec.to_string()).unwrap(), Fonts::system(), super::ICON);
+        for k in [15, 150, 300, 525, 597] {
+            f.draw(k as f64 / 30.0).save_png(out.join(format!("rust-{k:03}.png"))).unwrap();
+        }
     }
 }
 

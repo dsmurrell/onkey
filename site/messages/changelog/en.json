@@ -1,0 +1,176 @@
+{
+  "page": {
+    "title": "What's new",
+    "description": "Every OnKey feature and fix, newest first, with the release that brought it.",
+    "kicker": "Changelog",
+    "heading": "What’s new in OnKey",
+    "intro": "Every feature and fix, newest first, and the release that brought it. OnKey updates itself, so these reach you on their own.",
+    "release": "OnKey {version}",
+    "latest": "Latest",
+    "kind": {
+      "new": "New",
+      "better": "Better",
+      "fix": "Fixed"
+    },
+    "github": "Every change is on <link>GitHub</link>, where OnKey is open source."
+  },
+  "releases": {
+    "0-3-0": {
+      "note": "OnKey in 19 languages, and lyrics that keep time in Spanish, Portuguese, Italian, French and German."
+    },
+    "0-2-0": {
+      "note": "Downloads and installs itself on Macs already running OnKey."
+    },
+    "0-1-0": {
+      "note": "The first public release.",
+      "link": "Launched on Hacker News"
+    }
+  },
+  "entries": {
+    "onkey-in-your-language": {
+      "title": "OnKey in your language",
+      "summary": "OnKey now speaks 19 languages. It follows your Mac's language on its own, or pick one from the globe in the top bar, on the welcome screen or in Settings.",
+      "p1": "Six have full support, lyrics included: Spanish (Latin America and Spain), Portuguese, Italian, French and German",
+      "p2": "Twelve more are early translations: Dutch, Japanese, Chinese (Simplified and Traditional), Korean, Hindi, Russian, Turkish, Polish, Indonesian, Vietnamese and Thai. Each says so, with a link to improve it",
+      "p3": "All are machine translations for now: if something reads oddly, the link in Settings opens it for fixing",
+      "p4": "The OnKey menu, the Mac's permission prompts and the save dialog are in your language too, and covers come from your own country's store",
+      "p5": "So is this website, its guides and this changelog: it follows your browser's language, and a globe in the header switches it"
+    },
+    "lyrics-keep-time-in-more-languages": {
+      "title": "Lyrics keep time in more languages",
+      "summary": "Words in Spanish, Portuguese, Italian, French and German now light up as they're sung. Accented letters (corazón, Straße, cœur) are read properly, and syllables are counted by each language's rules rather than English's.",
+      "p1": "Songs in Japanese, Chinese, Korean, Hindi, Russian, Thai and other scripts show their lines whole, in time with the song, without word-by-word timing for now",
+      "p2": "English lyrics are exactly as before"
+    },
+    "songs-to-try-in-your-language": {
+      "title": "Songs to try in your language",
+      "summary": "With Spanish, Portuguese, Italian, French or German chosen, the Sing page suggests eight songs in that language, from easy to hard, with a reason for each.",
+      "p1": "Click a suggested song and it starts in Spotify, as a Library card does",
+      "p2": "The links to find it in Apple Music are still there"
+    },
+    "when-a-song-has-no-lyrics": {
+      "title": "When a song has no lyrics",
+      "summary": "Lyrics come from LRCLIB, a free library anyone can add to. A song it has nothing for now says so under the lane and on the song's page, with a Look again button that asks LRCLIB straight away.",
+      "p1": "Before, OnKey remembered a \"none\" answer for a day, so lyrics someone had just added didn't show until tomorrow",
+      "p2": "When LRCLIB itself is down, the Sing page tells you: the notes carry on, the words join if it comes back, and a song learned meanwhile gets its words next time you sing it"
+    },
+    "smoother-switching-in-spotify": {
+      "title": "Smoother switching in Spotify",
+      "summary": "Asking for a different song while one plays now pauses the first for a moment before starting the next, so the switch is cleaner."
+    },
+    "a-clearer-settings-page": {
+      "title": "A clearer Settings page",
+      "summary": "The microphone is chosen from OnKey's own menu, with virtual devices and a disconnected mic listed apart. Menus open over the page, so a long list is never cut off.",
+      "p1": "On Library cards, a song's range line is green when it fits you and peach when it doesn't simply fit (an octave away, a few notes out, or wider)",
+      "p2": "Setup's step bars stay level when a step's name takes two lines"
+    },
+    "small-fixes-0-3-0": {
+      "title": "Small fixes",
+      "summary": "Things that were a little off, now right.",
+      "p1": "The What's new dot shows after an update until you open it, and never on a fresh install",
+      "p2": "Report a problem keeps its text box at full height, and the dialog is solid over Settings",
+      "p3": "A YouTube tab's notification count, \"(3) Artist - Title\", no longer gets in the way of naming the song"
+    },
+    "pause-listening": {
+      "title": "Pause listening",
+      "summary": "Watching a stream or a podcast? Pause OnKey's listening, and it stops hearing anything until you resume. Nothing is followed, named or learned in the meantime.",
+      "p1": "Press ⌘⇧P, click the Live chip on the Sing page, or choose OnKey → Pause Listening",
+      "p2": "A small \"Listening paused · Resume\" pill stays at the top of every page, so you don't forget",
+      "p3": "It stays paused after a restart, until you resume"
+    },
+    "see-when-a-paused-take-will-be-scored": {
+      "title": "See when a paused take will be scored",
+      "summary": "Pause mid-song and OnKey waits a minute in case you carry on. It now tells you, and lets you skip the wait.",
+      "p1": "The Sing page counts down: \"Paused · scored in 0:45 · Finish now\"",
+      "p2": "History shows the song you're singing as its first card, so a play you just paused never looks lost",
+      "p3": "Every song card in History draws your scores from the second play"
+    },
+    "audio-interfaces-and-your-microphone-list": {
+      "title": "Audio interfaces and your microphone list",
+      "summary": "OnKey now takes your voice from the input it's actually on, so a mic on input 2 of a Focusrite (or any interface with several inputs) just works.",
+      "p1": "No setting needed: OnKey follows the input your voice is on",
+      "p2": "Virtual devices other apps add (Krisp, Loopback, BlackHole, Zoom) are listed apart from your real mics"
+    },
+    "listening-back-stays-in-step-after-a-skip": {
+      "title": "Listening back stays in step after a skip",
+      "summary": "If you skipped ahead while singing, \"Play with the song\" could play the part before the skip out of time. Every part of the take now plays in step with the song."
+    },
+    "reliability-fixes": {
+      "title": "Reliability fixes",
+      "summary": "Things that could go wrong mid-song, now fixed.",
+      "p1": "Finish no longer throws a take away if pressed while OnKey checks the player",
+      "p2": "A song can no longer stay at \"Waiting\" or \"Scoring\" for good after a rare failure",
+      "p3": "Library's Delete all no longer sticks, and \"Stop learning and delete\" only deletes the song you picked",
+      "p4": "Keyboard shortcuts no longer reach the music behind dialogs",
+      "p5": "The score arrives straight away when a song ends paused",
+      "p6": "A radio stream or hours-long mix stops at 20 minutes rather than running on as one take",
+      "p7": "Quitting is instant: OnKey disappears at once and finishes saving what it learned out of sight"
+    },
+    "songs-start-cleanly": {
+      "title": "Songs start cleanly",
+      "summary": "Pressing Sing on a card could start the music twice, or play a blip of the song before it restarted. One press now means one clean start."
+    },
+    "guides-and-help-and-beyond-pitch": {
+      "title": "Guides and help, and Beyond pitch",
+      "summary": "Settings now links to these docs. A new guide, Beyond pitch, covers what OnKey can't hear (tone, breath, style) and free teachers to learn it from."
+    },
+    "smoother-setup-and-youtube": {
+      "title": "Smoother setup and YouTube",
+      "summary": "Fixes for the first things our testers ran into.",
+      "p1": "Setup's music apps step goes straight on when there's nothing for macOS to ask",
+      "p2": "A YouTube tab that Chrome put to sleep no longer holds OnKey up",
+      "p3": "A music app you don't have installed shows as off, rather than on"
+    },
+    "learn-a-song-again": {
+      "title": "Learn a song again",
+      "summary": "If a song's lyrics or notes slip, have OnKey learn it afresh: its next play learns it, and replaces the old copy once it's heard enough.",
+      "p1": "Choose Learn again from the Library's ⋯ menu or the song's page",
+      "p2": "OnKey suggests it when a song's words drift the same way on two plays"
+    },
+    "a-tidier-app-page-by-page": {
+      "title": "A tidier app, page by page",
+      "summary": "Each take gets a clearer report, and Sing, History, Library and Settings are easier to find your way around.",
+      "p1": "Sing offers \"Pick up where you left off\": your last few songs, each with its last score and a Sing button",
+      "p2": "Library's Play starts the song for you, and Sing shows it starting (or says why it can't)"
+    },
+    "scoring-levels-relaxed-steady-and-pro": {
+      "title": "Scoring levels: Relaxed, Steady and Pro",
+      "summary": "Choose how strictly your takes are scored in Settings. Relaxed is how OnKey has always scored; Steady and Pro ask for more.",
+      "p1": "Vibrato is judged on the centre of the note, so a good vibrato isn't marked down at any level",
+      "p2": "Each take shows the level it was scored at"
+    },
+    "leave-out-what-isn-t-the-melody": {
+      "title": "Leave out what isn't the melody",
+      "summary": "If OnKey picked up a backing vocal or an ad-lib instead of the tune, mark that stretch \"Not the melody\" on the take's page. It's left out of every score for that song, past takes included."
+    },
+    "your-vocal-range": {
+      "title": "Your vocal range",
+      "summary": "OnKey works out your range from the songs you sing, and shows how each song fits it.",
+      "p1": "History shows your range on a strip of keys, with your comfortable middle marked",
+      "p2": "The Library shows each song's fit, with a filter for songs in your range",
+      "p3": "When a song sits high or low, it says whether singing it an octave away would fit you better"
+    },
+    "challenge-a-friend-and-share-your-best-takes": {
+      "title": "Challenge a friend, and share your best takes",
+      "summary": "From a take, copy a link that says what you scored and asks a friend to beat it. It carries only the song, the artist, your score and, if you like, your first name.",
+      "p1": "After a best on a song or a big step up, the take's page offers \"Share this take\"",
+      "p2": "A shared clip ends on an OnKey card: your voice, never the music"
+    },
+    "fade-the-guide": {
+      "title": "Fade the guide",
+      "summary": "Turn it on in Settings, and on songs you already sing well your pitch line fades while you're on the note, so you sing by ear and not by eye. It comes back the moment you drift."
+    },
+    "lyrics-line-up-better": {
+      "title": "Lyrics line up better",
+      "summary": "Lines and words now light up closer to when they're sung, including lines that open on an \"oh\" or \"whoa\"."
+    },
+    "onkey-s-first-release": {
+      "title": "OnKey's first release",
+      "summary": "Free, open source, and everything on your Mac.",
+      "p1": "Learns the melody of any song you play in Spotify, Apple Music or YouTube, the first time you play it",
+      "p2": "A live pitch line over the singer's notes, with synced lyrics and a score for every take",
+      "p3": "Takes to hear back, and a short video of a take to share: your voice, no music",
+      "p4": "Starter songs, a library of what you've learned, and updates that install themselves"
+    }
+  }
+}

@@ -1,28 +1,16 @@
 "use client";
 import { useEffect, useRef, useState, type SyntheticEvent } from "react";
 import { sizedArt, spotifySearch } from "@/components/Cover";
-import { getSettings, inApp, openLink, setSetting } from "@/lib/session";
+import { getSettings, inApp, openLink, playTrack, setSetting } from "@/lib/session";
+import { useLocale, useT, type MessageKey } from "@/lib/i18n";
+import { startersFor, type StarterList, type StarterSong } from "@/lib/starterSongs";
 
-/** The OnKey starter playlist, public, for the first card ("Play the OnKey starter playlist"). Paste its share link
- *  here: a Spotify playlist (https://open.spotify.com/playlist/<id>) and/or an Apple Music one
- *  (https://music.apple.com/...). While both are "" the card is hidden. Set, the card's button opens it in the
- *  Spotify app (or Apple Music). */
-export const STARTER_PLAYLIST_URL: string = "https://open.spotify.com/playlist/3Anv0qIDPKoitFPK71u7Bd";
-export const STARTER_PLAYLIST_APPLE_URL: string = "";
-
-/** Songs that are good to start with, picked from OnKey's eval data (a clean lead vocal, a steady melody, well
- *  known; easy to hard). Titles, artists and a reason only: no lyrics, audio or covers bundled (a cover is looked
- *  up on Apple's iTunes Search once and kept in the app's data folder: music.rs starter_cover). */
-export const STARTER_SONGS: { artist: string; title: string; why: string }[] = [
-  { artist: "Ben E. King", title: "Stand By Me", why: "Easy: a steady, simple melody" },
-  { artist: "Oasis", title: "Wonderwall", why: "The singalong everyone knows" },
-  { artist: "Tracy Chapman", title: "Fast Car", why: "Low and steady, easy to follow" },
-  { artist: "Lana Del Rey", title: "Young And Beautiful", why: "Long held notes to hold steady" },
-  { artist: "Lewis Capaldi", title: "Someone You Loved", why: "Gentle verses, big chorus" },
-  { artist: "Adele", title: "Someone Like You", why: "One clear voice, a chorus that lifts" },
-  { artist: "Jeff Buckley", title: "Hallelujah", why: "Slow and expressive: great for pitch" },
-  { artist: "Whitney Houston", title: "I Will Always Love You", why: "The challenge: huge range" },
-];
+/** Songs that are good to start with, in the window's language (lib/starterSongs.ts: easy to hard, a reason each;
+ *  English for a language without its own list). A cover is looked up on Apple's iTunes Search once and kept in the
+ *  app's data folder (music.rs starter_cover). */
+function useStarters(): StarterList & { list: string } {
+  return startersFor(useLocale());
+}
 
 /** Apple Music's search for a song (a plain link to music.apple.com, no API; it goes to your own storefront). */
 const appleSearch = (artist: string, title: string) =>
@@ -48,8 +36,9 @@ export function useStartersHidden(): [boolean | null, (hide: boolean) => void] {
 const open = (href: string) => (e: SyntheticEvent) => { e.preventDefault(); e.stopPropagation(); void openLink(href); };
 
 function Out({ href, label, dim, title }: { href: string; label: string; dim?: boolean; title?: string }) {
+  const t = useT();
   return (
-    <a href={href} onClick={open(href)} title={title ?? `Search for it in ${label}`}
+    <a href={href} onClick={open(href)} title={title ?? t("starters.searchIn", { app: label })}
        className={`whitespace-nowrap underline-offset-2 transition hover:underline ${dim ? "text-ink-500 hover:text-ink-300" : "text-ink-400 hover:text-ink-200"}`}>{label} ↗</a>
   );
 }
@@ -61,14 +50,14 @@ const songKey = (s: { artist: string; title: string }) => `${s.artist}\n${s.titl
 
 /** The starter songs' covers, asked for one at a time (the app keeps them; the first time, it looks each up,
  *  spaced). Only in the app: the browser preview shows the drawn tiles. */
-function useStarterCovers(): Map<string, StarterCover | null> {
+function useStarterCovers(songs: StarterSong[]): Map<string, StarterCover | null> {
   const [, redraw] = useState(0);
   useEffect(() => {
     if (!inApp()) return;
     let live = true;
     (async () => {
       const { invoke } = await import("@tauri-apps/api/core");
-      for (const s of STARTER_SONGS) {
+      for (const s of songs) {
         if (!live) return;
         if (covers.has(songKey(s))) continue;
         const c = await invoke<StarterCover | null>("starter_cover", { artist: s.artist, title: s.title }).catch(() => undefined);
@@ -78,7 +67,7 @@ function useStarterCovers(): Map<string, StarterCover | null> {
       }
     })();
     return () => { live = false; };
-  }, []);
+  }, [songs]);
   return covers;
 }
 
@@ -116,6 +105,7 @@ function StarterTile({ title, size }: { title: string; size: number }) {
 
 /** A starter song's cover, linked to the song on Apple Music (as Apple's artwork terms ask), or the drawn tile. */
 function StarterArt({ title, artist, cover, size = 44 }: { title: string; artist: string; cover?: StarterCover | null; size?: number }) {
+  const t = useT();
   const [failed, setFailed] = useState(false);
   if (!cover || failed) return <StarterTile title={title} size={size} />;
   const img = (
@@ -126,29 +116,30 @@ function StarterArt({ title, artist, cover, size = 44 }: { title: string; artist
   );
   if (!cover.link) return img;
   return (
-    <a href={cover.link} onClick={open(cover.link)} title="Open in Apple Music" aria-label={`Open ${title} by ${artist} in Apple Music`}
+    <a href={cover.link} onClick={open(cover.link)} title={t("starters.openInAppleMusic")} aria-label={t("starters.openSongInAppleMusic", { title, artist })}
        className="shrink-0 transition hover:opacity-85">{img}</a>
   );
 }
 
 /** "Play the OnKey starter playlist": opens it in the Spotify app (or Apple Music), where OnKey hears it. (Not
  *  the services' embedded players: those played inside OnKey's own window, which OnKey doesn't listen to.) */
-function PlaylistStrip() {
-  const href = STARTER_PLAYLIST_URL || STARTER_PLAYLIST_APPLE_URL;
-  const app = STARTER_PLAYLIST_URL ? "Spotify" : "Apple Music";
+function PlaylistStrip({ playlist, playlistApple }: { playlist?: string; playlistApple?: string }) {
+  const t = useT();
+  const href = playlist || playlistApple || "";
+  const app = playlist ? "Spotify" : "Apple Music";
   return (
     <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl border border-accent-400/25 bg-accent-500/10 px-4 py-3">
       <span className="min-w-0 flex-1">
-        <span className="block text-sm font-medium text-ink-100">Play the OnKey starter playlist</span>
-        <span className="block text-xs text-ink-300">All of these and more, from easy to challenging: press play and sing</span>
+        <span className="block text-sm font-medium text-ink-100">{t("starters.playlist.title")}</span>
+        <span className="block text-xs text-ink-300">{t("starters.playlist.sub")}</span>
       </span>
-      {STARTER_PLAYLIST_URL && STARTER_PLAYLIST_APPLE_URL && (
-        <Out href={STARTER_PLAYLIST_APPLE_URL} label="or Apple Music" dim title="Open the playlist in Apple Music" />
+      {playlist && playlistApple && (
+        <Out href={playlistApple} label={t("starters.playlist.orAppleMusic")} dim title={t("starters.playlist.openInAppleMusic")} />
       )}
-      <a href={href} onClick={open(href)} title={`Open the playlist in ${app}`}
+      <a href={href} onClick={open(href)} title={t("starters.playlist.open", { app })}
          className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-accent-500 px-3.5 py-1.5 text-sm font-medium text-white transition hover:bg-accent-400">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M7 4.5v15l13-7.5z" /></svg>
-        Play in {app}
+        {t("starters.playlist.playIn", { app })}
       </a>
     </div>
   );
@@ -157,6 +148,7 @@ function PlaylistStrip() {
 /** The cards in one row that scrolls sideways: the edge fades where there's more, and ‹ › buttons that scroll by a
  *  card (each hidden at its end). */
 function Scroller({ children }: { children: React.ReactNode }) {
+  const t = useT();
   const ref = useRef<HTMLUListElement>(null);
   const [ends, setEnds] = useState({ start: true, end: false });
   useEffect(() => {
@@ -196,26 +188,51 @@ function Scroller({ children }: { children: React.ReactNode }) {
       <ul ref={ref} className="flex gap-2 overflow-x-auto pb-2 select-none [scrollbar-width:none]" style={{ maskImage: fade, WebkitMaskImage: fade }}>
         {children}
       </ul>
-      {!ends.start && <button onClick={() => by(-1)} aria-label="Earlier songs" className={`${arrow} -left-3`}>‹</button>}
-      {!ends.end && <button onClick={() => by(1)} aria-label="More songs" className={`${arrow} -right-3`}>›</button>}
+      {!ends.start && <button onClick={() => by(-1)} aria-label={t("starters.earlier")} className={`${arrow} -left-3`}>‹</button>}
+      {!ends.end && <button onClick={() => by(1)} aria-label={t("starters.more")} className={`${arrow} -right-3`}>›</button>}
     </div>
   );
 }
 
-export default function StarterSongs({ onHide, className = "", hideLabel = "Hide suggestions" }: { onHide: () => void; className?: string; hideLabel?: string }) {
-  const playlist = !!(STARTER_PLAYLIST_URL || STARTER_PLAYLIST_APPLE_URL);
-  const found = useStarterCovers();
+export default function StarterSongs({ onHide, onPlay, className = "", hideLabel }: {
+  onHide: () => void;
+  /** a song was started (the sheet over Sing closes) */
+  onPlay?: () => void;
+  className?: string; hideLabel?: string;
+}) {
+  const t = useT();
+  const starters = useStarters();
+  // A song with a Spotify id is sung as a Library card is: the same playTrack, which starts it in its app and goes to
+  // Sing, showing it as starting there (or why the app couldn't, with a button to open it). Its Spotify and Apple
+  // Music links stay for opening it there yourself. In the browser preview there's no app: the links only.
+  const [starting, setStarting] = useState<string | null>(null);
+  const sing = async (s: StarterSong) => {
+    if (!s.spotify || starting) return;
+    setStarting(s.spotify);
+    onPlay?.();
+    try { await playTrack(`spotify:track:${s.spotify}`, true, s.title); }
+    catch {}
+    finally { setStarting(null); }
+  };
+  const playable = (s: StarterSong) => !!s.spotify && inApp();
+  const playlist = !!(starters.playlist || starters.playlistApple);
+  const found = useStarterCovers(starters.songs);
   return (
-    <section aria-label="Songs to try" className={`w-full text-left ${className}`}>
+    <section aria-label={t("starters.label")} className={`w-full text-left ${className}`}>
       <div className="mb-2 flex items-baseline justify-between gap-3 px-1 text-xs">
-        <span className="font-medium text-ink-300">Try these <span className="font-normal text-ink-500">· songs OnKey follows well</span></span>
-        <button onClick={onHide} className="text-ink-500 transition hover:text-ink-200">{hideLabel}</button>
+        <span className="font-medium text-ink-300">{t.rich("starters.heading", { dim: c => <span className="font-normal text-ink-500">{c}</span> })}</span>
+        <button onClick={onHide} className="text-ink-500 transition hover:text-ink-200">{hideLabel ?? t("starters.hide")}</button>
       </div>
       <Scroller>
-        {STARTER_SONGS.map(s => {
+        {starters.songs.map(s => {
           const cover = found.get(songKey(s));
           return (
-            <li key={songKey(s)} className="glass flex w-48 shrink-0 flex-col rounded-2xl p-3">
+            <li key={songKey(s)}
+                {...(playable(s) ? {
+                  role: "button", tabIndex: 0, "aria-label": t("library.card.sing", { name: s.title, artist: s.artist }),
+                  onClick: () => void sing(s), onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter") void sing(s); },
+                } : {})}
+                className={`glass group flex w-48 shrink-0 flex-col rounded-2xl p-3 transition ${playable(s) ? "cursor-pointer hover:border-accent-400/35" : ""} ${starting === s.spotify ? "opacity-60" : ""}`}>
               <span className="flex items-center gap-2.5">
                 <StarterArt title={s.title} artist={s.artist} cover={cover} />
                 <span className="flex min-w-0 flex-col">
@@ -223,18 +240,30 @@ export default function StarterSongs({ onHide, className = "", hideLabel = "Hide
                   <span className="truncate text-xs text-ink-400" title={s.artist}>{s.artist}</span>
                 </span>
               </span>
-              <span className="mt-2 flex-1 text-xs leading-snug text-ink-300">{s.why}</span>
-              <span className="mt-2 flex gap-1.5 text-[11px]">
-                <span className="text-ink-500">in</span><Out href={spotifySearch(s.artist, s.title)} label="Spotify" />
-                <span className="text-ink-600">·</span>
-                {cover?.link ? <Out href={cover.link} label="Apple Music" dim title="Open it in Apple Music" />
-                  : <Out href={appleSearch(s.artist, s.title)} label="Apple Music" dim />}
+              <span className="mt-2 flex-1 text-xs leading-snug text-ink-300">{t(`starters.why.${starters.list}.${s.why}` as MessageKey)}</span>
+              {playable(s) ? (
+              // sung from the card (it starts in Spotify, as a Library card does): its Sing ▶, and Apple Music's link
+              <span className="mt-2 flex items-center justify-between gap-1.5 text-[11px]">
+                <span aria-hidden className="-ml-2 flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-0.5 text-sm font-medium text-accent-300 transition group-hover:bg-accent-500/15 group-hover:text-white">
+                  {starting === s.spotify ? t("library.card.starting") : t("library.card.singButton")}
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M8 5.5v13l11-6.5z" /></svg>
+                </span>
+                {cover?.link ? <Out href={cover.link} label={t("starters.appAppleMusic")} dim title={t("starters.openItInAppleMusic")} />
+                  : <Out href={appleSearch(s.artist, s.title)} label={t("starters.appAppleMusic")} dim />}
               </span>
+              ) : (
+              <span className="mt-2 flex gap-1.5 text-[11px]">
+                <span className="text-ink-500">{t("starters.in")}</span><Out href={spotifySearch(s.artist, s.title)} label={t("starters.appSpotify")} />
+                <span className="text-ink-600">·</span>
+                {cover?.link ? <Out href={cover.link} label={t("starters.appAppleMusic")} dim title={t("starters.openItInAppleMusic")} />
+                  : <Out href={appleSearch(s.artist, s.title)} label={t("starters.appAppleMusic")} dim />}
+              </span>
+              )}
             </li>
           );
         })}
       </Scroller>
-      {playlist && <PlaylistStrip />}
+      {playlist && <PlaylistStrip playlist={starters.playlist} playlistApple={starters.playlistApple} />}
     </section>
   );
 }
@@ -242,6 +271,7 @@ export default function StarterSongs({ onHide, className = "", hideLabel = "Hide
 /** The songs to try over the Sing page (the logo, clicked on Sing, opens it: "onkey-songs-to-try"), even mid-song,
  *  without leaving the lane; Esc or a click outside closes it. */
 export function StarterSheet() {
+  const t = useT();
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const show = () => setOpen(true);
@@ -252,10 +282,10 @@ export function StarterSheet() {
   }, []);
   if (!open) return null;
   return (
-    <div role="dialog" aria-modal="true" aria-label="Songs to try" onClick={() => setOpen(false)}
+    <div role="dialog" aria-modal="true" aria-label={t("starters.label")} onClick={() => setOpen(false)}
          className="fixed inset-0 z-40 grid place-items-start overflow-y-auto bg-ink-950/70 px-4 pt-24 pb-10 backdrop-blur-sm animate-rise">
       <div onClick={e => e.stopPropagation()} className="glass mx-auto w-full max-w-4xl rounded-3xl p-5">
-        <StarterSongs onHide={() => setOpen(false)} hideLabel="Close" />
+        <StarterSongs onHide={() => setOpen(false)} onPlay={() => setOpen(false)} hideLabel={t("starters.close")} />
       </div>
     </div>
   );

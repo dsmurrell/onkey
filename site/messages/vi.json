@@ -1,0 +1,831 @@
+{
+  "meta": {
+    "title": "OnKey: học hát những bài bạn yêu thích",
+    "description": "OnKey là phần mềm luyện hát miễn phí, mã nguồn mở cho Mac. OnKey nghe nhạc đang phát trên máy Mac của bạn, học giai điệu của ca sĩ rồi hiện gợi ý cao độ trong lúc bạn hát, để bạn thấy mình đang chênh cao hay thấp ở đâu. OnKey không bao giờ lưu bản nhạc."
+  },
+  "common": {
+    "skip": "Chuyển tới nội dung",
+    "joke": "Cứu các ca sĩ phòng tắm khỏi chính mình từ năm 2026",
+    "sourceOnGitHub": "Mã nguồn trên GitHub",
+    "stars": "{n, plural, other {# sao trên GitHub}}",
+    "requirements": {
+      "silicon": "Máy Mac dùng chip Apple Silicon (M1 trở lên)",
+      "macos": "macOS 14.2 trở lên"
+    },
+    "early": "{language} mới có trên OnKey: hiện tại, bài hát bằng {language} chỉ hiện lời theo từng dòng, chưa canh thời gian theo từng từ."
+  },
+  "header": {
+    "home": "Trang chủ OnKey",
+    "label": "Chính",
+    "docs": "Tài liệu",
+    "faq": "Hỏi đáp",
+    "whatsNew": "Có gì mới",
+    "github": "GitHub",
+    "discord": "Discord"
+  },
+  "footer": {
+    "license": "· miễn phí và mã nguồn mở (MIT)",
+    "madeBy": "Tạo bởi <link>Daniel Murrell</link>",
+    "notAffiliated": "Không liên kết với Spotify, Apple hay Google.",
+    "label": "Chân trang",
+    "gettingStarted": "Bắt đầu",
+    "howItWorks": "Cách hoạt động",
+    "privacy": "Quyền riêng tư & pháp lý",
+    "faq": "Hỏi đáp",
+    "whatsNew": "Có gì mới",
+    "github": "GitHub",
+    "discord": "Discord",
+    "language": "Ngôn ngữ",
+    "improve": "Cải thiện bản dịch này"
+  },
+  "download": {
+    "mac": "Tải về cho Mac",
+    "macsOnly": "Hiện OnKey chỉ chạy trên Mac. <link>Muốn có bản Windows? Bình chọn ở đây</link>.",
+    "send": "Gửi tới máy Mac của bạn",
+    "sent": "Đã gửi",
+    "phones": "OnKey chạy trên Mac, không chạy trên điện thoại. Gửi liên kết cho chính bạn để dùng sau.",
+    "shareText": "OnKey, phần mềm luyện hát cho Mac: tải về trên máy Mac của bạn tại",
+    "mailSubject": "OnKey cho máy Mac của tôi"
+  },
+  "docsNav": {
+    "label": "Tài liệu",
+    "heading": "Tài liệu",
+    "inEnglish": "{title} (tiếng Anh)",
+    "pages": {
+      "start": "Bắt đầu",
+      "howItWorks": "OnKey hoạt động thế nào",
+      "scoring": "Cách chấm điểm",
+      "privacy": "Quyền riêng tư & pháp lý",
+      "faq": "Hỏi đáp",
+      "yourVoice": "Hát sao cho thoải mái",
+      "beyondPitch": "Không chỉ cao độ",
+      "troubleshooting": "Khắc phục sự cố",
+      "credits": "Ghi công"
+    }
+  },
+  "home": {
+    "kicker": "Phần mềm luyện hát miễn phí, mã nguồn mở cho Mac",
+    "title": "Học hát những bài bạn yêu thích.",
+    "intro": "OnKey nghe nhạc đang phát trên máy Mac của bạn và học giai điệu của ca sĩ. Sau đó, OnKey hiện gợi ý cao độ trong lúc bạn hát, để bạn thấy mình đang chênh cao hay thấp ở đâu.",
+    "howLink": "Cách hoạt động →",
+    "languages": "Có sẵn bằng {names} và <more>{n, plural, other {# ngôn ngữ khác}}</more>",
+    "factsLabel": "Tóm tắt",
+    "facts": {
+      "free": "Miễn phí và mã nguồn mở (MIT)",
+      "macs": "Apple Silicon, macOS 14.2+",
+      "local": "Chạy trên máy Mac của bạn, không cần tài khoản",
+      "music": "Không bao giờ lưu bản nhạc đã nghe"
+    },
+    "laneTitle": "Bài đã học · điểm 82",
+    "videoCaption": "Tôi hát theo và được chấm điểm ngay trong lúc hát.",
+    "video": {
+      "label": "1:35 · có tiếng",
+      "video": "OnKey đang dùng: Daniel hát theo, các nốt trôi về phía anh và cao độ của anh được vẽ lên trên",
+      "play": "Phát video giới thiệu, có tiếng",
+      "dialog": "Video giới thiệu",
+      "close": "Đóng video"
+    },
+    "artCaption": "Minh họa dải nốt khi hát. Video giới thiệu sắp có.",
+    "how": {
+      "title": "Cách hoạt động",
+      "step": "Bước {n}",
+      "steps": {
+        "play": {
+          "title": "Phát một bài hát",
+          "body": "Trong Spotify, Apple Music hoặc YouTube, như bạn vẫn làm. OnKey nghe cùng bạn. OnKey không tự phát hay tải nhạc."
+        },
+        "learn": {
+          "title": "Lần phát đầu dạy cho OnKey",
+          "body": "Khi bài hát kết thúc, OnKey mất vài phút để học các nốt của ca sĩ và khớp lời bài hát."
+        },
+        "sing": {
+          "title": "Hát theo gợi ý cao độ",
+          "body": "Lần sau, các nốt trôi về phía bạn và giọng bạn được vẽ lên trên. Xanh là đúng nốt, đỏ là lệch."
+        },
+        "review": {
+          "title": "Xem bạn hát thế nào",
+          "body": "Bạn nhận được điểm số, các nốt hát trúng và trượt, cùng bản ghi giọng để nghe lại cùng bài hát."
+        }
+      },
+      "more": "Muốn biết chi tiết? <link>Đọc chính xác cách OnKey hoạt động</link>, có sơ đồ."
+    },
+    "privacy": {
+      "title": "Nghe, nhưng không bao giờ lưu bản nhạc",
+      "body": "OnKey nghe nhạc chỉ để học giai điệu và giữ các nốt đúng nhịp. OnKey không bao giờ lưu hay tải bản nhạc lên. Thứ ở lại trên máy Mac của bạn là các nốt OnKey học được và bản ghi micrô cho mỗi lượt hát, để bạn nghe lại chính mình.",
+      "link": "Quyền riêng tư & pháp lý",
+      "cards": {
+        "network": {
+          "title": "Không tài khoản, không máy chủ, không phân tích",
+          "body": "Những gì rời khỏi máy Mac của bạn: một chữ ký Shazam (không phải âm thanh) để tìm tên bài mới, tên bài hát gửi tới LRCLIB để lấy lời và tới Apple để lấy ảnh bìa, cùng một lần kiểm tra cập nhật mỗi ngày trên GitHub."
+        },
+        "fair": {
+          "title": "Chấm điểm công bằng",
+          "body": "Hát thấp hơn một quãng tám vẫn được tính, và nhịp của bạn được nới 80 ms. Chênh cao hay thấp mới là thứ làm bạn mất điểm."
+        },
+        "headphones": {
+          "title": "Tai nghe hay loa",
+          "body": "Tai nghe cho điểm ổn định nhất. Khi dùng loa, micrô nghe cả bài hát lẫn giọng bạn, nên OnKey lọc bài hát ra."
+        }
+      }
+    },
+    "questions": {
+      "title": "Câu hỏi",
+      "body": "Những câu mọi người hỏi đầu tiên. <link>Tất cả câu hỏi</link>."
+    },
+    "get": {
+      "title": "Tải OnKey",
+      "body": "Miễn phí và mã nguồn mở theo giấy phép MIT. {requirements}.",
+      "discord": "Tham gia Discord"
+    }
+  },
+  "start": {
+    "title": "Bắt đầu",
+    "lede": "Cài OnKey, cấp hai quyền, rồi phát một bài hát.",
+    "need": {
+      "title": "Bạn cần gì",
+      "music": "Nhạc đang phát trong Spotify hoặc Apple Music, hoặc YouTube trong Chrome, Brave, Edge hay Safari.",
+      "mic": "Một micrô (micrô có sẵn của máy dùng được). Tai nghe cho điểm ổn định nhất.",
+      "why": "macOS 14.2 là phiên bản đầu tiên cho một ứng dụng nghe âm thanh của ứng dụng khác mà không cần driver bổ sung, và các mô hình cần Apple Silicon để chạy đủ nhanh."
+    },
+    "install": {
+      "title": "Cài đặt",
+      "download": "Tải <code>OnKey.dmg</code> từ <link>trang phát hành</link>. Tệp nặng khoảng 350 MB (khoảng 420 MB sau khi cài) vì các mô hình nằm ngay trong ứng dụng, nên OnKey không bao giờ tải thêm gì khác.",
+      "drag": "Mở tệp và kéo OnKey vào thư mục Ứng dụng.",
+      "open": "Mở OnKey. Ứng dụng đã được Apple ký và công chứng, nên mở như mọi ứng dụng khác.",
+      "openAnyway": "Mở OnKey. Bản dựng này chưa được công chứng, nên lần đầu macOS báo không kiểm tra được ứng dụng. Vào <strong>Cài đặt hệ thống → Quyền riêng tư & Bảo mật</strong>, cuộn xuống và bấm <strong>Vẫn mở</strong>. Bạn chỉ cần làm một lần.",
+      "updates": "Sau đó, OnKey kiểm tra GitHub mỗi ngày một lần để tìm phiên bản mới, tải về trong nền (khoảng 350 MB) và cài khi bạn khởi động lại hoặc thoát, không bao giờ cài giữa bài hát. Bạn có thể tắt tính năng này trong <strong>Cài đặt</strong>."
+    },
+    "permissions": {
+      "title": "Quyền truy cập",
+      "permission": "Quyền",
+      "why": "Vì sao OnKey cần",
+      "mic": "<strong>Micrô</strong>",
+      "micWhy": "Để nghe bạn hát.",
+      "audio": "<strong>Ghi âm thanh hệ thống</strong>",
+      "audioWhy": "Để nghe ứng dụng nhạc, nhờ đó OnKey học được giai điệu và giữ các nốt đúng nhịp. macOS gọi đây là ghi âm, nhưng OnKey chỉ phân tích âm thanh trong lúc phát và không bao giờ lưu lại.",
+      "control": "<strong>Điều khiển Spotify và Nhạc</strong> (hỏi khi thiết lập)",
+      "controlWhy": "Để đọc bài nào đang phát và tới đâu, và để phát, tạm dừng, tua cho “Hát lại” và chuyển bài. Thiết lập sẽ nhờ macOS hỏi cho từng ứng dụng đang mở. Ứng dụng chưa mở sẽ được hỏi lần đầu bạn phát một bài trong đó. Chọn “Chỉ nghe” thì OnKey không bao giờ gửi gì cho Spotify hay Nhạc, và theo bài hát bằng âm thanh.",
+      "browser": "<strong>Điều khiển trình duyệt</strong> (tùy chọn, cho YouTube)",
+      "browserWhy": "Chỉ khi bạn bật YouTube, trong Cài đặt hoặc trên trang Hát: để đọc thời gian và tiêu đề của tab YouTube, và để phát, tạm dừng, tua tab đó.",
+      "after": "Bài bạn đã hát trước đây được nhận ra ngay trên máy Mac, bài mới thì nhờ Shazam. Nếu bạn lỡ từ chối một quyền, vào <strong>Cài đặt hệ thống → Quyền riêng tư & Bảo mật</strong>, tìm mục tương ứng và bật OnKey."
+    },
+    "first": {
+      "title": "Bài hát đầu tiên của bạn",
+      "play": "Mở OnKey và phát một bài trong Spotify, Apple Music hoặc YouTube. Chưa biết hát gì? Bấm vào logo OnKey trên trang Hát để xem gợi ý.",
+      "lyrics": "Lần đầu, chưa có nốt nào. Bạn thấy lời bài hát theo từng dòng, đúng nhịp với ca sĩ trong khoảng một phút rưỡi đầu (trừ trên máy Mac 8 GB). Cứ hát theo nếu muốn, vì lượt hát này vẫn được chấm điểm.",
+      "learns": "Khi bài hát kết thúc, OnKey <strong>học bài đó</strong>. Trên máy Mac của tôi mất hai đến ba phút, và nút Hát hiện “Đang học…” cho đến khi xong. Mỗi lần chỉ học một bài, nên các bài phát liên tiếp sẽ hiện “Chờ học” cho đến lượt mình.",
+      "again": "Phát lại bài đó. Các nốt còn mờ (“Đang khớp với bài hát…”) trong vài giây cho đến khi OnKey biết bạn đang ở đâu. Rồi chúng trôi về phía bạn kèm lời trên đó, và cao độ của bạn được vẽ trực tiếp.",
+      "score": "Khi bài kết thúc, bạn nhận được điểm số, báo cáo cho từng nốt và từng dòng, cùng bản ghi giọng để nghe lại cùng bài hát.",
+      "learned": "Một bài được tính là đã học xong khi OnKey nghe được khoảng 70% bài đó. Nếu bạn tua lung tung, phần còn lại sẽ được học lần sau bạn phát những đoạn đó.",
+      "rest": "Hát nhiều? Hãy đọc <link>hát sao cho thoải mái</link>. Sau khoảng 35 phút, OnKey nhắc bạn cho giọng nghỉ.",
+      "next": "Tiếp theo: <how>OnKey hoạt động thế nào</how>, <scoring>cách tính điểm</scoring>, hoặc <troubleshooting>khắc phục sự cố</troubleshooting>."
+    }
+  },
+  "faqPage": {
+    "title": "Hỏi đáp",
+    "before": "Trước khi tải",
+    "using": "Dùng OnKey"
+  },
+  "faq": {
+    "network": {
+      "q": "Có gì rời khỏi máy Mac của tôi không?",
+      "intro": "OnKey không bao giờ lưu hay tải lên bản nhạc đã nghe. Bản ghi giọng và các bài đã học ở lại trên máy Mac của bạn. Những gì được gửi đi:",
+      "shazam": "<strong>Shazam</strong> (Apple): một chữ ký của tối đa 5 giây âm thanh từ ứng dụng nhạc (không phải âm thanh, và không bao giờ là micrô của bạn) để tìm tên bài mới khi không có cách nào khác biết bài gì đang phát. Đó là YouTube, các ứng dụng khác, hoặc chế độ Chỉ nghe. Spotify và Apple Music tự cho biết tên bài, và bài bạn đã hát trước đây được nhận ra ngay trên máy Mac. Bạn có thể tắt Shazam trong Cài đặt.",
+      "lrclib": "<strong>LRCLIB</strong>: nghệ sĩ, tiêu đề, album và độ dài bài hát, để lấy lời đã đồng bộ (trừ khi tắt Hiện lời bài hát).",
+      "apple": "<strong>Apple</strong>: nghệ sĩ và tiêu đề để tìm ảnh bìa album, và mã Apple Music của bài đã nhận ra để lấy độ dài. Ảnh bìa tải từ máy chủ ảnh của Spotify, Apple hoặc YouTube.",
+      "github": "<strong>GitHub</strong>: kiểm tra phiên bản mới mỗi ngày, và tải về bản đó. Bạn có thể tắt trong Cài đặt.",
+      "outro": "Không có tài khoản, không phân tích, không máy chủ nào của tôi. “Báo cáo sự cố” chỉ lưu một tệp trên máy Mac của bạn, để bạn đính kèm vào một issue trên GitHub nếu muốn. <link>Toàn bộ về quyền riêng tư</link>."
+    },
+    "music": {
+      "q": "OnKey có cung cấp hay tải nhạc không?",
+      "a": "Không. Ứng dụng nhạc của bạn phát bài hát (Spotify, Apple Music hoặc YouTube trong trình duyệt). OnKey nghe để học các nốt của ca sĩ và không bao giờ lưu bản nhạc."
+    },
+    "kept": {
+      "q": "OnKey giữ gì trên máy Mac của tôi?",
+      "a": "Với mỗi bài: các nốt, một dấu vân âm thanh và chữ ký Shazam, cùng lời bài hát với thời gian của chúng. Với mỗi lượt hát: một <strong>bản ghi micrô của bạn</strong> (khoảng 0,5 MB mỗi phút), điểm số và lời bạn đã hát, để bạn nghe lại. Tất cả nằm trong <code>{dataDir}</code> (trừ lượt hát bạn chia sẻ, được lưu thành video trong Tải về), và xóa một lượt hát hay bài hát sẽ chuyển nó vào Thùng rác. OnKey không bao giờ giữ bản nhạc, dù một lượt hát qua loa sẽ thu kèm một phần nhạc."
+    },
+    "permissions": {
+      "q": "OnKey hỏi những quyền gì?",
+      "mic": "<strong>Micrô</strong>: để nghe bạn hát.",
+      "audio": "<strong>Ghi âm thanh hệ thống</strong>: để nghe ứng dụng nhạc hoặc trình duyệt đang phát. macOS gọi đây là ghi âm, nhưng OnKey chỉ phân tích âm thanh trong lúc phát và không lưu lại.",
+      "control": "<strong>Điều khiển Spotify và Nhạc</strong> (hỏi khi thiết lập): để đọc bài nào đang phát và tới đâu, và để phát, tạm dừng, tua cho “Hát lại”. Chọn “Chỉ nghe” khi thiết lập, hoặc tắt chúng trong mục “Cho OnKey điều khiển” ở Cài đặt, thì OnKey không bao giờ gửi gì cho chúng.",
+      "browser": "<strong>Điều khiển trình duyệt</strong> (chỉ khi bạn bật YouTube): tương tự cho tab YouTube."
+    },
+    "macs": {
+      "q": "OnKey chạy trên máy Mac nào?",
+      "a": "Apple Silicon (M1 trở lên) với macOS 14.2 trở lên. 14.2 là phiên bản đầu tiên cho một ứng dụng nghe âm thanh của ứng dụng khác mà không cần driver bổ sung, và các mô hình cần Apple Silicon để chạy kịp. 8 GB bộ nhớ là đủ. Không hỗ trợ Mac dùng Intel."
+    },
+    "windows": {
+      "q": "Vì sao chưa có bản Windows, Linux hay điện thoại?",
+      "a": "OnKey được xây trên tính năng thu âm thanh theo từng ứng dụng của macOS và Core ML. Windows cũng nghe được âm thanh của một ứng dụng, nên việc chuyển sang là khả thi, nhưng tôi chưa bắt đầu. Nếu bạn sẽ dùng, hãy lên tiếng ở <link>issue về Windows</link>. Điện thoại không cho một ứng dụng nghe ứng dụng khác, nên bản điện thoại sẽ cần cách làm khác."
+    },
+    "browser": {
+      "q": "OnKey khác gì các ứng dụng khác? Và vì sao không chạy trên trình duyệt?",
+      "compare": "Hầu hết ứng dụng luyện hát cần danh mục bài riêng, nhạc nền hoặc bản nốt soạn tay. OnKey học từ nhạc bạn vẫn phát, nên bạn luyện cùng chính ca sĩ gốc. Bài có giọng hát chính rõ ràng cho kết quả tốt nhất.",
+      "web": "Một trang web không nghe được ứng dụng Spotify hay Apple Music, không hỏi được chúng đang phát gì, và không dùng được ShazamKit hay Core ML. Vì vậy OnKey là ứng dụng Mac."
+    },
+    "scoring": {
+      "q": "Điểm được tính thế nào?",
+      "a": "Cứ mỗi 10 ms mà bạn và ca sĩ cùng hát, cao độ của bạn được so với họ. Trong vòng nửa cung được trọn điểm, giảm dần về không ở một cung rưỡi. Lệch quãng tám không bị trừ, và nhịp của bạn được nới 80 ms. Điểm là độ chính xác của bạn, nhân với tỷ lệ phần của ca sĩ mà bạn đã hát. Xem thêm ở <link>Cách chấm điểm</link>."
+    },
+    "licence": {
+      "q": "Giấy phép là gì?",
+      "a": "MIT. Miễn phí và mã nguồn trên GitHub. Các mô hình có giấy phép riêng, liệt kê trong <link>Ghi công</link>."
+    },
+    "firstPlay": {
+      "q": "Vì sao lần phát đầu không hiện nốt nào?",
+      "a": "OnKey học một bài sau khi lần phát đầu kết thúc, nên chưa có nốt. Thay vào đó bạn thấy lời bài hát theo từng dòng (đúng nhịp với ca sĩ trong khoảng một phút rưỡi đầu, trừ trên máy Mac 8 GB). Cứ hát theo, vì lượt hát đó vẫn được chấm điểm. Từ lần phát thứ hai, các nốt trôi về phía bạn kèm lời trên đó."
+    },
+    "learning": {
+      "q": "Vì sao tôi chưa hát được bài này? Nó hiện “Đang học…”",
+      "a": "Việc học diễn ra sau khi bài kết thúc và mất hai đến ba phút trên máy Mac của tôi. Nút “Hát lại” hiện tiến độ và trở lại khi xong. Các bài khác vẫn hát được trong lúc đó. Mỗi lần chỉ học một bài, nên các bài phát liên tiếp hiện “Chờ học” cho đến lượt mình. Việc học cũng tạm dừng khi bạn hát một bài OnKey đã biết."
+    },
+    "starters": {
+      "q": "Tôi nên hát bài gì đầu tiên?",
+      "a": "OnKey gợi ý những bài mà nó theo tốt. Chúng hiện trên trang Hát khi không có gì đang phát, ở cuối Thư viện, và khi bạn bấm vào logo OnKey trên trang Hát. Mỗi bài có liên kết tới Spotify và Apple Music."
+    },
+    "busy": {
+      "q": "OnKey có làm máy Mac chậm không?",
+      "a": "Hát một bài đã học rất nhẹ: 15 đến 19% của một nhân CPU trên máy Mac của tôi. Học là phần nặng, nên OnKey làm sau khi bài kết thúc, mỗi lần một bài, ở mức ưu tiên thấp. Trong lúc học, OnKey dùng khoảng 1,7 GB bộ nhớ (tối đa 2,4 GB). Trên máy Mac dưới 32 GB, các mô hình được giải phóng sau mỗi bài."
+    },
+    "headphones": {
+      "q": "Tôi có cần tai nghe không?",
+      "a": "Không, nhưng tai nghe cho điểm ổn định nhất. Khi dùng loa, khử tiếng vọng lọc bài hát ra khỏi micrô của bạn: 20 dB hoặc hơn trên loa MacBook, 8 đến 14 dB trên loa ngoài. Nhạc to vẫn có thể lọt vào."
+    },
+    "octave": {
+      "q": "Tôi có thể hát thấp hoặc cao hơn một quãng tám không?",
+      "a": "Có. Cách ca sĩ một quãng tám vẫn tính là đúng nốt."
+    },
+    "apps": {
+      "q": "Những ứng dụng nhạc nào dùng được?",
+      "a": "Spotify, Apple Music, và YouTube trong Chrome, Brave, Edge hay Safari. Theo mặc định, OnKey hỏi Spotify và Apple Music bài nào đang phát, nên vị trí chính xác, và có thể phát, tạm dừng chúng từ cửa sổ của mình. Với “Chỉ nghe” (tắt mọi ứng dụng trong mục “Cho OnKey điều khiển” ở Cài đặt), OnKey nhận ra bài hát bằng âm thanh. YouTube được theo bằng âm thanh trừ khi bạn cho OnKey điều khiển trình duyệt."
+    },
+    "shazam": {
+      "q": "Vì sao dùng Shazam? Thế chẳng phải gửi âm thanh cho Apple sao?",
+      "a": "ShazamKit gửi một chữ ký (dấu vân âm thanh tính ngay trên máy Mac của bạn), không phải âm thanh, và không bao giờ là micrô của bạn. OnKey chỉ hỏi Shazam khi không có cách nào khác biết tên bài: YouTube, các ứng dụng khác, hoặc Chỉ nghe. Bài bạn đã hát trước đây được nhận ra trên máy Mac trước. Tắt Cài đặt → “Dùng Shazam để tìm tên bài mới” thì không gì được gửi cho Apple, nhưng chỉ những bài đã học mới được nhận ra bằng âm thanh."
+    },
+    "lyricsOff": {
+      "q": "Tôi có thể tắt lời bài hát không?",
+      "a": "Có, trong Cài đặt → “Hiện lời bài hát”. Khi tắt, OnKey không hỏi LRCLIB gì cả và không hiện lời. Lời đã có trên máy Mac được ẩn, không bị xóa. Các nốt và điểm vẫn hoạt động như thường, và bài học khi tắt lời sẽ lấy nốt từ giai điệu thôi."
+    },
+    "oddScores": {
+      "q": "Một số bài cho điểm lạ. Vì sao?",
+      "a": "Bài rap hoặc nói hầu như không có giai điệu để chấm, và bè hay hợp xướng có thể làm lẫn giọng nào là giai điệu chính. Xem <link>các giới hạn</link>."
+    },
+    "report": {
+      "q": "Có gì đó bị lỗi. Tôi báo cáo thế nào?",
+      "a": "Dùng <strong>Báo cáo sự cố</strong> trong Cài đặt, menu Trợ giúp, hoặc trang của một lượt hát. OnKey cho bạn xem những gì nằm trong tệp zip (nhật ký ba ngày gần nhất của OnKey và tóm tắt mỗi lần phát, có tên bài nhưng không có lời, âm thanh hay bản ghi) rồi lưu trên máy Mac của bạn. Không gì được tải lên. Sau đó mở một issue trên <github>GitHub</github> và đính kèm tệp zip nếu bạn thấy ổn. Hãy xem <link>Khắc phục sự cố</link> trước."
+    },
+    "updates": {
+      "q": "Tôi nhận cập nhật thế nào?",
+      "a": "Tự động. Mỗi ngày một lần, OnKey kiểm tra GitHub để tìm phiên bản mới và tải về trong nền (khoảng 350 MB, vì các mô hình nằm trong ứng dụng). Bản mới được cài khi bạn chọn Khởi động lại để cập nhật hoặc khi bạn thoát, không bao giờ giữa bài hát. Bạn có thể tắt kiểm tra trong Cài đặt."
+    }
+  },
+  "troubleshooting": {
+    "title": "Khắc phục sự cố",
+    "lede": "Làm gì khi OnKey không khởi động, không nghe được, không tìm được tên bài, hoặc lệch nhịp với tai nghe của bạn.",
+    "starting": {
+      "title": "Kẹt ở “Đang khởi động OnKey…”",
+      "body": "Thường chỉ mất vài giây. Nếu sau một phút vẫn vậy, thoát OnKey (<strong>⌘Q</strong>) rồi mở lại. Nếu vẫn không được, <link>báo cáo sự cố</link>."
+    },
+    "permissions": {
+      "title": "Câu hỏi về quyền",
+      "intro": "OnKey hỏi ba thứ khi thiết lập:",
+      "mic": "<strong>Micrô</strong>: nếu bạn đã từ chối, vào <strong>Cài đặt hệ thống → Quyền riêng tư & Bảo mật → Micrô</strong> và bật OnKey.",
+      "audio": "<strong>Ghi âm thanh hệ thống</strong>: cần để nghe ứng dụng nhạc. Nếu bạn đã từ chối, hoặc OnKey báo “chưa nghe được …”, vào <strong>Cài đặt hệ thống → Quyền riêng tư & Bảo mật → Bản ghi âm thanh hệ thống & màn hình</strong> và bật OnKey trong mục <strong>Chỉ bản ghi âm thanh hệ thống</strong>.",
+      "control": "<strong>Điều khiển Spotify và Apple Music</strong>: thiết lập nhờ macOS hỏi cho từng ứng dụng đang mở. Ứng dụng chưa mở sẽ được hỏi lần đầu bạn phát một bài trong đó. Nếu câu hỏi không xuất hiện, bấm <strong>Tiếp tục</strong>. macOS sẽ hỏi lần đầu bạn phát một bài ở đó. Để đổi câu trả lời, vào <strong>Cài đặt hệ thống → Quyền riêng tư & Bảo mật → Tự động hóa → OnKey</strong>, hoặc dùng <strong>Cho OnKey điều khiển</strong> trong Cài đặt của OnKey.",
+      "buttons": "Các nút trong thông báo của OnKey mở đúng trang Cài đặt hệ thống. macOS có thể yêu cầu mở lại OnKey sau khi bạn đổi một quyền."
+    },
+    "naming": {
+      "title": "Bài mới mất một lúc mới có tên",
+      "body": "Bài mới được Shazam đặt tên, cần kết nối internet, và câu trả lời đầu tiên sau khi cài có thể chậm. Cứ để bài phát tiếp, vì OnKey hỏi liên tục. Nếu báo không kết nối được Shazam, hãy kiểm tra mạng. Bài đã học vẫn được nhận ra ngay trên máy Mac. Cho phép điều khiển Spotify hay Apple Music sẽ nhanh hơn, vì OnKey hỏi được ứng dụng bài nào đang phát."
+    },
+    "noNotes": {
+      "title": "Bài hát không có nốt",
+      "body": "OnKey học một bài sau khi lần phát đầu kết thúc, và nút Hát hiện “Đang học…” cho đến khi xong. Mỗi lần chỉ học một bài, nên các bài khác hiện “Chờ học”. Việc học cũng tạm dừng khi bạn hát một bài OnKey đã biết (“Chờ trong lúc bạn hát”), để các nốt luôn mượt. Một bài được tính là đã học xong khi OnKey nghe được khoảng 70% bài đó, nên nếu bạn đã tua lung tung, hãy phát trọn bài thêm một lần."
+    },
+    "dim": {
+      "title": "Các nốt bị mờ và hiện “Đang khớp với bài hát…”",
+      "body": "OnKey giữ các nốt mờ cho đến khi âm nhạc xác nhận bạn đang ở đâu, để bạn không bao giờ hát theo nốt sai chỗ. Thường mất vài giây sau khi bài bắt đầu hoặc sau khi bạn tua. Nếu vẫn mờ, hãy kiểm tra âm lượng riêng của ứng dụng nhạc có bị vặn quá nhỏ không, vì OnKey cần nghe được nó. Tăng âm lượng ứng dụng và dùng âm lượng của máy Mac thay thế."
+    },
+    "wholeLine": {
+      "title": "Ở lần phát đầu, lời hiện cả dòng một lúc",
+      "body": "Đó là bình thường. Cho đến khi học xong một bài, OnKey chưa biết mỗi từ được hát lúc nào, nên hiện cả dòng. Từ lần phát sau, lời nằm trên các thanh nốt."
+    },
+    "timing": {
+      "title": "Lời sớm hay muộn khi dùng tai nghe?",
+      "latency": "OnKey tính đến thời gian tai nghe hay loa của bạn cần để phát ra âm thanh, dựa trên con số macOS báo cho mỗi đầu ra. Trong thử nghiệm của tôi, con số đó đủ sát, kể cả Bluetooth, nên không có gì phải cài đặt.",
+      "still": "Nếu các nốt vẫn trông sớm hay muộn, có thể OnKey chưa khớp với bài hát. Hãy chờ vài giây, hoặc tua lùi một chút. Điểm của bạn không bị ảnh hưởng dù thế nào, vì OnKey tính độ trễ của bạn sau mỗi bài. Nếu cứ xảy ra với một cặp tai nghe, hãy <link>cho tôi biết</link> đó là loại nào."
+    },
+    "lyrics": {
+      "title": "Không có lời, hoặc sai lời",
+      "body": "Lời bài hát lấy từ <link>LRCLIB</link>, một cơ sở dữ liệu miễn phí do cộng đồng vận hành. Một số bài không có trong đó, hoặc chỉ có ở phiên bản khác. Khi không tìm được gì, OnKey hỏi lại sau một ngày."
+    },
+    "busy": {
+      "title": "Máy Mac của bạn có vẻ bận",
+      "intro": "Học một bài mới là phần nặng, nên OnKey làm sau khi bài kết thúc, ở mức ưu tiên thấp. Hát một bài đã học rất nhẹ. Hai cài đặt giúp ích:",
+      "battery": "<strong>Tiết kiệm pin khi hát</strong> (bật mặc định): khi dùng pin, các nốt được vẽ 30 lần mỗi giây thay vì 60.",
+      "models": "<strong>Giữ sẵn mô hình học</strong> (chỉ bật mặc định với 32 GB trở lên): tắt đi thì các mô hình (khoảng 1,5 GB) được giải phóng sau mỗi bài. Trên máy Mac 8 GB không hiện mục này, vì luôn được giải phóng."
+    },
+    "logs": {
+      "title": "Nhật ký ở đâu",
+      "where": "OnKey ghi nhật ký dạng văn bản thuần vào <code>$TMPDIR/onkey.log</code>. Để mở, chạy lệnh này trong Terminal:",
+      "records": "OnKey cũng giữ nhật ký mỗi ngày và một tóm tắt ngắn của mỗi lần phát (thời gian, CPU, bộ nhớ, bản dựng và máy Mac) trong thư mục<code> records/</code> của thư mục dữ liệu, trong 30 ngày và tối đa 200 MB. Chúng không chứa âm thanh hay lời bài hát, nhưng có tên các bài bạn đã phát."
+    },
+    "report": {
+      "title": "Báo cáo sự cố",
+      "choose": "Chọn <strong>Báo cáo sự cố</strong> trong Cài đặt hoặc <strong>Trợ giúp → Báo cáo sự cố…</strong>, hoặc <strong>Báo cáo sự cố với lượt hát này</strong> trên trang của một lượt hát.",
+      "zip": "OnKey cho bạn xem những gì nằm trong tệp zip: nhật ký ba ngày gần nhất và tóm tắt mỗi lần phát. Không có lời, âm thanh, bản ghi, tên người dùng hay thư mục nhà. Thêm ghi chú nếu muốn, rồi <strong>Lưu</strong> trên máy Mac của bạn. Không gì được tải lên.",
+      "issue": "Chọn <strong>Mở issue trên GitHub</strong> (hoặc vào <link>GitHub</link>), kể lại điều gì đã xảy ra và với bài nào, rồi đính kèm tệp zip nếu bạn thấy ổn."
+    },
+    "more": "Thêm câu trả lời trong <link>Hỏi đáp</link>.",
+    "discord": "Hoặc hỏi trong <link>Discord của OnKey</link>."
+  },
+  "docs": {
+    "diagrams": {
+      "legend": {
+        "label": "Màu dùng trong các hình minh họa",
+        "music": "Nhạc",
+        "musicNote": "thứ ứng dụng nhạc của bạn phát",
+        "singer": "Ca sĩ",
+        "singerNote": "giọng hát gốc, nốt và lời của nó",
+        "you": "Bạn",
+        "youNote": "giọng của bạn, từ micrô",
+        "score": "Điểm của bạn",
+        "scoreNote": "bạn hát sát đến đâu"
+      },
+      "stepOf": "Bước {n} / {total}",
+      "phrase": "Cùng nhau hát lên câu này nào",
+      "big": {
+        "label": "OnKey hoạt động thế nào, từ đầu đến cuối",
+        "all": "Nhạc vào, điểm của bạn ra. Tất cả trên máy Mac của bạn.",
+        "steps": {
+          "play": "Ứng dụng nhạc của bạn phát một bài",
+          "hears": "OnKey nghe bài đó, ngay trên máy Mac",
+          "learns": "Lần đầu, OnKey học bài hát",
+          "sing": "Bạn hát theo các nốt",
+          "score": "Bạn nhận điểm và một bản báo cáo"
+        },
+        "onMac": "OnKey, trên máy Mac của bạn",
+        "musicApp": "Ứng dụng nhạc",
+        "musicAppSub": "Spotify, Nhạc…",
+        "hears": "Nghe",
+        "hearsSub": "không bao giờ lưu",
+        "learns": "Học",
+        "learnsSub": "nốt và lời",
+        "sing": "Bạn hát",
+        "singSub": "micrô của bạn",
+        "score": "Điểm của bạn",
+        "scoreSub": "và một báo cáo"
+      },
+      "hearing": {
+        "label": "OnKey nghe nhạc thế nào",
+        "steps": {
+          "apps": "Nhiều ứng dụng phát âm thanh trên máy Mac",
+          "one": "OnKey chỉ nghe ứng dụng nhạc",
+          "mic": "Micrô của bạn đến theo cùng một đồng hồ",
+          "memory": "Phân tích ngay khi phát, không bao giờ lưu"
+        },
+        "musicApp": "Ứng dụng nhạc",
+        "browser": "Trình duyệt",
+        "messages": "Tin nhắn",
+        "yourMic": "Micrô của bạn",
+        "oneClock": "một đồng hồ",
+        "disk": "ổ đĩa",
+        "noMusicSaved": "không lưu nhạc",
+        "notHeard": "không nghe"
+      },
+      "learning": {
+        "label": "OnKey học một bài hát thế nào",
+        "steps": {
+          "mixed": "Bài hát đến: nhạc và ca sĩ hòa lẫn",
+          "separation": "Tách giọng lấy ra giọng ca sĩ, trong bộ nhớ",
+          "pitch": "Dò cao độ theo ca sĩ, mỗi 10 ms",
+          "notes": "Mỗi cao độ được giữ thành một thanh nốt",
+          "lyrics": "Các dòng lời dời đến chỗ nghe thấy từ",
+          "bars": "Một thanh cho mỗi âm tiết: sẵn sàng để hát"
+        },
+        "singer": "ca sĩ",
+        "everythingElse": "mọi thứ còn lại",
+        "mix": "bản hòa âm",
+        "timing": "thời gian từ tệp lời, sửa lại bằng tai"
+      },
+      "placement": {
+        "label": "OnKey tìm vị trí của bạn trong bài thế nào",
+        "steps": {
+          "fingerprint": "Bài đã học giữ một dấu vân âm thanh của nhạc",
+          "slide": "Vài giây nhạc đang phát trượt dọc theo nó",
+          "match": "Chỗ chúng khớp chính là nơi bạn đang ở",
+          "skip": "Tua tới, và OnKey tìm lại bạn",
+          "listening": "Chế độ nghe: Shazam gọi tên bài chưa học"
+        },
+        "fingerprint": "dấu vân âm thanh của bài đã học (8 dải tần, mỗi 10 ms)",
+        "match": "khớp",
+        "playingNow": "đang phát lúc này",
+        "skipped": "bạn đã tua",
+        "shazam": "Shazam: “một bài mới”, 0:42",
+        "shazamNote": "chỉ cho bài chưa học"
+      },
+      "echo": {
+        "label": "Khử tiếng vọng hoạt động thế nào",
+        "steps": {
+          "speakers": "Không đeo tai nghe, micrô nghe cả bạn và bài hát",
+          "copy": "OnKey biết chính xác bài hát nghe ra sao",
+          "learns": "OnKey học cách âm thanh đó đến micrô",
+          "subtracts": "…rồi trừ nó đi, còn lại giọng bạn",
+          "headphones": "Với tai nghe, không có gì để trừ"
+        },
+        "speakers": "loa",
+        "headphones": "tai nghe",
+        "yourMic": "micrô của bạn",
+        "whatsLeft": "còn lại: bạn",
+        "micHears": "thứ micrô nghe được",
+        "copy": "bản sao bài hát của OnKey (cùng đồng hồ)",
+        "room": "căn phòng thay đổi nó thế nào: trễ, vọng, âm sắc",
+        "minusSong": "− bài hát"
+      },
+      "scoring": {
+        "label": "OnKey chấm điểm giọng hát của bạn thế nào",
+        "steps": {
+          "compare": "Mỗi 10 ms, cao độ của bạn được so với ca sĩ",
+          "credit": "Trong vòng nửa cung là trọn điểm",
+          "octaves": "Lệch một quãng tám lên hay xuống vẫn tính đúng nốt",
+          "slack": "Sớm hoặc muộn một chút không bị trừ",
+          "hit": "Mỗi nốt: trúng nếu bạn giữ được nửa độ dài của nó",
+          "score": "Điểm: độ chính xác, nhân với phần bạn đã hát"
+        },
+        "flat60": "thấp 60 cent: 90% điểm",
+        "octaveLower": "thấp một quãng tám: vẫn xanh",
+        "slack80": "lệch tới 80 ms: chấp nhận",
+        "summary": "chính xác 86% · hát 80%"
+      },
+      "credit": {
+        "title": "Thử xem: bạn được lệch bao xa?",
+        "aria": "Đường cong điểm. Nốt của bạn {dir, select, flat {thấp} other {cao}} {n} cent, được {p}% điểm.",
+        "axis": "cent lệch khỏi nốt (100 cent = 1 nửa cung)",
+        "credit": "{p}% điểm",
+        "yourNote": "Nốt của bạn",
+        "onTheNote": "đúng nốt",
+        "off": "{dir, select, flat {thấp} other {cao}} {n}¢",
+        "octave": "Hát thấp hơn một quãng tám"
+      },
+      "coverage": {
+        "title": "Thử xem: bạn cần hát bao nhiêu phần bài?",
+        "aria": "Hát {p}% phần của ca sĩ với độ chính xác 86% được {s} điểm.",
+        "axis": "phần của ca sĩ mà bạn đã hát",
+        "score": "{s} điểm ở độ chính xác 86%",
+        "youSang": "Bạn đã hát"
+      },
+      "privacy": {
+        "label": "OnKey giữ gì và gửi gì",
+        "all": "OnKey không bao giờ lưu nhạc mà nó nghe",
+        "steps": {
+          "kept": "Giữ trên máy Mac: những gì OnKey học được, và các lượt hát của bạn",
+          "never": "Không bao giờ lưu hay gửi: âm thanh của bản nhạc",
+          "lookups": "Gửi đi: tra cứu theo tên, để lấy lời và ảnh bìa",
+          "shazam": "Để gọi tên bài mới: một chữ ký gửi Shazam"
+        },
+        "yourMac": "Máy Mac của bạn",
+        "kept": {
+          "notes": "Nốt và thanh của mỗi bài",
+          "fingerprint": "Dấu vân âm thanh và chữ ký",
+          "lyrics": "Lời và thời gian của lời",
+          "takes": "Lượt hát: micrô, điểm, lời"
+        },
+        "audio": "Âm thanh bản nhạc: phân tích\nkhi phát, không lưu hay gửi",
+        "lrclib": "nghệ sĩ, tên bài, album,\nđộ dài: để lấy lời",
+        "itunes": "nghệ sĩ, tên bài: ảnh bìa",
+        "shazam": "một chữ ký của bản nhạc,\nkhông bao giờ là micrô;\ncó thể tắt"
+      }
+    },
+    "howItWorks": {
+      "title": "OnKey hoạt động thế nào",
+      "lede": "Bảy phần, từ bức tranh toàn cảnh xuống tới các con số chính xác. Mọi phân tích diễn ra trên máy Mac của bạn.",
+      "exactNumbers": "Các con số chính xác",
+      "big": {
+        "title": "1. Bức tranh toàn cảnh",
+        "steps": {
+          "play": "Bạn phát nhạc như vẫn làm, trong <strong>Spotify, Apple Music hoặc YouTube</strong>. OnKey không tự phát gì cả.",
+          "hears": "OnKey <strong>nghe ứng dụng nhạc</strong> <wave></wave> qua macOS. Âm thanh được phân tích ngay khi phát và không bao giờ lưu.",
+          "learns": "Sau lần phát đầu của một bài, OnKey <strong>học bài đó</strong>: tách giọng ca sĩ <separate></separate>, tìm ra các nốt và canh lời.",
+          "sing": "Từ lần phát sau, bạn thấy các <strong>thanh nốt</strong> <lane></lane> trôi về phía mình, và giọng bạn <mic></mic> được vẽ lên trên.",
+          "score": "Khi bài kết thúc bạn nhận <strong>điểm</strong> <score></score> cùng báo cáo cho từng dòng, và biết mình hay hát cao hay thấp."
+        },
+        "hood": {
+          "app": "Một ứng dụng Mac: động cơ Rust (âm thanh, mô hình, chấm điểm) trong cửa sổ Tauri với giao diện React. <engine>engine.rs</engine> điều hành mọi thứ.",
+          "local": "Mọi thứ diễn ra trên máy Mac của bạn. Các mô hình chạy bằng ONNX Runtime, trên Core ML (GPU và Neural Engine) khi có lợi.",
+          "frames": "Âm thanh được phân tích ở 16 kHz theo từng khung 10 ms, đơn vị mà mọi con số dưới đây dùng (<dsp>dsp.rs</dsp>, <code>FRAME_S</code>).",
+          "learned": "Một bài tính là đã học xong khi 70% của nó đã được nghe (<code>READY_COVERAGE</code> trong <store>store.rs</store>). Bài mới nghe một phần sẽ học tiếp ở những lần phát sau."
+        }
+      },
+      "hearing": {
+        "title": "2. Nghe nhạc",
+        "steps": {
+          "apps": "Máy Mac của bạn phát âm thanh từ nhiều ứng dụng cùng lúc.",
+          "one": "OnKey xin macOS (với sự cho phép của bạn) âm thanh của <strong>một ứng dụng</strong>, ứng dụng nhạc, và bỏ qua phần còn lại.",
+          "mic": "<strong>Micrô</strong> <mic></mic> của bạn được ghi song song, theo <strong>cùng một đồng hồ</strong>, nên OnKey biết bạn hát vào khoảnh khắc nào của bài.",
+          "memory": "Nhạc được phân tích <strong>ngay khi phát</strong>, trong bộ nhớ (bài đang học nằm trong bộ nhớ cho đến khi kết thúc). Không bao giờ ghi ra ổ đĩa, tải lên hay chia sẻ."
+        },
+        "hood": {
+          "capture": "Thu âm dùng process tap của Core Audio (macOS 14.2+), cùng micrô của bạn, ở tần số của thiết bị đầu ra (thường là 48 kHz), theo một đồng hồ (<captureSwift>capture.swift</captureSwift>, <captureRs>capture.rs</captureRs>).",
+          "tapped": "Chỉ các tiến trình của ứng dụng nhạc được bắt, chọn theo bundle id của nó (<source>source.rs</source>).",
+          "resampled": "Mọi thứ được lấy mẫu lại về 16 kHz mono để phân tích. Bản phát hành không bao giờ ghi âm thanh của bản nhạc ra đâu cả. Chỉ giọng của bạn được giữ cùng mỗi lượt hát.",
+          "permissions": "Quyền: ghi âm thanh hệ thống và micrô. Điều khiển Spotify và Nhạc (đang phát gì và ở đâu, “Hát lại”, tua, tạm dừng) là một quyền riêng, hỏi khi thiết lập, và “Chỉ nghe” tắt quyền đó. Điều khiển tab YouTube tắt cho đến khi bạn bật."
+        }
+      },
+      "learning": {
+        "title": "3. Học một bài hát",
+        "steps": {
+          "mixed": "Bài hát đến với OnKey như một âm thanh duy nhất: <strong>ca sĩ và ban nhạc hòa lẫn</strong>.",
+          "separation": "Khi bài đã kết thúc, một mô hình <strong>tách giọng</strong> <separate></separate> lấy giọng hát chính ra khỏi bản hòa âm, từng đoạn một. (Làm việc này trong khi bạn hát sẽ khiến các nốt giật cục.)",
+          "pitch": "Một <strong>bộ dò cao độ</strong> theo giọng ca sĩ <strong>mỗi 10 ms</strong>. Kết quả là một đường ngoằn ngoèo mang đúng giai điệu, gồm cả luyến và rung.",
+          "notes": "Một mô hình nốt biến đường đó thành <strong>các nốt</strong>, với chỗ bắt đầu và kết thúc của từng nốt.",
+          "lyrics": "<strong>Lời bài hát</strong> lấy từ LRCLIB với thời gian ước lượng. Một mô hình nhận dạng giọng nói nghe ca sĩ và dời mỗi dòng đến <strong>chỗ từ ngữ được hát</strong>. Ở lần phát đầu, nó làm vậy cho khoảng một phút rưỡi đầu, để các dòng ấy cũng đúng nhịp.",
+          "bars": "Mỗi dòng được tách thành âm tiết, và mỗi âm tiết có <strong>thanh</strong> <lane></lane> riêng ở nốt của nó. Đó là dải nốt bạn hát theo."
+        },
+        "hood": {
+          "separation": "<strong>Tách giọng:</strong> UVR MDX-Net Karaoke 2 (ONNX, trên Core ML), chạy trên các đoạn 20 giây với 2 giây ngữ cảnh mỗi bên. Nhạc được giữ trong bộ nhớ khi bài phát và tách sau khi kết thúc, ở mức ưu tiên thấp. Mỗi lần chỉ học một bài. Các bài khác chờ tới lượt (“Chờ học”), và việc học tạm dừng khi bạn hát một bài đã học với cửa sổ đang hiện (<learn>learn.rs</learn>, <mdx>mdx.rs</mdx>).",
+          "firstPlay": "<strong>Lần phát đầu:</strong> tới 90 giây đầu được tách ngay khi phát, mỗi lần 5 giây, cho đến khi các dòng lời khớp với ca sĩ. Phần còn lại chờ bài kết thúc. Bước này bị bỏ qua trên máy Mac 8 GB và khi đang học bài khác. Trong thư viện của tôi, 60% dòng ở lần phát đầu nằm trong 0,3 giây so với tiếng hát theo cách này, so với 13% theo thời gian của chính LRCLIB.",
+          "memory": "<strong>Bộ nhớ:</strong> với 8 GB, mỗi lần chỉ nạp một mô hình và gỡ sau bước của nó. Dưới 32 GB, các mô hình học (khoảng 1,5 GB) được gỡ khi một bài đã học xong, trừ khi bật Cài đặt → Giữ sẵn mô hình học (<lowmem>lowmem.rs</lowmem>).",
+          "pitch": "<strong>Cao độ:</strong> CREPE “full” trên giọng đã tách, 16 kHz, bước 10 ms, cửa sổ 1024 mẫu, 50 đến 1100 Hz. Một khung tính là có hát khi độ tin cậy trên 0,45 (<pitch>pitch.rs</pitch>).",
+          "notes": "<strong>Nốt:</strong> GAME (OpenVPI) ký âm các nốt từ giọng hát. Mỗi thanh âm tiết nhận nốt của nó, và thanh không có nốt hát bên dưới bị bỏ (<game>game.rs</game>, <syllables>syllables.rs</syllables>).",
+          "lyrics": "<strong>Lời:</strong> lời đồng bộ từ LRCLIB (tra theo nghệ sĩ, tên bài, album và độ dài, rồi theo tên nếu không thấy). Các dòng được đặt lại bằng cách canh toàn bộ từ của bài với wav2vec 2.0 (CTC), và tách âm tiết bằng từ điển phát âm CMU (<lyrics>lyrics.rs</lyrics>, <ctc>ctc.rs</ctc>).",
+          "measured": "<strong>Đo được:</strong> trên 18 bài đánh dấu bằng tay, 98% nốt hát được một thanh bao phủ, 92% đúng nốt, và 73% bắt đầu trong 0,1 giây. 94% dòng lời nằm trong 0,3 giây.",
+          "kept": "<strong>Giữ cùng bài hát:</strong> đường cao độ, các thanh, một dấu vân nhịp điệu, một chữ ký Shazam và thời gian của lời, cùng mục LRCLIB mà các mốc thời gian đó dựa vào (giữ trên máy Mac, không bao giờ tải lên), để cùng một từ hiện trên cùng một thanh ở mỗi lần phát. Bản nhạc và giọng đã tách không được giữ."
+        }
+      },
+      "placement": {
+        "title": "4. Biết bạn đang ở đâu",
+        "steps": {
+          "fingerprint": "Khi học một bài, OnKey cũng giữ một <strong>dấu vân âm thanh</strong> <fingerprint></fingerprint>: âm thanh thay đổi bao nhiêu ở mỗi dải tần, mỗi 10 ms.",
+          "slide": "Ứng dụng nhạc chỉ báo vị trí trong bài một cách đại khái, nên OnKey trượt <strong>vài giây nhạc đang nghe</strong> dọc theo dấu vân.",
+          "match": "Chỗ chúng khớp chính là <strong>nơi bạn đang ở</strong>. Trước đó các nốt mờ đi (“Đang khớp với bài hát…”). Chúng thường sáng lên sau vài giây đầu bài.",
+          "skip": "Tua, nhảy hay bắt đầu lại, và OnKey <strong>tìm lại bạn</strong> trong vài giây. OnKey giữ trong đầu vài vị trí có thể và chỉ dời nốt khi nhạc đồng ý rõ ràng.",
+          "listening": "Đây là <strong>chế độ nghe</strong>. Bài bạn đã hát được nhận ra trên máy Mac, Shazam gọi tên bài mới, nên OnKey theo được nhạc mà không điều khiển ứng dụng. Điều khiển Spotify và Apple Music cho vị trí chính xác và bật sẵn (“Chỉ nghe” tắt nó). Điều khiển YouTube là tùy chọn."
+        },
+        "hood": {
+          "fingerprint": "<strong>Dấu vân âm thanh:</strong> âm thanh tăng bao nhiêu ở mỗi dải trong 8 dải tần từ khoảng 60 Hz đến 7 kHz, mỗi 10 ms (<code>FP_BANDS</code> trong <dsp>dsp.rs</dsp>).",
+          "placement": "<strong>Định vị:</strong> một bộ theo dõi định vị mọi lần phát (<tracker>tracker.rs</tracker>, theo bộ theo dõi nhạc “any-time” của Arzt và Widmer). Mỗi lần kiểm tra khớp vài giây nhạc cuối, tối đa 8 giây, với dấu vân, chính xác tới khung 10 ms, và giữ vài vị trí tốt nhất làm ứng viên có trọng số, nên một đoạn mở đầu lặp lại khớp lệch một nhịp không lừa được nó. Vị trí từ ứng dụng nhạc và câu trả lời của chế độ nghe chỉ đẩy nhẹ các ứng viên gần đó. Vị trí hiển thị chỉ chuyển sang ứng viên khác khi ứng viên đó dẫn trước rõ ràng trong khoảng 4 giây nhạc.",
+          "measured": "<strong>Đo được:</strong> phát lại 153 lần phát thật với vị trí của ứng dụng nhạc bị sai (lệch 0,73 giây hoặc 1,7 giây, hoặc một lần tua rơi cách 3,5 giây), vị trí hiển thị nằm trong 0,1 giây so với nhạc khoảng 91% thời gian. Các quy tắc trước đó đạt 75%, 0% và 0%.",
+          "listening": "<strong>Chế độ nghe</strong> (luôn bật, <listen>listen.rs</listen>, <recognize>recognize.rs</recognize>): sau 3 giây âm thanh, nó hỏi lần lượt danh mục bài đã học của chính OnKey (ShazamKit, trên máy Mac, chính xác tới khoảng 10 ms), các dấu vân âm thanh, rồi đến danh mục của Shazam. Nó kiểm tra lại mỗi 3 giây với bài đã học và khoảng mỗi 12 giây với bài chỉ Shazam biết. Shazam nhận một chữ ký của tối đa 5 giây âm thanh ứng dụng nhạc, không bao giờ là micrô. Một câu trả lời mới của Shazam cần câu trả lời thứ hai trùng khớp. Tạm dừng là 0,15 giây im lặng số.",
+          "shazamTest": "Thử nghiệm đầu với danh mục Shazam: gọi đúng tên 25 trong 30 bài thử từ 5 giây đầu, trung vị 0,24 giây."
+        }
+      },
+      "you": {
+        "title": "5. Nghe bạn",
+        "steps": {
+          "speakers": "Dùng loa laptop, micrô nghe <strong>cả bạn và bài hát</strong>, gồm cả ca sĩ. Để yên thì ca sĩ sẽ ghi điểm thay bạn.",
+          "copy": "Nhưng OnKey có bản sao bài hát của riêng mình <wave></wave>, cùng đồng hồ với micrô.",
+          "learns": "OnKey <strong>học cách âm thanh đó đến micrô</strong>, gồm độ trễ, tiếng vọng của phòng và âm sắc loa của bạn. Các cuộc gọi video cũng làm vậy.",
+          "subtracts": "Rồi nó <strong>trừ đi</strong> <echo></echo> phần dự đoán của bài hát, và thứ còn lại là <strong>giọng của bạn</strong>.",
+          "headphones": "Với <strong>tai nghe</strong>, micrô không nghe bài hát, nên không có gì để trừ. Đây vẫn là cách thiết lập đáng tin nhất."
+        },
+        "hood": {
+          "livePitch": "<strong>Cao độ trực tiếp:</strong> CREPE “tiny”, trên micrô đã khử tiếng vọng, mỗi 10 ms, chạy trên nhân CPU của Core ML: chấm cao độ chậm hơn giọng bạn 2 đến 4 ms, và hát một bài đã học tốn 15 đến 19% một nhân CPU trên máy Mac của tôi (<pitch>pitch.rs</pitch>).",
+          "canceller": "<strong>Bộ khử tiếng vọng:</strong> bộ lọc thích nghi miền tần số phân đoạn: 16 phân đoạn, mỗi phân đoạn 256 mẫu ở 16 kHz, nên mô hình hóa được 256 ms tiếng vọng (<bleed>bleed.rs</bleed>). Một số đầu ra đưa tiếng vọng đến muộn hơn thế, nên mỗi 2 giây độ trễ của tiếng vọng được đo (GCC-PHAT, tới 800 ms) và bài hát được đưa vào bộ lọc muộn đúng bấy nhiêu. Bộ lọc chỉ thích nghi khi bài hát đến micrô rõ ràng, và nếu đầu ra của nó to hơn micrô thì micrô được cho qua nguyên vẹn.",
+          "measured": "<strong>Đo được:</strong> loa tích hợp của MacBook (tiếng vọng trễ khoảng 24 ms): khử được 20 dB hoặc hơn. Loa ngoài với tiếng vọng trễ khoảng 290 ms: 8 đến 14 dB, tăng từ 1 đến 2 dB trước khi đo độ trễ.",
+          "limit": "<strong>Giới hạn:</strong> 8 đến 14 dB vẫn để lại một phần bài hát to trong micrô, và phần đó có thể bị nhầm là tiếng hát. Tai nghe đáng tin hơn."
+        }
+      },
+      "scoring": {
+        "title": "6. Chấm điểm",
+        "steps": {
+          "compare": "Mỗi 10 ms mà bạn và ca sĩ cùng hát, cao độ của bạn được so với đường của ca sĩ và thanh nốt, <strong>cái nào gần bạn hơn</strong>.",
+          "credit": "Trong vòng <strong>50 cent</strong> (nửa cung) được trọn điểm. Điểm rồi giảm dần về không ở 150 cent.",
+          "octaves": "<strong>Quãng tám được bỏ qua</strong>, nên bạn có thể hát trong quãng giọng của mình.",
+          "slack": "Mỗi nửa giây có thể dịch tới <strong>80 ms</strong> để khớp với ca sĩ, nên sớm hay muộn một chút không làm bạn mất điểm.",
+          "hit": "Mỗi nốt tính là <strong>trúng</strong> nếu bạn giữ trong vòng nửa cung suốt nửa độ dài của nó. 80 ms đầu không tính: ca sĩ thường vuốt lên vào nốt.",
+          "score": "Điểm của bạn <score></score> là <strong>độ chính xác</strong>, nhân với <strong>phần của ca sĩ mà bạn đã hát</strong>, nên một dòng hát hay không đem lại điểm cao."
+        },
+        "lenient": "Mặc định, cách chấm cố ý nhẹ tay, đặt cho người mới như tôi. Người hát tốt có thể chọn mức khắt khe hơn, Vững vàng hoặc Chuyên nghiệp, trong Cài đặt (rung giọng không bị trừ ở cả hai mức).",
+        "explained": "Các con số trong báo cáo của bạn được giải thích ở <link>Cách chấm điểm</link>.",
+        "hood": {
+          "credit": "<strong>Điểm:</strong> <code>clamp((150 − |error|) / 100, 0, 1)</code>, với sai số tính bằng cent gập vào ±600 để quãng tám không tính (<code>credit</code>, <code>fold</code> trong <dsp>dsp.rs</dsp>).",
+          "slack": "<strong>Độ nới nhịp:</strong> mỗi cửa sổ 0,5 giây nhận một độ dịch trong ±80 ms (<code>TOL</code> = 8 khung) khớp bạn tốt nhất (<code>tolerant_error</code>).",
+          "delay": "<strong>Độ trễ của bạn:</strong> sau bài, một lượt tìm từ sớm 0,3 giây đến muộn 1,5 giây tìm ra độ trễ khớp nhất (<analysis>analysis.rs</analysis>).",
+          "notesHit": "<strong>Nốt trúng:</strong> giữ trong vòng 100 cent ít nhất nửa nốt, bỏ qua 80 ms đầu. Nốt ngắn hơn 0,15 giây không tính.",
+          "score": "<strong>Điểm:</strong> <code>100 × accuracy × (0.3 × min(1, sung / 0.1) + 0.7 × min(1, sung / 0.4))</code>: trọn hệ số từ khi hát 40% phần của ca sĩ.",
+          "experts": "<strong>Đối chiếu với chuyên gia:</strong> trên 20 bản ghi đã được xếp hạng, nốt trúng khớp với xếp hạng của chuyên gia ở 0,77 và điểm ở 0,61 (các chuyên gia khớp với nhau ở 0,88)."
+        }
+      },
+      "privacy": {
+        "title": "7. Quyền riêng tư",
+        "steps": {
+          "kept": "Trên máy Mac, OnKey giữ những gì nó <strong>học được</strong> về mỗi bài, và với mỗi lượt hát <strong>một bản ghi micrô của bạn</strong> <lock></lock> (khoảng 0,5 MB mỗi phút), điểm và lời bạn đã hát, để bạn nghe lại. Xóa một lượt hát thì nó vào Thùng rác.",
+          "never": "OnKey <strong>không bao giờ lưu hay gửi âm thanh của bản nhạc</strong>, hay giọng đã tách. (Nếu nhạc phát qua loa, bản ghi micrô của bạn sẽ có một phần nhạc.)",
+          "lookups": "Để tìm lời, OnKey gửi <strong>nghệ sĩ, tên bài, album và độ dài</strong> của bài đến LRCLIB, một cơ sở dữ liệu lời miễn phí do cộng đồng vận hành (trừ khi tắt Hiện lời bài hát). Để lấy ảnh bìa, nó hỏi iTunes Search của Apple theo nghệ sĩ và tên bài.",
+          "shazam": "Để gọi tên một bài chưa học, <strong>chế độ nghe</strong> gửi Shazam một <strong>chữ ký</strong> của tối đa 5 giây âm thanh từ ứng dụng nhạc (không phải âm thanh, và không bao giờ là micrô của bạn). Bài bạn đã hát được nhận ra trên máy Mac, nên không gửi gì cho Shazam với các bài đó. Shazam chỉ được hỏi khi Spotify hoặc Apple Music không cho biết đang phát gì, và bạn có thể tắt trong Cài đặt."
+        },
+        "hood": {
+          "stored": "Lưu trong <code>{dataDir}</code>: <code>songs/</code> (đường cao độ, các thanh, dấu vân âm thanh, thời gian lời và một chữ ký Shazam, lưu cho mỗi bài đã học ở cả hai chế độ), <code>takes/</code> (<code>mic.m4a</code>: micrô của bạn, AAC mono khoảng 64 kbps, khoảng 0,5 MB mỗi phút, giữ tổng cộng tới 2 GB, cùng điểm và báo cáo với các dòng lời) và <code>records/</code> (nhật ký và bản tóm tắt mỗi lần phát, chỉ gồm số, giữ 30 ngày, tối đa 200 MB). Xóa một bài hay lượt hát sẽ chuyển nó vào Thùng rác.",
+          "network": "Mạng: Shazam (chế độ nghe, có thể tắt) cho bài chưa học, tra lời LRCLIB (trừ khi tắt Hiện lời bài hát), iTunes Search cho ảnh bìa, iTunes Lookup cho độ dài bài đã nhận ra, ảnh bìa (từ Apple, hoặc ảnh thu nhỏ của YouTube), và kiểm tra GitHub Releases mỗi ngày để cập nhật. Không tài khoản, không phân tích, không máy chủ của tôi.",
+          "more": "Xem thêm ở <link>Quyền riêng tư & pháp lý</link>."
+        }
+      }
+    },
+    "scoring": {
+      "title": "Cách chấm điểm",
+      "lede": "Mỗi con số nghĩa là gì, được tính thế nào, và còn thiếu ở đâu.",
+      "rules": {
+        "title": "Các quy tắc",
+        "every": "<strong>Mỗi 10 ms đều tính.</strong> Bất cứ khi nào bạn và ca sĩ cùng hát, cao độ của bạn được so với đường cao độ của ca sĩ và thanh nốt, cái nào gần bạn hơn.",
+        "credit": "<strong>Điểm cao độ.</strong> Trong vòng 50 cent (nửa cung) được trọn điểm. Rồi giảm theo đường thẳng về không ở 150 cent.",
+        "octaves": "<strong>Quãng tám được bỏ qua.</strong> Cao hay thấp hơn ca sĩ một quãng tám vẫn tính là đúng nốt, nên bạn có thể hát trong quãng giọng của mình.",
+        "slack": "<strong>Độ nới nhịp.</strong> Mỗi nửa giây có thể dịch tới 80 ms để khớp với ca sĩ, nên sớm hay muộn một chút không làm bạn mất gì.",
+        "delay": "<strong>Độ trễ của bạn được tìm giúp.</strong> Sau bài, OnKey thử các độ trễ từ sớm 0,3 giây đến muộn 1,5 giây và dùng độ trễ khớp bạn tốt nhất (bạn nghe bài hát muộn một chút).",
+        "relaxed": "Đây là các quy tắc ở mức <strong>Thoải mái</strong>, mức mặc định. Chúng cố ý dễ dãi, cho người mới (tôi là một) và trẻ em, nên nếu bạn hát tốt thì sẽ được điểm cao."
+      },
+      "levels": {
+        "title": "Các mức",
+        "intro": "Nếu Thoải mái quá dễ, hãy chọn mức khắt khe hơn trong Cài đặt → Chấm điểm. Mức mới áp dụng từ lượt hát tiếp theo, và mỗi lượt hát giữ mức mà nó được chấm: lượt không ở mức Thoải mái hiện một nhãn nhỏ, và điểm cao nhất của một bài chỉ so các lượt ở cùng mức.",
+        "level": "Mức",
+        "fullWithin": "Trọn điểm trong vòng",
+        "noneFrom": "Không điểm từ",
+        "slack": "Độ nới nhịp",
+        "relaxed": "<strong>Thoải mái</strong> (mặc định)",
+        "steady": "<strong>Vững vàng</strong>",
+        "pro": "<strong>Chuyên nghiệp</strong>",
+        "cents": "{n} cent",
+        "ms": "{n} ms",
+        "vibrato": "<strong>Rung giọng không bị trừ.</strong> Ở mức Vững vàng và Chuyên nghiệp, cao độ của bạn được xét theo tâm của dao động, lấy trung bình trong 0,17 giây (khoảng một chu kỳ của rung giọng thông thường, dao động 5 đến 7 lần mỗi giây). Rung đều quanh đúng nốt được gần trọn điểm; nốt giữ cao hay thấp thì vẫn là cao hay thấp. Ở mức Thoải mái, cao độ chính xác của bạn được dùng như trước, và rung rộng (±80 cent) mất khoảng một phần mười điểm. Quãng tám được bỏ qua ở mọi mức."
+      },
+      "report": {
+        "title": "Các con số trong báo cáo của bạn",
+        "number": "Con số",
+        "meaning": "Ý nghĩa",
+        "score": "<strong>Điểm</strong> (0–100)",
+        "scoreMeaning": "Điểm cao độ trung bình của bạn, nhân với phần của ca sĩ mà bạn đã hát (xem bên dưới).",
+        "accuracy": "<strong>Độ chính xác cao độ</strong>",
+        "accuracyMeaning": "Điểm cao độ trung bình trong lúc bạn hát.",
+        "notesHit": "<strong>Nốt trúng</strong>",
+        "notesHitMeaning": "Những nốt bạn giữ trong vòng nửa cung ít nhất nửa độ dài, với cùng độ nới 80 ms. 80 ms đầu của mỗi nốt được bỏ qua, vì ca sĩ thường vuốt lên vào nốt, và nốt ngắn hơn 0,15 giây không tính.",
+        "sangAlong": "<strong>Hát theo</strong>",
+        "sangAlongMeaning": "Phần của ca sĩ mà bạn cũng đang hát.",
+        "tendency": "<strong>Xu hướng</strong>",
+        "tendencyMeaning": "Bạn hay hát cao hay thấp, tính bằng cent (trung vị của các sai số).",
+        "latency": "<strong>Độ trễ</strong>",
+        "latencyMeaning": "Độ trễ OnKey đã tìm ra và bù cho bạn.",
+        "sangTitle": "“Hát theo” ảnh hưởng điểm thế nào",
+        "sangBody": "Điểm = 100 × độ chính xác cao độ × một hệ số theo phần bạn đã hát. Hát một phần mười phần của ca sĩ được 30% hệ số đó, phần còn lại tích dần cho đến khi bạn hát 40% (một phần giọng hát là bè hoặc ngẫu hứng chẳng ai hát theo). Nên một dòng hát hay không đem lại điểm cao, và người chỉ ngồi nghe được điểm gần như bằng không. Điểm trực tiếp dùng cùng công thức."
+      },
+      "checks": {
+        "title": "Tôi kiểm tra điểm đúng bằng cách nào",
+        "intro": "Mỗi thay đổi của OnKey đều được đo trước khi giữ lại. Thanh nốt được đối chiếu với nốt đánh dấu bằng tay, thời gian lời với lời canh bằng tay, và điểm với các ca sĩ mô phỏng (hoàn hảo, chao đảo, hát cao, và im lặng trong khi bài hát lọt vào micrô) cùng với chính ca sĩ gốc được chấm như thể là bạn.",
+        "check": "Kiểm tra",
+        "result": "Kết quả",
+        "covered": "Nốt đánh dấu bằng tay được một thanh nốt bao phủ",
+        "rightNote": "…có thanh đúng nốt",
+        "starts": "…có thanh bắt đầu trong 0,1 giây",
+        "noNote": "Thanh không có nốt hát bên dưới",
+        "lyricLines": "Dòng lời đặt trong 0,3 giây",
+        "expertsTitle": "Điểm có khớp với chuyên gia không?",
+        "expertsIntro": "Tôi chấm 20 bản ghi người hát, từ kém đến chuyên nghiệp, mà các chuyên gia âm nhạc đã xếp hạng (bộ nghiên cứu PESnQ), để xem OnKey có xếp chúng theo cùng thứ tự không. Trên thang mà 1 là khớp hoàn toàn:",
+        "measure": "Chỉ số",
+        "agreement": "Khớp với chuyên gia",
+        "expertsEachOther": "Chuyên gia với nhau (mức trần thực tế)",
+        "notesHit": "Nốt trúng của OnKey",
+        "score": "Điểm của OnKey",
+        "expertsOutro": "Nốt trúng đã theo sát chuyên gia, và điểm có thể dựa vào nó nhiều hơn. Chỉ có 20 bản ghi, hát không có nhạc nền, nên hãy xem đây là dấu hiệu tốt hơn là bằng chứng."
+      },
+      "limits": {
+        "title": "Giới hạn",
+        "rap": "<strong>Bài rap hoặc nói:</strong> chấm cao độ hầu như không áp dụng được.",
+        "harmonies": "<strong>Bè và hợp xướng:</strong> không luôn rõ giọng nào là giai điệu chính, nên vài thanh có thể theo một giọng bè.",
+        "speakers": "<strong>Hát không đeo tai nghe:</strong> khử tiếng vọng lọc được 20 dB hoặc hơn của bài hát trên loa MacBook, và 8 đến 14 dB trên loa ngoài. Phần còn lại của một bài to có thể bị nhầm là tiếng hát, nên tai nghe đáng tin hơn.",
+        "firstPlay": "<strong>Lần phát đầu</strong> chưa có nốt. Nốt xuất hiện từ lần phát thứ hai."
+      }
+    },
+    "privacy": {
+      "title": "Quyền riêng tư & pháp lý",
+      "translationNote": "Đây là bản dịch. Nếu khác với <link>bản tiếng Anh</link>, bản tiếng Anh được áp dụng.",
+      "lede": "OnKey chạy trên máy Mac của bạn và không bao giờ lưu nhạc mà nó nghe. Bản ghi và các bài đã học của bạn ở lại trên máy Mac. Trang này liệt kê mọi thứ OnKey giữ và mọi thứ OnKey gửi.",
+      "keeps": {
+        "title": "OnKey giữ gì trên máy Mac của bạn",
+        "intro": "Mọi thứ nằm trong <code>{dataDir}</code>.",
+        "songs": "<strong>Bài đã học</strong> (<code>songs/</code>): đường cao độ và thanh nốt của ca sĩ, một dấu vân nhịp điệu và một chữ ký Shazam của bản nhạc (để nhận ra bài và tìm vị trí của bạn), thời điểm mỗi dòng lời bắt đầu, và thời điểm nghe thấy mỗi từ được hát (chỉ thời gian, không có từ).",
+        "lyrics": "<strong>Lời bài hát</strong> (<code>lrclib/</code>): câu trả lời của LRCLIB, giữ tới 30 ngày (một ngày nếu không có). Bài đã học giữ bản lời mà thời gian của nó dựa vào, để cùng một từ hiện ở mỗi lần phát. Lời không bao giờ được tải lên. Khi tắt Cài đặt → “Hiện lời bài hát”, lời đã giữ được ẩn (không xóa) và không tải thêm.",
+        "takes": "<strong>Lượt hát</strong> (<code>takes/</code>): <strong>một bản ghi micrô của bạn</strong> (<code>mic.m4a</code>, khoảng 0,5 MB mỗi phút) để bạn nghe lại, điểm của bạn, và báo cáo, gồm lời và thời gian của lời. Một lượt hát chỉ được lưu nếu bạn hát theo ít nhất 10% phần của ca sĩ. Nếu nhạc phát qua loa, một phần nhạc cũng nằm trong bản ghi. Bản ghi được giữ tổng cộng tới 2 GB. Quá mức đó, bản cũ nhất bị xóa trước, nhưng không bao giờ là lượt của bài yêu thích hay lượt hát tốt nhất của một bài.",
+        "records": "<strong>Hồ sơ</strong> (<code>records/</code>), để chẩn đoán sự cố: một tệp nhật ký mỗi ngày và bản tóm tắt mỗi lần phát (thời gian, CPU, bộ nhớ, bản dựng và máy Mac). Đây là các con số và id, không có âm thanh hay lời, dù nhật ký có ghi tên bài bạn đã phát. Giữ 30 ngày, tối đa 200 MB. Chúng chỉ rời máy Mac nếu bạn tự đính kèm báo cáo vào một issue.",
+        "settings": "Cài đặt của bạn, nghệ sĩ và tên bài bạn đã gõ cho một video YouTube, ảnh bìa các bài khởi đầu, và bộ đệm các mô hình đã biên dịch.",
+        "remove": "Quên một bài trong Thư viện hoặc xóa một lượt hát trong Lịch sử thì tệp của nó vào Thùng rác. Để xóa hết, thoát OnKey và xóa thư mục ở trên."
+      },
+      "never": {
+        "title": "OnKey không bao giờ giữ gì",
+        "body": "Âm thanh của bản nhạc, hay giọng ca sĩ tách ra từ đó. Nó được phân tích trong bộ nhớ khi phát và không bao giờ lưu, tải lên, chia sẻ hay xuất ra. (Bản ghi micrô của bạn có thể chứa nhạc nếu bạn hát khi nhạc phát qua loa.)"
+      },
+      "leaves": {
+        "title": "Thứ rời khỏi máy Mac của bạn",
+        "sentTo": "Gửi đến",
+        "what": "Gì, và khi nào",
+        "shazam": "<strong>Shazam</strong> (Apple, qua ShazamKit)",
+        "shazamWhat": "Một chữ ký của tối đa 5 giây âm thanh từ <strong>ứng dụng nhạc</strong> (không bao giờ là micrô của bạn), không phải chính âm thanh. Chỉ gửi để gọi tên một bài OnKey chưa học khi không ứng dụng nhạc nào cho biết đang phát gì: YouTube, ứng dụng khác, hoặc Chỉ nghe. Spotify và Apple Music tự cho biết tên bài, và bài bạn đã hát được nhận ra trên máy Mac mà không gửi gì. Cài đặt → “Dùng Shazam để tìm tên bài mới” tắt việc này, và khi đó chỉ những bài đã học được nhận ra.",
+        "lrclibWhat": "Nghệ sĩ, tên bài, album và độ dài của bài khi bài bắt đầu, để lấy lời đồng bộ, rồi tìm theo tên nếu không thấy. Câu trả lời được giữ trên máy Mac tới 30 ngày (một ngày nếu không có), nên bài phát lại không bị hỏi lại. LRCLIB là cơ sở dữ liệu lời miễn phí do cộng đồng vận hành. Không gửi gì khi tắt “Hiện lời bài hát”.",
+        "itunes": "<strong>iTunes Search và Lookup</strong> (Apple)",
+        "itunesWhat": "Nghệ sĩ và tên bài, để tìm ảnh bìa album (ảnh liên kết tới trang Apple Music của nó), cả với bài cũ học từ Spotify. Và id Apple Music mà Shazam trả về, để lấy độ dài và album của bài. Ảnh bìa các bài khởi đầu “Thử những bài này” được tra mỗi ảnh một lần, cách quãng, rồi giữ lại, nên các lần sau không gửi gì.",
+        "covers": "<strong>Ảnh bìa</strong>",
+        "coversWhat": "Yêu cầu ảnh thông thường tới máy chủ ảnh của Spotify, Apple hoặc YouTube khi hiển thị ảnh bìa.",
+        "githubWhat": "Kiểm tra phiên bản OnKey mới hơn một phút sau khi mở rồi mỗi ngày một lần, và tải xuống nếu có. Khi tắt <strong>Tự động kiểm tra cập nhật</strong> trong Cài đặt, OnKey chỉ kiểm tra khi bạn nhấn <strong>Kiểm tra ngay</strong>.",
+        "nothingElse": "Không có gì khác đi ra: không tài khoản, không phân tích, không báo cáo lỗi sập, và không máy chủ của tôi. Bản ghi của bạn không bao giờ được tải lên. “Báo cáo sự cố” cho bạn xem bên trong tệp zip gồm số liệu và nhật ký, lưu nó trên máy Mac, và không gửi gì. Bạn tự chọn có đính kèm vào một issue trên GitHub hay không. Các mô hình đi kèm trong ứng dụng, nên OnKey không bao giờ tải chúng về.",
+        "website": "Trang web này (không phải ứng dụng) đếm lượt truy cập bằng Plausible. Nó không dùng cookie và không gì nhận diện bạn, chỉ giữ tổng số, như bao nhiêu người ghé, từ đâu, và bao nhiêu người bấm Tải xuống.",
+        "flowMyna": "Đường đi ẩn danh của lượt truy cập cũng được gửi tới Flow Myna, công cụ phân tích của riêng tôi: lượt truy cập đọc những phần nào của trang, theo thứ tự, và vị trí đại khái của kết nối (như quốc gia). Không cookie, và địa chỉ IP của bạn không được giữ.",
+        "stars": "Số sao trên các nút GitHub lấy thẳng từ GitHub, nên trình duyệt của bạn hỏi GitHub số đó."
+      },
+      "streaming": {
+        "title": "Dịch vụ phát nhạc",
+        "noMusic": "OnKey không cung cấp, phát trực tuyến hay tải nhạc. Ứng dụng nhạc của chính bạn phát nhạc, và OnKey nghe qua quyền thu âm thanh của macOS. OnKey không dùng SDK hay API cho nhà phát triển của bất kỳ dịch vụ phát nhạc nào, và không chạm vào tệp, bộ nhớ hay mã hóa của ứng dụng nào.",
+        "control": "Mặc định, OnKey theo Spotify và Apple Music qua quyền Tự động hóa của macOS (hỏi khi thiết lập): nó đọc đang phát gì và ở đâu, rồi phát, tạm dừng, tua và bắt đầu bài. Nếu bạn bật “YouTube trong trình duyệt” trong Cài đặt (ban đầu tắt), OnKey cũng đọc và điều khiển tab YouTube trong Chrome, Brave, Edge hoặc Safari. Chọn “Chỉ nghe” khi thiết lập, hoặc tắt trong mục “Cho OnKey điều khiển” ở Cài đặt, và OnKey không bao giờ gửi gì cho các ứng dụng đó.",
+        "terms": "OnKey không bao giờ lưu hay xuất nhạc mà nó nghe. Điều khoản của dịch vụ nhạc bạn dùng vẫn áp dụng với cách bạn sử dụng dịch vụ đó."
+      },
+      "rights": {
+        "title": "Chủ sở hữu quyền",
+        "body": "Nếu bạn đại diện cho một chủ sở hữu quyền hoặc một dịch vụ và có băn khoăn về OnKey, hãy gửi email tới <email>{address}</email>. Tôi đọc mọi thư và sẽ trả lời nhanh. Khi băn khoăn là có cơ sở, tôi sẽ thay đổi hoặc gỡ tính năng liên quan. Xem thêm <legal>LEGAL.md</legal>.",
+        "noAddress": "(địa chỉ sẽ có sau)"
+      },
+      "trademarks": {
+        "title": "Nhãn hiệu",
+        "body": "OnKey không liên kết với và không được Spotify, Apple hay Google bảo trợ. Tên của họ là nhãn hiệu của chủ sở hữu và chỉ được dùng để nói OnKey hoạt động với ứng dụng nào."
+      },
+      "licence": {
+        "title": "Giấy phép",
+        "body": "OnKey miễn phí và mã nguồn mở theo giấy phép MIT."
+      }
+    },
+    "yourVoice": {
+      "title": "Hát sao cho thoải mái",
+      "lede": "OnKey làm việc hát hết bài này đến bài khác trở nên dễ dàng, nên giọng của bạn cần được chăm một chút.",
+      "volume": {
+        "title": "Hát ở âm lượng thoải mái",
+        "body": "OnKey chỉ chấm cao độ, nên không cần hát át nhạc. Hát nhẹ vẫn được điểm như vậy. Tai nghe giúp ích, vì bạn không phải tranh với loa để nghe chính mình."
+      },
+      "octave": {
+        "title": "Hạ một quãng tám khi nốt quá tầm",
+        "body": "Nếu một bài quá cao hoặc quá thấp với bạn, hãy hát thấp hoặc cao hơn một quãng tám. OnKey tính đúng nốt ở mọi quãng tám, nên bạn không mất gì. Gắng sức ở rìa quãng giọng là cách nhanh nhất làm giọng mệt."
+      },
+      "warmUp": {
+        "title": "Khởi động và nghỉ giữa chừng",
+        "easy": "Bắt đầu với vài bài dễ, hoặc ngân nhẹ lên xuống quãng giọng của bạn một hai phút.",
+        "water": "Để nước gần bên.",
+        "rest": "Sau khoảng 35 phút hát, OnKey nhắc bạn nghỉ (bạn có thể tắt trong <strong>Cài đặt → Giọng của bạn</strong>).",
+        "gradually": "Tăng dần. Vài giờ trong ngày đầu là nhiều hơn hẳn so với mức hầu hết giọng quen chịu."
+      },
+      "pain": {
+        "title": "Dừng nếu thấy đau",
+        "body": "Đau, họng rát, hoặc giọng vẫn khàn sang ngày hôm sau nghĩa là đến lúc nghỉ. Nếu kéo dài hơn vài tuần, hãy gặp bác sĩ hoặc chuyên gia về giọng."
+      },
+      "technique": "Về kỹ thuật (hơi thở, âm khu, hát không gắng sức), xem <link>Không chỉ cao độ</link>.",
+      "disclaimer": "Trang này là lời khuyên chung về việc hát, không phải tư vấn y khoa."
+    },
+    "beyondPitch": {
+      "title": "Không chỉ cao độ",
+      "lede": "OnKey cho biết bạn có đúng nốt hay không. Hát hay cần nhiều hơn thế, và phần còn lại học từ thầy cô là tốt nhất.",
+      "hear": {
+        "title": "OnKey nghe được gì và không nghe được gì",
+        "body": "OnKey theo cao độ của bạn so với ca sĩ, từng dòng. Đó là cách nhanh để nghe, và thấy, bạn lệch ở đâu. Nó không biết bạn tạo ra âm thanh thế nào: bạn lấy hơi tốt không, có gắng sức không, hay hát có cảm xúc không. Điểm cao nghĩa là bạn trúng nốt, không phải bạn đã hát bài đó hay."
+      },
+      "learn": {
+        "title": "Còn gì cần học",
+        "breath": "<strong>Trụ hơi:</strong> luồng hơi đều đặn đỡ sau âm thanh, để câu dài không hụt hay run.",
+        "tension": "<strong>Ít căng hơn:</strong> cổ họng, hàm và lưỡi thả lỏng. Rướn lên nốt cao bằng cách gắng sức là cách giọng thường mệt hoặc tổn thương.",
+        "registers": "<strong>Âm khu:</strong> giọng ngực, giọng óc và vùng pha trộn giữa hai bên, để bạn đi qua quãng giọng mà không bị gãy.",
+        "vowels": "<strong>Nguyên âm:</strong> tạo hình để nốt vang và nốt cao dễ hơn.",
+        "phrasing": "<strong>Ngắt câu và nhịp:</strong> lấy hơi ở đâu, nhấn từ nào, và vào đúng phách."
+      },
+      "teachers": {
+        "title": "Thầy cô miễn phí để bắt đầu",
+        "callaway": "<link>Dan Callaway</link> dạy thanh nhạc nhạc kịch tại Boston Conservatory at Berklee. Bài học kỹ thuật rõ ràng, từ hơi thở đến belting.",
+        "rolka": "<link>Jeff Rolka</link>: khởi động, hát đúng tông, nốt cao, run và riff.",
+        "suggested": "Cả hai đều được các ca sĩ gợi ý trong cuộc thảo luận khi OnKey ra mắt. Còn nhiều thầy cô giỏi khác, và gợi ý luôn được hoan nghênh trên <link>GitHub</link>."
+      },
+      "lessons": {
+        "title": "Học với thầy cô",
+        "body": "Nếu có thể, hãy học vài buổi. Thầy cô nghe ra trong vài giây điều bạn phải mất hàng tháng mới tự nhận thấy, và đặt bài tập cho giọng của bạn. OnKey rồi có thể là cách bạn luyện giữa các buổi: hát theo bài mình thích, và thấy cao độ ngày càng vững."
+      },
+      "voice": "Để chăm giọng trong lúc luyện, xem <link>Hát sao cho thoải mái</link>."
+    },
+    "credits": {
+      "title": "Ghi công",
+      "lede": "OnKey được xây trên các dự án và dịch vụ mở này.",
+      "component": "Thành phần",
+      "usedFor": "Dùng cho",
+      "licence": "Giấy phép",
+      "uses": {
+        "crepe": "Cao độ: mô hình full khi học, mô hình tiny khi hát trực tiếp",
+        "game": "Nốt của mỗi âm tiết",
+        "wav2vec": "Thời điểm mỗi từ được hát",
+        "uvr": "Tách giọng hát chính",
+        "cmudict": "Đếm âm tiết",
+        "lrclib": "Lời đồng bộ, lấy khi chạy",
+        "shazamkit": "Gọi tên bài mới",
+        "itunes": "Ảnh bìa album và độ dài bài",
+        "hyphenation": "Tách từ thành âm tiết",
+        "onnx": "Chạy các mô hình",
+        "tauri": "Ứng dụng"
+      },
+      "licences": {
+        "service": "Dịch vụ",
+        "macos": "Một phần của macOS"
+      },
+      "notices": "Bản thân OnKey miễn phí và mã nguồn mở theo giấy phép MIT. Thông báo đầy đủ nằm trong <link>THIRD_PARTY_NOTICES.md</link>."
+    }
+  }
+}

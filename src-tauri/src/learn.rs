@@ -180,10 +180,7 @@ pub fn yield_to_singing(cancel: Option<&AtomicBool>) {
 /// the live pitch, and on the efficiency cores when the others are busy. Threads it starts (the models' own) are
 /// made at that QoS too, so the models are loaded after this.
 pub fn lower_priority() {
-    #[cfg(target_os = "macos")]
-    unsafe {
-        libc::pthread_set_qos_class_self_np(libc::qos_class_t::QOS_CLASS_UTILITY, 0);
-    }
+    crate::platform::sys::utility_thread();
 }
 
 /// A turn to separate (see `SEPARATING_AT_ONCE`), given back when dropped.

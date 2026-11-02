@@ -40,6 +40,25 @@ const SPREAD_MAX_S: f64 = 0.045;
 const UNEVEN: &str = "Your taps were too uneven to measure. Try again, tapping along in rhythm, like clapping to a beat.";
 pub const UNBELIEVABLE: &str = "That doesn’t look right: did you wait for each click? Try again, tapping along in rhythm, like clapping to a beat.";
 pub const REACTING: &str = "It looks like you waited for each click. Try tapping along in rhythm instead.";
+const FEW_TAPS: &str = "Not enough taps in time with the clicks. Tap along in rhythm, once on each click.";
+const UNTIMED: &str = "The check couldn’t time its clicks. Try again.";
+const STALLED: &str = "The sound stalled or restarted during the check, so it can’t be timed. Try again.";
+const OUTPUT_CHANGED: &str = "The output changed during the check. Try again.";
+
+/// A refused check's stable code, for the window to say it in its own language (`error` stays the English words;
+/// src-tauri/messages/KINDS.md lists them).
+pub fn error_code(why: &str) -> &'static str {
+    match why {
+        UNEVEN => "uneven",
+        UNBELIEVABLE => "unbelievable",
+        REACTING => "reacting",
+        FEW_TAPS => "few_taps",
+        UNTIMED => "untimed",
+        STALLED => "stalled",
+        OUTPUT_CHANGED => "output_changed",
+        _ => "other",
+    }
+}
 /// Tapping along in rhythm is tight (a standard deviation of 10-20 ms) and steady; waiting for each click and
 /// reacting to it is looser (a reaction varies by 35-60 ms), throws more strays, and falls behind as the run goes
 /// on. Any one of these is reacting (ms, share of taps). On a check's 20 taps counted, in synthetic runs (the
@@ -113,7 +132,7 @@ pub fn estimate(clicks: &[f64], taps: &[f64]) -> Result<Estimate, &'static str> 
     }
     let mut all: Vec<f64> = per.iter().skip(SKIP).flatten().copied().collect();
     if all.len() < MIN_TAPS {
-        return Err("Not enough taps in time with the clicks. Tap along in rhythm, once on each click.");
+        return Err(FEW_TAPS);
     }
     let mid = median(&mut all);
     // one tap per click: the one nearest the rest (a double tap or a slip)
@@ -233,11 +252,11 @@ pub fn on_one_clock(run: &Run) -> Result<Mapped, &'static str> {
         let drift = offs[offs.len() - 1 - k] - offs[k];
         ("output timestamps", median(&mut offs), drift)
     } else {
-        let Some((o, d)) = by_current_time(&run.now) else { return Err("The check couldn’t time its clicks. Try again.") };
+        let Some((o, d)) = by_current_time(&run.now) else { return Err(UNTIMED) };
         ("currentTime", o + run.base_latency.unwrap_or(0.0).clamp(0.0, 0.2), d)
     };
     if drift_s > MAX_DRIFT_S {
-        return Err("The sound stalled or restarted during the check, so it can’t be timed. Try again.");
+        return Err(STALLED);
     }
     let taps: Vec<(f64, bool)> = run.taps.iter().map(|&t| tap_time(t)).collect();
     Ok(Mapped { clicks: run.clicks.iter().map(|c| c + offset_s).collect(), taps: taps.iter().map(|t| t.0 / 1000.0).collect(),
@@ -411,7 +430,7 @@ fn log_run(run: &Run, m: Option<&Mapped>) {
 /// Returns what to show: the measurement and correction, `confirm` (one more to go), or `error` (what to say).
 pub fn check(uid: &str, run: &Run) -> Value {
     if uid.is_empty() || uid != crate::capture::output_uid() {
-        return json!({"error": "The output changed during the check. Try again."});
+        return json!({"error": OUTPUT_CHANGED, "code": error_code(OUTPUT_CHANGED)});
     }
     let mapped = on_one_clock(run);
     log_run(run, mapped.as_ref().ok());
@@ -419,7 +438,7 @@ pub fn check(uid: &str, run: &Run) -> Value {
         crate::engine::log(&format!("output timing check refused: {why}"));
         crate::records::note("output_timing", json!({"what": "check", "ok": false, "why": why, "measured_ms": measured.map(f64::round),
                                                      "clicks": run.clicks.len(), "taps": run.taps.len()}));
-        json!({"error": why})
+        json!({"error": why, "code": error_code(why)})
     };
     let m = match mapped {
         Ok(m) => m,
@@ -491,6 +510,17 @@ pub fn dismiss(uid: &str) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn every_refusal_has_its_own_code() {
+        let all = [UNEVEN, UNBELIEVABLE, REACTING, FEW_TAPS, UNTIMED, STALLED, OUTPUT_CHANGED];
+        let mut codes: Vec<&str> = all.iter().map(|w| error_code(w)).collect();
+        assert!(!codes.contains(&"other"));
+        codes.sort();
+        codes.dedup();
+        assert_eq!(codes.len(), all.len());
+        assert_eq!(error_code("something new"), "other");
+    }
 
     /// 16 clicks at 100 bpm from 0.5 s.
     fn clicks() -> Vec<f64> {

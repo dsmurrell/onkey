@@ -3,9 +3,11 @@
 // fails nothing is deleted, and the error shows here with the button ready to try again.
 import { useState } from "react";
 import { runDelete } from "@/lib/dataSafety";
+import { useT } from "@/lib/i18n";
 
 export default function DeleteButton({ what, confirm, onDelete, className = "" }:
     { what: string; confirm: string; onDelete: () => Promise<void> | void; className?: string }) {
+  const t = useT();
   const [asking, setAsking] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -23,8 +25,8 @@ export default function DeleteButton({ what, confirm, onDelete, className = "" }
             onClick={e => { e.preventDefault(); e.stopPropagation(); }}>
         <span className={error ? "text-off" : "text-ink-300"} role={error ? "alert" : undefined}>{error ?? confirm}</span>
         <button disabled={busy} onClick={confirmed}
-                className="rounded-full bg-off/20 px-2.5 py-1 font-medium text-off transition hover:bg-off/30 disabled:opacity-50">{error ? "Try again" : "Delete"}</button>
-        <button onClick={() => { setAsking(false); setError(null); }} className="rounded-full px-2.5 py-1 text-ink-300 transition hover:bg-white/8">Cancel</button>
+                className="rounded-full bg-off/20 px-2.5 py-1 font-medium text-off transition hover:bg-off/30 disabled:opacity-50">{error ? t("deleteButton.tryAgain") : t("deleteButton.delete")}</button>
+        <button onClick={() => { setAsking(false); setError(null); }} className="rounded-full px-2.5 py-1 text-ink-300 transition hover:bg-white/8">{t("deleteButton.cancel")}</button>
       </span>
     );
   return (

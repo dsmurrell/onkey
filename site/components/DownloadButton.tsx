@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { DOWNLOAD_URL, SITE_URL, WINDOWS_ISSUE_URL } from "@/lib/site";
+import { DOWNLOAD_URL, SITE_URL } from "@/lib/site";
 import { track } from "@/lib/track";
 import { FM_EVENTS, fm } from "@/lib/flowmyna";
 
@@ -25,15 +25,18 @@ const LINK = SITE_URL ?? "https://singonkey.app";
 
 /** The page's main call to action, for whatever the visitor is on. `note`: show the line under it (not in the header). */
 /** `where`: which button it is (header, top, bottom), kept with the visit-path event. */
-export function DownloadButton({ className, note = true, where }: { className: string; note?: boolean; where: string }) {
+/** `text`: the button's words in the page's language (lib/i18n.tsx downloadText), as this runs in the browser. */
+export type DownloadText = { mac: string; macsOnly: React.ReactNode; send: string; sent: string; phones: string; shareText: string; mailSubject: string };
+
+export function DownloadButton({ className, note = true, where, text }: { className: string; note?: boolean; where: string; text: DownloadText }) {
   const device = useDevice();
   const [sent, setSent] = useState("");
-  if (device === "mac") return <a href={DOWNLOAD_URL} data-track="Download for Mac" onClick={() => track("Download")} className={className}>Download for Mac</a>;
+  if (device === "mac") return <a href={DOWNLOAD_URL} data-track="Download for Mac" onClick={() => track("Download")} className={className}>{text.mac}</a>;
   if (device === "other") {
     return (
       <span className="inline-grid gap-1.5">
-        <a href={DOWNLOAD_URL} data-track="Download (not a Mac)" onClick={() => track("Download (not a Mac)")} className={className}>Download for Mac</a>
-        {note && <span className="text-xs text-muted">OnKey runs on Macs only for now. <a href={WINDOWS_ISSUE_URL} data-track="Windows issue" className="underline underline-offset-2">Want Windows? Vote here</a>.</span>}
+        <a href={DOWNLOAD_URL} data-track="Download (not a Mac)" onClick={() => track("Download (not a Mac)")} className={className}>{text.mac}</a>
+        {note && <span className="text-xs text-muted">{text.macsOnly}</span>}
       </span>
     );
   }
@@ -41,17 +44,17 @@ export function DownloadButton({ className, note = true, where }: { className: s
   const send = async () => {
     track("Send to Mac");
     fm(FM_EVENTS.sentToMac, { button: where });  // (downloads and other ways out: Flow Myna's clickout autocapture)
-    const data = { title: "OnKey", text: "OnKey, a singing trainer for the Mac: download it on your Mac from", url: LINK };
+    const data = { title: "OnKey", text: text.shareText, url: LINK };
     if (navigator.share) {
-      try { await navigator.share(data); setSent("Sent"); } catch { /* closed the sheet */ }
+      try { await navigator.share(data); setSent(text.sent); } catch { /* closed the sheet */ }
       return;
     }
-    location.href = `mailto:?subject=${encodeURIComponent("OnKey for my Mac")}&body=${encodeURIComponent(`${data.text} ${LINK}`)}`;
+    location.href = `mailto:?subject=${encodeURIComponent(text.mailSubject)}&body=${encodeURIComponent(`${data.text} ${LINK}`)}`;
   };
   return (
     <span className="inline-grid gap-1.5">
-      <button type="button" onClick={send} className={className}>{sent || "Send it to your Mac"}</button>
-      {note && <span className="text-xs text-muted">OnKey runs on Macs, not phones. Send yourself the link for later.</span>}
+      <button type="button" onClick={send} className={className}>{sent || text.send}</button>
+      {note && <span className="text-xs text-muted">{text.phones}</span>}
     </span>
   );
 }

@@ -1,0 +1,831 @@
+{
+  "meta": {
+    "title": "OnKey: belajar menyanyikan lagu yang Anda sukai",
+    "description": "OnKey adalah pelatih bernyanyi gratis dan bersumber terbuka untuk Mac. Ia mendengarkan musik yang diputar di Mac Anda, mempelajari melodi penyanyinya, dan menampilkan panduan nada selagi Anda bernyanyi, supaya Anda melihat di mana nada Anda terlalu tinggi atau terlalu rendah. Musiknya tidak pernah disimpan."
+  },
+  "common": {
+    "skip": "Langsung ke konten",
+    "joke": "Menyelamatkan penyanyi kamar mandi dari dirinya sendiri sejak 2026",
+    "sourceOnGitHub": "Kode sumber di GitHub",
+    "stars": "{n, plural, other {# bintang di GitHub}}",
+    "requirements": {
+      "silicon": "Mac dengan Apple Silicon (M1 atau lebih baru)",
+      "macos": "macOS 14.2 atau lebih baru"
+    },
+    "early": "{language} masih baru di OnKey: untuk sementara, lagu berbahasa {language} menampilkan liriknya satu baris sekaligus, tanpa pewaktuan per kata."
+  },
+  "header": {
+    "home": "Beranda OnKey",
+    "label": "Utama",
+    "docs": "Dokumentasi",
+    "faq": "Tanya jawab",
+    "whatsNew": "Yang baru",
+    "github": "GitHub",
+    "discord": "Discord"
+  },
+  "footer": {
+    "license": "· gratis dan bersumber terbuka (MIT)",
+    "madeBy": "Dibuat oleh <link>Daniel Murrell</link>",
+    "notAffiliated": "Tidak berafiliasi dengan Spotify, Apple atau Google.",
+    "label": "Kaki halaman",
+    "gettingStarted": "Memulai",
+    "howItWorks": "Cara kerja",
+    "privacy": "Privasi & hukum",
+    "faq": "Tanya jawab",
+    "whatsNew": "Yang baru",
+    "github": "GitHub",
+    "discord": "Discord",
+    "language": "Bahasa",
+    "improve": "Perbaiki terjemahan ini"
+  },
+  "download": {
+    "mac": "Unduh untuk Mac",
+    "macsOnly": "Untuk sementara OnKey hanya berjalan di Mac. <link>Ingin versi Windows? Beri suara di sini</link>.",
+    "send": "Kirim ke Mac Anda",
+    "sent": "Terkirim",
+    "phones": "OnKey berjalan di Mac, bukan di ponsel. Kirim tautannya ke diri sendiri untuk nanti.",
+    "shareText": "OnKey, pelatih bernyanyi untuk Mac: unduh di Mac Anda dari",
+    "mailSubject": "OnKey untuk Mac saya"
+  },
+  "docsNav": {
+    "label": "Dokumentasi",
+    "heading": "Dokumentasi",
+    "inEnglish": "{title} (bahasa Inggris)",
+    "pages": {
+      "start": "Memulai",
+      "howItWorks": "Cara kerja OnKey",
+      "scoring": "Penjelasan penilaian",
+      "privacy": "Privasi & hukum",
+      "faq": "Tanya jawab",
+      "yourVoice": "Bernyanyi dengan nyaman",
+      "beyondPitch": "Lebih dari sekadar nada",
+      "troubleshooting": "Mengatasi masalah",
+      "credits": "Kredit"
+    }
+  },
+  "home": {
+    "kicker": "Pelatih bernyanyi gratis dan bersumber terbuka untuk Mac",
+    "title": "Belajar menyanyikan lagu yang Anda sukai.",
+    "intro": "OnKey mendengarkan musik yang diputar di Mac Anda dan mempelajari melodi penyanyinya. Lalu ia menampilkan panduan nada selagi Anda bernyanyi, supaya Anda melihat di mana nada Anda terlalu tinggi atau terlalu rendah.",
+    "howLink": "Cara kerjanya →",
+    "languages": "Tersedia dalam {names} dan <more>{n, plural, other {# bahasa lainnya}}</more>",
+    "factsLabel": "Sekilas",
+    "facts": {
+      "free": "Gratis dan bersumber terbuka (MIT)",
+      "macs": "Apple Silicon, macOS 14.2+",
+      "local": "Berjalan di Mac Anda, tanpa akun",
+      "music": "Tidak pernah menyimpan musik yang didengarnya"
+    },
+    "laneTitle": "Lagu sudah dipelajari · skor 82",
+    "videoCaption": "Saya ikut bernyanyi, dinilai sambil jalan.",
+    "video": {
+      "label": "1:35 · dengan suara",
+      "video": "OnKey saat dipakai: Daniel ikut bernyanyi, not-not bergulir ke arahnya dan nadanya digambar di atasnya",
+      "play": "Putar video demo, dengan suara",
+      "dialog": "Video demo",
+      "close": "Tutup video"
+    },
+    "artCaption": "Ilustrasi jalur nyanyian. Video demo segera hadir.",
+    "how": {
+      "title": "Cara kerjanya",
+      "step": "Langkah {n}",
+      "steps": {
+        "play": {
+          "title": "Putar lagu",
+          "body": "Di Spotify, Apple Music atau YouTube, seperti biasa. OnKey ikut mendengarkan. Ia tidak memutar atau mengunduh musik sendiri."
+        },
+        "learn": {
+          "title": "Putaran pertama mengajarinya",
+          "body": "Saat lagu selesai, OnKey memerlukan beberapa menit untuk mempelajari not-not penyanyi dan menyelaraskan liriknya."
+        },
+        "sing": {
+          "title": "Bernyanyi dengan panduan nada",
+          "body": "Lain kali, not-not bergulir ke arah Anda dan suara Anda digambar di atasnya. Hijau berarti tepat di not, merah berarti melenceng."
+        },
+        "review": {
+          "title": "Lihat hasil Anda",
+          "body": "Anda mendapat skor, not yang tercapai dan terlewat, dan rekaman Anda untuk diputar ulang bersama lagunya."
+        }
+      },
+      "more": "Ingin detailnya? <link>Baca persis cara kerja OnKey</link>, dengan diagram."
+    },
+    "privacy": {
+      "title": "Ia mendengarkan, tetapi tidak pernah menyimpan musiknya",
+      "body": "OnKey mendengarkan musik hanya untuk mempelajari melodi dan menjaga not tetap tepat waktu. Ia tidak pernah menyimpan atau mengunggahnya. Yang tetap di Mac Anda adalah not yang dipelajarinya dan rekaman mikrofon Anda untuk setiap take, supaya Anda dapat mendengarkan diri sendiri.",
+      "link": "Privasi & hukum",
+      "cards": {
+        "network": {
+          "title": "Tanpa akun, tanpa server, tanpa analitik",
+          "body": "Yang keluar dari Mac Anda: tanda tangan Shazam (bukan audio) untuk menamai lagu baru, nama lagu ke LRCLIB untuk lirik dan ke Apple untuk sampul, serta pengecekan pembaruan harian di GitHub."
+        },
+        "fair": {
+          "title": "Penilaian yang adil",
+          "body": "Bernyanyi satu oktaf lebih rendah tetap dihitung, dan waktu Anda mendapat kelonggaran 80 md. Yang mengurangi skor adalah nada yang terlalu tinggi atau terlalu rendah."
+        },
+        "headphones": {
+          "title": "Headphone atau speaker",
+          "body": "Headphone memberi skor yang paling andal. Lewat speaker, mikrofon Anda mendengar lagunya sekaligus suara Anda, jadi OnKey menyaring lagunya keluar."
+        }
+      }
+    },
+    "questions": {
+      "title": "Pertanyaan",
+      "body": "Yang paling sering ditanyakan lebih dulu. <link>Semua pertanyaan</link>."
+    },
+    "get": {
+      "title": "Dapatkan OnKey",
+      "body": "Gratis dan bersumber terbuka di bawah lisensi MIT. {requirements}.",
+      "discord": "Gabung ke Discord"
+    }
+  },
+  "start": {
+    "title": "Memulai",
+    "lede": "Pasang OnKey, beri dua izin, dan putar lagu.",
+    "need": {
+      "title": "Yang Anda perlukan",
+      "music": "Musik yang diputar di Spotify atau Apple Music, atau YouTube di Chrome, Brave, Edge atau Safari.",
+      "mic": "Mikrofon (yang bawaan juga bisa). Headphone memberi skor yang paling andal.",
+      "why": "macOS 14.2 adalah versi pertama yang membiarkan satu aplikasi mendengar suara aplikasi lain tanpa driver tambahan, dan modelnya memerlukan Apple Silicon agar cukup cepat."
+    },
+    "install": {
+      "title": "Pasang",
+      "download": "Unduh <code>OnKey.dmg</code> dari <link>halaman rilis</link>. Ukurannya sekitar 350 MB (sekitar 420 MB setelah terpasang) karena modelnya disertakan di dalam aplikasi, sehingga tidak perlu mengunduh apa pun lagi.",
+      "drag": "Buka dan seret OnKey ke folder Aplikasi.",
+      "open": "Buka OnKey. Aplikasi ini ditandatangani dan dinotarisasi oleh Apple, jadi terbuka seperti aplikasi lain.",
+      "openAnyway": "Buka OnKey. Build ini belum dinotarisasi, jadi pada pembukaan pertama macOS mengatakan tidak dapat memeriksa aplikasinya. Buka <strong>Pengaturan Sistem → Privasi & Keamanan</strong>, gulir ke bawah, dan klik <strong>Tetap Buka</strong>. Ini hanya perlu dilakukan sekali.",
+      "updates": "Setelah itu, OnKey memeriksa versi baru di GitHub sekali sehari, mengunduhnya di latar belakang (sekitar 350 MB), dan memasangnya saat Anda mulai ulang atau keluar, tidak pernah di tengah lagu. Anda dapat mematikannya di <strong>Pengaturan</strong>."
+    },
+    "permissions": {
+      "title": "Izin",
+      "permission": "Izin",
+      "why": "Mengapa OnKey memerlukannya",
+      "mic": "<strong>Mikrofon</strong>",
+      "micWhy": "Untuk mendengar Anda bernyanyi.",
+      "audio": "<strong>Rekaman audio sistem</strong>",
+      "audioWhy": "Untuk mendengar aplikasi musik, supaya OnKey dapat mempelajari melodi dan menjaga not tetap tepat waktu. macOS menyebutnya merekam, tetapi OnKey menganalisis suara saat diputar dan tidak pernah menyimpannya.",
+      "control": "<strong>Mengontrol Spotify dan Musik</strong> (ditanyakan saat penyiapan)",
+      "controlWhy": "Untuk membaca lagu yang diputar dan posisinya, serta memutar, menjeda dan menggeser untuk “Nyanyikan lagi” dan melompat. Penyiapan meminta macOS bertanya untuk setiap aplikasi yang terbuka. Aplikasi yang belum terbuka ditanyakan saat Anda pertama kali memutar lagu di sana. Pilih “Hanya mendengarkan” dan OnKey tidak pernah mengirim apa pun ke Spotify atau Musik, lalu mengikuti lagu dari suaranya.",
+      "browser": "<strong>Mengontrol browser Anda</strong> (opsional, untuk YouTube)",
+      "browserWhy": "Hanya jika Anda mengaktifkan YouTube, di Pengaturan atau di halaman Nyanyi: untuk membaca waktu dan judul tab YouTube, serta memutar, menjeda dan menggesernya.",
+      "after": "Lagu yang pernah Anda nyanyikan dikenali di Mac Anda, lagu baru oleh Shazam. Jika Anda tidak sengaja menolak izin, buka <strong>Pengaturan Sistem → Privasi & Keamanan</strong>, cari bagiannya, dan aktifkan OnKey."
+    },
+    "first": {
+      "title": "Lagu pertama Anda",
+      "play": "Buka OnKey dan putar lagu di Spotify, Apple Music atau YouTube. Belum tahu mau menyanyikan apa? Klik logo OnKey di halaman Nyanyi untuk mendapat saran.",
+      "lyrics": "Pada putaran pertama belum ada not. Anda melihat lirik satu baris sekaligus, selaras dengan penyanyi selama sekitar satu setengah menit pertama (kecuali di Mac 8 GB). Ikut bernyanyi jika mau, karena take ini tetap dinilai.",
+      "learns": "Saat lagu selesai, OnKey <strong>mempelajarinya</strong>. Di Mac saya itu memerlukan dua sampai tiga menit, dan tombol Nyanyi bertuliskan “Mempelajari…” sampai selesai. Satu lagu dipelajari pada satu waktu, jadi lagu yang diputar berturut-turut bertuliskan “Menunggu dipelajari” sampai gilirannya.",
+      "again": "Putar lagi. Not-notnya tetap redup (“Menyelaraskan dengan lagu…”) selama beberapa detik sampai OnKey tahu posisi Anda. Lalu not-not bergulir ke arah Anda dengan liriknya, dan nada Anda digambar langsung.",
+      "score": "Saat selesai, Anda mendapat skor, laporan untuk setiap not dan baris, dan rekaman Anda untuk diputar ulang bersama lagunya.",
+      "learned": "Sebuah lagu dianggap sudah dipelajari setelah OnKey mendengar sekitar 70% darinya. Jika Anda melompat-lompat, sisanya dipelajari saat Anda memutar bagian itu lagi.",
+      "rest": "Banyak bernyanyi? Bacalah <link>bernyanyi dengan nyaman</link>. Setelah sekitar 35 menit, OnKey mengingatkan Anda untuk mengistirahatkan suara.",
+      "next": "Berikutnya: <how>cara kerja OnKey</how>, <scoring>cara kerja skor</scoring>, atau <troubleshooting>mengatasi masalah</troubleshooting>."
+    }
+  },
+  "faqPage": {
+    "title": "Tanya jawab",
+    "before": "Sebelum mengunduh",
+    "using": "Memakai OnKey"
+  },
+  "faq": {
+    "network": {
+      "q": "Apakah ada yang keluar dari Mac saya?",
+      "intro": "OnKey tidak pernah menyimpan atau mengunggah musik yang didengarnya. Rekaman Anda dan lagu yang dipelajari tetap di Mac Anda. Yang keluar:",
+      "shazam": "<strong>Shazam</strong> (Apple): tanda tangan dari maksimal 5 detik suara aplikasi musik (bukan audionya, dan tidak pernah mikrofon Anda) untuk menamai lagu baru saat tidak ada yang lain yang bisa memberi tahu apa yang diputar. Itu berlaku untuk YouTube, aplikasi lain, atau mode Hanya mendengarkan. Spotify dan Apple Music menamai lagunya sendiri, dan lagu yang pernah Anda nyanyikan dikenali di Mac Anda. Anda dapat mematikan Shazam di Pengaturan.",
+      "lrclib": "<strong>LRCLIB</strong>: artis, judul, album dan durasi lagu, untuk mengambil lirik tersinkron (kecuali Tampilkan lirik dimatikan).",
+      "apple": "<strong>Apple</strong>: artis dan judul untuk mencari sampul album, dan id Apple Music dari lagu yang dikenali untuk mendapatkan durasinya. Sampulnya sendiri dimuat dari server gambar Spotify, Apple atau YouTube.",
+      "github": "<strong>GitHub</strong>: pengecekan harian untuk versi baru, dan unduhannya. Anda dapat mematikannya di Pengaturan.",
+      "outro": "Tidak ada akun, tidak ada analitik, dan tidak ada server milik saya. “Laporkan masalah” hanya menyimpan file di Mac Anda, untuk Anda lampirkan ke issue GitHub jika mau. <link>Privasi selengkapnya</link>."
+    },
+    "music": {
+      "q": "Apakah OnKey menyediakan atau mengunduh musik?",
+      "a": "Tidak. Aplikasi musik Anda sendiri yang memutar lagu (Spotify, Apple Music, atau YouTube di browser). OnKey mendengarkan untuk mempelajari not-not penyanyi dan tidak pernah menyimpan musiknya."
+    },
+    "kept": {
+      "q": "Apa yang disimpannya di Mac saya?",
+      "a": "Untuk setiap lagu: not-notnya, sidik jari dan tanda tangan Shazam, serta lirik dengan pewaktuannya. Untuk setiap take: <strong>rekaman mikrofon Anda</strong> (sekitar 0,5 MB per menit), skor Anda, dan lirik yang Anda nyanyikan, supaya Anda dapat memutarnya ulang. Semuanya ada di <code>{dataDir}</code> (kecuali take yang Anda bagikan, yang disimpan sebagai video di Unduhan), dan menghapus take atau lagu memindahkannya ke Tong Sampah. Musiknya tidak pernah disimpan, meski take yang dinyanyikan lewat speaker akan menangkap sebagian."
+    },
+    "permissions": {
+      "q": "Izin apa saja yang dimintanya?",
+      "mic": "<strong>Mikrofon</strong>: untuk mendengar Anda bernyanyi.",
+      "audio": "<strong>Rekaman audio sistem</strong>: untuk mendengar aplikasi musik atau browser yang sedang memutar. macOS menyebutnya merekam, tetapi OnKey menganalisis suara saat diputar dan tidak menyimpannya.",
+      "control": "<strong>Kontrol atas Spotify dan Musik</strong> (ditanyakan saat penyiapan): untuk membaca lagu yang diputar dan posisinya, serta memutar, menjeda dan menggeser untuk “Nyanyikan lagi”. Pilih “Hanya mendengarkan” saat penyiapan, atau matikan di bawah “Izinkan OnKey mengontrol” di Pengaturan, dan OnKey tidak pernah mengirim apa pun ke keduanya.",
+      "browser": "<strong>Kontrol atas browser Anda</strong> (hanya jika Anda mengaktifkan YouTube): hal yang sama untuk tab YouTube."
+    },
+    "macs": {
+      "q": "Di Mac mana saja ia berjalan?",
+      "a": "Apple Silicon (M1 atau lebih baru) dengan macOS 14.2 atau lebih baru. 14.2 adalah versi pertama yang membiarkan satu aplikasi mendengar suara aplikasi lain tanpa driver tambahan, dan modelnya memerlukan Apple Silicon agar bisa mengimbangi. Memori 8 GB sudah cukup. Mac Intel tidak didukung."
+    },
+    "windows": {
+      "q": "Mengapa tidak ada versi Windows, Linux atau ponsel?",
+      "a": "OnKey dibangun di atas penangkapan audio per aplikasi di macOS dan Core ML. Windows juga dapat mendengar suara satu aplikasi, jadi porting mungkin saja, tetapi saya belum memulainya. Jika Anda akan memakainya, sampaikan di <link>issue Windows</link>. Ponsel tidak membiarkan satu aplikasi mendengar aplikasi lain, jadi versi ponsel memerlukan pendekatan yang berbeda."
+    },
+    "browser": {
+      "q": "Bagaimana dibanding aplikasi lain? Dan mengapa tidak di browser?",
+      "compare": "Kebanyakan aplikasi bernyanyi memerlukan katalog sendiri, musik pengiring, atau bagan not buatan tangan. OnKey belajar dari musik yang sudah Anda putar, jadi Anda berlatih dengan artis aslinya. Lagu dengan vokal utama yang jelas paling cocok.",
+      "web": "Halaman web tidak dapat mendengar aplikasi Spotify atau Apple Music, tidak dapat menanyakan apa yang diputar, dan tidak dapat memakai ShazamKit atau Core ML. Jadi OnKey adalah aplikasi Mac."
+    },
+    "scoring": {
+      "q": "Bagaimana skor dihitung?",
+      "a": "Setiap 10 md saat Anda dan penyanyi sama-sama bernyanyi, nada Anda dibandingkan dengan nada penyanyi. Dalam setengah semiton mendapat nilai penuh, berkurang sampai nol pada satu setengah semiton. Oktaf tidak mengurangi nilai, dan waktu Anda mendapat kelonggaran 80 md. Skor adalah akurasi Anda, diskalakan dengan seberapa banyak bagian penyanyi yang Anda nyanyikan. Selengkapnya di <link>Penjelasan penilaian</link>."
+    },
+    "licence": {
+      "q": "Apa lisensinya?",
+      "a": "MIT. Gratis dan kode sumbernya ada di GitHub. Modelnya punya lisensi sendiri, tercantum di <link>Kredit</link>."
+    },
+    "firstPlay": {
+      "q": "Mengapa putaran pertama tidak menampilkan not?",
+      "a": "OnKey mempelajari lagu setelah putaran pertamanya selesai, jadi belum ada not. Anda melihat liriknya saja, satu baris sekaligus (selaras dengan penyanyi selama sekitar satu setengah menit pertama, kecuali di Mac 8 GB). Ikut bernyanyi saja, karena take itu tetap dinilai. Mulai putaran kedua, not-not bergulir ke arah Anda dengan liriknya."
+    },
+    "learning": {
+      "q": "Mengapa saya belum bisa menyanyikan sebuah lagu? Tulisannya “Mempelajari…”",
+      "a": "Pembelajaran terjadi setelah lagu selesai dan memerlukan dua sampai tiga menit di Mac saya. Tombol “Nyanyikan lagi” menampilkan kemajuannya dan kembali saat selesai. Lagu lain tetap dapat dinyanyikan sementara itu. Satu lagu dipelajari pada satu waktu, jadi lagu yang diputar berturut-turut bertuliskan “Menunggu dipelajari” sampai gilirannya. Pembelajaran juga berhenti sejenak selagi Anda menyanyikan lagu yang sudah dikenal OnKey."
+    },
+    "starters": {
+      "q": "Apa yang sebaiknya saya nyanyikan dulu?",
+      "a": "OnKey menyarankan lagu yang diikutinya dengan baik. Lagu-lagu itu tampil di halaman Nyanyi saat tidak ada yang diputar, di bagian bawah Pustaka, dan saat Anda mengklik logo OnKey di halaman Nyanyi. Masing-masing punya tautan ke Spotify dan Apple Music."
+    },
+    "busy": {
+      "q": "Apakah Mac saya akan melambat?",
+      "a": "Menyanyikan lagu yang sudah dipelajari itu ringan: 15 sampai 19% dari satu inti CPU di Mac saya. Pembelajaran adalah bagian yang berat, jadi OnKey melakukannya setelah lagu selesai, satu lagu pada satu waktu, dengan prioritas rendah. Saat mempelajari, ia memakai sekitar 1,7 GB memori (paling banyak 2,4 GB). Di Mac dengan memori kurang dari 32 GB, modelnya dilepas setelah setiap lagu."
+    },
+    "headphones": {
+      "q": "Apakah saya perlu headphone?",
+      "a": "Tidak, tetapi headphone memberi skor yang paling andal. Lewat speaker, peredam gema menyingkirkan lagu dari mikrofon Anda: 20 dB atau lebih di speaker MacBook, 8 sampai 14 dB di speaker eksternal. Musik yang keras masih bisa bocor masuk."
+    },
+    "octave": {
+      "q": "Bolehkah saya bernyanyi di oktaf yang lebih rendah atau lebih tinggi?",
+      "a": "Boleh. Satu oktaf dari penyanyi dihitung tepat di not."
+    },
+    "apps": {
+      "q": "Aplikasi musik mana yang bisa dipakai?",
+      "a": "Spotify, Apple Music, dan YouTube di Chrome, Brave, Edge atau Safari. Secara bawaan, OnKey menanyakan ke Spotify dan Apple Music apa yang diputar, sehingga posisinya tepat, dan ia dapat memutar dan menjeda keduanya dari jendelanya sendiri. Dengan “Hanya mendengarkan” (semua aplikasi dimatikan di bawah “Izinkan OnKey mengontrol” di Pengaturan), ia mengenali lagu dari suaranya. YouTube diikuti dari suaranya kecuali Anda mengizinkan OnKey mengontrol browser Anda."
+    },
+    "shazam": {
+      "q": "Mengapa memakai Shazam? Bukankah itu mengirim audio ke Apple?",
+      "a": "ShazamKit mengirim tanda tangan (sidik jari yang dihitung di Mac Anda), bukan audionya, dan tidak pernah mikrofon Anda. OnKey hanya bertanya ke Shazam saat tidak ada yang lain yang bisa menamai lagunya: YouTube, aplikasi lain, atau Hanya mendengarkan. Lagu yang pernah Anda nyanyikan dikenali di Mac Anda dulu. Matikan Pengaturan → “Gunakan Shazam untuk menamai lagu baru” dan tidak ada yang dikirim ke Apple, tetapi hanya lagu yang sudah dipelajari yang dikenali dari suaranya."
+    },
+    "lyricsOff": {
+      "q": "Bisakah saya mematikan lirik?",
+      "a": "Bisa, di Pengaturan → “Tampilkan lirik”. Jika dimatikan, OnKey tidak meminta apa pun ke LRCLIB dan tidak menampilkan lirik. Lirik yang sudah ada di Mac Anda disembunyikan, bukan dihapus. Not dan skor berfungsi seperti biasa, dan lagu yang dipelajari saat lirik dimatikan mendapat not-notnya dari melodi saja."
+    },
+    "oddScores": {
+      "q": "Beberapa lagu skornya aneh. Mengapa?",
+      "a": "Lagu rap atau yang dibawakan dengan bicara hampir tidak punya melodi untuk dinilai, dan harmoni atau paduan suara dapat membingungkan suara mana yang menjadi melodi. Lihat <link>batasannya</link>."
+    },
+    "report": {
+      "q": "Ada yang salah. Bagaimana cara melaporkannya?",
+      "a": "Pakai <strong>Laporkan masalah</strong> di Pengaturan, menu Bantuan, atau halaman sebuah take. Anda ditunjukkan isi zip-nya (log OnKey tiga hari terakhir dan ringkasan setiap pemutaran, dengan nama lagu tetapi tanpa lirik, audio atau rekaman) dan zip itu disimpan di Mac Anda. Tidak ada yang diunggah. Lalu buka issue di <github>GitHub</github> dan lampirkan zip-nya jika Anda berkenan. Lihat <link>Mengatasi masalah</link> dulu."
+    },
+    "updates": {
+      "q": "Bagaimana cara mendapat pembaruan?",
+      "a": "Otomatis. Sekali sehari OnKey memeriksa versi baru di GitHub dan mengunduhnya di latar belakang (sekitar 350 MB, karena modelnya ada di dalam aplikasi). Pembaruan dipasang saat Anda memilih Mulai ulang untuk memperbarui atau saat Anda keluar, tidak pernah di tengah lagu. Anda dapat mematikan pengecekannya di Pengaturan."
+    }
+  },
+  "troubleshooting": {
+    "title": "Mengatasi masalah",
+    "lede": "Yang perlu dilakukan saat OnKey tidak mau mulai, tidak dapat mendengar, tidak dapat menamai lagu, atau tidak sinkron dengan headphone Anda.",
+    "starting": {
+      "title": "Tetap di “Memulai OnKey…”",
+      "body": "Biasanya ini hanya beberapa detik. Jika setelah satu menit masih di sana, keluar dari OnKey (<strong>⌘Q</strong>) dan buka lagi. Jika itu tidak membantu, <link>laporkan masalah</link>."
+    },
+    "permissions": {
+      "title": "Pertanyaan soal izin",
+      "intro": "OnKey meminta tiga hal saat penyiapan:",
+      "mic": "<strong>Mikrofon</strong>: jika Anda menolak, buka <strong>Pengaturan Sistem → Privasi & Keamanan → Mikrofon</strong> dan aktifkan OnKey.",
+      "audio": "<strong>Rekaman audio sistem</strong>: diperlukan untuk mendengar aplikasi musik. Jika Anda menolak, atau OnKey mengatakan “belum dapat mendengar …”, buka <strong>Pengaturan Sistem → Privasi & Keamanan → Rekaman Layar & Audio Sistem</strong> dan aktifkan OnKey di bawah <strong>Hanya Rekaman Audio Sistem</strong>.",
+      "control": "<strong>Kontrol atas Spotify dan Apple Music</strong>: penyiapan meminta macOS bertanya untuk setiap aplikasi yang terbuka. Aplikasi yang belum terbuka ditanyakan saat Anda pertama kali memutar lagu di sana. Jika pertanyaannya tidak muncul, klik <strong>Lanjutkan</strong>. macOS bertanya saat Anda pertama kali memutar lagu di sana. Untuk mengubah jawaban Anda, buka <strong>Pengaturan Sistem → Privasi & Keamanan → Automasi → OnKey</strong>, atau pakai <strong>Izinkan OnKey mengontrol</strong> di Pengaturan OnKey.",
+      "buttons": "Tombol di pesan-pesan OnKey membuka halaman Pengaturan Sistem yang tepat. macOS mungkin meminta Anda membuka OnKey lagi setelah mengubah izin."
+    },
+    "naming": {
+      "title": "Lagu baru lama diberi nama",
+      "body": "Lagu baru diberi nama oleh Shazam, yang memerlukan koneksi internet, dan jawaban pertama setelah pemasangan bisa lambat. Biarkan lagunya terus diputar, karena OnKey terus bertanya. Jika OnKey mengatakan Shazam tidak dapat dihubungi, periksa koneksi Anda. Lagu yang sudah dipelajari tetap dikenali di Mac Anda. Mengizinkan kontrol atas Spotify atau Apple Music lebih cepat, karena OnKey dapat langsung menanyakan ke aplikasinya apa yang diputar."
+    },
+    "noNotes": {
+      "title": "Tidak ada not pada sebuah lagu",
+      "body": "OnKey mempelajari lagu setelah putaran pertamanya selesai, dan tombol Nyanyi bertuliskan “Mempelajari…” sampai selesai. Satu lagu dipelajari pada satu waktu, jadi yang lain bertuliskan “Menunggu dipelajari”. Pembelajaran juga berhenti sejenak selagi Anda menyanyikan lagu yang sudah dikenal OnKey (“Menunggu selagi Anda bernyanyi”), supaya not-not tetap mulus. Sebuah lagu dianggap sudah dipelajari setelah OnKey mendengar sekitar 70% darinya, jadi jika Anda melompat-lompat, putar sekali lagi sampai selesai."
+    },
+    "dim": {
+      "title": "Not-notnya redup dan bertuliskan “Menyelaraskan dengan lagu…”",
+      "body": "OnKey menjaga not tetap redup sampai musiknya memastikan posisi Anda, supaya Anda tidak pernah bernyanyi mengikuti not di tempat yang salah. Biasanya hanya beberapa detik setelah lagu mulai atau setelah Anda melompat. Jika tetap redup, periksa apakah volume aplikasi musik itu sendiri tidak dikecilkan habis, karena OnKey perlu mendengarnya. Besarkan volume aplikasinya dan atur kerasnya lewat volume Mac Anda."
+    },
+    "wholeLine": {
+      "title": "Pada putaran pertama lirik tampil satu baris penuh sekaligus",
+      "body": "Itu memang wajar. Sebelum sebuah lagu dipelajari, OnKey tidak tahu kapan setiap kata dinyanyikan, jadi ia menampilkan seluruh barisnya. Mulai putaran berikutnya, kata-katanya ada di bilah not."
+    },
+    "timing": {
+      "title": "Lirik terlalu cepat atau terlambat di headphone?",
+      "latency": "OnKey memperhitungkan berapa lama headphone atau speaker Anda memutar suaranya, memakai angka yang dilaporkan macOS untuk setiap output. Dalam pengujian saya itu sudah cukup tepat, termasuk Bluetooth, jadi tidak ada yang perlu diatur.",
+      "still": "Jika not-notnya masih tampak terlalu cepat atau terlambat, OnKey mungkin belum selaras dengan lagunya. Beri beberapa detik, atau mundur sedikit. Skor Anda tidak terpengaruh, karena OnKey menghitung jeda Anda setelah setiap lagu. Jika terus terjadi pada satu headphone tertentu, <link>beri tahu saya</link> headphone yang mana."
+    },
+    "lyrics": {
+      "title": "Tidak ada lirik, atau liriknya salah",
+      "body": "Lirik berasal dari <link>LRCLIB</link>, basis data gratis yang dikelola komunitas. Beberapa lagu tidak ada di sana, atau hanya dalam versi lain. Jika tidak menemukan apa pun, OnKey bertanya lagi setelah satu hari."
+    },
+    "busy": {
+      "title": "Mac Anda terasa sibuk",
+      "intro": "Mempelajari lagu baru adalah bagian yang berat, jadi OnKey melakukannya setelah lagu selesai, dengan prioritas rendah. Menyanyikan lagu yang sudah dipelajari itu ringan. Dua pengaturan membantu:",
+      "battery": "<strong>Hemat baterai saat bernyanyi</strong> (aktif secara bawaan): saat memakai baterai, not digambar 30 kali per detik, bukan 60.",
+      "models": "<strong>Jaga model pembelajaran tetap siap</strong> (aktif secara bawaan hanya dengan memori 32 GB atau lebih): matikan dan modelnya (sekitar 1,5 GB) dilepas setelah setiap lagu. Di Mac 8 GB pengaturan ini tidak ditampilkan, karena modelnya selalu dilepas."
+    },
+    "logs": {
+      "title": "Di mana log-nya",
+      "where": "OnKey menulis log teks biasa ke <code>$TMPDIR/onkey.log</code>. Untuk membukanya, jalankan ini di Terminal:",
+      "records": "Ia juga menyimpan log setiap hari dan ringkasan singkat setiap pemutaran (waktu, CPU, memori, build dan Mac) di folder<code> records/</code> dalam folder datanya, selama 30 hari dan paling banyak 200 MB. Isinya tanpa audio atau lirik, tetapi menyebut nama lagu yang Anda putar."
+    },
+    "report": {
+      "title": "Laporkan masalah",
+      "choose": "Pilih <strong>Laporkan masalah</strong> di Pengaturan atau <strong>Bantuan → Laporkan Masalah…</strong>, atau <strong>Laporkan masalah pada take ini</strong> di halaman sebuah take.",
+      "zip": "OnKey menunjukkan isi zip-nya: log tiga hari terakhir dan ringkasan setiap pemutaran. Tanpa lirik, audio, rekaman, nama pengguna atau folder beranda. Tambahkan catatan jika mau, lalu <strong>Simpan</strong> di Mac Anda. Tidak ada yang diunggah.",
+      "issue": "Pilih <strong>Buka issue GitHub</strong> (atau buka <link>GitHub</link>), ceritakan apa yang terjadi dan dengan lagu apa, dan lampirkan zip-nya jika Anda berkenan."
+    },
+    "more": "Jawaban lainnya di <link>Tanya jawab</link>.",
+    "discord": "Atau tanyakan di <link>Discord OnKey</link>."
+  },
+  "docs": {
+    "diagrams": {
+      "legend": {
+        "label": "Warna yang dipakai dalam diagram",
+        "music": "Musik",
+        "musicNote": "yang diputar aplikasi musik Anda",
+        "singer": "Penyanyi",
+        "singerNote": "vokal asli, not dan liriknya",
+        "you": "Anda",
+        "youNote": "suara Anda, dari mikrofon",
+        "score": "Skor Anda",
+        "scoreNote": "seberapa dekat Anda"
+      },
+      "stepOf": "Langkah {n} dari {total}",
+      "phrase": "A- yo nya- nyi ber- sa- ma",
+      "big": {
+        "label": "Cara kerja OnKey dari awal sampai akhir",
+        "all": "Musik masuk, skor Anda keluar. Semuanya di Mac Anda.",
+        "steps": {
+          "play": "Aplikasi musik Anda memutar lagu",
+          "hears": "OnKey mendengarnya, di Mac Anda",
+          "learns": "Pada putaran pertama, ia mempelajari lagunya",
+          "sing": "Anda bernyanyi mengikuti not",
+          "score": "Anda mendapat skor dan laporan"
+        },
+        "onMac": "OnKey, di Mac Anda",
+        "musicApp": "Aplikasi musik",
+        "musicAppSub": "Spotify, Musik…",
+        "hears": "Mendengar",
+        "hearsSub": "tidak pernah disimpan",
+        "learns": "Mempelajari",
+        "learnsSub": "not dan lirik",
+        "sing": "Anda bernyanyi",
+        "singSub": "mikrofon Anda",
+        "score": "Skor Anda",
+        "scoreSub": "dan laporan"
+      },
+      "hearing": {
+        "label": "Cara OnKey mendengar musik",
+        "steps": {
+          "apps": "Banyak aplikasi mengeluarkan suara di Mac Anda",
+          "one": "OnKey hanya mendengarkan aplikasi musik",
+          "mic": "Mikrofon Anda datang dengan jam yang sama",
+          "memory": "Dianalisis sambil diputar, tidak pernah disimpan"
+        },
+        "musicApp": "Aplikasi musik",
+        "browser": "Browser",
+        "messages": "Pesan",
+        "yourMic": "Mikrofon Anda",
+        "oneClock": "satu jam",
+        "disk": "disk",
+        "noMusicSaved": "musik tidak disimpan",
+        "notHeard": "tidak didengar"
+      },
+      "learning": {
+        "label": "Cara OnKey mempelajari lagu",
+        "steps": {
+          "mixed": "Lagu masuk: musik dan penyanyi bercampur",
+          "separation": "Pemisahan mengambil suara penyanyi, di memori",
+          "pitch": "Pelacak nada mengikuti penyanyi, setiap 10 md",
+          "notes": "Setiap nada yang ditahan menjadi bilah not",
+          "lyrics": "Baris lirik pindah ke tempat katanya terdengar",
+          "bars": "Satu bilah per suku kata: siap dinyanyikan"
+        },
+        "singer": "penyanyi",
+        "everythingElse": "sisanya",
+        "mix": "campuran",
+        "timing": "pewaktuan dari berkas lirik, dikoreksi dengan telinga"
+      },
+      "placement": {
+        "label": "Cara OnKey menemukan posisi Anda dalam lagu",
+        "steps": {
+          "fingerprint": "Lagu yang dipelajari menyimpan sidik jari musiknya",
+          "slide": "Beberapa detik yang sedang diputar digeser di atasnya",
+          "match": "Tempat keduanya cocok adalah persis posisi Anda",
+          "skip": "Lompat ke depan, dan ia menemukan Anda lagi",
+          "listening": "Mode mendengarkan: Shazam menamai lagu yang belum dipelajari"
+        },
+        "fingerprint": "sidik jari lagu yang dipelajari (8 pita, setiap 10 md)",
+        "match": "cocok",
+        "playingNow": "yang diputar sekarang",
+        "skipped": "Anda melompat",
+        "shazam": "Shazam: “lagu baru”, 0:42",
+        "shazamNote": "hanya untuk lagu yang belum dipelajari"
+      },
+      "echo": {
+        "label": "Cara kerja peredam gema",
+        "steps": {
+          "speakers": "Tanpa headphone, mikrofon mendengar Anda dan lagunya",
+          "copy": "OnKey tahu persis bagaimana bunyi lagunya",
+          "learns": "Ia mempelajari cara suara itu sampai ke mikrofon",
+          "subtracts": "…dan menyingkirkannya, menyisakan suara Anda",
+          "headphones": "Dengan headphone, tidak ada yang perlu disingkirkan"
+        },
+        "speakers": "speaker",
+        "headphones": "headphone",
+        "yourMic": "mikrofon Anda",
+        "whatsLeft": "yang tersisa: Anda",
+        "micHears": "yang didengar mikrofon",
+        "copy": "salinan lagu milik OnKey (jam yang sama)",
+        "room": "cara ruangan mengubahnya: jeda, gema, warna suara",
+        "minusSong": "− lagu"
+      },
+      "scoring": {
+        "label": "Cara OnKey menilai nyanyian Anda",
+        "steps": {
+          "compare": "Setiap 10 md, nada Anda dibandingkan dengan nada penyanyi",
+          "credit": "Dalam setengah semiton berarti nilai penuh",
+          "octaves": "Satu oktaf ke atas atau ke bawah dihitung tepat di not",
+          "slack": "Sedikit lebih awal atau terlambat tidak dihukum",
+          "hit": "Setiap not: tercapai jika ditahan selama separuh panjangnya",
+          "score": "Skor: akurasi Anda, diskalakan dengan seberapa banyak Anda bernyanyi"
+        },
+        "flat60": "60 sen terlalu rendah: nilai 90%",
+        "octaveLower": "satu oktaf lebih rendah: tetap hijau",
+        "slack80": "meleset sampai 80 md: boleh",
+        "summary": "akurasi 86% · menyanyikan 80%"
+      },
+      "credit": {
+        "title": "Coba: seberapa jauh Anda boleh meleset?",
+        "aria": "Kurva nilai. Not Anda {n} sen {dir, select, flat {terlalu rendah} other {terlalu tinggi}}, mendapat nilai {p}%.",
+        "axis": "sen dari not (100 sen = 1 semiton)",
+        "credit": "nilai {p}%",
+        "yourNote": "Not Anda",
+        "onTheNote": "tepat di not",
+        "off": "{n}¢ {dir, select, flat {terlalu rendah} other {terlalu tinggi}}",
+        "octave": "Nyanyikan satu oktaf lebih rendah"
+      },
+      "coverage": {
+        "title": "Coba: seberapa banyak lagu yang perlu Anda nyanyikan?",
+        "aria": "Menyanyikan {p}% bagian penyanyi dengan akurasi 86% mendapat skor {s}.",
+        "axis": "bagian penyanyi yang Anda nyanyikan",
+        "score": "skor {s} pada akurasi 86%",
+        "youSang": "Anda menyanyikan"
+      },
+      "privacy": {
+        "label": "Yang disimpan dan dikirim OnKey",
+        "all": "OnKey tidak pernah menyimpan musik yang didengarnya",
+        "steps": {
+          "kept": "Disimpan di Mac Anda: yang dipelajari OnKey, dan take Anda",
+          "never": "Tidak pernah disimpan atau dikirim: audio musiknya",
+          "lookups": "Dikirim keluar: pencarian berdasarkan nama, untuk lirik dan sampul",
+          "shazam": "Untuk menamai lagu baru: tanda tangan ke Shazam"
+        },
+        "yourMac": "Mac Anda",
+        "kept": {
+          "notes": "Not dan bilah setiap lagu",
+          "fingerprint": "Sidik jari dan tanda tangannya",
+          "lyrics": "Lirik dan pewaktuannya",
+          "takes": "Take: mikrofon Anda, skor, lirik"
+        },
+        "audio": "Audio musik: dianalisis saat diputar,\ntidak disimpan atau dikirim",
+        "lrclib": "artis, judul, album,\ndurasi: untuk lirik",
+        "itunes": "artis, judul: sampul",
+        "shazam": "tanda tangan musiknya,\nbukan mikrofon;\nbisa dimatikan"
+      }
+    },
+    "howItWorks": {
+      "title": "Cara kerja OnKey",
+      "lede": "Tujuh bagian, dari gambaran besar sampai angka pastinya. Semua analisis terjadi di Mac Anda.",
+      "exactNumbers": "Angka pastinya",
+      "big": {
+        "title": "1. Gambaran besar",
+        "steps": {
+          "play": "Anda memutar musik seperti biasa, di <strong>Spotify, Apple Music, atau YouTube</strong>. OnKey tidak memutar apa pun sendiri.",
+          "hears": "OnKey <strong>mendengar aplikasi musik</strong> <wave></wave> lewat macOS. Suaranya dianalisis sambil diputar dan tidak pernah disimpan.",
+          "learns": "Setelah putaran pertama sebuah lagu, OnKey <strong>mempelajarinya</strong>: ia mengambil suara penyanyi <separate></separate>, menentukan not-notnya, dan menyelaraskan liriknya.",
+          "sing": "Mulai putaran berikutnya, Anda melihat <strong>bilah not</strong> <lane></lane> bergerak ke arah Anda, dan suara Anda <mic></mic> digambar di atasnya.",
+          "score": "Saat lagu berakhir Anda mendapat <strong>skor</strong> <score></score> dan laporan untuk setiap baris, serta apakah Anda cenderung menyanyi terlalu tinggi atau terlalu rendah."
+        },
+        "hood": {
+          "app": "Aplikasi Mac: mesin Rust (audio, model, penilaian) di dalam jendela Tauri dengan antarmuka React. <engine>engine.rs</engine> menjalankan semuanya.",
+          "local": "Semuanya terjadi di Mac Anda. Model berjalan dengan ONNX Runtime, di Core ML (GPU dan Neural Engine) bila itu membantu.",
+          "frames": "Audio dianalisis pada 16 kHz dalam bingkai 10 md, satuan yang dipakai setiap angka di bawah ini (<dsp>dsp.rs</dsp>, <code>FRAME_S</code>).",
+          "learned": "Sebuah lagu dianggap sudah dipelajari setelah 70% darinya terdengar (<code>READY_COVERAGE</code> di <store>store.rs</store>). Lagu yang baru terdengar sebagian terus dipelajari pada putaran berikutnya."
+        }
+      },
+      "hearing": {
+        "title": "2. Mendengar musik",
+        "steps": {
+          "apps": "Mac Anda memutar suara dari banyak aplikasi sekaligus.",
+          "one": "OnKey meminta kepada macOS (dengan izin Anda) suara dari <strong>satu aplikasi</strong>, aplikasi musik, dan mengabaikan yang lain.",
+          "mic": "<strong>Mikrofon</strong> Anda <mic></mic> direkam bersamaan, dengan <strong>jam yang sama</strong>, sehingga OnKey tahu Anda bernyanyi pada momen mana dalam lagu.",
+          "memory": "Musik dianalisis <strong>sambil diputar</strong>, di memori (lagu yang sedang dipelajari tetap di memori sampai berakhir). Tidak pernah ditulis ke disk, diunggah, atau dibagikan."
+        },
+        "hood": {
+          "capture": "Penangkapan memakai process tap Core Audio (macOS 14.2+), bersama mikrofon Anda, pada laju perangkat keluaran Anda sendiri (biasanya 48 kHz), dengan satu jam (<captureSwift>capture.swift</captureSwift>, <captureRs>capture.rs</captureRs>).",
+          "tapped": "Hanya proses aplikasi musik yang disadap, dipilih berdasarkan bundle id-nya (<source>source.rs</source>).",
+          "resampled": "Semuanya di-resample ke 16 kHz mono untuk analisis. Build rilis tidak pernah menulis audio musik ke mana pun. Hanya suara Anda sendiri yang disimpan dengan setiap take.",
+          "permissions": "Izin: rekaman audio sistem dan mikrofon. Mengontrol Spotify dan Musik (apa yang diputar dan di mana, “Nyanyikan lagi”, lompat, dan jeda) adalah izin terpisah yang diminta saat penyiapan, dan “Hanya mendengarkan” mematikannya. Kontrol tab YouTube mati sampai Anda mengaktifkannya."
+        }
+      },
+      "learning": {
+        "title": "3. Mempelajari lagu",
+        "steps": {
+          "mixed": "Lagu sampai ke OnKey sebagai satu suara: <strong>penyanyi dan band bercampur</strong>.",
+          "separation": "Setelah lagu berakhir, model <strong>pemisahan</strong> <separate></separate> mengambil penyanyi utama dari campuran, sepotong demi sepotong. (Melakukannya selagi Anda bernyanyi akan membuat not tersendat.)",
+          "pitch": "<strong>Pelacak nada</strong> mengikuti suara penyanyi <strong>setiap 10 md</strong>. Hasilnya garis bergelombang dengan melodi yang persis, termasuk gelincir dan vibrato.",
+          "notes": "Model not mengubah garis itu menjadi <strong>not</strong>, dengan awal dan akhir masing-masing.",
+          "lyrics": "<strong>Lirik</strong> datang dari LRCLIB dengan pewaktuan kasar. Model ucapan mendengarkan penyanyi dan memindahkan setiap baris ke <strong>tempat kata-katanya dinyanyikan</strong>. Pada putaran pertama ini dilakukan untuk sekitar satu setengah menit pertama, supaya baris-baris itu juga tepat waktu.",
+          "bars": "Setiap baris dipecah menjadi suku kata, dan setiap suku kata mendapat <strong>bilah</strong> <lane></lane> sendiri pada notnya. Itulah jalur yang Anda nyanyikan."
+        },
+        "hood": {
+          "separation": "<strong>Pemisahan:</strong> UVR MDX-Net Karaoke 2 (ONNX, di Core ML), dijalankan pada potongan 20 detik dengan konteks 2 detik di kedua sisi. Musik ditahan di memori selagi lagu diputar dan dipisahkan setelah berakhir, dengan prioritas rendah. Satu lagu dipelajari pada satu waktu. Yang lain menunggu giliran (“Menunggu dipelajari”), dan pembelajaran berhenti sejenak selagi Anda menyanyikan lagu yang sudah dipelajari dengan jendela terbuka (<learn>learn.rs</learn>, <mdx>mdx.rs</mdx>).",
+          "firstPlay": "<strong>Putaran pertama:</strong> sampai 90 detik pertamanya dipisahkan sambil diputar, 5 detik sekaligus, sampai baris lirik selaras dengan penyanyi. Sisanya menunggu lagu berakhir. Ini dilewati di Mac 8 GB dan selagi lagu lain dipelajari. Di seluruh pustaka saya, 60% baris putaran pertama berada dalam 0,3 detik dari nyanyiannya dengan cara ini, dibanding 13% pada pewaktuan LRCLIB sendiri.",
+          "memory": "<strong>Memori:</strong> dengan 8 GB, satu model dimuat pada satu waktu dan dibongkar setelah langkahnya. Di bawah 32 GB, model pembelajaran (sekitar 1,5 GB) dibongkar setelah lagu dipelajari, kecuali Pengaturan → Jaga model pembelajaran tetap siap aktif (<lowmem>lowmem.rs</lowmem>).",
+          "pitch": "<strong>Nada:</strong> CREPE “full” pada vokal yang dipisahkan, 16 kHz, hop 10 md, jendela 1024 sampel, 50 sampai 1100 Hz. Sebuah bingkai dihitung sebagai dinyanyikan jika keyakinannya di atas 0,45 (<pitch>pitch.rs</pitch>).",
+          "notes": "<strong>Not:</strong> GAME (OpenVPI) mentranskripsi not dari vokal. Setiap bilah suku kata mengambil notnya, dan bilah tanpa not yang dinyanyikan di bawahnya dibuang (<game>game.rs</game>, <syllables>syllables.rs</syllables>).",
+          "lyrics": "<strong>Lirik:</strong> lirik tersinkron dari LRCLIB (dicari berdasarkan artis, judul, album, dan durasi, lalu berdasarkan nama jika tidak ada hasil). Baris ditempatkan ulang dengan menyelaraskan seluruh kata lagu memakai wav2vec 2.0 (CTC), dan dipecah menjadi suku kata dengan kamus pelafalan CMU (<lyrics>lyrics.rs</lyrics>, <ctc>ctc.rs</ctc>).",
+          "measured": "<strong>Terukur:</strong> pada 18 lagu yang ditandai manual, 98% not yang dinyanyikan tertutup bilah, 92% pada not yang benar, dan 73% dimulai dalam 0,1 detik. 94% baris lirik berada dalam 0,3 detik.",
+          "kept": "<strong>Disimpan bersama lagu:</strong> garis nada, bilah, sidik jari ritme, tanda tangan Shazam dan pewaktuan lirik, plus entri LRCLIB yang menjadi dasar pewaktuan itu (disimpan di Mac, tidak pernah diunggah), supaya kata yang sama tampil di bilah yang sama pada setiap putaran. Musik dan vokal yang dipisahkan tidak disimpan."
+        }
+      },
+      "placement": {
+        "title": "4. Mengetahui posisi Anda",
+        "steps": {
+          "fingerprint": "Saat lagu dipelajari, OnKey juga menyimpan <strong>sidik jari</strong> <fingerprint></fingerprint>: seberapa besar suara berubah di setiap pita frekuensi, setiap 10 md.",
+          "slide": "Aplikasi musik hanya melaporkan posisi lagu secara kasar, jadi OnKey menggeser <strong>beberapa detik dari yang didengarnya</strong> di atas sidik jari itu.",
+          "match": "Tempat keduanya pas adalah <strong>persis posisi Anda</strong>. Sebelum itu not-notnya redup (“Menyelaraskan dengan lagu…”). Biasanya menyala beberapa detik setelah lagu mulai.",
+          "skip": "Lompat, geser, atau mulai ulang, dan ia <strong>menemukan Anda lagi</strong> dalam beberapa detik. OnKey mengingat beberapa kemungkinan posisi dan hanya memindahkan not saat musiknya jelas-jelas sepakat.",
+          "listening": "Inilah <strong>mode mendengarkan</strong>. Lagu yang pernah Anda nyanyikan dikenali di Mac Anda, dan Shazam menamai yang baru, sehingga OnKey dapat mengikuti musik tanpa mengontrol aplikasinya. Kontrol Spotify dan Apple Music memberi posisi yang persis dan aktif secara bawaan (“Hanya mendengarkan” mematikannya). Kontrol YouTube bersifat opsional."
+        },
+        "hood": {
+          "fingerprint": "<strong>Sidik jari:</strong> seberapa besar suara naik di masing-masing dari 8 pita dari sekitar 60 Hz sampai 7 kHz, setiap 10 md (<code>FP_BANDS</code> di <dsp>dsp.rs</dsp>).",
+          "placement": "<strong>Penempatan:</strong> satu pelacak menempatkan setiap putaran (<tracker>tracker.rs</tracker>, mengikuti pelacak musik “any-time” dari Arzt dan Widmer). Setiap pemeriksaan mencocokkan beberapa detik terakhir musik, paling banyak 8 detik, dengan sidik jari, sampai ketelitian bingkai 10 md, dan menyimpan beberapa posisi terbaik sebagai kandidat berbobot, sehingga intro berulang yang cocok tapi meleset satu ketukan tidak menipunya. Posisi dari aplikasi musik dan jawaban mode mendengarkan hanya menggeser sedikit kandidat di dekatnya. Posisi yang ditampilkan pindah ke kandidat lain hanya bila kandidat itu jelas memimpin selama sekitar 4 detik musik.",
+          "measured": "<strong>Terukur:</strong> memutar ulang 153 putaran nyata dengan posisi aplikasi musik yang salah (meleset 0,73 detik atau 1,7 detik, atau lompatan yang mendarat 3,5 detik jauhnya), posisi yang ditampilkan berada dalam 0,1 detik dari musik sekitar 91% dari waktu. Aturan sebelumnya mencapai 75%, 0%, dan 0%.",
+          "listening": "<strong>Mode mendengarkan</strong> (selalu aktif, <listen>listen.rs</listen>, <recognize>recognize.rs</recognize>): setelah 3 detik suara ia bertanya, berurutan, ke katalog lagu yang dipelajari milik OnKey sendiri (ShazamKit, di Mac, teliti sampai sekitar 10 md), ke sidik jari, lalu ke katalog Shazam. Ia memeriksa lagi setiap 3 detik untuk lagu yang dipelajari dan sekitar setiap 12 detik untuk lagu yang hanya dikenal Shazam. Shazam menerima tanda tangan dari paling banyak 5 detik suara aplikasi musik, tidak pernah mikrofon. Jawaban Shazam yang baru memerlukan jawaban kedua yang sepakat. Jeda adalah 0,15 detik keheningan digital.",
+          "shazamTest": "Uji pertama katalog Shazam: ia menamai 25 dari 30 lagu uji dari 5 detik pertamanya, dengan median 0,24 detik."
+        }
+      },
+      "you": {
+        "title": "5. Mendengar Anda",
+        "steps": {
+          "speakers": "Lewat speaker laptop, mikrofon Anda mendengar <strong>Anda dan lagunya</strong>, termasuk penyanyinya. Jika dibiarkan, penyanyi itu akan mencetak poin untuk Anda.",
+          "copy": "Tetapi OnKey punya salinan lagunya sendiri <wave></wave>, dengan jam yang sama seperti mikrofon.",
+          "learns": "Ia <strong>mempelajari cara suara itu sampai ke mikrofon</strong>, dengan jedanya, gema ruangan, dan warna suara speaker Anda. Panggilan video melakukan hal yang sama.",
+          "subtracts": "Lalu ia <strong>mengurangkan</strong> <echo></echo> perkiraannya tentang lagu itu, dan yang tersisa adalah <strong>suara Anda</strong>.",
+          "headphones": "Dengan <strong>headphone</strong>, mikrofon tidak mendengar lagunya, jadi tidak ada yang perlu disingkirkan. Ini tetap pengaturan yang paling andal."
+        },
+        "hood": {
+          "livePitch": "<strong>Nada langsung:</strong> CREPE “tiny”, pada mikrofon Anda yang sudah diredam gemanya, setiap 10 md, dijalankan di kernel CPU Core ML: titik nada tertinggal 2 sampai 4 md dari suara Anda, dan menyanyikan lagu yang sudah dipelajari memakan 15 sampai 19% dari satu inti CPU di Mac saya (<pitch>pitch.rs</pitch>).",
+          "canceller": "<strong>Peredam gema:</strong> filter adaptif ranah frekuensi terpartisi: 16 partisi berisi 256 sampel pada 16 kHz, sehingga memodelkan 256 md gema (<bleed>bleed.rs</bleed>). Beberapa keluaran menaruh gema lebih lambat dari itu, jadi setiap 2 detik jeda gemanya diukur (GCC-PHAT, sampai 800 md) dan lagunya diumpankan ke filter dengan keterlambatan itu. Ia hanya beradaptasi selagi lagunya jelas sampai ke mikrofon, dan jika keluarannya lebih keras daripada mikrofon, mikrofon diteruskan tanpa diubah.",
+          "measured": "<strong>Terukur:</strong> speaker bawaan MacBook (gema terlambat sekitar 24 md): 20 dB atau lebih disingkirkan. Speaker eksternal dengan gema terlambat sekitar 290 md: 8 sampai 14 dB, naik dari 1 sampai 2 dB sebelum jedanya diukur.",
+          "limit": "<strong>Batas:</strong> 8 sampai 14 dB masih menyisakan sebagian lagu yang keras di mikrofon, dan itu bisa disalahartikan sebagai nyanyian. Headphone lebih andal."
+        }
+      },
+      "scoring": {
+        "title": "6. Penilaian",
+        "steps": {
+          "compare": "Setiap 10 md saat Anda dan penyanyi sama-sama bernyanyi, nada Anda dibandingkan dengan garis penyanyi dan bilah not, <strong>mana yang lebih dekat dengan Anda</strong>.",
+          "credit": "Dalam <strong>50 sen</strong> (setengah semiton) mendapat nilai penuh. Nilai lalu memudar sampai nol pada 150 sen.",
+          "octaves": "<strong>Oktaf dimaafkan</strong>, jadi Anda bisa bernyanyi di rentang suara Anda sendiri.",
+          "slack": "Setiap setengah detik boleh bergeser sampai <strong>80 md</strong> untuk selaras dengan penyanyi, jadi sedikit lebih awal atau terlambat tidak merugikan Anda.",
+          "hit": "Setiap not <strong>tercapai</strong> jika Anda menahannya dalam satu semiton selama separuh panjangnya. 80 md pertamanya tidak dihitung: penyanyi biasa meluncur masuk ke not.",
+          "score": "Skor Anda <score></score> adalah <strong>akurasi</strong> Anda, diskalakan dengan <strong>seberapa banyak bagian penyanyi yang Anda nyanyikan</strong>, jadi satu baris yang bagus tidak akan mendapat skor bagus."
+        },
+        "lenient": "Secara bawaan penilaiannya memang dibuat longgar, disetel untuk pemula seperti saya. Penyanyi yang bagus dapat memilih tingkat yang lebih ketat, Mantap atau Pro, di Pengaturan (vibrato tidak dikurangi nilainya di keduanya).",
+        "explained": "Angka-angka di laporan Anda dijelaskan di <link>Penjelasan penilaian</link>.",
+        "hood": {
+          "credit": "<strong>Nilai:</strong> <code>clamp((150 − |error|) / 100, 0, 1)</code>, dengan galat dalam sen dilipat ke ±600 supaya oktaf tidak dihitung (<code>credit</code>, <code>fold</code> di <dsp>dsp.rs</dsp>).",
+          "slack": "<strong>Kelonggaran waktu:</strong> setiap jendela 0,5 detik mendapat satu pergeseran dalam ±80 md (<code>TOL</code> = 8 bingkai) yang paling menyelaraskan Anda (<code>tolerant_error</code>).",
+          "delay": "<strong>Jeda Anda:</strong> setelah lagu, pencarian dari 0,3 detik lebih awal sampai 1,5 detik terlambat menemukan jeda yang paling pas (<analysis>analysis.rs</analysis>).",
+          "notesHit": "<strong>Not tercapai:</strong> ditahan dalam 100 sen selama paling sedikit separuh not, mengabaikan 80 md pertamanya. Not di bawah 0,15 detik tidak dihitung.",
+          "score": "<strong>Skor:</strong> <code>100 × accuracy × (0.3 × min(1, sung / 0.1) + 0.7 × min(1, sung / 0.4))</code>: nilai penuh mulai 40% bagian penyanyi dinyanyikan.",
+          "experts": "<strong>Dicek terhadap pakar:</strong> pada 20 rekaman yang sudah dinilai, not tercapai sepakat dengan peringkat pakar pada 0,77 dan skor pada 0,61 (para pakar sepakat satu sama lain pada 0,88)."
+        }
+      },
+      "privacy": {
+        "title": "7. Privasi",
+        "steps": {
+          "kept": "Di Mac Anda, OnKey menyimpan apa yang <strong>dipelajarinya</strong> tentang setiap lagu, dan untuk setiap take <strong>rekaman mikrofon Anda</strong> <lock></lock> (sekitar 0,5 MB per menit), skor Anda dan lirik yang Anda nyanyikan, supaya Anda dapat memutarnya ulang. Hapus sebuah take dan ia masuk ke Tong Sampah.",
+          "never": "Ia <strong>tidak pernah menyimpan atau mengirim audio musiknya</strong>, atau vokal yang dipisahkan. (Jika musiknya lewat speaker, rekaman mikrofon Anda akan berisi sebagian darinya.)",
+          "lookups": "Untuk menemukan lirik ia mengirim <strong>artis, judul, album dan durasi</strong> lagu ke LRCLIB, basis data lirik gratis yang dikelola komunitas (kecuali Tampilkan lirik mati). Untuk sampul, ia bertanya ke iTunes Search milik Apple berdasarkan artis dan judul.",
+          "shazam": "Untuk menamai lagu yang belum dipelajarinya, <strong>mode mendengarkan</strong> mengirim ke Shazam sebuah <strong>tanda tangan</strong> dari paling banyak 5 detik suara aplikasi musik (bukan audionya, dan tidak pernah mikrofon Anda). Lagu yang pernah Anda nyanyikan dikenali di Mac Anda, jadi tidak ada yang dikirim ke Shazam untuk lagu itu. Shazam hanya ditanya saat Spotify atau Apple Music tidak memberitahukan apa yang diputar, dan Anda dapat mematikannya di Pengaturan."
+        },
+        "hood": {
+          "stored": "Disimpan di <code>{dataDir}</code>: <code>songs/</code> (garis nada, bilah, sidik jari, pewaktuan lirik dan tanda tangan Shazam, disimpan untuk setiap lagu yang dipelajari di kedua mode), <code>takes/</code> (<code>mic.m4a</code>: mikrofon Anda, AAC mono sekitar 64 kbps, sekitar 0,5 MB per menit, semuanya disimpan sampai total 2 GB, plus skor dan laporan dengan baris liriknya) dan <code>records/</code> (log dan ringkasan setiap putaran, hanya angka, disimpan 30 hari, paling banyak 200 MB). Menghapus lagu atau take memindahkannya ke Tong Sampah.",
+          "network": "Jaringan: Shazam (mode mendengarkan, bisa dimatikan) untuk lagu yang belum dipelajari, pencarian lirik LRCLIB (kecuali Tampilkan lirik mati), iTunes Search untuk sampul, iTunes Lookup untuk durasi lagu yang dikenali, gambar sampul (dari Apple, atau thumbnail YouTube), dan pemeriksaan harian GitHub Releases untuk pembaruan. Tanpa akun, tanpa analitik, dan tanpa server milik saya.",
+          "more": "Selengkapnya di <link>Privasi & hukum</link>."
+        }
+      }
+    },
+    "scoring": {
+      "title": "Penjelasan penilaian",
+      "lede": "Arti setiap angka, cara menghitungnya, dan di mana kekurangannya.",
+      "rules": {
+        "title": "Aturannya",
+        "every": "<strong>Setiap 10 md dihitung.</strong> Setiap kali Anda dan penyanyi sama-sama bernyanyi, nada Anda dibandingkan dengan garis nada penyanyi dan bilah not, mana yang lebih dekat dengan Anda.",
+        "credit": "<strong>Nilai nada.</strong> Dalam 50 sen (setengah semiton) mendapat nilai penuh. Lalu turun dalam garis lurus sampai nol pada 150 sen.",
+        "octaves": "<strong>Oktaf dimaafkan.</strong> Satu oktaf di atas atau di bawah penyanyi dihitung tepat di not, jadi Anda bisa bernyanyi di rentang suara Anda sendiri.",
+        "slack": "<strong>Kelonggaran waktu.</strong> Setiap setengah detik boleh bergeser sampai 80 md untuk selaras dengan penyanyi, jadi sedikit lebih awal atau terlambat tidak merugikan Anda sama sekali.",
+        "delay": "<strong>Jeda Anda dicari untuk Anda.</strong> Setelah lagu, OnKey mencoba jeda dari 0,3 detik lebih awal sampai 1,5 detik terlambat dan memakai yang paling menyelaraskan Anda (Anda mendengar lagunya sedikit terlambat).",
+        "relaxed": "Ini aturan pada <strong>Santai</strong>, tingkat bawaan. Memang dibuat pemaaf, untuk pemula (saya salah satunya) dan anak-anak, jadi jika Anda bernyanyi dengan baik, skor Anda akan tinggi."
+      },
+      "levels": {
+        "title": "Tingkat",
+        "intro": "Jika Santai terlalu murah hati, pilih tingkat yang lebih ketat di Pengaturan → Penilaian. Berlaku mulai take berikutnya, dan setiap take menyimpan tingkat yang dipakai saat dinilai: take yang bukan Santai menampilkan tanda kecil, dan skor terbaik sebuah lagu hanya membandingkan take pada tingkat yang sama.",
+        "level": "Tingkat",
+        "fullWithin": "Nilai penuh dalam",
+        "noneFrom": "Tanpa nilai mulai",
+        "slack": "Kelonggaran waktu",
+        "relaxed": "<strong>Santai</strong> (bawaan)",
+        "steady": "<strong>Mantap</strong>",
+        "pro": "<strong>Pro</strong>",
+        "cents": "{n} sen",
+        "ms": "{n} md",
+        "vibrato": "<strong>Vibrato tidak dihukum.</strong> Pada Mantap dan Pro nada Anda dinilai dari titik tengah goyangannya, dirata-ratakan selama 0,17 detik (sekitar satu siklus vibrato umum, yang berayun 5 sampai 7 kali per detik). Vibrato yang stabil di sekitar not yang benar mendapat nilai hampir penuh; not yang ditahan terlalu tinggi atau terlalu rendah tetap terlalu tinggi atau terlalu rendah. Pada Santai nada persis Anda yang dipakai, seperti sebelumnya, dan vibrato yang lebar (±80 sen) kehilangan sekitar sepersepuluh nilainya. Oktaf dimaafkan di setiap tingkat."
+      },
+      "report": {
+        "title": "Angka-angka di laporan Anda",
+        "number": "Angka",
+        "meaning": "Artinya",
+        "score": "<strong>Skor</strong> (0–100)",
+        "scoreMeaning": "Rata-rata nilai nada Anda, diskalakan dengan seberapa banyak bagian penyanyi yang Anda nyanyikan (lihat di bawah).",
+        "accuracy": "<strong>Akurasi nada</strong>",
+        "accuracyMeaning": "Rata-rata nilai nada Anda selagi Anda bernyanyi.",
+        "notesHit": "<strong>Not tercapai</strong>",
+        "notesHitMeaning": "Not yang Anda tahan dalam satu semiton selama paling sedikit separuh panjangnya, dengan kelonggaran 80 md yang sama. 80 md pertama setiap not diabaikan, karena penyanyi biasa meluncur masuk ke not, dan not di bawah 0,15 detik tidak dihitung.",
+        "sangAlong": "<strong>Ikut bernyanyi</strong>",
+        "sangAlongMeaning": "Bagian dari penyanyi yang juga Anda nyanyikan.",
+        "tendency": "<strong>Kecenderungan</strong>",
+        "tendencyMeaning": "Apakah Anda cenderung terlalu tinggi atau terlalu rendah, dalam sen (median dari galat Anda).",
+        "latency": "<strong>Latensi</strong>",
+        "latencyMeaning": "Jeda yang ditemukan dan diperhitungkan OnKey.",
+        "sangTitle": "Bagaimana “ikut bernyanyi” memengaruhi skor",
+        "sangBody": "Skor = 100 × akurasi nada × faktor seberapa banyak Anda bernyanyi. Menyanyikan sepersepuluh bagian penyanyi memberi 30% dari faktor itu, dan sisanya bertambah sampai Anda menyanyikan 40% darinya (sebagian vokal adalah vokal latar atau ad-lib yang tidak dinyanyikan siapa pun). Jadi satu baris yang bagus tidak akan mendapat skor bagus, dan orang yang hanya mendengarkan mendapat skor hampir nol. Skor langsung memakai rumus yang sama."
+      },
+      "checks": {
+        "title": "Cara saya memastikan skornya benar",
+        "intro": "Setiap perubahan pada OnKey diukur sebelum dipertahankan. Bilah not dicek terhadap not yang ditandai manual, pewaktuan lirik terhadap lirik yang diwaktukan manual, dan skor terhadap penyanyi simulasi (sempurna, goyah, terlalu tinggi, dan diam dengan lagu bocor ke mikrofon) serta terhadap penyanyi aslinya yang dinilai seolah-olah itu Anda.",
+        "check": "Pemeriksaan",
+        "result": "Hasil",
+        "covered": "Not yang ditandai manual yang tertutup bilah not",
+        "rightNote": "…yang bilahnya pada not yang benar",
+        "starts": "…yang bilahnya dimulai dalam 0,1 detik",
+        "noNote": "Bilah tanpa not yang dinyanyikan di bawahnya",
+        "lyricLines": "Baris lirik yang ditempatkan dalam 0,3 detik",
+        "expertsTitle": "Apakah skornya sepakat dengan pakar?",
+        "expertsIntro": "Saya menilai 20 rekaman orang bernyanyi, dari buruk sampai profesional, yang sudah dinilai pakar musik (set riset PESnQ), untuk melihat apakah OnKey mengurutkannya dengan urutan yang sama. Pada skala dengan 1 sebagai kesepakatan sempurna:",
+        "measure": "Ukuran",
+        "agreement": "Kesepakatan dengan pakar",
+        "expertsEachOther": "Pakar dengan sesama pakar (batas atas yang realistis)",
+        "notesHit": "Not tercapai OnKey",
+        "score": "Skor OnKey",
+        "expertsOutro": "Not tercapai sudah mengikuti pakar dengan baik, dan skor bisa lebih bertumpu padanya. Ini hanya 20 rekaman, dinyanyikan tanpa iringan, jadi anggaplah sebagai pertanda baik, bukan bukti."
+      },
+      "limits": {
+        "title": "Batasan",
+        "rap": "<strong>Lagu rap atau yang dibawakan dengan bicara:</strong> penilaian nada hampir tidak berlaku.",
+        "harmonies": "<strong>Harmoni dan paduan suara:</strong> tidak selalu jelas suara mana yang menjadi melodi, jadi sebagian bilah mungkin mengikuti harmoni.",
+        "speakers": "<strong>Bernyanyi tanpa headphone:</strong> peredam gema menyingkirkan 20 dB atau lebih dari lagu di speaker MacBook, dan 8 sampai 14 dB di speaker eksternal. Sisa lagu yang keras bisa disalahartikan sebagai nyanyian, jadi headphone lebih andal.",
+        "firstPlay": "<strong>Putaran pertama</strong> belum punya not. Not muncul mulai putaran kedua."
+      }
+    },
+    "privacy": {
+      "title": "Privasi & hukum",
+      "translationNote": "Ini adalah terjemahan. Jika berbeda dari <link>versi bahasa Inggris</link>, versi bahasa Inggris yang berlaku.",
+      "lede": "OnKey berjalan di Mac Anda dan tidak pernah menyimpan musik yang didengarnya. Rekaman Anda dan lagu yang dipelajari tetap di Mac Anda. Halaman ini mencantumkan semua yang disimpan dan semua yang dikirimnya.",
+      "keeps": {
+        "title": "Yang disimpan OnKey di Mac Anda",
+        "intro": "Semuanya ada di <code>{dataDir}</code>.",
+        "songs": "<strong>Lagu yang dipelajari</strong> (<code>songs/</code>): garis nada dan bilah not penyanyi, sidik jari ritme dan tanda tangan Shazam dari musiknya (untuk mengenali lagu dan menemukan posisi Anda), kapan setiap baris lirik dimulai, dan kapan setiap kata terdengar dinyanyikan (hanya waktunya, bukan kata-katanya).",
+        "lyrics": "<strong>Lirik</strong> (<code>lrclib/</code>): jawaban LRCLIB, disimpan sampai 30 hari (sehari jika tidak ada). Lagu yang dipelajari menyimpan lirik yang menjadi dasar pewaktuannya, supaya kata yang sama tampil pada setiap putaran. Lirik tidak pernah diunggah. Dengan Pengaturan → “Tampilkan lirik” mati, lirik yang tersimpan disembunyikan (tidak dihapus) dan tidak ada yang diambil.",
+        "takes": "<strong>Take</strong> (<code>takes/</code>): <strong>rekaman mikrofon Anda</strong> (<code>mic.m4a</code>, sekitar 0,5 MB per menit) supaya Anda dapat memutarnya ulang, skor Anda, dan laporannya, yang berisi lirik beserta waktunya. Sebuah take hanya disimpan jika Anda ikut menyanyikan paling sedikit 10% bagian penyanyi. Jika musiknya lewat speaker, sebagian darinya juga ada di rekaman. Rekaman disimpan sampai total 2 GB. Lewat dari itu yang paling lama dihapus dulu, tetapi tidak pernah take dari lagu favorit atau take terbaik sebuah lagu.",
+        "records": "<strong>Catatan</strong> (<code>records/</code>), untuk mendiagnosis masalah: satu berkas log per hari dan ringkasan setiap putaran (pewaktuan, CPU, memori, build dan Mac-nya). Ini angka dan id, tanpa audio atau lirik, meski log mencantumkan nama lagu yang Anda putar. Disimpan 30 hari, paling banyak 200 MB. Hanya keluar dari Mac Anda jika Anda sendiri melampirkan laporan ke sebuah issue.",
+        "settings": "Pengaturan Anda, artis dan judul yang Anda ketik untuk video YouTube, sampul lagu pembuka, dan cache model yang sudah dikompilasi.",
+        "remove": "Lupakan lagu di Pustaka atau hapus take di Riwayat dan berkasnya masuk ke Tong Sampah. Untuk menghapus semuanya, keluar dari OnKey dan hapus folder di atas."
+      },
+      "never": {
+        "title": "Yang tidak pernah disimpan OnKey",
+        "body": "Audio musiknya, atau suara penyanyi yang dipisahkan darinya. Ia dianalisis di memori sambil diputar dan tidak pernah disimpan, diunggah, dibagikan, atau diekspor. (Rekaman mikrofon Anda dapat berisi musik itu jika Anda bernyanyi dengan musik lewat speaker.)"
+      },
+      "leaves": {
+        "title": "Yang keluar dari Mac Anda",
+        "sentTo": "Dikirim ke",
+        "what": "Apa, dan kapan",
+        "shazam": "<strong>Shazam</strong> (Apple, lewat ShazamKit)",
+        "shazamWhat": "Tanda tangan dari paling banyak 5 detik suara <strong>aplikasi musik</strong> (tidak pernah mikrofon Anda), bukan audionya sendiri. Hanya dikirim untuk menamai lagu yang belum dipelajari OnKey saat tidak ada aplikasi musik yang memberitahukan apa yang diputar: YouTube, aplikasi lain, atau Hanya mendengarkan. Spotify dan Apple Music menamai lagunya sendiri, dan lagu yang pernah Anda nyanyikan dikenali di Mac Anda tanpa mengirim apa pun. Pengaturan → “Gunakan Shazam untuk menamai lagu baru” mematikannya, dan setelah itu hanya lagu yang sudah dipelajari yang dikenali.",
+        "lrclibWhat": "Artis, judul, album dan durasi lagu saat lagu dimulai, untuk mengambil lirik tersinkron, lalu pencarian berdasarkan nama jika tidak ada hasil. Jawaban disimpan di Mac Anda sampai 30 hari (sehari jika tidak ada), jadi lagu yang diputar lagi tidak ditanyakan lagi. LRCLIB adalah basis data lirik gratis yang dikelola komunitas. Tidak ada yang dikirim dengan “Tampilkan lirik” mati.",
+        "itunes": "<strong>iTunes Search dan Lookup</strong> (Apple)",
+        "itunesWhat": "Artis dan judul, untuk menemukan sampul album (yang menautkan ke halaman Apple Music-nya), juga untuk lagu lama yang dipelajari dari Spotify. Dan id Apple Music yang dikembalikan Shazam, untuk durasi dan album lagu. Sampul pembuka “Coba ini” dicari sekali masing-masing, berjarak, dan disimpan, jadi kunjungan berikutnya tidak mengirim apa pun.",
+        "covers": "<strong>Gambar sampul</strong>",
+        "coversWhat": "Permintaan gambar biasa ke server gambar Spotify, Apple atau YouTube saat sampul ditampilkan.",
+        "githubWhat": "Pemeriksaan versi OnKey yang lebih baru semenit setelah dibuka lalu sekali sehari, dan unduhannya jika ada. Dengan <strong>Periksa pembaruan secara otomatis</strong> mati di Pengaturan, ia hanya memeriksa saat Anda menekan <strong>Periksa sekarang</strong>.",
+        "nothingElse": "Tidak ada lagi yang keluar: tidak ada akun, tidak ada analitik, tidak ada pelaporan crash, dan tidak ada server milik saya. Rekaman Anda tidak pernah diunggah. “Laporkan masalah” menunjukkan kepada Anda isi zip berisi angka dan log, menyimpannya di Mac Anda, dan tidak mengirim apa pun. Anda yang memilih apakah akan melampirkannya ke issue GitHub. Model sudah ada di dalam aplikasi, jadi ia tidak pernah mengunduhnya.",
+        "website": "Situs web ini (bukan aplikasinya) menghitung kunjungan dengan Plausible. Ia tidak memakai cookie dan tidak ada yang mengidentifikasi Anda, dan hanya menyimpan total, seperti berapa orang yang berkunjung, dari mana, dan berapa yang mengklik Unduh.",
+        "flowMyna": "Jalur kunjungan anonim juga dikirim ke Flow Myna, alat analitik saya sendiri: bagian situs mana yang dibaca sebuah kunjungan, berurutan, dan lokasi kasar asal koneksinya (misalnya negaranya). Tanpa cookie, dan alamat IP Anda tidak disimpan.",
+        "stars": "Jumlah bintang pada tombol GitHub datang langsung dari GitHub, jadi browser Anda memintanya ke GitHub."
+      },
+      "streaming": {
+        "title": "Layanan streaming",
+        "noMusic": "OnKey tidak menyediakan, men-streaming, atau mengunduh musik. Aplikasi musik Anda sendiri yang memutarnya, dan OnKey mendengarkan lewat izin penangkapan audio macOS. Ia tidak memakai SDK atau API pengembang layanan streaming mana pun, dan tidak menyentuh berkas, memori, atau enkripsi aplikasi mana pun.",
+        "control": "Secara bawaan ia mengikuti Spotify dan Apple Music lewat izin Automasi macOS (diminta saat penyiapan): ia membaca apa yang diputar dan di mana, serta memutar, menjeda, menggeser dan memulai lagu. Jika Anda mengaktifkan “YouTube di browser Anda” di Pengaturan (awalnya mati), OnKey juga membaca dan mengontrol tab YouTube di Chrome, Brave, Edge atau Safari. Pilih “Hanya mendengarkan” saat penyiapan, atau matikan di bawah “Izinkan OnKey mengontrol” di Pengaturan, dan OnKey tidak pernah mengirim apa pun ke aplikasi-aplikasi itu.",
+        "terms": "OnKey tidak pernah menyimpan atau mengekspor musik yang didengarnya. Ketentuan layanan musik Anda sendiri tetap berlaku untuk cara Anda memakainya."
+      },
+      "rights": {
+        "title": "Pemegang hak",
+        "body": "Jika Anda mewakili pemegang hak atau sebuah layanan dan punya kekhawatiran tentang OnKey, kirim email ke <email>{address}</email>. Saya membaca setiap pesan dan akan membalas dengan cepat. Jika kekhawatiran itu beralasan, saya akan mengubah atau menghapus fitur yang bersangkutan. Lihat juga <legal>LEGAL.md</legal>.",
+        "noAddress": "(alamat menyusul)"
+      },
+      "trademarks": {
+        "title": "Merek dagang",
+        "body": "OnKey tidak berafiliasi dengan atau didukung oleh Spotify, Apple atau Google. Nama mereka adalah merek dagang pemiliknya dan dipakai hanya untuk menyebut aplikasi yang didukung OnKey."
+      },
+      "licence": {
+        "title": "Lisensi",
+        "body": "OnKey gratis dan sumber terbuka dengan lisensi MIT."
+      }
+    },
+    "yourVoice": {
+      "title": "Bernyanyi dengan nyaman",
+      "lede": "OnKey membuat Anda mudah bernyanyi lagu demi lagu, jadi suara Anda perlu sedikit dijaga.",
+      "volume": {
+        "title": "Bernyanyi dengan volume yang nyaman",
+        "body": "OnKey hanya menilai nada Anda, jadi tidak perlu bernyanyi melebihi musik. Bernyanyi pelan mendapat skor yang sama. Headphone membantu, karena Anda tidak perlu bersaing dengan speaker untuk mendengar diri sendiri."
+      },
+      "octave": {
+        "title": "Turun satu oktaf saat not tak terjangkau",
+        "body": "Jika sebuah lagu terlalu tinggi atau rendah untuk Anda, nyanyikan satu oktaf lebih rendah atau lebih tinggi. OnKey menghitung not yang benar di oktaf mana pun, jadi Anda tidak rugi apa-apa. Memaksakan diri di tepi rentang suara adalah cara tercepat melelahkan suara Anda."
+      },
+      "warmUp": {
+        "title": "Pemanasan dan istirahat",
+        "easy": "Mulailah dengan beberapa lagu yang mudah, atau bersenandung pelan naik turun rentang suara Anda selama satu dua menit.",
+        "water": "Sediakan air minum di dekat Anda.",
+        "rest": "Setelah sekitar 35 menit bernyanyi, OnKey mengingatkan Anda untuk beristirahat (Anda dapat mematikannya di <strong>Pengaturan → Suara Anda</strong>).",
+        "gradually": "Tingkatkan sedikit demi sedikit. Beberapa jam pada hari pertama jauh lebih banyak daripada yang biasa dialami kebanyakan suara."
+      },
+      "pain": {
+        "title": "Berhenti jika sakit",
+        "body": "Nyeri, tenggorokan perih, atau suara yang masih serak keesokan harinya berarti saatnya beristirahat. Jika berlangsung lebih dari dua minggu, temui dokter atau spesialis suara."
+      },
+      "technique": "Untuk teknik (napas, register, bernyanyi tanpa memaksa), lihat <link>Lebih dari sekadar nada</link>.",
+      "disclaimer": "Halaman ini berisi saran umum tentang bernyanyi, bukan nasihat medis."
+    },
+    "beyondPitch": {
+      "title": "Lebih dari sekadar nada",
+      "lede": "OnKey menunjukkan apakah Anda tepat di not. Bernyanyi dengan baik butuh lebih dari itu, dan sisanya paling baik dipelajari dari guru.",
+      "hear": {
+        "title": "Yang bisa dan tidak bisa didengar OnKey",
+        "body": "OnKey melacak nada Anda terhadap nada penyanyi, baris demi baris. Ini cara cepat untuk mendengar, dan melihat, di mana Anda melenceng. Ia tidak bisa tahu bagaimana Anda menghasilkan suaranya: apakah napas Anda baik, apakah Anda memaksa, atau bernyanyi dengan perasaan. Skor tinggi berarti Anda mencapai not-notnya, bukan berarti Anda menyanyikan lagunya dengan baik."
+      },
+      "learn": {
+        "title": "Apa lagi yang perlu dipelajari",
+        "breath": "<strong>Dukungan napas:</strong> aliran udara yang stabil di belakang suara, supaya baris yang panjang tidak kehabisan napas atau goyah.",
+        "tension": "<strong>Lebih sedikit ketegangan:</strong> tenggorokan, rahang dan lidah yang bebas. Meraih not tinggi dengan memaksa adalah cara suara biasanya lelah atau terluka.",
+        "registers": "<strong>Register:</strong> suara dada, suara kepala dan campuran di antaranya, supaya Anda bisa bergerak di seluruh rentang suara tanpa patah.",
+        "vowels": "<strong>Vokal:</strong> membentuknya supaya not berdenting dan not tinggi menjadi lebih mudah.",
+        "phrasing": "<strong>Frasering dan ritme:</strong> di mana mengambil napas, kata mana yang ditekankan, dan mendarat tepat pada ketukan."
+      },
+      "teachers": {
+        "title": "Guru gratis untuk memulai",
+        "callaway": "<link>Dan Callaway</link> mengajar vokal teater musikal di Boston Conservatory at Berklee. Pelajaran teknik yang jelas, dari napas sampai belting.",
+        "rolka": "<link>Jeff Rolka</link>: pemanasan, bernyanyi tepat nada, not tinggi, run dan riff.",
+        "suggested": "Keduanya disarankan oleh para penyanyi dalam diskusi saat OnKey diluncurkan. Masih ada guru bagus lainnya, dan saran selalu disambut di <link>GitHub</link>."
+      },
+      "lessons": {
+        "title": "Les dengan guru",
+        "body": "Jika bisa, ambillah beberapa kali les. Seorang guru mendengar dalam hitungan detik apa yang butuh berbulan-bulan untuk Anda sadari sendiri, dan memberi latihan yang sesuai untuk suara Anda. OnKey lalu bisa menjadi cara Anda berlatih di antara les: bernyanyi mengikuti lagu yang Anda sukai, dan melihat nada Anda makin mantap."
+      },
+      "voice": "Untuk menjaga suara selagi berlatih, lihat <link>Bernyanyi dengan nyaman</link>."
+    },
+    "credits": {
+      "title": "Kredit",
+      "lede": "OnKey dibangun di atas proyek dan layanan terbuka ini.",
+      "component": "Komponen",
+      "usedFor": "Dipakai untuk",
+      "licence": "Lisensi",
+      "uses": {
+        "crepe": "Nada: model full saat mempelajari, model tiny secara langsung",
+        "game": "Not setiap suku kata",
+        "wav2vec": "Kapan setiap kata dinyanyikan",
+        "uvr": "Memisahkan vokal utama",
+        "cmudict": "Jumlah suku kata",
+        "lrclib": "Lirik tersinkron, diambil saat berjalan",
+        "shazamkit": "Menamai lagu baru",
+        "itunes": "Sampul album dan durasi lagu",
+        "hyphenation": "Memecah kata menjadi suku kata",
+        "onnx": "Menjalankan model",
+        "tauri": "Aplikasinya"
+      },
+      "licences": {
+        "service": "Layanan",
+        "macos": "Bagian dari macOS"
+      },
+      "notices": "OnKey sendiri gratis dan sumber terbuka dengan lisensi MIT. Pemberitahuan lengkapnya ada di <link>THIRD_PARTY_NOTICES.md</link>."
+    }
+  }
+}

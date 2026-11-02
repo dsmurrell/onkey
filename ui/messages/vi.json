@@ -1,0 +1,1504 @@
+{
+  "app": {
+    "title": "OnKey",
+    "description": "Phần mềm luyện hát: học hát những bài bạn yêu thích, với nhạc bạn vẫn đang phát."
+  },
+  "settings": {
+    "language": {
+      "title": "Ngôn ngữ",
+      "label": "Ngôn ngữ",
+      "sub": "Ngôn ngữ OnKey hiển thị. Tự động theo ngôn ngữ của máy tính.",
+      "autoNamed": "Tự động ({language})",
+      "autoOs": "{language} ({os, select, mac {ngôn ngữ của máy Mac} other {ngôn ngữ của máy PC này}})",
+      "early": "Sơ bộ",
+      "earlyNote": "Lời các bài hát bằng {language} hiện chưa được canh thời gian theo từng từ. Muốn góp sức? <link>Cải thiện bản dịch này.</link>",
+      "credits": "Dịch bởi {names}"
+    },
+    "title": "Cài đặt",
+    "saveFailed": "Không lưu được cài đặt.",
+    "audio": {
+      "title": "Âm thanh",
+      "mic": {
+        "label": "Micrô",
+        "now": "Hiện tại: {name}.",
+        "none": "Chưa kết nối micrô nào.",
+        "nowMissingMac": "Hiện tại: {name}. Micrô bạn chọn chưa được kết nối, nên OnKey dùng đầu vào của máy Mac cho đến khi nó kết nối lại.",
+        "nowMissingPc": "Hiện tại: {name}. Micrô bạn chọn chưa được kết nối, nên OnKey dùng {input} cho đến khi nó kết nối lại.",
+        "noneMissingMac": "<warn>Chưa kết nối micrô nào.</warn> Micrô bạn chọn chưa được kết nối, nên OnKey dùng đầu vào của máy Mac cho đến khi nó kết nối lại.",
+        "noneMissingPc": "<warn>Chưa kết nối micrô nào.</warn> Micrô bạn chọn chưa được kết nối, nên OnKey dùng {input} cho đến khi nó kết nối lại.",
+        "moreMac": "Tự động dùng đầu vào của máy Mac (Cài đặt hệ thống → Âm thanh), nhưng không dùng micrô của tai nghe Bluetooth khi máy Mac có micrô riêng, để nhạc trong tai nghe giữ nguyên chất lượng. Bước kiểm tra micrô khi thiết lập và các lượt hát dùng cùng một micrô. Thiết bị ảo do ứng dụng khác thêm vào (Krisp, Loopback, BlackHole, Zoom, Teams) được xếp riêng: chỉ chọn khi bạn cố ý hát qua đó, vì nó đưa cho OnKey âm thanh của ứng dụng đó chứ không phải micrô của bạn.",
+        "morePc": "Tự động dùng {input} ({soundInput}). Bước kiểm tra micrô khi thiết lập và các lượt hát dùng cùng một micrô.",
+        "automatic": "Tự động",
+        "virtual": "Ảo (từ ứng dụng khác)",
+        "notConnected": "Chưa kết nối"
+      },
+      "output": {
+        "label": "Đầu ra",
+        "now": "Hiện tại: {name}. Đổi trong {os, select, mac {Cài đặt hệ thống → Âm thanh} other {{sound}}}."
+      },
+      "setup": {
+        "title": "Chạy lại thiết lập",
+        "sub": "Quyền truy cập và kiểm tra micrô, như ngày đầu."
+      }
+    },
+    "shortcuts": {
+      "title": "Phím tắt",
+      "space": "Dấu cách",
+      "pause": "Tạm dừng hoặc tiếp tục nghe (ở mọi trang)",
+      "playPause": "Phát hoặc tạm dừng",
+      "restart": "Hát lại bài từ đầu",
+      "previous": "Bài trước",
+      "next": "Bài tiếp, hoặc bỏ qua tới đoạn hát",
+      "blind": "Hiện hoặc ẩn nốt (hát không gợi ý)",
+      "favourite": "Yêu thích bài hát",
+      "mini": "Chế độ thu nhỏ: thanh lời nhỏ nằm trên các ứng dụng khác"
+    },
+    "updates": {
+      "version": "OnKey {version}",
+      "unsupportedMac": "Bản dựng phát triển: không tự cập nhật.",
+      "unsupportedPc": "Bản thử nghiệm này không tự cập nhật: khi có bản mới, cài đè lên.",
+      "waiting": "OnKey {version} sẽ được cài khi bài này kết thúc, rồi OnKey khởi động lại.",
+      "ready": "OnKey {version} đã sẵn sàng. Khởi động lại để cập nhật, hoặc bản mới được cài khi bạn thoát.",
+      "downloading": "Đang tải OnKey {version}…",
+      "checking": "Đang kiểm tra…",
+      "official": "OnKey {version} đã ra mắt từ dự án gốc, tại singonkey.app. Bản này được dựng từ mã nguồn, nên không tự cập nhật.",
+      "current": "Bạn đang dùng phiên bản mới nhất.",
+      "currentSource": "Bạn đang dùng phiên bản mới nhất. Bản này được dựng từ mã nguồn: nó báo khi có phiên bản mới, nhưng không tự cập nhật.",
+      "updateFailed": "Không cập nhật được lên OnKey {version}. Kiểm tra ngay sẽ thử lại.",
+      "updateFailedWhy": "Không cập nhật được lên OnKey {version} ({error}). Kiểm tra ngay sẽ thử lại.",
+      "checkFailed": "Lúc này không kiểm tra được cập nhật.",
+      "checkFailedWhy": "Lúc này không kiểm tra được cập nhật ({error}).",
+      "restart": "Khởi động lại để cập nhật",
+      "checkNow": "Kiểm tra ngay",
+      "auto": {
+        "title": "Tự động kiểm tra cập nhật",
+        "sub": "Mỗi ngày một lần, chạy nền. Không bao giờ làm gián đoạn bài hát.",
+        "more": "OnKey hỏi GitHub xem có phiên bản mới hơn không và tải về trong nền. Bản mới được cài khi bạn khởi động lại hoặc thoát."
+      }
+    },
+    "seeHow": {
+      "show": "Xem thử",
+      "hide": "Ẩn"
+    },
+    "more": {
+      "more": "Thêm",
+      "less": "Thu gọn"
+    },
+    "scoring": {
+      "title": "Chấm điểm",
+      "label": "Mức chấm điểm",
+      "more": "Rung giọng không sao: cao độ của bạn được đánh giá theo điểm giữa của độ rung. Mọi điểm số trong OnKey đều hiện ở mức này, kể cả các lượt hát trước: chúng được chấm lại từ giọng hát bạn đã ghi.",
+      "moreRelaxed": "Mọi điểm số trong OnKey đều hiện ở mức này, kể cả các lượt hát trước: chúng được chấm lại từ giọng hát bạn đã ghi."
+    },
+    "control": {
+      "title": "Cho OnKey điều khiển",
+      "introMac": "Bật mặc định: OnKey đọc bài nào đang phát và tới đâu (vị trí chính xác, tức thì), và có thể phát, tạm dừng, tua và bắt đầu bài hát. Không gì khác. macOS hỏi một lần cho mỗi ứng dụng.",
+      "introPc": "Bật mặc định: OnKey đọc bài nào đang phát và tới đâu, và có thể phát, tạm dừng, tua và bắt đầu bài hát. Không gì khác.",
+      "introAsking": "OnKey theo Spotify và Apple Music bằng cách hỏi chúng, nên đã điều khiển được rồi.",
+      "spotify": {
+        "title": "Spotify",
+        "missing": "Spotify chưa được cài trên {os, select, mac {máy Mac} other {máy PC}} này.",
+        "sub": "Bắt đầu, tạm dừng và chuyển bài trong Spotify từ OnKey."
+      },
+      "music": {
+        "title": "Apple Music",
+        "missingMac": "Ứng dụng Nhạc không có trên máy Mac này.",
+        "missingPc": "Ứng dụng Apple Music không có trên máy PC này.",
+        "subMac": "Tương tự cho ứng dụng Nhạc (bài trong thư viện của bạn).",
+        "subPc": "Tương tự cho ứng dụng Apple Music."
+      },
+      "youtube": {
+        "title": "YouTube trong trình duyệt",
+        "badge": "Quyền lớn hơn",
+        "subMac": "Đọc và điều khiển tab YouTube trong Chrome, Brave, Edge hoặc Safari.",
+        "moreMac": "Cần bật “Cho phép JavaScript từ Apple Events” trong trình duyệt. Khi đang bật (và trong 10 phút sau khi bạn mở một bài YouTube từ OnKey), OnKey nghe âm thanh của trình duyệt, bất kể là gì, kể cả cuộc gọi và podcast: âm thanh không nhận ra có thể được gửi tới Shazam dưới dạng mã nhận dạng ngắn (không bao giờ là âm thanh) trừ khi bạn tắt Shazam ở dưới.",
+        "subPc": "Theo bài hát đang phát trong Chrome, Edge, Firefox, Brave, Opera hoặc Vivaldi.",
+        "morePc": "Dựa trên những gì trình duyệt báo cho {os} là đang phát; OnKey có thể phát, tạm dừng và tua ở đó. Cho đến khi học xong một bài, vị trí có thể kém chính xác hơn Spotify một chút."
+      },
+      "listenOnlyMac": "OnKey chỉ đang nghe: theo bài hát bằng âm thanh và không chạm vào ứng dụng nào. Vị trí kém chính xác hơn một chút, và không bắt đầu hay hát lại bài được. Tắt một ứng dụng ở đây không thu hồi quyền của macOS: quyền đó nằm ở Cài đặt hệ thống → Quyền riêng tư & Bảo mật → Tự động hóa.",
+      "listenOnlyPc": "OnKey chỉ đang nghe: theo bài hát bằng âm thanh và không chạm vào ứng dụng nào. Trên {os}, như vậy chỉ nhận ra bài đã học: bài mới được đặt tên bởi {apps} khi chúng đang bật ở đây.",
+      "allOff": "Tắt hết các mục này thì OnKey chỉ theo bài hát bằng âm thanh."
+    },
+    "naming": {
+      "title": "Tìm tên bài hát",
+      "pc": "Bài bạn đã hát trước đây được nhận ra trên máy PC này bằng âm thanh. Bài mới được đặt tên bởi Spotify, Apple Music hoặc trình duyệt (khi bật YouTube), theo những gì chúng báo là đang phát. Không gì được gửi đi đâu để tìm tên bài.",
+      "shazam": {
+        "title": "Dùng Shazam để tìm tên bài mới",
+        "sub": "Đặt tên bài mới từ một mã nhận dạng ngắn của âm thanh, không phải âm thanh.",
+        "more": "Bài bạn đã hát trước đây được nhận ra trên máy Mac này. Bài mới từ Spotify và Apple Music được chính ứng dụng đặt tên khi OnKey được phép điều khiển; Shazam đặt tên phần còn lại. Khi tắt, không gì được gửi tới Shazam và chỉ các bài đã học trên máy Mac này được nhận ra. Ảnh bìa album vẫn được tìm theo nghệ sĩ và tiêu đề trong danh mục iTunes của Apple.",
+        "warn": "Khi tắt Spotify và Apple Music, bài mới chỉ học được khi bật Shazam. Bài đã học vẫn hoạt động."
+      }
+    },
+    "lyrics": {
+      "title": "Lời bài hát",
+      "show": {
+        "title": "Hiện lời bài hát",
+        "sub": "Từ LRCLIB, cơ sở dữ liệu lời bài hát miễn phí của cộng đồng.",
+        "more": "Khi tắt, OnKey không hỏi LRCLIB gì cả, và bạn hát theo nốt thôi: gợi ý cao độ và điểm số vẫn hoạt động như thường."
+      }
+    },
+    "voice": {
+      "title": "Giọng của bạn",
+      "breaks": {
+        "title": "Nhắc tôi nghỉ giọng",
+        "sub": "Một lời nhắc nhẹ để nghỉ sau khoảng 35 phút hát.",
+        "more": "Ngừng hát 20 phút thì đếm lại từ đầu."
+      },
+      "fadeGuide": {
+        "title": "Ẩn dần gợi ý ở bài đã quen",
+        "sub": "Đường cao độ của bạn mờ dần khi bạn đúng nốt, để bạn lắng nghe chính mình nhiều hơn.",
+        "more": "Bắt đầu khi bạn đã hát tốt một bài (điểm cao nhất từ 80, hoặc hai lượt gần nhất từ 75). Càng quen bài, đường càng mờ; lệch hơn nửa cung thì hiện như thường. Các nốt luôn giữ nguyên, và bạn có thể bật lại gợi ý đầy đủ cho bất kỳ lượt hát nào."
+      }
+    },
+    "performance": {
+      "title": "Hiệu năng",
+      "battery": {
+        "title": "Tiết kiệm pin khi hát",
+        "sub": "Khi dùng pin, các nốt được vẽ thưa hơn một chút. Vẫn mượt.",
+        "more": "30 lần mỗi giây thay vì 60: giảm nửa công việc vẽ cho máy Mac."
+      },
+      "keepModels": {
+        "title": "Giữ sẵn mô hình học",
+        "sub": "Bài mới học nhanh hơn, nhưng OnKey dùng nhiều bộ nhớ hơn.",
+        "more": "Thêm khoảng 1,5 GB, kể cả khi bạn hát bài OnKey đã biết. Khi tắt, mô hình được nạp khi học bài mới và giải phóng sau đó. Bật mặc định trên {os, select, mac {máy Mac} other {máy PC}} có 32 GB trở lên."
+      }
+    },
+    "about": {
+      "title": "Giới thiệu",
+      "report": {
+        "title": "Báo cáo sự cố",
+        "subMac": "Lưu nhật ký và số liệu thời gian của OnKey thành tệp zip để đính kèm vào issue trên GitHub. Bạn xem nội dung trước; không có lời bài hát hay âm thanh, không gì được tải lên.",
+        "subPc": "Lưu nhật ký và số liệu thời gian của OnKey thành một tệp zip trên Màn hình nền, để đính kèm vào tin nhắn hoặc issue trên GitHub. Bạn xem nội dung trước; không có lời bài hát hay âm thanh, không gì được tải lên."
+      },
+      "guides": {
+        "title": "Hướng dẫn và trợ giúp",
+        "sub": "Cách OnKey hoạt động, chấm điểm, khắc phục sự cố và hát sao cho thoải mái, tại singonkey.app."
+      },
+      "discord": {
+        "title": "Tham gia Discord của OnKey",
+        "sub": "Đặt câu hỏi, báo bài hát bị lệch nhịp và góp ý tưởng."
+      },
+      "madeBy": {
+        "title": "Tạo bởi Daniel Murrell",
+        "tagline": "Cứu các ca sĩ phòng tắm khỏi chính mình từ năm 2026"
+      },
+      "fairUse": {
+        "title": "Dùng OnKey đúng cách",
+        "sub": "OnKey dành cho việc gì, và cách chia sẻ giọng hát mà không chia sẻ bản nhạc."
+      },
+      "licences": {
+        "title": "Giấy phép mã nguồn mở",
+        "sub": "Các mô hình, dữ liệu, phông chữ và thư viện làm nên OnKey, cùng giấy phép của chúng."
+      },
+      "footer": "Dành cho luyện tập cá nhân tại nhà. Những gì OnKey học được ở lại trên {os, select, mac {máy Mac} other {máy PC}} này: hãy giữ cho riêng mình, và đừng đăng lượt hát hay bản ghi màn hình có kèm bản nhạc."
+    }
+  },
+  "music": {
+    "levels": {
+      "relaxed": {
+        "name": "Thoải mái",
+        "about": "Dễ tính: trọn điểm trong vòng nửa cung. Phù hợp người mới và trẻ em."
+      },
+      "steady": {
+        "name": "Vững vàng",
+        "about": "Cao độ và nhịp chặt hơn, cho người hát đã khá đúng tông."
+      },
+      "pro": {
+        "name": "Chuyên nghiệp",
+        "about": "Chặt, cho ca sĩ được đào tạo: một phần tư cung để được trọn điểm."
+      }
+    },
+    "offBy": {
+      "cents": "{dir, select, up {cao} other {thấp}} {cents}¢",
+      "octaves": "{dir, select, up {cao} other {thấp}} khoảng {count, plural, other {{count} quãng tám}}",
+      "semitones": "{dir, select, up {cao} other {thấp}} khoảng {count, plural, other {{count} nửa cung}}"
+    },
+    "scoreWord": {
+      "superb": "Tuyệt vời",
+      "great": "Rất tốt",
+      "good": "Tốt",
+      "gettingThere": "Sắp được rồi",
+      "keepAtIt": "Cố lên nhé"
+    }
+  },
+  "platform": {
+    "linux": {
+      "os": "Linux",
+      "settings": "Cài đặt âm thanh",
+      "sound": "cài đặt Âm thanh của hệ thống",
+      "soundInput": "cài đặt Âm thanh của hệ thống → Đầu vào",
+      "defaultInput": "đầu vào mặc định của hệ thống",
+      "files": "trình quản lý tệp",
+      "filesThe": "trình quản lý tệp",
+      "apps": "Spotify hoặc YouTube trong trình duyệt"
+    },
+    "windows": {
+      "os": "Windows",
+      "settings": "Cài đặt Windows",
+      "sound": "Cài đặt Windows → Hệ thống → Âm thanh",
+      "soundInput": "Cài đặt Windows → Hệ thống → Âm thanh → Đầu vào",
+      "defaultInput": "đầu vào mặc định của Windows",
+      "files": "File Explorer",
+      "filesThe": "File Explorer",
+      "apps": "Spotify, Apple Music hoặc YouTube trong trình duyệt"
+    },
+    "setupStep": {
+      "welcome": "Chào mừng",
+      "permissions": "Quyền truy cập",
+      "musicApps": "Ứng dụng nhạc",
+      "micCheck": "Kiểm tra micrô",
+      "ready": "Sẵn sàng"
+    },
+    "savedFolder": {
+      "desktop": "Màn hình nền",
+      "home": "thư mục cá nhân của bạn",
+      "named": "thư mục {folder}"
+    }
+  },
+  "learn": {
+    "stage": {
+      "playing": "Đang học khi bài phát",
+      "waiting": "Đang chờ tới lượt",
+      "queued": "Chờ học",
+      "paused": "Chờ trong lúc bạn hát",
+      "separating": "Đang tách giọng ca sĩ",
+      "pitch": "Đang dò giai điệu",
+      "scoring": "Đang chấm điểm lượt hát",
+      "words": "Đang canh thời gian lời",
+      "bars": "Đang tạo thanh nốt",
+      "notes": "Đang tìm từng nốt",
+      "saving": "Đang lưu",
+      "other": "Đang học"
+    },
+    "label": {
+      "queued": "Chờ học",
+      "going": "Đang học…",
+      "percent": "Đang học… {pct}%"
+    }
+  },
+  "starting": {
+    "yourApp": "ứng dụng nhạc của bạn",
+    "theSong": "bài hát",
+    "noId": {
+      "title": "OnKey không bắt đầu được {song} trong {app}",
+      "sub": "OnKey chưa biết bài này trong {app} (bài được học từ ứng dụng khác, hoặc bằng cách nghe). Mở bài trong {app} và nhấn phát: OnKey theo bài, và sau đó có thể bắt đầu bài cho bạn."
+    },
+    "failed": {
+      "title": "Không bắt đầu được {song} trong {app}",
+      "subMusic": "OnKey có thể bắt đầu các bài nằm trong thư viện Apple Music của bạn. Mở bài trong Apple Music và nhấn phát ở đó: OnKey theo bài.",
+      "sub": "Mở bài trong {app} và nhấn phát ở đó: OnKey theo bài."
+    },
+    "going": {
+      "title": "Đang bắt đầu {song} trong {app}…",
+      "sub": "Dải nốt xuất hiện ngay khi bài phát."
+    }
+  },
+  "errors": {
+    "deleteFailed": "Không xóa được.",
+    "readFailed": "Không đọc được {what, select, takes {các lượt hát} songs {các bài hát} other {{what}}} của bạn",
+    "reportsInApp": "Báo cáo được tạo trong ứng dụng OnKey."
+  },
+  "sing": {
+    "header": {
+      "miniTitle": "Chế độ thu nhỏ: thanh lời nhỏ luôn nằm trên các ứng dụng khác (M)"
+    },
+    "learning": {
+      "badge": "Đang học bài này",
+      "title": "Lượt hát không gợi ý của bạn",
+      "body": "Hát theo, không có gợi ý. Lần sau bạn sẽ thấy trước từng nốt.",
+      "scoreAfter": "<time>{clock}</time> · điểm sau khi bài kết thúc"
+    },
+    "learningLine": {
+      "waiting": "Chờ học <hl>{name}</hl>",
+      "learning": "Đang học <hl>{name}</hl>: {stage}",
+      "stage": {
+        "playing": "đang học khi bài phát",
+        "waiting": "đang chờ tới lượt",
+        "queued": "chờ học",
+        "paused": "chờ trong lúc bạn hát",
+        "separating": "đang tách giọng ca sĩ",
+        "pitch": "đang dò giai điệu",
+        "scoring": "đang chấm điểm lượt hát",
+        "words": "đang canh thời gian lời",
+        "bars": "đang tạo thanh nốt",
+        "notes": "đang tìm từng nốt",
+        "saving": "đang lưu",
+        "other": "đang học"
+      }
+    },
+    "lineSub": {
+      "mac": {
+        "finding": "OnKey đang tìm tên bài từ âm thanh. Mất vài giây, và lượt hát tính từ đầu bài.",
+        "new_song": "OnKey đang tìm tên bài tiếp theo. Lượt hát của bài tính từ đầu bài.",
+        "unnamed": "Bài này OnKey và Shazam đều chưa biết. OnKey hỏi lại khi âm thanh thay đổi.",
+        "no_shazam": "Lúc này không kết nối được Shazam, nên chỉ nhận ra các bài đã học trên máy Mac này. OnKey vẫn đang thử tiếp.",
+        "shazam_off": "Shazam đang tắt (Cài đặt), nên chỉ bằng âm thanh OnKey chỉ nhận ra các bài đã học trên máy Mac này. Bật Shazam để tìm tên bài mới.",
+        "podcast": "Phát một bài hát và OnKey sẽ theo.",
+        "stopped": "Bạn đã dừng học bài này, nên OnKey để nó yên. Phát bài khác và OnKey sẽ theo.",
+        "elsewhere": "OnKey nghe những gì phát trên máy Mac này. Nếu bài đang phát trên thiết bị khác (điện thoại, loa), hãy chuyển về máy Mac này trong menu thiết bị của ứng dụng."
+      },
+      "pc": {
+        "unnamed": "Bài này OnKey chưa học, và chưa ứng dụng nhạc nào cho biết đó là bài gì. OnKey hỏi lại khi âm thanh thay đổi.",
+        "no_shazam": "Bài này OnKey chưa học. Trên {os}, bài mới được đặt tên bởi {apps} (khi bật YouTube): phát bài ở đó và OnKey sẽ học.",
+        "shazam_off": "Bài này OnKey chưa học. Trên {os}, bài mới được đặt tên bởi {apps} (khi bật YouTube): phát bài ở đó và OnKey sẽ học.",
+        "elsewhere": "OnKey nghe những gì phát trên máy PC này. Nếu bài đang phát trên thiết bị khác (điện thoại, loa), hãy chuyển về máy PC này trong menu thiết bị của ứng dụng."
+      }
+    },
+    "waiting": {
+      "title": {
+        "starting": "Đang khởi động OnKey…",
+        "gettingReady": "Đang chuẩn bị…",
+        "notASong": "Không phải bài hát",
+        "stillListening": "Vẫn đang nghe",
+        "idle": "Phát một bài và hát theo"
+      },
+      "sub": {
+        "connecting": "Đang kết nối với bộ máy trên {os, select, pc {máy PC} other {máy Mac}} này.",
+        "listeningTo": "Đang nghe {name}. Dải nốt sẽ xuất hiện trong giây lát.",
+        "idle": "Trong Spotify{youtube, select, yes {, Apple Music hoặc YouTube} other { hoặc Apple Music}}. OnKey theo bài, và mỗi bài trở thành một lượt hát bạn có thể xem lại."
+      },
+      "openIn": "Mở trong {app}",
+      "notNow": "Để sau",
+      "keys": {
+        "playPause": "<kbd>Dấu cách</kbd> phát / tạm dừng",
+        "startOver": "<kbd>R</kbd> hát lại từ đầu",
+        "skip": "<kbd>←</kbd><kbd>→</kbd> chuyển bài",
+        "favourite": "<kbd>F</kbd> yêu thích"
+      },
+      "songsToTry": "Bài hát nên thử",
+      "youtube": {
+        "title": "YouTube và YouTube Music <badge>Thử nghiệm</badge>",
+        "turnOff": "Tắt",
+        "turnOn": "Bật",
+        "pcOn": "Đang bật. OnKey theo bài trong trình duyệt dựa trên những gì nó báo cho {os} là đang phát.",
+        "pcOff": "Đang tắt, nên bài phát trong trình duyệt không được nhận. Bật lên để hát theo trong Chrome, Edge, Firefox, Brave, Opera hoặc Vivaldi.",
+        "macOn": "Đang bật. macOS hỏi một lần để cho OnKey điều khiển trình duyệt, nhờ đó OnKey đọc được video đang ở đâu.",
+        "macOff": "Đang tắt, nên bài phát trong trình duyệt không được nhận. Bật lên để hát theo trong Chrome, Safari, Brave hoặc Edge: macOS hỏi một lần để cho OnKey điều khiển trình duyệt."
+      }
+    },
+    "paused": {
+      "text": "Đã tạm dừng nghe. Tiếp tục để hát theo.",
+      "resumeTitle": "Tiếp tục nghe (⌘⇧P)",
+      "resume": "Tiếp tục"
+    },
+    "rename": {
+      "saveFailed": "Không lưu được tên.",
+      "buttonTitle": "Sai tên bài? Sửa nghệ sĩ và tiêu đề (dùng để tìm lời)",
+      "title": "Sửa tên bài hát",
+      "about": "Đọc từ video YouTube. OnKey tìm lời theo tên này.",
+      "artist": "Nghệ sĩ",
+      "songTitle": "Tiêu đề",
+      "cancel": "Hủy",
+      "save": "Lưu"
+    },
+    "notices": {
+      "dismiss": "Bỏ qua",
+      "openWindowsSettings": "Mở Cài đặt Windows",
+      "openSystemSettings": "Mở Cài đặt hệ thống",
+      "mic": {
+        "title": "OnKey không nghe được micrô của bạn",
+        "deniedPc": "Giọng hát của bạn không được nghe hay chấm điểm cho đến khi nghe được. Trong <b>Cài đặt Windows → Quyền riêng tư & bảo mật → Micrô</b>, bật <b>Quyền truy nhập micrô</b> và <b>Cho phép ứng dụng trên máy tính truy nhập micrô của bạn</b>.",
+        "deniedMac": "Giọng hát của bạn không được nghe hay chấm điểm cho đến khi nghe được. Trong <b>Cài đặt hệ thống → Quyền riêng tư & Bảo mật → Micrô</b>, bật OnKey.",
+        "restrictedPc": "Cài đặt của máy PC này không cho OnKey dùng micrô. Hãy hỏi người quản lý máy.",
+        "restrictedMac": "Cài đặt của máy Mac không cho OnKey dùng micrô. Hãy hỏi người quản lý máy.",
+        "noneMac": "Chưa kết nối micrô nào, nên giọng hát của bạn không được nghe hay chấm điểm. Hãy kết nối một micrô, hoặc chọn trong <b>Cài đặt hệ thống → Âm thanh → Đầu vào</b>.",
+        "nonePc": "Chưa kết nối micrô nào, nên giọng hát của bạn không được nghe hay chấm điểm. Hãy kết nối một micrô, hoặc chọn trong <b>{soundInput}</b>."
+      },
+      "musicQuiet": {
+        "title": "Âm lượng của {app} rất nhỏ",
+        "body": "OnKey không nghe rõ bài hát{at, select, yes { ({app} đang ở {volume}%)} other {}}, nên giọng hát của bạn không được chấm điểm. Tăng âm lượng {app} và dùng âm lượng của {os, select, pc {máy PC} other {máy Mac}} thay thế."
+      },
+      "automation": {
+        "title": "OnKey không được phép điều khiển {app}",
+        "body": "{listening, select, yes {OnKey theo bài bằng cách nghe thay thế, và không bắt đầu, tạm dừng hay chuyển bài ở đó được.} other {Nên OnKey không biết bài gì đang phát ở đó.}} Trong <b>Cài đặt hệ thống → Quyền riêng tư & Bảo mật → Tự động hóa → OnKey</b>, bật {app}{listening, select, yes {, hoặc tắt nó trong Cài đặt của OnKey} other {}}."
+      },
+      "notAnswering": {
+        "title": "{app} không trả lời OnKey",
+        "body": "macOS có thể đang hỏi OnKey có được điều khiển {app} không, trong một cửa sổ bị che sau các cửa sổ khác: hãy tìm nó và chọn <b>Cho phép</b>. Hoặc bật {app} trong <b>Cài đặt hệ thống → Quyền riêng tư & Bảo mật → Tự động hóa → OnKey</b>. OnKey sẽ thử lại sau một phút."
+      },
+      "lyricsDown": {
+        "title": "Lúc này chưa có lời bài hát",
+        "body": "LRCLIB, dịch vụ lời bài hát miễn phí OnKey dùng, hiện không hoạt động. Các nốt vẫn hiện, và lời sẽ xuất hiện cùng nếu dịch vụ trở lại trong lúc bài phát. Bài học trong lúc này sẽ có lời ở lần bạn hát tiếp theo."
+      },
+      "models": {
+        "title": "Lúc này OnKey không học được bài mới",
+        "body": "Các mô hình học, vốn nằm trong ứng dụng, bị thiếu hoặc hỏng{hasError, select, yes { ({error})} other {}}. Bài đã học vẫn hoạt động. Để sửa, tải OnKey lại và {os, select, pc {cài đè lên bản này} other {thay ứng dụng trong thư mục Ứng dụng}}: bài hát và lượt hát của bạn được giữ nguyên."
+      },
+      "modelsBroken": {
+        "title": "Lúc này OnKey không nghe được giọng hát của bạn",
+        "body": "Mô hình cao độ, vốn nằm trong ứng dụng, không nạp được{hasError, select, yes { ({error})} other {}}. Để sửa, tải OnKey lại và thay ứng dụng trong thư mục Ứng dụng: bài hát và lượt hát của bạn được giữ nguyên."
+      },
+      "youtubeBlocked": {
+        "title": "Để hát theo YouTube, hãy cho OnKey đọc video trong {browser}",
+        "body": "Trong {browser}, chọn <b>{setting}</b>. OnKey chỉ đọc vị trí của video và tiêu đề bài hát, không gì khác trên trang."
+      },
+      "youtubeOff": {
+        "title": "Đang phát YouTube hoặc YouTube Music trong {browser}?",
+        "turnOn": "Bật YouTube",
+        "pc": "OnKey chỉ nhận bài trong trình duyệt khi YouTube được bật. Khi đó OnKey theo bài mà {browser} báo cho {os} là đang phát, và học nó như mọi bài khác.",
+        "mac": "OnKey chỉ nhận bài trong trình duyệt khi YouTube được bật. Khi đó macOS hỏi một lần để cho OnKey điều khiển {browser}, nhờ đó OnKey đọc được video đang ở đâu.",
+        "cantFollow": "OnKey không theo được bài trong {browser}. Hãy phát trong <b>Chrome, Safari, Brave hoặc Edge</b> và bật YouTube (ở đây, hoặc trong Cài đặt), hoặc bật <b>chế độ nghe</b> trong Cài đặt, vốn hoạt động với mọi trình duyệt."
+      }
+    },
+    "notASong": {
+      "text": "<hl>{name}</hl> nghe như nói chuyện chứ không phải bài hát, nên OnKey đã dừng học.",
+      "dismiss": "Bỏ qua",
+      "learnIt": "Đây là bài hát: học khi nó phát lần sau"
+    },
+    "speakerHint": {
+      "text": "Nhạc to quá nên OnKey không nghe rõ giọng bạn. Nếu bạn đang hát, hãy giảm nhạc một chút hoặc dùng tai nghe để được chấm điểm công bằng.",
+      "dismiss": "Bỏ qua",
+      "never": "Không hiện lại"
+    },
+    "ended": {
+      "title": "Phiên hát đã kết thúc",
+      "howYouDid": "Đây là kết quả của bạn.",
+      "noTakes": "Lần này không có lượt hát nào đủ dài để chấm điểm."
+    },
+    "permission": {
+      "yourApp": "ứng dụng nhạc của bạn",
+      "title": "OnKey chưa nghe được {app}",
+      "body": "Để theo bài hát, OnKey nghe âm thanh từ {app} trên máy Mac. Âm thanh không được lưu hay gửi đi; ở chế độ nghe, một mã nhận dạng ngắn (không phải âm thanh) được gửi tới Shazam của Apple để tìm tên bài.",
+      "step1": "1. Mở <b>Cài đặt hệ thống → Quyền riêng tư & Bảo mật</b>",
+      "step2": "2. Chọn <b>Bản ghi âm thanh hệ thống & màn hình</b>",
+      "step3": "3. Trong mục <b>Chỉ bản ghi âm thanh hệ thống</b>, bật OnKey",
+      "open": "Mở Cài đặt hệ thống"
+    },
+    "mini": {
+      "playASong": "Phát một bài trong Spotify hoặc Apple Music",
+      "score": "điểm",
+      "hideDancer": "Ẩn vũ công ở đây",
+      "expand": "Mở cửa sổ đầy đủ (M)",
+      "showDancer": "Hiện vũ công",
+      "progress": "Tiến độ bài hát"
+    }
+  },
+  "live": {
+    "lyrics": {
+      "none": "Bài này chưa có lời đồng bộ",
+      "off": "Lời bài hát đang tắt (Cài đặt)",
+      "findingPlace": "Đang tìm vị trí của bạn…",
+      "countdown": "♪ <num>{which, select, next {Dòng tiếp} other {Dòng đầu}} sau {secs} giây</num>"
+    },
+    "score": {
+      "label": "Điểm",
+      "afterSong": "sau khi bài kết thúc",
+      "onPitch": "✓ Đúng cao độ",
+      "higher": "▲ Hát cao lên",
+      "lower": "▼ Hát thấp xuống"
+    },
+    "transport": {
+      "restart": "Hát lại bài từ đầu (R)",
+      "previous": "Bài trước (←)",
+      "pause": "Tạm dừng (dấu cách)",
+      "play": "Phát (dấu cách)",
+      "skipToSinging": "Bỏ qua tới đoạn hát (→)",
+      "next": "Bài tiếp (→)"
+    },
+    "take": {
+      "done": "{blind, select, yes {không gợi ý · } other {}}{hasNotes, select, yes {{hit}/{total} nốt} other {xem}} →",
+      "couldntScore": "không chấm được",
+      "singNow": "Hát ngay",
+      "learnedPct": "đã học {pct}%",
+      "playThrough": "phát trọn bài",
+      "learningPct": "đang học… {pct}%",
+      "waiting": "chờ học",
+      "learning": "đang học…",
+      "scoring": "đang chấm điểm…",
+      "learned": "Đã học xong · sẵn sàng để hát"
+    },
+    "timing": {
+      "title": "Lời sớm hay muộn trên thiết bị này? Gõ theo tiếng tích để đo độ trễ",
+      "check": "Kiểm tra độ trễ trên <hl>{name}</hl> ›",
+      "theseHeadphones": "tai nghe này",
+      "dismiss": "Không gợi ý lại"
+    },
+    "chips": {
+      "connectionTitle": "Kết nối với bộ máy",
+      "reconnecting": "Đang kết nối lại",
+      "resumeTitle": "Tiếp tục nghe (⌘⇧P)",
+      "paused": "Đã tạm dừng nghe",
+      "pauseTitle": "Tạm dừng nghe (⌘⇧P)",
+      "live": "Trực tiếp",
+      "outputTitle": "Âm thanh phát trên {device}. Bạn nghe thấy sau {ms} ms kể từ khi ứng dụng nhạc phát; việc chấm điểm đã tính đến điều này{checked, select, yes { (từ lần kiểm tra độ trễ của bạn trong Cài đặt)} other {}}.",
+      "thisDevice": "thiết bị này",
+      "bluetooth": "Bluetooth",
+      "headphones": "Tai nghe hoặc loa",
+      "micTitle": "Micrô OnKey đang nghe (chọn micrô khác trong Cài đặt)",
+      "noMic": "Không có micrô"
+    },
+    "switches": {
+      "blindTitle": "Ẩn nốt để tự kiểm tra: lượt hát không gợi ý (B)",
+      "showNotes": "Hiện nốt",
+      "echoTitle": "Lọc tiếng nhạc ra khỏi micrô của bạn. Tắt để thử với chính bài hát phát qua loa.",
+      "echo": "Khử tiếng vọng",
+      "dancerTitle": "Một hình người que nhảy theo bài trong lúc bạn hát",
+      "dancer": "Vũ công"
+    },
+    "finish": {
+      "lastLine": "Đó là dòng cuối",
+      "seeScore": "Kết thúc và xem điểm",
+      "now": "Kết thúc ngay",
+      "paused": "Đã tạm dừng",
+      "pausedIn": "{learning, select, yes {học xong} other {có điểm}} sau {time}",
+      "learning": "đang học…",
+      "scoring": "đang chấm điểm…"
+    },
+    "openTake": {
+      "countdown": "Đã tạm dừng · {learning, select, yes {học xong} other {có điểm}} sau {time}",
+      "learning": "Đang học…",
+      "scoring": "Đang chấm điểm…",
+      "state": "{state, select, paused {Đã tạm dừng} learning {Đang học khi bài phát} other {Đang hát}} · {learning, select, yes {học xong} other {có điểm}} khi bài kết thúc",
+      "paused": "tạm dừng",
+      "now": "bây giờ",
+      "finish": "Kết thúc ngay"
+    },
+    "skip": {
+      "singingIn": "Hát sau {secs} giây",
+      "skipAhead": "Bỏ qua"
+    },
+    "pitchTitle": "Cao độ của bạn so với nốt hiện tại",
+    "toast": {
+      "view": "Xem",
+      "learned": "Đã học xong · lần sau có nốt"
+    }
+  },
+  "lane": {
+    "verdict": {
+      "perfect": "Hoàn hảo",
+      "excellent": "Xuất sắc",
+      "great": "Rất tốt",
+      "good": "Tốt",
+      "ok": "Ổn"
+    },
+    "blind": "Hát không gợi ý · nốt đang ẩn · nhấn B để hiện",
+    "findingPlace": "Đang tìm vị trí của bạn trong bài…",
+    "liningUp": "Đang khớp với bài hát…",
+    "singingStarts": "Bắt đầu hát sau {secs} giây"
+  },
+  "take": {
+    "allTakes": "← Tất cả lượt hát",
+    "notFound": "Không tìm thấy lượt hát này.",
+    "header": {
+      "singAgainBlocked": "Có thể hát khi đã học xong",
+      "singAgain": "Hát lại",
+      "shareTitle": "Video 20 giây gồm giọng bạn và các nốt, cho Instagram",
+      "share": "Chia sẻ",
+      "within50Title": "{pct}% phần bạn hát nằm trong vòng 50 cent so với ca sĩ.",
+      "sungLevelTitle": "Chấm lại từ giọng hát bạn đã ghi, ở mức chọn trong Cài đặt",
+      "sungLevel": "Hiện ở mức {level}. Khi hát ở mức {sungLevel}, lượt này được {score} điểm.",
+      "leftOut": "Chấm điểm không tính {count, plural, other {các đoạn}} đã đánh dấu không phải giai điệu chính{changed, select, yes { (trước đó là {first})} other {}}."
+    },
+    "mode": {
+      "firstPlay": "Lần phát đầu",
+      "firstPlayWhy": "Lần đầu bài này phát: OnKey học giai điệu, không hiện nốt nào",
+      "blind": "Không gợi ý",
+      "blindWhy": "Hát mà không hiện nốt"
+    },
+    "story": {
+      "none": "Bạn không hát theo phần của ca sĩ, nên không có gì để chấm điểm.",
+      "main": "Bạn đã hát <n>{sang}%</n> phần của ca sĩ, và phần bạn hát đúng tông <n>{tune}%</n>. {full, select, yes {Đó là điểm của bạn.} other {Điểm của bạn được tính trọn khi bạn hát từ 40% phần đó trở lên.}}"
+    },
+    "verdict": {
+      "great": "Đúng tông tuyệt đẹp.",
+      "mostly": "Phần lớn đúng tông, vài chỗ còn chao đảo.",
+      "often": "Thường ở gần nốt, đôi lúc trôi khỏi nốt.",
+      "away": "Có những đoạn giai điệu vuột khỏi bạn.",
+      "bias": "Trung bình bạn hát {off}.",
+      "worstLine": "Đáng thử lại: “{text}”.",
+      "worstAt": "Đáng thử lại: dòng ở {time}."
+    },
+    "proud": {
+      "share": "Chia sẻ lượt hát này",
+      "notNow": "Để sau"
+    },
+    "player": {
+      "notKept": "Bản ghi của lượt hát này không còn được giữ: OnKey giữ bản ghi của mọi lượt hát cho đến khi tổng vượt 2 GB, rồi bỏ bản cũ nhất (không bao giờ bỏ lượt yêu thích hay lượt hay nhất của một bài). Điểm số vẫn còn.",
+      "stop": "Dừng",
+      "play": "Phát",
+      "playWithSong": "Phát bản ghi của bạn cùng bài hát",
+      "playVoice": "Phát bản ghi của bạn",
+      "whatPlays": "Phát gì",
+      "withSong": "Cùng bài hát",
+      "voiceOnly": "Chỉ giọng bạn",
+      "backToStart": "Về đầu",
+      "lining": "Đang khớp với bài hát…",
+      "voiceTitle": "Độ to của giọng bạn so với bài hát",
+      "yourVoice": "Giọng bạn",
+      "voiceNormal": "bình thường",
+      "voiceDb": "{db} dB",
+      "aboutJoin": "OnKey giữ giọng bạn, không giữ bản nhạc. “Cùng bài hát” phát bản ghi của bạn khớp với {song} khi bạn phát bài đó trong {app}. Độ trễ của micrô ({ms} ms) đã được tự động tính đến.",
+      "aboutPlay": "OnKey giữ giọng bạn, không giữ bản nhạc. “Cùng bài hát” phát bài trong {app} song song với bản ghi của bạn. Độ trễ của micrô ({ms} ms) đã được tự động tính đến."
+    },
+    "join": {
+      "play": "Phát {song} trong {app}. OnKey sẽ hòa vào.",
+      "playFromStart": "Phát {song} trong {app} từ đầu. OnKey sẽ hòa vào.",
+      "goTo": "Tua tới {time} trong {app} cho đoạn này.",
+      "letStart": "Để OnKey bắt đầu cho bạn"
+    },
+    "graph": {
+      "singer": "Nốt của ca sĩ",
+      "within50": "Bạn, trong vòng 50¢",
+      "within100": "Trong vòng 100¢",
+      "further": "Lệch xa hơn",
+      "heldTitle": "Các nốt bạn giữ trong vòng nửa cung ít nhất nửa độ dài. Thanh của chúng sáng xanh.",
+      "held": "Giữ được <n>{hit}</n> trong {total} nốt",
+      "biasTitle": "Trung bình cao độ của bạn nằm ở đâu so với ca sĩ",
+      "centred": "Trung bình ở giữa",
+      "bias": "Trung bình {off}",
+      "notMelody": "Không phải giai điệu chính"
+    },
+    "notMelody": {
+      "buttonTitle": "Bỏ một đoạn mà các nốt theo giọng bè hay hòa âm, không phải giai điệu chính",
+      "button": "Không phải giai điệu chính?",
+      "span": "{from} đến {to}",
+      "saving": "Đang chấm lại…",
+      "leaveOut": "Bỏ đoạn này khỏi điểm",
+      "drag": "Kéo qua đoạn mà các nốt theo giọng bè hay hòa âm thay vì giai điệu chính.",
+      "cancel": "Hủy",
+      "note": "Đoạn này bị bỏ khỏi điểm của mọi lượt hát bài này, và khi bạn hát lần sau.",
+      "leftOut": "Bỏ khỏi điểm, không phải giai điệu chính:",
+      "putBack": "Đưa lại",
+      "notLearned": "Bài này chưa học xong, nên chưa bỏ gì cả.",
+      "noChange": "Không lượt hát nào đổi điểm.",
+      "rescored": "{count, plural, other {{count} lượt hát}} của bài này đã được chấm lại."
+    },
+    "report": "Báo cáo sự cố với lượt hát này",
+    "lines": {
+      "title": "Từng dòng",
+      "lyricsOff": "Lời bài hát đang tắt (Cài đặt), nên lượt hát này không có báo cáo từng dòng.",
+      "none": "Không tìm thấy lời đồng bộ cho bài này.",
+      "playFrom": "Phát từ {time}",
+      "line": "Dòng {n}",
+      "noLead": "không có giọng chính",
+      "notSung": "chưa hát"
+    }
+  },
+  "share": {
+    "saved": "Đã lưu vào Tải về. Trong Instagram, thêm {song} và bắt đầu ở {at} (đã sao chép).",
+    "failed": "Không tạo được video: {error}",
+    "clip": "<b>{at}–{to}</b><dim> · trúng {hits} trong {notes} nốt</dim>",
+    "cantShare": "Không chia sẻ được lượt hát này",
+    "finding": "Đang tìm đoạn clip…",
+    "which": "20 giây nào",
+    "fromPlayhead": "Từ vị trí phát",
+    "best": "Đoạn hay nhất",
+    "playIt": "Phát",
+    "making": "Đang tạo video…",
+    "make": "Tạo video",
+    "close": "Đóng",
+    "noBest": "Lượt này không trúng nốt nào, nên không có đoạn hay nhất: bắt đầu từ vị trí phát.",
+    "about": "Giọng bạn như đã ghi, các nốt và điểm số, không thêm nhạc. Thêm bài hát trong Instagram từ thư viện nhạc của họ, bắt đầu ở mốc thời gian đã hiện. Hát với bài phát qua loa? Thì một phần nhạc đã lọt vào bản ghi của bạn: lượt hát bằng tai nghe là tốt nhất để chia sẻ. <why>{open, select, yes {Ẩn} other {Vì sao tai nghe?}}</why> Xin đừng đăng bản ghi màn hình có nhạc đang phát."
+  },
+  "challenge": {
+    "button": "Thách đấu bạn bè",
+    "says": "Một liên kết cho biết bạn đạt <b>{score}</b> ở {song}, và mời họ vượt qua.",
+    "nameLabel": "Tên của bạn (không bắt buộc)",
+    "namePlaceholder": "Để trống để ẩn danh",
+    "copied": "Đã sao chép: dán cho bạn bè",
+    "failed": "Không sao chép được",
+    "copy": "Sao chép liên kết",
+    "holds": "Liên kết chỉ chứa tên bài, nghệ sĩ và điểm của bạn. Không có bản ghi, nốt hay lời.",
+    "holdsNamed": "Liên kết chỉ chứa tên bài, nghệ sĩ, điểm và tên của bạn. Không có bản ghi, nốt hay lời."
+  },
+  "voiceRange": {
+    "title": "Quãng giọng của bạn",
+    "working": "Đang tính từ các lượt hát của bạn…",
+    "empty": "Hát vài bài và OnKey sẽ hiện quãng giọng của bạn ở đây.",
+    "from": "từ {count, plural, other {{count} lượt hát}}",
+    "fromPending": "từ {count, plural, other {{count} lượt hát}}; {pending} lượt cũ hơn đang được đo",
+    "summary": "<range>{low}–{high}</range><dim>, thoải mái nhất quanh </dim><mid>{midLo}–{midHi}</mid>",
+    "aria": "Quãng giọng của bạn từ {low} đến {high}, thoải mái nhất từ {midLo} đến {midHi}",
+    "note": "Các nốt bạn hát nhiều nhất, từ các lượt hát (bỏ 5% thấp nhất và cao nhất). Quãng này mở rộng khi bạn hát thêm bài."
+  },
+  "voiceBreak": {
+    "text": "Bạn đã hát {minutes} phút. Hãy cho giọng nghỉ vài phút và uống chút nước.",
+    "dismiss": "Bỏ qua",
+    "ok": "OK"
+  },
+  "takeTags": {
+    "firstPlay": "Lần phát đầu",
+    "blind": "Không gợi ý"
+  },
+  "timingCheck": {
+    "macOs": "macOS",
+    "title": "Đầu ra của bạn",
+    "experimental": "Thử nghiệm",
+    "checkOn": "Kiểm tra độ trễ trên {name}",
+    "thisOutput": "đầu ra này",
+    "thisOutputCap": "Đầu ra này",
+    "checked": "Bạn đã kiểm tra: OnKey tính {heard} ms cho nhạc đến tai bạn ở đây ({os} báo {reported} ms).",
+    "unchecked": "OnKey tính {reported} ms cho nhạc đến tai bạn ở đây, theo {os} báo. Tai nghe Bluetooth thường trễ hơn con số {os} báo, làm lời và nốt bị sớm. Gõ theo tiếng tích để đo (hai lần: hai kết quả phải khớp nhau).",
+    "how": "Gõ theo nhịp, như vỗ tay theo điệu nhạc. Đừng chờ nghe từng tiếng tích: giữ nhịp cùng chúng.",
+    "pauseFirst": "Tạm dừng nhạc trước.",
+    "reset": "Đặt lại",
+    "checkAgain": "Kiểm tra lại",
+    "redo": "Làm lại",
+    "check": "Kiểm tra độ trễ",
+    "tapAria": "Gõ theo mỗi tiếng tích",
+    "tapTitle": "Nhấn Dấu cách (hoặc bấm vào đây) theo tiếng tích, đúng nhịp",
+    "keepTime": "Giữ nhịp đến hết, lắng nghe thay vì nhìn. Esc để dừng.",
+    "cancel": "Hủy",
+    "cantPlay": "Bài kiểm tra không phát được tiếng tích ({error}).",
+    "said": {
+      "confirmBefore": "Kết quả là {measured} ms, không khớp với lần kiểm tra trước ({before} ms). Thêm một lần nữa để xác nhận.",
+      "confirm": "Bạn nghe thấy sau {measured} ms kể từ khi phát ({os} báo {reported} ms). Thêm một lần nữa để xác nhận.",
+      "onTime": "{name} {plural, select, yes {} other {}}khớp với ước tính của OnKey: lệch trong vòng {ms} ms.",
+      "behind": "{name} {plural, select, yes {} other {}}trễ {ms} ms so với OnKey ước tính; đã điều chỉnh.",
+      "ahead": "{name} {plural, select, yes {} other {}}sớm {ms} ms so với OnKey ước tính; đã điều chỉnh."
+    }
+  },
+  "setup": {
+    "dialogLabel": "Thiết lập OnKey",
+    "stepsLabel": "Các bước thiết lập",
+    "welcome": {
+      "title": "Chào mừng đến với OnKey",
+      "lead": "Học hát những bài bạn yêu thích, với nhạc bạn vẫn đang phát.",
+      "play": "Phát một bài trong ứng dụng nhạc, như bạn vẫn làm. OnKey nghe nhạc đang phát trên {os, select, mac {máy Mac} other {máy PC}} và tự theo bài.",
+      "learn": "Lần đầu một bài phát, OnKey học giai điệu của ca sĩ. Từ đó về sau, bạn thấy trước từng nốt, và biết mình chênh cao hay thấp ở đâu.",
+      "privacyPc": "OnKey không bao giờ lưu bản nhạc đã nghe. Bản ghi giọng hát ở lại trên máy PC này để bạn nghe lại các lượt hát. Tên bài cũng được tìm ngay trên máy PC này, từ những gì ứng dụng nhạc báo là đang phát: không gì được gửi đi để tìm tên bài.",
+      "privacyMac": "OnKey không bao giờ lưu bản nhạc đã nghe. Bản ghi giọng hát ở lại trên máy Mac này để bạn nghe lại các lượt hát. Để tìm tên bài mới, chế độ nghe gửi cho Shazam của Apple một mã nhận dạng ngắn của âm thanh từ ứng dụng nhạc (không phải âm thanh).",
+      "entitled": "OnKey dành cho luyện tập tại nhà với nhạc bạn có quyền phát. Giai điệu OnKey học được là để bạn tự luyện, nên hãy giữ cho riêng mình.",
+      "macosOld": "OnKey cần macOS 14.2 trở lên để nghe các ứng dụng khác. Cập nhật macOS trong Cài đặt hệ thống → Cài đặt chung → Cập nhật phần mềm.",
+      "later": "Thiết lập sau",
+      "start": "Bắt đầu"
+    },
+    "permissions": {
+      "title": "Hai quyền truy cập",
+      "sub": "macOS hỏi một lần cho mỗi quyền. Bạn có thể đổi sau trong Cài đặt hệ thống → Quyền riêng tư & Bảo mật.",
+      "mic": {
+        "title": "Micrô",
+        "why": "Để nghe bạn hát.",
+        "hint": "Bật OnKey trong mục Micrô."
+      },
+      "audio": {
+        "title": "Ghi âm thanh hệ thống",
+        "why": "Để nghe nhạc đang phát trên máy Mac, nhờ đó OnKey học được giai điệu. OnKey không bao giờ lưu hay gửi bản nhạc; để tìm tên bài chưa biết, một mã nhận dạng ngắn (không phải âm thanh) có thể được gửi tới Shazam của Apple.",
+        "hint": "Mở Bản ghi âm thanh hệ thống & màn hình và bật OnKey trong mục Chỉ bản ghi âm thanh hệ thống."
+      },
+      "reopen": "Nếu macOS yêu cầu thoát và mở lại OnKey sau khi bạn cho phép, hãy làm vậy. Thiết lập tiếp tục từ chỗ bạn dừng.",
+      "skip": "Bỏ qua lúc này",
+      "continue": "Tiếp tục",
+      "allowed": "Đã cho phép",
+      "openSettings": "Mở Cài đặt hệ thống",
+      "asking": "Đang hỏi…",
+      "allow": "Cho phép",
+      "restricted": "Cài đặt của máy Mac không cho phép việc này. Hãy hỏi người quản lý máy."
+    },
+    "musicApps": {
+      "title": "Cho OnKey theo Spotify và Apple Music",
+      "recommended": "Nên dùng",
+      "why": "Để lời và nốt đúng chỗ từ giây đầu tiên, và OnKey có thể phát hay hát lại bài cho bạn.",
+      "scope": "OnKey đọc được bài nào đang phát và tới đâu, và có thể phát, tạm dừng, tua. Không gì khác. macOS hỏi một lần cho mỗi ứng dụng.",
+      "waitingMac": "Đang chờ macOS. Nếu macOS đang hỏi về Spotify hay Apple Music (câu hỏi có thể mở sau cửa sổ này), hãy trả lời. Không thấy câu hỏi? Cứ tiếp tục: macOS sẽ hỏi lần đầu bạn phát một bài ở đó.",
+      "noAnswer": "macOS chưa nhận được câu trả lời. Nếu câu hỏi đang hiện, hãy trả lời; nếu không, macOS sẽ hỏi lần đầu bạn phát một bài ở đó.",
+      "listenOnly": "Chỉ nghe",
+      "continue": "Tiếp tục",
+      "carryOn": "Tiếp tục",
+      "asking": "Đang hỏi…",
+      "allow": "Cho phép",
+      "appSpotify": "Spotify",
+      "appAppleMusic": "Apple Music",
+      "state": {
+        "allowed": "Đã cho phép",
+        "notAllowed": "Không được phép",
+        "notRunning": "macOS hỏi khi bạn phát bài đầu tiên trong đó",
+        "waiting": "Chưa có câu trả lời",
+        "ask": "Chưa hỏi"
+      },
+      "openSettings": "Mở Cài đặt hệ thống"
+    },
+    "micCheck": {
+      "title": "OnKey nghe được bạn không?",
+      "micOffPc": "Windows đang tắt micrô cho các ứng dụng. Trong <b>Cài đặt Windows → Quyền riêng tư & bảo mật → Micrô</b>, bật <b>Quyền truy nhập micrô</b> và <b>Cho phép ứng dụng trên máy tính truy nhập micrô của bạn</b>.",
+      "micFirst": "OnKey cần micrô trước: quay lại để cho phép.",
+      "noMicDevice": "Chưa kết nối micrô nào. Hãy kết nối một micrô, hoặc chọn trong {soundInput}.",
+      "macSoundInput": "Cài đặt hệ thống → Âm thanh → Đầu vào",
+      "say": "Nói gì đó, hoặc hát một nốt.",
+      "device": "Đang nghe {device}. Bạn có thể chọn micrô khác trong Cài đặt.",
+      "meterLabel": "Mức micrô",
+      "heard": "Đã nghe thấy bạn",
+      "listening": "Đang nghe…",
+      "notAllowed": "Không được phép",
+      "starting": "Đang khởi động…",
+      "noMic": "Không có micrô",
+      "headphones": "Tai nghe cho điểm ổn định nhất. Loa laptop cũng dùng được: OnKey lọc nhạc ra khỏi những gì micrô nghe.",
+      "skip": "Bỏ qua",
+      "continue": "Tiếp tục",
+      "openSettings": "Mở {settings}",
+      "back": "Quay lại quyền truy cập"
+    },
+    "ready": {
+      "title": "Bạn đã sẵn sàng",
+      "lead": "Phát một bài trong ứng dụng nhạc và bắt đầu hát. Lần phát đầu của mỗi bài dạy OnKey giai điệu.",
+      "tipsLabel": "Việc học diễn ra thế nào",
+      "tip": {
+        "toEnd": "Hãy để bài hát phát hết. Nếu OnKey chỉ nghe được một phần, phần còn lại sẽ học ở lần phát sau.",
+        "talk": "Cứ nói chuyện hay hát theo tùy thích. OnKey học từ âm thanh của ứng dụng nhạc, không phải micrô của bạn.",
+        "volumePc": "Giữ âm lượng riêng của ứng dụng nhạc ở khoảng một phần tư trở lên.",
+        "learnPc": "Việc học chạy trên máy PC này vài phút sau khi bài kết thúc. Cứ nghe tiếp trong lúc đó.",
+        "volumeMac": "Giữ âm lượng riêng của ứng dụng nhạc ở khoảng một phần tư trở lên. Âm lượng máy Mac để sao cũng được, tắt cũng được.",
+        "learnMac": "Việc học chạy trên máy Mac vài phút sau khi bài kết thúc, lâu hơn trên máy Mac 8 GB bộ nhớ. Cứ nghe tiếp trong lúc đó."
+      },
+      "quickest": "<b>Cách nhanh nhất:</b> phát danh sách phát khởi đầu của OnKey và để chạy nửa tiếng.",
+      "openPlaylist": "Mở danh sách phát trong {app}",
+      "playIn": "Phát trong {app}",
+      "comfortable": "Hát ở âm lượng thoải mái: OnKey chấm cao độ, không chấm độ to. Nghỉ khi giọng mỏi, và dừng nếu đau họng.",
+      "start": "Bắt đầu hát"
+    }
+  },
+  "controlPrompt": {
+    "titleAllow": "Cho OnKey điều khiển {app}?",
+    "titleCant": "OnKey không điều khiển được {app}",
+    "bodyAllow": "OnKey đang nghe {app}, không điều khiển nó. Để bắt đầu bài, bỏ qua tới đoạn hát và tạm dừng từ OnKey, OnKey cần bạn cho phép.{os, select, mac { macOS cũng sẽ hỏi bạn một lần.} other {}}",
+    "bodyCant": "OnKey theo {app} chỉ bằng cách nghe. Hãy phát, tạm dừng và chuyển bài ở đó.",
+    "browserPc": "Sau đó OnKey có thể theo bài trong trình duyệt, và phát, tạm dừng, tua ở đó.",
+    "browserMac": "Đây là quyền lớn hơn: sau đó OnKey có thể đọc và điều khiển tab YouTube trong trình duyệt, và nghe âm thanh của trình duyệt, bất kể là gì (kể cả cuộc gọi): âm thanh không nhận ra có thể được gửi tới Shazam dưới dạng mã nhận dạng ngắn, không bao giờ là âm thanh. Trình duyệt cũng cần bật “Cho phép JavaScript từ Apple Events”.",
+    "notNow": "Để sau",
+    "yourBrowser": "trình duyệt của bạn",
+    "openIn": "Mở trong {app}",
+    "allow": "Cho phép điều khiển",
+    "changeLater": "Bạn có thể đổi bất cứ lúc nào trong Cài đặt."
+  },
+  "starters": {
+    "label": "Bài hát nên thử",
+    "heading": "Thử những bài này <dim>· bài OnKey theo tốt</dim>",
+    "hide": "Ẩn gợi ý",
+    "close": "Đóng",
+    "earlier": "Bài trước đó",
+    "more": "Thêm bài",
+    "why": {
+      "en": {
+        "standByMe": "Dễ: giai điệu đều, đơn giản",
+        "wonderwall": "Bài hát tập thể ai cũng biết",
+        "fastCar": "Trầm và đều, dễ theo",
+        "youngAndBeautiful": "Nốt ngân dài để giữ vững",
+        "someoneYouLoved": "Lời nhẹ nhàng, điệp khúc bùng nổ",
+        "someoneLikeYou": "Một giọng rõ, điệp khúc vút lên",
+        "hallelujah": "Chậm và biểu cảm: rất tốt cho cao độ",
+        "iWillAlwaysLoveYou": "Thử thách: quãng rất rộng"
+      },
+      "es": {
+        "laCamisaNegra": "Dễ: giai điệu hẹp, bắt tai",
+        "meVoy": "Nhẹ và đều, dễ theo",
+        "deMusicaLigera": "Bài rock tập thể ai cũng biết",
+        "comoLaFlor": "Bản kinh điển ngọt ngào, đung đưa",
+        "rayandoElSol": "Lời nhẹ nhàng, điệp khúc bùng nổ",
+        "rosas": "Một giọng rõ, điệp khúc vút lên",
+        "hijoDeLaLuna": "Chậm và ma mị: rất tốt cho cao độ",
+        "volverVolver": "Thử thách: nốt ranchera hùng tráng"
+      },
+      "pt": {
+        "comoUmaOnda": "Dễ: giai điệu đều, đơn giản",
+        "velhaInfancia": "Dịu và ngọt, dễ theo",
+        "gostavaTantoDeVoce": "Bản soul kinh điển, điệp khúc ai cũng hát",
+        "tempoPerdido": "Bài rock hùng ca ai cũng biết",
+        "comoEuQuero": "Pop nhẹ với giai điệu rõ ràng",
+        "infiel": "Sertanejo thất tình, sinh ra để hát theo",
+        "amarPelosDois": "Chậm và dịu dàng: rất tốt cho cao độ",
+        "oceano": "Thử thách: giai điệu dài, uốn lượn"
+      },
+      "it": {
+        "azzurro": "Dễ: giai điệu đều, đơn giản",
+        "lItaliano": "Bài hát tập thể ai cũng biết",
+        "saraPercheTiAmo": "Nhún nhảy, vui, dành cho hát nhóm",
+        "albachiara": "Trầm và đều, dễ theo",
+        "laSolitudine": "Một giọng rõ, điệp khúc vút lên",
+        "emozioni": "Chậm và biểu cảm: rất tốt cho cao độ",
+        "grandeGrandeGrande": "Từ nhẹ lên lớn dần",
+        "caruso": "Thử thách: điệp khúc opera bay bổng"
+      },
+      "fr": {
+        "lesChampsElysees": "Dễ: giai điệu đều, đơn giản",
+        "jeLAimeAMourir": "Nhẹ và trầm, dễ theo",
+        "laVieEnRose": "Bản kinh điển ai cũng biết",
+        "avenir": "Pop nhẹ, rõ và bắt tai",
+        "jeVeux": "Tươi sáng và swing, hát rất vui",
+        "derniereDanse": "Nốt ngân dài để giữ vững",
+        "laBoheme": "Chậm và biểu cảm: rất tốt cho cao độ",
+        "pourQueTuMAimesEncore": "Thử thách: dâng lên những nốt lớn"
+      },
+      "de": {
+        "uberDenWolken": "Dễ: giai điệu folk đều đặn",
+        "n99Luftballons": "Bài hát tập thể ai cũng biết",
+        "perfekteWelle": "Lời đều, điệp khúc bùng nổ",
+        "atemlosDurchDieNacht": "Schlager sôi động, sinh ra để hát theo",
+        "griechischerWein": "Bản kinh điển thế hệ nào cũng biết",
+        "dasBeste": "Một giọng rõ, điệp khúc vút lên",
+        "aufUns": "Điệp khúc lớn, mở, để hát hết mình",
+        "derWeg": "Thử thách: chậm, mộc và biểu cảm"
+      }
+    },
+    "in": "trong",
+    "appSpotify": "Spotify",
+    "appAppleMusic": "Apple Music",
+    "searchIn": "Tìm bài này trong {app}",
+    "openItInAppleMusic": "Mở bài này trong Apple Music",
+    "openInAppleMusic": "Mở trong Apple Music",
+    "openSongInAppleMusic": "Mở {title} của {artist} trong Apple Music",
+    "playlist": {
+      "title": "Phát danh sách phát khởi đầu của OnKey",
+      "sub": "Tất cả những bài này và hơn nữa, từ dễ đến khó: nhấn phát và hát",
+      "orAppleMusic": "hoặc Apple Music",
+      "openInAppleMusic": "Mở danh sách phát trong Apple Music",
+      "open": "Mở danh sách phát trong {app}",
+      "playIn": "Phát trong {app}"
+    }
+  },
+  "demo": {
+    "title": "Thử ngay: hát một bài mẫu",
+    "starting": "Đang bắt đầu…",
+    "tryIt": "Thử ngay",
+    "about": "Một bài mẫu để bạn xem OnKey hoạt động thế nào. Bài của bạn cần phát một lần để học trước."
+  },
+  "guides": {
+    "systemAudio": {
+      "summary": "Cách cho OnKey ghi âm thanh hệ thống trên Mac. Trong Cài đặt hệ thống, mở Quyền riêng tư & Bảo mật, chọn Bản ghi âm thanh hệ thống & màn hình, và bật OnKey trong mục Chỉ bản ghi âm thanh hệ thống. Nếu macOS hỏi, chọn Thoát & mở lại. OnKey mở lại với mục ghi âm thanh hệ thống đã được tích và thiết lập tiếp tục.",
+      "step": {
+        "openPrivacy": "Mở Quyền riêng tư & Bảo mật",
+        "screenRecording": "Bản ghi âm thanh hệ thống & màn hình",
+        "turnOn": "Bật OnKey trong mục Chỉ bản ghi âm thanh hệ thống",
+        "quitReopen": "Nếu macOS hỏi, thoát và mở lại. Thiết lập tiếp tục"
+      },
+      "dots": "Các bước",
+      "stepOf": "Bước {step} trong {count}: {caption}",
+      "mock": {
+        "privacySecurity": "Quyền riêng tư & Bảo mật",
+        "screenRecording": "Bản ghi âm thanh hệ thống & màn hình",
+        "audioOnly": "Chỉ bản ghi âm thanh hệ thống",
+        "appName": "OnKey",
+        "quitReopenQuestion": "Thoát & mở lại?",
+        "later": "Sau",
+        "quitReopen": "Thoát & mở lại",
+        "setup": "Thiết lập",
+        "systemAudioRow": "Ghi âm thanh hệ thống"
+      }
+    },
+    "musicApps": {
+      "caption": {
+        "ask": "macOS hỏi một lần cho mỗi ứng dụng",
+        "allow": "Chọn Cho phép",
+        "done": "Sau đó OnKey theo được bài đang phát",
+        "behind": "Câu hỏi có thể mở sau cửa sổ này: hãy tìm nó"
+      },
+      "labelOne": "Hoạt cảnh: một câu hỏi của macOS hỏi OnKey có được điều khiển {app} không. Con trỏ chọn Cho phép, câu hỏi đóng lại và ứng dụng hiện kèm dấu tích trong cửa sổ OnKey. Cuối cùng, câu hỏi hiện nửa khuất sau cửa sổ OnKey, với lời nhắc tìm nó ở đó.",
+      "labelTwo": "Hoạt cảnh: một câu hỏi của macOS hỏi OnKey có được điều khiển {first} rồi {second} không. Con trỏ chọn Cho phép, câu hỏi đóng lại và ứng dụng hiện kèm dấu tích trong cửa sổ OnKey. Cuối cùng, câu hỏi hiện nửa khuất sau cửa sổ OnKey, với lời nhắc tìm nó ở đó.",
+      "app": {
+        "spotify": "Spotify",
+        "appleMusic": "Apple Music"
+      },
+      "asked": {
+        "spotify": "Spotify",
+        "appleMusic": "Nhạc"
+      },
+      "alert": {
+        "wantsAccess": "“OnKey” muốn có quyền truy cập để",
+        "control": "điều khiển “{app}”",
+        "allowing": "Việc cho phép quyền điều khiển sẽ cung cấp quyền truy cập vào “{app}”.",
+        "dontAllow": "Từ chối",
+        "allow": "Cho phép"
+      },
+      "window": {
+        "title": "OnKey",
+        "note": "A4",
+        "musicApps": "ỨNG DỤNG NHẠC"
+      },
+      "menuBar": {
+        "appName": "OnKey"
+      },
+      "dots": "Các bước",
+      "stepOf": "Bước {step} trong {count}: {caption}",
+      "stepOfApp": "Bước {step} trong {count}: {caption} ({app})"
+    },
+    "stillSteps": {
+      "dots": "Các bước",
+      "stepOf": "Bước {step} trong {count}",
+      "again": "Xem lại",
+      "next": "Tiếp"
+    },
+    "learnSong": {
+      "steps": {
+        "s0": "Phát một bài trọn vẹn một lần",
+        "s1": "OnKey học giai điệu từ nhạc, không phải micrô của bạn",
+        "s2": "Vài phút sau khi bài kết thúc",
+        "s3": "Lần sau, hát bài đó với các nốt"
+      },
+      "summary": "OnKey học một bài hát. Một bài phát trọn vẹn một lần trong trình phát nhạc trong khi sóng âm chảy vào OnKey và giai điệu được vẽ thành các thanh nốt. Vài phút sau khi bài kết thúc, vòng Đang học biến thành dấu tích xanh: Đã học xong. Lần sau bài phát, các nốt trôi qua với đường cao độ xanh của ca sĩ nằm trên chúng và lời bên dưới.",
+      "learning": "Đang học…",
+      "learned": "Đã học xong",
+      "appName": "OnKey",
+      "melody": "GIAI ĐIỆU",
+      "you": "BẠN",
+      "lyric": {
+        "w0": "giữ",
+        "w1": "lấy",
+        "w2": "ánh",
+        "w3": "sáng",
+        "w4": "thêm",
+        "w5": "chút",
+        "w6": "nữa",
+        "w7": "cho",
+        "w8": "đêm",
+        "w9": "nay",
+        "w10": "nhé"
+      },
+      "stepsGroup": "Các bước hoạt cảnh",
+      "stepLabel": "Bước {n} trong {count}: {caption}"
+    },
+    "leaveOut": {
+      "steps": {
+        "s0": "Nốt đang theo giọng bè?",
+        "s1": "Kéo qua đoạn đó",
+        "s2": "Đoạn đó bị bỏ khỏi điểm, với mọi lượt hát của bài"
+      },
+      "ariaLabel": "Hoạt cảnh biểu đồ cao độ của một lượt hát. Các thanh tím là nốt mà điểm số mong đợi, một đường cho thấy người hát đã hát gì, xanh ở chỗ trùng. Có một đoạn các thanh tím vọt lên cao, theo giọng bè, trong khi người hát vẫn giữ giai điệu chính và đường chuyển sang màu hổ phách. Con trỏ kéo qua đoạn đó để chọn và bấm “Bỏ đoạn này khỏi điểm”. Đoạn đó chuyển thành sọc xám, điểm tăng từ {before} lên {after}, và đoạn đó bị bỏ khỏi mọi lượt hát của bài.",
+      "score": "Điểm",
+      "take": "Lượt {n}",
+      "leftOut": "Đã bỏ",
+      "leaveOutButton": "Bỏ đoạn này khỏi điểm",
+      "stepsGroup": "Các bước hoạt cảnh",
+      "stepLabel": "Bước {n}: {caption}"
+    },
+    "speakers": {
+      "steps": {
+        "s0": "Dùng loa, bài hát lọt vào bản ghi của bạn",
+        "s1": "Dùng tai nghe, chỉ còn giọng bạn"
+      },
+      "label": "Hai cảnh ngắn. Trên loa laptop, bài hát tràn ra và cuốn vào micrô, nên bản ghi trộn giọng bạn với nhạc. Với tai nghe, nhạc ở trong tai bạn và bản ghi chỉ có giọng bạn.",
+      "rec": "GHI",
+      "voice": "Giọng",
+      "song": "Nhạc",
+      "stepsGroup": "Các bước",
+      "stepLabel": "Bước {n} trong {count}: {caption}"
+    },
+    "fadeDemo": {
+      "captions": {
+        "c0": "Khi bạn đã hát tốt một bài",
+        "c1": "Đường của bạn mờ dần khi bạn đúng nốt",
+        "c2": "Trượt khỏi nốt thì hiện như thường",
+        "c3": "Bật lại gợi ý đầy đủ cho bất kỳ lượt hát nào"
+      },
+      "take": "Lượt {n}",
+      "ariaLabel": "Bốn lượt hát của cùng một bài dưới dạng dải nốt: Lượt 1, 3, 5 và 8. Các nốt tím giữ nguyên ở mọi lượt. Đường cao độ xanh của bạn sáng rõ ở Lượt 1 và mờ dần qua từng lượt khi đúng nốt; ở Lượt 5, đường trượt hơn nửa cung trong một thoáng và đoạn đó hiện đầy đủ, màu đỏ. Công tắc Gợi ý đầy đủ đưa cả đường trở lại.",
+      "fullGuide": "Gợi ý đầy đủ",
+      "stepsGroup": "Các bước hoạt cảnh",
+      "stepLabel": "Bước {n} trong {count}: {caption}"
+    }
+  },
+  "guideFade": {
+    "title": "Đường cao độ của bạn mờ dần khi bạn đúng nốt ({amount, select, little {một chút} more {nhiều hơn} other {hoàn toàn}}), và hiện khi bạn lệch hơn nửa cung. Tắt trong Cài đặt.",
+    "note": "Gợi ý đã mờ: bạn quen bài này rồi",
+    "showFull": "Hiện gợi ý đầy đủ"
+  },
+  "update": {
+    "failed": {
+      "text": "Không cập nhật được lên OnKey {version}",
+      "why": "Lý do: {error}. Cài đặt → Kiểm tra ngay sẽ thử lại.",
+      "again": "Cài đặt → Kiểm tra ngay sẽ thử lại."
+    },
+    "official": {
+      "text": "OnKey {version} đã ra mắt từ dự án gốc",
+      "why": "Bản OnKey này được dựng từ mã nguồn, nên không tự cập nhật.",
+      "download": "Tải về"
+    },
+    "ready": {
+      "why": "OnKey {version} đã sẵn sàng. Nếu bạn không khởi động lại ngay, bản mới được cài khi bạn thoát.",
+      "waiting": "Cập nhật sau bài này…",
+      "available": "Có bản cập nhật",
+      "restart": "Khởi động lại để cập nhật",
+      "later": "Để sau",
+      "laterWhy": "Để sau (cài khi bạn thoát)"
+    },
+    "hide": "Ẩn"
+  },
+  "report": {
+    "title": "Báo cáo sự cố",
+    "titleTake": "Báo cáo sự cố với lượt hát này",
+    "savedPc": "Đã lưu vào {folder} với tên <file>{name}</file>, và hiện trong {files}. Đính kèm đúng tệp đó vào tin nhắn của bạn (hoặc một issue trên GitHub). Chưa có gì được gửi đi đâu.",
+    "savedMac": "Đã lưu vào <file>{path}</file>. Để gửi, mở một issue trên GitHub và đính kèm tệp zip (kéo vào khung). Chưa có gì được gửi đi đâu.",
+    "showInPc": "Hiện trong {files}",
+    "showInFinder": "Hiện trong Finder",
+    "openIssue": "Mở issue trên GitHub",
+    "done": "Xong",
+    "introPc": "OnKey gom hồ sơ của mình vào một tệp zip trên Màn hình nền để bạn đính kèm vào tin nhắn: nhật ký ba ngày gần nhất, tóm tắt mỗi lần phát, và tóm tắt về máy PC này, âm thanh của nó và các ứng dụng nhạc đã theo. Không có lời bài hát, âm thanh, tệp nhạc, tên người dùng hay thư mục nhà. Không gì được tải lên.",
+    "introMac": "OnKey gom hồ sơ của mình vào một tệp zip để bạn lưu và đính kèm vào báo cáo lỗi: nhật ký ba ngày gần nhất và tóm tắt mỗi lần phát (thời gian, CPU, bản dựng nào, máy Mac nào). Không có lời bài hát, âm thanh, tệp nhạc, tên người dùng hay thư mục nhà. Không gì được tải lên.",
+    "askLabel": "Có chuyện gì xảy ra? <muted>(không bắt buộc)</muted>",
+    "placeholder": "ví dụ: lời bị trễ ở Bad Day, hoặc bị kẹt ở Đang khởi động OnKey",
+    "preparing": "Đang gom lại…",
+    "inZip": "Trong tệp zip ({count} tệp, {size}):",
+    "logs": "{count, plural, other {{count} ngày}} nhật ký của OnKey ({size})",
+    "size": {
+      "b": "{n} B",
+      "kb": "{n} KB",
+      "mb": "{n} MB"
+    },
+    "showFiles": "Hiện các tệp",
+    "cancel": "Hủy",
+    "saveMac": "Lưu…",
+    "savePc": "Lưu vào Màn hình nền"
+  },
+  "nav": {
+    "appName": "OnKey",
+    "songsToTry": "Bài hát nên thử",
+    "sing": "Hát",
+    "library": "Thư viện",
+    "history": "Lịch sử",
+    "settings": "Cài đặt",
+    "paused": "Đã tạm dừng nghe",
+    "resume": "Tiếp tục",
+    "resumeWhy": "Tiếp tục nghe (⌘⇧P)",
+    "whatsNew": "Có gì mới trong OnKey",
+    "whatsNewFresh": "Có gì mới trong OnKey (mới)",
+    "testBuild": "Bản thử nghiệm",
+    "testBuildTitle": "Bản thử nghiệm OnKey cho Windows hoặc Linux: khi có bản tiếp theo, hãy cài đè lên"
+  },
+  "licences": {
+    "back": "← Cài đặt",
+    "title": "Giấy phép mã nguồn mở",
+    "intro": "OnKey miễn phí và mã nguồn mở theo Giấy phép MIT. OnKey được xây trên các mô hình, dữ liệu, phông chữ và thư viện dưới đây.",
+    "error": "Không mở được các thông báo: {error}",
+    "missing": "Các thông báo nằm trong THIRD_PARTY_NOTICES.md, cạnh mã nguồn."
+  },
+  "fairUse": {
+    "back": "← Cài đặt",
+    "title": "Dùng OnKey đúng cách",
+    "intro": "OnKey dành cho luyện tập tại nhà, với nhạc bạn có quyền phát. Xin bạn:",
+    "keep": {
+      "title": "Giữ những gì OnKey học cho riêng mình.",
+      "body": "Bản ghi giai điệu của mỗi bài là để bạn luyện tập, nên đừng chia sẻ hay đăng lên. Chia sẻ chính OnKey thì rất hoan nghênh."
+    },
+    "share": {
+      "title": "Để chia sẻ một lượt hát, dùng Chia sẻ trên trang của nó.",
+      "body": "Nó tạo một video ngắn gồm giọng bạn và đường cao độ, không có nhạc, và bạn có thể thêm bài hát từ thư viện nhạc của Instagram, vốn đã được cấp phép cho việc này. Lượt hát bằng tai nghe là tốt nhất: hát qua loa thì một phần bài hát lọt vào bản ghi của bạn. Đừng đăng bản ghi màn hình có nhạc đang phát."
+    },
+    "venue": {
+      "title": "Dùng dịch vụ karaoke có bản quyền cho quán bar hay sự kiện.",
+      "body": "Lời bài hát của OnKey đến từ một cơ sở dữ liệu cộng đồng miễn phí."
+    },
+    "modify": {
+      "title": "Đừng sửa OnKey để lưu bản nhạc."
+    },
+    "contact": "OnKey không bao giờ lưu bản nhạc đã nghe. Chủ sở hữu bản quyền có thể liên hệ tôi tại <email>hello@singonkey.app</email>."
+  },
+  "library": {
+    "title": "Thư viện",
+    "intro": "Các bài OnKey đã học. Chọn một bài để hát với mọi nốt hiện trước.",
+    "search": "Tìm bài hát",
+    "empty": {
+      "title": "Chưa học bài nào",
+      "body": "Phát trọn một bài trong lúc OnKey đang mở và OnKey sẽ học giai điệu. Cả một danh sách phát cũng được: cứ để nó chạy.",
+      "start": "Bắt đầu",
+      "showStarters": "Hiện bài hát nên thử"
+    },
+    "filter": {
+      "label": "Hiện",
+      "all": "Tất cả",
+      "favorites": "Yêu thích",
+      "unscored": "Chưa có điểm",
+      "partial": "Mới học một phần",
+      "count": "{count, plural, other {{count} bài hát}}"
+    },
+    "inRange": {
+      "title": "Bài hợp quãng giọng của bạn, hát nguyên bản hoặc thấp/cao hơn một quãng tám (quãng tám không bị trừ): {count, plural, other {{count} bài hát}}",
+      "label": "Hợp quãng giọng"
+    },
+    "sort": {
+      "recent": "Gần đây",
+      "easy": "Dễ trước",
+      "hard": "Khó trước",
+      "best": "Điểm cao nhất",
+      "most": "Hát nhiều nhất",
+      "az": "A–Z"
+    },
+    "shownPartly": "{count} mới học một phần",
+    "shownLearned": "{count} đã học xong",
+    "partlyNote": "OnKey chỉ nghe được một phần những bài này. Phát trọn một bài và OnKey sẽ học xong, rồi bài chuyển sang Tất cả.",
+    "noFavourites": "Chạm ♥ trên một bài để giữ ở đây.",
+    "none": {
+      "partly": "Không có bài nào mới học một phần: mọi bài đều sẵn sàng.",
+      "unscored": "Mọi bài đều có điểm. Hay quá.",
+      "search": "Không có bài nào khớp “{q}”.",
+      "filters": "Không có bài nào khớp các bộ lọc này.",
+      "clear": "Xóa"
+    },
+    "card": {
+      "sing": "Hát {name} của {artist}",
+      "whenLearned": "Có thể hát khi đã học xong",
+      "playThrough": "Phát trọn bài để học xong",
+      "learning": "Đang học",
+      "learnsAgain": "Học lại ở lần phát sau",
+      "learnsAgainTitle": "Lần phát sau sẽ học lại từ đầu; cho tới đó bài vẫn hát như trước",
+      "pctLearned": "đã học {pct}%",
+      "relearn": "Nên học lại",
+      "relearnTitle": "Lời bị trôi ở {at} trong các lần bạn phát: học lại bài này sẽ sửa được (menu ⋯)",
+      "notScored": "Chưa có điểm",
+      "notScoredTitle": "Bạn chưa hát bài này với OnKey",
+      "playsTitle": "Các lần bạn phát bài này",
+      "plays": "{count, plural, other {{count} lần phát}}",
+      "playsBest": "{count, plural, other {{count} lần phát}} · cao nhất <n>{best}</n>",
+      "demo": "bài mẫu",
+      "demoTitle": "Bài mẫu đi kèm OnKey",
+      "fitTitle": "{label}. Nốt của bài: {low}–{high}",
+      "starting": "Đang bắt đầu…",
+      "singButton": "Hát"
+    },
+    "menu": {
+      "more": "Thêm cho {name}",
+      "openIn": "Mở trong {app} ↗",
+      "learnAgain": "Học lại",
+      "dontLearnAgain": "Không học lại",
+      "deleteWhat": "Xóa bài này (lượt hát của bạn vẫn còn trong Lịch sử; bài vào Thùng rác)",
+      "deleteConfirm": "Xóa bài này?",
+      "stopWhat": "Dừng học bài này và xóa (chẳng hạn vì không phải bài hát)",
+      "stopConfirm": "Dừng học và xóa?",
+      "stop": "Dừng học và xóa",
+      "delete": "Xóa"
+    },
+    "startersLink": "Bài hát nên thử",
+    "footer": "OnKey không bao giờ lưu bản nhạc: chỉ giữ các nốt học được và giọng của bạn. Lời bài hát đến từ <link>LRCLIB</link>. OnKey không liên kết với hay được Spotify, Apple hoặc Google chứng thực; tên của họ là nhãn hiệu thuộc chủ sở hữu.",
+    "difficulty": {
+      "label": "Độ khó {level} trên 5: {word}",
+      "title": "Độ khó {level} trên 5: {word}. Chủ yếu dựa trên quãng rộng của giai điệu."
+    },
+    "clearPartly": {
+      "button": "Xóa tất cả {count}",
+      "label": "Xóa tất cả bài mới học một phần",
+      "ask": "Xóa {count, plural, other {{count} bài mới học một phần{shown, select, yes { đang hiện} other {}}}}? Lượt hát vẫn còn trong Lịch sử{hearted, plural, =0 {} other {; giữ lại {hearted} bài yêu thích}}.",
+      "deleting": "Đang xóa…",
+      "tryAgain": "Thử lại",
+      "deleteAll": "Xóa tất cả",
+      "cancel": "Hủy"
+    }
+  },
+  "history": {
+    "title": "Lịch sử hát",
+    "intro": "Mỗi bài bạn hát trở thành một lượt hát. Đây là tiến triển của bạn.",
+    "scoresAt": "Điểm ở mức {level} · <link>đổi</link>",
+    "search": "Tìm bài hát",
+    "pending": {
+      "learning": "Đang học bài, rồi chấm điểm lượt hát của bạn…",
+      "scoring": "Đang chấm điểm…"
+    },
+    "stat": {
+      "takes": "Lượt hát",
+      "average": "Trung bình 10 lượt gần nhất",
+      "best": "Cao nhất",
+      "songs": "Bài đã hát"
+    },
+    "chart": {
+      "title": "Điểm mỗi lượt hát",
+      "axis": "cũ nhất → mới nhất"
+    },
+    "view": {
+      "label": "Xem",
+      "songs": "Bài hát",
+      "takes": "Tất cả lượt hát"
+    },
+    "show": {
+      "label": "Hiện",
+      "all": "Tất cả",
+      "favorites": "Yêu thích"
+    },
+    "clearFilters": "Xóa bộ lọc",
+    "sort": {
+      "recent": "Gần đây",
+      "best": "Điểm cao nhất",
+      "most": "Hát nhiều nhất",
+      "improved": "Tiến bộ nhất",
+      "easy": "Dễ trước",
+      "hard": "Khó trước",
+      "az": "A–Z"
+    },
+    "counts": "Đã hát {songs, plural, other {{songs} bài}} · {takes, plural, other {{takes} lượt hát}}",
+    "none": {
+      "search": "Không có bài nào khớp “{q}”.",
+      "favourites": "Chạm ♥ trên một bài để giữ ở đây.",
+      "filters": "Không có bài nào khớp các bộ lọc này.",
+      "clear": "Xóa"
+    },
+    "col": {
+      "song": "Bài hát",
+      "when": "Thời gian",
+      "sung": "Đã hát",
+      "pitch": "Cao độ",
+      "score": "Điểm"
+    },
+    "rescored": "Đã chấm lại",
+    "rescoredTitle": "Chấm lại, không tính đoạn đã đánh dấu không phải giai điệu chính",
+    "deleteWhat": "Xóa lượt hát này (vào Thùng rác)",
+    "deleteConfirm": "Xóa lượt hát này?",
+    "showMore": "Hiện thêm <n>(còn {left})</n>",
+    "card": {
+      "best": "cao nhất",
+      "scores": "Điểm: {list}",
+      "plays": "{count, plural, other {{count} lần phát}} · gần nhất {last}",
+      "whenLearned": "{label} Có thể hát khi đã học xong",
+      "singAgain": "Hát lại"
+    },
+    "empty": {
+      "title": "Chưa có lượt hát nào",
+      "body": "Hát theo một bài ít nhất 20 giây và lượt hát sẽ hiện ở đây.",
+      "start": "Bắt đầu hát"
+    }
+  },
+  "song": {
+    "back": "← Lịch sử hát",
+    "none": "Chưa có lần phát nào của bài này.",
+    "scoresAt": "Điểm ở mức {level} · <link>đổi</link>",
+    "whenLearned": "Có thể hát khi đã học xong",
+    "singAgain": "Hát lại",
+    "learnsAgain": "Học lại ở lần phát sau · <cancel>Hủy</cancel>",
+    "learnAgain": "Học lại",
+    "learnAgainTitle": "Phát bài ngay và học lại từ đầu, như lần phát đầu. Các lần phát và điểm của bạn vẫn còn; nếu dừng sớm, bài giữ nguyên như cũ.",
+    "relearn": "Lời bị trôi khoảng {by} giây ở {at} mỗi lần bạn phát. Học lại bài này sẽ sửa được.",
+    "learnItAgain": "Học lại",
+    "stat": {
+      "plays": "Lần phát",
+      "best": "Cao nhất",
+      "latest": "Mới nhất",
+      "gainBoth": "3 lần cuối so với 3 lần đầu",
+      "gainOne": "Mới nhất so với lần đầu",
+      "fromTo": "từ {from} lên {to}",
+      "fromToAverage": "trung bình từ {from} lên {to}",
+      "singToSee": "hát lại để xem"
+    },
+    "chart": {
+      "title": "Điểm mỗi lần phát",
+      "axis": "lần đầu → mới nhất"
+    },
+    "table": {
+      "title": "Mọi lần phát",
+      "play": "Lần phát",
+      "when": "Thời gian",
+      "sung": "Đã hát",
+      "sungTitle": "Bạn đã hát bao nhiêu phần bài",
+      "pitch": "Cao độ",
+      "score": "Điểm"
+    },
+    "deleteWhat": "Xóa lần phát này (vào Thùng rác)",
+    "deleteConfirm": "Xóa lần phát này?"
+  },
+  "noLyrics": {
+    "line": "Bài hát này chưa có lời. Lời bài hát lấy từ <link>LRCLIB</link>, một thư viện miễn phí mà ai cũng có thể đóng góp.",
+    "lookAgain": "Tìm lại",
+    "looking": "Đang tìm…",
+    "found": "Đã tìm thấy",
+    "stillNone": "Vẫn chưa có",
+    "notAnswering": "LRCLIB không phản hồi"
+  },
+  "cover": {
+    "openApple": "Mở trong Apple Music",
+    "openAppleNamed": "Mở {name} trong Apple Music",
+    "openIn": "Mở trong {app}",
+    "inAppLink": "trong {app} ↗",
+    "inApp": "trong {app}",
+    "following": "Ứng dụng OnKey đang theo",
+    "otherLink": "{app} ↗",
+    "appleMusicLink": "Apple Music ↗"
+  },
+  "recent": {
+    "title": "Tiếp tục từ chỗ bạn dừng",
+    "last": "gần nhất <n>{score}</n>",
+    "whenLearned": "Có thể hát khi đã học xong",
+    "singNamed": "Hát {name}",
+    "starting": "Đang bắt đầu…",
+    "sing": "Hát"
+  },
+  "trend": {
+    "legend": "{unit, select, play {Đường: trung bình của bạn qua {avg} lần phát · chấm: mỗi lần phát} other {Đường: trung bình của bạn qua {avg} lượt hát · chấm: mỗi lượt hát}}",
+    "tipScore": "Điểm <n>{score}</n> · đã hát {pct}%",
+    "tipAverage": "Trung bình lúc đó <n>{avg}</n>"
+  },
+  "listControls": {
+    "sort": "Sắp xếp",
+    "difficultyLabel": "Độ khó",
+    "difficulty": {
+      "easy": "Dễ",
+      "moderate": "Vừa",
+      "medium": "Trung bình",
+      "hard": "Khó",
+      "veryHard": "Rất khó"
+    },
+    "levelTitle": "{level}: {count, plural, other {{count} bài hát}}",
+    "levelLabel": "{level} ({n} trên 5)",
+    "clear": "Xóa"
+  },
+  "deleteButton": {
+    "tryAgain": "Thử lại",
+    "delete": "Xóa",
+    "cancel": "Hủy"
+  },
+  "readError": {
+    "body": "Nhiều khả năng chúng vẫn còn đó: chỉ là lần này OnKey không mở được. Không gì bị thay đổi hay xóa.",
+    "tryAgain": "Thử lại"
+  },
+  "levelTag": {
+    "title": "Chấm ở mức {level}: {about}"
+  },
+  "learnBar": {
+    "label": "Đang học {name}",
+    "valueText": "{stage}, {pct}%"
+  },
+  "heart": {
+    "remove": "Bỏ khỏi yêu thích",
+    "add": "Thêm vào yêu thích"
+  },
+  "engine": {
+    "line": {
+      "finding": "Nghe thấy nhạc… đang tìm bài",
+      "new_song": "Bài mới… đang tìm",
+      "unnamed": "Không tìm được tên bài này",
+      "no_shazam": "Không có Shazam: chỉ nhận ra bài đã học ở đây",
+      "shazam_off": "Không phải bài đã học ở đây: Shazam đang tắt trong Cài đặt",
+      "elsewhere": "{app} đang phát, nhưng không phải trên máy Mac này",
+      "learning": "Đang học: cứ hát theo, điểm tính từ lần phát sau",
+      "stopped": "Không học {song}",
+      "podcast": "Đang phát podcast: OnKey chỉ hát theo nhạc"
+    },
+    "share": {
+      "first": "{score} điểm ở lần đầu hát {song}",
+      "over80": "Điểm đầu tiên của bạn trên {over} ở {song}",
+      "best": "Kỷ lục mới ở {song}, hơn {points, plural, other {{points} điểm}}",
+      "up": "Hơn lượt hát trước của bạn {points, plural, other {{points} điểm}} ở {song}"
+    },
+    "timing": {
+      "output_changed": "Đầu ra thay đổi trong lúc kiểm tra. Hãy thử lại.",
+      "few_taps": "Không đủ lần gõ đúng nhịp với tiếng tích. Gõ theo nhịp, mỗi tiếng tích một lần.",
+      "uneven": "Các lần gõ quá không đều để đo. Hãy thử lại, gõ theo nhịp như vỗ tay theo điệu nhạc.",
+      "reacting": "Có vẻ bạn chờ từng tiếng tích. Hãy thử gõ theo nhịp thay vì chờ.",
+      "unbelievable": "Kết quả không hợp lý: bạn có chờ từng tiếng tích không? Hãy thử lại, gõ theo nhịp như vỗ tay theo điệu nhạc.",
+      "untimed": "Bài kiểm tra không đo được thời gian tiếng tích. Hãy thử lại.",
+      "stalled": "Âm thanh bị ngắt hoặc khởi động lại trong lúc kiểm tra, nên không đo được. Hãy thử lại."
+    },
+    "settingUnsaved": "Không lưu được cài đặt ({error}). Cài đặt giữ đến khi OnKey thoát.",
+    "fit": {
+      "fits": "Vừa với quãng giọng của bạn",
+      "few_above": "Vài nốt cao hơn quãng giọng của bạn",
+      "few_below": "Vài nốt thấp hơn quãng giọng của bạn",
+      "octave_lower": "Phần lớn cao hơn bạn: hãy hát thấp xuống một quãng tám",
+      "octave_higher": "Phần lớn thấp hơn bạn: hãy hát cao lên một quãng tám",
+      "above": "Phần lớn cao hơn quãng giọng của bạn",
+      "below": "Phần lớn thấp hơn quãng giọng của bạn",
+      "wider": "Rộng hơn quãng giọng của bạn"
+    },
+    "reportWhat": {
+      "log": "nhật ký OnKey của ngày đó",
+      "take": "tóm tắt một lượt hát: {artist} - {name}",
+      "take_reported": "lượt hát được báo cáo: tóm tắt một lượt hát: {artist} - {name}",
+      "builds": "các bản dựng OnKey đã chạy trên {os, select, pc {PC} other {Mac}} này",
+      "summary": "tóm tắt nhật ký: {os, select, pc {PC} other {máy tính}} này, âm thanh, ứng dụng nhạc, việc học, lượt hát, lỗi",
+      "about": "phiên bản OnKey, {os, select, pc {PC} other {Mac}} này, cài đặt và những gì bạn đã viết"
+    },
+    "models": {
+      "unloadable": "không tải được"
+    },
+    "youtubeSetting": {
+      "safari": "Safari ▸ Cài đặt ▸ Nâng cao: đánh dấu “Hiển thị các tính năng cho nhà phát triển web”, rồi chọn Phát triển ▸ Cho phép JavaScript từ Apple Events",
+      "chromium": "Xem ▸ Nhà phát triển ▸ Cho phép JavaScript từ Apple Events"
+    },
+    "app": {
+      "music_app": "ứng dụng nhạc của bạn",
+      "browser": "trình duyệt của bạn"
+    }
+  }
+}

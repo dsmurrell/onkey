@@ -22,21 +22,10 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import StillSteps from "./StillSteps";
+import { useT } from "@/lib/i18n";
 
 /* ---------- palette (the only colours used) ---------- */
-const C = {
-  bg: "#0b0d13",
-  panel: "#151924",
-  line: "#2a3142",
-  muted: "#8b94ab",
-  text: "#e6e9f0",
-  accent: "#7c6cf6",
-  accentLight: "#b5a8ff",
-  accentDark: "#6252e0",
-  good: "#34d27b",
-  amber: "#f5b942",
-  red: "#f06a6a",
-} as const;
+import { GUIDE as C } from "@/lib/colors";
 
 const FONT = "system-ui, sans-serif";
 
@@ -59,10 +48,10 @@ const yOf = (p: number) => 174 - p * 7;
 
 /* ---------- timeline (ms) ---------- */
 const STEPS = [
-  { caption: "Play a song once to the end", start: 0 },
-  { caption: "OnKey learns the melody from the music, not your mic", start: 3200 },
-  { caption: "A couple of minutes after it ends", start: 6800 },
-  { caption: "Next time, sing it with the notes", start: 9800 },
+  { id: "s0", start: 0 },   // captions: guides.learnSong.steps.<id>
+  { id: "s1", start: 3200 },
+  { id: "s2", start: 6800 },
+  { id: "s3", start: 9800 },
 ] as const;
 
 const LOOP_MS = 15600;
@@ -84,27 +73,21 @@ const T = {
 /** Representative moments for the reduced-motion strip, one per step. */
 const STILL_AT = [2600, 5600, 9400, 13200] as const;
 
-const SUMMARY =
-  "OnKey learning a song. A song plays once to the end in a music player while sound waves flow into OnKey " +
-  "and its melody is drawn as note bars. A couple of minutes after it ends, a Learning ring turns into a green " +
-  "check: Learned. The next time the song plays, the notes scroll by with the singer's green pitch line riding " +
-  "on them and the lyrics underneath.";
-
-/* ---------- melody (invented tune and words) ---------- */
-type Note = { s: number; d: number; p: number; word: string };
+/* ---------- melody (invented tune and words; the words: guides.learnSong.lyric.<word>) ---------- */
+type Note = { s: number; d: number; p: number; word: `w${0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10}` };
 
 const MELODY: readonly Note[] = [
-  { s: 0.0, d: 0.07, p: 1, word: "hold" },
-  { s: 0.085, d: 0.05, p: 2, word: "the" },
-  { s: 0.15, d: 0.12, p: 4, word: "light" },
-  { s: 0.29, d: 0.05, p: 3, word: "a" },
-  { s: 0.355, d: 0.055, p: 2, word: "lit-" },
-  { s: 0.425, d: 0.055, p: 3, word: "tle" },
-  { s: 0.495, d: 0.1, p: 5, word: "long-" },
-  { s: 0.61, d: 0.09, p: 4, word: "er" },
-  { s: 0.725, d: 0.055, p: 2, word: "for" },
-  { s: 0.795, d: 0.06, p: 1, word: "the" },
-  { s: 0.87, d: 0.13, p: 0, word: "night" },
+  { s: 0.0, d: 0.07, p: 1, word: "w0" },
+  { s: 0.085, d: 0.05, p: 2, word: "w1" },
+  { s: 0.15, d: 0.12, p: 4, word: "w2" },
+  { s: 0.29, d: 0.05, p: 3, word: "w3" },
+  { s: 0.355, d: 0.055, p: 2, word: "w4" },
+  { s: 0.425, d: 0.055, p: 3, word: "w5" },
+  { s: 0.495, d: 0.1, p: 5, word: "w6" },
+  { s: 0.61, d: 0.09, p: 4, word: "w7" },
+  { s: 0.725, d: 0.055, p: 2, word: "w8" },
+  { s: 0.795, d: 0.06, p: 1, word: "w9" },
+  { s: 0.87, d: 0.13, p: 0, word: "w10" },
 ];
 
 /* ---------- easing helpers ---------- */
@@ -149,33 +132,34 @@ function sungPitch(s: number): number {
 }
 
 /* ---------- one frame of the animation, as a pure function of time ---------- */
-const Scene = ({ t, uid }: { t: number; uid: string }) => {
-  const learnP = clamp01((t - T.playStart) / (T.playEnd - T.playStart));
-  const waves = span(t, T.wavesIn, T.wavesOut, 450);
-  const mic = span(t, T.micIn, T.micOut, 400);
-  const pill = span(t, T.pillIn, LOOP_MS, 400);
-  const done = ramp(t, T.learnedAt, T.learnedAt + 300);
-  const check = ramp(t, T.learnedAt + 150, T.learnedAt + 550);
-  const scene1 = 1 - ramp(t, T.replayAt, T.replayAt + 400);
-  const scene2 = span(t, T.replayAt + 200, LOOP_MS, 400);
-  const pos = clamp01((t - T.song2Start) / (T.song2End - T.song2Start));
+const Scene = ({ ms, uid }: { ms: number; uid: string }) => {
+  const t = useT();
+  const learnP = clamp01((ms - T.playStart) / (T.playEnd - T.playStart));
+  const waves = span(ms, T.wavesIn, T.wavesOut, 450);
+  const mic = span(ms, T.micIn, T.micOut, 400);
+  const pill = span(ms, T.pillIn, LOOP_MS, 400);
+  const done = ramp(ms, T.learnedAt, T.learnedAt + 300);
+  const check = ramp(ms, T.learnedAt + 150, T.learnedAt + 550);
+  const scene1 = 1 - ramp(ms, T.replayAt, T.replayAt + 400);
+  const scene2 = span(ms, T.replayAt + 200, LOOP_MS, 400);
+  const pos = clamp01((ms - T.song2Start) / (T.song2End - T.song2Start));
 
-  const replay = t >= T.replayAt;
-  const bar = replay ? (t < T.song2Start ? 1 : pos) : learnP;
+  const replay = ms >= T.replayAt;
+  const bar = replay ? (ms < T.song2Start ? 1 : pos) : learnP;
   const barAlpha = replay
-    ? t < T.song2Start
-      ? 1 - ramp(t, T.replayAt, T.replayAt + 350)
-      : 1 - ramp(t, LOOP_MS - 400, LOOP_MS)
+    ? ms < T.song2Start
+      ? 1 - ramp(ms, T.replayAt, T.replayAt + 350)
+      : 1 - ramp(ms, LOOP_MS - 400, LOOP_MS)
     : 1;
   const playing = Math.max(
-    span(t, T.playStart - 50, T.playEnd + 50, 200),
-    span(t, T.song2Start - 50, T.song2End + 50, 200),
+    span(ms, T.playStart - 50, T.playEnd + 50, 200),
+    span(ms, T.song2Start - 50, T.song2End + 50, 200),
   );
 
-  const arcLen = RING_C * (0.18 + 0.7 * ramp(t, T.pillIn, T.learnedAt));
-  const spin = -90 + Math.max(0, t - T.pillIn) * 0.32;
-  const halo = waves * (0.3 + 0.15 * Math.sin((t / 1400) * 2 * Math.PI));
-  const headAlpha = span(t, T.playStart, T.playEnd + 250, 250) * scene1;
+  const arcLen = RING_C * (0.18 + 0.7 * ramp(ms, T.pillIn, T.learnedAt));
+  const spin = -90 + Math.max(0, ms - T.pillIn) * 0.32;
+  const halo = waves * (0.3 + 0.15 * Math.sin((ms / 1400) * 2 * Math.PI));
+  const headAlpha = span(ms, T.playStart, T.playEnd + 250, 250) * scene1;
   const headX = LANE_X0 + learnP * LANE_W;
 
   // scene 2: pitch trail from the lane's left edge up to the playhead
@@ -196,7 +180,7 @@ const Scene = ({ t, uid }: { t: number; uid: string }) => {
     }
   }
   const singerY = yOf(sungPitch(pos));
-  const singerAlpha = ramp(t, T.song2Start, T.song2Start + 200) * (1 - ramp(t, T.song2End, T.song2End + 300));
+  const singerAlpha = ramp(ms, T.song2Start, T.song2Start + 200) * (1 - ramp(ms, T.song2End, T.song2End + 300));
 
   const stroke = { fill: "none", strokeWidth: 1.5, strokeLinecap: "round", strokeLinejoin: "round" } as const;
 
@@ -242,7 +226,7 @@ const Scene = ({ t, uid }: { t: number; uid: string }) => {
       {/* sound waves flowing from the player into OnKey */}
       {waves > 0.001 &&
         [0, 1, 2].map((i) => {
-          const ph = (t / 1400 + i / 3) % 1;
+          const ph = (ms / 1400 + i / 3) % 1;
           const x = 200 + ph * 88;
           const h = 7 + 6 * Math.sin(Math.PI * ph);
           return (
@@ -271,7 +255,7 @@ const Scene = ({ t, uid }: { t: number; uid: string }) => {
             {...stroke}
           />
           <text x={229} y={63.5} fontSize={10} fill={C.muted} fontFamily={FONT}>
-            Learning…
+            {t("guides.learnSong.learning")}
           </text>
         </g>
         <g opacity={done}>
@@ -284,7 +268,7 @@ const Scene = ({ t, uid }: { t: number; uid: string }) => {
             {...stroke}
           />
           <text x={229} y={63.5} fontSize={10} fontWeight={600} fill={C.good} fontFamily={FONT}>
-            Learned
+            {t("guides.learnSong.learned")}
           </text>
         </g>
       </g>
@@ -296,7 +280,7 @@ const Scene = ({ t, uid }: { t: number; uid: string }) => {
       <rect x={318} y={58} width={8} height={4} rx={2} fill={C.accentLight} />
       <rect x={327} y={51} width={8} height={4} rx={2} fill={C.accentLight} />
       <text x={322} y={99} fontSize={10} fontWeight={500} textAnchor="middle" fill={C.muted} fontFamily={FONT}>
-        OnKey
+        {t("guides.learnSong.appName")}
       </text>
 
       {/* "not your mic" badge */}
@@ -325,7 +309,7 @@ const Scene = ({ t, uid }: { t: number; uid: string }) => {
       ))}
       <rect x={LANE_X0} y={126} width={10} height={4} rx={2} fill={C.accent} />
       <text x={42} y={131} fontSize={8.5} fontWeight={600} letterSpacing="0.08em" fill={C.muted} fontFamily={FONT}>
-        MELODY
+        {t("guides.learnSong.melody")}
       </text>
 
       {/* scene 1: melody drawn left to right, in step with the play bar */}
@@ -353,7 +337,7 @@ const Scene = ({ t, uid }: { t: number; uid: string }) => {
       <g opacity={scene2}>
         <path d="M300 128 H310" stroke={C.good} {...stroke} />
         <text x={LANE_X1} y={131} fontSize={8.5} fontWeight={600} letterSpacing="0.08em" textAnchor="end" fill={C.muted} fontFamily={FONT}>
-          YOU
+          {t("guides.learnSong.you")}
         </text>
         <line
           x1={PLAYHEAD_X}
@@ -384,7 +368,7 @@ const Scene = ({ t, uid }: { t: number; uid: string }) => {
                   fill={active ? C.accentLight : passed ? C.accentDark : C.accent}
                 />
                 <text x={x + 1} y={192} fontSize={9.5} fill={active ? C.text : C.muted} fontFamily={FONT}>
-                  {n.word}
+                  {t(`guides.learnSong.lyric.${n.word}`)}
                 </text>
               </g>
             );
@@ -439,11 +423,12 @@ export type OnKeyLearnSongProps = {
 };
 
 export default function LearnSongGuide({ mode = "auto", className }: OnKeyLearnSongProps) {
+  const t = useT();
   const uid = "okl" + useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const reduced = usePrefersReducedMotion();
   const animate = mode === "animated" || (mode === "auto" && !reduced);
 
-  const [t, setT] = useState(0);
+  const [time, setTime] = useState(0);
   const timeRef = useRef(0);
   const pausedRef = useRef(false);
 
@@ -454,7 +439,7 @@ export default function LearnSongGuide({ mode = "auto", className }: OnKeyLearnS
     const tick = (now: number) => {
       if (last !== null && !pausedRef.current) {
         timeRef.current = (timeRef.current + Math.min(64, now - last)) % LOOP_MS;
-        setT(timeRef.current);
+        setTime(timeRef.current);
       }
       last = now;
       raf = requestAnimationFrame(tick);
@@ -465,16 +450,16 @@ export default function LearnSongGuide({ mode = "auto", className }: OnKeyLearnS
 
   const jump = (i: number) => {
     timeRef.current = STEPS[i].start + 1;
-    setT(timeRef.current);
+    setTime(timeRef.current);
   };
 
   if (!animate) {
-    return <StillSteps count={STEPS.length} label={SUMMARY} caption={i => STEPS[i].caption}
-                       frame={i => <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} style={{ display: "block", width: "100%", height: "auto" }} aria-hidden="true" focusable="false"><Scene t={STILL_AT[i]} uid={`${uid}-s${i}`} /></svg>} />;
+    return <StillSteps count={STEPS.length} label={t("guides.learnSong.summary")} caption={i => t(`guides.learnSong.steps.${STEPS[i].id}`)}
+                       frame={i => <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} style={{ display: "block", width: "100%", height: "auto" }} aria-hidden="true" focusable="false"><Scene ms={STILL_AT[i]} uid={`${uid}-s${i}`} /></svg>} />;
   }
 
-  const step = stepAt(t);
-  const progress = clamp01((t - STEPS[step].start) / (stepEnd(step) - STEPS[step].start));
+  const step = stepAt(time);
+  const progress = clamp01((time - STEPS[step].start) / (stepEnd(step) - STEPS[step].start));
 
   return (
     <div className={`okl-root okl-mode-${mode}${className ? ` ${className}` : ""}`}>
@@ -494,27 +479,27 @@ export default function LearnSongGuide({ mode = "auto", className }: OnKeyLearnS
                 className="okl-stage"
                 viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
                 role="img"
-                aria-label={SUMMARY}
+                aria-label={t("guides.learnSong.summary")}
                 style={{ fontFamily: FONT }}
               >
-                <Scene t={t} uid={`${uid}-m`} />
+                <Scene ms={time} uid={`${uid}-m`} />
               </svg>
               {/* every caption in the same place, only the current one shown: the box keeps the tallest's height */}
               <p className="okl-caption">
                 {STEPS.map((s, i) => (
-                  <span key={s.caption} className="okl-caption-text" data-active={i === step} aria-hidden={i !== step}>
-                    {s.caption}
+                  <span key={s.id} className="okl-caption-text" data-active={i === step} aria-hidden={i !== step}>
+                    {t(`guides.learnSong.steps.${s.id}`)}
                   </span>
                 ))}
               </p>
             </div>
-            <div className="okl-dots" role="group" aria-label="Animation steps">
+            <div className="okl-dots" role="group" aria-label={t("guides.learnSong.stepsGroup")}>
               {STEPS.map((s, i) => (
                 <button
                   key={i}
                   type="button"
                   className="okl-dot"
-                  aria-label={`Step ${i + 1} of ${STEPS.length}: ${s.caption}`}
+                  aria-label={t("guides.learnSong.stepLabel", { n: i + 1, count: STEPS.length, caption: t(`guides.learnSong.steps.${s.id}`) })}
                   aria-current={i === step ? "step" : undefined}
                   onClick={() => jump(i)}
                 >

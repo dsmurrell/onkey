@@ -1,0 +1,831 @@
+{
+  "meta": {
+    "title": "OnKey: aprenda a cantar as músicas que você ama",
+    "description": "O OnKey é um treinador de canto gratuito e de código aberto para Mac. Ele ouve a música que toca no seu Mac, aprende a melodia de quem canta e mostra um guia de afinação enquanto você canta, para você ver onde está acima ou abaixo do tom. Ele nunca salva a música."
+  },
+  "common": {
+    "skip": "Pular para o conteúdo",
+    "joke": "Salvando cantores de chuveiro deles mesmos desde 2026",
+    "sourceOnGitHub": "Código no GitHub",
+    "stars": "{n, plural, one {# estrela no GitHub} other {# estrelas no GitHub}}",
+    "requirements": {
+      "silicon": "Um Mac com Apple Silicon (M1 ou mais recente)",
+      "macos": "macOS 14.2 ou mais recente"
+    },
+    "early": "{language} é uma língua nova no OnKey: por enquanto, músicas cantadas em {language} mostram a letra uma linha por vez, sem a sincronia palavra por palavra."
+  },
+  "header": {
+    "home": "Página inicial do OnKey",
+    "label": "Principal",
+    "docs": "Guias",
+    "faq": "Perguntas",
+    "whatsNew": "Novidades",
+    "github": "GitHub",
+    "discord": "Discord"
+  },
+  "footer": {
+    "license": "· gratuito e de código aberto (MIT)",
+    "madeBy": "Feito por <link>Daniel Murrell</link>",
+    "notAffiliated": "Sem vínculo com Spotify, Apple ou Google.",
+    "label": "Rodapé",
+    "gettingStarted": "Primeiros passos",
+    "howItWorks": "Como funciona",
+    "privacy": "Privacidade e termos",
+    "faq": "Perguntas",
+    "whatsNew": "Novidades",
+    "github": "GitHub",
+    "discord": "Discord",
+    "language": "Idioma",
+    "improve": "Melhorar esta tradução"
+  },
+  "download": {
+    "mac": "Baixar para Mac",
+    "macsOnly": "Por enquanto, o OnKey só roda em Macs. <link>Quer para Windows? Vote aqui</link>.",
+    "send": "Enviar para o seu Mac",
+    "sent": "Enviado",
+    "phones": "O OnKey roda em Macs, não em celulares. Envie o link para você mesmo e baixe depois.",
+    "shareText": "OnKey, um treinador de canto para Mac: baixe no seu Mac em",
+    "mailSubject": "OnKey para o meu Mac"
+  },
+  "docsNav": {
+    "label": "Guias",
+    "heading": "Guias",
+    "inEnglish": "{title} (em inglês)",
+    "pages": {
+      "start": "Primeiros passos",
+      "howItWorks": "Como o OnKey funciona",
+      "scoring": "Como funciona a pontuação",
+      "privacy": "Privacidade e termos",
+      "faq": "Perguntas",
+      "yourVoice": "Cantar com conforto",
+      "beyondPitch": "Além da afinação",
+      "troubleshooting": "Resolver problemas",
+      "credits": "Créditos"
+    }
+  },
+  "home": {
+    "kicker": "Um treinador de canto gratuito e de código aberto para Mac",
+    "title": "Aprenda a cantar as músicas que você ama.",
+    "intro": "O OnKey ouve a música que toca no seu Mac e aprende a melodia de quem canta. Depois, mostra um guia de afinação enquanto você canta, para você ver onde está acima ou abaixo do tom.",
+    "howLink": "Como funciona →",
+    "languages": "Disponível em {names} e <more>{n, plural, one {mais # idioma} other {mais # idiomas}}</more>",
+    "factsLabel": "Em resumo",
+    "facts": {
+      "free": "Gratuito e de código aberto (MIT)",
+      "macs": "Apple Silicon, macOS 14.2+",
+      "local": "Roda no seu Mac, sem conta",
+      "music": "Nunca salva a música que ouve"
+    },
+    "laneTitle": "Música aprendida · pontuação 82",
+    "videoCaption": "Eu cantando junto, com a pontuação em tempo real.",
+    "video": {
+      "label": "1:35 · com som",
+      "video": "OnKey em uso: Daniel canta junto, as notas rolam em direção a ele e a afinação dele é desenhada por cima",
+      "play": "Reproduzir o vídeo de demonstração, com som",
+      "dialog": "Vídeo de demonstração",
+      "close": "Fechar o vídeo"
+    },
+    "artCaption": "Ilustração da pista de canto. Vídeo de demonstração em breve.",
+    "how": {
+      "title": "Como funciona",
+      "step": "Passo {n}",
+      "steps": {
+        "play": {
+          "title": "Toque uma música",
+          "body": "No Spotify, no Apple Music ou no YouTube, como você já faz. O OnKey ouve junto. Ele não toca nem baixa música."
+        },
+        "learn": {
+          "title": "A primeira vez ensina o OnKey",
+          "body": "Quando a música termina, o OnKey leva alguns minutos para aprender as notas de quem canta e alinhar a letra."
+        },
+        "sing": {
+          "title": "Cante com o guia de afinação",
+          "body": "Na próxima vez, as notas rolam em sua direção e a sua voz é desenhada por cima delas. Verde é na nota, vermelho é fora."
+        },
+        "review": {
+          "title": "Veja como foi",
+          "body": "Você recebe uma pontuação, as notas que acertou e errou, e a sua gravação para ouvir junto com a música."
+        }
+      },
+      "more": "Quer os detalhes? <link>Leia exatamente como o OnKey funciona</link>, com diagramas."
+    },
+    "privacy": {
+      "title": "Ele ouve, mas nunca salva a música",
+      "body": "O OnKey ouve a música só para aprender a melodia e manter as notas no tempo. Ele nunca salva nem envia a música. O que fica no seu Mac são as notas que ele aprende e uma gravação do seu microfone a cada take, para você se ouvir depois.",
+      "link": "Privacidade e termos",
+      "cards": {
+        "network": {
+          "title": "Sem conta, sem servidor, sem analytics",
+          "body": "O que sai do seu Mac: uma assinatura do Shazam (não o áudio) para identificar uma música nova, o nome da música para o LRCLIB buscar a letra e para a Apple buscar a capa, e uma verificação diária de atualização no GitHub."
+        },
+        "fair": {
+          "title": "Pontuação justa",
+          "body": "Cantar uma oitava abaixo ainda conta, e a sua sincronia tem 80 ms de folga. O que custa pontos é estar acima ou abaixo do tom."
+        },
+        "headphones": {
+          "title": "Fones ou alto-falantes",
+          "body": "Fones de ouvido dão as pontuações mais confiáveis. Com alto-falantes, o microfone ouve a música além de você, então o OnKey filtra a música."
+        }
+      }
+    },
+    "questions": {
+      "title": "Perguntas",
+      "body": "As que as pessoas fazem primeiro. <link>Todas as perguntas</link>."
+    },
+    "get": {
+      "title": "Baixe o OnKey",
+      "body": "Gratuito e de código aberto sob a licença MIT. {requirements}.",
+      "discord": "Entrar no Discord"
+    }
+  },
+  "start": {
+    "title": "Primeiros passos",
+    "lede": "Instale o OnKey, dê duas permissões e toque uma música.",
+    "need": {
+      "title": "O que você precisa",
+      "music": "Música tocando no Spotify ou no Apple Music, ou no YouTube no Chrome, Brave, Edge ou Safari.",
+      "mic": "Um microfone (o embutido funciona). Fones de ouvido dão as pontuações mais confiáveis.",
+      "why": "O macOS 14.2 é a primeira versão que deixa um app ouvir o som de outro app sem drivers extras, e os modelos precisam de Apple Silicon para rodar rápido o suficiente."
+    },
+    "install": {
+      "title": "Instalar",
+      "download": "Baixe o <code>OnKey.dmg</code> na <link>página de versões</link>. Ele tem cerca de 350 MB (uns 420 MB instalado) porque os modelos vêm dentro do app, então ele nunca baixa mais nada.",
+      "drag": "Abra o arquivo e arraste o OnKey para Aplicativos.",
+      "open": "Abra o OnKey. Ele é assinado e autenticado pela Apple, então abre como qualquer outro app.",
+      "openAnyway": "Abra o OnKey. Esta versão ainda não foi autenticada, então na primeira vez o macOS diz que não consegue verificar o app. Vá em <strong>Ajustes do Sistema → Privacidade e Segurança</strong>, role até o fim e clique em <strong>Abrir Mesmo Assim</strong>. Isso só precisa ser feito uma vez.",
+      "updates": "Depois disso, o OnKey verifica no GitHub se há uma versão nova uma vez por dia, baixa em segundo plano (cerca de 350 MB) e instala quando você reinicia ou encerra o app, nunca no meio de uma música. Você pode desativar isso em <strong>Ajustes</strong>."
+    },
+    "permissions": {
+      "title": "Permissões",
+      "permission": "Permissão",
+      "why": "Por que o OnKey precisa dela",
+      "mic": "<strong>Microfone</strong>",
+      "micWhy": "Para ouvir você cantar.",
+      "audio": "<strong>Gravação do áudio do sistema</strong>",
+      "audioWhy": "Para ouvir o app de música, de modo que o OnKey aprenda a melodia e mantenha as notas no tempo. O macOS chama isso de gravação, mas o OnKey analisa o som enquanto ele toca e nunca o salva.",
+      "control": "<strong>Controlar o Spotify e o Música</strong> (pedido na configuração)",
+      "controlWhy": "Para ler o que está tocando e em que ponto, e para tocar, pausar e avançar em “Cantar de novo” e ao pular. A configuração pede ao macOS por cada app que estiver aberto. Um app fechado pede na primeira vez que você toca uma música nele. Escolha “Só ouvir” e o OnKey nunca envia nada ao Spotify ou ao Música, e acompanha a música pelo som.",
+      "browser": "<strong>Controlar o seu navegador</strong> (opcional, para o YouTube)",
+      "browserWhy": "Só se você ativar o YouTube, em Ajustes ou na página Cantar: para ler o tempo e o título da aba do YouTube, e tocar, pausar e avançar nela.",
+      "after": "Músicas que você já cantou são reconhecidas no seu Mac; as novas, pelo Shazam. Se negou uma permissão sem querer, vá em <strong>Ajustes do Sistema → Privacidade e Segurança</strong>, encontre a seção e ative o OnKey."
+    },
+    "first": {
+      "title": "Sua primeira música",
+      "play": "Abra o OnKey e toque uma música no Spotify, no Apple Music ou no YouTube. Não sabe o que cantar? Clique no logo do OnKey na página Cantar para ver sugestões.",
+      "lyrics": "Na primeira vez, ainda não há notas. Você vê a letra uma linha por vez, no tempo de quem canta durante o primeiro minuto e meio, mais ou menos (exceto em Macs de 8 GB). Cante junto se quiser, pois esse take também é pontuado.",
+      "learns": "Quando a música termina, o OnKey <strong>aprende a música</strong>. No meu Mac isso levou de dois a três minutos, e o botão Cantar mostra “Aprendendo…” até terminar. Uma música é aprendida por vez, então músicas tocadas em sequência mostram “Esperando para aprender” até a sua vez.",
+      "again": "Toque de novo. As notas ficam apagadas (“Sincronizando com a música…”) por alguns segundos até o OnKey saber onde você está. Depois elas rolam em sua direção com as palavras em cima, e a sua afinação é desenhada ao vivo.",
+      "score": "Quando termina, você recebe uma pontuação, um relatório de cada nota e cada linha, e a sua gravação para ouvir junto com a música.",
+      "learned": "Uma música conta como aprendida quando o OnKey ouviu cerca de 70% dela. Se você pulou partes, o resto é aprendido na próxima vez que elas tocarem.",
+      "rest": "Vai cantar muito? Dê uma olhada em <link>cantar com conforto</link>. Depois de uns 35 minutos, o OnKey lembra você de descansar a voz.",
+      "next": "A seguir: <how>como o OnKey funciona</how>, <scoring>como funciona a pontuação</scoring> ou <troubleshooting>resolver problemas</troubleshooting>."
+    }
+  },
+  "faqPage": {
+    "title": "Perguntas",
+    "before": "Antes de baixar",
+    "using": "Usando o OnKey"
+  },
+  "faq": {
+    "network": {
+      "q": "Alguma coisa sai do meu Mac?",
+      "intro": "O OnKey nunca salva nem envia a música que ouve. Suas gravações e as músicas aprendidas ficam no seu Mac. O que sai:",
+      "shazam": "<strong>Shazam</strong> (Apple): uma assinatura de até 5 segundos do som do app de música (não o áudio, e nunca o seu microfone) para identificar uma música nova quando nada mais consegue dizer o que está tocando. Isso vale para o YouTube, outros apps ou o modo “Só ouvir”. O Spotify e o Apple Music identificam as próprias músicas, e músicas que você já cantou são reconhecidas no seu Mac. Você pode desativar o Shazam em Ajustes.",
+      "lrclib": "<strong>LRCLIB</strong>: artista, título, álbum e duração da música, para buscar a letra sincronizada (a menos que “Mostrar letra” esteja desativado).",
+      "apple": "<strong>Apple</strong>: artista e título para encontrar a capa do álbum, e o id no Apple Music de uma música reconhecida para obter a duração. As capas em si são carregadas dos servidores de imagem do Spotify, da Apple ou do YouTube.",
+      "github": "<strong>GitHub</strong>: uma verificação diária de versão nova, e o download dela. Você pode desativar isso em Ajustes.",
+      "outro": "Não há conta, não há analytics e não há servidor meu. “Relatar um problema” só salva um arquivo no seu Mac, para você anexar a uma issue no GitHub se quiser. <link>Privacidade na íntegra</link>."
+    },
+    "music": {
+      "q": "O OnKey fornece ou baixa música?",
+      "a": "Não. O seu app de música toca a música (Spotify, Apple Music ou YouTube em um navegador). O OnKey ouve para aprender as notas de quem canta e nunca salva a música."
+    },
+    "kept": {
+      "q": "O que ele guarda no meu Mac?",
+      "a": "De cada música: as notas, uma impressão digital e uma assinatura do Shazam, e a letra com a sincronia. De cada take: uma <strong>gravação do seu microfone</strong> (cerca de 0,5 MB por minuto), suas pontuações e a letra que você cantou, para você ouvir depois. Fica tudo em <code>{dataDir}</code> (exceto um take compartilhado, que é salvo como vídeo em Downloads), e apagar um take ou uma música move o arquivo para o Lixo. Ele nunca guarda a música, embora um take cantado com alto-falantes capte um pouco dela."
+    },
+    "permissions": {
+      "q": "Quais permissões ele pede?",
+      "mic": "<strong>Microfone</strong>: para ouvir você cantar.",
+      "audio": "<strong>Gravação do áudio do sistema</strong>: para ouvir o app de música ou o navegador que está tocando. O macOS chama isso de gravação, mas o OnKey analisa o som enquanto ele toca e não o salva.",
+      "control": "<strong>Controle do Spotify e do Música</strong> (pedido na configuração): para ler o que está tocando e em que ponto, e para tocar, pausar e avançar em “Cantar de novo”. Escolha “Só ouvir” na configuração, ou desative os apps em “Deixar o OnKey controlar” nos Ajustes, e o OnKey nunca envia nada a eles.",
+      "browser": "<strong>Controle do seu navegador</strong> (só se você ativar o YouTube): o mesmo, para uma aba do YouTube."
+    },
+    "macs": {
+      "q": "Em quais Macs ele roda?",
+      "a": "Apple Silicon (M1 ou mais recente) com macOS 14.2 ou mais recente. O 14.2 é a primeira versão que deixa um app ouvir o som de outro app sem drivers extras, e os modelos precisam de Apple Silicon para acompanhar. 8 GB de memória bastam. Macs com Intel não são compatíveis."
+    },
+    "windows": {
+      "q": "Por que não há versão para Windows, Linux ou celular?",
+      "a": "O OnKey é construído sobre a captura de áudio por app do macOS e o Core ML. O Windows também consegue ouvir o som de um app, então uma versão é possível, mas ainda não comecei. Se você usaria, diga na <link>issue sobre o Windows</link>. Celulares não deixam um app ouvir outro, então uma versão para celular precisaria de outra abordagem."
+    },
+    "browser": {
+      "q": "Como ele se compara? E por que não no navegador?",
+      "compare": "A maioria dos apps de canto precisa do próprio catálogo, de playbacks ou de partituras feitas à mão. O OnKey aprende com a música que você já toca, então você pratica com o artista original. Músicas com um vocal principal claro funcionam melhor.",
+      "web": "Uma página da web não consegue ouvir o app do Spotify ou do Apple Music, não consegue perguntar a eles o que está tocando e não consegue usar o ShazamKit nem o Core ML. Por isso é um app para Mac."
+    },
+    "scoring": {
+      "q": "Como a pontuação é calculada?",
+      "a": "A cada 10 ms em que você e quem canta cantam ao mesmo tempo, a sua afinação é comparada com a dele. Até meio semitom de diferença vale crédito total, caindo a zero em um semitom e meio. Oitavas não contam contra você, e a sua sincronia tem 80 ms de folga. A pontuação é a sua precisão, ajustada por quanto da parte de quem canta você cantou. Mais em <link>Como funciona a pontuação</link>."
+    },
+    "licence": {
+      "q": "Qual é a licença?",
+      "a": "MIT. Ele é gratuito e o código está no GitHub. Os modelos têm as próprias licenças, listadas em <link>Créditos</link>."
+    },
+    "firstPlay": {
+      "q": "Por que a primeira vez não mostra nenhuma nota?",
+      "a": "O OnKey aprende uma música depois que a primeira reprodução termina, então ainda não há notas. Em vez disso você vê a letra, uma linha por vez (no tempo de quem canta durante o primeiro minuto e meio, mais ou menos, exceto em Macs de 8 GB). Cante junto mesmo assim, pois esse take também é pontuado. A partir da segunda vez, as notas rolam em sua direção com as palavras em cima."
+    },
+    "learning": {
+      "q": "Por que ainda não consigo cantar uma música? Está escrito “Aprendendo…”",
+      "a": "O aprendizado acontece depois que a música termina e levou de dois a três minutos no meu Mac. O botão “Cantar de novo” mostra o progresso e volta quando termina. As outras músicas continuam cantáveis enquanto isso. Uma música é aprendida por vez, então músicas tocadas em sequência mostram “Esperando para aprender” até a sua vez. O aprendizado também pausa enquanto você canta uma música que o OnKey já conhece."
+    },
+    "starters": {
+      "q": "O que devo cantar primeiro?",
+      "a": "O OnKey sugere músicas que ele acompanha bem. Elas aparecem na página Cantar quando nada está tocando, no fim da Biblioteca e quando você clica no logo do OnKey na página Cantar. Cada uma tem links para o Spotify e o Apple Music."
+    },
+    "busy": {
+      "q": "Ele vai deixar meu Mac lento?",
+      "a": "Cantar uma música aprendida é leve: de 15 a 19% de um núcleo da CPU no meu Mac. Aprender é a parte pesada, por isso o OnKey faz isso depois que a música termina, uma música por vez, em baixa prioridade. Durante o aprendizado, ele usou cerca de 1,7 GB de memória (2,4 GB no máximo). Em Macs com menos de 32 GB, os modelos são descarregados depois de cada música."
+    },
+    "headphones": {
+      "q": "Preciso de fones de ouvido?",
+      "a": "Não, mas eles dão as pontuações mais confiáveis. Com alto-falantes, o cancelamento de eco tira a música do seu microfone: 20 dB ou mais nos alto-falantes de um MacBook, de 8 a 14 dB em alto-falantes externos. Música alta ainda pode vazar."
+    },
+    "octave": {
+      "q": "Posso cantar uma oitava abaixo ou acima?",
+      "a": "Pode. Uma oitava de distância de quem canta conta como na nota."
+    },
+    "apps": {
+      "q": "Quais apps de música funcionam?",
+      "a": "Spotify, Apple Music e YouTube no Chrome, Brave, Edge ou Safari. Por padrão, o OnKey pergunta ao Spotify e ao Apple Music o que está tocando, então as posições são exatas, e ele pode tocar e pausar a partir da própria janela. Com “Só ouvir” (todos os apps desativados em “Deixar o OnKey controlar” nos Ajustes), ele reconhece as músicas pelo som. O YouTube é acompanhado pelo som, a menos que você deixe o OnKey controlar o seu navegador."
+    },
+    "shazam": {
+      "q": "Por que usar o Shazam? Isso não envia áudio para a Apple?",
+      "a": "O ShazamKit envia uma assinatura (uma impressão digital calculada no seu Mac), não o áudio, e nunca o seu microfone. O OnKey só pergunta ao Shazam quando nada mais consegue identificar a música: YouTube, outros apps ou “Só ouvir”. Músicas que você já cantou são reconhecidas primeiro no seu Mac. Desative Ajustes → “Usar o Shazam para identificar músicas novas” e nada vai para a Apple, mas só as músicas já aprendidas são reconhecidas pelo som."
+    },
+    "lyricsOff": {
+      "q": "Posso desativar a letra?",
+      "a": "Pode, em Ajustes → “Mostrar letra”. Desativado, o OnKey não pede nada ao LRCLIB e não mostra palavras. Letras que já estão no seu Mac ficam ocultas, não apagadas. As notas e a pontuação funcionam normalmente, e músicas aprendidas com a letra desativada tiram as notas só da melodia."
+    },
+    "oddScores": {
+      "q": "Algumas músicas têm pontuações estranhas. Por quê?",
+      "a": "Músicas de rap ou faladas quase não têm melodia para pontuar, e harmonias ou coros podem confundir qual voz é a melodia. Veja <link>os limites</link>."
+    },
+    "report": {
+      "q": "Algo deu errado. Como eu relato?",
+      "a": "Use <strong>Relatar um problema</strong> em Ajustes, no menu Ajuda ou na página de um take. Ele mostra o que vai no zip (os últimos três dias do log do OnKey e um resumo de cada reprodução, com nomes de músicas, mas sem letras, áudio ou gravações) e salva no seu Mac. Nada é enviado. Depois abra uma issue no <github>GitHub</github> e anexe o zip, se quiser. Dê uma olhada em <link>Resolver problemas</link> antes."
+    },
+    "updates": {
+      "q": "Como recebo atualizações?",
+      "a": "Automaticamente. Uma vez por dia o OnKey verifica no GitHub se há uma versão nova e baixa em segundo plano (cerca de 350 MB, pois os modelos ficam dentro do app). Ele instala quando você escolhe Reiniciar para atualizar ou quando encerra o app, nunca no meio de uma música. Você pode desativar as verificações em Ajustes."
+    }
+  },
+  "troubleshooting": {
+    "title": "Resolver problemas",
+    "lede": "O que fazer quando o OnKey não abre, não ouve, não identifica uma música ou está fora do tempo com os seus fones.",
+    "starting": {
+      "title": "Fica parado em “Iniciando o OnKey…”",
+      "body": "Normalmente isso leva alguns segundos. Se depois de um minuto ainda estiver assim, encerre o OnKey (<strong>⌘Q</strong>) e abra de novo. Se não resolver, <link>relate um problema</link>."
+    },
+    "permissions": {
+      "title": "Dúvidas sobre permissões",
+      "intro": "O OnKey pede três coisas na configuração:",
+      "mic": "<strong>Microfone</strong>: se você negou, vá em <strong>Ajustes do Sistema → Privacidade e Segurança → Microfone</strong> e ative o OnKey.",
+      "audio": "<strong>Gravação do áudio do sistema</strong>: necessária para ouvir o app de música. Se você negou, ou se o OnKey diz que “ainda não consegue ouvir…”, vá em <strong>Ajustes do Sistema → Privacidade e Segurança → Gravação do Áudio do Sistema e da Tela</strong> e ative o OnKey em <strong>Apenas Gravação do Áudio do Sistema</strong>.",
+      "control": "<strong>Controle do Spotify e do Apple Music</strong>: a configuração pede ao macOS por cada app que estiver aberto. Um app fechado pede na primeira vez que você toca uma música nele. Se a pergunta não aparecer, clique em <strong>Continuar</strong>. O macOS pergunta na primeira vez que você toca uma música lá. Para mudar a resposta, vá em <strong>Ajustes do Sistema → Privacidade e Segurança → Automação → OnKey</strong>, ou use <strong>Deixar o OnKey controlar</strong> nos Ajustes do OnKey.",
+      "buttons": "Os botões nas mensagens do OnKey abrem a página certa dos Ajustes do Sistema. O macOS pode pedir para reabrir o OnKey depois que você muda uma permissão."
+    },
+    "naming": {
+      "title": "Uma música nova demora para ser identificada",
+      "body": "Músicas novas são identificadas pelo Shazam, que precisa de conexão com a internet, e a primeira resposta depois da instalação pode ser lenta. Deixe a música tocando, pois o OnKey continua perguntando. Se ele diz que não consegue acessar o Shazam, verifique a sua conexão. Músicas que você já aprendeu continuam sendo reconhecidas no seu Mac. Permitir o controle do Spotify ou do Apple Music é mais rápido, pois o OnKey pode perguntar ao app o que está tocando."
+    },
+    "noNotes": {
+      "title": "Uma música sem notas",
+      "body": "O OnKey aprende uma música depois que a primeira reprodução termina, e o botão Cantar mostra “Aprendendo…” até terminar. Uma música é aprendida por vez, então as outras mostram “Esperando para aprender”. O aprendizado também pausa enquanto você canta uma música que o OnKey já conhece (“Esperando você cantar”), para as notas continuarem fluidas. Uma música conta como aprendida quando o OnKey ouviu cerca de 70% dela, então, se você pulou partes, toque-a inteira mais uma vez."
+    },
+    "dim": {
+      "title": "As notas estão apagadas e dizem “Sincronizando com a música…”",
+      "body": "O OnKey mantém as notas apagadas até a música confirmar onde você está, para você nunca cantar notas no lugar errado. Normalmente leva alguns segundos depois que uma música começa ou depois que você pula. Se continuar apagado, confira se o volume do próprio app de música não está muito baixo, pois o OnKey precisa ouvi-lo. Aumente o app e use o volume do Mac no lugar."
+    },
+    "wholeLine": {
+      "title": "Na primeira vez, a letra aparece uma linha inteira por vez",
+      "body": "É o esperado. Até uma música ser aprendida, o OnKey não sabe quando cada palavra é cantada, então mostra a linha inteira. A partir da próxima vez, as palavras ficam nas barras de notas."
+    },
+    "timing": {
+      "title": "Letra adiantada ou atrasada nos fones?",
+      "latency": "O OnKey compensa o tempo que os seus fones ou alto-falantes levam para reproduzir o som, usando o valor que o macOS informa para cada saída. Nos meus testes isso foi preciso o suficiente, Bluetooth incluído, então não há nada a configurar.",
+      "still": "Se as notas ainda parecem adiantadas ou atrasadas, pode ser que o OnKey ainda não tenha sincronizado com a música. Dê alguns segundos, ou volte um pouco. A sua pontuação não é afetada em nenhum dos casos, pois o OnKey calcula o seu atraso depois de cada música. Se continuar acontecendo com um par de fones, <link>me conte</link> quais são."
+    },
+    "lyrics": {
+      "title": "Sem letra, ou com a letra errada",
+      "body": "A letra vem do <link>LRCLIB</link>, um banco de dados gratuito mantido pela comunidade. Algumas músicas não estão lá, ou só em outra versão. Quando não encontra nada, o OnKey pergunta de novo depois de um dia."
+    },
+    "busy": {
+      "title": "Seu Mac parece ocupado",
+      "intro": "Aprender uma música nova é a parte pesada, por isso o OnKey faz isso depois que a música termina, em baixa prioridade. Cantar uma música aprendida é leve. Dois ajustes ajudam:",
+      "battery": "<strong>Economizar bateria ao cantar</strong> (ativado por padrão): na bateria, as notas são desenhadas 30 vezes por segundo em vez de 60.",
+      "models": "<strong>Manter os modelos de aprendizado prontos</strong> (ativado por padrão só com 32 GB ou mais): desative e os modelos (cerca de 1,5 GB) são descarregados depois de cada música. Em Macs de 8 GB ele não aparece, pois lá eles são sempre descarregados."
+    },
+    "logs": {
+      "title": "Onde ficam os logs",
+      "where": "O OnKey grava um log em texto simples em <code>$TMPDIR/onkey.log</code>. Para abrir, rode isto no Terminal:",
+      "records": "Ele também guarda o log de cada dia e um resumo curto de cada reprodução (tempos, CPU, memória, versão e Mac) na pasta<code> records/</code> da sua pasta de dados, por 30 dias e no máximo 200 MB. Eles não têm áudio nem letras, mas registram os nomes das músicas que você tocou."
+    },
+    "report": {
+      "title": "Relatar um problema",
+      "choose": "Escolha <strong>Relatar um problema</strong> em Ajustes ou <strong>Ajuda → Relatar um Problema…</strong>, ou <strong>Relatar um problema com este take</strong> na página de um take.",
+      "zip": "O OnKey mostra o que vai no zip: os últimos três dias do log e um resumo de cada reprodução. Sem letras, áudio, gravações, nome de usuário ou pasta pessoal. Adicione uma observação se quiser e depois <strong>Salve</strong> no seu Mac. Nada é enviado.",
+      "issue": "Escolha <strong>Abrir uma issue no GitHub</strong> (ou vá ao <link>GitHub</link>), diga o que aconteceu e com qual música, e anexe o zip, se quiser."
+    },
+    "more": "Mais respostas nas <link>Perguntas</link>.",
+    "discord": "Ou pergunte no <link>Discord do OnKey</link>."
+  },
+  "docs": {
+    "diagrams": {
+      "legend": {
+        "label": "Cores usadas nos diagramas",
+        "music": "A música",
+        "musicNote": "o que o seu app de música toca",
+        "singer": "Quem canta",
+        "singerNote": "o vocal original, suas notas e a letra",
+        "you": "Você",
+        "youNote": "a sua voz, pelo microfone",
+        "score": "Sua pontuação",
+        "scoreNote": "o quanto você chegou perto"
+      },
+      "stepOf": "Passo {n} de {total}",
+      "phrase": "U- ma li- nha pra vo- cê",
+      "big": {
+        "label": "Como o OnKey funciona, do começo ao fim",
+        "all": "Entra a música, sai a sua pontuação. Tudo no seu Mac.",
+        "steps": {
+          "play": "Seu app de música toca uma música",
+          "hears": "O OnKey a ouve, no seu Mac",
+          "learns": "Na primeira vez, ele aprende a música",
+          "sing": "Você canta junto, seguindo as notas",
+          "score": "Você recebe uma pontuação e um relatório"
+        },
+        "onMac": "OnKey, no seu Mac",
+        "musicApp": "App de música",
+        "musicAppSub": "Spotify, Música…",
+        "hears": "Ouve",
+        "hearsSub": "nunca salva",
+        "learns": "Aprende",
+        "learnsSub": "notas e letra",
+        "sing": "Você canta",
+        "singSub": "seu microfone",
+        "score": "Sua pontuação",
+        "scoreSub": "e um relatório"
+      },
+      "hearing": {
+        "label": "Como o OnKey ouve a música",
+        "steps": {
+          "apps": "Muitos apps fazem som no seu Mac",
+          "one": "O OnKey ouve só o app de música",
+          "mic": "Seu microfone chega no mesmo relógio",
+          "memory": "Analisada enquanto toca, nunca salva"
+        },
+        "musicApp": "App de música",
+        "browser": "Navegador",
+        "messages": "Mensagens",
+        "yourMic": "Seu microfone",
+        "oneClock": "um só relógio",
+        "disk": "disco",
+        "noMusicSaved": "nenhuma música salva",
+        "notHeard": "não é ouvido"
+      },
+      "learning": {
+        "label": "Como o OnKey aprende uma música",
+        "steps": {
+          "mixed": "A música chega: instrumentos e voz misturados",
+          "separation": "A separação extrai a voz de quem canta, na memória",
+          "pitch": "O rastreador de afinação segue a voz, a cada 10 ms",
+          "notes": "Cada altura sustentada vira uma barra de nota",
+          "lyrics": "As linhas da letra vão para onde as palavras são ouvidas",
+          "bars": "Uma barra por sílaba: pronta para cantar"
+        },
+        "singer": "quem canta",
+        "everythingElse": "todo o resto",
+        "mix": "a mixagem",
+        "timing": "tempos do arquivo de letra, corrigidos de ouvido"
+      },
+      "placement": {
+        "label": "Como o OnKey descobre em que ponto da música você está",
+        "steps": {
+          "fingerprint": "Uma música aprendida guarda uma impressão digital do som",
+          "slide": "Alguns segundos do que está tocando deslizam por ela",
+          "match": "Onde eles coincidem é exatamente onde você está",
+          "skip": "Pule para a frente, e ele encontra você de novo",
+          "listening": "Modo de escuta: o Shazam identifica músicas que ele ainda não aprendeu"
+        },
+        "fingerprint": "a impressão digital da música aprendida (8 bandas, a cada 10 ms)",
+        "match": "coincidência",
+        "playingNow": "o que está tocando agora",
+        "skipped": "você pulou",
+        "shazam": "Shazam: “uma música nova”, 0:42",
+        "shazamNote": "só para músicas ainda não aprendidas"
+      },
+      "echo": {
+        "label": "Como funciona o cancelamento de eco",
+        "steps": {
+          "speakers": "Sem fones, o microfone ouve você e a música",
+          "copy": "O OnKey sabe exatamente como a música soa",
+          "learns": "Ele aprende como esse som chega ao microfone",
+          "subtracts": "…e o tira, deixando a sua voz",
+          "headphones": "Com fones, não há nada para tirar"
+        },
+        "speakers": "alto-falantes",
+        "headphones": "fones de ouvido",
+        "yourMic": "seu microfone",
+        "whatsLeft": "o que sobra: você",
+        "micHears": "o que o microfone ouve",
+        "copy": "a cópia da música que o OnKey tem (mesmo relógio)",
+        "room": "como a sala muda o som: atraso, eco, timbre",
+        "minusSong": "− música"
+      },
+      "scoring": {
+        "label": "Como o OnKey pontua o seu canto",
+        "steps": {
+          "compare": "A cada 10 ms, a sua afinação é comparada com a de quem canta",
+          "credit": "Até meio semitom é crédito total",
+          "octaves": "Uma oitava acima ou abaixo conta como na nota",
+          "slack": "Um pouco adiantado ou atrasado não é punido",
+          "hit": "Cada nota: acertada se você a sustentou por metade da duração",
+          "score": "A pontuação: a sua precisão, ajustada por quanto você cantou"
+        },
+        "flat60": "60 cents abaixo: 90% de crédito",
+        "octaveLower": "uma oitava abaixo: continua verde",
+        "slack80": "até 80 ms fora: permitido",
+        "summary": "86% de precisão · cantou 80%"
+      },
+      "credit": {
+        "title": "Experimente: quanto você pode errar?",
+        "aria": "Curva de crédito. Sua nota está {n} cents {dir, select, flat {abaixo} other {acima}}, rendendo {p}% de crédito.",
+        "axis": "cents a partir da nota (100 cents = 1 semitom)",
+        "credit": "{p}% de crédito",
+        "yourNote": "Sua nota",
+        "onTheNote": "na nota",
+        "off": "{n}¢ {dir, select, flat {abaixo} other {acima}}",
+        "octave": "Cante uma oitava abaixo"
+      },
+      "coverage": {
+        "title": "Experimente: quanto da música você precisa cantar?",
+        "aria": "Cantar {p}% da parte de quem canta com 86% de precisão dá pontuação {s}.",
+        "axis": "parte do vocal que você cantou",
+        "score": "pontuação {s} com 86% de precisão",
+        "youSang": "Você cantou"
+      },
+      "privacy": {
+        "label": "O que o OnKey guarda e envia",
+        "all": "O OnKey nunca salva a música que ouve",
+        "steps": {
+          "kept": "Fica no seu Mac: o que o OnKey aprendeu e os seus takes",
+          "never": "Nunca salvo nem enviado: o áudio da música",
+          "lookups": "Sai: buscas por nome, para letras e capas",
+          "shazam": "Para identificar uma música nova: uma assinatura para o Shazam"
+        },
+        "yourMac": "Seu Mac",
+        "kept": {
+          "notes": "As notas e barras de cada música",
+          "fingerprint": "A impressão digital e a assinatura dela",
+          "lyrics": "A letra e a sincronia",
+          "takes": "Takes: seu microfone, pontuações, letra"
+        },
+        "audio": "O áudio da música: analisado\nenquanto toca, nunca salvo nem enviado",
+        "lrclib": "artista, título, álbum,\nduração: para a letra",
+        "itunes": "artista, título: capa",
+        "shazam": "uma assinatura da\nmúsica, nunca do microfone;\npode ser desativado"
+      }
+    },
+    "howItWorks": {
+      "title": "Como o OnKey funciona",
+      "lede": "Sete seções, da visão geral até os números exatos. Toda a análise acontece no seu Mac.",
+      "exactNumbers": "Os números exatos",
+      "big": {
+        "title": "1. A visão geral",
+        "steps": {
+          "play": "Você toca música como já faz, no <strong>Spotify, no Apple Music ou no YouTube</strong>. O OnKey não toca nada por conta própria.",
+          "hears": "O OnKey <strong>ouve o app de música</strong> <wave></wave> pelo macOS. O som é analisado enquanto toca e nunca é salvo.",
+          "learns": "Depois da primeira vez que uma música toca, o OnKey <strong>aprende a música</strong>: ele extrai a voz de quem canta <separate></separate>, descobre as notas e alinha a letra.",
+          "sing": "A partir da próxima vez, você vê as <strong>barras de notas</strong> <lane></lane> vindo em sua direção, e a sua voz <mic></mic> desenhada por cima.",
+          "score": "Quando a música termina, você recebe uma <strong>pontuação</strong> <score></score> e um relatório de cada linha, e se você tende a cantar acima ou abaixo do tom."
+        },
+        "hood": {
+          "app": "Um app para Mac: um motor em Rust (áudio, modelos, pontuação) dentro de uma janela Tauri com uma interface em React. <engine>engine.rs</engine> comanda tudo.",
+          "local": "Tudo acontece no seu Mac. Os modelos rodam com ONNX Runtime, no Core ML (GPU e Neural Engine) onde isso ajuda.",
+          "frames": "O áudio é analisado a 16 kHz em quadros de 10 ms, a unidade que todos os números abaixo usam (<dsp>dsp.rs</dsp>, <code>FRAME_S</code>).",
+          "learned": "Uma música conta como aprendida quando 70% dela foi ouvido (<code>READY_COVERAGE</code> em <store>store.rs</store>). Uma música ouvida em parte continua aprendendo nas próximas vezes que toca."
+        }
+      },
+      "hearing": {
+        "title": "2. Ouvir a música",
+        "steps": {
+          "apps": "Seu Mac toca som de muitos apps ao mesmo tempo.",
+          "one": "O OnKey pede ao macOS (com a sua permissão) o som de <strong>um app só</strong>, o de música, e ignora o resto.",
+          "mic": "Seu <strong>microfone</strong> <mic></mic> é gravado junto, no <strong>mesmo relógio</strong>, então o OnKey sabe contra qual momento da música você cantou.",
+          "memory": "A música é analisada <strong>enquanto toca</strong>, na memória (uma música sendo aprendida fica na memória até terminar). Ela nunca é gravada em disco, enviada ou compartilhada."
+        },
+        "hood": {
+          "capture": "A captura usa process taps do Core Audio (macOS 14.2 ou mais recente), junto com o seu microfone, na taxa do seu próprio dispositivo de saída (normalmente 48 kHz), em um só relógio (<captureSwift>capture.swift</captureSwift>, <captureRs>capture.rs</captureRs>).",
+          "tapped": "Só os processos do app de música são capturados, escolhidos pelo bundle id dele (<source>source.rs</source>).",
+          "resampled": "Tudo é reamostrado para 16 kHz mono para a análise. As versões lançadas nunca gravam o áudio da música em lugar nenhum. Só a sua própria voz é guardada com cada take.",
+          "permissions": "Permissões: gravação do áudio do sistema e microfone. Controlar o Spotify e o Música (o que está tocando e em que ponto, “Cantar de novo”, pular e pausar) é uma permissão separada, pedida na configuração, e “Só ouvir” a desativa. O controle da aba do YouTube fica desativado até você ativá-lo."
+        }
+      },
+      "learning": {
+        "title": "3. Aprender uma música",
+        "steps": {
+          "mixed": "A música chega ao OnKey como um som só: <strong>a voz e a banda misturadas</strong>.",
+          "separation": "Depois que a música termina, um modelo de <strong>separação</strong> <separate></separate> extrai a voz principal da mixagem, um trecho por vez. (Fazer isso enquanto você canta faria as notas travarem.)",
+          "pitch": "Um <strong>rastreador de afinação</strong> segue a voz de quem canta <strong>a cada 10 ms</strong>. Isso dá uma linha ondulada com a melodia exata, incluindo os deslizamentos e o vibrato.",
+          "notes": "Um modelo de notas transforma essa linha em <strong>notas</strong>, com onde cada uma começa e termina.",
+          "lyrics": "A <strong>letra</strong> vem do LRCLIB com tempos aproximados. Um modelo de fala ouve quem canta e move cada linha para <strong>onde as palavras são cantadas</strong>. Na primeira vez, ele faz isso no primeiro minuto e meio, mais ou menos, para essas linhas também ficarem no tempo.",
+          "bars": "Cada linha é dividida em sílabas, e cada sílaba ganha a própria <strong>barra</strong> <lane></lane> na sua nota. Essa é a pista que você canta."
+        },
+        "hood": {
+          "separation": "<strong>Separação:</strong> UVR MDX-Net Karaoke 2 (ONNX, no Core ML), rodando em trechos de 20 s com 2 s de contexto de cada lado. A música fica na memória enquanto toca e é separada depois que termina, em baixa prioridade. Uma música é aprendida por vez. As outras esperam a vez (“Esperando para aprender”), e o aprendizado pausa enquanto você canta uma música aprendida com a janela visível (<learn>learn.rs</learn>, <mdx>mdx.rs</mdx>).",
+          "firstPlay": "<strong>Primeira vez:</strong> até os primeiros 90 s são separados enquanto tocam, 5 s por vez, até as linhas da letra ficarem alinhadas com quem canta. O resto espera a música terminar. Isso é pulado em Macs de 8 GB e enquanto outra música está sendo aprendida. Na minha biblioteca, 60% das linhas da primeira vez ficaram a menos de 0,3 s do canto desse jeito, contra 13% com os tempos do próprio LRCLIB.",
+          "memory": "<strong>Memória:</strong> com 8 GB, um modelo é carregado por vez e descarregado depois da sua etapa. Abaixo de 32 GB, os modelos de aprendizado (cerca de 1,5 GB) são descarregados quando uma música é aprendida, a menos que Ajustes → Manter os modelos de aprendizado prontos esteja ativado (<lowmem>lowmem.rs</lowmem>).",
+          "pitch": "<strong>Afinação:</strong> CREPE “full” no vocal separado, 16 kHz, passo de 10 ms, janelas de 1024 amostras, de 50 a 1100 Hz. Um quadro conta como cantado quando a confiança passa de 0,45 (<pitch>pitch.rs</pitch>).",
+          "notes": "<strong>Notas:</strong> o GAME (OpenVPI) transcreve as notas do vocal. Cada barra de sílaba recebe a sua nota, e barras sem nenhuma nota cantada embaixo são descartadas (<game>game.rs</game>, <syllables>syllables.rs</syllables>).",
+          "lyrics": "<strong>Letra:</strong> letras sincronizadas do LRCLIB (buscadas por artista, título, álbum e duração, e depois por nome se isso não encontrar nada). As linhas são recolocadas alinhando as palavras da música inteira com o wav2vec 2.0 (CTC), e divididas em sílabas com o dicionário de pronúncia CMU (<lyrics>lyrics.rs</lyrics>, <ctc>ctc.rs</ctc>).",
+          "measured": "<strong>Medido:</strong> em 18 músicas marcadas à mão, 98% das notas cantadas são cobertas por uma barra, 92% na nota certa e 73% começando a menos de 0,1 s. 94% das linhas da letra ficam a menos de 0,3 s.",
+          "kept": "<strong>Guardado com a música:</strong> a linha de afinação, as barras, uma impressão digital rítmica, uma assinatura do Shazam e a sincronia da letra, mais a entrada do LRCLIB para a qual esses tempos foram feitos (guardada no Mac, nunca enviada), para que as mesmas palavras apareçam nas mesmas barras toda vez. A música e o vocal separado não são guardados."
+        }
+      },
+      "placement": {
+        "title": "4. Saber onde você está",
+        "steps": {
+          "fingerprint": "Quando uma música é aprendida, o OnKey também guarda uma <strong>impressão digital</strong> <fingerprint></fingerprint>: quanto o som muda em cada banda de frequências, a cada 10 ms.",
+          "slide": "Os apps de música só informam de forma aproximada em que ponto a música está, então o OnKey desliza <strong>alguns segundos do que está ouvindo</strong> pela impressão digital.",
+          "match": "Onde eles se encaixam é <strong>exatamente onde você está</strong>. Até então as notas ficam apagadas (“Sincronizando com a música…”). Elas costumam acender alguns segundos depois que a música começa.",
+          "skip": "Pule, avance ou recomece, e ele <strong>encontra você de novo</strong> em alguns segundos. O OnKey mantém algumas posições possíveis em mente e só move as notas quando a música confirma com clareza.",
+          "listening": "Isso é o <strong>modo de escuta</strong>. Músicas que você já cantou são reconhecidas no seu Mac, e o Shazam identifica as novas, então o OnKey consegue acompanhar a música sem controlar o app. O controle do Spotify e do Apple Music dá posições exatas e vem ativado por padrão (“Só ouvir” desativa). O controle do YouTube é opcional."
+        },
+        "hood": {
+          "fingerprint": "<strong>Impressão digital:</strong> quanto o som sobe em cada uma de 8 bandas, de cerca de 60 Hz a 7 kHz, a cada 10 ms (<code>FP_BANDS</code> em <dsp>dsp.rs</dsp>).",
+          "placement": "<strong>Posição:</strong> um só rastreador posiciona cada reprodução (<tracker>tracker.rs</tracker>, inspirado no rastreador musical “any-time” de Arzt e Widmer). Cada verificação compara os últimos segundos de música, no máximo 8 s, com a impressão digital, com precisão de um quadro de 10 ms, e mantém as melhores posições como candidatas ponderadas, para uma introdução repetitiva que coincide um tempo adiante não enganar o rastreador. A posição do app de música e as respostas da escuta só empurram as candidatas próximas delas. A posição mostrada muda para outra candidata só quando essa lidera com clareza por cerca de 4 s de música.",
+          "measured": "<strong>Medido:</strong> ao repetir 153 reproduções reais com a posição do app de música errada (0,73 s ou 1,7 s fora, ou um pulo caindo 3,5 s adiante), a posição mostrada ficou a menos de 0,1 s da música cerca de 91% do tempo. As regras anteriores conseguiam 75%, 0% e 0%.",
+          "listening": "<strong>Modo de escuta</strong> (sempre ativo, <listen>listen.rs</listen>, <recognize>recognize.rs</recognize>): depois de 3 s de som, ele consulta, nesta ordem, o catálogo próprio do OnKey de músicas aprendidas (ShazamKit, no Mac, exato a cerca de 10 ms), as impressões digitais e depois o catálogo do Shazam. Ele verifica de novo a cada 3 s para músicas aprendidas e a cada 12 s, mais ou menos, para músicas que só o Shazam conhece. O Shazam recebe uma assinatura de no máximo 5 s do som do app de música, nunca do microfone. Uma resposta nova do Shazam precisa de uma segunda que concorde. Uma pausa é 0,15 s de silêncio digital.",
+          "shazamTest": "Primeiro teste do catálogo do Shazam: ele identificou 25 de 30 músicas de teste pelos primeiros 5 s, em uma mediana de 0,24 s."
+        }
+      },
+      "you": {
+        "title": "5. Ouvir você",
+        "steps": {
+          "speakers": "Nos alto-falantes do notebook, o seu microfone ouve <strong>você e a música</strong>, vocal incluído. Sem nenhum cuidado, quem canta marcaria pontos por você.",
+          "copy": "Mas o OnKey tem a própria cópia da música <wave></wave>, no mesmo relógio que o microfone.",
+          "learns": "Ele <strong>aprende como esse som chega ao microfone</strong>, com o atraso, o eco da sala e o timbre dos seus alto-falantes. Chamadas de vídeo fazem o mesmo.",
+          "subtracts": "Então ele <strong>subtrai</strong> <echo></echo> a sua previsão da música, e o que sobra é <strong>a sua voz</strong>.",
+          "headphones": "Com <strong>fones de ouvido</strong>, o microfone não ouve a música, então não há nada para tirar. Ainda é a configuração mais confiável."
+        },
+        "hood": {
+          "livePitch": "<strong>Afinação ao vivo:</strong> CREPE “tiny”, no seu microfone com o eco cancelado, a cada 10 ms, rodando nos kernels de CPU do Core ML: o ponto de afinação fica de 2 a 4 ms atrás da sua voz, e cantar uma música aprendida custa ao OnKey de 15 a 19% de um núcleo da CPU no meu Mac (<pitch>pitch.rs</pitch>).",
+          "canceller": "<strong>Cancelador de eco:</strong> um filtro adaptativo particionado no domínio da frequência: 16 partições de 256 amostras a 16 kHz, então ele modela 256 ms de eco (<bleed>bleed.rs</bleed>). Algumas saídas colocam o eco mais tarde que isso, então a cada 2 s o atraso do eco é medido (GCC-PHAT, até 800 ms) e a música é entregue ao filtro com esse atraso. Ele só se adapta enquanto a música está chegando com clareza ao microfone, e se a saída dele ficar mais alta que o microfone, o microfone passa sem alterações.",
+          "measured": "<strong>Medido:</strong> alto-falantes embutidos de um MacBook (eco cerca de 24 ms atrasado): 20 dB ou mais removidos. Alto-falantes externos com o eco cerca de 290 ms atrasado: de 8 a 14 dB, contra 1 a 2 dB antes de o atraso ser medido.",
+          "limit": "<strong>Limite:</strong> de 8 a 14 dB ainda deixam um pouco de uma música alta no microfone, e isso pode ser confundido com canto. Fones de ouvido são mais confiáveis."
+        }
+      },
+      "scoring": {
+        "title": "6. Pontuação",
+        "steps": {
+          "compare": "A cada 10 ms em que você e quem canta cantam ao mesmo tempo, a sua afinação é comparada com a linha de quem canta e com a barra da nota, <strong>a que estiver mais perto de você</strong>.",
+          "credit": "Até <strong>50 cents</strong> (meio semitom) vale crédito total. Depois o crédito cai até zero a 150 cents.",
+          "octaves": "<strong>Oitavas são perdoadas</strong>, então você pode cantar na sua própria extensão.",
+          "slack": "Cada meio segundo pode se deslocar até <strong>80 ms</strong> para se alinhar com quem canta, então estar um pouco adiantado ou atrasado não custa nada.",
+          "hit": "Cada nota é <strong>acertada</strong> se você a sustenta dentro de um semitom por metade da duração. Os primeiros 80 ms dela não contam: quem canta entra nas notas por baixo.",
+          "score": "Sua pontuação <score></score> é a sua <strong>precisão</strong>, ajustada por <strong>quanto da parte de quem canta você cantou</strong>, então uma linha boa sozinha não dá uma pontuação boa."
+        },
+        "lenient": "Por padrão, a pontuação é tolerante de propósito, pensada para iniciantes como eu. Quem canta bem pode escolher um nível mais rigoroso, Firme ou Pro, em Ajustes (o vibrato não é penalizado em nenhum deles).",
+        "explained": "Os números do seu relatório estão explicados em <link>Como funciona a pontuação</link>.",
+        "hood": {
+          "credit": "<strong>Crédito:</strong> <code>clamp((150 − |error|) / 100, 0, 1)</code>, com o erro em cents dobrado para ±600 para que oitavas não contem (<code>credit</code>, <code>fold</code> em <dsp>dsp.rs</dsp>).",
+          "slack": "<strong>Folga de sincronia:</strong> cada janela de 0,5 s recebe o único deslocamento dentro de ±80 ms (<code>TOL</code> = 8 quadros) que melhor alinha você (<code>tolerant_error</code>).",
+          "delay": "<strong>Seu atraso:</strong> depois da música, uma busca de 0,3 s adiantado a 1,5 s atrasado encontra o atraso que melhor se encaixa (<analysis>analysis.rs</analysis>).",
+          "notesHit": "<strong>Notas acertadas:</strong> sustentadas dentro de 100 cents por pelo menos metade da nota, ignorando os primeiros 80 ms dela. Notas com menos de 0,15 s não são contadas.",
+          "score": "<strong>Pontuação:</strong> <code>100 × accuracy × (0.3 × min(1, sung / 0.1) + 0.7 × min(1, sung / 0.4))</code>: crédito total a partir de 40% da parte de quem canta cantada.",
+          "experts": "<strong>Conferido com especialistas:</strong> em 20 gravações avaliadas, as notas acertadas concordam com a classificação dos especialistas em 0,77 e a pontuação em 0,61 (os especialistas concordam entre si em 0,88)."
+        }
+      },
+      "privacy": {
+        "title": "7. Privacidade",
+        "steps": {
+          "kept": "No seu Mac, o OnKey guarda o que <strong>aprendeu</strong> sobre cada música e, para cada take, <strong>uma gravação do seu microfone</strong> <lock></lock> (cerca de 0,5 MB por minuto), suas pontuações e a letra que você cantou, para você ouvir depois. Apague um take e ele vai para o Lixo.",
+          "never": "Ele <strong>nunca salva nem envia o áudio da música</strong>, nem o vocal separado. (Se a música estava nos alto-falantes, a gravação do seu microfone terá um pouco dela.)",
+          "lookups": "Para encontrar a letra, ele envia <strong>artista, título, álbum e duração</strong> da música ao LRCLIB, um banco de dados de letras gratuito mantido pela comunidade (a menos que “Mostrar letra” esteja desativado). Para as capas, ele pergunta à Busca do iTunes, da Apple, por artista e título.",
+          "shazam": "Para identificar uma música que ainda não aprendeu, o <strong>modo de escuta</strong> envia ao Shazam uma <strong>assinatura</strong> de até 5 segundos do som do app de música (não o áudio, e nunca o seu microfone). Músicas que você já cantou são reconhecidas no seu Mac, então nada vai para o Shazam por elas. O Shazam só é consultado quando o Spotify ou o Apple Music não dizem o que está tocando, e você pode desativá-lo em Ajustes."
+        },
+        "hood": {
+          "stored": "Guardado em <code>{dataDir}</code>: <code>songs/</code> (linha de afinação, barras, impressão digital, sincronia da letra e uma assinatura do Shazam, salvos para cada música aprendida em qualquer dos dois modos), <code>takes/</code> (<code>mic.m4a</code>: seu microfone, AAC mono a cerca de 64 kbps, cerca de 0,5 MB por minuto, tudo guardado até 2 GB no total, mais as pontuações e o relatório com as linhas da letra) e <code>records/</code> (logs e um resumo de cada reprodução, só números, guardados por 30 dias, no máximo 200 MB). Apagar uma música ou um take move o arquivo para o Lixo.",
+          "network": "Rede: Shazam (modo de escuta, pode ser desativado) para músicas ainda não aprendidas, buscas de letra no LRCLIB (a menos que “Mostrar letra” esteja desativado), Busca do iTunes para capas, Lookup do iTunes para a duração de uma música reconhecida, as imagens das capas (da Apple ou a miniatura do YouTube) e uma verificação diária no GitHub Releases por atualizações. Sem conta, sem analytics e sem nenhum servidor meu.",
+          "more": "Mais em <link>Privacidade e termos</link>."
+        }
+      }
+    },
+    "scoring": {
+      "title": "Como funciona a pontuação",
+      "lede": "O que cada número significa, como ele é calculado e onde ele falha.",
+      "rules": {
+        "title": "As regras",
+        "every": "<strong>Cada 10 ms contam.</strong> Sempre que você e quem canta estão cantando ao mesmo tempo, a sua afinação é comparada com a linha de afinação de quem canta e com a barra da nota, a que estiver mais perto de você.",
+        "credit": "<strong>Crédito de afinação.</strong> Até 50 cents (meio semitom) vale crédito total. Depois ele cai em linha reta até zero a 150 cents.",
+        "octaves": "<strong>Oitavas são perdoadas.</strong> Uma oitava acima ou abaixo de quem canta conta como na nota, então você pode cantar na sua própria extensão.",
+        "slack": "<strong>Folga de sincronia.</strong> Cada meio segundo pode se deslocar até 80 ms para se alinhar com quem canta, então estar um pouquinho adiantado ou atrasado não custa nada.",
+        "delay": "<strong>Seu atraso é encontrado para você.</strong> Depois da música, o OnKey testa atrasos de 0,3 s adiantado a 1,5 s atrasado e usa o que melhor alinha você (você ouve a música um pouco atrasada).",
+        "relaxed": "Essas são as regras no <strong>Relaxado</strong>, o nível padrão. Elas são tolerantes de propósito, para iniciantes (eu sou um) e crianças, então, se você cantar bem, vai pontuar alto."
+      },
+      "levels": {
+        "title": "Níveis",
+        "intro": "Se o Relaxado for bonzinho demais, escolha um nível mais rigoroso em Ajustes → Pontuação. Ele vale a partir do seu próximo take, e cada take guarda o nível em que foi pontuado: takes fora do Relaxado mostram uma etiqueta pequena, e a melhor pontuação de uma música só compara takes do mesmo nível.",
+        "level": "Nível",
+        "fullWithin": "Crédito total até",
+        "noneFrom": "Sem crédito a partir de",
+        "slack": "Folga de sincronia",
+        "relaxed": "<strong>Relaxado</strong> (padrão)",
+        "steady": "<strong>Firme</strong>",
+        "pro": "<strong>Pro</strong>",
+        "cents": "{n} cents",
+        "ms": "{n} ms",
+        "vibrato": "<strong>O vibrato não é penalizado.</strong> No Firme e no Pro, a sua afinação é julgada pelo centro da oscilação, com média em 0,17 s (cerca de um ciclo de um vibrato típico, que oscila de 5 a 7 vezes por segundo). Um vibrato estável em volta da nota certa pontua quase o máximo; uma nota sustentada acima ou abaixo continua acima ou abaixo. No Relaxado, a sua afinação exata é usada, como sempre foi, e um vibrato largo (±80 cents) perde cerca de um décimo do crédito. Oitavas são perdoadas em todos os níveis."
+      },
+      "report": {
+        "title": "Os números do seu relatório",
+        "number": "Número",
+        "meaning": "O que significa",
+        "score": "<strong>Pontuação</strong> (0–100)",
+        "scoreMeaning": "Seu crédito de afinação médio, ajustado por quanto da parte de quem canta você cantou (veja abaixo).",
+        "accuracy": "<strong>Precisão de afinação</strong>",
+        "accuracyMeaning": "Seu crédito de afinação médio enquanto você cantava.",
+        "notesHit": "<strong>Notas acertadas</strong>",
+        "notesHitMeaning": "Notas que você sustentou dentro de um semitom por pelo menos metade da duração, com a mesma folga de 80 ms. Os primeiros 80 ms de cada nota são ignorados, porque quem canta entra nas notas por baixo, e notas com menos de 0,15 s não são contadas.",
+        "sangAlong": "<strong>Parte cantada</strong>",
+        "sangAlongMeaning": "A parte do vocal em que você também estava cantando.",
+        "tendency": "<strong>Tendência</strong>",
+        "tendencyMeaning": "Se você tende a ficar acima ou abaixo do tom, em cents (a mediana dos seus erros).",
+        "latency": "<strong>Latência</strong>",
+        "latencyMeaning": "O atraso que o OnKey encontrou e compensou.",
+        "sangTitle": "Como a “parte cantada” afeta a pontuação",
+        "sangBody": "Pontuação = 100 × precisão de afinação × um fator por quanto você cantou. Cantar um décimo da parte de quem canta rende 30% desse fator, e o resto vai se acumulando até você ter cantado 40% dela (parte do vocal é backing vocal ou improviso que ninguém canta). Então uma linha boa sozinha não dá uma pontuação boa, e quem só escuta pontua quase nada. A pontuação ao vivo usa a mesma fórmula."
+      },
+      "checks": {
+        "title": "Como eu confiro se a pontuação está certa",
+        "intro": "Toda mudança no OnKey é medida antes de ser mantida. As barras de notas são conferidas contra notas marcadas à mão, a sincronia da letra contra letras cronometradas à mão, e a pontuação contra cantores simulados (perfeito, trêmulo, acima do tom e mudo com a música vazando no microfone) e contra os cantores originais pontuados como se fossem você.",
+        "check": "Verificação",
+        "result": "Resultado",
+        "covered": "Notas marcadas à mão que uma barra de nota cobre",
+        "rightNote": "…cuja barra está na nota certa",
+        "starts": "…cuja barra começa a menos de 0,1 s",
+        "noNote": "Barras sem nenhuma nota cantada embaixo",
+        "lyricLines": "Linhas da letra colocadas a menos de 0,3 s",
+        "expertsTitle": "A pontuação concorda com os especialistas?",
+        "expertsIntro": "Pontuei 20 gravações de pessoas cantando, de fracas a profissionais, que especialistas em música já tinham avaliado (o conjunto de pesquisa PESnQ), para ver se o OnKey as classifica na mesma ordem. Em uma escala em que 1 é concordância perfeita:",
+        "measure": "Medida",
+        "agreement": "Concordância com os especialistas",
+        "expertsEachOther": "Especialistas entre si (o teto realista)",
+        "notesHit": "Notas acertadas do OnKey",
+        "score": "Pontuação do OnKey",
+        "expertsOutro": "As notas acertadas já seguem bem os especialistas, e a pontuação poderia se apoiar mais nelas. São só 20 gravações, cantadas sem playback, então tome isso como um bom sinal, mais do que como prova."
+      },
+      "limits": {
+        "title": "Limites",
+        "rap": "<strong>Músicas de rap ou faladas:</strong> a pontuação de afinação quase não se aplica.",
+        "harmonies": "<strong>Harmonias e coros:</strong> nem sempre fica claro qual voz é a melodia, então algumas barras podem seguir uma harmonia.",
+        "speakers": "<strong>Cantar sem fones:</strong> o cancelamento de eco remove 20 dB ou mais da música nos alto-falantes de um MacBook, e de 8 a 14 dB em alto-falantes externos. O que sobra de uma música alta pode ser confundido com canto, então fones de ouvido são mais confiáveis.",
+        "firstPlay": "<strong>A primeira vez</strong> não tem notas. Elas aparecem a partir da segunda."
+      }
+    },
+    "privacy": {
+      "title": "Privacidade e termos",
+      "translationNote": "Esta é uma tradução. Se ela diferir da <link>versão em inglês</link>, vale a versão em inglês.",
+      "lede": "O OnKey roda no seu Mac e nunca salva a música que ouve. Suas gravações e as músicas aprendidas ficam no seu Mac. Esta página lista tudo o que ele guarda e tudo o que ele envia.",
+      "keeps": {
+        "title": "O que o OnKey guarda no seu Mac",
+        "intro": "Tudo fica em <code>{dataDir}</code>.",
+        "songs": "<strong>Músicas aprendidas</strong> (<code>songs/</code>): a linha de afinação e as barras de notas de quem canta, uma impressão digital rítmica e uma assinatura do Shazam da música (para reconhecer a música e encontrar onde você está), quando cada linha da letra começa, e quando cada palavra foi ouvida sendo cantada (só os tempos, não as palavras).",
+        "lyrics": "<strong>Letras</strong> (<code>lrclib/</code>): as respostas do LRCLIB, guardadas por até 30 dias (um dia se não houve nenhuma). Uma música aprendida guarda a letra para a qual a sincronia foi feita, para que as mesmas palavras apareçam toda vez. Letras nunca são enviadas. Com Ajustes → “Mostrar letra” desativado, as letras guardadas ficam ocultas (não apagadas) e nenhuma é buscada.",
+        "takes": "<strong>Takes</strong> (<code>takes/</code>): <strong>uma gravação do seu microfone</strong> (<code>mic.m4a</code>, cerca de 0,5 MB por minuto) para você ouvir depois, suas pontuações e o relatório, que inclui a letra e os tempos dela. Um take só é salvo se você cantou junto pelo menos 10% da parte de quem canta. Se a música estava nos alto-falantes, um pouco dela também está na gravação. As gravações são guardadas até 2 GB no total. Passando disso, as mais antigas vão primeiro, mas nunca as de uma música favorita nem o melhor take de uma música.",
+        "records": "<strong>Registros</strong> (<code>records/</code>), para diagnosticar problemas: um arquivo de log por dia e um resumo de cada reprodução (tempos, CPU, memória, a versão e o Mac). São números e ids, sem áudio nem letras, embora o log registre os nomes das músicas que você tocou. Guardados por 30 dias, no máximo 200 MB. Eles só saem do seu Mac se você mesmo anexar um relatório a uma issue.",
+        "settings": "Seus ajustes, qualquer artista e título que você digitou para um vídeo do YouTube, as capas das músicas iniciais e um cache dos modelos compilados.",
+        "remove": "Esqueça uma música na Biblioteca ou apague um take no Histórico e os arquivos vão para o Lixo. Para remover tudo, encerre o OnKey e apague a pasta acima."
+      },
+      "never": {
+        "title": "O que o OnKey nunca guarda",
+        "body": "O áudio da música, ou a voz de quem canta separada dele. Ele é analisado na memória enquanto toca e nunca é salvo, enviado, compartilhado ou exportado. (A gravação do seu microfone pode conter um pouco dele se você cantou com a música nos alto-falantes.)"
+      },
+      "leaves": {
+        "title": "O que sai do seu Mac",
+        "sentTo": "Enviado para",
+        "what": "O quê, e quando",
+        "shazam": "<strong>Shazam</strong> (Apple, via ShazamKit)",
+        "shazamWhat": "Uma assinatura de até 5 segundos do som do <strong>app de música</strong> (nunca do seu microfone), não o áudio em si. Ela só é enviada para identificar uma música que o OnKey não aprendeu quando nenhum app de música diz o que está tocando: YouTube, outros apps ou “Só ouvir”. O Spotify e o Apple Music identificam as próprias músicas, e músicas que você já cantou são reconhecidas no seu Mac sem enviar nada. Ajustes → “Usar o Shazam para identificar músicas novas” desativa isso, e então só as músicas já aprendidas são reconhecidas.",
+        "lrclibWhat": "Artista, título, álbum e duração da música quando ela começa, para buscar a letra sincronizada, e depois uma busca por nome se isso não encontrar nada. As respostas ficam guardadas no seu Mac por até 30 dias (um dia se não houve nenhuma), então uma música tocada de novo não é consultada de novo. O LRCLIB é um banco de dados de letras gratuito mantido pela comunidade. Nada é enviado com “Mostrar letra” desativado.",
+        "itunes": "<strong>Busca e Lookup do iTunes</strong> (Apple)",
+        "itunesWhat": "Artista e título, para encontrar a capa do álbum (que leva à página dela no Apple Music), também para músicas antigas aprendidas do Spotify. E o id do Apple Music que o Shazam devolveu, para a duração e o álbum da música. As capas das músicas iniciais de “Experimente estas” são buscadas uma vez cada, com intervalo, e guardadas, então as visitas seguintes não enviam nada.",
+        "covers": "<strong>Imagens de capa</strong>",
+        "coversWhat": "Pedidos de imagem comuns aos servidores de imagem do Spotify, da Apple ou do YouTube quando uma capa é mostrada.",
+        "githubWhat": "Uma verificação por uma versão mais nova do OnKey um minuto depois de abrir e depois uma vez por dia, e o download, se houver uma. Com <strong>Verificar atualizações automaticamente</strong> desativado em Ajustes, ele só verifica quando você clica em <strong>Verificar agora</strong>.",
+        "nothingElse": "Nada mais sai: não há conta, analytics, relatório de falhas nem servidor meu. Suas gravações nunca são enviadas. “Relatar um problema” mostra o que vai no zip de números e logs, salva no seu Mac e não envia nada. Você decide se anexa a uma issue no GitHub. Os modelos vêm dentro do app, então ele nunca os baixa.",
+        "website": "Este site (não o app) conta visitas com o Plausible. Ele não usa cookies nem nada que identifique você, e só guarda totais, como quantas pessoas visitaram, de onde vieram e quantas clicaram em Baixar.",
+        "flowMyna": "Caminhos anônimos de visita também vão para o Flow Myna, minha própria ferramenta de analytics: quais partes do site uma visita leu, em que ordem, e a localização aproximada de onde veio a conexão (como o país). Sem cookies, e o seu endereço IP não é guardado.",
+        "stars": "O número de estrelas nos botões do GitHub vem direto do GitHub, então o seu navegador pede isso ao GitHub."
+      },
+      "streaming": {
+        "title": "Serviços de streaming",
+        "noMusic": "O OnKey não fornece, transmite nem baixa música. O seu próprio app de música toca, e o OnKey ouve pela permissão de captura de áudio do macOS. Ele não usa o SDK nem a API para desenvolvedores de nenhum serviço de streaming, e não mexe nos arquivos, na memória nem na criptografia de nenhum app.",
+        "control": "Por padrão, ele acompanha o Spotify e o Apple Music pela permissão de Automação do macOS (pedida na configuração): lê o que está tocando e em que ponto, e toca, pausa, avança e inicia músicas. Se você ativar “YouTube no seu navegador” em Ajustes (vem desativado), o OnKey também lê e controla a aba do YouTube no Chrome, Brave, Edge ou Safari. Escolha “Só ouvir” na configuração, ou desative os apps em “Deixar o OnKey controlar” nos Ajustes, e o OnKey nunca envia nada a eles.",
+        "terms": "O OnKey nunca salva nem exporta a música que ouve. Os termos do seu serviço de música continuam valendo para o jeito como você o usa."
+      },
+      "rights": {
+        "title": "Detentores de direitos",
+        "body": "Se você representa um detentor de direitos ou um serviço e tem alguma preocupação com o OnKey, escreva para <email>{address}</email>. Leio todas as mensagens e respondo rápido. Quando uma preocupação for válida, vou mudar ou remover o recurso envolvido. Veja também <legal>LEGAL.md</legal>.",
+        "noAddress": "(endereço em breve)"
+      },
+      "trademarks": {
+        "title": "Marcas registradas",
+        "body": "O OnKey não tem vínculo com o Spotify, a Apple ou o Google nem é endossado por eles. Os nomes deles são marcas dos respectivos donos e são usados só para dizer com quais apps o OnKey funciona."
+      },
+      "licence": {
+        "title": "Licença",
+        "body": "O OnKey é gratuito e de código aberto sob a licença MIT."
+      }
+    },
+    "yourVoice": {
+      "title": "Cantar com conforto",
+      "lede": "Com o OnKey, é fácil cantar uma música atrás da outra, então a sua voz precisa de um pouco de cuidado.",
+      "volume": {
+        "title": "Cante em um volume confortável",
+        "body": "O OnKey só pontua a sua afinação, então não precisa cantar mais alto que a música. Cantar baixinho pontua igual. Fones ajudam, porque você não precisa competir com os alto-falantes para se ouvir."
+      },
+      "octave": {
+        "title": "Desça uma oitava quando uma nota estiver fora do alcance",
+        "body": "Se uma música fica alta ou baixa demais para você, cante uma oitava abaixo ou acima. O OnKey conta a nota certa em qualquer oitava, então você não perde nada. Forçar no limite da sua extensão é o jeito mais rápido de cansar a voz."
+      },
+      "warmUp": {
+        "title": "Aqueça e faça pausas",
+        "easy": "Comece com algumas músicas fáceis, ou cantarole de leve subindo e descendo pela sua extensão por um ou dois minutos.",
+        "water": "Deixe água por perto.",
+        "rest": "Depois de uns 35 minutos cantando, o OnKey lembra você de descansar (dá para desativar em <strong>Ajustes → Sua voz</strong>).",
+        "gradually": "Aumente aos poucos. Algumas horas no primeiro dia é muito mais do que a maioria das vozes está acostumada."
+      },
+      "pain": {
+        "title": "Pare se doer",
+        "body": "Dor, garganta arranhando ou uma voz que continua rouca no dia seguinte são sinal de que é hora de descansar. Se durar mais que algumas semanas, procure um médico ou um especialista em voz."
+      },
+      "technique": "Para técnica (respiração, registros, cantar sem forçar), veja <link>Além da afinação</link>.",
+      "disclaimer": "Esta página traz conselhos gerais sobre canto, não orientação médica."
+    },
+    "beyondPitch": {
+      "title": "Além da afinação",
+      "lede": "O OnKey mostra se você está na nota. Cantar bem exige mais do que isso, e o resto se aprende melhor com aulas.",
+      "hear": {
+        "title": "O que o OnKey consegue e não consegue ouvir",
+        "body": "O OnKey acompanha a sua afinação em relação à de quem canta, linha por linha. É um jeito rápido de ouvir, e ver, onde você desvia. Ele não sabe como você produziu o som: se está respirando bem, forçando ou cantando com sentimento. Uma pontuação alta quer dizer que você acertou as notas, não que cantou bem a música."
+      },
+      "learn": {
+        "title": "O que mais aprender",
+        "breath": "<strong>Apoio respiratório:</strong> ar constante por trás do som, para frases longas não acabarem no meio nem tremerem.",
+        "tension": "<strong>Menos tensão:</strong> garganta, mandíbula e língua soltas. Forçar para alcançar notas altas é o jeito mais comum de cansar ou machucar a voz.",
+        "registers": "<strong>Registros:</strong> voz de peito, voz de cabeça e a mistura entre elas, para percorrer a sua extensão sem quebras.",
+        "vowels": "<strong>Vogais:</strong> dar forma a elas para as notas soarem e as agudas ficarem mais fáceis.",
+        "phrasing": "<strong>Fraseado e ritmo:</strong> onde respirar, em quais palavras se apoiar e cair junto com a batida."
+      },
+      "teachers": {
+        "title": "Professores gratuitos para começar",
+        "callaway": "<link>Dan Callaway</link> ensina canto para teatro musical no Boston Conservatory at Berklee. Aulas claras de técnica, da respiração ao belting.",
+        "rolka": "<link>Jeff Rolka</link>: aquecimentos, cantar afinado, notas agudas, melismas e riffs.",
+        "suggested": "Os dois foram sugeridos por cantores na discussão de quando o OnKey foi lançado. Há outros bons professores por aí, e sugestões são bem-vindas no <link>GitHub</link>."
+      },
+      "lessons": {
+        "title": "Aulas com um professor",
+        "body": "Se puder, faça algumas aulas. Quem ensina ouve em segundos o que você levaria meses para notar sozinho, e passa exercícios para a sua voz. O OnKey pode então ser o seu jeito de praticar entre as aulas: cantando junto com as músicas que você gosta e vendo a sua afinação ficar mais firme."
+      },
+      "voice": "Para cuidar da voz enquanto pratica, veja <link>Cantar com conforto</link>."
+    },
+    "credits": {
+      "title": "Créditos",
+      "lede": "O OnKey é construído sobre estes projetos abertos e serviços.",
+      "component": "Componente",
+      "usedFor": "Usado para",
+      "licence": "Licença",
+      "uses": {
+        "crepe": "Afinação: modelo “full” ao aprender, modelo “tiny” ao vivo",
+        "game": "A nota de cada sílaba",
+        "wav2vec": "Quando cada palavra é cantada",
+        "uvr": "Separar o vocal principal",
+        "cmudict": "Contagem de sílabas",
+        "lrclib": "Letras sincronizadas, buscadas durante o uso",
+        "shazamkit": "Identificar músicas novas",
+        "itunes": "Capas de álbum e durações das músicas",
+        "hyphenation": "Dividir palavras em sílabas",
+        "onnx": "Rodar os modelos",
+        "tauri": "O app"
+      },
+      "licences": {
+        "service": "Serviço",
+        "macos": "Parte do macOS"
+      },
+      "notices": "O OnKey em si é gratuito e de código aberto sob a licença MIT. Os avisos completos estão em <link>THIRD_PARTY_NOTICES.md</link>."
+    }
+  }
+}

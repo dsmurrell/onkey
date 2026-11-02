@@ -2,25 +2,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export const DOCS = [
-  { href: "/docs/", title: "Getting started" },
-  { href: "/docs/how-it-works/", title: "How OnKey works" },
-  { href: "/docs/scoring/", title: "Scoring explained" },
-  { href: "/docs/privacy/", title: "Privacy & legal" },
-  { href: "/docs/faq/", title: "FAQ" },
-  { href: "/docs/your-voice/", title: "Singing comfortably" },
-  { href: "/docs/beyond-pitch/", title: "Beyond pitch" },
-  { href: "/docs/troubleshooting/", title: "Troubleshooting" },
-  { href: "/docs/credits/", title: "Credits" },
-];
-
-export function DocsNav() {
+/** `items`: the pages in the page's language (app/…/docs/layout: a translated page's link stays in it). */
+export function DocsNav({ items, label, heading }: { items: { href: string; title: string }[]; label: string; heading: string }) {
   const path = usePathname();
   const norm = (p: string) => (p.endsWith("/") ? p : p + "/");
   return (
-    <nav aria-label="Docs" className="flex flex-wrap gap-1 border-b border-line pb-4 text-sm md:grid md:gap-0.5 md:border-0 md:pb-0">
-      <p className="mb-2 hidden px-3 text-xs font-medium uppercase tracking-wider text-faint md:block">Docs</p>
-      {DOCS.map((d) => {
+    <nav aria-label={label} className="flex flex-wrap gap-1 border-b border-line pb-4 text-sm md:grid md:gap-0.5 md:border-0 md:pb-0">
+      <p className="mb-2 hidden px-3 text-xs font-medium uppercase tracking-wider text-faint md:block">{heading}</p>
+      {items.map((d) => {
         const on = norm(path) === d.href;
         return (
           <Link

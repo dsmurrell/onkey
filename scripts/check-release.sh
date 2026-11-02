@@ -32,10 +32,14 @@ for s in "${FORBIDDEN[@]}"; do
   if grep -qF -- "$s" "$STR"; then bad "development-only string in the release binary: \"$s\""; fi
 done
 # experiment knobs: environment variables the code reads only in development builds (crate::devtest::knob!), and any
-# new one that skipped it. Only these may be in a release: ONKEY_NO_SHAZAM turns sound recognition's network use off
-# (the lab's benchmarks run the app without reaching Shazam), which is safe for anyone to set.
+# new one that skipped it. Only these may be in a release, each safe for anyone to set:
+#   ONKEY_NO_SHAZAM           sound recognition's network use off (the lab's benchmarks run the app without Shazam)
+#   ONKEY_UPDATE_REHEARSAL    the release's update rehearsal (updater.rs): the app updates from http://127.0.0.1 only,
+#                             the signature still checked, then exits; whoever sets it controls the machine anyway
+#   ONKEY_REPORT_TO           CI's launch checks: a problem report (logs and numbers, no lyrics or audio) saved to
+#                             that path 30 s after launch, as "Report a problem" would
 # (A name can run on into the next string in the binary, "ONKEY_NO_SHAZAMS...": allowed names match as prefixes.)
-ALLOWED_VARS=(ONKEY_NO_SHAZAM)
+ALLOWED_VARS=(ONKEY_NO_SHAZAM ONKEY_UPDATE_REHEARSAL ONKEY_REPORT_TO)
 while read -r v; do
   [ -n "$v" ] || continue
   ok=0; for a in "${ALLOWED_VARS[@]}"; do [[ "$v" == "$a"* ]] && ok=1; done

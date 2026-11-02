@@ -21,22 +21,37 @@ const COMPENSATE: f32 = 1.065;
 pub struct Mdx {
     session: Session,
     window: Vec<f32>,
+    /// on DirectML (Windows): how to go to the CPU should a run fail there
+    gpu: Option<crate::gpu::Fallback>,
 }
 
 impl Mdx {
-    /// `coreml`: run on Apple's Core ML (GPU / Neural Engine) instead of the CPU.
+    /// `coreml`: run on Apple's Core ML (GPU / Neural Engine), or on Windows DirectML (gpu.rs), instead of the CPU.
     pub fn load(path: &std::path::Path, threads: usize, coreml: bool) -> Result<Mdx, String> {
         // one chunk a run: the model's free batch dimension is fixed at 1, so Core ML sees static shapes (with an
         // unbounded one the Neural Engine refuses the model, "E5RT ... unbounded dimension", and the GPU runs it)
-        let configure = |b: SessionBuilder| b.with_optimization_level(GraphOptimizationLevel::Level3)?.with_intra_threads(threads)?
+        let configure = move |b: SessionBuilder| b.with_optimization_level(GraphOptimizationLevel::Level3)?.with_intra_threads(threads)?
             .with_dimension_override("batch_size", 1);
-        let session = if coreml {
-            crate::pitch::load_coreml(path, configure)
+        let loading = |e: ort::Error| format!("loading {}: {e}", path.display());
+        let (session, gpu) = if coreml {
+            crate::gpu::load("separation", path, configure).map_err(loading)?
         } else {
-            Session::builder().and_then(configure).and_then(|b| b.commit_from_file(path))
-        }.map_err(|e| format!("loading {}: {e}", path.display()))?;
+            (Session::builder().and_then(configure).and_then(|b| b.commit_from_file(path)).map_err(loading)?, None)
+        };
         let window = (0..N_FFT).map(|n| 0.5 - 0.5 * (2.0 * std::f32::consts::PI * n as f32 / N_FFT as f32).cos()).collect();
-        Ok(Mdx { session, window })
+        Ok(Mdx { session, window, gpu })
+    }
+
+    /// `run_chunk`, on the CPU from now on if it failed on DirectML.
+    fn run_chunk_or_cpu(&mut self, ch: [&[f32]; 2], planner: &mut RealFftPlanner<f32>) -> Result<[Vec<f32>; 2], String> {
+        let r = self.run_chunk(ch, planner);
+        if let Err(e) = &r {
+            if let Some(f) = self.gpu.take() {
+                self.session = f.to_cpu(e).map_err(|e| e.to_string())?;
+                return self.run_chunk(ch, planner);
+            }
+        }
+        r
     }
 
     /// The model's music estimate for one chunk (2 channels × CHUNK samples).
@@ -154,7 +169,7 @@ impl Separator for Mdx {
                 p.resize(CHUNK, 0.0);
                 p
             });
-            let music = self.run_chunk([&parts[0], &parts[1]], &mut planner)?;
+            let music = self.run_chunk_or_cpu([&parts[0], &parts[1]], &mut planner)?;
             crate::progress::advance((i + step).min(total), total);     // (the window's progress bar)
             for n in 0..actual {
                 acc[0][i + n] += music[0][n] * w[n];

@@ -31,29 +31,19 @@ import {
   type CSSProperties,
   type PointerEvent as ReactPointerEvent,
 } from "react";
+import { useT, type Translator } from "@/lib/i18n";
 
 /* ------------------------------------------------------------------ tokens */
 
-const C = {
-  bg: "#0b0d13",
-  panel: "#151924",
-  line: "#2a3142",
-  muted: "#8b94ab",
-  text: "#e6e9f0",
-  accent: "#7c6cf6",
-  accentLight: "#b5a8ff",
-  accentDark: "#6252e0",
-  green: "#34d27b",
-  amber: "#f5b942",
-  red: "#f06a6a",
-} as const;
+import { GUIDE as C } from "@/lib/colors";
 
 const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
 
 /* ------------------------------------------------------------------ timing */
 
 type Step = {
-  caption: string;
+  /** caption: guides.speakers.steps.<id> */
+  id: "s0" | "s1";
   /** scene length, ms */
   dur: number;
   /** when the recording starts and stops filling, ms into the scene */
@@ -63,13 +53,13 @@ type Step = {
 
 const STEPS: readonly [Step, Step] = [
   {
-    caption: "On speakers, the song gets into your recording",
+    id: "s0",
     dur: 3800,
     fillStart: 300,
     fillEnd: 3300,
   },
   {
-    caption: "With headphones, it's just your voice",
+    id: "s1",
     dur: 4400,
     fillStart: 450,
     fillEnd: 3350,
@@ -80,10 +70,7 @@ const STEP_START = [0, STEPS[0].dur] as const;
 const TOTAL = STEPS[0].dur + STEPS[1].dur; // 8.2 s loop
 const TAKE_SECONDS = 3; // what the REC timer counts up to
 
-const LABEL =
-  "Two short scenes. On laptop speakers, the backing song spills out and curls into the microphone, " +
-  "so the recording mixes your voice with the music. With headphones, the music stays in your ears " +
-  "and the recording is just your voice.";
+const caption = (t: Translator, s: Step) => t(`guides.speakers.steps.${s.id}`);
 
 /* ------------------------------------------------------------------ maths */
 
@@ -269,6 +256,7 @@ const GRILLE: ReadonlyArray<Pt> = [
 type StageProps = { f: Frame; uid: string; compact?: boolean; paused?: boolean };
 
 function Stage({ f, uid, compact = false, paused = false }: StageProps) {
+  const t = useT();
   const sp = 220 + 72 * f.songProgress;
   const px = WX + f.fill * WW;
   const recDot = 0.35 + 0.65 * f.singing * (0.7 + 0.3 * Math.cos((2 * Math.PI * f.t) / 1100));
@@ -277,7 +265,7 @@ function Stage({ f, uid, compact = false, paused = false }: StageProps) {
   const take = (which: 0 | 1, p: number, alpha: number) =>
     alpha > 0.001 && p > 0 ? (
       <g key={`take-${which}-${alpha === 1 ? "now" : "prev"}`} opacity={alpha}>
-        <path d={wavePath(voice, p)} stroke={C.green} />
+        <path d={wavePath(voice, p)} stroke={C.good} />
         {which === 0 && <path d={wavePath(song, p)} stroke={C.muted} />}
       </g>
     ) : null;
@@ -419,7 +407,7 @@ function Stage({ f, uid, compact = false, paused = false }: StageProps) {
               <path
                 key={`v${i}`}
                 d="M-1.2-4Q2 0-1.2 4"
-                stroke={C.green}
+                stroke={C.good}
                 opacity={f.voice * Math.sin(Math.PI * u)}
                 transform={`translate(${(105 + 27 * u).toFixed(2)} 82) scale(${(0.8 + 0.45 * u).toFixed(3)})`}
               />
@@ -438,7 +426,7 @@ function Stage({ f, uid, compact = false, paused = false }: StageProps) {
         {/* green check by the headphones */}
         {f.check > 0.001 && (
           <g opacity={f.check} transform={`translate(123 57) scale(${(0.85 + 0.15 * f.check).toFixed(3)})`}>
-            <circle r={7} fill={C.green} stroke="none" />
+            <circle r={7} fill={C.good} stroke="none" />
             <path d="M-3 0.2L-0.9 2.3L3.1-2" stroke={C.bg} />
           </g>
         )}
@@ -449,16 +437,16 @@ function Stage({ f, uid, compact = false, paused = false }: StageProps) {
         {!compact && (
           <>
             <text x={39} y={178.5} fontSize={10} fontWeight={600} letterSpacing={0.8} fill={C.muted} stroke="none">
-              REC
+              {t("guides.speakers.rec")}
             </text>
-            <path d="M188 175h10" stroke={C.green} />
+            <path d="M188 175h10" stroke={C.good} />
             <text x={202} y={178.5} fontSize={10} fill={C.muted} stroke="none">
-              Voice
+              {t("guides.speakers.voice")}
             </text>
             <g opacity={f.songLegend}>
               <path d="M238 175h10" stroke={C.muted} />
               <text x={252} y={178.5} fontSize={10} fill={C.muted} stroke="none">
-                Song
+                {t("guides.speakers.song")}
               </text>
             </g>
             <text
@@ -544,6 +532,7 @@ export type SpeakersVsHeadphonesProps = {
 };
 
 export default function SpeakersGuide({ reducedMotion, className, style }: SpeakersVsHeadphonesProps) {
+  const t = useT();
   const uid = "hpx" + useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const prefersReduced = usePrefersReducedMotion();
   const isStatic = reducedMotion ?? prefersReduced;
@@ -595,15 +584,15 @@ export default function SpeakersGuide({ reducedMotion, className, style }: Speak
         <style>{CSS}</style>
         <div
           role="img"
-          aria-label={LABEL}
+          aria-label={t("guides.speakers.label")}
           style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: 8 }}
         >
           {STEPS.map((s, i) => (
-            <div key={s.caption} style={{ display: "grid", gap: 8, alignContent: "start" }}>
+            <div key={s.id} style={{ display: "grid", gap: 8, alignContent: "start" }}>
               <Stage f={staticFrame(i as 0 | 1)} uid={`${uid}-s${i}`} compact />
               <p style={{ margin: 0, fontSize: 12, lineHeight: 1.4, textWrap: "balance" }}>
                 <span style={{ color: C.muted, fontVariantNumeric: "tabular-nums" }}>{i + 1} </span>
-                {s.caption}
+                {caption(t, s)}
               </p>
             </div>
           ))}
@@ -617,27 +606,27 @@ export default function SpeakersGuide({ reducedMotion, className, style }: Speak
   return (
     <div className={className} style={{ ...wrapStyle, ...style }}>
       <style>{CSS}</style>
-      <div role="img" aria-label={LABEL}>
+      <div role="img" aria-label={t("guides.speakers.label")}>
         <div onPointerEnter={onEnter} onPointerLeave={onLeave}>
           <Stage f={f} uid={uid} paused={paused} />
         </div>
         <div aria-hidden="true" style={{ display: "grid", marginTop: 10, padding: "0 6px" }}>
           {STEPS.map((s, i) => (
-            <p key={s.caption} style={{ ...captionStyle, opacity: f.captions[i] }}>
-              {s.caption}
+            <p key={s.id} style={{ ...captionStyle, opacity: f.captions[i] }}>
+              {caption(t, s)}
             </p>
           ))}
         </div>
       </div>
-      <div role="group" aria-label="Steps" style={{ display: "flex", justifyContent: "center", gap: 2, marginTop: 4 }}>
+      <div role="group" aria-label={t("guides.speakers.stepsGroup")} style={{ display: "flex", justifyContent: "center", gap: 2, marginTop: 4 }}>
         {STEPS.map((s, i) => {
           const active = f.step === i;
           return (
             <button
-              key={s.caption}
+              key={s.id}
               type="button"
               className="hpx-dot"
-              aria-label={`Step ${i + 1} of ${STEPS.length}: ${s.caption}`}
+              aria-label={t("guides.speakers.stepLabel", { n: i + 1, count: STEPS.length, caption: caption(t, s) })}
               aria-current={active ? "step" : undefined}
               onClick={() => jump(i as 0 | 1)}
             >

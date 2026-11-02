@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "关于 OnKey",
+      "services": "服务",
+      "pauseListening": "暂停聆听",
+      "resumeListening": "继续聆听",
+      "hide": "隐藏 OnKey",
+      "hideOthers": "隐藏其他",
+      "quit": "退出 OnKey"
+    },
+    "file": {
+      "title": "文件",
+      "closeWindow": "关闭窗口"
+    },
+    "edit": {
+      "title": "编辑",
+      "undo": "撤销",
+      "redo": "重做",
+      "cut": "剪切",
+      "copy": "拷贝",
+      "paste": "粘贴",
+      "selectAll": "全选"
+    },
+    "view": {
+      "title": "显示",
+      "fullScreen": "切换全屏幕"
+    },
+    "window": {
+      "title": "窗口",
+      "minimize": "最小化",
+      "zoom": "缩放",
+      "closeWindow": "关闭窗口"
+    },
+    "help": {
+      "title": "帮助",
+      "reportProblem": "报告问题…"
+    }
+  },
+  "report": {
+    "savePanelMessage": "OnKey 用于问题报告的记录：日志和数据，没有歌词或音频。"
+  },
+  "share": {
+    "endCard": {
+      "tagline": "唱准每个音",
+      "free": "Mac 版免费"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey 聆听你的歌声，显示你唱得有多准。录音只留在你的 Mac 上。",
+    "NSAudioCaptureUsageDescription": "OnKey 聆听 Mac 上播放的音乐，学习原唱的旋律。它绝不保存或发送音乐。在聆听模式下，音乐的一小段指纹（不是音频）会发给 Apple 的 Shazam 来识别歌名。",
+    "NSAppleEventsUsageDescription": "OnKey 向 Spotify、音乐或浏览器（用于 YouTube）询问正在播放什么，并在你按播放、跳过或从头开始时控制播放。"
+  }
+}

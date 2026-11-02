@@ -129,6 +129,12 @@ with their licences in its ThirdPartyNotices:
 <https://github.com/microsoft/onnxruntime/blob/v1.22.0/ThirdPartyNotices.txt>.
 Prebuilt binaries provided by pyke.io (`ort`, MIT OR Apache-2.0, Copyright (c) 2023-2025 pyke.io).
 
+### DirectML 1.15.4 (Windows only: `DirectML.dll`, beside `onkey.exe`)
+
+Microsoft's DirectML, from its NuGet package `Microsoft.AI.DirectML` 1.15.4, unmodified: runs the learning models
+on the GPU. Copyright (c) Microsoft Corporation, distributed under the Microsoft Software License Terms for
+DirectML, which are installed beside it as `DirectML-LICENSE.txt` (<https://www.nuget.org/packages/Microsoft.AI.DirectML/1.15.4/License>).
+
 ### JavaScript in the app's interface (`ui/`, static export)
 
 | Package | Licence | Copyright |

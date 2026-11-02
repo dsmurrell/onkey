@@ -1,0 +1,13 @@
+{
+  "name": "onkey-i18n",
+  "private": true,
+  "type": "module",
+  "description": "Translates OnKey's message catalogs (ui, site, native). See README.md.",
+  "scripts": {
+    "test": "node --test 'test/*.test.mjs'",
+    "translate": "node translate.mjs"
+  },
+  "dependencies": {
+    "@formatjs/icu-messageformat-parser": "3.5.21"
+  }
+}

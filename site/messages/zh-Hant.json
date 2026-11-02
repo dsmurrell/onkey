@@ -1,0 +1,831 @@
+{
+  "meta": {
+    "title": "OnKey：學會唱你喜歡的歌",
+    "description": "OnKey 是一款免費、開放原始碼的 Mac 歌唱練習工具。它聆聽 Mac 上播放的音樂，學習原唱的旋律，並在你唱的時候顯示音高提示，讓你看到自己哪裡偏高、哪裡偏低。它絕不儲存音樂。"
+  },
+  "common": {
+    "skip": "跳到內容",
+    "joke": "自 2026 年起，讓浴室歌手不再走音",
+    "sourceOnGitHub": "原始碼在 GitHub",
+    "stars": "{n, plural, other {GitHub 上 # 顆星}}",
+    "requirements": {
+      "silicon": "搭載 Apple 晶片的 Mac（M1 或更新）",
+      "macos": "macOS 14.2 或以上版本"
+    },
+    "early": "OnKey 的{language}版本才剛推出：用{language}演唱的歌曲目前整行顯示歌詞，還沒有逐字對齊。"
+  },
+  "header": {
+    "home": "OnKey 首頁",
+    "label": "主選單",
+    "docs": "文件",
+    "faq": "常見問題",
+    "whatsNew": "新功能",
+    "github": "GitHub",
+    "discord": "Discord"
+  },
+  "footer": {
+    "license": "· 免費且開放原始碼（MIT）",
+    "madeBy": "作者：<link>Daniel Murrell</link>",
+    "notAffiliated": "與 Spotify、Apple 或 Google 沒有關聯。",
+    "label": "頁尾",
+    "gettingStarted": "開始使用",
+    "howItWorks": "運作方式",
+    "privacy": "隱私權與法律",
+    "faq": "常見問題",
+    "whatsNew": "新功能",
+    "github": "GitHub",
+    "discord": "Discord",
+    "language": "語言",
+    "improve": "改進這份翻譯"
+  },
+  "download": {
+    "mac": "下載 Mac 版",
+    "macsOnly": "OnKey 目前只能在 Mac 上執行。<link>想要 Windows 版？來投票</link>。",
+    "send": "傳到你的 Mac",
+    "sent": "已傳送",
+    "phones": "OnKey 在 Mac 上執行，不支援手機。把連結傳給自己，稍後再看。",
+    "shareText": "OnKey，一款 Mac 歌唱練習工具：在 Mac 上從這裡下載",
+    "mailSubject": "給我 Mac 的 OnKey"
+  },
+  "docsNav": {
+    "label": "文件",
+    "heading": "文件",
+    "inEnglish": "{title}（英文）",
+    "pages": {
+      "start": "開始使用",
+      "howItWorks": "OnKey 的運作方式",
+      "scoring": "評分說明",
+      "privacy": "隱私權與法律",
+      "faq": "常見問題",
+      "yourVoice": "舒服地唱歌",
+      "beyondPitch": "音準之外",
+      "troubleshooting": "疑難排解",
+      "credits": "鳴謝"
+    }
+  },
+  "home": {
+    "kicker": "一款免費、開放原始碼的 Mac 歌唱練習工具",
+    "title": "學會唱你喜歡的歌。",
+    "intro": "OnKey 聆聽 Mac 上播放的音樂，學習原唱的旋律。然後在你唱的時候顯示音高提示，讓你看到自己哪裡偏高、哪裡偏低。",
+    "howLink": "運作方式 →",
+    "languages": "支援 {names} 和<more>{n, plural, other {另外 # 種語言}}</more>",
+    "factsLabel": "一覽",
+    "facts": {
+      "free": "免費且開放原始碼（MIT）",
+      "macs": "Apple 晶片，macOS 14.2+",
+      "local": "在你的 Mac 上執行，不需帳號",
+      "music": "絕不儲存它聽到的音樂"
+    },
+    "laneTitle": "已學會的歌 · 分數 82",
+    "videoCaption": "我跟著唱，邊唱邊評分。",
+    "video": {
+      "label": "1:35 · 有聲音",
+      "video": "OnKey 使用中：Daniel 跟著唱，音符朝他捲來，他的音高畫在音符上",
+      "play": "播放示範影片（有聲）",
+      "dialog": "示範影片",
+      "close": "關閉影片"
+    },
+    "artCaption": "音符軌道示意圖。示範影片即將推出。",
+    "how": {
+      "title": "運作方式",
+      "step": "第 {n} 步",
+      "steps": {
+        "play": {
+          "title": "播放一首歌",
+          "body": "在 Spotify、Apple Music 或 YouTube，跟平常一樣。OnKey 在旁邊聽。它自己不播放也不下載音樂。"
+        },
+        "learn": {
+          "title": "第一次播放教會它",
+          "body": "歌曲結束後，OnKey 花一兩分鐘學習原唱的音符，並把歌詞對齊。"
+        },
+        "sing": {
+          "title": "看著音高提示唱",
+          "body": "下次，音符朝你捲來，你的聲音畫在上面。綠色是在音上，紅色是走音了。"
+        },
+        "review": {
+          "title": "看看你唱得怎麼樣",
+          "body": "你會得到一個分數、唱準和沒唱準的音，以及可以和歌曲一起回放的錄音。"
+        }
+      },
+      "more": "想知道細節？<link>讀一讀 OnKey 到底是怎麼運作的</link>，有圖解。"
+    },
+    "privacy": {
+      "title": "它在聽，但絕不儲存音樂",
+      "body": "OnKey 聆聽音樂只是為了學習旋律、讓音符保持同步。它絕不儲存或上傳音樂。留在你 Mac 上的，是它學到的音符和每次演唱的麥克風錄音，供你回聽自己。",
+      "link": "隱私權與法律",
+      "cards": {
+        "network": {
+          "title": "沒有帳號、沒有伺服器、沒有分析追蹤",
+          "body": "離開你 Mac 的只有：用來辨識新歌的 Shazam 簽章（不是音訊）、傳給 LRCLIB 取歌詞和傳給 Apple 取封面的歌名，以及每天一次到 GitHub 的更新檢查。"
+        },
+        "fair": {
+          "title": "公平的評分",
+          "body": "低一個八度唱也算，節奏有 80 毫秒的寬容。扣分的只有偏高或偏低。"
+        },
+        "headphones": {
+          "title": "耳機或揚聲器",
+          "body": "耳機的評分最可靠。用揚聲器時，麥克風既聽到歌也聽到你，所以 OnKey 會把歌濾掉。"
+        }
+      }
+    },
+    "questions": {
+      "title": "常見問題",
+      "body": "大家最先問的幾個。<link>全部問題</link>。"
+    },
+    "get": {
+      "title": "取得 OnKey",
+      "body": "免費且開放原始碼，MIT 授權。{requirements}。",
+      "discord": "加入 Discord"
+    }
+  },
+  "start": {
+    "title": "開始使用",
+    "lede": "安裝 OnKey，給它兩項權限，播放一首歌。",
+    "need": {
+      "title": "你需要",
+      "music": "在 Spotify 或 Apple Music 播放的音樂，或者 Chrome、Brave、Edge、Safari 裡的 YouTube。",
+      "mic": "一支麥克風（內建的就可以）。耳機的評分最可靠。",
+      "why": "macOS 14.2 是第一個讓一個 App 不需額外驅動程式就能聽到另一個 App 聲音的版本，而模型需要 Apple 晶片才能跑得夠快。"
+    },
+    "install": {
+      "title": "安裝",
+      "download": "從<link>發行頁面</link>下載 <code>OnKey.dmg</code>。它大約 350 MB（安裝後約 420 MB），因為模型內建在 App 裡，所以之後不會再下載任何東西。",
+      "drag": "打開它，把 OnKey 拖到「應用程式」。",
+      "open": "打開 OnKey。它已經過 Apple 簽署和公證，所以和其他 App 一樣正常打開。",
+      "openAnyway": "打開 OnKey。這個版本還沒有公證，所以第一次 macOS 會說無法檢查這個 App。前往<strong>系統設定 → 隱私權與安全性</strong>，往下捲動，按<strong>強制打開</strong>。只需要做一次。",
+      "updates": "之後，OnKey 每天到 GitHub 檢查一次新版本，在背景下載（約 350 MB），並在你重新啟動或結束 OnKey 時安裝，絕不會在歌曲中途。可以在<strong>設定</strong>裡關閉。"
+    },
+    "permissions": {
+      "title": "權限",
+      "permission": "權限",
+      "why": "OnKey 為什麼需要它",
+      "mic": "<strong>麥克風</strong>",
+      "micWhy": "用來聽你唱。",
+      "audio": "<strong>系統錄音</strong>",
+      "audioWhy": "用來聽音樂 App，讓 OnKey 學習旋律並讓音符保持同步。macOS 叫它「錄音」，但 OnKey 只在播放時分析聲音，絕不儲存。",
+      "control": "<strong>控制 Spotify 和音樂</strong>（在設定流程中詢問）",
+      "controlWhy": "用來讀取正在播放什麼、播到哪裡，並為「再唱一次」和跳轉提供播放、暫停和定位。設定流程會為每個開著的 App 向 macOS 申請。沒開的 App，會在你第一次在裡面播放歌曲時詢問。選擇「只聆聽」，OnKey 就絕不會傳任何東西給 Spotify 或音樂，只靠聲音跟隨歌曲。",
+      "browser": "<strong>控制瀏覽器</strong>（選用，用於 YouTube）",
+      "browserWhy": "只在你開啟 YouTube 時（在設定或唱歌頁面）：用來讀取 YouTube 分頁的時間和標題，並播放、暫停和定位。",
+      "after": "你唱過的歌會在 Mac 上直接辨識，新歌由 Shazam 辨識。如果你不小心拒絕了某項權限，前往<strong>系統設定 → 隱私權與安全性</strong>，找到相應的區段，開啟 OnKey。"
+    },
+    "first": {
+      "title": "你的第一首歌",
+      "play": "打開 OnKey，在 Spotify、Apple Music 或 YouTube 播放一首歌。不知道唱什麼？按唱歌頁面上的 OnKey 標誌，看看推薦。",
+      "lyrics": "第一次還沒有音符。你會看到歌詞一行一行地顯示，前一分半左右與原唱同步（8 GB 的 Mac 除外）。想唱就跟著唱，這次演唱同樣會評分。",
+      "learns": "歌曲結束後，OnKey <strong>學習它</strong>。在我的 Mac 上要兩到三分鐘，完成前「唱」按鈕會顯示「正在學習…」。一次只學一首歌，所以連著播放的歌會顯示「等待學習」，直到輪到它們。",
+      "again": "再播放一次。音符會先暗著（「正在和歌曲對齊…」）幾秒鐘，直到 OnKey 確定你的位置。然後它們帶著歌詞朝你捲來，你的音高即時畫出。",
+      "score": "結束時，你會得到一個分數、每個音和每一句的報告，以及可以和歌曲一起回放的錄音。",
+      "learned": "OnKey 聽到一首歌大約 70% 後就算學會。如果你跳來跳去，剩下的部分會在你下次播放時學完。",
+      "rest": "唱得多？讀一讀<link>舒服地唱歌</link>。大約 35 分鐘後，OnKey 會提醒你讓喉嚨休息。",
+      "next": "接下來：<how>OnKey 的運作方式</how>、<scoring>分數是怎麼算的</scoring>，或者<troubleshooting>疑難排解</troubleshooting>。"
+    }
+  },
+  "faqPage": {
+    "title": "常見問題",
+    "before": "下載之前",
+    "using": "使用 OnKey"
+  },
+  "faq": {
+    "network": {
+      "q": "有什麼東西會離開我的 Mac 嗎？",
+      "intro": "OnKey 絕不儲存或上傳它聽到的音樂。你的錄音和學會的歌都留在你的 Mac 上。會傳出去的是：",
+      "shazam": "<strong>Shazam</strong>（Apple）：音樂 App 聲音最多 5 秒的簽章（不是音訊，也絕不是你的麥克風），在沒有別的方法知道在播什麼時用來辨識新歌。也就是 YouTube、其他 App，或「只聆聽」模式。Spotify 和 Apple Music 自己回報歌名，你唱過的歌在 Mac 上直接辨識。可以在設定裡關閉 Shazam。",
+      "lrclib": "<strong>LRCLIB</strong>：歌曲的演出者、歌名、專輯和長度，用來取得同步歌詞（除非關閉了「顯示歌詞」）。",
+      "apple": "<strong>Apple</strong>：演出者和歌名，用來尋找專輯封面；以及已辨識歌曲的 Apple Music id，用來取得長度。封面本身從 Spotify、Apple 或 YouTube 的圖片伺服器載入。",
+      "github": "<strong>GitHub</strong>：每天一次檢查新版本，以及下載它。可以在設定裡關閉。",
+      "outro": "沒有帳號、沒有分析追蹤，也沒有我的伺服器。「回報問題」只在你的 Mac 上儲存一個檔案，由你決定要不要附到 GitHub issue 裡。<link>完整的隱私權說明</link>。"
+    },
+    "music": {
+      "q": "OnKey 提供或下載音樂嗎？",
+      "a": "不。歌由你自己的音樂 App 播放（Spotify、Apple Music，或瀏覽器裡的 YouTube）。OnKey 只是聽，用來學習原唱的音符，絕不儲存音樂。"
+    },
+    "kept": {
+      "q": "它在我的 Mac 上保存什麼？",
+      "a": "每首歌：音符、一個指紋和 Shazam 簽章，以及帶時間的歌詞。每次演唱：一份<strong>麥克風錄音</strong>（每分鐘約 0.5 MB）、你的分數，以及你唱的歌詞，供你回放。全部在 <code>{dataDir}</code> 裡（分享的演唱除外，它會以影片儲存到「下載項目」），刪除演唱或歌曲會把它移到垃圾桶。它絕不儲存音樂，不過用揚聲器唱的演唱會錄進一些。"
+    },
+    "permissions": {
+      "q": "它會要求哪些權限？",
+      "mic": "<strong>麥克風</strong>：用來聽你唱。",
+      "audio": "<strong>系統錄音</strong>：用來聽正在播放的音樂 App 或瀏覽器。macOS 叫它「錄音」，但 OnKey 只在播放時分析聲音，不儲存。",
+      "control": "<strong>控制 Spotify 和音樂</strong>（在設定流程中詢問）：用來讀取正在播放什麼、播到哪裡，並為「再唱一次」提供播放、暫停和定位。在設定流程中選「只聆聽」，或在設定的「允許 OnKey 控制」下關掉它們，OnKey 就絕不會傳任何東西給它們。",
+      "browser": "<strong>控制瀏覽器</strong>（只在你開啟 YouTube 時）：對 YouTube 分頁做同樣的事。"
+    },
+    "macs": {
+      "q": "它能在哪些 Mac 上執行？",
+      "a": "macOS 14.2 或以上版本的 Apple 晶片（M1 或更新）。14.2 是第一個讓一個 App 不需額外驅動程式就能聽到另一個 App 聲音的版本，而模型需要 Apple 晶片才跟得上。8 GB 記憶體夠用。不支援 Intel Mac。"
+    },
+    "windows": {
+      "q": "為什麼沒有 Windows、Linux 或手機版？",
+      "a": "OnKey 建立在 macOS 的逐 App 音訊擷取和 Core ML 之上。Windows 也能聽到單一 App 的聲音，所以移植是可能的，但我還沒開始。如果你會用，請到 <link>Windows issue</link> 說一聲。手機不允許一個 App 聽另一個 App，所以手機版需要另一種做法。"
+    },
+    "browser": {
+      "q": "和其他 App 比起來呢？為什麼不做成網頁？",
+      "compare": "大多數歌唱 App 需要自己的曲庫、伴奏或手工製作的音符譜。OnKey 從你平常播放的音樂學習，所以你練的是原唱。主唱清晰的歌效果最好。",
+      "web": "網頁聽不到 Spotify 或 Apple Music App，不能問它們在播什麼，也不能用 ShazamKit 或 Core ML。所以它是一個 Mac App。"
+    },
+    "scoring": {
+      "q": "分數是怎麼算的？",
+      "a": "你和原唱都在唱的每 10 毫秒，你的音高都會和對方比較。半音以內滿分，到一個半半音時降為零。八度不扣分，節奏有 80 毫秒的寬容。分數是你的準確度，依你唱了主唱部分的多少折算。詳見<link>評分說明</link>。"
+    },
+    "licence": {
+      "q": "授權條款是什麼？",
+      "a": "MIT。它免費，原始碼在 GitHub 上。模型有各自的授權條款，列在<link>鳴謝</link>中。"
+    },
+    "firstPlay": {
+      "q": "為什麼第一次播放不顯示音符？",
+      "a": "OnKey 在一首歌第一次播放結束後才學習它，所以還沒有音符。你會看到歌詞一行一行地顯示（前一分半左右與原唱同步，8 GB 的 Mac 除外）。照樣跟著唱，這次演唱同樣會評分。從第二次播放起，音符帶著歌詞朝你捲來。"
+    },
+    "learning": {
+      "q": "為什麼我還不能唱這首歌？它顯示「正在學習…」",
+      "a": "學習在歌曲結束後進行，在我的 Mac 上要兩到三分鐘。「再唱一次」按鈕會顯示進度，完成後恢復。期間其他歌照樣可以唱。一次只學一首歌，所以連著播放的歌會顯示「等待學習」，直到輪到它們。你唱 OnKey 已經會的歌時，學習也會暫停。"
+    },
+    "starters": {
+      "q": "我應該先唱什麼？",
+      "a": "OnKey 會推薦它跟得好的歌。它們顯示在沒有播放時的唱歌頁面、資料庫底部，以及你按唱歌頁面上的 OnKey 標誌時。每首都有 Spotify 和 Apple Music 的連結。"
+    },
+    "busy": {
+      "q": "它會讓我的 Mac 變慢嗎？",
+      "a": "唱一首已學會的歌很輕：在我的 Mac 上占一個 CPU 核心的 15% 到 19%。學習才是重活，所以 OnKey 在歌曲結束後做，一次一首，低優先權。學習時它用了大約 1.7 GB 記憶體（最多 2.4 GB）。在記憶體不到 32 GB 的 Mac 上，每首歌學完後模型會被釋放。"
+    },
+    "headphones": {
+      "q": "我需要耳機嗎？",
+      "a": "不需要，但耳機的評分最可靠。用揚聲器時，回音消除會把歌從麥克風裡去掉：MacBook 的揚聲器能去掉 20 dB 以上，外接揚聲器 8 到 14 dB。音樂太大聲的話還是會漏進來。"
+    },
+    "octave": {
+      "q": "我可以低一個或高一個八度唱嗎？",
+      "a": "可以。和原唱差一個八度也算在音上。"
+    },
+    "apps": {
+      "q": "哪些音樂 App 可以用？",
+      "a": "Spotify、Apple Music，以及 Chrome、Brave、Edge 或 Safari 裡的 YouTube。預設情況下，OnKey 向 Spotify 和 Apple Music 詢問在播什麼，所以位置精確，還能從自己的視窗播放和暫停它們。選「只聆聽」（設定裡「允許 OnKey 控制」下的每個 App 都關掉）時，它靠聲音辨識歌曲。除非你允許 OnKey 控制瀏覽器，YouTube 都是靠聲音跟隨的。"
+    },
+    "shazam": {
+      "q": "為什麼用 Shazam？那不是把音訊傳給 Apple 嗎？",
+      "a": "ShazamKit 傳送的是簽章（在你 Mac 上算出的指紋），不是音訊，也絕不是你的麥克風。只有在沒有別的方法知道歌名時 OnKey 才會問 Shazam：YouTube、其他 App，或「只聆聽」模式。你唱過的歌會先在 Mac 上直接辨識。關閉「設定 → 用 Shazam 辨識新歌」，就不會有任何東西傳給 Apple，但靠聲音只能辨識你已經學會的歌。"
+    },
+    "lyricsOff": {
+      "q": "我可以關掉歌詞嗎？",
+      "a": "可以，在「設定 → 顯示歌詞」。關閉後，OnKey 不會向 LRCLIB 要任何東西，也不顯示歌詞。已在 Mac 上的歌詞只是隱藏，不會刪除。音符和評分照常運作，關著歌詞學會的歌只從旋律取得音符。"
+    },
+    "oddScores": {
+      "q": "有些歌的分數很奇怪。為什麼？",
+      "a": "饒舌或念白的歌幾乎沒有旋律可評，和聲或合唱會讓它搞不清楚哪個聲部是主旋律。見<link>限制</link>。"
+    },
+    "report": {
+      "q": "出問題了。怎麼回報？",
+      "a": "用設定、「輔助說明」選單或演唱頁面裡的<strong>回報問題</strong>。它會讓你看 zip 裡有什麼（OnKey 最近三天的日誌和每次播放的摘要，有歌名但沒有歌詞、音訊或錄音），然後儲存到你的 Mac 上。不會上傳任何東西。接著到 <github>GitHub</github> 開一個 issue，願意的話附上 zip。先看看<link>疑難排解</link>。"
+    },
+    "updates": {
+      "q": "怎麼取得更新？",
+      "a": "自動。OnKey 每天到 GitHub 檢查一次新版本，並在背景下載（約 350 MB，因為模型在 App 裡）。在你選擇「重新啟動以更新」或結束 OnKey 時安裝，絕不會在歌曲中途。可以在設定裡關閉檢查。"
+    }
+  },
+  "troubleshooting": {
+    "title": "疑難排解",
+    "lede": "OnKey 無法啟動、聽不到、辨識不出歌，或者和你的耳機對不上節奏時該怎麼辦。",
+    "starting": {
+      "title": "一直停在「正在啟動 OnKey…」",
+      "body": "這通常只要幾秒鐘。如果一分鐘後還在，結束 OnKey（<strong>⌘Q</strong>）再打開。還是不行的話，<link>回報問題</link>。"
+    },
+    "permissions": {
+      "title": "權限問題",
+      "intro": "OnKey 在設定流程中要求三樣東西：",
+      "mic": "<strong>麥克風</strong>：如果你拒絕了，前往<strong>系統設定 → 隱私權與安全性 → 麥克風</strong>，開啟 OnKey。",
+      "audio": "<strong>系統錄音</strong>：聽音樂 App 必需。如果你拒絕了，或者 OnKey 說它「還聽不到…」，前往<strong>系統設定 → 隱私權與安全性 → 螢幕與系統錄音</strong>，在<strong>僅限系統錄音</strong>下開啟 OnKey。",
+      "control": "<strong>控制 Spotify 和 Apple Music</strong>：設定流程會為每個開著的 App 向 macOS 申請。沒開的 App，會在你第一次在裡面播放歌曲時詢問。如果詢問沒有出現，按<strong>繼續</strong>。你第一次在那裡播放歌曲時 macOS 會問。要更改你的回答，前往<strong>系統設定 → 隱私權與安全性 → 自動化 → OnKey</strong>，或者用 OnKey 設定裡的<strong>允許 OnKey 控制</strong>。",
+      "buttons": "OnKey 訊息裡的按鈕會打開系統設定的相應頁面。更改權限後，macOS 可能會要求你重新打開 OnKey。"
+    },
+    "naming": {
+      "title": "新歌要過一會兒才辨識出來",
+      "body": "新歌由 Shazam 辨識，需要網路連線，而且安裝後的第一次回答可能較慢。讓歌繼續播，OnKey 會一直問。如果它說連不上 Shazam，檢查一下網路。你已經學會的歌仍然在 Mac 上直接辨識。允許控制 Spotify 或 Apple Music 會更快，因為 OnKey 可以直接問 App 在播什麼。"
+    },
+    "noNotes": {
+      "title": "某首歌沒有音符",
+      "body": "OnKey 在一首歌第一次播放結束後才學習它，完成前「唱」按鈕會顯示「正在學習…」。一次只學一首歌，所以其他歌顯示「等待學習」。你唱 OnKey 已經會的歌時，學習也會暫停（「等你唱完」），讓音符保持流暢。OnKey 聽到一首歌大約 70% 後就算學會，所以如果你跳來跳去，再完整播放一遍。"
+    },
+    "dim": {
+      "title": "音符是暗的，顯示「正在和歌曲對齊…」",
+      "body": "OnKey 會讓音符保持暗著，直到音樂確認了你的位置，這樣你就不會對著錯位的音符唱。歌曲開始或你跳轉之後，通常只要幾秒鐘。如果一直是暗的，檢查音樂 App 自己的音量有沒有調到很低，因為 OnKey 需要聽到它。把 App 調大，改用 Mac 的音量控制。"
+    },
+    "wholeLine": {
+      "title": "第一次播放時歌詞整行顯示",
+      "body": "這是正常的。一首歌學會之前，OnKey 不知道每個字什麼時候唱，所以整行顯示。從下次播放起，歌詞就在音符條上了。"
+    },
+    "timing": {
+      "title": "用耳機時歌詞偏早或偏晚？",
+      "latency": "OnKey 會補償耳機或揚聲器播放聲音所需的時間，用的是 macOS 為每個輸出回報的數值。在我的測試中這夠接近了，藍牙也一樣，所以沒什麼需要設定的。",
+      "still": "如果音符看起來還是偏早或偏晚，可能是 OnKey 還沒和歌曲對齊。等幾秒鐘，或者往回跳一點。不管怎樣，你的分數都不受影響，因為 OnKey 在每首歌結束後會算出你的延遲。如果同一副耳機一直這樣，請<link>告訴我</link>是哪一副。"
+    },
+    "lyrics": {
+      "title": "沒有歌詞，或者歌詞不對",
+      "body": "歌詞來自 <link>LRCLIB</link>，一個免費、由社群維護的資料庫。有些歌不在裡面，或者只有另一個版本。找不到時，OnKey 一天後再問。"
+    },
+    "busy": {
+      "title": "你的 Mac 感覺很忙",
+      "intro": "學習新歌是重活，所以 OnKey 在歌曲結束後以低優先權進行。唱已學會的歌很輕。兩個設定有幫助：",
+      "battery": "<strong>唱歌時省電</strong>（預設開啟）：使用電池時，音符每秒更新 30 次而不是 60 次。",
+      "models": "<strong>讓學習模型保持就緒</strong>（只在 32 GB 以上預設開啟）：關掉它，模型（約 1.5 GB）會在每首歌之後釋放。8 GB 的 Mac 上不顯示這項，因為總是會釋放。"
+    },
+    "logs": {
+      "title": "日誌在哪裡",
+      "where": "OnKey 把純文字日誌寫到 <code>$TMPDIR/onkey.log</code>。要打開它，在「終端機」執行：",
+      "records": "它還會在資料檔案夾的<code> records/</code> 檔案夾中保留每天的日誌和每次播放的簡短摘要（時間、CPU、記憶體、版本和 Mac），保留 30 天，最多 200 MB。它們不含音訊或歌詞，但會寫明你播放過哪些歌。"
+    },
+    "report": {
+      "title": "回報問題",
+      "choose": "在設定裡選擇<strong>回報問題</strong>，或<strong>輔助說明 → 回報問題…</strong>，或在演唱頁面選擇<strong>回報這次演唱的問題</strong>。",
+      "zip": "OnKey 會讓你看 zip 裡有什麼：最近三天的日誌和每次播放的摘要。沒有歌詞、音訊、錄音、使用者名稱或個人檔案夾。想的話加一段備註，然後<strong>儲存</strong>到你的 Mac 上。不會上傳任何東西。",
+      "issue": "選擇<strong>開一個 GitHub issue</strong>（或前往 <link>GitHub</link>），說明發生了什麼、是哪首歌，願意的話附上 zip。"
+    },
+    "more": "更多解答見<link>常見問題</link>。",
+    "discord": "或者到 <link>OnKey 的 Discord</link> 提問。"
+  },
+  "docs": {
+    "diagrams": {
+      "legend": {
+        "label": "圖解中使用的顏色",
+        "music": "音樂",
+        "musicNote": "你的音樂 App 播放的內容",
+        "singer": "原唱",
+        "singerNote": "原版人聲，以及它的音符和歌詞",
+        "you": "你",
+        "youNote": "你的聲音，來自麥克風",
+        "score": "你的分數",
+        "scoreNote": "你唱得有多接近"
+      },
+      "stepOf": "第 {n} 步，共 {total} 步",
+      "phrase": "跟 著 我 唱 這 一 句",
+      "big": {
+        "label": "OnKey 的運作方式，從頭到尾",
+        "all": "音樂進來，分數出去。全在你的 Mac 上。",
+        "steps": {
+          "play": "你的音樂 App 播放一首歌",
+          "hears": "OnKey 在你的 Mac 上聽到它",
+          "learns": "第一次播放時，它學習這首歌",
+          "sing": "你跟著音符唱",
+          "score": "你得到分數和一份報告"
+        },
+        "onMac": "OnKey，在你的 Mac 上",
+        "musicApp": "音樂 App",
+        "musicAppSub": "Spotify、音樂…",
+        "hears": "聽到",
+        "hearsSub": "絕不儲存",
+        "learns": "學會",
+        "learnsSub": "音符和歌詞",
+        "sing": "你唱",
+        "singSub": "你的麥克風",
+        "score": "你的分數",
+        "scoreSub": "和一份報告"
+      },
+      "hearing": {
+        "label": "OnKey 怎麼聽到音樂",
+        "steps": {
+          "apps": "你的 Mac 上有很多 App 在發出聲音",
+          "one": "OnKey 只聽音樂 App",
+          "mic": "你的麥克風走同一個時鐘",
+          "memory": "邊播邊分析，絕不儲存"
+        },
+        "musicApp": "音樂 App",
+        "browser": "瀏覽器",
+        "messages": "訊息",
+        "yourMic": "你的麥克風",
+        "oneClock": "同一個時鐘",
+        "disk": "硬碟",
+        "noMusicSaved": "不儲存音樂",
+        "notHeard": "聽不到"
+      },
+      "learning": {
+        "label": "OnKey 怎麼學習一首歌",
+        "steps": {
+          "mixed": "歌曲到達：音樂和原唱混在一起",
+          "separation": "分離在記憶體中把原唱的聲音挑出來",
+          "pitch": "音高追蹤每 10 毫秒跟一次原唱",
+          "notes": "每個持續的音高變成一個音符條",
+          "lyrics": "歌詞行移到聽見那些字的位置",
+          "bars": "每個音節一個條：可以唱了"
+        },
+        "singer": "原唱",
+        "everythingElse": "其他一切",
+        "mix": "混音",
+        "timing": "歌詞檔的時間，靠耳朵校正"
+      },
+      "placement": {
+        "label": "OnKey 怎麼找到你在歌裡的位置",
+        "steps": {
+          "fingerprint": "學會的歌保留著它音樂的指紋",
+          "slide": "正在播放的幾秒鐘沿著指紋滑動",
+          "match": "對上的地方，就是你所在的位置",
+          "skip": "往前跳，它會再次找到你",
+          "listening": "聆聽模式：沒學過的歌由 Shazam 辨識歌名"
+        },
+        "fingerprint": "學會的歌的指紋（8 個頻帶，每 10 毫秒）",
+        "match": "吻合",
+        "playingNow": "正在播放的內容",
+        "skipped": "你跳過了",
+        "shazam": "Shazam：「一首新歌」，0:42",
+        "shazamNote": "只用於還沒學會的歌"
+      },
+      "echo": {
+        "label": "回音消除怎麼運作",
+        "steps": {
+          "speakers": "不戴耳機時，麥克風既聽到你也聽到歌",
+          "copy": "OnKey 清楚知道這首歌是什麼聲音",
+          "learns": "它學習那個聲音是怎麼傳到麥克風的",
+          "subtracts": "…然後把它減掉，留下你的聲音",
+          "headphones": "戴上耳機，就沒有什麼要減的了"
+        },
+        "speakers": "揚聲器",
+        "headphones": "耳機",
+        "yourMic": "你的麥克風",
+        "whatsLeft": "剩下的：你",
+        "micHears": "麥克風聽到的",
+        "copy": "OnKey 手上這首歌的副本（同一個時鐘）",
+        "room": "房間帶來的變化：延遲、回音、音色",
+        "minusSong": "− 歌曲"
+      },
+      "scoring": {
+        "label": "OnKey 怎麼為你的演唱評分",
+        "steps": {
+          "compare": "每 10 毫秒，把你的音高和原唱比一次",
+          "credit": "半個半音以內算滿分",
+          "octaves": "高或低一個八度都算在音上",
+          "slack": "稍早或稍晚一點不扣分",
+          "hit": "每個音：撐住一半長度就算唱準",
+          "score": "分數：你的準確度，依你唱了多少折算"
+        },
+        "flat60": "偏低 60 音分：得 90%",
+        "octaveLower": "低一個八度：仍然是綠色",
+        "slack80": "偏差 80 毫秒以內：允許",
+        "summary": "準確度 86% · 唱了 80%"
+      },
+      "credit": {
+        "title": "試試看：可以偏多遠？",
+        "aria": "得分曲線。你的音{dir, select, flat {偏低} other {偏高}} {n} 音分，得 {p}% 的分。",
+        "axis": "與音符相差的音分（100 音分 = 1 個半音）",
+        "credit": "得 {p}%",
+        "yourNote": "你的音",
+        "onTheNote": "在音上",
+        "off": "{dir, select, flat {偏低} other {偏高}} {n}¢",
+        "octave": "低一個八度唱"
+      },
+      "coverage": {
+        "title": "試試看：這首歌要唱多少？",
+        "aria": "以 86% 的準確度唱了主唱部分的 {p}%，得 {s} 分。",
+        "axis": "你唱了主唱部分的多少",
+        "score": "準確度 86% 時得 {s} 分",
+        "youSang": "你唱了"
+      },
+      "privacy": {
+        "label": "OnKey 保留什麼、傳送什麼",
+        "all": "OnKey 絕不儲存它聽到的音樂",
+        "steps": {
+          "kept": "留在你的 Mac 上：OnKey 學到的東西，以及你的演唱",
+          "never": "絕不儲存或傳送：音樂的音訊",
+          "lookups": "傳出去：依名稱查詢歌詞和封面",
+          "shazam": "辨識新歌：傳一個簽章給 Shazam"
+        },
+        "yourMac": "你的 Mac",
+        "kept": {
+          "notes": "每首歌的音符和音符條",
+          "fingerprint": "它的指紋和簽章",
+          "lyrics": "歌詞和它們的時間",
+          "takes": "演唱：你的麥克風、分數、歌詞"
+        },
+        "audio": "音樂的音訊：邊播邊分析，\n絕不儲存或傳送",
+        "lrclib": "演出者、歌名、專輯、\n長度：用來取歌詞",
+        "itunes": "演出者、歌名：取封面",
+        "shazam": "音樂的一個簽章，\n絕不是麥克風；\n可以關閉"
+      }
+    },
+    "howItWorks": {
+      "title": "OnKey 的運作方式",
+      "lede": "七個部分，從整體概覽到精確的數字。所有分析都在你的 Mac 上進行。",
+      "exactNumbers": "精確的數字",
+      "big": {
+        "title": "1. 整體概覽",
+        "steps": {
+          "play": "你跟平常一樣在 <strong>Spotify、Apple Music 或 YouTube</strong> 播放音樂。OnKey 自己不播放任何東西。",
+          "hears": "OnKey 透過 macOS <strong>聽到音樂 App</strong> <wave></wave>。聲音邊播邊分析，絕不儲存。",
+          "learns": "一首歌第一次播放完後，OnKey <strong>學習它</strong>：把原唱的聲音挑出來 <separate></separate>，算出音符，再把歌詞對齊。",
+          "sing": "從下一次播放起，你會看到<strong>音符條</strong> <lane></lane> 朝你捲來，你的聲音 <mic></mic> 畫在上面。",
+          "score": "歌曲結束時，你會得到一個<strong>分數</strong> <score></score>、一份逐行的報告，以及你是偏高還是偏低的傾向。"
+        },
+        "hood": {
+          "app": "一個 Mac App：Rust 引擎（音訊、模型、評分）跑在帶 React 介面的 Tauri 視窗裡。<engine>engine.rs</engine> 驅動一切。",
+          "local": "一切都在你的 Mac 上進行。模型用 ONNX Runtime 執行，在有幫助的地方跑在 Core ML 上（GPU 和神經網路引擎）。",
+          "frames": "音訊以 16 kHz、每 10 毫秒一幀來分析，下面每個數字都用這個單位（<dsp>dsp.rs</dsp>，<code>FRAME_S</code>）。",
+          "learned": "一首歌聽過 70% 就算學會（<store>store.rs</store> 裡的 <code>READY_COVERAGE</code>）。只聽了一部分的歌會在之後的播放中接著學。"
+        }
+      },
+      "hearing": {
+        "title": "2. 聽到音樂",
+        "steps": {
+          "apps": "你的 Mac 同時在播放很多 App 的聲音。",
+          "one": "OnKey 向 macOS 要求（經你允許）<strong>一個 App</strong> 的聲音，也就是音樂 App，其餘的都忽略。",
+          "mic": "你的<strong>麥克風</strong> <mic></mic> 同時錄製，走<strong>同一個時鐘</strong>，所以 OnKey 知道你是對著歌曲的哪一刻唱的。",
+          "memory": "音樂<strong>邊播邊</strong>在記憶體中分析（正在學習的歌會留在記憶體裡直到結束）。它絕不寫入硬碟、上傳或分享。"
+        },
+        "hood": {
+          "capture": "擷取使用 Core Audio 的程序分接（macOS 14.2 以上），連同你的麥克風，以輸出裝置自己的取樣率（通常是 48 kHz），走同一個時鐘（<captureSwift>capture.swift</captureSwift>，<captureRs>capture.rs</captureRs>）。",
+          "tapped": "只分接音樂 App 的程序，依它的 bundle id 選擇（<source>source.rs</source>）。",
+          "resampled": "一切都重新取樣成 16 kHz 單聲道來分析。正式版本絕不把音樂的音訊寫到任何地方。每次演唱只保留你自己的聲音。",
+          "permissions": "權限：系統錄音和麥克風。控制 Spotify 和「音樂」（在播什麼、播到哪、「再唱一次」、跳過和暫停）是另一項權限，在設定流程中詢問，選「只聆聽」就會關掉。控制 YouTube 分頁預設關閉，直到你打開它。"
+        }
+      },
+      "learning": {
+        "title": "3. 學習一首歌",
+        "steps": {
+          "mixed": "歌曲以一個聲音到達 OnKey：<strong>原唱和樂隊混在一起</strong>。",
+          "separation": "歌曲結束後，一個<strong>分離</strong>模型 <separate></separate> 一段一段地把主唱從混音裡挑出來。（在你唱的時候做這件事，音符會卡頓。）",
+          "pitch": "一個<strong>音高追蹤器</strong><strong>每 10 毫秒</strong>跟一次原唱的聲音。這給出一條帶著精確旋律的曲線，滑音和抖音都在裡面。",
+          "notes": "一個音符模型把那條線變成<strong>音符</strong>，帶上每個音的起止。",
+          "lyrics": "<strong>歌詞</strong>來自 LRCLIB，帶有粗略的時間。一個語音模型聽原唱，把每一行移到<strong>這些字被唱出來的位置</strong>。第一次播放時，它對開頭一分半左右這樣做，所以那些行也是對準的。",
+          "bars": "每一行被拆成音節，每個音節在它的音高上得到自己的<strong>條</strong> <lane></lane>。這就是你跟著唱的音符軌道。"
+        },
+        "hood": {
+          "separation": "<strong>分離：</strong>UVR MDX-Net Karaoke 2（ONNX，跑在 Core ML 上），以 20 秒一段執行，前後各帶 2 秒上下文。音樂在播放時保存在記憶體裡，結束後以低優先權分離。一次只學一首歌。其他的排隊等候（「等待學習」），而當你在視窗顯示時唱一首學會的歌，學習會暫停（<learn>learn.rs</learn>，<mdx>mdx.rs</mdx>）。",
+          "firstPlay": "<strong>第一次播放：</strong>開頭最多 90 秒邊播邊分離，每次 5 秒，直到歌詞行和原唱對齊。其餘的等歌曲結束。8 GB 的 Mac 上，以及另一首歌正在學習時，會跳過這一步。在我的資料庫裡，這樣做之後 60% 的第一次播放歌詞行與演唱相差在 0.3 秒以內，而用 LRCLIB 自帶的時間只有 13%。",
+          "memory": "<strong>記憶體：</strong>8 GB 時，一次只載入一個模型，用完那一步就卸載。32 GB 以下，一首歌學會後就卸載學習模型（約 1.5 GB），除非開啟了設定 → 「讓學習模型保持就緒」（<lowmem>lowmem.rs</lowmem>）。",
+          "pitch": "<strong>音高：</strong>在分離出的人聲上跑 CREPE「full」，16 kHz，10 毫秒步長，1024 個取樣的視窗，50 到 1100 Hz。信心度超過 0.45 的幀算作在唱（<pitch>pitch.rs</pitch>）。",
+          "notes": "<strong>音符：</strong>GAME（OpenVPI）從人聲中轉寫音符。每個音節條取它的音符，下面沒有唱出音符的條會被丟掉（<game>game.rs</game>，<syllables>syllables.rs</syllables>）。",
+          "lyrics": "<strong>歌詞：</strong>來自 LRCLIB 的同步歌詞（依演出者、歌名、專輯和長度查找，找不到就依名稱查）。各行透過用 wav2vec 2.0（CTC）對齊整首歌的字來重新放置，並用 CMU 發音字典拆成音節（<lyrics>lyrics.rs</lyrics>，<ctc>ctc.rs</ctc>）。",
+          "measured": "<strong>測量結果：</strong>在 18 首人工標註的歌上，98% 唱出的音符有條覆蓋，92% 在正確的音上，73% 的起點在 0.1 秒以內。94% 的歌詞行在 0.3 秒以內。",
+          "kept": "<strong>隨歌保留的：</strong>音高線、音符條、一個節奏指紋、一個 Shazam 簽章和歌詞的時間，再加上這些時間所對應的那筆 LRCLIB 紀錄（保留在 Mac 上，絕不上傳），這樣每次播放同樣的字都出現在同樣的條上。音樂和分離出的人聲不會保留。"
+        }
+      },
+      "placement": {
+        "title": "4. 知道你在哪",
+        "steps": {
+          "fingerprint": "學習一首歌時，OnKey 還會保留一個<strong>指紋</strong> <fingerprint></fingerprint>：每 10 毫秒，聲音在每個頻帶裡變化了多少。",
+          "slide": "音樂 App 回報的歌曲位置只是大概，所以 OnKey 把<strong>它正在聽到的幾秒鐘</strong>沿著指紋滑動。",
+          "match": "對上的地方就是<strong>你所在的位置</strong>。在此之前音符是暗的（「正在和歌曲對齊…」）。它們通常在歌曲開始幾秒後亮起。",
+          "skip": "跳過、拖曳或重新開始，它會在幾秒內<strong>再次找到你</strong>。OnKey 同時記著幾個可能的位置，只有在音樂明確同意時才移動音符。",
+          "listening": "這就是<strong>聆聽模式</strong>。你唱過的歌在你的 Mac 上辨識，新歌由 Shazam 辨識歌名，所以 OnKey 不用控制 App 也能跟著音樂。控制 Spotify 和 Apple Music 能給出精確位置，預設開啟（「只聆聽」會關掉它）。YouTube 控制需要手動開啟。"
+        },
+        "hood": {
+          "fingerprint": "<strong>指紋：</strong>從大約 60 Hz 到 7 kHz 的 8 個頻帶中，每 10 毫秒聲音各上升了多少（<dsp>dsp.rs</dsp> 裡的 <code>FP_BANDS</code>）。",
+          "placement": "<strong>定位：</strong>一個追蹤器為每次播放定位（<tracker>tracker.rs</tracker>，仿照 Arzt 和 Widmer 的「any-time」音樂追蹤器）。每次檢查把最近幾秒（最多 8 秒）的音樂與指紋比對，精確到 10 毫秒的一幀，並把最好的幾個位置作為加權候選保留下來，這樣一段差一拍也能對上的重複前奏騙不了它。音樂 App 的位置和聆聽的結果只會把附近的候選推一推。只有當另一個候選在大約 4 秒的音樂裡明顯領先時，顯示的位置才會移到那裡。",
+          "measured": "<strong>測量結果：</strong>重播 153 次真實播放，並讓音樂 App 的位置出錯（偏 0.73 秒或 1.7 秒，或一次落在 3.5 秒之外的跳轉），顯示的位置約 91% 的時間與音樂相差在 0.1 秒以內。之前的規則分別做到 75%、0% 和 0%。",
+          "listening": "<strong>聆聽模式</strong>（始終開啟，<listen>listen.rs</listen>，<recognize>recognize.rs</recognize>）：聽到 3 秒聲音後，它依序詢問 OnKey 自己學會的歌的目錄（ShazamKit，在 Mac 上，精確到約 10 毫秒）、指紋，然後是 Shazam 的目錄。學會的歌每 3 秒再查一次，只有 Shazam 知道的歌大約每 12 秒一次。Shazam 得到的是音樂 App 聲音最多 5 秒的簽章，絕不是麥克風。Shazam 的新答案需要第二個一致的答案才算。0.15 秒的數位靜音算作暫停。",
+          "shazamTest": "Shazam 目錄的首次測試：30 首測試歌曲中，它從開頭 5 秒辨識出 25 首，中位耗時 0.24 秒。"
+        }
+      },
+      "you": {
+        "title": "5. 聽到你",
+        "steps": {
+          "speakers": "用筆電揚聲器時，你的麥克風聽到的是<strong>你和歌</strong>，包括原唱。不管的話，原唱就會替你拿分。",
+          "copy": "但 OnKey 手上有這首歌自己的副本 <wave></wave>，和麥克風走同一個時鐘。",
+          "learns": "它<strong>學習那個聲音是怎麼傳到麥克風的</strong>，包括延遲、房間的回音和你揚聲器的音色。視訊通話做的是同一件事。",
+          "subtracts": "然後它<strong>減掉</strong> <echo></echo> 它對歌曲的預測，剩下的就是<strong>你的聲音</strong>。",
+          "headphones": "戴<strong>耳機</strong>時，麥克風聽不到歌，所以沒有什麼要減的。這仍然是最可靠的方式。"
+        },
+        "hood": {
+          "livePitch": "<strong>即時音高：</strong>在你經過回音消除的麥克風上，每 10 毫秒跑一次 CREPE「tiny」，用 Core ML 的 CPU 核心程式：音高點比你的聲音慢 2 到 4 毫秒，唱一首學會的歌在我的 Mac 上要花 OnKey 一個 CPU 核心的 15% 到 19%（<pitch>pitch.rs</pitch>）。",
+          "canceller": "<strong>回音消除器：</strong>一個分段頻域自適應濾波器：16 個分段，每段 256 個取樣，16 kHz，所以它能建模 256 毫秒的回音（<bleed>bleed.rs</bleed>）。有些輸出裝置的回音比這更晚，所以每 2 秒測一次回音的延遲（GCC-PHAT，最多 800 毫秒），並把歌曲延後這麼多再送進濾波器。它只在歌曲明確傳到麥克風時才自適應，如果它的輸出比麥克風還大聲，就讓麥克風原樣通過。",
+          "measured": "<strong>測量結果：</strong>MacBook 內建揚聲器（回音晚約 24 毫秒）：去掉 20 dB 或更多。回音晚約 290 毫秒的外接揚聲器：8 到 14 dB，而在測量延遲之前只有 1 到 2 dB。",
+          "limit": "<strong>限制：</strong>8 到 14 dB 仍會讓大聲的歌有一部分留在麥克風裡，可能被誤認為是在唱。耳機更可靠。"
+        }
+      },
+      "scoring": {
+        "title": "6. 評分",
+        "steps": {
+          "compare": "你和原唱都在唱的每 10 毫秒，你的音高會和原唱的線以及音符條比較，<strong>看你更接近哪一個</strong>。",
+          "credit": "<strong>50 音分</strong>（半個半音）以內得滿分。然後得分逐漸下降，到 150 音分時為零。",
+          "octaves": "<strong>八度不計</strong>，所以你可以在自己的音域裡唱。",
+          "slack": "每半秒可以移動最多 <strong>80 毫秒</strong>來和原唱對齊，所以稍早或稍晚一點不會扣分。",
+          "hit": "每個音，只要你在一個半音以內撐住了它一半的長度，就算<strong>唱準</strong>。它的前 80 毫秒不算：歌手都是滑進音裡的。",
+          "score": "你的分數 <score></score> 是你的<strong>準確度</strong>，依<strong>你唱了主唱部分的多少</strong>折算，所以只唱好一句不會得到好分數。"
+        },
+        "lenient": "預設的評分是故意放寬鬆的，為像我這樣的初學者設定。唱得好的人可以在設定裡選更嚴格的難度，穩健或專業（兩者都不扣抖音的分）。",
+        "explained": "報告裡的數字在<link>評分說明</link>中有解釋。",
+        "hood": {
+          "credit": "<strong>得分：</strong><code>clamp((150 − |error|) / 100, 0, 1)</code>，誤差以音分計並摺疊到 ±600 以內，所以八度不算（<dsp>dsp.rs</dsp> 裡的 <code>credit</code>、<code>fold</code>）。",
+          "slack": "<strong>節奏寬容：</strong>每個 0.5 秒的視窗在 ±80 毫秒（<code>TOL</code> = 8 幀）內取一個讓你對得最齊的位移（<code>tolerant_error</code>）。",
+          "delay": "<strong>你的延遲：</strong>歌曲結束後，從早 0.3 秒到晚 1.5 秒搜尋，找出最吻合的滯後（<analysis>analysis.rs</analysis>）。",
+          "notesHit": "<strong>唱準的音：</strong>忽略前 80 毫秒後，在 100 音分以內撐住了至少一半的音。短於 0.15 秒的音不計。",
+          "score": "<strong>分數：</strong><code>100 × accuracy × (0.3 × min(1, sung / 0.1) + 0.7 × min(1, sung / 0.4))</code>：唱了主唱部分的 40% 起就是滿額。",
+          "experts": "<strong>與專家對照：</strong>在 20 段已評等的錄音上，唱準的音與專家排名的一致度為 0.77，分數為 0.61（專家之間的一致度為 0.88）。"
+        }
+      },
+      "privacy": {
+        "title": "7. 隱私權",
+        "steps": {
+          "kept": "在你的 Mac 上，OnKey 保留它對每首歌<strong>學到的東西</strong>，以及每次演唱的<strong>一份麥克風錄音</strong> <lock></lock>（每分鐘約 0.5 MB）、你的分數和你唱的歌詞，供你回放。刪除一次演唱，它會進垃圾桶。",
+          "never": "它<strong>絕不儲存或傳送音樂的音訊</strong>，也不保留分離出的人聲。（如果音樂是用揚聲器放的，你的麥克風錄音裡會有一些。）",
+          "lookups": "為了找歌詞，它把歌曲的<strong>演出者、歌名、專輯和長度</strong>傳給 LRCLIB，一個免費、由社群營運的歌詞資料庫（除非關閉了「顯示歌詞」）。封面則依演出者和歌名向 Apple 的 iTunes Search 查詢。",
+          "shazam": "為了辨識一首它沒學過的歌，<strong>聆聽模式</strong>會把音樂 App 聲音最多 5 秒的一個<strong>簽章</strong>傳給 Shazam（不是音訊，也絕不是你的麥克風）。你唱過的歌在你的 Mac 上辨識，所以不會有任何東西為它們傳給 Shazam。只有在 Spotify 或 Apple Music 沒有回報在播什麼時才會問 Shazam，你可以在設定裡關閉它。"
+        },
+        "hood": {
+          "stored": "存放在 <code>{dataDir}</code>：<code>songs/</code>（音高線、音符條、指紋、歌詞時間和一個 Shazam 簽章，兩種模式下每首學會的歌都會儲存）、<code>takes/</code>（<code>mic.m4a</code>：你的麥克風，AAC 單聲道約 64 kbps，每分鐘約 0.5 MB，總共最多保留 2 GB，加上分數和帶歌詞行的報告）和 <code>records/</code>（日誌和每次播放的摘要，只有數字，保留 30 天，最多 200 MB）。刪除歌曲或演唱會把它移到垃圾桶。",
+          "network": "網路：Shazam（聆聽模式，可以關閉）用於還沒學會的歌，LRCLIB 歌詞查詢（除非關閉了「顯示歌詞」），iTunes Search 用於封面，iTunes Lookup 用於已辨識歌曲的長度，封面圖片（來自 Apple，或 YouTube 的縮圖），以及每天一次到 GitHub Releases 的更新檢查。沒有帳號、沒有分析追蹤，也沒有我的伺服器。",
+          "more": "更多請見<link>隱私權與法律</link>。"
+        }
+      }
+    },
+    "scoring": {
+      "title": "評分說明",
+      "lede": "每個數字是什麼意思，怎麼算出來的，以及它在哪裡還不夠好。",
+      "rules": {
+        "title": "規則",
+        "every": "<strong>每 10 毫秒都算。</strong>只要你和原唱都在唱，你的音高就會和原唱的音高線以及音符條比較，看你更接近哪一個。",
+        "credit": "<strong>音準得分。</strong>50 音分（半個半音）以內得滿分。然後沿直線下降，到 150 音分時為零。",
+        "octaves": "<strong>八度不計。</strong>比原唱高或低一個八度都算在音上，所以你可以在自己的音域裡唱。",
+        "slack": "<strong>節奏寬容。</strong>每半秒可以移動最多 80 毫秒來和原唱對齊，所以稍早或稍晚一點什麼都不扣。",
+        "delay": "<strong>你的延遲會替你找出來。</strong>歌曲結束後，OnKey 從早 0.3 秒到晚 1.5 秒嘗試各種延遲，用讓你對得最齊的那個（你聽到歌會稍微晚一點）。",
+        "relaxed": "這些是預設難度<strong>輕鬆</strong>的規則。它們故意寬鬆，為初學者（我就是一個）和小朋友設計，所以如果你唱得好，就會拿高分。"
+      },
+      "levels": {
+        "title": "難度",
+        "intro": "如果輕鬆太客氣了，可以在設定 → 評分裡選更嚴格的難度。它從你的下一次演唱起生效，每次演唱保留當時評分的難度：不是輕鬆難度的演唱會顯示一個小標籤，一首歌的最高分只在同一難度的演唱之間比較。",
+        "level": "難度",
+        "fullWithin": "滿分範圍",
+        "noneFrom": "零分起點",
+        "slack": "節奏寬容",
+        "relaxed": "<strong>輕鬆</strong>（預設）",
+        "steady": "<strong>穩健</strong>",
+        "pro": "<strong>專業</strong>",
+        "cents": "{n} 音分",
+        "ms": "{n} 毫秒",
+        "vibrato": "<strong>抖音不扣分。</strong>在穩健和專業難度下，你的音高依它抖動的中心來判斷，在 0.17 秒內取平均（大約是典型抖音的一個週期，抖音每秒擺動 5 到 7 次）。圍繞正確的音穩定地抖音接近滿分；一個一直偏高或偏低的音仍然是偏高或偏低。在輕鬆難度下，用的是你的精確音高，一如既往，一個幅度很大的抖音（±80 音分）會丟掉大約十分之一的分。八度在每個難度下都不計。"
+      },
+      "report": {
+        "title": "報告裡的數字",
+        "number": "數字",
+        "meaning": "含義",
+        "score": "<strong>分數</strong>（0–100）",
+        "scoreMeaning": "你的平均音準得分，依你唱了主唱部分的多少折算（見下文）。",
+        "accuracy": "<strong>音準</strong>",
+        "accuracyMeaning": "你在唱的時候的平均音準得分。",
+        "notesHit": "<strong>唱準的音</strong>",
+        "notesHitMeaning": "你在一個半音以內撐住了至少一半長度的音，同樣有 80 毫秒的寬容。每個音的前 80 毫秒忽略，因為歌手都是滑進音裡的，短於 0.15 秒的音不計。",
+        "sangAlong": "<strong>跟唱比例</strong>",
+        "sangAlongMeaning": "主唱部分中你也在唱的比例。",
+        "tendency": "<strong>傾向</strong>",
+        "tendencyMeaning": "你是傾向偏高還是偏低，以音分計（你誤差的中位數）。",
+        "latency": "<strong>延遲</strong>",
+        "latencyMeaning": "OnKey 找到並補償掉的延遲。",
+        "sangTitle": "「跟唱比例」怎麼影響分數",
+        "sangBody": "分數 = 100 × 音準 × 一個取決於你唱了多少的係數。唱主唱部分的十分之一能拿到這個係數的 30%，其餘的在你唱到 40% 之前逐漸累積（人聲裡有一部分是和聲或即興，沒人會唱）。所以只唱好一句不會得到好分數，只聽不唱的人幾乎是零分。即時分數用的是同一個公式。"
+      },
+      "checks": {
+        "title": "我怎麼檢查分數是對的",
+        "intro": "OnKey 的每一處改動在保留之前都要測量。音符條對照人工標註的音符檢查，歌詞時間對照人工校時的歌詞檢查，分數則對照模擬歌手（完美的、晃動的、偏高的，以及一聲不出但歌曲漏進麥克風的）和被當成你來評分的原唱檢查。",
+        "check": "檢查項目",
+        "result": "結果",
+        "covered": "人工標註的音中有音符條覆蓋的",
+        "rightNote": "…其中條落在正確的音上的",
+        "starts": "…其中條的起點在 0.1 秒以內的",
+        "noNote": "下面沒有唱出音符的條",
+        "lyricLines": "放置在 0.3 秒以內的歌詞行",
+        "expertsTitle": "分數和專家一致嗎？",
+        "expertsIntro": "我用 OnKey 為 20 段從差到專業的人聲錄音評了分，這些錄音音樂專家已經評過等級（PESnQ 研究資料集），看 OnKey 是否依同樣的順序排列它們。在 1 代表完全一致的尺度上：",
+        "measure": "指標",
+        "agreement": "與專家的一致度",
+        "expertsEachOther": "專家之間（現實的上限）",
+        "notesHit": "OnKey 的唱準的音",
+        "score": "OnKey 的分數",
+        "expertsOutro": "唱準的音已經很好地跟上了專家，分數可以更倚重它。這只有 20 段錄音，而且是沒有伴奏唱的，所以把它當作一個好兆頭，而不是證明。"
+      },
+      "limits": {
+        "title": "限制",
+        "rap": "<strong>饒舌或唸白的歌：</strong>音準評分基本上不適用。",
+        "harmonies": "<strong>和聲與合唱：</strong>哪條聲線是主旋律並不總是清楚，所以有些條可能跟著和聲走。",
+        "speakers": "<strong>不戴耳機唱：</strong>回音消除能在 MacBook 的揚聲器上去掉 20 dB 或更多的歌聲，在外接揚聲器上去掉 8 到 14 dB。大聲的歌剩下的部分可能被誤認為是在唱，所以耳機更可靠。",
+        "firstPlay": "<strong>第一次播放</strong>沒有音符。從第二次播放起才出現。"
+      }
+    },
+    "privacy": {
+      "title": "隱私權與法律",
+      "translationNote": "這是一份翻譯。如果它與<link>英文版</link>有出入，以英文版為準。",
+      "lede": "OnKey 在你的 Mac 上執行，絕不儲存它聽到的音樂。你的錄音和學會的歌都留在你的 Mac 上。這一頁列出它保留的一切和傳送的一切。",
+      "keeps": {
+        "title": "OnKey 在你的 Mac 上保留什麼",
+        "intro": "一切都在 <code>{dataDir}</code> 裡。",
+        "songs": "<strong>學會的歌</strong>（<code>songs/</code>）：原唱的音高線和音符條、一個節奏指紋和一個音樂的 Shazam 簽章（用來辨識歌曲和找到你的位置）、每行歌詞的開始時間，以及每個字被聽到唱出的時間（只有時間，沒有字）。",
+        "lyrics": "<strong>歌詞</strong>（<code>lrclib/</code>）：LRCLIB 的回答，最多保留 30 天（沒有結果時保留一天）。一首學會的歌會保留它的時間所對應的歌詞，這樣每次播放顯示的都是同樣的字。歌詞絕不上傳。關閉設定 → 「顯示歌詞」後，已保留的歌詞會被隱藏（不刪除），也不再取得新的。",
+        "takes": "<strong>演唱</strong>（<code>takes/</code>）：<strong>一份你麥克風的錄音</strong>（<code>mic.m4a</code>，每分鐘約 0.5 MB）供你回放，你的分數，以及報告，其中包括歌詞和它們的時間。只有當你跟唱了主唱部分至少 10% 時才會儲存一次演唱。如果音樂是用揚聲器放的，錄音裡也會有一些。錄音總共最多保留 2 GB。超過後最早的先刪，但絕不會刪最愛歌曲的演唱或一首歌的最高分演唱。",
+        "records": "<strong>紀錄</strong>（<code>records/</code>），用於診斷問題：每天一個日誌檔，以及每次播放的摘要（時間、CPU、記憶體、版本和 Mac 機型）。這些是數字和 id，沒有音訊或歌詞，不過日誌會寫明你播放了哪些歌。保留 30 天，最多 200 MB。只有你自己把回報附到 issue 上，它們才會離開你的 Mac。",
+        "settings": "你的設定、你為 YouTube 影片輸入的任何演出者和歌名、推薦歌曲的封面，以及編譯好的模型的快取。",
+        "remove": "在資料庫裡忘掉一首歌，或在歷史紀錄裡刪除一次演唱，它的檔案就會進垃圾桶。要全部清除，結束 OnKey 並刪除上面那個檔案夾。"
+      },
+      "never": {
+        "title": "OnKey 絕不保留什麼",
+        "body": "音樂的音訊，或從中分離出來的原唱聲音。它邊播邊在記憶體中分析，絕不儲存、上傳、分享或匯出。（如果你是用揚聲器放著音樂唱的，你的麥克風錄音裡可能會有它。）"
+      },
+      "leaves": {
+        "title": "什麼會離開你的 Mac",
+        "sentTo": "傳給",
+        "what": "傳什麼，什麼時候",
+        "shazam": "<strong>Shazam</strong>（Apple，透過 ShazamKit）",
+        "shazamWhat": "<strong>音樂 App</strong> 聲音最多 5 秒的一個簽章（絕不是你的麥克風），不是音訊本身。只有在沒有任何音樂 App 回報在播什麼時（YouTube、其他 App 或「只聆聽」），為了辨識一首 OnKey 沒學過的歌才會傳送。Spotify 和 Apple Music 自己回報歌名，你唱過的歌在你的 Mac 上辨識，什麼都不傳。設定 → 「用 Shazam 辨識新歌」可以關閉它，之後就只辨識已經學會的歌。",
+        "lrclibWhat": "一首歌開始時，傳送它的演出者、歌名、專輯和長度來取得同步歌詞，找不到就再依名稱搜尋一次。回答在你的 Mac 上保留最多 30 天（沒有結果時保留一天），所以再播一次同一首歌不會再問。LRCLIB 是一個免費、由社群營運的歌詞資料庫。關閉「顯示歌詞」後什麼都不傳。",
+        "itunes": "<strong>iTunes Search 和 Lookup</strong>（Apple）",
+        "itunesWhat": "演出者和歌名，用來找專輯封面（它連結到 Apple Music 的頁面），早先從 Spotify 學會的歌也一樣。還有 Shazam 回傳的 Apple Music id，用來取歌曲的長度和專輯。「試試這些」的推薦封面每個只查一次，分散進行並保留下來，之後再造訪就什麼都不傳。",
+        "covers": "<strong>封面圖片</strong>",
+        "coversWhat": "顯示封面時，向 Spotify、Apple 或 YouTube 的圖片伺服器發出的普通圖片請求。",
+        "githubWhat": "啟動一分鐘後檢查一次有沒有更新的 OnKey 版本，之後每天一次，有的話就下載。在設定裡關閉<strong>自動檢查更新</strong>後，只有你按<strong>立即檢查</strong>時才會檢查。",
+        "nothingElse": "其他什麼都不會傳出去：沒有帳號、沒有分析追蹤、沒有當機回報，也沒有我的伺服器。你的錄音絕不上傳。「回報問題」會讓你看它那個裝著數字和日誌的 zip 裡有什麼，儲存在你的 Mac 上，什麼都不傳。要不要把它附到 GitHub issue 上由你決定。模型隨 App 一起提供，所以它絕不下載模型。",
+        "website": "這個網站（不是 App）用 Plausible 統計造訪量。它不用 cookie，也不用任何能識別你的東西，只保留總數，比如多少人來過、從哪裡來、多少人點了下載。",
+        "flowMyna": "匿名的造訪路徑也會傳給 Flow Myna，我自己的分析工具：一次造訪依序讀了網站的哪些部分，以及連線來自的大致位置（比如國家）。不用 cookie，你的 IP 位址不保留。",
+        "stars": "GitHub 按鈕上的星數直接來自 GitHub，所以你的瀏覽器會向 GitHub 請求它。"
+      },
+      "streaming": {
+        "title": "串流服務",
+        "noMusic": "OnKey 不提供、不串流、也不下載音樂。播放的是你自己的音樂 App，OnKey 透過 macOS 的音訊擷取權限來聽。它不使用任何串流服務的 SDK 或開發者 API，也不碰任何 App 的檔案、記憶體或加密。",
+        "control": "預設情況下，它透過 macOS 的「自動化」權限（在設定流程中詢問）跟隨 Spotify 和 Apple Music：讀取在播什麼、播到哪，並播放、暫停、拖曳和開始歌曲。如果你在設定裡開啟「瀏覽器中的 YouTube」（一開始是關閉的），OnKey 也會讀取並控制 Chrome、Brave、Edge 或 Safari 裡的 YouTube 分頁。在設定流程中選「只聆聽」，或在設定的「允許 OnKey 控制」下把它們關掉，OnKey 就絕不會向那些 App 傳送任何東西。",
+        "terms": "OnKey 絕不儲存或匯出它聽到的音樂。你的音樂服務自己的條款仍然適用於你對它的使用。"
+      },
+      "rights": {
+        "title": "權利人",
+        "body": "如果你代表權利人或某項服務，對 OnKey 有疑慮，請寄信到 <email>{address}</email>。每一封訊息我都會讀，並儘快回覆。疑慮成立的，我會修改或移除相關功能。另見 <legal>LEGAL.md</legal>。",
+        "noAddress": "（地址待公布）"
+      },
+      "trademarks": {
+        "title": "商標",
+        "body": "OnKey 與 Spotify、Apple 或 Google 沒有關聯，也未獲其認可。它們的名稱是各自所有者的商標，在這裡只用來說明 OnKey 能搭配哪些 App 使用。"
+      },
+      "licence": {
+        "title": "授權條款",
+        "body": "OnKey 在 MIT 授權條款下免費且開放原始碼。"
+      }
+    },
+    "yourVoice": {
+      "title": "舒服地唱歌",
+      "lede": "OnKey 讓你很容易一首接一首地唱，所以你的聲音需要一點照顧。",
+      "volume": {
+        "title": "用舒服的音量唱",
+        "body": "OnKey 只為你的音準評分，所以沒必要壓過音樂。輕聲唱得分一樣。耳機有幫助，因為你不用和揚聲器較勁才能聽見自己。"
+      },
+      "octave": {
+        "title": "搆不到的音就降一個八度",
+        "body": "如果一首歌對你來說太高或太低，就低一個或高一個八度唱。OnKey 在任何八度上都算你唱對，所以你什麼都不損失。在音域邊緣硬撐是讓聲音最快疲勞的方式。"
+      },
+      "warmUp": {
+        "title": "熱身，並且休息",
+        "easy": "先唱幾首輕鬆的歌，或者在你的音域裡上下輕輕哼唱一兩分鐘。",
+        "water": "把水放在手邊。",
+        "rest": "唱了大約 35 分鐘後，OnKey 會提醒你休息（可以在<strong>設定 → 你的聲音</strong>裡關掉）。",
+        "gradually": "循序漸進。第一天就唱幾個小時，比大多數人的聲音習慣的量多得多。"
+      },
+      "pain": {
+        "title": "痛就停下",
+        "body": "疼痛、喉嚨刺刺癢癢，或第二天聲音還是啞的，都表示該休息了。如果持續超過兩週，去看醫生或嗓音專科。"
+      },
+      "technique": "技巧方面（呼吸、聲區、不費力地唱），請見<link>音準之外</link>。",
+      "disclaimer": "這一頁是關於唱歌的一般建議，不是醫療建議。"
+    },
+    "beyondPitch": {
+      "title": "音準之外",
+      "lede": "OnKey 顯示你是否在音上。唱得好不止於此，其餘的最好向老師學。",
+      "hear": {
+        "title": "OnKey 聽得到和聽不到什麼",
+        "body": "OnKey 逐行把你的音高和原唱對比。這是一種又快又直觀的方法，讓你聽到、看到自己在哪裡走音。它聽不出你是怎麼發出這個聲音的：呼吸是否順暢，是否在硬撐，是否唱出了感情。高分代表你唱準了音，不代表你把這首歌唱好了。"
+      },
+      "learn": {
+        "title": "還要學什麼",
+        "breath": "<strong>氣息支撐：</strong>聲音後面有穩定的氣流，長句才不會斷氣或發抖。",
+        "tension": "<strong>減少緊繃：</strong>放鬆的喉嚨、下巴和舌頭。靠硬撐去搆高音，是聲音疲勞或受傷最常見的原因。",
+        "registers": "<strong>聲區：</strong>真音、假音和兩者之間的混聲，讓你在音域內換聲時沒有斷層。",
+        "vowels": "<strong>母音：</strong>調整它們的形狀，讓音更響亮，高音更輕鬆。",
+        "phrasing": "<strong>樂句與節奏：</strong>在哪裡換氣，強調哪些字，以及踩在節拍上。"
+      },
+      "teachers": {
+        "title": "可以先跟著學的免費老師",
+        "callaway": "<link>Dan Callaway</link> 在 Boston Conservatory at Berklee 教音樂劇聲樂。從呼吸到 belting，技巧課講得清楚明白。",
+        "rolka": "<link>Jeff Rolka</link>：熱身、唱準、高音、轉音和花腔。",
+        "suggested": "兩位都是 OnKey 發布時的討論裡唱歌的朋友們推薦的。還有別的好老師，歡迎到 <link>GitHub</link> 推薦。"
+      },
+      "lessons": {
+        "title": "跟老師上課",
+        "body": "如果可以，上幾堂課。你自己要幾個月才能察覺的問題，老師幾秒鐘就能聽出來，還會針對你的聲音給你練習。然後 OnKey 可以是你兩堂課之間的練習方式：跟著喜歡的歌唱，看著自己的音高越來越穩。"
+      },
+      "voice": "練習時如何照顧聲音，請見<link>舒服地唱歌</link>。"
+    },
+    "credits": {
+      "title": "鳴謝",
+      "lede": "OnKey 建立在這些開放的專案和服務之上。",
+      "component": "元件",
+      "usedFor": "用途",
+      "licence": "授權條款",
+      "uses": {
+        "crepe": "音高：學習時用 full 模型，即時用 tiny 模型",
+        "game": "每個音節的音符",
+        "wav2vec": "每個字在什麼時候唱出",
+        "uvr": "分離主唱",
+        "cmudict": "音節數",
+        "lrclib": "同步歌詞，執行時取得",
+        "shazamkit": "辨識新歌",
+        "itunes": "專輯封面和歌曲長度",
+        "hyphenation": "把字拆成音節",
+        "onnx": "執行模型",
+        "tauri": "App 本身"
+      },
+      "licences": {
+        "service": "服務",
+        "macos": "macOS 的一部分"
+      },
+      "notices": "OnKey 本身在 MIT 授權條款下免費且開放原始碼。完整的聲明請見 <link>THIRD_PARTY_NOTICES.md</link>。"
+    }
+  }
+}

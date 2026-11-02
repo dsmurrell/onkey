@@ -1,9 +1,11 @@
 import type { TakeSummary } from "@/lib/session";
+import { useT } from "@/lib/i18n";
 
 /** A tag for the takes that aren't like the rest: the first play (sung while the song was learned), or sung blind.
  *  Nothing for the usual take. */
-export default function TakeTags({ t }: { t: Pick<TakeSummary, "mode" | "blind"> }) {
-  const tag = t.mode === "learn" ? "First play" : t.blind ? "Blind" : null;
+export default function TakeTags({ t: tk }: { t: Pick<TakeSummary, "mode" | "blind"> }) {
+  const t = useT();
+  const tag = tk.mode === "learn" ? t("takeTags.firstPlay") : tk.blind ? t("takeTags.blind") : null;
   return tag ? <span className="rounded-full bg-white/6 px-1.5 py-px text-[10px] font-medium text-ink-300">{tag}</span> : null;
 }
 

@@ -2,7 +2,10 @@
 //! with the singer) is forced-aligned on the separated lead vocal with a speech model (wav2vec2, English
 //! characters), words are split into syllables (CMU pronouncing dictionary counts, hyphenation for the text),
 //! each syllable starts where its first letter was heard, and gets the singer's pitch over it. Port of an
-//! earlier Python prototype.
+//! earlier Python prototype. [lyrics-ml] Spanish, Portuguese, Italian, French and German lyrics (lang.rs detects
+//! the language from the text) have their syllables counted and split by their own spelling rules; a song in
+//! another script (Han, Kana, Hangul, Devanagari...) is left with LRCLIB's lines and no bars, and the word timer
+//! isn't run on it at all (lang::alignable).
 use std::collections::HashMap;
 
 use hyphenation::{Hyphenator, Language, Load, Standard};
@@ -27,8 +30,16 @@ impl Syllabifier {
         Syllabifier { counts, hyph: Standard::from_embedded(Language::EnglishUS).expect("hyphenation patterns") }
     }
 
+    /// A word's syllables in `lang`: English as `split` (unchanged); the other languages by lang::syllables.
+    pub fn split_in(&self, word: &str, lang: crate::lang::Lang) -> Vec<String> {
+        match lang {
+            crate::lang::Lang::En => self.split(word),
+            other => crate::lang::syllables(word, other),
+        }
+    }
+
     /// "beautiful" -> ["beau", "ti", "ful"]: the number of syllables from the dictionary (or vowel groups),
-    /// the split points from hyphenation, merged or split to match the count.
+    /// the split points from hyphenation, merged or split to match the count. (English.)
     pub fn split(&self, word: &str) -> Vec<String> {
         let w: String = word.to_lowercase().chars().filter(|c| c.is_ascii_lowercase() || *c == '\'').collect();
         let k = self.counts.get(&w).map(|k| *k as usize).unwrap_or_else(|| {
@@ -69,18 +80,34 @@ impl Syllabifier {
 
 pub struct WordAligner {
     session: Session,
+    /// on DirectML (Windows): how to go to the CPU should a run fail there
+    gpu: Option<crate::gpu::Fallback>,
 }
 
 impl WordAligner {
     pub fn load(path: &std::path::Path, threads: usize) -> Result<WordAligner, String> {
-        let session = Session::builder().and_then(|b| b.with_optimization_level(GraphOptimizationLevel::Level3))
-            .and_then(|b| b.with_intra_threads(threads)).and_then(crate::pitch::lean).and_then(|b| b.commit_from_file(path))
-            .map_err(|e| format!("loading {}: {e}", path.display()))?;
-        Ok(WordAligner { session })
+        let options = move |b: ort::session::builder::SessionBuilder| b.with_optimization_level(GraphOptimizationLevel::Level3)
+            .and_then(|b| b.with_intra_threads(threads)).and_then(crate::pitch::lean);
+        let loading = |e: ort::Error| format!("loading {}: {e}", path.display());
+        // (on Windows on DirectML when it can be: gpu.rs)
+        let (session, gpu) = crate::gpu::load("words", path, options).map_err(loading)?;
+        Ok(WordAligner { session, gpu })
     }
 
     /// Log-probabilities (frames × 29 characters) for 16 kHz audio, and seconds per frame.
     fn logprobs(&mut self, audio: &[f32]) -> Result<(Vec<f32>, f64), String> {
+        let r = self.logprobs_here(audio);
+        // (on the CPU from now on, if it failed on DirectML)
+        if let Err(e) = &r {
+            if let Some(f) = self.gpu.take() {
+                self.session = f.to_cpu(e).map_err(|e| e.to_string())?;
+                return self.logprobs_here(audio);
+            }
+        }
+        r
+    }
+
+    fn logprobs_here(&mut self, audio: &[f32]) -> Result<(Vec<f32>, f64), String> {
         let x = ndarray::Array2::from_shape_vec((1, audio.len()), audio.to_vec()).map_err(|e| e.to_string())?;
         let out = self.session.run(ort::inputs!["audio" => ort::value::Tensor::from_array(x).map_err(|e| e.to_string())?])
             .map_err(|e| e.to_string())?;
@@ -109,12 +136,68 @@ pub struct Inputs<'a> {
 
 /// A lyric line's words without bracketed parts (backing vocals sung over the lead).
 fn lead_words(text: &str) -> Vec<String> {
+    lead_words_with(text, fold_on())
+}
+
+fn lead_words_with(text: &str, fold: bool) -> Vec<String> {
     let mut clean = String::new();
     let mut depth = 0;
     for c in text.chars() {
         match c { '(' => depth += 1, ')' => { depth = 0usize.max(depth - 1) }, _ if depth == 0 => clean.push(c), _ => {} }
     }
-    clean.split_whitespace().filter(|w| w.chars().any(|c| c.is_ascii_alphabetic())).map(str::to_string).collect()
+    clean.split_whitespace().filter(|w| w.chars().any(|c| c.is_ascii_alphabetic()) || (fold && fold_upper(w).chars().any(|c| c.is_ascii_uppercase())))
+        .map(str::to_string).collect()
+}
+
+/// [latin-timing] Accented Latin letters are folded to A-Z before the English aligner sees them ("corazón" ->
+/// CORAZON, "Straße" -> STRASSE, "cœur" -> COEUR); the lab measured this harmless for Spanish and German and a
+/// little better for French (bench/align/ml_score.py). English lyrics are untouched (an occasional "café" becomes
+/// CAFE rather than CAF). ONKEY_FOLD=0 turns it off: accented letters are dropped (CORAZN), as before 1 Nov 2026.
+fn fold_on() -> bool {
+    static ON: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+    *ON.get_or_init(|| crate::devtest::knob!("ONKEY_FOLD").as_deref() != Some("0"))   // (a dev-build knob: always on in a release)
+}
+
+/// A word in upper case with diacritics folded to A-Z (other characters kept as they are).
+fn fold_upper(w: &str) -> String {
+    let mut out = String::with_capacity(w.len());
+    for c in w.to_uppercase().chars() {
+        match c {
+            'Á' | 'À' | 'Â' | 'Ä' | 'Ã' | 'Å' | 'Ā' | 'Ă' | 'Ą' => out.push('A'),
+            'Æ' => out.push_str("AE"),
+            'Ç' | 'Ć' | 'Č' => out.push('C'),
+            'Ď' | 'Đ' => out.push('D'),
+            'É' | 'È' | 'Ê' | 'Ë' | 'Ē' | 'Ė' | 'Ę' | 'Ě' => out.push('E'),
+            'Í' | 'Ì' | 'Î' | 'Ï' | 'Ī' | 'Į' => out.push('I'),
+            'Ł' => out.push('L'),
+            'Ñ' | 'Ń' | 'Ň' => out.push('N'),
+            'Ó' | 'Ò' | 'Ô' | 'Ö' | 'Õ' | 'Ø' | 'Ō' | 'Ő' => out.push('O'),
+            'Œ' => out.push_str("OE"),
+            'Ř' => out.push('R'),
+            'Ś' | 'Š' | 'Ş' => out.push('S'),
+            'ẞ' => out.push_str("SS"),
+            'Ť' | 'Ţ' => out.push('T'),
+            'Ú' | 'Ù' | 'Û' | 'Ü' | 'Ū' | 'Ů' | 'Ű' => out.push('U'),
+            'Ý' | 'Ÿ' => out.push('Y'),
+            'Ź' | 'Ż' | 'Ž' => out.push('Z'),
+            c => out.push(c),
+        }
+    }
+    out
+}
+
+/// A word as the aligner's letters see it: upper case, accents folded to A-Z (unless ONKEY_FOLD=0).
+fn upper(w: &str) -> String {
+    if fold_on() { fold_upper(w) } else { w.to_uppercase() }
+}
+
+/// The letters a syllable gives the aligner (counted like the tokens: A-Z and the apostrophe).
+fn letter_count(p: &str) -> usize {
+    if fold_on() {
+        fold_upper(p).chars().filter(|c| c.is_ascii_uppercase() || *c == '\'').count()
+    } else {
+        p.chars().filter(|c| c.is_ascii_alphabetic() || *c == '\'').count()
+    }
 }
 
 /// Where each lyric line is really sung: the whole song's lyrics forced-aligned at once on the lead vocal.
@@ -192,7 +275,7 @@ fn place_on(logp: &[f32], times: &[f64], (t0, t1): (f64, f64), lyrics: &[(f64, S
         }
         let from = toks.len();
         for (wi, w) in lead_words(text).iter().enumerate() {
-            let cs: Vec<usize> = w.to_uppercase().chars().filter_map(|c| idx.get(&c).copied()).filter(|&c| c > 1).collect();
+            let cs: Vec<usize> = upper(w).chars().filter_map(|c| idx.get(&c).copied()).filter(|&c| c > 1).collect();
             if cs.is_empty() {
                 continue;
             }
@@ -386,7 +469,7 @@ pub fn line_confidence(aligner: &mut WordAligner, vocal16: &[f32], song_offset: 
     }
     let mut toks = Vec::new();
     for w in lead_words(text) {
-        let cs: Vec<usize> = w.to_uppercase().chars().filter_map(|c| idx.get(&c).copied()).filter(|&c| c > 1).collect();
+        let cs: Vec<usize> = upper(&w).chars().filter_map(|c| idx.get(&c).copied()).filter(|&c| c > 1).collect();
         if cs.is_empty() {
             continue;
         }
@@ -453,6 +536,12 @@ pub fn line_up_live(aligner: &mut WordAligner, vocal16: &[f32], song_offset: f64
     // nothing to hear yet (an intro: no line due within 12 s of the window, however far off LRCLIB is): no work
     if !given.iter().any(|(t, s)| !s.trim().is_empty() && t + prior > off - 12.0 && t + prior < end + 12.0) {
         trace("no line due in the window".into());
+        return None;
+    }
+    // lyrics in another script (Mandarin, Japanese, Korean...): the English word timer can't hear them, and
+    // LRCLIB's times are kept as they are, so no model pass (lang::alignable)
+    if !crate::lang::alignable(given) {
+        trace("lyrics aren't in Latin letters".into());
         return None;
     }
     let Some((logp, times)) = song_logprobs(aligner, &vocal16[from..], off) else {
@@ -571,6 +660,7 @@ pub fn pace(lyrics: &[(f64, String)], heard: &Heard) -> Option<f64> {
     static SYL: std::sync::Mutex<Option<Syllabifier>> = std::sync::Mutex::new(None);
     let mut g = SYL.lock().unwrap();
     let syl = g.get_or_insert_with(Syllabifier::new);
+    let langs = crate::lang::line_langs(lyrics);
     let mut steps: Vec<f32> = Vec::new();
     for (i, h) in heard.iter().enumerate() {
         let Some(h) = h else { continue };
@@ -584,7 +674,7 @@ pub fn pace(lyrics: &[(f64, String)], heard: &Heard) -> Option<f64> {
         }
         starts.sort_by_key(|w| w.0);
         for p in starts.windows(2) {
-            let n = words.get(p[0].0).map_or(1, |w| syl.split(w).len().max(1));
+            let n = words.get(p[0].0).map_or(1, |w| syl.split_in(w, langs[i]).len().max(1));
             let d = p[1].1 - p[0].1;
             if p[1].0 == p[0].0 + 1 && d > 0.0 && d < 3.0 {
                 steps.push((d / n as f64) as f32);
@@ -622,6 +712,12 @@ pub fn make(aligner: &mut WordAligner, syl: &Syllabifier, inp: &Inputs) -> Vec<S
     let voiced: Vec<f32> = inp.line.iter().copied().filter(|v| !v.is_nan()).collect();
     let register = if voiced.is_empty() { 60.0 } else { median(&mut voiced.clone()) };
     let mut bars: Vec<(i64, i64, Option<f32>, String)> = Vec::new();
+    // the language of each line (lang.rs): how its words split into syllables (ONKEY_SYL_LANG=en: every line as
+    // English, the way it was before [lyrics-ml], for the lab to compare: examples/barsml)
+    let langs = match crate::devtest::knob!("ONKEY_SYL_LANG").as_deref() {
+        Some("en") => vec![crate::lang::Lang::En; inp.lyrics.len()],
+        _ => crate::lang::line_langs(inp.lyrics),
+    };
     for (i, (t, text)) in inp.lyrics.iter().enumerate() {
         crate::progress::advance(i, inp.lyrics.len());     // (the window's progress bar)
         // bracketed parts are backing vocals sung over the lead: no bars for them
@@ -653,11 +749,10 @@ pub fn make(aligner: &mut WordAligner, syl: &Syllabifier, inp: &Inputs) -> Vec<S
                 if s0 < 0 || s1 as usize > inp.vocal16.len() || s1 - s0 < 8000 {
                     return None;
                 }
-                let (logp, ratio) = aligner.logprobs(&inp.vocal16[s0 as usize..s1 as usize]).ok()?;
                 let mut toks = Vec::new();
                 let mut owners: Vec<(usize, usize)> = Vec::new();      // (word, letter index within the word)
                 for (wi, w) in words.iter().enumerate() {
-                    let cs: Vec<usize> = w.to_uppercase().chars().filter_map(|c| idx.get(&c).copied()).filter(|&c| c > 1).collect();
+                    let cs: Vec<usize> = upper(w).chars().filter_map(|c| idx.get(&c).copied()).filter(|&c| c > 1).collect();
                     if cs.is_empty() {
                         continue;
                     }
@@ -670,6 +765,11 @@ pub fn make(aligner: &mut WordAligner, syl: &Syllabifier, inp: &Inputs) -> Vec<S
                         owners.push((wi, li));
                     }
                 }
+                // (no letter the timer knows, as in a line in another script: no model run for it)
+                if toks.is_empty() {
+                    return None;
+                }
+                let (logp, ratio) = aligner.logprobs(&inp.vocal16[s0 as usize..s1 as usize]).ok()?;
                 let spans = crate::ctc::align(&logp, LABELS.len(), &toks, 0)?;
                 let mut wspan: HashMap<usize, (f64, f64)> = HashMap::new();
                 let mut lstart: HashMap<(usize, usize), f64> = HashMap::new();
@@ -692,13 +792,13 @@ pub fn make(aligner: &mut WordAligner, syl: &Syllabifier, inp: &Inputs) -> Vec<S
             // a word lasts until the next word starts, if that's soon (singers hold the vowel)
             let nxt0 = wspan.iter().filter(|(k, _)| **k > wi).map(|(_, v)| v.0).fold(w1 + 0.4, f64::min);
             w1 = w1.max(nxt0.min(w1 + 0.8));
-            let parts = syl.split(w);
+            let parts = syl.split_in(w, langs[i]);
             let f0 = (w0 * 100.0) as i64;
             let f1 = (w1 * 100.0) as i64;
             let seg: Vec<f32> = (f0..f1).map(|f| inp.line.get(f as usize).copied().unwrap_or(f32::NAN)).collect();
             let len = seg.len() as i64;
             // where each later syllable starts: when the aligner heard its first letter; else even
-            let letters: Vec<usize> = parts.iter().map(|p| p.chars().filter(|c| c.is_ascii_alphabetic() || *c == '\'').count()).collect();
+            let letters: Vec<usize> = parts.iter().map(|p| letter_count(p)).collect();
             let mut cuts = Vec::new();
             let mut pos = 0;
             for k in 1..parts.len() {
@@ -921,8 +1021,9 @@ pub fn refine_with_notes_where_heard(bars: &[SyllableBar], notes: &[(f64, f64, f
 /// syllables; elsewhere the bars stay as they are.
 pub fn relabel(bars: &mut [(i64, i64, i32, String)], lyrics: &[(f64, String)]) {
     let syl = Syllabifier::new();
+    let langs = crate::lang::line_langs(lyrics);
     for (i, (t, text)) in lyrics.iter().enumerate() {
-        let parts: Vec<String> = lead_words(text).iter().flat_map(|w| syl.split(w)).collect();
+        let parts: Vec<String> = lead_words(text).iter().flat_map(|w| syl.split_in(w, langs[i])).collect();
         if parts.is_empty() {
             continue;
         }
@@ -971,6 +1072,142 @@ pub fn merge_play(old_lyrics: &[(f64, String)], new_lyrics: &[(f64, String)], pl
 #[cfg(test)]
 mod tests {
     use super::keep_shown;
+
+    /// [lyrics-ml] The English syllable splitter as it was before the languages work (1 Nov 2026), kept here so
+    /// the regression below can show the English path is byte-identical over the whole dictionary.
+    fn old_split(syl: &super::Syllabifier, word: &str) -> Vec<String> {
+        use hyphenation::Hyphenator;
+        let w: String = word.to_lowercase().chars().filter(|c| c.is_ascii_lowercase() || *c == '\'').collect();
+        let k = syl.counts.get(&w).map(|k| *k as usize).unwrap_or_else(|| {
+            let groups = w.split(|c: char| !"aeiouy".contains(c)).filter(|g| !g.is_empty()).count();
+            (groups - usize::from(w.ends_with('e') && w.len() > 3 && groups > 1)).max(1)
+        });
+        let lower = word.to_lowercase();
+        let mut parts: Vec<String> = if lower.len() == word.len() {
+            let h = syl.hyph.hyphenate(&lower);
+            let mut v = Vec::new();
+            let mut last = 0;
+            for &b in &h.breaks {
+                v.push(word[last..b].to_string());
+                last = b;
+            }
+            v.push(word[last..].to_string());
+            v
+        } else {
+            vec![word.to_string()]
+        };
+        while parts.len() > k {
+            let last = parts.pop().unwrap();
+            parts.last_mut().unwrap().push_str(&last);
+        }
+        while parts.len() < k {
+            let i = (0..parts.len()).max_by_key(|&j| parts[j].chars().count()).unwrap();
+            let p: Vec<char> = parts[i].chars().collect();
+            if p.len() < 2 {
+                break;
+            }
+            let h = p.len() / 2;
+            let (a, b): (String, String) = (p[..h].iter().collect(), p[h..].iter().collect());
+            parts.splice(i..=i, [a, b]);
+        }
+        parts
+    }
+
+    #[test]
+    fn english_syllables_are_as_they_were_over_the_whole_dictionary() {
+        let syl = super::Syllabifier::new();
+        let mut n = 0;
+        for w in include_str!("../data/syllables-en.txt").lines().filter_map(|l| l.split_once(' ').map(|p| p.0)) {
+            let want = old_split(&syl, w);
+            assert_eq!(syl.split(w), want, "{w}");
+            assert_eq!(syl.split_in(w, crate::lang::Lang::En), want, "{w}");
+            n += 1;
+        }
+        assert!(n > 100_000, "{n} words");
+        // and words as lyrics have them (capitals, punctuation, accents, contractions)
+        for w in ["Beautiful,", "DON'T", "café", "whoa-oh", "I'm", "ev'ry", "Yeah!", "x", "---", "corazón"] {
+            assert_eq!(syl.split(w), old_split(&syl, w), "{w}");
+        }
+    }
+
+    #[test]
+    fn other_languages_split_by_their_own_rules() {
+        use crate::lang::Lang;
+        let syl = super::Syllabifier::new();
+        // the English path has these wrong (one syllable: the dictionary's "come", a final e dropped, accents lost)
+        assert_eq!(syl.split("come").len(), 1);
+        assert_eq!(syl.split("vive").len(), 1);
+        assert_eq!(syl.split_in("come", Lang::Es), vec!["co", "me"]);
+        assert_eq!(syl.split_in("vive", Lang::Es), vec!["vi", "ve"]);
+        assert_eq!(syl.split_in("amore", Lang::It), vec!["a", "mo", "re"]);
+        assert_eq!(syl.split_in("Liebe", Lang::De), vec!["Lie", "be"]);
+        assert_eq!(syl.split_in("coração", Lang::Pt), vec!["co", "ra", "ção"]);
+        assert_eq!(syl.split_in("chanson", Lang::Fr), vec!["chan", "son"]);
+        // the letters a syllable gives the aligner add up to the word's, however it's split (folding included)
+        for (w, l) in [("Straße", Lang::De), ("cœur,", Lang::Fr), ("corazón", Lang::Es), ("você", Lang::Pt), ("perché", Lang::It)] {
+            let parts = syl.split_in(w, l);
+            assert_eq!(parts.iter().map(|p| super::letter_count(p)).sum::<usize>(), super::letter_count(w), "{w}");
+            assert_eq!(parts.concat(), w);
+        }
+    }
+
+    #[test]
+    fn folds_accented_latin_letters() {
+        use super::fold_upper;
+        assert_eq!(fold_upper("corazón"), "CORAZON");
+        assert_eq!(fold_upper("Niño"), "NINO");
+        assert_eq!(fold_upper("Straße"), "STRASSE");
+        assert_eq!(fold_upper("über"), "UBER");
+        assert_eq!(fold_upper("garçon"), "GARCON");
+        assert_eq!(fold_upper("cœur"), "COEUR");
+        assert_eq!(fold_upper("Æble"), "AEBLE");
+        assert_eq!(fold_upper("smørbrød"), "SMORBROD");
+        assert_eq!(fold_upper("Åse"), "ASE");
+        assert_eq!(fold_upper("être,"), "ETRE,");
+        assert_eq!(fold_upper("l'été"), "L'ETE");
+        assert_eq!(fold_upper("plain"), "PLAIN");
+        // every folded letter is one the English aligner has
+        let all = "áàâäãåāăąæçćčďđéèêëēėęěíìîïīįłñńňóòôöõøōőœřśšşßťţúùûüūůűýÿźżž";
+        assert!(fold_upper(all).chars().all(|c| c.is_ascii_uppercase()), "{}", fold_upper(all));
+        assert!(fold_upper(&all.to_uppercase()).chars().all(|c| c.is_ascii_uppercase()));
+    }
+
+    #[test]
+    fn folded_lead_words_keep_accent_only_words() {
+        use super::lead_words_with;
+        assert_eq!(lead_words_with("voy à la mer (ó)", false), vec!["voy", "la", "mer"]);
+        assert_eq!(lead_words_with("voy à la mer (ó)", true), vec!["voy", "à", "la", "mer"]);
+        assert_eq!(lead_words_with("¡Óyeme tiburón!", true), vec!["¡Óyeme", "tiburón!"]);
+        assert_eq!(lead_words_with("- 123 é", true), vec!["é"]);
+    }
+
+    #[test]
+    fn folding_is_on_unless_turned_off() {
+        // the default (ONKEY_FOLD unset, or anything but "0"): on
+        if crate::devtest::knob!("ONKEY_FOLD").as_deref() != Some("0") {
+            assert!(super::fold_on());
+            assert_eq!(super::upper("corazón"), "CORAZON");
+            assert_eq!(super::letter_count("ñón"), 3);
+        }
+    }
+
+    #[test]
+    fn folding_leaves_english_as_it_was() {
+        use super::{fold_upper, lead_words_with};
+        // plain English (A-Z, apostrophes, punctuation): folded and unfolded are the same letters, words and counts
+        let line = "Oh, you and I don't know (hey) what's goin' on - it's 2 AM, baby!";
+        for w in line.split_whitespace() {
+            assert_eq!(fold_upper(w), w.to_uppercase(), "{w}");
+            assert_eq!(fold_upper(w).chars().filter(|c| c.is_ascii_uppercase() || *c == '\'').count(),
+                       w.chars().filter(|c| c.is_ascii_alphabetic() || *c == '\'').count(), "{w}");
+        }
+        assert_eq!(lead_words_with(line, true), lead_words_with(line, false));
+        // the odd accented word in English keeps all its letters rather than losing the accented one
+        assert_eq!(fold_upper("café"), "CAFE");
+        assert_eq!(fold_upper("naïve"), "NAIVE");
+        assert_eq!(fold_upper("fiancée"), "FIANCEE");
+        assert_eq!(lead_words_with("at the café, naïve", true), vec!["at", "the", "café,", "naïve"]);
+    }
 
     #[test]
     fn lines_opening_on_a_sung_vowel() {

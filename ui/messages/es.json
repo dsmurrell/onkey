@@ -1,0 +1,1504 @@
+{
+  "app": {
+    "title": "OnKey",
+    "description": "Un entrenador de canto: aprende a cantar las canciones que te gustan, con la música que ya escuchas."
+  },
+  "settings": {
+    "language": {
+      "title": "Idioma",
+      "label": "Idioma",
+      "sub": "El idioma en que OnKey te habla. Automático sigue el idioma de tu equipo.",
+      "autoNamed": "Automático ({language})",
+      "autoOs": "{language} ({os, select, mac {el idioma de tu Mac} other {el idioma de tu PC}})",
+      "early": "Preliminar",
+      "earlyNote": "Por ahora, las letras de las canciones en {language} se muestran sin sincronía palabra por palabra. ¿Quieres ayudar? <link>Mejora esta traducción.</link>",
+      "credits": "Traducido por {names}"
+    },
+    "title": "Ajustes",
+    "saveFailed": "No se pudo guardar el ajuste.",
+    "audio": {
+      "title": "Audio",
+      "mic": {
+        "label": "Micrófono",
+        "now": "Ahora: {name}.",
+        "none": "No hay ningún micrófono conectado.",
+        "nowMissingMac": "Ahora: {name}. El que elegiste no está conectado, así que OnKey usa la entrada propia de la Mac hasta que lo esté.",
+        "nowMissingPc": "Ahora: {name}. El que elegiste no está conectado, así que OnKey usa {input} hasta que lo esté.",
+        "noneMissingMac": "<warn>No hay ningún micrófono conectado.</warn> El que elegiste no está conectado, así que OnKey usa la entrada propia de la Mac hasta que lo esté.",
+        "noneMissingPc": "<warn>No hay ningún micrófono conectado.</warn> El que elegiste no está conectado, así que OnKey usa {input} hasta que lo esté.",
+        "moreMac": "Automático usa la entrada de tu Mac (Configuración del Sistema → Sonido), pero no el micrófono de unos auriculares Bluetooth mientras la Mac tenga el suyo, para que la música suene en ellos con toda su calidad. La prueba de micrófono de la configuración inicial y tus tomas usan el mismo. Los dispositivos virtuales que añaden otras apps (Krisp, Loopback, BlackHole, Zoom, Teams) aparecen aparte: elige uno solo si quieres cantar a través de él a propósito, porque le da a OnKey el sonido de esa app, no el de tu micrófono.",
+        "morePc": "Automático usa {input} ({soundInput}). La prueba de micrófono de la configuración inicial y tus tomas usan el mismo.",
+        "automatic": "Automático",
+        "virtual": "Virtuales (de otras apps)",
+        "notConnected": "No conectado"
+      },
+      "output": {
+        "label": "Salida",
+        "now": "Ahora: {name}. Cámbiala en {os, select, mac {Configuración del Sistema → Sonido} other {{sound}}}."
+      },
+      "setup": {
+        "title": "Repetir la configuración inicial",
+        "sub": "Los permisos y la prueba de micrófono, como el primer día."
+      }
+    },
+    "shortcuts": {
+      "title": "Atajos de teclado",
+      "space": "Espacio",
+      "pause": "Pausar o reanudar la escucha (en cualquier página)",
+      "playPause": "Reproducir o pausar",
+      "restart": "Empezar la canción de nuevo",
+      "previous": "Canción anterior",
+      "next": "Canción siguiente, o saltar a la parte cantada",
+      "blind": "Mostrar u ocultar las notas (toma a ciegas)",
+      "favourite": "Marcar la canción como favorita",
+      "mini": "Modo mini: una barra de letras pequeña sobre las demás apps"
+    },
+    "updates": {
+      "version": "OnKey {version}",
+      "unsupportedMac": "Versión de desarrollo: no se actualiza sola.",
+      "unsupportedPc": "Esta versión de prueba no se actualiza sola: cuando haya una nueva, instálala encima.",
+      "waiting": "OnKey {version} se instala cuando termine esta canción; después, OnKey se reinicia.",
+      "ready": "Ya se descargó OnKey {version}. Reinicia para actualizar, o se instala cuando salgas.",
+      "downloading": "Descargando OnKey {version}…",
+      "checking": "Comprobando…",
+      "official": "Ya salió OnKey {version} del proyecto original, en singonkey.app. Esta copia se compiló desde el código fuente, así que no se actualiza sola.",
+      "current": "Tienes la versión más reciente.",
+      "currentSource": "Tienes la versión más reciente. Esta copia se compiló desde el código fuente: avisa cuando sale una versión nueva, pero no se actualiza sola.",
+      "updateFailed": "No se pudo actualizar a OnKey {version}. Comprobar ahora lo vuelve a intentar.",
+      "updateFailedWhy": "No se pudo actualizar a OnKey {version} ({error}). Comprobar ahora lo vuelve a intentar.",
+      "checkFailed": "No se pudieron buscar actualizaciones en este momento.",
+      "checkFailedWhy": "No se pudieron buscar actualizaciones en este momento ({error}).",
+      "restart": "Reiniciar para actualizar",
+      "checkNow": "Comprobar ahora",
+      "auto": {
+        "title": "Buscar actualizaciones automáticamente",
+        "sub": "Una vez al día, en segundo plano. Nunca interrumpe una canción.",
+        "more": "OnKey le pide a GitHub una versión más nueva y la descarga en segundo plano. Se instala cuando reinicias o sales."
+      }
+    },
+    "seeHow": {
+      "show": "Ver cómo se ve",
+      "hide": "Ocultar"
+    },
+    "more": {
+      "more": "Más",
+      "less": "Menos"
+    },
+    "scoring": {
+      "title": "Puntuación",
+      "label": "Nivel de puntuación",
+      "more": "El vibrato no es problema: tu afinación se juzga por el centro de su oscilación. Todas las puntuaciones de OnKey se muestran en este nivel, también tus tomas anteriores: se puntúan de nuevo a partir de tu voz tal como se guardó.",
+      "moreRelaxed": "Todas las puntuaciones de OnKey se muestran en este nivel, también tus tomas anteriores: se puntúan de nuevo a partir de tu voz tal como se guardó."
+    },
+    "control": {
+      "title": "Dejar que OnKey controle",
+      "introMac": "Activado por defecto: OnKey lee qué se reproduce y en qué punto (posiciones exactas, al instante), y puede reproducir, pausar, avanzar y empezar canciones. Nada más. macOS lo pregunta una vez por cada app.",
+      "introPc": "Activado por defecto: OnKey lee qué se reproduce y en qué punto, y puede reproducir, pausar, avanzar y empezar canciones. Nada más.",
+      "introAsking": "OnKey sigue a Spotify y Apple Music preguntándoles, así que ya las controla.",
+      "spotify": {
+        "title": "Spotify",
+        "missing": "Spotify no está instalado en {os, select, mac {esta Mac} other {esta PC}}.",
+        "sub": "Empezar, pausar y saltar canciones en Spotify desde OnKey."
+      },
+      "music": {
+        "title": "Apple Music",
+        "missingMac": "La app Música no está en esta Mac.",
+        "missingPc": "La app Apple Music no está en esta PC.",
+        "subMac": "Lo mismo para la app Música (las canciones de tu biblioteca).",
+        "subPc": "Lo mismo para la app Apple Music."
+      },
+      "youtube": {
+        "title": "YouTube en tu navegador",
+        "badge": "Permiso mayor",
+        "subMac": "Leer y controlar la pestaña de YouTube en Chrome, Brave, Edge o Safari.",
+        "moreMac": "Necesita que “Permitir JavaScript de eventos de Apple” esté activado en el navegador. Mientras esté activado (y durante 10 minutos después de abrir una canción de YouTube desde OnKey), OnKey escucha el sonido de tu navegador, sea el que sea, llamadas y pódcasts incluidos: el sonido que no reconoce puede ir a Shazam como una huella corta (nunca el audio), salvo que Shazam esté desactivado más abajo.",
+        "subPc": "Seguir las canciones que suenan en Chrome, Edge, Firefox, Brave, Opera o Vivaldi.",
+        "morePc": "A partir de lo que el navegador le dice a {os} que se reproduce; OnKey puede reproducirlas, pausarlas y avanzarlas allí. Hasta que una canción esté aprendida, su posición puede ser algo menos exacta que la de Spotify."
+      },
+      "listenOnlyMac": "OnKey solo escucha: sigue las canciones por su sonido y no toca ninguna app. Las posiciones son algo menos exactas, y no puede empezar ni reiniciar canciones. Desactivar una app aquí no retira el permiso de macOS: eso está en Configuración del Sistema → Privacidad y seguridad → Automatización.",
+      "listenOnlyPc": "OnKey solo escucha: sigue las canciones por su sonido y no toca ninguna app. En {os} eso significa solo canciones que ya aprendió: las nuevas las nombra {apps} mientras estén activadas aquí.",
+      "allOff": "Con todo esto desactivado, OnKey sigue las canciones únicamente por su sonido."
+    },
+    "naming": {
+      "title": "Nombrar canciones",
+      "pc": "Las canciones que ya cantaste se reconocen en esta PC por su sonido. Las nuevas las nombran Spotify, Apple Music o tu navegador (con YouTube activado), a partir de lo que dicen que se reproduce. No se envía nada a ningún sitio para nombrar una canción.",
+      "shazam": {
+        "title": "Usar Shazam para nombrar canciones nuevas",
+        "sub": "Nombra las canciones nuevas a partir de una huella corta del sonido, no del audio.",
+        "more": "Las canciones que ya cantaste se reconocen en esta Mac. Las nuevas de Spotify y Apple Music las nombra la propia app mientras OnKey pueda controlarla; Shazam nombra el resto. Desactivado, no se envía nada a Shazam y por el sonido solo se reconocen las canciones ya aprendidas en esta Mac. Las carátulas se siguen buscando por artista y título en el catálogo de iTunes de Apple.",
+        "warn": "Con Spotify y Apple Music desactivados, las canciones nuevas solo se pueden aprender con Shazam activado. Las ya aprendidas siguen funcionando."
+      }
+    },
+    "lyrics": {
+      "title": "Letras",
+      "show": {
+        "title": "Mostrar letras",
+        "sub": "De LRCLIB, una base de datos de letras gratuita y comunitaria.",
+        "more": "Desactivado, OnKey no le pide letras a LRCLIB y cantas solo con las notas: la guía de afinación y tu puntuación funcionan igual."
+      }
+    },
+    "voice": {
+      "title": "Tu voz",
+      "breaks": {
+        "title": "Recordarme descansar la voz",
+        "sub": "Un aviso discreto para hacer una pausa tras unos 35 minutos cantando.",
+        "more": "Una pausa de 20 minutos sin cantar vuelve a empezar la cuenta."
+      },
+      "fadeGuide": {
+        "title": "Atenuar la guía en las canciones que ya sabes",
+        "sub": "La línea de tu voz se atenúa mientras estás en la nota, para que te escuches más a ti.",
+        "more": "Empieza cuando ya cantaste bien una canción (tu mejor puntuación de 80 o más, o tus dos últimas tomas de 75 o más). Cuanto mejor la sabes, más tenue se vuelve; a más de un semitono de la nota, se ve como siempre. Las notas se quedan siempre, y puedes recuperar la guía completa en cualquier toma."
+      }
+    },
+    "performance": {
+      "title": "Rendimiento",
+      "battery": {
+        "title": "Ahorrar batería al cantar",
+        "sub": "Con batería, las notas se dibujan un poco menos a menudo. Sigue siendo fluido.",
+        "more": "30 veces por segundo en vez de 60: la mitad de trabajo de dibujo para tu Mac."
+      },
+      "keepModels": {
+        "title": "Mantener listos los modelos de aprendizaje",
+        "sub": "Las canciones nuevas se aprenden más rápido, pero OnKey usa más memoria.",
+        "more": "Unos 1.5 GB más, también mientras cantas canciones que OnKey ya conoce. Desactivado, los modelos se cargan al aprender una canción nueva y se liberan después. Activado por defecto en {os, select, mac {Macs} other {PCs}} con 32 GB o más."
+      }
+    },
+    "about": {
+      "title": "Acerca de",
+      "report": {
+        "title": "Informar de un problema",
+        "subMac": "Guarda los registros y tiempos de OnKey en un zip para adjuntarlo a un issue de GitHub. Antes ves lo que contiene; sin letras ni audio, y no se sube nada.",
+        "subPc": "Guarda los registros y tiempos de OnKey en un solo zip en tu Escritorio, para adjuntarlo a un mensaje o a un issue de GitHub. Antes ves lo que contiene; sin letras ni audio, y no se sube nada."
+      },
+      "guides": {
+        "title": "Guías y ayuda",
+        "sub": "Cómo funciona OnKey, la puntuación, cómo resolver problemas y cantar con comodidad, en singonkey.app."
+      },
+      "discord": {
+        "title": "Unirse al Discord de OnKey",
+        "sub": "Haz preguntas, avisa de una canción que va desincronizada y propón ideas."
+      },
+      "madeBy": {
+        "title": "Hecho por Daniel Murrell",
+        "tagline": "Salvando de sí mismos a quienes cantan en la ducha desde 2026"
+      },
+      "fairUse": {
+        "title": "Usar OnKey con responsabilidad",
+        "sub": "Para qué sirve OnKey y cómo compartir tu voz sin compartir la música."
+      },
+      "licences": {
+        "title": "Licencias de código abierto",
+        "sub": "Los modelos, datos, fuentes y bibliotecas en que se basa OnKey, y sus licencias."
+      },
+      "footer": "Para practicar en casa. Lo que OnKey aprende se queda en {os, select, mac {esta Mac} other {esta PC}}: guárdalo para ti y no publiques tomas ni grabaciones de pantalla con la música incluida."
+    }
+  },
+  "music": {
+    "levels": {
+      "relaxed": {
+        "name": "Relajado",
+        "about": "Indulgente: puntuación completa hasta medio semitono. Ideal para principiantes y niños."
+      },
+      "steady": {
+        "name": "Firme",
+        "about": "Más exigente en afinación y tiempo, para quienes ya cantan casi siempre afinado."
+      },
+      "pro": {
+        "name": "Pro",
+        "about": "Estricto, para voces entrenadas: un cuarto de semitono para la puntuación completa."
+      }
+    },
+    "offBy": {
+      "cents": "{cents}¢ {dir, select, up {alto} other {bajo}}",
+      "octaves": "{count, plural, one {una octava} other {{count} octavas}} más {dir, select, up {alto} other {bajo}}, aproximadamente",
+      "semitones": "{count, plural, one {un semitono} other {{count} semitonos}} más {dir, select, up {alto} other {bajo}}, aproximadamente"
+    },
+    "scoreWord": {
+      "superb": "Magnífico",
+      "great": "Genial",
+      "good": "Bien",
+      "gettingThere": "Vas mejorando",
+      "keepAtIt": "Sigue practicando"
+    }
+  },
+  "platform": {
+    "linux": {
+      "os": "Linux",
+      "settings": "Ajustes de sonido",
+      "sound": "los ajustes de sonido de tu sistema",
+      "soundInput": "los ajustes de sonido de tu sistema → Entrada",
+      "defaultInput": "la entrada predeterminada del sistema",
+      "files": "tu gestor de archivos",
+      "filesThe": "el gestor de archivos",
+      "apps": "Spotify o YouTube en tu navegador"
+    },
+    "windows": {
+      "os": "Windows",
+      "settings": "Configuración de Windows",
+      "sound": "Configuración de Windows → Sistema → Sonido",
+      "soundInput": "Configuración de Windows → Sistema → Sonido → Entrada",
+      "defaultInput": "la entrada predeterminada de Windows",
+      "files": "el Explorador de archivos",
+      "filesThe": "el Explorador de archivos",
+      "apps": "Spotify, Apple Music o YouTube en tu navegador"
+    },
+    "setupStep": {
+      "welcome": "Bienvenida",
+      "permissions": "Permisos",
+      "musicApps": "Apps de música",
+      "micCheck": "Micrófono",
+      "ready": "Listo"
+    },
+    "savedFolder": {
+      "desktop": "tu Escritorio",
+      "home": "tu carpeta de inicio",
+      "named": "la carpeta {folder}"
+    }
+  },
+  "learn": {
+    "stage": {
+      "playing": "Aprendiendo mientras suena",
+      "waiting": "Esperando su turno",
+      "queued": "Esperando para aprender",
+      "paused": "En espera mientras cantas",
+      "separating": "Separando la voz",
+      "pitch": "Siguiendo la melodía",
+      "scoring": "Puntuando tu toma",
+      "words": "Sincronizando las palabras",
+      "bars": "Creando las barras de notas",
+      "notes": "Buscando cada nota",
+      "saving": "Guardando",
+      "other": "Aprendiendo"
+    },
+    "label": {
+      "queued": "Esperando para aprender",
+      "going": "Aprendiendo…",
+      "percent": "Aprendiendo… {pct} %"
+    }
+  },
+  "starting": {
+    "yourApp": "tu app de música",
+    "theSong": "la canción",
+    "noId": {
+      "title": "OnKey no puede empezar {song} en {app}",
+      "sub": "OnKey aún no conoce esta canción en {app} (la aprendió desde otra app, o escuchando). Ábrela en {app} y reprodúcela: OnKey la sigue, y a partir de entonces puede empezarla por ti."
+    },
+    "failed": {
+      "title": "No se pudo empezar {song} en {app}",
+      "subMusic": "OnKey puede empezar las canciones que están en tu biblioteca de Apple Music. Ábrela en Apple Music y reprodúcela allí: OnKey la sigue.",
+      "sub": "Ábrela en {app} y reprodúcela allí: OnKey la sigue."
+    },
+    "going": {
+      "title": "Empezando {song} en {app}…",
+      "sub": "El carril aparece en cuanto suena."
+    }
+  },
+  "errors": {
+    "deleteFailed": "No se pudo eliminar.",
+    "readFailed": "No se pudieron leer tus {what, select, takes {tomas} songs {canciones} other {{what}}}",
+    "reportsInApp": "Los informes se hacen en la app OnKey."
+  },
+  "sing": {
+    "header": {
+      "miniTitle": "Modo mini: una barra de letras pequeña que se queda sobre las demás apps (M)"
+    },
+    "learning": {
+      "badge": "Aprendiendo esta canción",
+      "title": "Tu toma a ciegas",
+      "body": "Canta sin pistas. La próxima vez verás venir cada nota.",
+      "scoreAfter": "<time>{clock}</time> · puntuación al terminar la canción"
+    },
+    "learningLine": {
+      "waiting": "Esperando para aprender <hl>{name}</hl>",
+      "learning": "Aprendiendo <hl>{name}</hl>: {stage}",
+      "stage": {
+        "playing": "aprendiendo mientras suena",
+        "waiting": "esperando su turno",
+        "queued": "esperando para aprender",
+        "paused": "en espera mientras cantas",
+        "separating": "separando la voz",
+        "pitch": "siguiendo la melodía",
+        "scoring": "puntuando tu toma",
+        "words": "sincronizando las palabras",
+        "bars": "creando las barras de notas",
+        "notes": "buscando cada nota",
+        "saving": "guardando",
+        "other": "aprendiendo"
+      }
+    },
+    "lineSub": {
+      "mac": {
+        "finding": "OnKey está nombrando la canción por su sonido. Tarda unos segundos, y la toma empieza desde el principio de la canción.",
+        "new_song": "OnKey está nombrando la siguiente canción. Su toma empieza desde el principio de la canción.",
+        "unnamed": "No es una canción que OnKey o Shazam conozcan. OnKey vuelve a preguntar cuando cambie el sonido.",
+        "no_shazam": "No se puede contactar con Shazam en este momento, así que solo se reconocen las canciones aprendidas en esta Mac. OnKey sigue intentándolo.",
+        "shazam_off": "Shazam está desactivado (Ajustes), así que solo por el sonido OnKey reconoce únicamente las canciones ya aprendidas en esta Mac. Activa Shazam para nombrar las nuevas.",
+        "podcast": "Reproduce una canción y OnKey la sigue.",
+        "stopped": "Detuviste su aprendizaje, así que OnKey la deja en paz. Reproduce otra canción y OnKey la sigue.",
+        "elsewhere": "OnKey oye lo que suena en esta Mac. Si se está reproduciendo en otro dispositivo (tu teléfono, un altavoz), cámbialo a esta Mac en el menú de dispositivos de la app."
+      },
+      "pc": {
+        "unnamed": "No es una canción que OnKey haya aprendido, y ninguna app de música ha dicho cuál es. OnKey vuelve a preguntar cuando cambie el sonido.",
+        "no_shazam": "OnKey aún no ha aprendido esta canción. En {os}, las canciones nuevas las nombra {apps} (con YouTube activado): reprodúcela allí y OnKey la aprende.",
+        "shazam_off": "OnKey aún no ha aprendido esta canción. En {os}, las canciones nuevas las nombra {apps} (con YouTube activado): reprodúcela allí y OnKey la aprende.",
+        "elsewhere": "OnKey oye lo que suena en esta PC. Si se está reproduciendo en otro dispositivo (tu teléfono, un altavoz), cámbialo a esta PC en el menú de dispositivos de la app."
+      }
+    },
+    "waiting": {
+      "title": {
+        "starting": "Iniciando OnKey…",
+        "gettingReady": "Preparando…",
+        "notASong": "No es una canción",
+        "stillListening": "Aún escuchando",
+        "idle": "Reproduce una canción y canta"
+      },
+      "sub": {
+        "connecting": "Conectando con el motor de {os, select, pc {esta PC} other {esta Mac}}.",
+        "listeningTo": "Escuchando {name}. El carril aparece en un momento.",
+        "idle": "En Spotify{youtube, select, yes {, Apple Music o YouTube} other { o Apple Music}}. OnKey la sigue, y cada canción se convierte en una toma que puedes revisar."
+      },
+      "openIn": "Abrir en {app}",
+      "notNow": "Ahora no",
+      "keys": {
+        "playPause": "<kbd>Espacio</kbd> reproducir / pausar",
+        "startOver": "<kbd>R</kbd> empezar de nuevo",
+        "skip": "<kbd>←</kbd><kbd>→</kbd> saltar",
+        "favourite": "<kbd>F</kbd> favorita"
+      },
+      "songsToTry": "Canciones para probar",
+      "youtube": {
+        "title": "YouTube y YouTube Music <badge>Experimental</badge>",
+        "turnOff": "Desactivar",
+        "turnOn": "Activar",
+        "pcOn": "Activado. OnKey sigue las canciones de tu navegador a partir de lo que este le dice a {os} que se reproduce.",
+        "pcOff": "Desactivado, así que las canciones que suenan en tu navegador no se detectan. Actívalo para cantar en Chrome, Edge, Firefox, Brave, Opera o Vivaldi.",
+        "macOn": "Activado. macOS pregunta una vez si OnKey puede controlar tu navegador, para poder leer en qué punto va el video.",
+        "macOff": "Desactivado, así que las canciones que suenan en tu navegador no se detectan. Actívalo para cantar en Chrome, Safari, Brave o Edge: macOS pregunta una vez si OnKey puede controlar el navegador."
+      }
+    },
+    "paused": {
+      "text": "La escucha está en pausa. Reanúdala para cantar.",
+      "resumeTitle": "Reanudar la escucha (⌘⇧P)",
+      "resume": "Reanudar"
+    },
+    "rename": {
+      "saveFailed": "No se pudo guardar el nombre.",
+      "buttonTitle": "¿Nombre equivocado? Corrige el artista y el título (se usan para buscar la letra)",
+      "title": "Corregir el nombre de la canción",
+      "about": "Leído del video de YouTube. OnKey busca la letra con este nombre.",
+      "artist": "Artista",
+      "songTitle": "Título",
+      "cancel": "Cancelar",
+      "save": "Guardar"
+    },
+    "notices": {
+      "dismiss": "Descartar",
+      "openWindowsSettings": "Abrir Configuración de Windows",
+      "openSystemSettings": "Abrir Configuración del Sistema",
+      "mic": {
+        "title": "OnKey no oye tu micrófono",
+        "deniedPc": "Tu voz no se oye ni se puntúa hasta que pueda. En <b>Configuración de Windows → Privacidad y seguridad → Micrófono</b>, activa <b>Acceso al micrófono</b> y <b>Permitir que las aplicaciones de escritorio accedan al micrófono</b>.",
+        "deniedMac": "Tu voz no se oye ni se puntúa hasta que pueda. En <b>Configuración del Sistema → Privacidad y seguridad → Micrófono</b>, activa OnKey.",
+        "restrictedPc": "La configuración de esta PC no permite que OnKey use el micrófono. Pregunta a quien administra esta PC.",
+        "restrictedMac": "La configuración de tu Mac no permite que OnKey use el micrófono. Pregunta a quien administra esta Mac.",
+        "noneMac": "No hay ningún micrófono conectado, así que tu voz no se oye ni se puntúa. Conecta uno, o elige uno en <b>Configuración del Sistema → Sonido → Entrada</b>.",
+        "nonePc": "No hay ningún micrófono conectado, así que tu voz no se oye ni se puntúa. Conecta uno, o elige uno en <b>{soundInput}</b>."
+      },
+      "musicQuiet": {
+        "title": "El volumen de {app} está muy bajo",
+        "body": "OnKey no oye bien la canción{at, select, yes { ({app} está al {volume} %)} other {}}, así que tu voz no se puntúa. Sube el volumen de {app} y regula el sonido con el volumen de {os, select, pc {la PC} other {tu Mac}}."
+      },
+      "automation": {
+        "title": "OnKey no tiene permiso para controlar {app}",
+        "body": "{listening, select, yes {OnKey la sigue por el sonido, y allí no puede empezar, pausar ni saltar canciones.} other {Así que no sabe qué se reproduce allí.}} En <b>Configuración del Sistema → Privacidad y seguridad → Automatización → OnKey</b>, activa {app}{listening, select, yes {, o desactívala en los Ajustes de OnKey} other {}}."
+      },
+      "notAnswering": {
+        "title": "{app} no responde a OnKey",
+        "body": "Puede que macOS esté preguntando si OnKey puede controlar {app}, en una ventana escondida detrás de otras: búscala y elige <b>Permitir</b>. O activa {app} en <b>Configuración del Sistema → Privacidad y seguridad → Automatización → OnKey</b>. OnKey lo vuelve a intentar en un minuto."
+      },
+      "lyricsDown": {
+        "title": "Las letras no están disponibles ahora",
+        "body": "LRCLIB, el servicio gratuito de letras que usa OnKey, no funciona en este momento. Las notas se siguen mostrando, y las palabras se les unen si vuelve durante la canción. Una canción aprendida mientras tanto recibe su letra la próxima vez que la cantes."
+      },
+      "models": {
+        "title": "OnKey no puede aprender canciones nuevas ahora",
+        "body": "Sus modelos de aprendizaje, que vienen dentro de la app, faltan o están dañados{hasError, select, yes { ({error})} other {}}. Las canciones que ya aprendiste siguen funcionando. Para arreglarlo, descarga OnKey de nuevo y {os, select, pc {instálalo encima de este} other {reemplaza la app en Aplicaciones}}: tus canciones y tomas se conservan."
+      },
+      "modelsBroken": {
+        "title": "OnKey no puede oír tu voz ahora",
+        "body": "Su modelo de afinación, que viene dentro de la app, no se pudo cargar{hasError, select, yes { ({error})} other {}}. Para arreglarlo, descarga OnKey de nuevo y reemplaza la app en Aplicaciones: tus canciones y tomas se conservan."
+      },
+      "youtubeBlocked": {
+        "title": "Para cantar con YouTube, deja que OnKey lea el video en {browser}",
+        "body": "En {browser}, elige <b>{setting}</b>. OnKey solo lee la posición del video y el título de la canción, nada más de la página."
+      },
+      "youtubeOff": {
+        "title": "¿Reproduces YouTube o YouTube Music en {browser}?",
+        "turnOn": "Activar YouTube",
+        "pc": "OnKey solo detecta las canciones de tu navegador cuando YouTube está activado. Entonces sigue la canción que {browser} le dice a {os} que se reproduce, y la aprende como cualquier otra.",
+        "mac": "OnKey solo detecta las canciones de tu navegador cuando YouTube está activado. macOS pregunta entonces una vez si OnKey puede controlar {browser}, para poder leer en qué punto va el video.",
+        "cantFollow": "OnKey no puede seguir canciones en {browser}. Reprodúcelas en <b>Chrome, Safari, Brave o Edge</b> y activa YouTube (aquí o en Ajustes), o activa el <b>modo de escucha</b> en Ajustes, que funciona en cualquier navegador."
+      }
+    },
+    "notASong": {
+      "text": "<hl>{name}</hl> suena a conversación, no a canción, así que OnKey dejó de aprenderla.",
+      "dismiss": "Descartar",
+      "learnIt": "Es una canción: aprenderla la próxima vez que suene"
+    },
+    "speakerHint": {
+      "text": "OnKey no te oye por encima de la música. Si estás cantando, bájala un poco o usa auriculares para una puntuación justa.",
+      "dismiss": "Descartar",
+      "never": "No mostrar de nuevo"
+    },
+    "ended": {
+      "title": "Sesión terminada",
+      "howYouDid": "Así te fue.",
+      "noTakes": "Esta vez ninguna toma fue lo bastante larga para puntuarla."
+    },
+    "permission": {
+      "yourApp": "tu app de música",
+      "title": "OnKey aún no puede oír {app}",
+      "body": "Para seguir la canción, OnKey escucha el audio de {app} en tu Mac. El audio no se guarda ni se envía; en modo de escucha, una huella corta (no el audio) va a Shazam, de Apple, para nombrar la canción.",
+      "step1": "1. Abre <b>Configuración del Sistema → Privacidad y seguridad</b>",
+      "step2": "2. Elige <b>Grabación de audio del sistema y pantalla</b>",
+      "step3": "3. En <b>Sólo grabación de audio del sistema</b>, activa OnKey",
+      "open": "Abrir Configuración del Sistema"
+    },
+    "mini": {
+      "playASong": "Reproduce una canción en Spotify o Apple Music",
+      "score": "puntuación",
+      "hideDancer": "Ocultar el bailarín aquí",
+      "expand": "Abrir la ventana completa (M)",
+      "showDancer": "Mostrar el bailarín",
+      "progress": "Avance de la canción"
+    }
+  },
+  "live": {
+    "lyrics": {
+      "none": "No hay letra sincronizada para esta canción",
+      "off": "Las letras están desactivadas (Ajustes)",
+      "findingPlace": "Buscando tu posición…",
+      "countdown": "♪ <num>{which, select, next {Siguiente línea} other {Primera línea}} en {secs} s</num>"
+    },
+    "score": {
+      "label": "Puntuación",
+      "afterSong": "al terminar la canción",
+      "onPitch": "✓ Afinado",
+      "higher": "▲ Canta más alto",
+      "lower": "▼ Canta más bajo"
+    },
+    "transport": {
+      "restart": "Empezar la canción de nuevo (R)",
+      "previous": "Anterior (←)",
+      "pause": "Pausar (espacio)",
+      "play": "Reproducir (espacio)",
+      "skipToSinging": "Saltar a la parte cantada (→)",
+      "next": "Canción siguiente (→)"
+    },
+    "take": {
+      "done": "{blind, select, yes {a ciegas · } other {}}{hasNotes, select, yes {{hit}/{total} notas} other {ver}} →",
+      "couldntScore": "sin puntuación",
+      "singNow": "Cantar ahora",
+      "learnedPct": "{pct} % aprendida",
+      "playThrough": "reprodúcela entera",
+      "learningPct": "aprendiendo… {pct} %",
+      "waiting": "esperando para aprender",
+      "learning": "aprendiendo…",
+      "scoring": "puntuando…",
+      "learned": "Aprendida · lista para cantar"
+    },
+    "timing": {
+      "title": "¿Las letras van adelantadas o atrasadas con estos auriculares? Toca al ritmo de un clic para medir su retraso",
+      "check": "Probar la sincronía con <hl>{name}</hl> ›",
+      "theseHeadphones": "estos auriculares",
+      "dismiss": "No volver a sugerirlo"
+    },
+    "chips": {
+      "connectionTitle": "Conexión con el motor",
+      "reconnecting": "Reconectando",
+      "resumeTitle": "Reanudar la escucha (⌘⇧P)",
+      "paused": "Escucha en pausa",
+      "pauseTitle": "Pausar la escucha (⌘⇧P)",
+      "live": "En vivo",
+      "outputTitle": "El sonido sale por {device}. Lo oyes {ms} ms después de que la app de música lo reproduce; la puntuación lo tiene en cuenta{checked, select, yes { (según tu prueba de sincronía en Ajustes)} other {}}.",
+      "thisDevice": "este dispositivo",
+      "bluetooth": "Bluetooth",
+      "headphones": "Auriculares o altavoces",
+      "micTitle": "El micrófono que escucha OnKey (elige otro en Ajustes)",
+      "noMic": "Sin micrófono"
+    },
+    "switches": {
+      "blindTitle": "Oculta las notas para ponerte a prueba: una toma a ciegas (B)",
+      "showNotes": "Mostrar notas",
+      "echoTitle": "Quita el sonido de la música de tu micrófono. Desactívalo para probar con la canción sonando por las altavoces.",
+      "echo": "Cancelación de eco",
+      "dancerTitle": "Un monigote que baila la canción mientras cantas",
+      "dancer": "Bailarín"
+    },
+    "finish": {
+      "lastLine": "Esa era la última línea",
+      "seeScore": "Terminar y ver tu puntuación",
+      "now": "Terminar ahora",
+      "paused": "En pausa",
+      "pausedIn": "{learning, select, yes {aprendida} other {puntuada}} en {time}",
+      "learning": "aprendiendo…",
+      "scoring": "puntuando…"
+    },
+    "openTake": {
+      "countdown": "En pausa · {learning, select, yes {aprendida} other {puntuada}} en {time}",
+      "learning": "Aprendiendo…",
+      "scoring": "Puntuando…",
+      "state": "{state, select, paused {En pausa} learning {Aprendiendo mientras suena} other {Cantando ahora}} · {learning, select, yes {aprendida} other {puntuada}} al terminar",
+      "paused": "en pausa",
+      "now": "ahora",
+      "finish": "Terminar ahora"
+    },
+    "skip": {
+      "singingIn": "La voz entra en {secs} s",
+      "skipAhead": "Saltar"
+    },
+    "pitchTitle": "Tu afinación respecto a la nota actual",
+    "toast": {
+      "view": "Ver",
+      "learned": "Aprendida · notas listas para la próxima"
+    }
+  },
+  "lane": {
+    "verdict": {
+      "perfect": "Perfecto",
+      "excellent": "Excelente",
+      "great": "Genial",
+      "good": "Bien",
+      "ok": "Aceptable"
+    },
+    "blind": "Toma a ciegas · notas ocultas · la tecla B las muestra",
+    "findingPlace": "Buscando tu posición en la canción…",
+    "liningUp": "Sincronizando con la canción…",
+    "singingStarts": "La voz entra en {secs} s"
+  },
+  "take": {
+    "allTakes": "← Todas las tomas",
+    "notFound": "No se encontró esta toma.",
+    "header": {
+      "singAgainBlocked": "Se podrá cantar cuando esté aprendida",
+      "singAgain": "Cantarla otra vez",
+      "shareTitle": "Un video de 20 segundos con tu voz y las notas, para Instagram",
+      "share": "Compartir",
+      "within50Title": "El {pct} % de lo que cantaste estuvo a menos de 50 cents de la voz original.",
+      "sungLevelTitle": "Puntuada de nuevo a partir de tu voz tal como se guardó, en el nivel elegido en Ajustes",
+      "sungLevel": "Mostrada en nivel {level}. Cantada en nivel {sungLevel}, obtuvo {score}.",
+      "leftOut": "Puntuada sin {count, plural, one {la parte marcada} other {las partes marcadas}} como no melodía{changed, select, yes { (antes era {first})} other {}}."
+    },
+    "mode": {
+      "firstPlay": "Primera reproducción",
+      "firstPlayWhy": "La primera vez que sonó esta canción: OnKey aprendió su melodía, sin mostrar notas",
+      "blind": "A ciegas",
+      "blindWhy": "Cantada sin ver las notas"
+    },
+    "story": {
+      "none": "No cantaste con la voz principal, así que no hubo nada que puntuar.",
+      "main": "Cantaste el <n>{sang} %</n> de la voz principal, y lo que cantaste estuvo afinado un <n>{tune} %</n>. {full, select, yes {Esa es tu puntuación.} other {Tu puntuación lo cuenta por completo cuando cantas el 40 % o más de la parte.}}"
+    },
+    "verdict": {
+      "great": "Afinación preciosa.",
+      "mostly": "Casi siempre afinado, con algún tramo tembloroso.",
+      "often": "A menudo cerca de la nota, aunque a veces te alejas.",
+      "away": "La melodía se te escapó en algunos pasajes.",
+      "bias": "En promedio estuviste {off}.",
+      "worstLine": "Vale la pena repetir: “{text}”.",
+      "worstAt": "Vale la pena repetir: la línea del minuto {time}."
+    },
+    "proud": {
+      "share": "Compartir esta toma",
+      "notNow": "Ahora no"
+    },
+    "player": {
+      "notKept": "La grabación de esta toma ya no se conserva: OnKey guarda la grabación de cada toma hasta que entre todas superan 2 GB, y entonces va soltando las más antiguas (nunca las de tus favoritas ni la mejor toma de una canción). Las puntuaciones se quedan.",
+      "stop": "Detener",
+      "play": "Reproducir",
+      "playWithSong": "Reproducir tu grabación con la canción",
+      "playVoice": "Reproducir tu grabación",
+      "whatPlays": "Qué suena",
+      "withSong": "Con la canción",
+      "voiceOnly": "Solo tu voz",
+      "backToStart": "Volver al principio",
+      "lining": "Sincronizando con la canción…",
+      "voiceTitle": "Volumen de tu voz respecto a la canción",
+      "yourVoice": "Tu voz",
+      "voiceNormal": "normal",
+      "voiceDb": "{db} dB",
+      "aboutJoin": "OnKey guarda tu voz, no la música. “Con la canción” reproduce tu grabación al compás de {song} cuando la pones en {app}. La latencia de tu micrófono ({ms} ms) se compensó automáticamente.",
+      "aboutPlay": "OnKey guarda tu voz, no la música. “Con la canción” reproduce la pista en {app} junto con tu grabación. La latencia de tu micrófono ({ms} ms) se compensó automáticamente."
+    },
+    "join": {
+      "play": "Reproduce {song} en {app}. OnKey se unirá.",
+      "playFromStart": "Reproduce {song} en {app} desde el principio. OnKey se unirá.",
+      "goTo": "Ve al minuto {time} en {app} para esta parte.",
+      "letStart": "Dejar que OnKey la empiece por ti"
+    },
+    "graph": {
+      "singer": "Notas de la voz original",
+      "within50": "Tú, a menos de 50¢",
+      "within100": "A menos de 100¢",
+      "further": "Más lejos",
+      "heldTitle": "Notas que sostuviste a menos de un semitono durante al menos la mitad de su duración. Sus barras se iluminan en verde.",
+      "held": "<n>{hit}</n> de {total} notas sostenidas",
+      "biasTitle": "Dónde se situó tu afinación respecto a la voz original, en promedio",
+      "centred": "Centrado en promedio",
+      "bias": "{off} en promedio",
+      "notMelody": "No es la melodía"
+    },
+    "notMelody": {
+      "buttonTitle": "Dejar fuera una parte donde las notas siguen un coro o una armonía, no la melodía",
+      "button": "¿No es la melodía?",
+      "span": "De {from} a {to}",
+      "saving": "Puntuando de nuevo…",
+      "leaveOut": "Dejarla fuera de la puntuación",
+      "drag": "Arrastra sobre la parte donde las notas siguen un coro o una armonía en vez de la melodía.",
+      "cancel": "Cancelar",
+      "note": "Queda fuera de la puntuación de todas las tomas de esta canción, y de la próxima vez que la cantes.",
+      "leftOut": "Fuera de la puntuación, no es la melodía:",
+      "putBack": "Volver a incluirla",
+      "notLearned": "Esta canción aún no está aprendida, así que no se dejó nada fuera.",
+      "noChange": "Ninguna toma cambió de puntuación.",
+      "rescored": "{count, plural, one {{count} toma} other {{count} tomas}} de esta canción se puntuaron de nuevo."
+    },
+    "report": "Informar de un problema con esta toma",
+    "lines": {
+      "title": "Línea por línea",
+      "lyricsOff": "Las letras están desactivadas (Ajustes), así que esta toma no tiene informe línea por línea.",
+      "none": "No se encontró letra sincronizada para esta canción.",
+      "playFrom": "Reproducir desde {time}",
+      "line": "Línea {n}",
+      "noLead": "sin voz principal",
+      "notSung": "no cantada"
+    }
+  },
+  "share": {
+    "saved": "Guardado en Descargas. En Instagram, añade {song} y empiézala en {at} (copiado).",
+    "failed": "No se pudo crear el video: {error}",
+    "clip": "<b>{at}–{to}</b><dim> · {hits} de {notes} notas acertadas</dim>",
+    "cantShare": "Esta toma no se puede compartir",
+    "finding": "Buscando el fragmento…",
+    "which": "Qué 20 segundos",
+    "fromPlayhead": "Desde el cursor",
+    "best": "Mejor momento",
+    "playIt": "Reproducir",
+    "making": "Creando el video…",
+    "make": "Crear video",
+    "close": "Cerrar",
+    "noBest": "En esta toma no acertaste ninguna nota, así que no hay mejor momento: empieza desde el cursor.",
+    "about": "Tu voz tal como se grabó, las notas y tu puntuación, sin música añadida. Añade la canción en Instagram desde su propia biblioteca de música, empezando en el minuto indicado. ¿Cantaste con la canción por las altavoces? Entonces parte de ella está en tu grabación: las tomas con auriculares son las mejores para compartir. <why>{open, select, yes {Ocultar} other {¿Por qué auriculares?}}</why> Por favor, no publiques grabaciones de pantalla con la música sonando."
+  },
+  "challenge": {
+    "button": "Enviar un reto",
+    "says": "Un enlace que dice que obtuviste <b>{score}</b> en {song}, y reta a superarlo.",
+    "nameLabel": "Tu nombre (opcional)",
+    "namePlaceholder": "Déjalo en blanco para quedar en el anonimato",
+    "copied": "Copiado: pégaselo a quien quieras retar",
+    "failed": "No se pudo copiar",
+    "copy": "Copiar enlace",
+    "holds": "Solo contiene el nombre de la canción, el artista y tu puntuación. Sin grabación, notas ni letra.",
+    "holdsNamed": "Solo contiene el nombre de la canción, el artista, tu puntuación y tu nombre. Sin grabación, notas ni letra."
+  },
+  "voiceRange": {
+    "title": "Tu rango",
+    "working": "Calculándolo a partir de tus tomas…",
+    "empty": "Canta unas cuantas canciones y OnKey mostrará aquí tu rango vocal.",
+    "from": "de {count, plural, one {{count} toma} other {{count} tomas}}",
+    "fromPending": "de {count, plural, one {{count} toma} other {{count} tomas}}; {pending} más antiguas aún por medir",
+    "summary": "<range>{low}–{high}</range><dim>, más cómodo entre </dim><mid>{midLo}–{midHi}</mid>",
+    "aria": "Tu rango va de {low} a {high}, más cómodo de {midLo} a {midHi}",
+    "note": "Las notas que más has cantado, según tus tomas (sin el 5 % más grave ni el 5 % más agudo). Crece a medida que cantas más canciones."
+  },
+  "voiceBreak": {
+    "text": "Llevas {minutes} minutos cantando. Dale a tu voz unos minutos de descanso y bebe un poco de agua.",
+    "dismiss": "Descartar",
+    "ok": "OK"
+  },
+  "takeTags": {
+    "firstPlay": "Primera reproducción",
+    "blind": "A ciegas"
+  },
+  "timingCheck": {
+    "macOs": "macOS",
+    "title": "Tu salida",
+    "experimental": "Experimental",
+    "checkOn": "Probar la sincronía con {name}",
+    "thisOutput": "esta salida",
+    "thisOutputCap": "Esta salida",
+    "checked": "Comprobado por ti: OnKey da {heard} ms para que la música llegue a tus oídos aquí ({os} dice {reported} ms).",
+    "unchecked": "OnKey da {reported} ms para que la música llegue a tus oídos aquí, según {os}. Los auriculares Bluetooth suelen tardar más de lo que {os} indica, lo que adelanta las letras y las notas. Sigue un clic con los dedos para medirlo (dos veces: las dos deben coincidir).",
+    "how": "Sigue el ritmo, como si aplaudieras al compás. No esperes a oír cada clic: lleva el tiempo con ellos.",
+    "pauseFirst": "Pausa la música primero.",
+    "reset": "Restablecer",
+    "checkAgain": "Probar de nuevo",
+    "redo": "Repetir",
+    "check": "Probar la sincronía",
+    "tapAria": "Toca con cada clic",
+    "tapTitle": "Toca Espacio (o haz clic aquí) con cada clic, siguiendo el ritmo",
+    "keepTime": "Lleva el ritmo hasta el final, escuchando en vez de mirar. Esc lo detiene.",
+    "cancel": "Cancelar",
+    "cantPlay": "La prueba no pudo reproducir sus clics ({error}).",
+    "said": {
+      "confirmBefore": "Salió {measured} ms, que no coincide con la prueba anterior ({before} ms). Una vez más para confirmar.",
+      "confirm": "Lo oyes {measured} ms después de que se reproduce ({os} dice {reported} ms). Una vez más para confirmar.",
+      "onTime": "{name} {plural, select, yes {van} other {va}} a tiempo: a menos de {ms} ms de lo que OnKey suponía.",
+      "behind": "{name} {plural, select, yes {van} other {va}} {ms} ms por detrás de lo que OnKey suponía; ajustado.",
+      "ahead": "{name} {plural, select, yes {van} other {va}} {ms} ms por delante de lo que OnKey suponía; ajustado."
+    }
+  },
+  "setup": {
+    "dialogLabel": "Configurar OnKey",
+    "stepsLabel": "Pasos de la configuración",
+    "welcome": {
+      "title": "Te damos la bienvenida a OnKey",
+      "lead": "Aprende a cantar las canciones que te gustan, con la música que ya escuchas.",
+      "play": "Reproduce una canción en tu app de música, como siempre. OnKey escucha la música que suena en tu {os, select, mac {Mac} other {PC}} y la sigue por sí solo.",
+      "learn": "La primera vez que suena una canción, OnKey aprende la melodía de la voz. Desde entonces ves venir cada nota, y dónde cantas más alto o más bajo de lo debido.",
+      "privacyPc": "OnKey nunca guarda la música que escucha. Las grabaciones de tu voz se quedan en esta PC para que puedas volver a oír tus tomas. Las canciones también se nombran en esta PC, a partir de lo que tu app de música dice que se reproduce: no se envía nada para nombrarlas.",
+      "privacyMac": "OnKey nunca guarda la música que escucha. Las grabaciones de tu voz se quedan en esta Mac para que puedas volver a oír tus tomas. Para nombrar una canción nueva, el modo de escucha envía a Shazam, de Apple, una huella corta del sonido de la app de música (no el audio).",
+      "entitled": "OnKey es para practicar en casa con música que tienes derecho a reproducir. Las melodías que aprende son para tu práctica personal: guárdalas para ti.",
+      "macosOld": "OnKey necesita macOS 14.2 o posterior para oír otras apps. Actualiza macOS en Configuración del Sistema → General → Actualización de software.",
+      "later": "Configurar más tarde",
+      "start": "Empezar"
+    },
+    "permissions": {
+      "title": "Dos permisos",
+      "sub": "macOS los pide una vez cada uno. Puedes cambiarlos después en Configuración del Sistema → Privacidad y seguridad.",
+      "mic": {
+        "title": "Micrófono",
+        "why": "Para oírte cantar.",
+        "hint": "Activa OnKey en Micrófono."
+      },
+      "audio": {
+        "title": "Grabación de audio del sistema",
+        "why": "Para oír la música que suena en tu Mac y que OnKey pueda aprender la melodía. OnKey nunca guarda la música ni la envía; para nombrar una canción que no conoce, una huella corta (no el audio) puede ir a Shazam, de Apple.",
+        "hint": "Abre Grabación de audio del sistema y pantalla y activa OnKey en Sólo grabación de audio del sistema."
+      },
+      "reopen": "Si macOS pide salir y volver a abrir OnKey después de permitir algo, hazlo. La configuración continúa donde la dejaste.",
+      "skip": "Omitir por ahora",
+      "continue": "Continuar",
+      "allowed": "Permitido",
+      "openSettings": "Abrir Configuración del Sistema",
+      "asking": "Preguntando…",
+      "allow": "Permitir",
+      "restricted": "La configuración de tu Mac no lo permite. Pregunta a quien la administra."
+    },
+    "musicApps": {
+      "title": "Deja que OnKey siga a Spotify y Apple Music",
+      "recommended": "Recomendado",
+      "why": "Así las letras y las notas están en su sitio desde el primer segundo, y OnKey puede reproducir y reiniciar canciones por ti.",
+      "scope": "Puede leer qué se reproduce y en qué punto, y reproducir, pausar y avanzar. Nada más. macOS lo pregunta una vez por cada app.",
+      "waitingMac": "Esperando a macOS. Si está preguntando por Spotify o Apple Music (su pregunta puede abrirse detrás de esta ventana), respóndela. ¿No hay pregunta? Sigue adelante: macOS pregunta la primera vez que reproduces una canción allí.",
+      "noAnswer": "macOS aún no tiene respuesta. Si su pregunta está a la vista, respóndela; si no, la hará la primera vez que reproduzcas una canción allí.",
+      "listenOnly": "Solo escuchar",
+      "continue": "Continuar",
+      "carryOn": "Seguir",
+      "asking": "Preguntando…",
+      "allow": "Permitir",
+      "appSpotify": "Spotify",
+      "appAppleMusic": "Apple Music",
+      "state": {
+        "allowed": "Permitido",
+        "notAllowed": "No permitido",
+        "notRunning": "macOS pregunta la primera vez que reproduzcas una canción ahí",
+        "waiting": "Aún sin respuesta",
+        "ask": "Aún no se ha preguntado"
+      },
+      "openSettings": "Abrir Configuración del Sistema"
+    },
+    "micCheck": {
+      "title": "¿OnKey te oye?",
+      "micOffPc": "Windows tiene el micrófono desactivado para las aplicaciones. En <b>Configuración de Windows → Privacidad y seguridad → Micrófono</b>, activa <b>Acceso al micrófono</b> y <b>Permitir que las aplicaciones de escritorio accedan al micrófono</b>.",
+      "micFirst": "OnKey necesita primero el micrófono: vuelve atrás para permitirlo.",
+      "noMicDevice": "No hay ningún micrófono conectado. Conecta uno, o elige uno en {soundInput}.",
+      "macSoundInput": "Configuración del Sistema → Sonido → Entrada",
+      "say": "Di algo, o canta una nota.",
+      "device": "Escuchando {device}. Puedes elegir otro en Ajustes.",
+      "meterLabel": "Nivel del micrófono",
+      "heard": "Te oí",
+      "listening": "Escuchando…",
+      "notAllowed": "No permitido",
+      "starting": "Iniciando…",
+      "noMic": "Sin micrófono",
+      "headphones": "Los auriculares dan las puntuaciones más estables. Los altavoces de la laptop también sirven: OnKey quita la música de lo que oye el micrófono.",
+      "skip": "Omitir",
+      "continue": "Continuar",
+      "openSettings": "Abrir {settings}",
+      "back": "Volver a los permisos"
+    },
+    "ready": {
+      "title": "Todo listo",
+      "lead": "Reproduce una canción en tu app de música y empieza a cantar. La primera reproducción de cada canción le enseña la melodía a OnKey.",
+      "tipsLabel": "Cómo funciona el aprendizaje",
+      "tip": {
+        "toEnd": "Deja que la canción suene hasta el final. Si OnKey solo oye una parte, aprende el resto la próxima vez que suene.",
+        "talk": "Habla o canta cuanto quieras. OnKey aprende del sonido de la app de música, no de tu micrófono.",
+        "volumePc": "Mantén el volumen propio de la app de música en un cuarto o más.",
+        "learnPc": "El aprendizaje se ejecuta en esta PC durante unos minutos después de terminar la canción. Mientras tanto, sigue escuchando.",
+        "volumeMac": "Mantén el volumen propio de la app de música en un cuarto o más. El volumen de tu Mac puede estar como quieras, incluso en silencio.",
+        "learnMac": "El aprendizaje se ejecuta en tu Mac durante un par de minutos después de terminar la canción, más en las Mac con 8 GB de memoria. Mientras tanto, sigue escuchando."
+      },
+      "quickest": "<b>El comienzo más rápido:</b> pon la playlist para empezar de OnKey y déjala sonar media hora.",
+      "openPlaylist": "Abrir la playlist en {app}",
+      "playIn": "Reproducir en {app}",
+      "comfortable": "Canta a un volumen cómodo: OnKey puntúa tu afinación, no lo fuerte que cantas. Descansa cuando se te canse la voz, y para si te duele la garganta.",
+      "start": "Empezar a cantar"
+    }
+  },
+  "controlPrompt": {
+    "titleAllow": "¿Dejar que OnKey controle {app}?",
+    "titleCant": "OnKey no puede controlar {app}",
+    "bodyAllow": "OnKey está escuchando {app}, pero no controla la reproducción. Para empezar canciones, saltar a la parte cantada y pausar desde OnKey, necesita tu permiso.{os, select, mac { macOS también te lo preguntará una vez.} other {}}",
+    "bodyCant": "OnKey sigue {app} solo escuchando. Reproduce, pausa y salta allí.",
+    "browserPc": "OnKey podrá entonces seguir las canciones de tu navegador, y reproducirlas, pausarlas y avanzarlas allí.",
+    "browserMac": "Este es el permiso mayor: OnKey podrá entonces leer y controlar la pestaña de YouTube en tu navegador, y escucha el sonido de tu navegador, sea el que sea (llamadas incluidas): el sonido que no reconoce puede ir a Shazam como una huella corta, nunca el audio. Tu navegador también necesita tener activado “Permitir JavaScript de eventos de Apple”.",
+    "notNow": "Ahora no",
+    "yourBrowser": "tu navegador",
+    "openIn": "Abrir en {app}",
+    "allow": "Permitir el control",
+    "changeLater": "Puedes cambiarlo en cualquier momento en Ajustes."
+  },
+  "starters": {
+    "label": "Canciones para probar",
+    "heading": "Prueba estas <dim>· canciones que OnKey sigue bien</dim>",
+    "hide": "Ocultar sugerencias",
+    "close": "Cerrar",
+    "earlier": "Canciones anteriores",
+    "more": "Más canciones",
+    "why": {
+      "en": {
+        "standByMe": "Fácil: una melodía sencilla y estable",
+        "wonderwall": "La que todo el mundo canta a coro",
+        "fastCar": "Grave y estable, fácil de seguir",
+        "youngAndBeautiful": "Notas largas para sostener con firmeza",
+        "someoneYouLoved": "Versos suaves, estribillo enorme",
+        "someoneLikeYou": "Una voz clara y un estribillo que se eleva",
+        "hallelujah": "Lenta y expresiva: ideal para la afinación",
+        "iWillAlwaysLoveYou": "El reto: un rango inmenso"
+      },
+      "es": {
+        "laCamisaNegra": "Fácil: una melodía corta y pegadiza",
+        "meVoy": "Ligera y estable, fácil de seguir",
+        "deMusicaLigera": "El himno de rock que todo el mundo canta",
+        "comoLaFlor": "Un clásico dulce y cadencioso",
+        "rayandoElSol": "Versos suaves, estribillo enorme",
+        "rosas": "Una voz clara y un estribillo que se eleva",
+        "hijoDeLaLuna": "Lenta y misteriosa: ideal para la afinación",
+        "volverVolver": "El reto: las grandes notas de la ranchera"
+      },
+      "pt": {
+        "comoUmaOnda": "Fácil: una melodía sencilla y estable",
+        "velhaInfancia": "Suave y dulce, fácil de seguir",
+        "gostavaTantoDeVoce": "Clásico del soul, con un estribillo que todos cantan",
+        "tempoPerdido": "El himno de rock que todo el mundo conoce",
+        "comoEuQuero": "Pop ligero con una melodía clara",
+        "infiel": "Desamor sertanejo, hecho para cantar a coro",
+        "amarPelosDois": "Lenta y tierna: ideal para la afinación",
+        "oceano": "El reto: una melodía larga y sinuosa"
+      },
+      "it": {
+        "azzurro": "Fácil: una melodía sencilla y estable",
+        "lItaliano": "La que todo el mundo canta a coro",
+        "saraPercheTiAmo": "Alegre y divertida, hecha para cantar en grupo",
+        "albachiara": "Grave y estable, fácil de seguir",
+        "laSolitudine": "Una voz clara y un estribillo que se eleva",
+        "emozioni": "Lenta y expresiva: ideal para la afinación",
+        "grandeGrandeGrande": "Crece de lo suave a lo grande",
+        "caruso": "El reto: un estribillo operístico que se eleva"
+      },
+      "fr": {
+        "lesChampsElysees": "Fácil: una melodía sencilla y estable",
+        "jeLAimeAMourir": "Suave y grave, fácil de seguir",
+        "laVieEnRose": "El clásico que todo el mundo conoce",
+        "avenir": "Pop ligero, claro y pegadizo",
+        "jeVeux": "Luminosa y con swing, divertida de cantar",
+        "derniereDanse": "Notas largas para sostener con firmeza",
+        "laBoheme": "Lenta y expresiva: ideal para la afinación",
+        "pourQueTuMAimesEncore": "El reto: crece hasta notas enormes"
+      },
+      "de": {
+        "uberDenWolken": "Fácil: una melodía folk estable",
+        "n99Luftballons": "La que todo el mundo canta a coro",
+        "perfekteWelle": "Versos estables, estribillo enorme",
+        "atemlosDurchDieNacht": "Schlager animado, hecho para cantar a coro",
+        "griechischerWein": "Un clásico que conoce cada generación",
+        "dasBeste": "Una voz clara y un estribillo que se eleva",
+        "aufUns": "Un estribillo grande y abierto para cantar a pleno pulmón",
+        "derWeg": "El reto: lenta, cruda y expresiva"
+      }
+    },
+    "in": "en",
+    "appSpotify": "Spotify",
+    "appAppleMusic": "Apple Music",
+    "searchIn": "Buscarla en {app}",
+    "openItInAppleMusic": "Abrirla en Apple Music",
+    "openInAppleMusic": "Abrir en Apple Music",
+    "openSongInAppleMusic": "Abrir {title} de {artist} en Apple Music",
+    "playlist": {
+      "title": "Pon la playlist para empezar de OnKey",
+      "sub": "Todas estas y más, de fáciles a difíciles: dale a reproducir y canta",
+      "orAppleMusic": "o Apple Music",
+      "openInAppleMusic": "Abrir la playlist en Apple Music",
+      "open": "Abrir la playlist en {app}",
+      "playIn": "Reproducir en {app}"
+    }
+  },
+  "demo": {
+    "title": "Pruébalo ahora: canta una canción de demostración",
+    "starting": "Iniciando…",
+    "tryIt": "Probar ahora",
+    "about": "Una canción de ejemplo para que veas cómo funciona OnKey. Tus propias canciones necesitan sonar una vez para aprenderse."
+  },
+  "guides": {
+    "systemAudio": {
+      "summary": "Cómo permitir que OnKey grabe el audio del sistema en una Mac. En Configuración del Sistema, abre Privacidad y seguridad, elige Grabación de audio del sistema y pantalla, y activa OnKey en Sólo grabación de audio del sistema. Si macOS lo pide, elige Cerrar y volver a abrir. OnKey se abre de nuevo con la grabación de audio del sistema marcada y la configuración continúa.",
+      "step": {
+        "openPrivacy": "Abre Privacidad y seguridad",
+        "screenRecording": "Grabación de audio del sistema y pantalla",
+        "turnOn": "Activa OnKey en Sólo grabación de audio del sistema",
+        "quitReopen": "Si macOS lo pide, sal y vuelve a abrir. La configuración continúa"
+      },
+      "dots": "Pasos",
+      "stepOf": "Paso {step} de {count}: {caption}",
+      "mock": {
+        "privacySecurity": "Privacidad y seguridad",
+        "screenRecording": "Grabación de audio del sistema y pantalla",
+        "audioOnly": "Sólo grabación de audio del sistema",
+        "appName": "OnKey",
+        "quitReopenQuestion": "¿Cerrar y volver a abrir?",
+        "later": "Más tarde",
+        "quitReopen": "Cerrar y volver a abrir",
+        "setup": "Configuración",
+        "systemAudioRow": "Grabación de audio del sistema"
+      }
+    },
+    "musicApps": {
+      "caption": {
+        "ask": "macOS pregunta una vez por cada app",
+        "allow": "Elige Permitir",
+        "done": "Después puede seguir lo que se reproduce",
+        "behind": "Puede abrirse detrás de esta ventana: búscala"
+      },
+      "labelOne": "Animación: una pregunta de macOS consulta si OnKey puede controlar {app}. El puntero elige Permitir, la pregunta se cierra y la app aparece con una marca en la ventana de OnKey. Por último, la pregunta se muestra medio escondida detrás de la ventana de OnKey, con un recordatorio para buscarla ahí.",
+      "labelTwo": "Animación: una pregunta de macOS consulta si OnKey puede controlar {first} y después {second}. El puntero elige Permitir, la pregunta se cierra y la app aparece con una marca en la ventana de OnKey. Por último, la pregunta se muestra medio escondida detrás de la ventana de OnKey, con un recordatorio para buscarla ahí.",
+      "app": {
+        "spotify": "Spotify",
+        "appleMusic": "Apple Music"
+      },
+      "asked": {
+        "spotify": "Spotify",
+        "appleMusic": "Música"
+      },
+      "alert": {
+        "wantsAccess": "OnKey solicita acceso",
+        "control": "para controlar {app}.",
+        "allowing": "Esto da acceso a los documentos y datos de {app}.",
+        "dontAllow": "No permitir",
+        "allow": "Permitir"
+      },
+      "window": {
+        "title": "OnKey",
+        "note": "A4",
+        "musicApps": "APPS DE MÚSICA"
+      },
+      "menuBar": {
+        "appName": "OnKey"
+      },
+      "dots": "Pasos",
+      "stepOf": "Paso {step} de {count}: {caption}",
+      "stepOfApp": "Paso {step} de {count}: {caption} ({app})"
+    },
+    "stillSteps": {
+      "dots": "Pasos",
+      "stepOf": "Paso {step} de {count}",
+      "again": "Otra vez",
+      "next": "Siguiente"
+    },
+    "learnSong": {
+      "steps": {
+        "s0": "Reproduce una canción una vez hasta el final",
+        "s1": "OnKey aprende la melodía de la música, no de tu micrófono",
+        "s2": "Un par de minutos después de terminar",
+        "s3": "La próxima vez, cántala con las notas"
+      },
+      "summary": "OnKey aprendiendo una canción. Una canción suena una vez hasta el final en un reproductor de música mientras las ondas de sonido fluyen hacia OnKey y su melodía se dibuja como barras de notas. Un par de minutos después de terminar, un anillo de Aprendiendo se convierte en una marca verde: Aprendida. La próxima vez que suena la canción, las notas pasan deslizándose con la línea verde de la voz montada sobre ellas y la letra debajo.",
+      "learning": "Aprendiendo…",
+      "learned": "Aprendida",
+      "appName": "OnKey",
+      "melody": "MELODÍA",
+      "you": "TÚ",
+      "lyric": {
+        "w0": "ten",
+        "w1": "la",
+        "w2": "luz",
+        "w3": "un",
+        "w4": "po-",
+        "w5": "co",
+        "w6": "más",
+        "w7": "por",
+        "w8": "la",
+        "w9": "no-",
+        "w10": "che"
+      },
+      "stepsGroup": "Pasos de la animación",
+      "stepLabel": "Paso {n} de {count}: {caption}"
+    },
+    "leaveOut": {
+      "steps": {
+        "s0": "¿Las notas siguen un coro?",
+        "s1": "Arrastra sobre esa parte",
+        "s2": "Queda fuera de la puntuación, en todas las tomas de la canción"
+      },
+      "ariaLabel": "Animación de un gráfico de afinación de una toma de una canción. Unas barras moradas muestran las notas que la puntuación espera y una línea muestra lo que cantó la persona, verde donde coincide. En un tramo las barras moradas saltan hacia arriba, siguiendo un coro, mientras la persona se mantiene en la melodía y la línea se vuelve ámbar. Un cursor arrastra sobre ese tramo para seleccionarlo y hace clic en \"Dejarla fuera de la puntuación\". El tramo se convierte en rayas grises, la puntuación sube de {before} a {after}, y el mismo tramo queda fuera en todas las tomas de la canción.",
+      "score": "Puntuación",
+      "take": "Toma {n}",
+      "leftOut": "Fuera",
+      "leaveOutButton": "Dejarla fuera de la puntuación",
+      "stepsGroup": "Pasos de la animación",
+      "stepLabel": "Paso {n}: {caption}"
+    },
+    "speakers": {
+      "steps": {
+        "s0": "Con altavoces, la canción se cuela en tu grabación",
+        "s1": "Con auriculares, solo está tu voz"
+      },
+      "label": "Dos escenas cortas. Con los altavoces de la laptop, la canción de fondo se derrama y se cuela en el micrófono, así que la grabación mezcla tu voz con la música. Con auriculares, la música se queda en tus oídos y la grabación es solo tu voz.",
+      "rec": "REC",
+      "voice": "Voz",
+      "song": "Canción",
+      "stepsGroup": "Pasos",
+      "stepLabel": "Paso {n} de {count}: {caption}"
+    },
+    "fadeDemo": {
+      "captions": {
+        "c0": "Cuando ya cantaste bien una canción",
+        "c1": "Tu línea se atenúa mientras estás en la nota",
+        "c2": "Si te sales, se ve como siempre",
+        "c3": "Recupera la guía completa en cualquier toma"
+      },
+      "take": "Toma {n}",
+      "ariaLabel": "Cuatro tomas de la misma canción como carriles de notas: tomas 1, 3, 5 y 8. Las notas moradas son iguales en todas. La línea verde de tu voz es brillante en la toma 1 y más tenue en cada toma mientras está en la nota; en la toma 5 se sale más de un semitono por un momento y esa parte se ve completa, en rojo. Un interruptor de Guía completa devuelve la línea entera.",
+      "fullGuide": "Guía completa",
+      "stepsGroup": "Pasos de la animación",
+      "stepLabel": "Paso {n} de {count}: {caption}"
+    }
+  },
+  "guideFade": {
+    "title": "La línea de tu voz se atenúa mientras estás en la nota ({amount, select, little {un poco} more {más} other {del todo}}), y se muestra cuando te alejas más de un semitono. Desactívalo en Ajustes.",
+    "note": "Guía atenuada: esta ya la sabes",
+    "showFull": "Mostrar la guía completa"
+  },
+  "update": {
+    "failed": {
+      "text": "No se pudo actualizar a OnKey {version}",
+      "why": "Motivo: {error}. Ajustes → Comprobar ahora lo vuelve a intentar.",
+      "again": "Ajustes → Comprobar ahora lo vuelve a intentar."
+    },
+    "official": {
+      "text": "Ya salió OnKey {version} del proyecto original",
+      "why": "Esta copia de OnKey se compiló desde el código fuente, así que no se actualiza sola.",
+      "download": "Descargar"
+    },
+    "ready": {
+      "why": "Ya se descargó OnKey {version}. Si no reinicias ahora, se instala cuando salgas.",
+      "waiting": "Se actualiza después de esta canción…",
+      "available": "Actualización disponible",
+      "restart": "Reiniciar para actualizar",
+      "later": "Más tarde",
+      "laterWhy": "Más tarde (se instala cuando salgas)"
+    },
+    "hide": "Ocultar"
+  },
+  "report": {
+    "title": "Informar de un problema",
+    "titleTake": "Informar de un problema con esta toma",
+    "savedPc": "Guardado en {folder} como <file>{name}</file>, y mostrado en {files}. Adjunta ese único archivo a tu mensaje (o a un issue de GitHub). No se ha enviado nada a ningún sitio.",
+    "savedMac": "Guardado en <file>{path}</file>. Para enviarlo, abre un issue en GitHub y adjunta el zip (arrástralo al cuadro). No se ha enviado nada a ningún sitio.",
+    "showInPc": "Mostrar en {files}",
+    "showInFinder": "Mostrar en el Finder",
+    "openIssue": "Abrir un issue en GitHub",
+    "done": "Listo",
+    "introPc": "OnKey reúne sus registros en un archivo zip en tu Escritorio para que lo adjuntes a un mensaje: su registro de los últimos tres días, un resumen de cada reproducción y un resumen de esta PC, su sonido y las apps de música que siguió. Sin letras, sin audio, sin archivos de canciones, y sin tu nombre de usuario ni tu carpeta de inicio. No se sube nada.",
+    "introMac": "OnKey reúne sus registros en un zip para que lo guardes y lo adjuntes a un informe de error: su registro de los últimos tres días y un resumen de cada reproducción (tiempos, CPU, qué versión, qué Mac). Sin letras, sin audio, sin archivos de canciones, y sin tu nombre de usuario ni tu carpeta de inicio. No se sube nada.",
+    "askLabel": "¿Qué salió mal? <muted>(opcional)</muted>",
+    "placeholder": "p. ej., la letra iba atrasada en Bad Day, o se quedó en Iniciando OnKey",
+    "preparing": "Preparándolo…",
+    "inZip": "En el zip ({count} archivos, {size}):",
+    "logs": "{count, plural, one {{count} día} other {{count} días}} del registro de OnKey ({size})",
+    "size": {
+      "b": "{n} B",
+      "kb": "{n} KB",
+      "mb": "{n} MB"
+    },
+    "showFiles": "Mostrar los archivos",
+    "cancel": "Cancelar",
+    "saveMac": "Guardar…",
+    "savePc": "Guardar en el Escritorio"
+  },
+  "nav": {
+    "appName": "OnKey",
+    "songsToTry": "Canciones para probar",
+    "sing": "Cantar",
+    "library": "Biblioteca",
+    "history": "Historial",
+    "settings": "Ajustes",
+    "paused": "Escucha en pausa",
+    "resume": "Reanudar",
+    "resumeWhy": "Reanudar la escucha (⌘⇧P)",
+    "whatsNew": "Novedades de OnKey",
+    "whatsNewFresh": "Novedades de OnKey (nuevo)",
+    "testBuild": "Versión de prueba",
+    "testBuildTitle": "Una versión de prueba de OnKey para Windows o Linux: instala la siguiente encima cuando salga"
+  },
+  "licences": {
+    "back": "← Ajustes",
+    "title": "Licencias de código abierto",
+    "intro": "OnKey es gratuito y de código abierto bajo la licencia MIT. Se basa en los modelos, datos, fuentes y bibliotecas siguientes.",
+    "error": "No se pudieron abrir los avisos: {error}",
+    "missing": "Los avisos están en THIRD_PARTY_NOTICES.md, junto al código fuente."
+  },
+  "fairUse": {
+    "back": "← Ajustes",
+    "title": "Usar OnKey con responsabilidad",
+    "intro": "OnKey es para practicar en casa, con música que tienes derecho a reproducir. Por favor:",
+    "keep": {
+      "title": "Guarda para ti lo que aprende.",
+      "body": "Su transcripción de la melodía de cada canción es para tu práctica, así que no la compartas ni la publiques. Compartir OnKey en sí, en cambio, es bienvenido."
+    },
+    "share": {
+      "title": "Para compartir una toma, usa Compartir en su página.",
+      "body": "Crea un video corto de tu voz y la línea de tu afinación, sin música, y puedes añadir la canción desde la propia biblioteca de música de Instagram, que tiene licencia para ello. Las tomas con auriculares son las mejores: cantada con altavoces, parte de la canción está en tu grabación. No publiques grabaciones de pantalla con la música sonando."
+    },
+    "venue": {
+      "title": "Para un bar o un evento, usa un servicio de karaoke con licencia.",
+      "body": "Las letras de OnKey vienen de una base de datos comunitaria gratuita."
+    },
+    "modify": {
+      "title": "No modifiques OnKey para guardar la música."
+    },
+    "contact": "OnKey nunca guarda la música que escucha. Los titulares de derechos pueden escribirme a <email>hello@singonkey.app</email>."
+  },
+  "library": {
+    "title": "Biblioteca",
+    "intro": "Canciones que OnKey ha aprendido. Elige una para cantarla viendo venir cada nota.",
+    "search": "Buscar canciones",
+    "empty": {
+      "title": "Aún no hay nada aprendido",
+      "body": "Reproduce una canción entera con OnKey abierto y aprende la melodía. Una playlist completa también sirve: solo déjala sonar.",
+      "start": "Empezar",
+      "showStarters": "Mostrar canciones para probar"
+    },
+    "filter": {
+      "label": "Mostrar",
+      "all": "Todas",
+      "favorites": "Favoritas",
+      "unscored": "Sin puntuar",
+      "partial": "Aprendidas en parte",
+      "count": "{count, plural, one {{count} canción} other {{count} canciones}}"
+    },
+    "inRange": {
+      "title": "Canciones que caben en tu rango, tal cual o cantadas una octava más abajo o más arriba (las octavas se perdonan): {count, plural, one {{count} canción} other {{count} canciones}}",
+      "label": "En tu rango"
+    },
+    "sort": {
+      "recent": "Recientes",
+      "easy": "Fáciles primero",
+      "hard": "Difíciles primero",
+      "best": "Mejor puntuación",
+      "most": "Más cantadas",
+      "az": "A–Z"
+    },
+    "shownPartly": "{count} aprendidas en parte",
+    "shownLearned": "{count} aprendidas",
+    "partlyNote": "OnKey solo oyó una parte de estas. Reproduce una entera y termina de aprenderla; entonces pasa a Todas.",
+    "noFavourites": "Toca ♥ en una canción para guardarla aquí.",
+    "none": {
+      "partly": "Nada aprendido en parte: todas las canciones están listas.",
+      "unscored": "Todas las canciones tienen puntuación. Muy bien.",
+      "search": "Ninguna canción coincide con “{q}”.",
+      "filters": "Ninguna canción coincide con estos filtros.",
+      "clear": "Borrar"
+    },
+    "card": {
+      "sing": "Cantar {name} de {artist}",
+      "whenLearned": "Se podrá cantar cuando esté aprendida",
+      "playThrough": "Reprodúcela entera para terminar de aprenderla",
+      "learning": "Aprendiendo",
+      "learnsAgain": "Se vuelve a aprender la próxima vez",
+      "learnsAgainTitle": "Su próxima reproducción la aprende de cero; hasta entonces se canta como antes",
+      "pctLearned": "{pct} % aprendida",
+      "relearn": "Conviene volver a aprenderla",
+      "relearnTitle": "Su letra se desfasa en {at} cuando la reproduces: volver a aprenderla debería arreglarlo (menú ⋯)",
+      "notScored": "Sin puntuar",
+      "notScoredTitle": "Aún no la has cantado con OnKey",
+      "playsTitle": "Tus reproducciones de esta canción",
+      "plays": "{count, plural, one {{count} reproducción} other {{count} reproducciones}}",
+      "playsBest": "{count, plural, one {{count} reproducción} other {{count} reproducciones}} · mejor <n>{best}</n>",
+      "demo": "canción de demostración",
+      "demoTitle": "Una canción de ejemplo que viene con OnKey",
+      "fitTitle": "{label}. Sus notas: {low}–{high}",
+      "starting": "Iniciando…",
+      "singButton": "Cantar"
+    },
+    "menu": {
+      "more": "Más para {name}",
+      "openIn": "Abrir en {app} ↗",
+      "learnAgain": "Volver a aprender",
+      "dontLearnAgain": "No volver a aprenderla",
+      "deleteWhat": "Eliminar esta canción (tus tomas se quedan en el Historial; va a la Papelera)",
+      "deleteConfirm": "¿Eliminar esta canción?",
+      "stopWhat": "Dejar de aprenderla y eliminarla (si no es una canción, por ejemplo)",
+      "stopConfirm": "¿Dejar de aprender y eliminar?",
+      "stop": "Dejar de aprender y eliminar",
+      "delete": "Eliminar"
+    },
+    "startersLink": "Canciones para probar",
+    "footer": "OnKey nunca guarda la música: solo conserva las notas que aprende y tu propia voz. Las letras vienen de <link>LRCLIB</link>. OnKey no está afiliado a Spotify, Apple ni Google, ni cuenta con su respaldo; sus nombres son marcas de sus propietarios.",
+    "difficulty": {
+      "label": "Dificultad {level} de 5: {word}",
+      "title": "Dificultad {level} de 5: {word}. Sobre todo, lo amplio que es el rango de la melodía."
+    },
+    "clearPartly": {
+      "button": "Eliminar las {count}",
+      "label": "Eliminar todas las canciones aprendidas en parte",
+      "ask": "¿Eliminar {count, plural, one {{count} canción aprendida en parte{shown, select, yes { de las mostradas} other {}}} other {{count} canciones aprendidas en parte{shown, select, yes { de las mostradas} other {}}}}? Las tomas se quedan en el Historial{hearted, plural, =0 {} one {; se conserva {hearted} favorita} other {; se conservan {hearted} favoritas}}.",
+      "deleting": "Eliminando…",
+      "tryAgain": "Intentar de nuevo",
+      "deleteAll": "Eliminar todas",
+      "cancel": "Cancelar"
+    }
+  },
+  "history": {
+    "title": "Tu canto",
+    "intro": "Cada canción que cantas se convierte en una toma. Así te va.",
+    "scoresAt": "Puntuaciones en nivel {level} · <link>cambiar</link>",
+    "search": "Buscar canciones",
+    "pending": {
+      "learning": "Aprendiendo la canción; después se puntúa tu toma…",
+      "scoring": "Puntuando…"
+    },
+    "stat": {
+      "takes": "Tomas",
+      "average": "Promedio, últimas 10",
+      "best": "Mejor",
+      "songs": "Canciones cantadas"
+    },
+    "chart": {
+      "title": "Puntuación por toma",
+      "axis": "más antigua → más reciente"
+    },
+    "view": {
+      "label": "Ver",
+      "songs": "Canciones",
+      "takes": "Todas las tomas"
+    },
+    "show": {
+      "label": "Mostrar",
+      "all": "Todas",
+      "favorites": "Favoritas"
+    },
+    "clearFilters": "Borrar filtros",
+    "sort": {
+      "recent": "Recientes",
+      "best": "Mejor puntuación",
+      "most": "Más cantadas",
+      "improved": "Mayor mejora",
+      "easy": "Fáciles primero",
+      "hard": "Difíciles primero",
+      "az": "A–Z"
+    },
+    "counts": "{songs, plural, one {{songs} canción cantada} other {{songs} canciones cantadas}} · {takes, plural, one {{takes} toma} other {{takes} tomas}}",
+    "none": {
+      "search": "Ninguna canción coincide con “{q}”.",
+      "favourites": "Toca ♥ en una canción para guardarla aquí.",
+      "filters": "Ninguna canción coincide con estos filtros.",
+      "clear": "Borrar"
+    },
+    "col": {
+      "song": "Canción",
+      "when": "Cuándo",
+      "sung": "Cantado",
+      "pitch": "Afinación",
+      "score": "Puntuación"
+    },
+    "rescored": "Repuntuada",
+    "rescoredTitle": "Puntuada de nuevo, sin una parte de la canción marcada como no melodía",
+    "deleteWhat": "Eliminar esta toma (va a la Papelera)",
+    "deleteConfirm": "¿Eliminar esta toma?",
+    "showMore": "Mostrar más <n>(quedan {left})</n>",
+    "card": {
+      "best": "mejor",
+      "scores": "Puntuaciones: {list}",
+      "plays": "{count, plural, one {{count} reproducción} other {{count} reproducciones}} · última {last}",
+      "whenLearned": "{label} Se podrá cantar cuando esté aprendida",
+      "singAgain": "Cantarla otra vez"
+    },
+    "empty": {
+      "title": "Aún no hay tomas",
+      "body": "Canta con una canción al menos 20 segundos y aparecerá aquí.",
+      "start": "Empezar a cantar"
+    }
+  },
+  "song": {
+    "back": "← Tu canto",
+    "none": "Aún no hay reproducciones de esta canción.",
+    "scoresAt": "Puntuaciones en nivel {level} · <link>cambiar</link>",
+    "whenLearned": "Se podrá cantar cuando esté aprendida",
+    "singAgain": "Cantarla otra vez",
+    "learnsAgain": "Se vuelve a aprender en su próxima reproducción · <cancel>Cancelar</cancel>",
+    "learnAgain": "Volver a aprender",
+    "learnAgainTitle": "La reproduce ahora y la aprende de cero, como en su primera reproducción. Tus reproducciones y puntuaciones se quedan; si se detiene antes, queda como estaba.",
+    "relearn": "La letra se desfasa unos {by} s en {at} cada vez que la reproduces. Volver a aprenderla debería arreglarlo.",
+    "learnItAgain": "Volver a aprenderla",
+    "stat": {
+      "plays": "Reproducciones",
+      "best": "Mejor",
+      "latest": "Última",
+      "gainBoth": "Últimas 3 frente a las 3 primeras",
+      "gainOne": "Última frente a la primera",
+      "fromTo": "de {from} a {to}",
+      "fromToAverage": "promedio de {from} a {to}",
+      "singToSee": "cántala otra vez para verlo"
+    },
+    "chart": {
+      "title": "Puntuación por reproducción",
+      "axis": "primera → última"
+    },
+    "table": {
+      "title": "Todas las reproducciones",
+      "play": "Reproducción",
+      "when": "Cuándo",
+      "sung": "Cantado",
+      "sungTitle": "Cuánto de la canción cantaste",
+      "pitch": "Afinación",
+      "score": "Puntuación"
+    },
+    "deleteWhat": "Eliminar esta reproducción (va a la Papelera)",
+    "deleteConfirm": "¿Eliminar esta reproducción?"
+  },
+  "noLyrics": {
+    "line": "Esta canción aún no tiene letra. Las letras vienen de <link>LRCLIB</link>, una biblioteca gratuita a la que cualquiera puede aportar.",
+    "lookAgain": "Buscar de nuevo",
+    "looking": "Buscando…",
+    "found": "Encontrada",
+    "stillNone": "Sigue sin letra",
+    "notAnswering": "LRCLIB no responde"
+  },
+  "cover": {
+    "openApple": "Abrir en Apple Music",
+    "openAppleNamed": "Abrir {name} en Apple Music",
+    "openIn": "Abrir en {app}",
+    "inAppLink": "en {app} ↗",
+    "inApp": "en {app}",
+    "following": "La app que OnKey está siguiendo",
+    "otherLink": "{app} ↗",
+    "appleMusicLink": "Apple Music ↗"
+  },
+  "recent": {
+    "title": "Sigue donde lo dejaste",
+    "last": "última <n>{score}</n>",
+    "whenLearned": "Se podrá cantar cuando esté aprendida",
+    "singNamed": "Cantar {name}",
+    "starting": "Iniciando…",
+    "sing": "Cantar"
+  },
+  "trend": {
+    "legend": "{unit, select, play {Línea: tu promedio de {avg} reproducciones · puntos: cada reproducción} other {Línea: tu promedio de {avg} tomas · puntos: cada toma}}",
+    "tipScore": "Puntuación <n>{score}</n> · cantado {pct} %",
+    "tipAverage": "Promedio entonces <n>{avg}</n>"
+  },
+  "listControls": {
+    "sort": "Ordenar",
+    "difficultyLabel": "Dificultad",
+    "difficulty": {
+      "easy": "Fácil",
+      "moderate": "Moderada",
+      "medium": "Media",
+      "hard": "Difícil",
+      "veryHard": "Muy difícil"
+    },
+    "levelTitle": "{level}: {count, plural, one {{count} canción} other {{count} canciones}}",
+    "levelLabel": "{level} ({n} de 5)",
+    "clear": "Borrar"
+  },
+  "deleteButton": {
+    "tryAgain": "Intentar de nuevo",
+    "delete": "Eliminar",
+    "cancel": "Cancelar"
+  },
+  "readError": {
+    "body": "Lo más probable es que sigan ahí: OnKey simplemente no pudo abrirlas esta vez. No se ha cambiado ni eliminado nada.",
+    "tryAgain": "Intentar de nuevo"
+  },
+  "levelTag": {
+    "title": "Puntuada en nivel {level}: {about}"
+  },
+  "learnBar": {
+    "label": "Aprendiendo {name}",
+    "valueText": "{stage}, {pct} %"
+  },
+  "heart": {
+    "remove": "Quitar de favoritos",
+    "add": "Añadir a favoritos"
+  },
+  "engine": {
+    "line": {
+      "finding": "Se oye música… buscando la canción",
+      "new_song": "Canción nueva… buscándola",
+      "unnamed": "No se pudo nombrar esta canción",
+      "no_shazam": "Shazam no disponible: solo se reconocen las canciones aprendidas aquí",
+      "shazam_off": "No es una canción aprendida aquí: Shazam está desactivado en Ajustes",
+      "elsewhere": "{app} está reproduciendo, pero no en esta Mac",
+      "learning": "Aprendiendo: canta; se puntúa a partir de la próxima reproducción",
+      "stopped": "No se está aprendiendo {song}",
+      "podcast": "Suena un pódcast: OnKey canta con la música"
+    },
+    "share": {
+      "first": "{score} en tu primer intento con {song}",
+      "over80": "Tu primera puntuación por encima de {over} en {song}",
+      "best": "Tu mejor marca en {song}, por {points, plural, one {{points} punto} other {{points} puntos}}",
+      "up": "{points, plural, one {{points} punto} other {{points} puntos}} más que en tu última toma de {song}"
+    },
+    "timing": {
+      "output_changed": "La salida cambió durante la prueba. Inténtalo de nuevo.",
+      "few_taps": "No hubo suficientes toques a tiempo con los clics. Sigue el ritmo, un toque por cada clic.",
+      "uneven": "Tus toques fueron demasiado irregulares para medirlos. Inténtalo de nuevo siguiendo el ritmo, como si aplaudieras al compás.",
+      "reacting": "Parece que esperaste a cada clic. Prueba a seguir el ritmo en vez de reaccionar.",
+      "unbelievable": "Eso no cuadra: ¿esperaste a cada clic? Inténtalo de nuevo siguiendo el ritmo, como si aplaudieras al compás.",
+      "untimed": "La prueba no pudo medir el tiempo de sus clics. Inténtalo de nuevo.",
+      "stalled": "El sonido se detuvo o se reinició durante la prueba, así que no se puede medir. Inténtalo de nuevo."
+    },
+    "settingUnsaved": "No se pudo guardar el ajuste ({error}). Se mantiene hasta que OnKey se cierre.",
+    "fit": {
+      "fits": "Dentro de tu rango",
+      "few_above": "Algunas notas por encima de tu rango",
+      "few_below": "Algunas notas por debajo de tu rango",
+      "octave_lower": "Casi toda por encima de ti: cántala una octava más abajo",
+      "octave_higher": "Casi toda por debajo de ti: cántala una octava más arriba",
+      "above": "Casi toda por encima de tu rango",
+      "below": "Casi toda por debajo de tu rango",
+      "wider": "Más amplia que tu rango"
+    },
+    "reportWhat": {
+      "log": "el registro de OnKey de ese día",
+      "take": "resumen de una toma: {artist} - {name}",
+      "take_reported": "la toma reportada: resumen de una toma: {artist} - {name}",
+      "builds": "las versiones de OnKey que se ejecutaron en {os, select, pc {esta PC} other {esta Mac}}",
+      "summary": "resumen de los registros: {os, select, pc {esta PC} other {este equipo}}, audio, apps de música, aprendizaje, tomas, errores",
+      "about": "la versión de OnKey, {os, select, pc {esta PC} other {esta Mac}}, los ajustes y lo que escribiste"
+    },
+    "models": {
+      "unloadable": "no se pudieron cargar"
+    },
+    "youtubeSetting": {
+      "safari": "Safari ▸ Ajustes ▸ Avanzado: marca “Mostrar funciones para desarrolladores web” y luego Desarrollo ▸ Permitir JavaScript de eventos de Apple",
+      "chromium": "Ver ▸ Desarrollador ▸ Permitir JavaScript de eventos de Apple"
+    },
+    "app": {
+      "music_app": "tu app de música",
+      "browser": "tu navegador"
+    }
+  }
+}

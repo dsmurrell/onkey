@@ -66,17 +66,11 @@ if (typeof window === "undefined" && UNFILLED.length && !g.__onkeyWarned) {
 
 export const REQUIREMENTS = ["A Mac with Apple Silicon (M1 or later)", "macOS 14.2 or later"];
 
-export const NOT_AFFILIATED =
-  "OnKey isn't affiliated with or endorsed by Spotify, Apple or Google. Their names are trademarks of their owners and are used only to say which apps OnKey works with.";
-
 /** Prefix for files in public/ when the site is served under a sub-path (GitHub Pages project sites). */
 export const asset = (path: string) => /^https?:\/\//.test(path) ? path : `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
 
 /** A file in the repository (on its default branch), for "Under the hood" links. */
 export const codeUrl = (path: string) => `${GITHUB_URL}/blob/HEAD/${path}`;
-
-/** The footer's short form of NOT_AFFILIATED (the Privacy & legal page keeps the full sentence). */
-export const NOT_AFFILIATED_SHORT = "Not affiliated with Spotify, Apple or Google.";
 
 /** The card shown when a link to the site is shared (1280x640). Hosted with the demo video, outside the repo,
  *  since it shows a song's notes. */

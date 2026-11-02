@@ -1,6 +1,6 @@
 [package]
 name = "onkey"
-version = "0.2.0"
+version = "0.3.0"
 description = "Sing along and see how in tune you are"
 authors = ["OnKey contributors"]
 license = "MIT"
@@ -16,14 +16,18 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
 tauri-build = { version = "2.2.0", features = [] }
+# (already in the tree via tauri-build) reads messages/*.json for the native strings and InfoPlist.strings
+serde_json = "1.0"
 
 [dependencies]
 serde_json = "1.0"
+semver = "1"            # the app's version (tauri's PackageInfo), to tell a preview build (updater.rs)
 serde = { version = "1.0", features = ["derive"] }
 log = "0.4"
 tauri = { version = "2.5.0", features = ["protocol-asset", "macos-private-api"] }
 rtrb = "0.3"
-ort = { version = "=2.0.0-rc.10", features = ["coreml"] }
+# (Core ML on macOS and DirectML on Windows, below: elsewhere the models run on the CPU)
+ort = "=2.0.0-rc.10"
 ndarray = "0.16"
 ureq = { version = "2", features = ["json"] }
 urlencoding = "2"
@@ -38,11 +42,57 @@ crc32fast = "1"
 tauri-plugin-updater = { version = "2.12", default-features = false, features = ["native-tls"] }
 
 [target.'cfg(target_os = "macos")'.dependencies]
+ort = { version = "=2.0.0-rc.10", features = ["coreml"] }
 # already in the tree via tauri/tao; used directly to hide the window buttons in mini mode
 objc2 = "0.6"
 objc2-app-kit = { version = "0.3", default-features = false, features = ["std", "NSResponder", "NSWindow", "NSView", "NSControl", "NSButton", "NSRunningApplication", "NSWorkspace", "NSPanel", "NSSavePanel", "NSApplication"] }
 # (the save panel's file name and folder; asking macOS whether a music app is running, without a process)
 objc2-foundation = { version = "0.3", default-features = false, features = ["std", "NSString", "NSURL", "NSArray", "NSLocale"] }
+
+[target.'cfg(windows)'.dependencies]
+# DirectML (the GPU) for the learning models and live pitch: gpu.rs. ONNX Runtime's Windows build already has it;
+# the app ships DirectML.dll beside onkey.exe (tauri.windows.conf.json, scripts/fetch-directml.sh)
+ort = { version = "=2.0.0-rc.10", features = ["directml"] }
+# already in the tree (via tauri/wry); used directly for audio (WASAPI, Media Foundation) and the music app (the system media session)
+windows = { version = "0.62", features = [
+    "Foundation", "Foundation_Collections", "Media_Control",
+    "Win32_Foundation", "Win32_Media_Audio", "Win32_Media_MediaFoundation", "Win32_System_Com", "Win32_System_Com_StructuredStorage", "Win32_System_Variant",
+    "Win32_UI_Shell_PropertiesSystem", "Win32_Devices_FunctionDiscovery", "Win32_Devices_Properties",
+    "Win32_System_Diagnostics_ToolHelp", "Win32_System_ProcessStatus", "Win32_System_SystemInformation", "Win32_System_Threading",
+    "Win32_Security", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging", "Win32_System_DataExchange", "Win32_System_Memory", "Win32_System_Registry",
+    "Win32_Graphics_Dxgi", "Win32_System_LibraryLoader",
+    # (platform/windows/audio.rs: the performance counter WASAPI stamps its packets with)
+    "Win32_System_Performance",
+    # (report.rs, platform/windows/diag.rs: the display name a report leaves out, and a crash's exception for the log)
+    "Win32_Security_Authentication_Identity", "Win32_System_Diagnostics_Debug", "Win32_System_Kernel",
+    # (platform/windows/sys.rs: the region and the preferred languages)
+    "Win32_Globalization",
+] }
+# the share video's frames (share_draw.rs; macOS draws them in native/share.swift): shapes, and text in the system's font
+tiny-skia = { version = "0.11", default-features = false, features = ["std", "simd", "png-format"] }
+ab_glyph = "0.2"
+# (also in the tree: what `#[implement]`, the COM callback for per-process loopback, expands to)
+windows-core = "0.62"
+# (also in the tree: the media session's asks, waited for with a time limit: platform/windows/media.rs `within`)
+windows-future = "0.3"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+# the music apps and browsers through MPRIS on the session D-Bus (platform/linux/mpris.rs): plain Rust, no libdbus
+zbus = { version = "5", default-features = false, features = ["blocking-api", "async-io"] }
+# the sound server (PipeWire's pipewire-pulse, or PulseAudio) in its own protocol, plain Rust over its socket: capture,
+# mics and playback (platform/linux/pulse.rs, render.rs); nothing to link, nothing for the AppImage to carry
+pulseaudio = "0.3"
+# decoding takes' recordings and the demo song (WAV, AAC in .m4a, MP3, FLAC, Vorbis) in Rust (platform/linux/audiofile.rs)
+symphonia = { version = "0.5", default-features = false, features = ["wav", "pcm", "aac", "isomp4", "mp3", "flac", "ogg", "vorbis"] }
+# already in the tree (Tauri's window on Linux); used directly for the clipboard and to tell Wayland from X11
+gtk = "0.18"
+gdk = "0.18"
+glib = "0.18"
+
+[dev-dependencies]
+# (the share video's drawing is checked on the Mac too, against the Swift one's)
+tiny-skia = { version = "0.11", default-features = false, features = ["std", "simd", "png-format"] }
+ab_glyph = "0.2"
 
 [features]
 # development-only test hooks (simulated singer, event log, keeping audio for tests); never in release builds

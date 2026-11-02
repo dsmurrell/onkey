@@ -6,11 +6,11 @@
 #   text:     only text inside a library (documentation links in error messages, XML namespaces); never contacted
 # Shazam isn't listed: sound recognition goes through Apple's ShazamKit, a part of macOS, not a web address in OnKey.
 
-lrclib.net              contacts  # synced lyrics for a song (lyrics.rs)
+lrclib.net              contacts  # synced lyrics for a song (lyrics.rs); also a link: "LRCLIB" under "No lyrics for this song yet" opens lrclib.net in your browser (open_link)
 itunes.apple.com        contacts  # Apple's public song search and lookup: names, lengths, covers (music.rs, recognize.rs)
 *.mzstatic.com          contacts  # Apple's cover images, only from addresses Apple's search returned (music.rs)
 i.ytimg.com             contacts  # a YouTube video's thumbnail as its cover (youtube.rs)
-github.com              contacts  # update check (latest.json from this repo's releases); "Report a problem" opens an issue form
+github.com              contacts  # update check (latest.json from this repo's releases); "Report a problem" opens an issue form; Settings → Language opens a language's file (Improve this translation)
 open.spotify.com        link      # open a song or the starter playlist in Spotify
 music.apple.com         link      # open a song in Apple Music
 www.youtube.com         link      # open or search a song on YouTube

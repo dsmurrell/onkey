@@ -1,0 +1,1504 @@
+{
+  "app": {
+    "title": "OnKey",
+    "description": "Bir şarkı söyleme antrenörü: sevdiğiniz şarkıları, zaten çaldığınız müzikle söylemeyi öğrenin."
+  },
+  "settings": {
+    "language": {
+      "title": "Dil",
+      "label": "Dil",
+      "sub": "OnKey’in gösterdiği metinlerin dili. Otomatik, bilgisayarınızın dilini izler.",
+      "autoNamed": "Otomatik ({language})",
+      "autoOs": "{language} ({os, select, mac {Mac’inizin dili} other {bu PC’nin dili}})",
+      "early": "Erken",
+      "earlyNote": "{language} şarkıların sözleri şimdilik kelime kelime zamanlama olmadan gösteriliyor. Yardım etmek ister misiniz? <link>Bu çeviriyi iyileştirin.</link>",
+      "credits": "Çeviren: {names}"
+    },
+    "title": "Ayarlar",
+    "saveFailed": "Ayar kaydedilemedi.",
+    "audio": {
+      "title": "Ses",
+      "mic": {
+        "label": "Mikrofon",
+        "now": "Şu an: {name}.",
+        "none": "Bağlı mikrofon yok.",
+        "nowMissingMac": "Şu an: {name}. Seçtiğiniz mikrofon bağlı değil; bağlanana kadar OnKey Mac’in kendi girişini kullanıyor.",
+        "nowMissingPc": "Şu an: {name}. Seçtiğiniz mikrofon bağlı değil; bağlanana kadar OnKey {input} kullanıyor.",
+        "noneMissingMac": "<warn>Bağlı mikrofon yok.</warn> Seçtiğiniz mikrofon bağlı değil; bağlanana kadar OnKey Mac’in kendi girişini kullanıyor.",
+        "noneMissingPc": "<warn>Bağlı mikrofon yok.</warn> Seçtiğiniz mikrofon bağlı değil; bağlanana kadar OnKey {input} kullanıyor.",
+        "moreMac": "Otomatik, Mac’inizin girişini kullanır (Sistem Ayarları → Ses); ancak Mac’in kendi mikrofonu varken Bluetooth kulaklığın mikrofonunu kullanmaz, böylece kulaklıkta müzik tam kalitede kalır. Kurulumdaki mikrofon kontrolü ve denemeleriniz aynı mikrofonu kullanır. Başka uygulamaların eklediği sanal aygıtlar (Krisp, Loopback, BlackHole, Zoom, Teams) ayrı listelenir: birini yalnızca bilerek onun üzerinden söylemek için seçin, çünkü OnKey’e mikrofonunuzun değil o uygulamanın sesini verir.",
+        "morePc": "Otomatik, {input} kullanır ({soundInput}). Kurulumdaki mikrofon kontrolü ve denemeleriniz aynı mikrofonu kullanır.",
+        "automatic": "Otomatik",
+        "virtual": "Sanal (başka uygulamalardan)",
+        "notConnected": "Bağlı değil"
+      },
+      "output": {
+        "label": "Çıkış",
+        "now": "Şu an: {name}. Değiştirmek için: {os, select, mac {Sistem Ayarları → Ses} other {{sound}}}."
+      },
+      "setup": {
+        "title": "Kurulumu yeniden çalıştır",
+        "sub": "İzinler ve mikrofon kontrolü, ilk gündeki gibi."
+      }
+    },
+    "shortcuts": {
+      "title": "Klavye kısayolları",
+      "space": "Boşluk",
+      "pause": "Dinlemeyi duraklat veya devam et (her sayfada)",
+      "playPause": "Oynat veya duraklat",
+      "restart": "Şarkıyı baştan başlat",
+      "previous": "Önceki şarkı",
+      "next": "Sonraki şarkı veya şarkı söylenen yere atla",
+      "blind": "Notaları göster veya gizle (Notasız deneme)",
+      "favourite": "Şarkıyı favorilere ekle",
+      "mini": "Mini mod: diğer uygulamaların üstünde küçük bir söz çubuğu"
+    },
+    "updates": {
+      "version": "OnKey {version}",
+      "unsupportedMac": "Geliştirme yapısı: kendini güncellemez.",
+      "unsupportedPc": "Bu test yapısı kendini güncellemez: yenisi çıkınca üzerine kurun.",
+      "waiting": "OnKey {version} bu şarkı bitince kurulur, sonra OnKey yeniden başlar.",
+      "ready": "OnKey {version} hazır. Güncellemek için yeniden başlatın; yoksa çıkışta kurulur.",
+      "downloading": "OnKey {version} indiriliyor…",
+      "checking": "Denetleniyor…",
+      "official": "Asıl projeden OnKey {version} çıktı: singonkey.app. Bu kopya kaynak koddan derlendi, bu yüzden kendini güncellemez.",
+      "current": "En son sürümü kullanıyorsunuz.",
+      "currentSource": "En son sürümü kullanıyorsunuz. Bu kopya kaynak koddan derlendi: yeni sürüm çıktığında söyler ama kendini güncellemez.",
+      "updateFailed": "OnKey {version} sürümüne güncellenemedi. “Şimdi denetle” yeniden dener.",
+      "updateFailedWhy": "OnKey {version} sürümüne güncellenemedi ({error}). “Şimdi denetle” yeniden dener.",
+      "checkFailed": "Güncellemeler şu an denetlenemedi.",
+      "checkFailedWhy": "Güncellemeler şu an denetlenemedi ({error}).",
+      "restart": "Güncellemek için yeniden başlat",
+      "checkNow": "Şimdi denetle",
+      "auto": {
+        "title": "Güncellemeleri otomatik denetle",
+        "sub": "Günde bir kez, arka planda. Şarkıyı hiçbir zaman bölmez.",
+        "more": "OnKey GitHub’dan daha yeni bir sürüm olup olmadığını sorar ve arka planda indirir. Yeniden başlattığınızda veya çıktığınızda kurulur."
+      }
+    },
+    "seeHow": {
+      "show": "Nasıl göründüğüne bak",
+      "hide": "Gizle"
+    },
+    "more": {
+      "more": "Daha fazla",
+      "less": "Daha az"
+    },
+    "scoring": {
+      "title": "Puanlama",
+      "label": "Puanlama düzeyi",
+      "more": "Vibrato sorun değil: perdeniz dalgalanmanın ortasına göre değerlendirilir. OnKey’deki her puan bu düzeyde gösterilir, önceki denemeleriniz de: saklanan söyleyişinizden yeniden puanlanırlar.",
+      "moreRelaxed": "OnKey’deki her puan bu düzeyde gösterilir, önceki denemeleriniz de: saklanan söyleyişinizden yeniden puanlanırlar."
+    },
+    "control": {
+      "title": "OnKey yönetebilir",
+      "introMac": "Varsayılan olarak açık: OnKey ne çaldığını ve neresinde olduğunu okur (tam ve anlık konumlar); şarkıları oynatabilir, duraklatabilir, sarabilir ve başlatabilir. Başka hiçbir şey yapmaz. macOS her biri için bir kez sorar.",
+      "introPc": "Varsayılan olarak açık: OnKey ne çaldığını ve neresinde olduğunu okur; şarkıları oynatabilir, duraklatabilir, sarabilir ve başlatabilir. Başka hiçbir şey yapmaz.",
+      "introAsking": "OnKey, Spotify ve Apple Music’i onlara sorarak takip ediyor; yani onları zaten yönetiyor.",
+      "spotify": {
+        "title": "Spotify",
+        "missing": "Spotify bu {os, select, mac {Mac’te} other {PC’de}} kurulu değil.",
+        "sub": "Spotify’daki şarkıları OnKey’den başlatın, duraklatın ve atlayın."
+      },
+      "music": {
+        "title": "Apple Music",
+        "missingMac": "Müzik uygulaması bu Mac’te yok.",
+        "missingPc": "Apple Music uygulaması bu PC’de yok.",
+        "subMac": "Müzik uygulaması için aynısı (arşivinizdeki şarkılar).",
+        "subPc": "Apple Music uygulaması için aynısı."
+      },
+      "youtube": {
+        "title": "Tarayıcınızda YouTube",
+        "badge": "Daha geniş izin",
+        "subMac": "Chrome, Brave, Edge veya Safari’deki YouTube sekmesini okuyun ve yönetin.",
+        "moreMac": "Tarayıcıda “Apple Olayları’ndan JavaScript’e izin ver” seçeneğinin açık olması gerekir. Açıkken (ve OnKey’den bir YouTube şarkısı açtıktan sonraki 10 dakika boyunca) OnKey, aramalar ve podcast’ler dahil tarayıcınızın tüm sesini dinler: tanımadığı sesler, Shazam aşağıda kapalı değilse kısa bir parmak izi olarak (hiçbir zaman ses olarak) Shazam’a gidebilir.",
+        "subPc": "Chrome, Edge, Firefox, Brave, Opera veya Vivaldi’de çalan şarkıları takip edin.",
+        "morePc": "Tarayıcının {os} sistemine çaldığını bildirdiği şarkılardan; OnKey onları orada oynatabilir, duraklatabilir ve sarabilir. Şarkı öğrenilene kadar konumu Spotify’dakinden biraz daha az kesin olabilir."
+      },
+      "listenOnlyMac": "OnKey yalnızca dinliyor: şarkıları seslerinden takip ediyor ve hiçbir uygulamaya dokunmuyor. Konumlar biraz daha az kesin ve şarkıları başlatamaz veya baştan alamaz. Burada bir uygulamayı kapatmak macOS’in iznini geri almaz: o, Sistem Ayarları → Gizlilik ve Güvenlik → Otomasyon’da.",
+      "listenOnlyPc": "OnKey yalnızca dinliyor: şarkıları seslerinden takip ediyor ve hiçbir uygulamaya dokunmuyor. {os} üzerinde bu yalnızca zaten öğrendiği şarkılar demek: yeniler, burada açık oldukları sürece {apps} tarafından adlandırılır.",
+      "allOff": "Bunların hepsi kapalıyken OnKey şarkıları yalnızca seslerinden takip eder."
+    },
+    "naming": {
+      "title": "Şarkıları adlandırma",
+      "pc": "Daha önce söylediğiniz şarkılar bu PC’de seslerinden tanınır. Yeni şarkılar Spotify, Apple Music veya tarayıcınız (YouTube açıkken) tarafından, çaldığını söyledikleri şarkıdan adlandırılır. Bir şarkıyı adlandırmak için hiçbir yere hiçbir şey gönderilmez.",
+      "shazam": {
+        "title": "Yeni şarkıları adlandırmak için Shazam kullan",
+        "sub": "Yeni şarkıları sesin kısa bir parmak izinden adlandırır, sesin kendisinden değil.",
+        "more": "Daha önce söylediğiniz şarkılar bu Mac’te tanınır. Spotify ve Apple Music’teki yeni şarkıları, OnKey yönetebildiği sürece uygulamanın kendisi adlandırır; kalanını Shazam adlandırır. Kapalıyken Shazam’a hiçbir şey gönderilmez ve orada yalnızca bu Mac’te zaten öğrenilmiş şarkılar tanınır. Albüm kapakları yine sanatçı ve şarkı adıyla Apple’ın iTunes kataloğunda aranır.",
+        "warn": "Spotify ve Apple Music kapalıyken yeni şarkılar yalnızca Shazam açıkken öğrenilebilir. Zaten öğrenilmiş şarkılar çalışmaya devam eder."
+      }
+    },
+    "lyrics": {
+      "title": "Şarkı sözleri",
+      "show": {
+        "title": "Sözleri göster",
+        "sub": "Ücretsiz bir topluluk söz veri tabanı olan LRCLIB’den.",
+        "more": "Kapalıyken OnKey LRCLIB’den hiçbir şey istemez ve yalnızca notalarla söylersiniz: ses rehberi ve puanınız her zamanki gibi çalışır."
+      }
+    },
+    "voice": {
+      "title": "Sesiniz",
+      "breaks": {
+        "title": "Sesimi dinlendirmemi hatırlat",
+        "sub": "Yaklaşık 35 dakika şarkı söyledikten sonra sessiz bir mola hatırlatması.",
+        "more": "20 dakikalık bir şarkı arası sayacı yeniden başlatır."
+      },
+      "fadeGuide": {
+        "title": "Bildiğiniz şarkılarda rehberi azalt",
+        "sub": "Notanın üstündeyken ses çizginiz solar, böylece kendinizi daha çok dinlersiniz.",
+        "more": "Bir şarkıyı iyi söylediğinizde başlar (en iyi puanınız 80 veya üstü ya da son iki denemeniz 75 veya üstü). Şarkıyı ne kadar iyi bilirseniz çizgi o kadar soluklaşır; yarım tondan fazla saparsanız her zamanki gibi görünür. Notalar her zaman kalır ve herhangi bir denemede tam rehberi geri getirebilirsiniz."
+      }
+    },
+    "performance": {
+      "title": "Performans",
+      "battery": {
+        "title": "Söylerken pil tasarrufu yap",
+        "sub": "Pildeyken notalar biraz daha seyrek çizilir. Yine akıcı.",
+        "more": "Saniyede 60 yerine 30 kez: Mac’iniz için yarı yarıya çizim işi."
+      },
+      "keepModels": {
+        "title": "Öğrenme modellerini hazır tut",
+        "sub": "Yeni şarkılar daha hızlı öğrenilir ama OnKey daha fazla bellek kullanır.",
+        "more": "Yaklaşık 1,5 GB daha fazla; OnKey’in zaten bildiği şarkıları söylerken de. Kapalıyken modeller yeni bir şarkı öğrenilirken yüklenir ve sonra bırakılır. 32 GB veya daha fazla belleği olan {os, select, mac {Mac’lerde} other {PC’lerde}} varsayılan olarak açık."
+      }
+    },
+    "about": {
+      "title": "Hakkında",
+      "report": {
+        "title": "Sorun bildir",
+        "subMac": "OnKey’in günlüklerini ve zamanlamalarını bir GitHub issue’suna eklemek için zip olarak kaydedin. İçinde ne olduğunu önce görürsünüz; söz veya ses yok, hiçbir şey yüklenmez.",
+        "subPc": "OnKey’in günlüklerini ve zamanlamalarını bir mesaja veya GitHub issue’suna eklemek için Masaüstü’ne tek bir zip olarak kaydedin. İçinde ne olduğunu önce görürsünüz; söz veya ses yok, hiçbir şey yüklenmez."
+      },
+      "guides": {
+        "title": "Rehberler ve yardım",
+        "sub": "OnKey nasıl çalışır, puanlama, sorun giderme ve rahat şarkı söylemek; singonkey.app’te."
+      },
+      "discord": {
+        "title": "OnKey’in Discord’una katıl",
+        "sub": "Soru sorun, zamanlaması kayan bir şarkıyı bildirin, fikir önerin."
+      },
+      "madeBy": {
+        "title": "Daniel Murrell yaptı",
+        "tagline": "2026’dan beri duş şarkıcılarını kendilerinden kurtarıyor"
+      },
+      "fairUse": {
+        "title": "OnKey’i adil kullanmak",
+        "sub": "OnKey ne için ve müziği paylaşmadan şarkı söyleyişinizi nasıl paylaşırsınız."
+      },
+      "licences": {
+        "title": "Açık kaynak lisansları",
+        "sub": "OnKey’in üzerine kurulduğu modeller, veriler, yazı tipleri ve kitaplıklar ile lisansları."
+      },
+      "footer": "Evde kişisel çalışma için. OnKey’in öğrendikleri bu {os, select, mac {Mac’te} other {PC’de}} kalır: lütfen kendinize saklayın; içinde müzik olan denemeleri veya ekran kayıtlarını paylaşmayın."
+    }
+  },
+  "music": {
+    "levels": {
+      "relaxed": {
+        "name": "Rahat",
+        "about": "Hoşgörülü: yarım tonun yarısı içinde tam puan. Yeni başlayanlar ve çocuklar için iyi."
+      },
+      "steady": {
+        "name": "Dengeli",
+        "about": "Daha sıkı perde ve zamanlama; çoğunlukla doğru tonda söyleyenler için."
+      },
+      "pro": {
+        "name": "Pro",
+        "about": "Sıkı, eğitimli şarkıcılar için: tam puan için yarım tonun çeyreği."
+      }
+    },
+    "offBy": {
+      "cents": "{cents}¢ {dir, select, up {tiz} other {pes}}",
+      "octaves": "yaklaşık {count, plural, one {bir oktav} other {{count} oktav}} {dir, select, up {yukarıda} other {aşağıda}}",
+      "semitones": "yaklaşık {count, plural, one {yarım ton} other {{count} yarım ton}} {dir, select, up {tiz} other {pes}}"
+    },
+    "scoreWord": {
+      "superb": "Muhteşem",
+      "great": "Harika",
+      "good": "İyi",
+      "gettingThere": "Yaklaşıyor",
+      "keepAtIt": "Devam edin"
+    }
+  },
+  "platform": {
+    "linux": {
+      "os": "Linux",
+      "settings": "Ses Ayarları",
+      "sound": "sisteminizin Ses ayarları",
+      "soundInput": "sisteminizin Ses ayarları → Giriş",
+      "defaultInput": "sistemin varsayılan girişini",
+      "files": "dosya yöneticiniz",
+      "filesThe": "dosya yöneticisi",
+      "apps": "Spotify veya tarayıcınızda YouTube"
+    },
+    "windows": {
+      "os": "Windows",
+      "settings": "Windows Ayarları",
+      "sound": "Windows Ayarları → Sistem → Ses",
+      "soundInput": "Windows Ayarları → Sistem → Ses → Giriş",
+      "defaultInput": "Windows’un varsayılan girişini",
+      "files": "Dosya Gezgini",
+      "filesThe": "Dosya Gezgini",
+      "apps": "Spotify, Apple Music veya tarayıcınızda YouTube"
+    },
+    "setupStep": {
+      "welcome": "Hoş geldiniz",
+      "permissions": "İzinler",
+      "musicApps": "Müzik uygulamaları",
+      "micCheck": "Mikrofon kontrolü",
+      "ready": "Hazır"
+    },
+    "savedFolder": {
+      "desktop": "Masaüstünüz",
+      "home": "ev klasörünüz",
+      "named": "{folder} klasörü"
+    }
+  },
+  "learn": {
+    "stage": {
+      "playing": "Çalarken öğreniyor",
+      "waiting": "Sırasını bekliyor",
+      "queued": "Öğrenmeyi bekliyor",
+      "paused": "Siz söylerken bekliyor",
+      "separating": "Şarkıcıyı ayırıyor",
+      "pitch": "Melodiyi izliyor",
+      "scoring": "Denemenizi puanlıyor",
+      "words": "Sözleri zamanlıyor",
+      "bars": "Nota çubuklarını yapıyor",
+      "notes": "Her notayı buluyor",
+      "saving": "Kaydediyor",
+      "other": "Öğreniyor"
+    },
+    "label": {
+      "queued": "Öğrenmeyi bekliyor",
+      "going": "Öğreniyor…",
+      "percent": "Öğreniyor… %{pct}"
+    }
+  },
+  "starting": {
+    "yourApp": "müzik uygulamanız",
+    "theSong": "Şarkı",
+    "noId": {
+      "title": "{song}, {app} içinde başlatılamıyor",
+      "sub": "OnKey bu şarkıyı {app} içinde henüz tanımıyor (başka bir uygulamadan veya dinleyerek öğrenildi). Şarkıyı {app} içinde açıp oynatın: OnKey takip eder ve sonrasında sizin için başlatabilir."
+    },
+    "failed": {
+      "title": "{song}, {app} içinde başlamadı",
+      "subMusic": "OnKey, Apple Music arşivinizdeki şarkıları başlatabilir. Apple Music’te açıp orada oynatın: OnKey takip eder.",
+      "sub": "Şarkıyı {app} içinde açıp orada oynatın: OnKey takip eder."
+    },
+    "going": {
+      "title": "{song}, {app} içinde başlatılıyor…",
+      "sub": "Şerit, şarkı çalar çalmaz görünür."
+    }
+  },
+  "errors": {
+    "deleteFailed": "Silinemedi.",
+    "readFailed": "{what, select, takes {Denemeleriniz} songs {Şarkılarınız} other {{what}}} okunamadı",
+    "reportsInApp": "Raporlar OnKey uygulamasında hazırlanır."
+  },
+  "sing": {
+    "header": {
+      "miniTitle": "Mini mod: diğer uygulamaların üstünde kalan küçük bir söz çubuğu (M)"
+    },
+    "learning": {
+      "badge": "Bu şarkıyı öğreniyor",
+      "title": "Notasız denemeniz",
+      "body": "İpucu olmadan eşlik edin. Bir sonraki sefer her notayı önceden göreceksiniz.",
+      "scoreAfter": "<time>{clock}</time> · puan şarkıdan sonra"
+    },
+    "learningLine": {
+      "waiting": "<hl>{name}</hl> öğrenilmeyi bekliyor",
+      "learning": "<hl>{name}</hl> öğreniliyor: {stage}",
+      "stage": {
+        "playing": "çalarken öğreniyor",
+        "waiting": "sırasını bekliyor",
+        "queued": "öğrenmeyi bekliyor",
+        "paused": "siz söylerken bekliyor",
+        "separating": "şarkıcıyı ayırıyor",
+        "pitch": "melodiyi izliyor",
+        "scoring": "denemenizi puanlıyor",
+        "words": "sözleri zamanlıyor",
+        "bars": "nota çubuklarını yapıyor",
+        "notes": "her notayı buluyor",
+        "saving": "kaydediyor",
+        "other": "öğreniyor"
+      }
+    },
+    "lineSub": {
+      "mac": {
+        "finding": "OnKey şarkıyı sesinden adlandırıyor. Birkaç saniye sürer; deneme şarkının başından başlar.",
+        "new_song": "OnKey sıradaki şarkıyı adlandırıyor. Denemesi şarkının başından başlar.",
+        "unnamed": "OnKey’in veya Shazam’ın tanıdığı bir şarkı değil. Ses değişince OnKey yeniden sorar.",
+        "no_shazam": "Shazam’a şu an ulaşılamıyor, bu yüzden yalnızca bu Mac’te öğrenilmiş şarkılar tanınıyor. OnKey denemeye devam ediyor.",
+        "shazam_off": "Shazam kapalı (Ayarlar); bu yüzden OnKey yalnızca sesinden, bu Mac’te zaten öğrenilmiş şarkıları tanıyor. Yenileri adlandırmak için Shazam’ı açın.",
+        "podcast": "Bir şarkı çalın, OnKey takip eder.",
+        "stopped": "Öğrenmesini durdurdunuz, OnKey de ona dokunmuyor. Başka bir şarkı çalın, OnKey takip eder.",
+        "elsewhere": "OnKey bu Mac’te çalanı duyar. Başka bir aygıtta (telefonunuz, bir hoparlör) çalıyorsa uygulamanın aygıt menüsünden bu Mac’e geçirin."
+      },
+      "pc": {
+        "unnamed": "OnKey’in öğrendiği bir şarkı değil ve hiçbir müzik uygulaması ne olduğunu söylemedi. Ses değişince OnKey yeniden sorar.",
+        "no_shazam": "OnKey’in henüz öğrendiği bir şarkı değil. {os} üzerinde yeni şarkılar {apps} tarafından adlandırılır (YouTube açıkken): orada çalın, OnKey öğrenir.",
+        "shazam_off": "OnKey’in henüz öğrendiği bir şarkı değil. {os} üzerinde yeni şarkılar {apps} tarafından adlandırılır (YouTube açıkken): orada çalın, OnKey öğrenir.",
+        "elsewhere": "OnKey bu PC’de çalanı duyar. Başka bir aygıtta (telefonunuz, bir hoparlör) çalıyorsa uygulamanın aygıt menüsünden bu PC’ye geçirin."
+      }
+    },
+    "waiting": {
+      "title": {
+        "starting": "OnKey başlatılıyor…",
+        "gettingReady": "Hazırlanıyor…",
+        "notASong": "Şarkı değil",
+        "stillListening": "Dinlemeye devam ediyor",
+        "idle": "Bir şarkı çalın ve eşlik edin"
+      },
+      "sub": {
+        "connecting": "Bu {os, select, pc {PC’deki} other {Mac’teki}} motora bağlanıyor.",
+        "listeningTo": "{name} dinleniyor. Şerit az sonra görünür.",
+        "idle": "Spotify{youtube, select, yes {, Apple Music veya YouTube’da} other { veya Apple Music’te}}. OnKey takip eder ve her şarkı, gözden geçirebileceğiniz bir deneme olur."
+      },
+      "openIn": "{app} içinde aç",
+      "notNow": "Şimdi değil",
+      "keys": {
+        "playPause": "<kbd>Boşluk</kbd> oynat / duraklat",
+        "startOver": "<kbd>R</kbd> baştan başlat",
+        "skip": "<kbd>←</kbd><kbd>→</kbd> atla",
+        "favourite": "<kbd>F</kbd> favori"
+      },
+      "songsToTry": "Denenecek şarkılar",
+      "youtube": {
+        "title": "YouTube ve YouTube Music <badge>Deneysel</badge>",
+        "turnOff": "Kapat",
+        "turnOn": "Aç",
+        "pcOn": "Açık. OnKey tarayıcınızdaki şarkıları, tarayıcının {os} sistemine çaldığını bildirdiği şarkıdan takip eder.",
+        "pcOff": "Kapalı; bu yüzden tarayıcınızda çalan şarkılar alınmıyor. Chrome, Edge, Firefox, Brave, Opera veya Vivaldi’de eşlik etmek için açın.",
+        "macOn": "Açık. macOS, OnKey’in tarayıcınızı yönetmesine izin vermek için bir kez sorar; böylece videonun neresinde olduğunu okuyabilir.",
+        "macOff": "Kapalı; bu yüzden tarayıcınızda çalan şarkılar alınmıyor. Chrome, Safari, Brave veya Edge’de eşlik etmek için açın: macOS, OnKey’in tarayıcıyı yönetmesine izin vermek için bir kez sorar."
+      }
+    },
+    "paused": {
+      "text": "Dinleme duraklatıldı. Eşlik etmek için devam edin.",
+      "resumeTitle": "Dinlemeye devam et (⌘⇧P)",
+      "resume": "Devam et"
+    },
+    "rename": {
+      "saveFailed": "Ad kaydedilemedi.",
+      "buttonTitle": "Şarkı adı yanlış mı? Sanatçıyı ve adı düzeltin (sözleri bulmak için kullanılır)",
+      "title": "Şarkı adını düzelt",
+      "about": "YouTube videosundan okundu. OnKey sözleri bu ada göre bulur.",
+      "artist": "Sanatçı",
+      "songTitle": "Ad",
+      "cancel": "İptal",
+      "save": "Kaydet"
+    },
+    "notices": {
+      "dismiss": "Kapat",
+      "openWindowsSettings": "Windows Ayarları’nı aç",
+      "openSystemSettings": "Sistem Ayarları’nı aç",
+      "mic": {
+        "title": "OnKey mikrofonunuzu duyamıyor",
+        "deniedPc": "Duyabilene kadar şarkı söylemeniz duyulmaz ve puanlanmaz. <b>Windows Ayarları → Gizlilik ve güvenlik → Mikrofon</b>’da <b>Mikrofon erişimi</b>’ni ve <b>Masaüstü uygulamalarının mikrofonunuza erişmesine izin ver</b>’i açın.",
+        "deniedMac": "Duyabilene kadar şarkı söylemeniz duyulmaz ve puanlanmaz. <b>Sistem Ayarları → Gizlilik ve Güvenlik → Mikrofon</b>’da OnKey’i açın.",
+        "restrictedPc": "Bu PC’nin ayarları OnKey’in mikrofonu kullanmasına izin vermiyor. Bu PC’yi yönetene sorun.",
+        "restrictedMac": "Mac’inizin ayarları OnKey’in mikrofonu kullanmasına izin vermiyor. Bu Mac’i yönetene sorun.",
+        "noneMac": "Bağlı mikrofon yok, bu yüzden şarkı söylemeniz duyulmaz ve puanlanmaz. Bir mikrofon bağlayın veya <b>Sistem Ayarları → Ses → Giriş</b>’ten birini seçin.",
+        "nonePc": "Bağlı mikrofon yok, bu yüzden şarkı söylemeniz duyulmaz ve puanlanmaz. Bir mikrofon bağlayın veya <b>{soundInput}</b>’ten birini seçin."
+      },
+      "musicQuiet": {
+        "title": "{app} uygulamasının ses düzeyi çok düşük",
+        "body": "OnKey şarkıyı iyi duyamıyor{at, select, yes { ({app} %{volume} düzeyinde)} other {}}, bu yüzden şarkı söylemeniz puanlanmıyor. {app} sesini açın ve bunun yerine {os, select, pc {PC’nin} other {Mac’inizin}} ses düzeyini kullanın."
+      },
+      "automation": {
+        "title": "OnKey’in {app} uygulamasını yönetmesine izin verilmiyor",
+        "body": "{listening, select, yes {OnKey onu bunun yerine dinleyerek takip ediyor ve orada şarkı başlatamıyor, duraklatamıyor veya atlayamıyor.} other {Bu yüzden orada ne çaldığını bilemiyor.}} <b>Sistem Ayarları → Gizlilik ve Güvenlik → Otomasyon → OnKey</b>’de {app} uygulamasını açın{listening, select, yes { veya OnKey’in Ayarlar’ından kapatın} other {}}."
+      },
+      "notAnswering": {
+        "title": "{app}, OnKey’e yanıt vermiyor",
+        "body": "macOS, OnKey’in {app} uygulamasını yönetebileceğini diğerlerinin arkasında kalmış bir pencerede soruyor olabilir: pencereyi bulun ve <b>İzin Ver</b>’i seçin. Veya <b>Sistem Ayarları → Gizlilik ve Güvenlik → Otomasyon → OnKey</b>’de {app} uygulamasını açın. OnKey bir dakika içinde yeniden dener."
+      },
+      "lyricsDown": {
+        "title": "Şarkı sözleri şu an kullanılamıyor",
+        "body": "OnKey’in kullandığı ücretsiz söz servisi LRCLIB şu an çalışmıyor. Notalar yine gösterilir; şarkı sırasında geri gelirse sözler de eklenir. Bu arada öğrenilen bir şarkı, sözlerini bir sonraki söyleyişinizde alır."
+      },
+      "models": {
+        "title": "OnKey şu an yeni şarkı öğrenemiyor",
+        "body": "Uygulamanın içinde gelen öğrenme modelleri eksik veya bozuk{hasError, select, yes { ({error})} other {}}. Zaten öğrendiğiniz şarkılar çalışmaya devam eder. Düzeltmek için OnKey’i yeniden indirin ve {os, select, pc {bunun üzerine kurun} other {Uygulamalar’daki uygulamayı değiştirin}}: şarkılarınız ve denemeleriniz korunur."
+      },
+      "modelsBroken": {
+        "title": "OnKey şu an şarkı söylemenizi duyamıyor",
+        "body": "Uygulamanın içinde gelen perde modeli yüklenemedi{hasError, select, yes { ({error})} other {}}. Düzeltmek için OnKey’i yeniden indirin ve Uygulamalar’daki uygulamayı değiştirin: şarkılarınız ve denemeleriniz korunur."
+      },
+      "youtubeBlocked": {
+        "title": "YouTube’a eşlik etmek için OnKey’in {browser} içindeki videoyu okumasına izin verin",
+        "body": "{browser} içinde <b>{setting}</b>’i seçin. OnKey yalnızca videonun konumunu ve şarkının adını okur; sayfadaki başka hiçbir şeyi okumaz."
+      },
+      "youtubeOff": {
+        "title": "{browser} içinde YouTube veya YouTube Music mi çalıyorsunuz?",
+        "turnOn": "YouTube’u aç",
+        "pc": "OnKey tarayıcınızdaki şarkıları yalnızca YouTube açıkken alır. Sonra {browser} tarayıcısının {os} sistemine çaldığını bildirdiği şarkıyı takip eder ve diğerleri gibi öğrenir.",
+        "mac": "OnKey tarayıcınızdaki şarkıları yalnızca YouTube açıkken alır. macOS, OnKey’in {browser} tarayıcısını yönetmesine izin vermek için bir kez sorar; böylece videonun neresinde olduğunu okuyabilir.",
+        "cantFollow": "OnKey, {browser} içindeki şarkıları takip edemiyor. Onları <b>Chrome, Safari, Brave veya Edge</b>’de çalın ve YouTube’u açın (buradan veya Ayarlar’dan) ya da Ayarlar’dan her tarayıcıda çalışan <b>dinleme modu</b>nu açın."
+      }
+    },
+    "notASong": {
+      "text": "<hl>{name}</hl> şarkıdan çok konuşmaya benziyor, bu yüzden OnKey öğrenmeyi durdurdu.",
+      "dismiss": "Kapat",
+      "learnIt": "Bu bir şarkı: bir sonraki çalmada öğren"
+    },
+    "speakerHint": {
+      "text": "OnKey sizi müziğin üstünden duyamıyor. Şarkı söylüyorsanız, adil bir puan için müziği biraz kısın veya kulaklık kullanın.",
+      "dismiss": "Kapat",
+      "never": "Bir daha gösterme"
+    },
+    "ended": {
+      "title": "Oturum bitti",
+      "howYouDid": "İşte nasıl yaptığınız.",
+      "noTakes": "Bu sefer puanlanacak kadar uzun deneme yok."
+    },
+    "permission": {
+      "yourApp": "müzik uygulamanızın",
+      "title": "OnKey henüz {app} sesini duyamıyor",
+      "body": "Şarkıyı takip etmek için OnKey, Mac’inizde {app} sesini dinler. Ses kaydedilmez veya gönderilmez; dinleme modunda şarkıyı adlandırmak için kısa bir parmak izi (ses değil) Apple’ın Shazam servisine gider.",
+      "step1": "1. <b>Sistem Ayarları → Gizlilik ve Güvenlik</b>’i açın",
+      "step2": "2. <b>Ekran ve Sistem Sesi Kaydı</b>’nı seçin",
+      "step3": "3. <b>Yalnızca Sistem Sesi Kaydı</b> altında OnKey’i açın",
+      "open": "Sistem Ayarları’nı aç"
+    },
+    "mini": {
+      "playASong": "Spotify veya Apple Music’te bir şarkı çalın",
+      "score": "puan",
+      "hideDancer": "Dansçıyı burada gizle",
+      "expand": "Tam pencereyi aç (M)",
+      "showDancer": "Dansçıyı göster",
+      "progress": "Şarkının neresinde"
+    }
+  },
+  "live": {
+    "lyrics": {
+      "none": "Bu şarkı için zamanlı söz yok",
+      "off": "Sözler kapalı (Ayarlar)",
+      "findingPlace": "Yeriniz bulunuyor…",
+      "countdown": "♪ <num>{which, select, next {Sonraki satır} other {İlk satır}} {secs} sn sonra</num>"
+    },
+    "score": {
+      "label": "Puan",
+      "afterSong": "şarkıdan sonra",
+      "onPitch": "✓ Tam perdesinde",
+      "higher": "▲ Daha tiz söyleyin",
+      "lower": "▼ Daha pes söyleyin"
+    },
+    "transport": {
+      "restart": "Şarkıyı baştan başlat (R)",
+      "previous": "Önceki (←)",
+      "pause": "Duraklat (boşluk)",
+      "play": "Oynat (boşluk)",
+      "skipToSinging": "Şarkı söylenen yere atla (→)",
+      "next": "Sonraki şarkı (→)"
+    },
+    "take": {
+      "done": "{blind, select, yes {notasız · } other {}}{hasNotes, select, yes {{hit}/{total} nota} other {görüntüle}} →",
+      "couldntScore": "puanlanamadı",
+      "singNow": "Şimdi söyle",
+      "learnedPct": "%{pct} öğrenildi",
+      "playThrough": "baştan sona çalın",
+      "learningPct": "öğreniyor… %{pct}",
+      "waiting": "öğrenmeyi bekliyor",
+      "learning": "öğreniyor…",
+      "scoring": "puanlıyor…",
+      "learned": "Öğrenildi · söylemeye hazır"
+    },
+    "timing": {
+      "title": "Bunlarda sözler erken veya geç mi? Gecikmelerini ölçmek için bir tık sesine eşlik ederek dokunun",
+      "check": "<hl>{name}</hl> için zamanlamayı kontrol et ›",
+      "theseHeadphones": "bu kulaklık",
+      "dismiss": "Bunu bir daha önerme"
+    },
+    "chips": {
+      "connectionTitle": "Motora bağlantı",
+      "reconnecting": "Yeniden bağlanıyor",
+      "resumeTitle": "Dinlemeye devam et (⌘⇧P)",
+      "paused": "Dinleme duraklatıldı",
+      "pauseTitle": "Dinlemeyi duraklat (⌘⇧P)",
+      "live": "Canlı",
+      "outputTitle": "Ses {device} üzerinden çalıyor. Müzik uygulaması çaldıktan {ms} ms sonra duyuyorsunuz; puanlama bunu hesaba katıyor{checked, select, yes { (Ayarlar’daki zamanlama kontrolünüzden)} other {}}.",
+      "thisDevice": "bu aygıt",
+      "bluetooth": "Bluetooth",
+      "headphones": "Kulaklık veya hoparlör",
+      "micTitle": "OnKey’in dinlediği mikrofon (Ayarlar’dan başkasını seçin)",
+      "noMic": "Mikrofon yok"
+    },
+    "switches": {
+      "blindTitle": "Kendinizi sınamak için notaları gizleyin: Notasız deneme (B)",
+      "showNotes": "Notaları göster",
+      "echoTitle": "Müziğin sesini mikrofonunuzdan çıkarır. Hoparlörden çalan şarkıyla sınamak için kapatın.",
+      "echo": "Yankı engelleme",
+      "dancerTitle": "Siz söylerken şarkıyla dans eden bir çöp adam",
+      "dancer": "Dansçı"
+    },
+    "finish": {
+      "lastLine": "Bu son satırdı",
+      "seeScore": "Bitir ve puanını gör",
+      "now": "Şimdi bitir",
+      "paused": "Duraklatıldı",
+      "pausedIn": "{time} sonra {learning, select, yes {öğrenilir} other {puanlanır}}",
+      "learning": "öğreniyor…",
+      "scoring": "puanlıyor…"
+    },
+    "openTake": {
+      "countdown": "Duraklatıldı · {time} sonra {learning, select, yes {öğrenilir} other {puanlanır}}",
+      "learning": "Öğreniyor…",
+      "scoring": "Puanlıyor…",
+      "state": "{state, select, paused {Duraklatıldı} learning {Çalarken öğreniyor} other {Şu an söylüyor}} · bitince {learning, select, yes {öğrenilir} other {puanlanır}}",
+      "paused": "duraklatıldı",
+      "now": "şimdi",
+      "finish": "Şimdi bitir"
+    },
+    "skip": {
+      "singingIn": "Şarkı {secs} sn sonra",
+      "skipAhead": "İleri atla"
+    },
+    "pitchTitle": "Geçerli notaya göre perdeniz",
+    "toast": {
+      "view": "Görüntüle",
+      "learned": "Öğrenildi · notalar bir sonraki sefer hazır"
+    }
+  },
+  "lane": {
+    "verdict": {
+      "perfect": "Kusursuz",
+      "excellent": "Mükemmel",
+      "great": "Harika",
+      "good": "İyi",
+      "ok": "İdare eder"
+    },
+    "blind": "Notasız deneme · notalar gizli · göstermek için B’ye basın",
+    "findingPlace": "Şarkıdaki yeriniz bulunuyor…",
+    "liningUp": "Şarkıyla hizalanıyor…",
+    "singingStarts": "Şarkı {secs} sn sonra başlıyor"
+  },
+  "take": {
+    "allTakes": "← Tüm denemeler",
+    "notFound": "Bu deneme bulunamadı.",
+    "header": {
+      "singAgainBlocked": "Öğrenildikten sonra söylenebilir",
+      "singAgain": "Yeniden söyle",
+      "shareTitle": "Sesinizin ve notaların 20 saniyelik videosu, Instagram için",
+      "share": "Paylaş",
+      "within50Title": "Söyleyişinizin %{pct} kadarı şarkıcının 50 sent yakınındaydı.",
+      "sungLevelTitle": "Ayarlar’da seçilen düzeyde, saklanan söyleyişinizden yeniden puanlandı",
+      "sungLevel": "{level} düzeyinde gösteriliyor. {sungLevel} düzeyinde söylendi, {score} aldı.",
+      "leftOut": "Melodi değil diye işaretlenen {count, plural, one {bölüm} other {bölümler}} dışarıda bırakılarak puanlandı{changed, select, yes { (önce {first} idi)} other {}}."
+    },
+    "mode": {
+      "firstPlay": "İlk çalma",
+      "firstPlayWhy": "Bu şarkının ilk çalınışı: OnKey melodisini öğrendi, nota gösterilmedi",
+      "blind": "Notasız",
+      "blindWhy": "Nota gösterilmeden söylendi"
+    },
+    "story": {
+      "none": "Şarkıcının bölümüne eşlik etmediniz, bu yüzden puanlanacak bir şey yoktu.",
+      "main": "Şarkıcının bölümünün <n>%{sang}</n> kadarını söylediniz ve söylediğiniz kısmın <n>%{tune}</n> kadarı doğru tondaydı. {full, select, yes {Puanınız bu.} other {Bölümün %40’ını veya fazlasını söylediğinizde puanınız bunu tam olarak sayar.}}"
+    },
+    "verdict": {
+      "great": "Çok temiz bir ton.",
+      "mostly": "Çoğunlukla doğru tonda, birkaç dalgalı yer var.",
+      "often": "Sık sık notanın yakınında, zaman zaman uzaklaşıyor.",
+      "away": "Melodi yer yer elinizden kaçtı.",
+      "bias": "Ortalamada {off} kaldınız.",
+      "worstLine": "Bir kez daha denemeye değer: “{text}”.",
+      "worstAt": "Bir kez daha denemeye değer: {time} konumundaki satır."
+    },
+    "proud": {
+      "share": "Bu denemeyi paylaş",
+      "notNow": "Şimdi değil"
+    },
+    "player": {
+      "notKept": "Bu denemenin kaydınız artık saklanmıyor: OnKey tüm denemelerin kayıtlarını toplamda 2 GB’yi geçene kadar tutar, sonra en eskisini bırakır (favorilerinizin veya bir şarkının en iyi denemesinin kaydını hiçbir zaman). Puanlar kalır.",
+      "stop": "Durdur",
+      "play": "Oynat",
+      "playWithSong": "Kaydınızı şarkıyla oynat",
+      "playVoice": "Kaydınızı oynat",
+      "whatPlays": "Ne çalsın",
+      "withSong": "Şarkıyla",
+      "voiceOnly": "Yalnızca sesiniz",
+      "backToStart": "Başa dön",
+      "lining": "Şarkıyla hizalanıyor…",
+      "voiceTitle": "Sesinizin şarkıya göre ne kadar yüksek çalacağı",
+      "yourVoice": "Sesiniz",
+      "voiceNormal": "normal",
+      "voiceDb": "{db} dB",
+      "aboutJoin": "OnKey müziği değil, sesinizi saklar. “Şarkıyla”, {song} şarkısını {app} içinde çaldığınızda kaydınızı onunla uyumlu oynatır. Mikrofonunuzun gecikmesi ({ms} ms) otomatik olarak hesaba katıldı.",
+      "aboutPlay": "OnKey müziği değil, sesinizi saklar. “Şarkıyla”, parçayı {app} içinde kaydınızla birlikte çalar. Mikrofonunuzun gecikmesi ({ms} ms) otomatik olarak hesaba katıldı."
+    },
+    "join": {
+      "play": "{song} şarkısını {app} içinde çalın. OnKey katılır.",
+      "playFromStart": "{song} şarkısını {app} içinde baştan çalın. OnKey katılır.",
+      "goTo": "Bu bölüm için {app} içinde {time} konumuna gidin.",
+      "letStart": "OnKey sizin için başlatsın"
+    },
+    "graph": {
+      "singer": "Şarkıcının notaları",
+      "within50": "Siz, 50¢ içinde",
+      "within100": "100¢ içinde",
+      "further": "Daha uzak",
+      "heldTitle": "En az yarısı boyunca yarım ton içinde tuttuğunuz notalar. Çubukları yeşil yanar.",
+      "held": "{total} notadan <n>{hit}</n> tutuldu",
+      "biasTitle": "Perdenizin şarkıcıya göre ortalamada nerede durduğu",
+      "centred": "Ortalamada ortada",
+      "bias": "ortalamada {off}",
+      "notMelody": "Melodi değil"
+    },
+    "notMelody": {
+      "buttonTitle": "Notaların melodiyi değil bir arka vokali veya armoniyi izlediği bölümü dışarıda bırakın",
+      "button": "Melodi değil mi?",
+      "span": "{from} – {to}",
+      "saving": "Yeniden puanlanıyor…",
+      "leaveOut": "Puandan çıkar",
+      "drag": "Notaların melodi yerine bir arka vokali veya armoniyi izlediği bölümün üzerinde sürükleyin.",
+      "cancel": "İptal",
+      "note": "Bu şarkının her denemesinin puanından ve bir sonraki söyleyişinizden çıkarılır.",
+      "leftOut": "Puandan çıkarıldı, melodi değil:",
+      "putBack": "Geri koy",
+      "notLearned": "Bu şarkı henüz öğrenilmedi, bu yüzden hiçbir şey çıkarılmadı.",
+      "noChange": "Hiçbir denemenin puanı değişmedi.",
+      "rescored": "Bu şarkının {count, plural, one {{count} denemesi} other {{count} denemesi}} yeniden puanlandı."
+    },
+    "report": "Bu denemeyle ilgili sorun bildir",
+    "lines": {
+      "title": "Satır satır",
+      "lyricsOff": "Sözler kapalı (Ayarlar), bu yüzden bu denemenin satır satır raporu yok.",
+      "none": "Bu şarkı için zamanlı söz bulunamadı.",
+      "playFrom": "{time} konumundan oynat",
+      "line": "Satır {n}",
+      "noLead": "ana vokal yok",
+      "notSung": "söylenmedi"
+    }
+  },
+  "share": {
+    "saved": "İndirilenler’e kaydedildi. Instagram’da {song} şarkısını ekleyin ve {at} konumundan başlatın (kopyalandı).",
+    "failed": "Video yapılamadı: {error}",
+    "clip": "<b>{at}–{to}</b><dim> · {notes} notadan {hits} tutturuldu</dim>",
+    "cantShare": "Bu deneme paylaşılamaz",
+    "finding": "Klip bulunuyor…",
+    "which": "Hangi 20 saniye",
+    "fromPlayhead": "Oynatma imlecinden",
+    "best": "En iyi bölüm",
+    "playIt": "Oynat",
+    "making": "Video yapılıyor…",
+    "make": "Video yap",
+    "close": "Kapat",
+    "noBest": "Bu denemede tutturulan nota yok, bu yüzden en iyi bölüm de yok: oynatma imlecinden başlar.",
+    "about": "Kaydedildiği gibi sesiniz, notalar ve puanınız; müzik eklenmez. Şarkıyı Instagram’da kendi müzik kitaplığından, gösterilen zamandan başlatarak ekleyin. Şarkı hoparlörden çalarken mi söylediniz? O zaman bir kısmı kaydınızda: paylaşmak için en iyisi kulaklıkla yapılan denemeler. <why>{open, select, yes {Gizle} other {Neden kulaklık?}}</why> Lütfen müzik çalarken ekran kaydı paylaşmayın."
+  },
+  "challenge": {
+    "button": "Arkadaşına meydan oku",
+    "says": "{song} şarkısında <b>{score}</b> aldığınızı söyleyen ve onu geçmesini isteyen bir bağlantı.",
+    "nameLabel": "Adınız (isteğe bağlı)",
+    "namePlaceholder": "Anonim kalmak için boş bırakın",
+    "copied": "Kopyalandı: bir arkadaşınıza yapıştırın",
+    "failed": "Kopyalanamadı",
+    "copy": "Bağlantıyı kopyala",
+    "holds": "Yalnızca şarkının adını, sanatçıyı ve puanınızı içerir. Kayıt, nota veya söz yok.",
+    "holdsNamed": "Yalnızca şarkının adını, sanatçıyı, puanınızı ve adınızı içerir. Kayıt, nota veya söz yok."
+  },
+  "voiceRange": {
+    "title": "Ses aralığınız",
+    "working": "Denemelerinizden hesaplanıyor…",
+    "empty": "Birkaç şarkı söyleyin, OnKey ses aralığınızı burada gösterir.",
+    "from": "{count, plural, one {{count} denemeden} other {{count} denemeden}}",
+    "fromPending": "{count, plural, one {{count} denemeden} other {{count} denemeden}}; {pending} eski deneme hâlâ ölçülüyor",
+    "summary": "<range>{low}–{high}</range><dim>, en rahat bölge </dim><mid>{midLo}–{midHi}</mid>",
+    "aria": "Ses aralığınız {low} – {high}, en rahat {midLo} – {midHi}",
+    "note": "Denemelerinizde en çok söylediğiniz notalar (en alçak ve en yüksek %5 dışarıda). Daha çok şarkı söyledikçe genişler."
+  },
+  "voiceBreak": {
+    "text": "{minutes} dakikadır şarkı söylüyorsunuz. Sesinizi birkaç dakika dinlendirin ve biraz su için.",
+    "dismiss": "Kapat",
+    "ok": "Tamam"
+  },
+  "takeTags": {
+    "firstPlay": "İlk çalma",
+    "blind": "Notasız"
+  },
+  "timingCheck": {
+    "macOs": "macOS",
+    "title": "Çıkışınız",
+    "experimental": "Deneysel",
+    "checkOn": "{name} için zamanlamayı kontrol et",
+    "thisOutput": "bu çıkış",
+    "thisOutputCap": "Bu çıkış",
+    "checked": "Sizin kontrolünüzle: OnKey burada müziğin kulağınıza ulaşması için {heard} ms pay veriyor ({os} {reported} ms diyor).",
+    "unchecked": "OnKey burada müziğin kulağınıza ulaşması için {os} dediği gibi {reported} ms pay veriyor. Bluetooth kulaklıklar çoğu zaman {os} bildirdiğinden daha uzun sürer, bu da sözleri ve notaları erkene alır. Ölçmek için bir tık sesine eşlik ederek dokunun (iki kez: ikisi uyuşmalı).",
+    "how": "Bir ritme el çırpar gibi, tempoyla dokunun. Her tıkı duymayı beklemeyin: onlarla birlikte tempo tutun.",
+    "pauseFirst": "Önce müziği duraklatın.",
+    "reset": "Sıfırla",
+    "checkAgain": "Yeniden kontrol et",
+    "redo": "Yinele",
+    "check": "Zamanlamayı kontrol et",
+    "tapAria": "Her tıkla birlikte dokunun",
+    "tapTitle": "Tıklarla birlikte, tempoyla Boşluk’a basın (veya buraya tıklayın)",
+    "keepTime": "Sonuna kadar tempoyu tutun; bakmaktan çok dinleyin. Esc durdurur.",
+    "cancel": "İptal",
+    "cantPlay": "Kontrol tık seslerini çalamadı ({error}).",
+    "said": {
+      "confirmBefore": "Bu {measured} ms çıktı; öncekiyle ({before} ms) uyuşmuyor. Doğrulamak için bir kez daha.",
+      "confirm": "Sesi çalındıktan {measured} ms sonra duyuyorsunuz ({os} {reported} ms diyor). Doğrulamak için bir kez daha.",
+      "onTime": "{name} {plural, select, yes {zamanında} other {zamanında}}: OnKey’in varsaydığının {ms} ms içinde.",
+      "behind": "{name}, OnKey’in varsaydığından {ms} ms {plural, select, yes {geride} other {geride}}; ayarlandı.",
+      "ahead": "{name}, OnKey’in varsaydığından {ms} ms {plural, select, yes {ileride} other {ileride}}; ayarlandı."
+    }
+  },
+  "setup": {
+    "dialogLabel": "OnKey’i kur",
+    "stepsLabel": "Kurulum adımları",
+    "welcome": {
+      "title": "OnKey’e hoş geldiniz",
+      "lead": "Sevdiğiniz şarkıları, zaten çaldığınız müzikle söylemeyi öğrenin.",
+      "play": "Müzik uygulamanızda her zamanki gibi bir şarkı çalın. OnKey, {os, select, mac {Mac’inizde} other {PC’nizde}} çalan müziği dinler ve kendi başına takip eder.",
+      "learn": "Bir şarkı ilk kez çaldığında OnKey şarkıcının melodisini öğrenir. Ondan sonra her notayı önceden ve nerede tiz, nerede pes kaldığınızı görürsünüz.",
+      "privacyPc": "OnKey dinlediği müziği hiçbir zaman kaydetmez. Denemelerinizi geri dinleyebilmeniz için şarkı söyleme kayıtlarınız bu PC’de kalır. Şarkılar da bu PC’de, müzik uygulamanızın çaldığını söylediği şarkıdan adlandırılır: adlandırmak için hiçbir şey gönderilmez.",
+      "privacyMac": "OnKey dinlediği müziği hiçbir zaman kaydetmez. Denemelerinizi geri dinleyebilmeniz için şarkı söyleme kayıtlarınız bu Mac’te kalır. Yeni bir şarkıyı adlandırmak için dinleme modu, Apple’ın Shazam servisine müzik uygulamasının sesinin kısa bir parmak izini (sesi değil) gönderir.",
+      "entitled": "OnKey, çalma hakkınız olan müzikle evde çalışmak içindir. Öğrendiği melodiler kendi çalışmanız için; lütfen kendinize saklayın.",
+      "macosOld": "OnKey’in diğer uygulamaları duyması için macOS 14.2 veya sonrası gerekir. macOS’i Sistem Ayarları → Genel → Yazılım Güncelleme’den güncelleyin.",
+      "later": "Sonra kur",
+      "start": "Başla"
+    },
+    "permissions": {
+      "title": "İki izin",
+      "sub": "macOS her biri için bir kez sorar. Daha sonra Sistem Ayarları → Gizlilik ve Güvenlik’ten değiştirebilirsiniz.",
+      "mic": {
+        "title": "Mikrofon",
+        "why": "Şarkı söylemenizi duymak için.",
+        "hint": "Mikrofon altında OnKey’i açın."
+      },
+      "audio": {
+        "title": "Sistem sesi kaydı",
+        "why": "Mac’inizde çalan müziği duymak için; böylece OnKey melodiyi öğrenir. OnKey müziği hiçbir zaman kaydetmez veya göndermez; tanımadığı bir şarkıyı adlandırmak için kısa bir parmak izi (ses değil) Apple’ın Shazam servisine gidebilir.",
+        "hint": "Ekran ve Sistem Sesi Kaydı’nı açın ve Yalnızca Sistem Sesi Kaydı altında OnKey’i açın."
+      },
+      "reopen": "Bir izin verdikten sonra macOS OnKey’den çıkıp yeniden açmanızı isterse yapın. Kurulum kaldığı yerden devam eder.",
+      "skip": "Şimdilik geç",
+      "continue": "Devam et",
+      "allowed": "İzin verildi",
+      "openSettings": "Sistem Ayarları’nı aç",
+      "asking": "Soruluyor…",
+      "allow": "İzin ver",
+      "restricted": "Mac’inizin ayarları buna izin vermiyor. Yönetene sorun."
+    },
+    "musicApps": {
+      "title": "OnKey, Spotify ve Apple Music’i takip edebilsin",
+      "recommended": "Önerilen",
+      "why": "Böylece sözler ve notalar ilk saniyeden doğru yerde olur; OnKey şarkıları sizin için çalabilir ve baştan başlatabilir.",
+      "scope": "Ne çaldığını ve neresinde olduğunu okuyabilir; oynatabilir, duraklatabilir ve sarabilir. Başka hiçbir şey yapmaz. macOS her uygulama için bir kez sorar.",
+      "waitingMac": "macOS bekleniyor. Spotify veya Apple Music hakkında soruyorsa (sorusu bu pencerenin arkasında açılabilir) yanıtlayın. Soru yok mu? Devam edin: macOS orada ilk şarkı çaldığınızda sorar.",
+      "noAnswer": "macOS henüz yanıt almadı. Sorusu görünüyorsa yanıtlayın; yoksa orada ilk şarkı çaldığınızda sorar.",
+      "listenOnly": "Yalnızca dinle",
+      "continue": "Devam et",
+      "carryOn": "Devam et",
+      "asking": "Soruluyor…",
+      "allow": "İzin ver",
+      "appSpotify": "Spotify",
+      "appAppleMusic": "Apple Music",
+      "state": {
+        "allowed": "İzin verildi",
+        "notAllowed": "İzin verilmedi",
+        "notRunning": "macOS, orada ilk şarkı çaldığınızda sorar",
+        "waiting": "Henüz yanıt yok",
+        "ask": "Henüz sorulmadı"
+      },
+      "openSettings": "Sistem Ayarları’nı aç"
+    },
+    "micCheck": {
+      "title": "OnKey sizi duyabiliyor mu?",
+      "micOffPc": "Windows mikrofonu uygulamalar için kapatmış. <b>Windows Ayarları → Gizlilik ve güvenlik → Mikrofon</b>’da <b>Mikrofon erişimi</b>’ni ve <b>Masaüstü uygulamalarının mikrofonunuza erişmesine izin ver</b>’i açın.",
+      "micFirst": "OnKey’in önce mikrofona ihtiyacı var: geri dönüp izin verin.",
+      "noMicDevice": "Bağlı mikrofon yok. Bir mikrofon bağlayın veya {soundInput} bölümünden birini seçin.",
+      "macSoundInput": "Sistem Ayarları → Ses → Giriş",
+      "say": "Bir şey söyleyin veya bir nota tutun.",
+      "device": "{device} dinleniyor. Ayarlar’dan başkasını seçebilirsiniz.",
+      "meterLabel": "Mikrofon düzeyi",
+      "heard": "Sizi duydu",
+      "listening": "Dinliyor…",
+      "notAllowed": "İzin verilmedi",
+      "starting": "Başlatılıyor…",
+      "noMic": "Mikrofon yok",
+      "headphones": "En kararlı puanları kulaklık verir. Dizüstü hoparlörleri de olur: OnKey mikrofonun duyduğundan müziği çıkarır.",
+      "skip": "Geç",
+      "continue": "Devam et",
+      "openSettings": "{settings}’nı aç",
+      "back": "İzinlere dön"
+    },
+    "ready": {
+      "title": "Hazırsınız",
+      "lead": "Müzik uygulamanızda bir şarkı çalın ve söylemeye başlayın. Her şarkının ilk çalınışı OnKey’e melodiyi öğretir.",
+      "tipsLabel": "Öğrenme nasıl işler",
+      "tip": {
+        "toEnd": "Bir şarkıyı sonuna kadar çalın. OnKey yalnızca bir kısmını duyarsa kalanını bir sonraki çalınışında öğrenir.",
+        "talk": "İstediğiniz gibi konuşun veya eşlik edin. OnKey mikrofonunuzdan değil, müzik uygulamasının sesinden öğrenir.",
+        "volumePc": "Müzik uygulamasının kendi ses düzeyini yaklaşık çeyrekte veya üstünde tutun.",
+        "learnPc": "Öğrenme, şarkı bittikten sonra bu PC’de birkaç dakika sürer. Bu arada dinlemeye devam edin.",
+        "volumeMac": "Müzik uygulamasının kendi ses düzeyini yaklaşık çeyrekte veya üstünde tutun. Mac’inizin ses düzeyi ne olursa olsun, kapalı bile olabilir.",
+        "learnMac": "Öğrenme, şarkı bittikten sonra Mac’inizde birkaç dakika sürer; 8 GB bellekli Mac’lerde daha uzun. Bu arada dinlemeye devam edin."
+      },
+      "quickest": "<b>En hızlı başlangıç:</b> OnKey başlangıç çalma listesini açın ve yarım saat çalmaya bırakın.",
+      "openPlaylist": "Çalma listesini {app} içinde aç",
+      "playIn": "{app} içinde çal",
+      "comfortable": "Rahat bir ses düzeyinde söyleyin: OnKey ne kadar yüksek söylediğinizi değil, perdenizi puanlar. Sesiniz yorulunca dinlenin; boğazınız ağrırsa durun.",
+      "start": "Söylemeye başla"
+    }
+  },
+  "controlPrompt": {
+    "titleAllow": "{app} için OnKey’e yönetim izni verilsin mi?",
+    "titleCant": "OnKey, {app} üzerinde kontrol sahibi değil",
+    "bodyAllow": "OnKey, {app} içinde çalanı dinliyor ama yönetmiyor. Şarkıları başlatmak, şarkı söylenen yere atlamak ve OnKey’den duraklatmak için izninize ihtiyacı var.{os, select, mac { macOS da size bir kez soracak.} other {}}",
+    "bodyCant": "OnKey, {app} içinde çalanı yalnızca dinleyerek takip ediyor. Oynatma, duraklatma ve atlamayı orada yapın.",
+    "browserPc": "OnKey sonra tarayıcınızdaki şarkıları takip edebilir; orada oynatabilir, duraklatabilir ve sarabilir.",
+    "browserMac": "Bu daha geniş bir izin: OnKey sonra tarayıcınızdaki YouTube sekmesini okuyup yönetebilir ve tarayıcınızın tüm sesini dinler, ne olursa olsun (aramalar da): tanımadığı sesler kısa bir parmak izi olarak Shazam’a gidebilir, hiçbir zaman ses olarak değil. Tarayıcınızda “Apple Olayları’ndan JavaScript’e izin ver” seçeneğinin de açık olması gerekir.",
+    "notNow": "Şimdi değil",
+    "yourBrowser": "Tarayıcınız",
+    "openIn": "{app} içinde aç",
+    "allow": "Yönetmeye izin ver",
+    "changeLater": "Bunu istediğiniz zaman Ayarlar’dan değiştirebilirsiniz."
+  },
+  "starters": {
+    "label": "Denenecek şarkılar",
+    "heading": "Bunları deneyin <dim>· OnKey’in iyi takip ettiği şarkılar</dim>",
+    "hide": "Önerileri gizle",
+    "close": "Kapat",
+    "earlier": "Önceki şarkılar",
+    "more": "Daha fazla şarkı",
+    "why": {
+      "en": {
+        "standByMe": "Kolay: sakin, sade bir melodi",
+        "wonderwall": "Herkesin bildiği, hep bir ağızdan söylenen şarkı",
+        "fastCar": "Pes ve sakin, takip etmesi kolay",
+        "youngAndBeautiful": "Sabit tutmak için uzun notalar",
+        "someoneYouLoved": "Yumuşak kıtalar, büyük nakarat",
+        "someoneLikeYou": "Tek bir net ses, yükselen bir nakarat",
+        "hallelujah": "Yavaş ve duygulu: perde için harika",
+        "iWillAlwaysLoveYou": "Zorlu olan: çok geniş aralık"
+      },
+      "es": {
+        "laCamisaNegra": "Kolay: dar, akılda kalıcı bir melodi",
+        "meVoy": "Hafif ve sakin, takip etmesi kolay",
+        "deMusicaLigera": "Herkesin bildiği rock şarkısı",
+        "comoLaFlor": "Tatlı, salınan bir klasik",
+        "rayandoElSol": "Yumuşak kıtalar, büyük nakarat",
+        "rosas": "Tek bir net ses, yükselen bir nakarat",
+        "hijoDeLaLuna": "Yavaş ve büyüleyici: perde için harika",
+        "volverVolver": "Zorlu olan: büyük ranchera notaları"
+      },
+      "pt": {
+        "comoUmaOnda": "Kolay: sakin, sade bir melodi",
+        "velhaInfancia": "Yumuşak ve tatlı, takip etmesi kolay",
+        "gostavaTantoDeVoce": "Soul klasiği, herkesin söylediği bir nakarat",
+        "tempoPerdido": "Herkesin bildiği rock marşı",
+        "comoEuQuero": "Net melodili hafif pop",
+        "infiel": "Sertanejo kalp kırıklığı, eşlik etmek için yapılmış",
+        "amarPelosDois": "Yavaş ve içten: perde için harika",
+        "oceano": "Zorlu olan: uzun, kıvrımlı bir melodi"
+      },
+      "it": {
+        "azzurro": "Kolay: sakin, sade bir melodi",
+        "lItaliano": "Herkesin bildiği, hep bir ağızdan söylenen şarkı",
+        "saraPercheTiAmo": "Hareketli ve eğlenceli, kalabalık için yapılmış",
+        "albachiara": "Pes ve sakin, takip etmesi kolay",
+        "laSolitudine": "Tek bir net ses, yükselen bir nakarat",
+        "emozioni": "Yavaş ve duygulu: perde için harika",
+        "grandeGrandeGrande": "Yumuşaktan güçlüye yükselir",
+        "caruso": "Zorlu olan: göklere çıkan, operavari bir nakarat"
+      },
+      "fr": {
+        "lesChampsElysees": "Kolay: sakin, sade bir melodi",
+        "jeLAimeAMourir": "Yumuşak ve pes, takip etmesi kolay",
+        "laVieEnRose": "Herkesin bildiği klasik",
+        "avenir": "Hafif pop, net ve akılda kalıcı",
+        "jeVeux": "Parlak ve swing’li, söylemesi eğlenceli",
+        "derniereDanse": "Sabit tutmak için uzun notalar",
+        "laBoheme": "Yavaş ve duygulu: perde için harika",
+        "pourQueTuMAimesEncore": "Zorlu olan: büyük notalara yükselir"
+      },
+      "de": {
+        "uberDenWolken": "Kolay: sakin bir halk melodisi",
+        "n99Luftballons": "Herkesin bildiği, hep bir ağızdan söylenen şarkı",
+        "perfekteWelle": "Sakin kıtalar, büyük nakarat",
+        "atemlosDurchDieNacht": "Hareketli Schlager, eşlik etmek için yapılmış",
+        "griechischerWein": "Her kuşağın bildiği bir klasik",
+        "dasBeste": "Tek bir net ses, yükselen bir nakarat",
+        "aufUns": "Bağıra bağıra söylenecek büyük, açık bir nakarat",
+        "derWeg": "Zorlu olan: yavaş, çıplak ve duygulu"
+      }
+    },
+    "in": "Aç:",
+    "appSpotify": "Spotify",
+    "appAppleMusic": "Apple Music",
+    "searchIn": "{app} içinde ara",
+    "openItInAppleMusic": "Apple Music’te aç",
+    "openInAppleMusic": "Apple Music’te aç",
+    "openSongInAppleMusic": "{artist} – {title} şarkısını Apple Music’te aç",
+    "playlist": {
+      "title": "OnKey başlangıç çalma listesini çalın",
+      "sub": "Bunların hepsi ve daha fazlası, kolaydan zora: oynatın ve söyleyin",
+      "orAppleMusic": "veya Apple Music",
+      "openInAppleMusic": "Çalma listesini Apple Music’te aç",
+      "open": "Çalma listesini {app} içinde aç",
+      "playIn": "{app} içinde çal"
+    }
+  },
+  "demo": {
+    "title": "Hemen deneyin: bir örnek şarkı söyleyin",
+    "starting": "Başlatılıyor…",
+    "tryIt": "Hemen dene",
+    "about": "OnKey’in nasıl çalıştığını görebilmeniz için bir örnek şarkı. Kendi şarkılarınızın önce bir kez çalınıp öğrenilmesi gerekir."
+  },
+  "guides": {
+    "systemAudio": {
+      "summary": "Mac’te OnKey’in sistem sesini kaydetmesine nasıl izin verilir. Sistem Ayarları’nda Gizlilik ve Güvenlik’i açın, Ekran ve Sistem Sesi Kaydı’nı seçin ve Yalnızca Sistem Sesi Kaydı altında OnKey’i açın. macOS sorarsa Çık ve Yeniden Aç’ı seçin. OnKey sistem sesi kaydı işaretli olarak yeniden açılır ve kurulum devam eder.",
+      "step": {
+        "openPrivacy": "Gizlilik ve Güvenlik’i açın",
+        "screenRecording": "Ekran ve Sistem Sesi Kaydı",
+        "turnOn": "Yalnızca Sistem Sesi Kaydı altında OnKey’i açın",
+        "quitReopen": "macOS sorarsa çıkıp yeniden açın. Kurulum devam eder"
+      },
+      "dots": "Adımlar",
+      "stepOf": "Adım {step} / {count}: {caption}",
+      "mock": {
+        "privacySecurity": "Gizlilik ve Güvenlik",
+        "screenRecording": "Ekran ve Sistem Sesi Kaydı",
+        "audioOnly": "Yalnızca Sistem Sesi Kaydı",
+        "appName": "OnKey",
+        "quitReopenQuestion": "Çıkıp Yeniden Açılsın mı?",
+        "later": "Daha Sonra",
+        "quitReopen": "Çık ve Yeniden Aç",
+        "setup": "Kurulum",
+        "systemAudioRow": "Sistem sesi kaydı"
+      }
+    },
+    "musicApps": {
+      "caption": {
+        "ask": "macOS her uygulama için bir kez sorar",
+        "allow": "İzin Ver’i seçin",
+        "done": "Sonra ne çaldığını takip edebilir",
+        "behind": "Bu pencerenin arkasında açılabilir: bulun"
+      },
+      "labelOne": "Animasyon: bir macOS sorusu OnKey’in {app} uygulamasını yönetebileceğini soruyor. İmleç İzin Ver’i seçiyor, soru kapanıyor ve uygulama OnKey penceresinde bir onay işaretiyle görünüyor. Son olarak soru OnKey penceresinin arkasında yarı gizli gösteriliyor, orada aramanız için bir hatırlatmayla.",
+      "labelTwo": "Animasyon: bir macOS sorusu OnKey’in önce {first}, sonra {second} uygulamasını yönetebileceğini soruyor. İmleç İzin Ver’i seçiyor, soru kapanıyor ve uygulama OnKey penceresinde bir onay işaretiyle görünüyor. Son olarak soru OnKey penceresinin arkasında yarı gizli gösteriliyor, orada aramanız için bir hatırlatmayla.",
+      "app": {
+        "spotify": "Spotify",
+        "appleMusic": "Apple Music"
+      },
+      "asked": {
+        "spotify": "Spotify",
+        "appleMusic": "Müzik"
+      },
+      "alert": {
+        "wantsAccess": "“OnKey”, şunun için erişim istiyor:",
+        "control": "“{app}” uygulamasını denetleme",
+        "allowing": "Denetlemeye izin verildiğinde “{app}” uygulamasına erişilebilecektir.",
+        "dontAllow": "İzin Verme",
+        "allow": "İzin Ver"
+      },
+      "window": {
+        "title": "OnKey",
+        "note": "A4",
+        "musicApps": "MÜZİK UYGULAMALARI"
+      },
+      "menuBar": {
+        "appName": "OnKey"
+      },
+      "dots": "Adımlar",
+      "stepOf": "Adım {step} / {count}: {caption}",
+      "stepOfApp": "Adım {step} / {count}: {caption} ({app})"
+    },
+    "stillSteps": {
+      "dots": "Adımlar",
+      "stepOf": "Adım {step} / {count}",
+      "again": "Yeniden",
+      "next": "Sonraki"
+    },
+    "learnSong": {
+      "steps": {
+        "s0": "Bir şarkıyı bir kez sonuna kadar çalın",
+        "s1": "OnKey melodiyi mikrofonunuzdan değil, müzikten öğrenir",
+        "s2": "Bittikten birkaç dakika sonra",
+        "s3": "Bir sonraki sefer notalarla söyleyin"
+      },
+      "summary": "OnKey bir şarkıyı öğreniyor. Bir müzik çalarda şarkı bir kez sonuna kadar çalıyor; ses dalgaları OnKey’e akıyor ve melodisi nota çubukları olarak çiziliyor. Bittikten birkaç dakika sonra bir Öğreniyor halkası yeşil bir onay işaretine dönüşüyor: Öğrenildi. Şarkı bir sonraki çalışında notalar, üzerlerinde şarkıcının yeşil ses çizgisi ve altlarında sözlerle kayıp geçiyor.",
+      "learning": "Öğreniyor…",
+      "learned": "Öğrenildi",
+      "appName": "OnKey",
+      "melody": "MELODİ",
+      "you": "SİZ",
+      "lyric": {
+        "w0": "ı-",
+        "w1": "şı-",
+        "w2": "ğı",
+        "w3": "bi-",
+        "w4": "raz",
+        "w5": "da-",
+        "w6": "ha",
+        "w7": "tut",
+        "w8": "bu",
+        "w9": "ge-",
+        "w10": "ce"
+      },
+      "stepsGroup": "Animasyon adımları",
+      "stepLabel": "Adım {n} / {count}: {caption}"
+    },
+    "leaveOut": {
+      "steps": {
+        "s0": "Notalar bir arka vokali mi izliyor?",
+        "s1": "O bölümün üzerinde sürükleyin",
+        "s2": "Şarkının her denemesinin puanından çıkarılır"
+      },
+      "ariaLabel": "Bir şarkının bir denemesine ait perde grafiğinin animasyonu. Mor çubuklar puanın beklediği notaları, bir çizgi şarkıcının söylediğini gösteriyor; uyuştuğu yerde yeşil. Bir bölümde mor çubuklar bir arka vokali izleyerek yukarı sıçrıyor, şarkıcı melodide kalıyor ve çizgi kehribar rengine dönüyor. Bir imleç o bölümün üzerinde sürükleyip seçiyor ve “Puandan çıkar”a tıklıyor. Bölüm gri çizgilere dönüyor, puan {before} iken {after} oluyor ve aynı bölüm şarkının her denemesinden çıkarılıyor.",
+      "score": "Puan",
+      "take": "Deneme {n}",
+      "leftOut": "Çıkarıldı",
+      "leaveOutButton": "Puandan çıkar",
+      "stepsGroup": "Animasyon adımları",
+      "stepLabel": "Adım {n}: {caption}"
+    },
+    "speakers": {
+      "steps": {
+        "s0": "Hoparlörde şarkı kaydınıza karışır",
+        "s1": "Kulaklıkla yalnızca sesiniz kalır"
+      },
+      "label": "İki kısa sahne. Dizüstü hoparlörlerinde eşlik edilen şarkı dışarı yayılıp mikrofona kıvrılıyor, böylece kayıt sesinizi müzikle karıştırıyor. Kulaklıkla müzik kulaklarınızda kalıyor ve kayıt yalnızca sizin sesiniz oluyor.",
+      "rec": "REC",
+      "voice": "Ses",
+      "song": "Şarkı",
+      "stepsGroup": "Adımlar",
+      "stepLabel": "Adım {n} / {count}: {caption}"
+    },
+    "fadeDemo": {
+      "captions": {
+        "c0": "Bir şarkıyı iyi söylediğinizde",
+        "c1": "Notanın üstündeyken çizginiz solar",
+        "c2": "Saparsanız her zamanki gibi görünür",
+        "c3": "Herhangi bir denemede tam rehberi geri getirin"
+      },
+      "take": "Deneme {n}",
+      "ariaLabel": "Aynı şarkının dört denemesi nota şeritleri olarak: Deneme 1, 3, 5 ve 8. Mor notalar her denemede aynı kalıyor. Yeşil ses çizginiz Deneme 1’de parlak, notanın üstündeyken her denemede biraz daha soluk; Deneme 5’te bir an yarım tondan fazla sapıyor ve o bölüm kırmızı olarak tam görünüyor. Bir Tam rehber anahtarı çizginin tamamını geri getiriyor.",
+      "fullGuide": "Tam rehber",
+      "stepsGroup": "Animasyon adımları",
+      "stepLabel": "Adım {n} / {count}: {caption}"
+    }
+  },
+  "guideFade": {
+    "title": "Notanın üstündeyken ses çizginiz solar ({amount, select, little {biraz} more {daha çok} other {tamamen}}) ve yarım tondan fazla saptığınızda görünür. Ayarlar’dan kapatın.",
+    "note": "Rehber azaltıldı: bunu biliyorsunuz",
+    "showFull": "Tam rehberi göster"
+  },
+  "update": {
+    "failed": {
+      "text": "OnKey {version} sürümüne güncellenemedi",
+      "why": "Neden: {error}. Ayarlar → Şimdi denetle yeniden dener.",
+      "again": "Ayarlar → Şimdi denetle yeniden dener."
+    },
+    "official": {
+      "text": "Asıl projeden OnKey {version} çıktı",
+      "why": "Bu OnKey kaynak koddan derlendi, bu yüzden kendini güncellemez.",
+      "download": "İndir"
+    },
+    "ready": {
+      "why": "OnKey {version} hazır. Şimdi yeniden başlatmazsanız çıkışta kurulur.",
+      "waiting": "Bu şarkıdan sonra güncellenecek…",
+      "available": "Güncelleme var",
+      "restart": "Güncellemek için yeniden başlat",
+      "later": "Sonra",
+      "laterWhy": "Sonra (çıkışta kurulur)"
+    },
+    "hide": "Gizle"
+  },
+  "report": {
+    "title": "Sorun bildir",
+    "titleTake": "Bu denemeyle ilgili sorun bildir",
+    "savedPc": "Kaydedildi: {folder}, <file>{name}</file>; {files} içinde gösteriliyor. Mesajınıza (veya bir GitHub issue’suna) yalnızca bu dosyayı ekleyin. Hiçbir yere hiçbir şey gönderilmedi.",
+    "savedMac": "<file>{path}</file> konumuna kaydedildi. Göndermek için GitHub’da bir issue açın ve zip dosyasını ekleyin (kutuya sürükleyin). Hiçbir yere hiçbir şey gönderilmedi.",
+    "showInPc": "{files} içinde göster",
+    "showInFinder": "Finder’da göster",
+    "openIssue": "GitHub issue’su aç",
+    "done": "Bitti",
+    "introPc": "OnKey kayıtlarını, bir mesaja eklemeniz için Masaüstü’nüzde tek bir zip dosyasında toplar: son üç günün günlüğü, her çalmanın özeti ve bu PC’nin, sesinin ve takip ettiği müzik uygulamalarının özeti. Söz yok, ses yok, şarkı dosyası yok, kullanıcı adı veya ev klasörü yok. Hiçbir şey yüklenmez.",
+    "introMac": "OnKey kayıtlarını, kaydedip bir hata raporuna eklemeniz için bir zip dosyasında toplar: son üç günün günlüğü ve her çalmanın özeti (zamanlamalar, CPU, hangi yapı, hangi Mac). Söz yok, ses yok, şarkı dosyası yok, kullanıcı adı veya ev klasörü yok. Hiçbir şey yüklenmez.",
+    "askLabel": "Ne ters gitti? <muted>(isteğe bağlı)</muted>",
+    "placeholder": "örn. Bad Day’de sözler geç kaldı veya OnKey başlatılıyor ekranında dondu",
+    "preparing": "Hazırlanıyor…",
+    "inZip": "Zip içinde ({count} dosya, {size}):",
+    "logs": "OnKey günlüğünün {count, plural, one {{count} günü} other {{count} günü}} ({size})",
+    "size": {
+      "b": "{n} B",
+      "kb": "{n} KB",
+      "mb": "{n} MB"
+    },
+    "showFiles": "Dosyaları göster",
+    "cancel": "İptal",
+    "saveMac": "Kaydet…",
+    "savePc": "Masaüstü’ne kaydet"
+  },
+  "nav": {
+    "appName": "OnKey",
+    "songsToTry": "Denenecek şarkılar",
+    "sing": "Söyle",
+    "library": "Arşiv",
+    "history": "Geçmiş",
+    "settings": "Ayarlar",
+    "paused": "Dinleme duraklatıldı",
+    "resume": "Devam et",
+    "resumeWhy": "Dinlemeye devam et (⌘⇧P)",
+    "whatsNew": "OnKey’de yenilikler",
+    "whatsNewFresh": "OnKey’de yenilikler (yeni)",
+    "testBuild": "Test sürümü",
+    "testBuildTitle": "Windows veya Linux için OnKey test sürümü: bir sonraki çıktığında bunun üzerine kurun"
+  },
+  "licences": {
+    "back": "← Ayarlar",
+    "title": "Açık kaynak lisansları",
+    "intro": "OnKey, MIT Lisansı altında ücretsiz ve açık kaynaktır. Aşağıdaki modeller, veriler, yazı tipleri ve kitaplıklar üzerine kuruludur.",
+    "error": "Bildirimler açılamadı: {error}",
+    "missing": "Bildirimler kaynak kodun yanındaki THIRD_PARTY_NOTICES.md dosyasında."
+  },
+  "fairUse": {
+    "back": "← Ayarlar",
+    "title": "OnKey’i adil kullanmak",
+    "intro": "OnKey, çalma hakkınız olan müzikle evde çalışmak içindir. Lütfen:",
+    "keep": {
+      "title": "Öğrendiklerini kendinize saklayın.",
+      "body": "Her şarkının melodisinin yazımı sizin çalışmanız için; paylaşmayın veya yayımlamayın. OnKey’in kendisini paylaşmanız ise hoş karşılanır."
+    },
+    "share": {
+      "title": "Bir denemeyi paylaşmak için sayfasındaki Paylaş’ı kullanın.",
+      "body": "Sesinizin ve ses çizginizin müziksiz kısa bir videosunu yapar; şarkıyı Instagram’ın bunun için lisanslı kendi müzik kitaplığından ekleyebilirsiniz. En iyisi kulaklıkla yapılan denemeler: hoparlörle söylendiğinde şarkının bir kısmı kaydınıza girer. Müzik çalarken ekran kaydı paylaşmayın."
+    },
+    "venue": {
+      "title": "Bar veya etkinlik için lisanslı bir karaoke servisi kullanın.",
+      "body": "OnKey’in şarkı sözleri ücretsiz bir topluluk veri tabanından gelir."
+    },
+    "modify": {
+      "title": "OnKey’i müziği kaydedecek şekilde değiştirmeyin."
+    },
+    "contact": "OnKey dinlediği müziği hiçbir zaman kaydetmez. Hak sahipleri bana <email>hello@singonkey.app</email> adresinden ulaşabilir."
+  },
+  "library": {
+    "title": "Arşiv",
+    "intro": "OnKey’in öğrendiği şarkılar. Birini seçin ve her notayı önceden görerek söyleyin.",
+    "search": "Şarkı ara",
+    "empty": {
+      "title": "Henüz öğrenilen yok",
+      "body": "OnKey açıkken bir şarkıyı baştan sona çalın, melodiyi öğrenir. Bütün bir çalma listesi de olur: bırakın çalsın.",
+      "start": "Başla",
+      "showStarters": "Denenecek şarkıları göster"
+    },
+    "filter": {
+      "label": "Göster",
+      "all": "Hepsi",
+      "favorites": "Favoriler",
+      "unscored": "Henüz puanlanmadı",
+      "partial": "Kısmen öğrenildi",
+      "count": "{count, plural, one {{count} şarkı} other {{count} şarkı}}"
+    },
+    "inRange": {
+      "title": "Ses aralığınıza uyan şarkılar; olduğu gibi veya bir oktav aşağıdan ya da yukarıdan söylenerek (oktavlar hoş görülür): {count, plural, one {{count} şarkı} other {{count} şarkı}}",
+      "label": "Aralığınızda"
+    },
+    "sort": {
+      "recent": "En son",
+      "easy": "Önce en kolay",
+      "hard": "Önce en zor",
+      "best": "En iyi puan",
+      "most": "En çok söylenen",
+      "az": "A–Z"
+    },
+    "shownPartly": "{count} kısmen öğrenildi",
+    "shownLearned": "{count} öğrenildi",
+    "partlyNote": "OnKey bunların yalnızca bir kısmını duydu. Birini baştan sona çalın, öğrenmeyi tamamlar ve Hepsi’ne taşınır.",
+    "noFavourites": "Bir şarkıda ♥ simgesine dokunun, burada kalsın.",
+    "none": {
+      "partly": "Kısmen öğrenilen yok: her şarkı hazır.",
+      "unscored": "Her şarkının bir puanı var. Güzel.",
+      "search": "“{q}” ile eşleşen şarkı yok.",
+      "filters": "Bu filtrelerle eşleşen şarkı yok.",
+      "clear": "Temizle"
+    },
+    "card": {
+      "sing": "{artist} – {name} şarkısını söyle",
+      "whenLearned": "Öğrenildikten sonra söylenebilir",
+      "playThrough": "Öğrenmeyi bitirmek için baştan sona çalın",
+      "learning": "Öğreniyor",
+      "learnsAgain": "Bir sonraki çalmada yeniden öğrenir",
+      "learnsAgainTitle": "Bir sonraki çalınışında yeniden öğrenilir; o zamana kadar eskisi gibi söylenir",
+      "pctLearned": "%{pct} öğrenildi",
+      "relearn": "Yeniden öğrenme önerilir",
+      "relearnTitle": "Çalmalarınızda sözler {at} konumunda kayıyor: yeniden öğrenmek bunu düzeltmeli (⋯ menüsü)",
+      "notScored": "Henüz puanlanmadı",
+      "notScoredTitle": "Bunu OnKey’le henüz söylemediniz",
+      "playsTitle": "Bu şarkıyı çalmalarınız",
+      "plays": "{count, plural, one {{count} çalma} other {{count} çalma}}",
+      "playsBest": "{count, plural, one {{count} çalma} other {{count} çalma}} · en iyi <n>{best}</n>",
+      "demo": "örnek şarkı",
+      "demoTitle": "OnKey’le gelen bir örnek şarkı",
+      "fitTitle": "{label}. Notaları: {low}–{high}",
+      "starting": "Başlatılıyor…",
+      "singButton": "Söyle"
+    },
+    "menu": {
+      "more": "{name} için daha fazla",
+      "openIn": "{app} içinde aç ↗",
+      "learnAgain": "Yeniden öğren",
+      "dontLearnAgain": "Yeniden öğrenme",
+      "deleteWhat": "Bu şarkıyı sil (denemeleriniz Geçmiş’te kalır; şarkı Çöp Sepeti’ne gider)",
+      "deleteConfirm": "Bu şarkı silinsin mi?",
+      "stopWhat": "Öğrenmeyi durdur ve sil (şarkı değilse, örneğin)",
+      "stopConfirm": "Öğrenme durdurulup silinsin mi?",
+      "stop": "Öğrenmeyi durdur ve sil",
+      "delete": "Sil"
+    },
+    "startersLink": "Denenecek şarkılar",
+    "footer": "OnKey müziği hiçbir zaman kaydetmez: yalnızca öğrendiği notaları ve sizin sesinizi saklar. Sözler <link>LRCLIB</link>’den gelir. OnKey’in Spotify, Apple veya Google ile bağlantısı yoktur ve onlar tarafından desteklenmez; adları sahiplerinin ticari markalarıdır.",
+    "difficulty": {
+      "label": "Zorluk {level}/5: {word}",
+      "title": "Zorluk {level}/5: {word}. Çoğunlukla melodinin aralığının ne kadar geniş olduğuna bağlı."
+    },
+    "clearPartly": {
+      "button": "{count} şarkının hepsini sil",
+      "label": "Kısmen öğrenilen tüm şarkıları sil",
+      "ask": "{count, plural, one {{shown, select, yes {Gösterilen } other {}}{count} kısmen öğrenilmiş şarkı} other {{shown, select, yes {Gösterilen } other {}}{count} kısmen öğrenilmiş şarkı}} silinsin mi? Denemeler Geçmiş’te kalır{hearted, plural, =0 {} one {; {hearted} favori korunur} other {; {hearted} favori korunur}}.",
+      "deleting": "Siliniyor…",
+      "tryAgain": "Yeniden dene",
+      "deleteAll": "Hepsini sil",
+      "cancel": "İptal"
+    }
+  },
+  "history": {
+    "title": "Söylediğiniz şarkılar",
+    "intro": "Söylediğiniz her şarkı bir deneme olur. İşte gidişatı.",
+    "scoresAt": "Puanlar {level} düzeyinde · <link>değiştir</link>",
+    "search": "Şarkı ara",
+    "pending": {
+      "learning": "Şarkı öğreniliyor, sonra denemeniz puanlanacak…",
+      "scoring": "Puanlıyor…"
+    },
+    "stat": {
+      "takes": "Denemeler",
+      "average": "Ortalama, son 10",
+      "best": "En iyi",
+      "songs": "Söylenen şarkılar"
+    },
+    "chart": {
+      "title": "Deneme başına puan",
+      "axis": "en eski → en yeni"
+    },
+    "view": {
+      "label": "Görünüm",
+      "songs": "Şarkılar",
+      "takes": "Tüm denemeler"
+    },
+    "show": {
+      "label": "Göster",
+      "all": "Hepsi",
+      "favorites": "Favoriler"
+    },
+    "clearFilters": "Filtreleri temizle",
+    "sort": {
+      "recent": "En son",
+      "best": "En iyi puan",
+      "most": "En çok söylenen",
+      "improved": "En çok gelişen",
+      "easy": "Önce en kolay",
+      "hard": "Önce en zor",
+      "az": "A–Z"
+    },
+    "counts": "{songs, plural, one {{songs} şarkı} other {{songs} şarkı}} söylendi · {takes, plural, one {{takes} deneme} other {{takes} deneme}}",
+    "none": {
+      "search": "“{q}” ile eşleşen şarkı yok.",
+      "favourites": "Bir şarkıda ♥ simgesine dokunun, burada kalsın.",
+      "filters": "Bu filtrelerle eşleşen şarkı yok.",
+      "clear": "Temizle"
+    },
+    "col": {
+      "song": "Şarkı",
+      "when": "Ne zaman",
+      "sung": "Söylenen",
+      "pitch": "Perde",
+      "score": "Puan"
+    },
+    "rescored": "Yeniden puanlandı",
+    "rescoredTitle": "Şarkının melodi değil diye işaretlenen bir bölümü olmadan yeniden puanlandı",
+    "deleteWhat": "Bu denemeyi sil (Çöp Sepeti’ne gider)",
+    "deleteConfirm": "Bu deneme silinsin mi?",
+    "showMore": "Daha fazla göster <n>({left} kaldı)</n>",
+    "card": {
+      "best": "en iyi",
+      "scores": "Puanlar: {list}",
+      "plays": "{count, plural, one {{count} çalma} other {{count} çalma}} · son {last}",
+      "whenLearned": "{label} Öğrenildikten sonra söylenebilir",
+      "singAgain": "Yeniden söyle"
+    },
+    "empty": {
+      "title": "Henüz deneme yok",
+      "body": "Bir şarkıya en az 20 saniye eşlik edin, burada görünür.",
+      "start": "Söylemeye başla"
+    }
+  },
+  "song": {
+    "back": "← Söylediğiniz şarkılar",
+    "none": "Bu şarkı henüz çalınmadı.",
+    "scoresAt": "Puanlar {level} düzeyinde · <link>değiştir</link>",
+    "whenLearned": "Öğrenildikten sonra söylenebilir",
+    "singAgain": "Yeniden söyle",
+    "learnsAgain": "Bir sonraki çalmada yeniden öğrenir · <cancel>İptal</cancel>",
+    "learnAgain": "Yeniden öğren",
+    "learnAgainTitle": "Şimdi çalar ve ilk çalınışındaki gibi yeniden öğrenir. Çalmalarınız ve puanlarınız kalır; erken durdurulursa olduğu gibi bırakılır.",
+    "relearn": "Her çalışınızda sözler {at} konumunda yaklaşık {by} sn kayıyor. Yeniden öğrenmek bunu düzeltmeli.",
+    "learnItAgain": "Yeniden öğren",
+    "stat": {
+      "plays": "Çalmalar",
+      "best": "En iyi",
+      "latest": "Son",
+      "gainBoth": "Son 3 / ilk 3",
+      "gainOne": "Son / ilk çalma",
+      "fromTo": "{from} → {to}",
+      "fromToAverage": "ortalama {from} → {to}",
+      "singToSee": "görmek için yeniden söyleyin"
+    },
+    "chart": {
+      "title": "Çalma başına puan",
+      "axis": "ilk çalma → son"
+    },
+    "table": {
+      "title": "Her çalma",
+      "play": "Çalma",
+      "when": "Ne zaman",
+      "sung": "Söylenen",
+      "sungTitle": "Şarkının ne kadarını söylediğiniz",
+      "pitch": "Perde",
+      "score": "Puan"
+    },
+    "deleteWhat": "Bu çalmayı sil (Çöp Sepeti’ne gider)",
+    "deleteConfirm": "Bu çalma silinsin mi?"
+  },
+  "noLyrics": {
+    "line": "Bu şarkının sözleri henüz yok. Şarkı sözleri, herkesin katkıda bulunabildiği ücretsiz bir kütüphane olan <link>LRCLIB</link>’den gelir.",
+    "lookAgain": "Yeniden ara",
+    "looking": "Aranıyor…",
+    "found": "Bulundu",
+    "stillNone": "Hâlâ yok",
+    "notAnswering": "LRCLIB yanıt vermiyor"
+  },
+  "cover": {
+    "openApple": "Apple Music’te aç",
+    "openAppleNamed": "{name} şarkısını Apple Music’te aç",
+    "openIn": "{app} içinde aç",
+    "inAppLink": "{app} üzerinde ↗",
+    "inApp": "{app} üzerinde",
+    "following": "OnKey’in takip ettiği uygulama",
+    "otherLink": "{app} ↗",
+    "appleMusicLink": "Apple Music ↗"
+  },
+  "recent": {
+    "title": "Kaldığınız yerden devam edin",
+    "last": "son <n>{score}</n>",
+    "whenLearned": "Öğrenildikten sonra söylenebilir",
+    "singNamed": "{name} şarkısını söyle",
+    "starting": "Başlatılıyor…",
+    "sing": "Söyle"
+  },
+  "trend": {
+    "legend": "{unit, select, play {Çizgi: {avg} çalmanın ortalaması · noktalar: her çalma} other {Çizgi: {avg} denemenin ortalaması · noktalar: her deneme}}",
+    "tipScore": "Puan <n>{score}</n> · %{pct} söylendi",
+    "tipAverage": "O zamanki ortalama <n>{avg}</n>"
+  },
+  "listControls": {
+    "sort": "Sırala",
+    "difficultyLabel": "Zorluk",
+    "difficulty": {
+      "easy": "Kolay",
+      "moderate": "Orta kolay",
+      "medium": "Orta",
+      "hard": "Zor",
+      "veryHard": "Çok zor"
+    },
+    "levelTitle": "{level}: {count, plural, one {{count} şarkı} other {{count} şarkı}}",
+    "levelLabel": "{level} ({n}/5)",
+    "clear": "Temizle"
+  },
+  "deleteButton": {
+    "tryAgain": "Yeniden dene",
+    "delete": "Sil",
+    "cancel": "İptal"
+  },
+  "readError": {
+    "body": "Büyük olasılıkla hâlâ oradalar: OnKey bu sefer açamadı. Hiçbir şey değiştirilmedi veya silinmedi.",
+    "tryAgain": "Yeniden dene"
+  },
+  "levelTag": {
+    "title": "{level} düzeyinde puanlandı: {about}"
+  },
+  "learnBar": {
+    "label": "{name} öğreniliyor",
+    "valueText": "{stage}, %{pct}"
+  },
+  "heart": {
+    "remove": "Favorilerden çıkar",
+    "add": "Favorilere ekle"
+  },
+  "engine": {
+    "line": {
+      "finding": "Müzik duyuluyor… şarkı bulunuyor",
+      "new_song": "Yeni şarkı… bulunuyor",
+      "unnamed": "Bu şarkı adlandırılamadı",
+      "no_shazam": "Shazam kullanılamıyor: yalnızca burada öğrenilen şarkılar tanınır",
+      "shazam_off": "Burada öğrenilmiş bir şarkı değil: Shazam Ayarlar’da kapalı",
+      "elsewhere": "{app} çalıyor ama bu Mac’te değil",
+      "learning": "Öğreniyor: eşlik edin, bir sonraki çalmadan itibaren puanlanır",
+      "stopped": "{song} öğrenilmiyor",
+      "podcast": "Podcast çalıyor: OnKey müziğe eşlik eder"
+    },
+    "share": {
+      "first": "{song} şarkısındaki ilk denemenizde {score}",
+      "over80": "{song} şarkısında {over} üstü ilk puanınız",
+      "best": "{song} şarkısındaki en iyi puanınız, {points, plural, one {{points} puan} other {{points} puan}} farkla",
+      "up": "{song} şarkısındaki son denemenizden {points, plural, one {{points} puan} other {{points} puan}} yukarıda"
+    },
+    "timing": {
+      "output_changed": "Kontrol sırasında çıkış değişti. Yeniden deneyin.",
+      "few_taps": "Tıklarla zamanlı yeterli dokunuş yok. Her tıkta bir kez, tempoyla dokunun.",
+      "uneven": "Dokunuşlarınız ölçülemeyecek kadar düzensizdi. Bir ritme el çırpar gibi tempoyla dokunarak yeniden deneyin.",
+      "reacting": "Her tıkı beklemişe benziyorsunuz. Bunun yerine tempoyla dokunmayı deneyin.",
+      "unbelievable": "Bu doğru görünmüyor: her tıkı mı beklediniz? Bir ritme el çırpar gibi tempoyla dokunarak yeniden deneyin.",
+      "untimed": "Kontrol tık seslerini zamanlayamadı. Yeniden deneyin.",
+      "stalled": "Kontrol sırasında ses takıldı veya yeniden başladı, bu yüzden zamanlanamıyor. Yeniden deneyin."
+    },
+    "settingUnsaved": "Ayar kaydedilemedi ({error}). OnKey kapanana kadar geçerli.",
+    "fit": {
+      "fits": "Ses aralığınıza uygun",
+      "few_above": "Birkaç nota ses aralığınızın üstünde",
+      "few_below": "Birkaç nota ses aralığınızın altında",
+      "octave_lower": "Çoğu sizin üstünüzde: bir oktav aşağıdan söyleyin",
+      "octave_higher": "Çoğu sizin altınızda: bir oktav yukarıdan söyleyin",
+      "above": "Çoğu ses aralığınızın üstünde",
+      "below": "Çoğu ses aralığınızın altında",
+      "wider": "Ses aralığınızdan geniş"
+    },
+    "reportWhat": {
+      "log": "OnKey’in o güne ait günlüğü",
+      "take": "bir denemenin özeti: {artist} - {name}",
+      "take_reported": "bildirilen deneme: bir denemenin özeti: {artist} - {name}",
+      "builds": "bu {os, select, pc {PC’de} other {Mac’te}} çalışan OnKey sürümleri",
+      "summary": "günlüklerin özeti: bu {os, select, pc {PC} other {bilgisayar}}, ses, müzik uygulamaları, öğrenme, denemeler, hatalar",
+      "about": "OnKey’in sürümü, bu {os, select, pc {PC} other {Mac}}, ayarlar ve yazdıklarınız"
+    },
+    "models": {
+      "unloadable": "yüklenemediler"
+    },
+    "youtubeSetting": {
+      "safari": "Safari ▸ Ayarlar ▸ Gelişmiş: “Web geliştiricileri için özellikleri göster” seçeneğini işaretleyin, sonra Geliştirici ▸ Apple Events’ten JavaScript’e İzin Ver",
+      "chromium": "Görünüm ▸ Geliştirici ▸ Apple Events’ten JavaScript’e İzin Ver"
+    },
+    "app": {
+      "music_app": "müzik uygulamanız",
+      "browser": "tarayıcınız"
+    }
+  }
+}

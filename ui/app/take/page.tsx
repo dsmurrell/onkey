@@ -17,7 +17,10 @@ import { driveGraphAt } from "@/lib/devDrive";
 import { alongTiming } from "@/lib/alongTiming";
 import { songAtTake, takeAtSong, type Place } from "@/lib/places";
 import { allowControl, alongMode, type AlongMode, getSettings, getTake, joinAlong, setNotMelody, sharePrompt, sharePromptSeen, type SharePrompt, learnLabel, playAlong, playTrack, playerNow, type PlayerNow, stopPlayAlong, voiceClose, voiceGain, voiceOpen, voicePlay, voiceStop as voiceStopNative, takeAudioUrl, takePlaying, type Track, useLearn, useSession } from "@/lib/session";
-import { COLORS, LEVELS, clock, creditAt, grade, levelOf, lineGrade, noteName, offBy, scoreWord, sourceName, when } from "@/lib/music";
+import { ACCENT, INK } from "@/lib/colors";
+import { COLORS, clock, creditAt, grade, levelName, levelOf, lineGrade, noteName, offBy, scoreWord, sourceName, when } from "@/lib/music";
+import { useT, type Translator } from "@/lib/i18n";
+import { appText, shareReason } from "@/lib/engineText";
 
 type Line = { t0: number; t1: number; text: string; ref_frames: number; coverage: number; accuracy: number | null; bias: number | null };
 type Result = {
@@ -85,6 +88,7 @@ function TakeOf() {
   const tParam = params.get("t");
   const startAt = useRef<number | null>(null);
   useEffect(() => { const s = Number(tParam); startAt.current = tParam != null && Number.isFinite(s) ? s : null; }, [id, tParam]);
+  const t = useT();
   const dev = useDevTools();
   const [r, setR] = useState<Result | null | undefined>(undefined);
   const [lyricsOff, setLyricsOff] = useState(false);
@@ -188,7 +192,7 @@ function TakeOf() {
       void ctx.resume().then(() => logUi(`take playback: voice raised ${(20 * Math.log10(boost.current.gain)).toFixed(1)} dB, sound ${ctx.state}`));
     } catch (e) { logUi(`take playback: no level boost (${e})`); }
   };
-  const [t, setT] = useState(0);
+  const [head, setHead] = useState(0);
   const [sharing, setSharing] = useState(false);
   // the player: what the play button plays, and the dev tools tucked under "dev"
   // "With the song" first: hearing yourself against the track is what most people want; "Your voice only" when the
@@ -308,7 +312,7 @@ function TakeOf() {
       if (target < 0 || target > v.dur) return quiet(`outside the recording (song ${song.toFixed(1)} s, recording ${target.toFixed(1)} of ${v.dur.toFixed(1)} s)`);
       // (with how far the app's own clock is from the song heard, for the log: never used)
       if (!v.on) { say(`playing together, as placed (the app's clock ${(n.position - song).toFixed(2)} s ahead of it${shiftRef.current ? `; dev shift ${shiftRef.current > 0 ? "+" : ""}${shiftRef.current} ms` : ""})`); diffs.length = 0; voiceStart(target); holdUntil.current = performance.now() + 300; timedAt = -Infinity; timing(n, song, target); return; }
-      setT(heardPos());
+      setHead(heardPos());
       timing(n, song, target);
       if (n.voice == null) return;     // (just started: not rendering yet)
       diffs.push(target - n.voice);
@@ -357,7 +361,7 @@ function TakeOf() {
     const g = driveGraphAt(driveAt, r.song_offset);
     if (g == null || r.song_offset == null || r.audio_kept === false) { logUi(`dev drive: can't play this take with the song (${driveAt})`); return; }
     logUi(`dev drive: Play with the song from ${g.toFixed(2)} s on the graph (song ${(r.song_offset + g).toFixed(2)} s)`);
-    heardFrom.current = g; setT(g);
+    heardFrom.current = g; setHead(g);
     startAlong(g);
   }); // eslint-disable-line react-hooks/exhaustive-deps
   const devStop = useRef(() => {});
@@ -375,7 +379,7 @@ function TakeOf() {
   }, [along, id, dev]);
 
   if (r === undefined) return <Shell><div className="glass mt-8 h-64 rounded-3xl shimmer" /></Shell>;
-  if (r === null) return <Shell><p className="mt-10 text-ink-300">This take couldn’t be found.</p></Shell>;
+  if (r === null) return <Shell><p className="mt-10 text-ink-300">{t("take.notFound")}</p></Shell>;
   // the song's "Not the melody" stretches in this take, on the graph (song s - the take's place in the song)
   const songNm = r.not_melody ?? [];
   const graphDur = r.ref.length * r.frame_s;
@@ -387,8 +391,8 @@ function TakeOf() {
     setSaving(true);
     try {
       const done = await setNotMelody(r.song_id, next);
-      setRescoredNote(!done ? "This song isn’t learned yet, so nothing was left out." : done.rescored === 0 ? "No take’s score changed." :
-        `${done.rescored === 1 ? "1 take" : `${done.rescored} takes`} of this song scored again.`);
+      setRescoredNote(!done ? t("take.notMelody.notLearned") : done.rescored === 0 ? t("take.notMelody.noChange") :
+        t("take.notMelody.rescored", { count: done.rescored }));
       setMarking(false); setSel(null);
       await load();
     } finally { setSaving(false); }
@@ -405,7 +409,7 @@ function TakeOf() {
   const seek = (s: number) => {
     if (!audio.current) return;
     s = Math.max(0, s);
-    heardFrom.current = s; setT(s);
+    heardFrom.current = s; setHead(s);
     if (along) { startAlong(s); return; }
     // moved there; it plays on only if it was playing (press Play to start from here)
     audio.current.currentTime = s + latency.current;
@@ -416,8 +420,8 @@ function TakeOf() {
   const play = () => {
     const a = audio.current;
     if (!a) return;
-    const from = a.ended ? 0 : t;
-    heardFrom.current = from; setT(from);
+    const from = a.ended ? 0 : head;
+    heardFrom.current = from; setHead(from);
     route(); void a.play();
   };
 
@@ -425,8 +429,8 @@ function TakeOf() {
     <Shell>
       <audio ref={audio} src={src || undefined} preload="auto"
              onLoadedMetadata={() => { if (startAt.current != null) { seek(startAt.current); startAt.current = null; } }}
-             onTimeUpdate={() => setT(heardPos())} onPlay={() => { route(); setPlaying(true); }}
-             onPause={() => { setT(heardPos()); setPlaying(false); }} onEnded={() => setPlaying(false)} />
+             onTimeUpdate={() => setHead(heardPos())} onPlay={() => { route(); setPlaying(true); }}
+             onPause={() => { setHead(heardPos()); setPlaying(false); }} onEnded={() => setPlaying(false)} />
       {/* the ring stays beside the title at every width (smaller when narrow), so the graph stays on the first screen */}
       <section className="mt-6 grid grid-cols-[auto_1fr] items-start gap-4 md:items-center md:gap-6">
         <ScoreRing score={r.score} />
@@ -443,46 +447,46 @@ function TakeOf() {
               </div>
             </div>
             <div className="flex shrink-0 flex-wrap items-center gap-2">
-              <button onClick={() => playTrack(r.track.id, true, r.track.name)} disabled={!!job} title={job ? "It can be sung once it’s learned" : undefined}
+              <button onClick={() => playTrack(r.track.id, true, r.track.name)} disabled={!!job} title={job ? t("take.header.singAgainBlocked") : undefined}
                       className="tabular rounded-xl bg-accent-500 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-accent-600/25 transition hover:bg-accent-400
                                  disabled:cursor-default disabled:bg-white/6 disabled:text-ink-300 disabled:shadow-none">
-                {job ? learnLabel(job) : "Sing it again"}
+                {job ? learnLabel(job) : t("take.header.singAgain")}
               </button>
               {r.song_offset != null && r.audio_kept !== false && (
-                <button onClick={() => { setSharing(v => !v); setProud(null); }} aria-expanded={sharing} title="A 20-second video of your voice and the notes, for Instagram"
+                <button onClick={() => { setSharing(v => !v); setProud(null); }} aria-expanded={sharing} title={t("take.header.shareTitle")}
                         className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition ${sharing || (proud && !sharing) ? "bg-accent-500/20 text-accent-100 ring-1 ring-accent-400/40 hover:bg-accent-500/30" : "bg-white/6 text-ink-100 hover:bg-white/10"}`}>
                   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M12 3v12" /><path d="M7 8l5-5 5 5" /><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
                   </svg>
-                  Share
+                  {t("take.header.share")}
                 </button>
               )}
               {!job && <Challenge song={r.track.name} artist={r.track.artist} score={r.score} />}
             </div>
           </div>
-          <p className="mt-3 max-w-2xl text-ink-200">{verdict(r)}</p>
-          <p className="mt-2 max-w-2xl text-sm text-ink-300" title={`${Math.round(100 * r.within50)}% of your singing was within 50 cents of the singer.`}>
+          <p className="mt-3 max-w-2xl text-ink-200">{verdict(t, r)}</p>
+          <p className="mt-2 max-w-2xl text-sm text-ink-300" title={t("take.header.within50Title", { pct: Math.round(100 * r.within50) })}>
             <ScoreStory r={r} />
           </p>
           {r.sung_level && r.sung_score != null && (
-            <p className="mt-1 text-xs text-ink-400" title="Scored again from your singing as it was kept, at the level chosen in Settings">
-              Shown at {LEVELS[levelOf(r.level)].name}. Sung at {LEVELS[levelOf(r.sung_level)].name}, it scored {r.sung_score}.
+            <p className="mt-1 text-xs text-ink-400" title={t("take.header.sungLevelTitle")}>
+              {t("take.header.sungLevel", { level: levelName(levelOf(r.level)), sungLevel: levelName(levelOf(r.sung_level)), score: r.sung_score })}
             </p>
           )}
           {r.left_out?.length && r.scored_first ? (
             <p className="mt-1 text-xs text-ink-400">
-              Scored without {r.left_out.length === 1 ? "the part" : "the parts"} marked not the melody{r.scored_first.score !== r.score ? ` (it was ${r.scored_first.score})` : ""}.
+              {t("take.header.leftOut", { count: r.left_out.length, changed: r.scored_first.score !== r.score ? "yes" : "no", first: r.scored_first.score })}
             </p>
           ) : null}
           {job && <LearnBar job={job} className="mt-3 max-w-sm" />}
           {proud && !sharing && r.song_offset != null && r.audio_kept !== false && (
             <div className="mt-4 inline-flex max-w-full items-center gap-3 rounded-xl bg-accent-500/10 py-1.5 pl-3 pr-1.5 text-sm text-accent-100">
-              <span className="min-w-0 truncate"><span aria-hidden className="mr-1.5 text-accent-300">✦</span>{proud.reason}</span>
+              <span className="min-w-0 truncate"><span aria-hidden className="mr-1.5 text-accent-300">✦</span>{shareReason(t, proud)}</span>
               <button onClick={() => { setSharing(true); setProud(null); }}
                       className="shrink-0 rounded-lg bg-accent-500 px-3 py-1 text-xs font-medium text-white transition hover:bg-accent-400">
-                Share this take
+                {t("take.proud.share")}
               </button>
-              <button onClick={() => setProud(null)} aria-label="Not now" title="Not now"
+              <button onClick={() => setProud(null)} aria-label={t("take.proud.notNow")} title={t("take.proud.notNow")}
                       className="shrink-0 px-1 text-accent-200/70 transition hover:text-white">✕</button>
             </div>
           )}
@@ -491,32 +495,32 @@ function TakeOf() {
 
       <section className="glass mt-8 rounded-3xl p-4">
         {r.audio_kept === false ? (
-          <p className="mb-3 px-1 text-xs text-ink-400">Your recording of this take isn’t kept any more: OnKey keeps every take’s recording until they pass 2 GB together, then lets the oldest go (never your favourites’ or a song’s best take). The scores stay.</p>
+          <p className="mb-3 px-1 text-xs text-ink-400">{t("take.player.notKept")}</p>
         ) : (
           <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-2 px-1">
             {/* one play button; what it plays is chosen beside it */}
             <button onClick={() => {
                       if (along) stopAlong();
                       else if (playing) audio.current?.pause();
-                      else if (withSong) startAlong(t);
+                      else if (withSong) startAlong(head);
                       else play();
                     }}
-                    aria-label={playing || along ? "Stop" : "Play"} title={playing || along ? "Stop" : withSong ? "Play your recording with the song" : "Play your recording"}
+                    aria-label={playing || along ? t("take.player.stop") : t("take.player.play")} title={playing || along ? t("take.player.stop") : withSong ? t("take.player.playWithSong") : t("take.player.playVoice")}
                     className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent-500 text-white shadow-lg shadow-accent-600/25 transition hover:bg-accent-400">
               {playing || along
                 ? <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>
                 : <svg viewBox="0 0 24 24" className="ml-0.5 h-4 w-4" fill="currentColor" aria-hidden><path d="M8 5v14l11-7z" /></svg>}
             </button>
             {r.song_offset != null && (
-              <span className="flex rounded-xl bg-white/6 p-0.5 text-sm" role="radiogroup" aria-label="What plays">
-                {([[true, "With the song"], [false, "Your voice only"]] as const).map(([k, label]) => (
-                  <button key={label} role="radio" aria-checked={withSong === k}
+              <span className="flex rounded-xl bg-white/6 p-0.5 text-sm" role="radiogroup" aria-label={t("take.player.whatPlays")}>
+                {([[true, t("take.player.withSong")], [false, t("take.player.voiceOnly")]] as const).map(([k, label]) => (
+                  <button key={String(k)} role="radio" aria-checked={withSong === k}
                           onClick={() => {
                             if (withSong === k) return;
                             setWithSong(k);
                             // switching while it plays carries on from here the other way
                             if (along) { stopAlong(); if (!k) play(); }
-                            else if (playing) { audio.current?.pause(); if (k) startAlong(t); }
+                            else if (playing) { audio.current?.pause(); if (k) startAlong(head); }
                           }}
                           className={`rounded-lg px-3 py-1.5 font-medium transition ${withSong === k ? "bg-white/12 text-white" : "text-ink-300 hover:text-white"}`}>
                     {label}
@@ -525,26 +529,26 @@ function TakeOf() {
               </span>
             )}
             <button onClick={() => { seek(0); if (audio.current && !along && playing) { route(); void audio.current.play(); } }}
-                    disabled={t <= 1} title="Back to the beginning" aria-label="Back to the beginning"
+                    disabled={head <= 1} title={t("take.player.backToStart")} aria-label={t("take.player.backToStart")}
                     className="grid h-8 w-8 place-items-center rounded-lg text-ink-300 transition hover:bg-white/6 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent">
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M3 12a9 9 0 1 0 3-6.7" /><path d="M3 4v5h5" />
               </svg>
             </button>
-            <span className="tabular text-sm text-ink-300">{clock(t)}<span className="text-ink-500"> / {clock(graphDur)}</span></span>
+            <span className="tabular text-sm text-ink-300">{clock(head)}<span className="text-ink-500"> / {clock(graphDur)}</span></span>
             {/* the recording waits, silent, until the song is placed (the same words as live singing's) */}
             {along && lining && !(mode && !mode.control && !joined) && (
-              <span role="status" className="text-sm text-accent-200">Lining up with the song…</span>
+              <span role="status" className="text-sm text-accent-200">{t("take.player.lining")}</span>
             )}
             <span className="ml-auto flex items-center gap-3">
-              <label className="inline-flex items-center gap-2 text-ink-400" title="How loud your voice plays, against the song">
+              <label className="inline-flex items-center gap-2 text-ink-400" title={t("take.player.voiceTitle")}>
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M11 5 6 9H3v6h3l5 4z" /><path d="M15.5 8.5a5 5 0 0 1 0 7" /><path d="M18.5 5.5a9 9 0 0 1 0 13" />
                 </svg>
-                <span className="sr-only">Your voice</span>
+                <span className="sr-only">{t("take.player.yourVoice")}</span>
                 <input type="range" min={-6} max={12} step={1} value={voiceDb} onChange={e => changeVoiceDb(Number(e.target.value))}
-                       aria-valuetext={voiceDb === 0 ? "normal" : `${voiceDb > 0 ? "+" : ""}${voiceDb} dB`} className="w-20 accent-accent-400" />
-                <span className="tabular w-9 text-xs">{voiceDb === 0 ? "" : `${voiceDb > 0 ? "+" : ""}${voiceDb} dB`}</span>
+                       aria-valuetext={voiceDb === 0 ? t("take.player.voiceNormal") : t("take.player.voiceDb", { db: `${voiceDb > 0 ? "+" : ""}${voiceDb}` })} className="w-20 accent-accent-400" />
+                <span className="tabular w-9 text-xs">{voiceDb === 0 ? "" : t("take.player.voiceDb", { db: `${voiceDb > 0 ? "+" : ""}${voiceDb}` })}</span>
               </label>
               {dev && (
                 <button onClick={() => setDevOpen(v => !v)} aria-expanded={devOpen} title="Development tools (not in releases)"
@@ -553,7 +557,8 @@ function TakeOf() {
                 </button>
               )}
               <span className="cursor-help text-ink-500 transition hover:text-ink-200" tabIndex={0}
-                    title={`OnKey keeps your voice, not the music. “With the song” ${mode && !mode.control ? `plays your recording in step with ${r.track.name} when you play it in ${mode.app}` : `plays the track in ${sourceName(r.track.id)} alongside your recording`}. Your microphone’s latency (${r.latency_ms} ms) was allowed for automatically.`}>
+                    title={mode && !mode.control ? t("take.player.aboutJoin", { song: r.track.name, app: appText(t, mode.app, mode.app_kind), ms: r.latency_ms })
+                      : t("take.player.aboutPlay", { app: sourceName(r.track.id), ms: r.latency_ms })}>
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
                   <circle cx="12" cy="12" r="9" /><path d="M12 11v5" /><path d="M12 7.5v.01" />
                 </svg>
@@ -584,18 +589,18 @@ function TakeOf() {
         )}
         {along && mode && !mode.control && !joined && (
           <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl bg-accent-500/10 px-3 py-2 text-sm text-accent-100">
-              <span>Play {r.track.name} in {mode.app}{joinFrom < 5 ? " from the beginning" : ""}. OnKey will join in.</span>
-              {joinFrom >= 5 && <span className="text-accent-200/80">Go to {clock(joinFrom)} in {mode.app} for this part.</span>}
+              <span>{t(joinFrom < 5 ? "take.join.playFromStart" : "take.join.play", { song: r.track.name, app: appText(t, mode.app, mode.app_kind) })}</span>
+              {joinFrom >= 5 && <span className="text-accent-200/80">{t("take.join.goTo", { time: clock(joinFrom), app: appText(t, mode.app, mode.app_kind) })}</span>}
               {mode.key && (
                 <button onClick={async () => { await allowControl(mode.key!); const m = await alongMode(r.track.id); setMode(m); stopAlong(); }}
-                        className="text-xs text-accent-300 underline-offset-2 hover:underline">Let OnKey start it for you</button>
+                        className="text-xs text-accent-300 underline-offset-2 hover:underline">{t("take.join.letStart")}</button>
               )}
             </div>
         )}
         {sharing && r.song_offset != null && (
           <div className="mb-3">
-            <SharePanel id={id} song={r.track.name} t={t} onClose={() => setSharing(false)}
-                        onShow={g => { if (!playing && !along) { heardFrom.current = g; setT(g); } }}
+            <SharePanel id={id} song={r.track.name} t={head} onClose={() => setSharing(false)}
+                        onShow={g => { if (!playing && !along) { heardFrom.current = g; setHead(g); } }}
                         onPlay={g => {
                           if (along) stopAlong();
                           seek(g);
@@ -606,25 +611,25 @@ function TakeOf() {
                         }} />
           </div>
         )}
-        <PitchView r={r} t={t} playing={playing} onSeek={seek} clock={heardPos} leftOut={leftOut}
+        <PitchView r={r} head={head} playing={playing} onSeek={seek} clock={heardPos} leftOut={leftOut}
                    marking={marking} sel={sel} onSel={setSel} />
         <div className="mt-2 flex flex-wrap items-center justify-between gap-3 px-1 text-xs text-ink-400">
           <div className="flex flex-wrap items-center gap-4">
-            <Key color="#6252e0" label="Singer’s notes" bar /><Key color={COLORS.good} label="You, within 50¢" />
-            <Key color={COLORS.close} label="Within 100¢" /><Key color={COLORS.off} label="Further off" />
+            <Key color={ACCENT[600]} label={t("take.graph.singer")} bar /><Key color={COLORS.good} label={t("take.graph.within50")} />
+            <Key color={COLORS.close} label={t("take.graph.within100")} /><Key color={COLORS.off} label={t("take.graph.further")} />
             {/* the take's details beside the graph they describe: held notes light up green */}
             <span className="flex items-center gap-x-4 text-ink-300">
-              {!!r.notes_total && <span title="Notes you held within a semitone for at least half their length. Their bars light up green.">
-                <span className="tabular text-ink-100">{r.notes_hit}</span> of {r.notes_total} notes held</span>}
-              <span title="Where your pitch sat against the singer’s on average">
-                {Math.abs(r.bias_cents) < 10 ? "Centred on average" : `${offBy(r.bias_cents)} on average`}</span>
+              {!!r.notes_total && <span title={t("take.graph.heldTitle")}>
+                {t.rich("take.graph.held", { hit: r.notes_hit ?? "", total: r.notes_total, n: c => <span className="tabular text-ink-100">{c}</span> })}</span>}
+              <span title={t("take.graph.biasTitle")}>
+                {Math.abs(r.bias_cents) < 10 ? t("take.graph.centred") : t("take.graph.bias", { off: offBy(r.bias_cents) })}</span>
             </span>
           </div>
           {canMark && !marking && (
             <button onClick={() => { setMarking(true); setSel(null); setRescoredNote(""); }}
-                    title="Leave out a part where the notes follow a backing vocal or harmony, not the melody"
+                    title={t("take.notMelody.buttonTitle")}
                     className="rounded-lg px-2.5 py-1 font-medium text-ink-300 transition hover:bg-white/6 hover:text-white">
-              Not the melody?
+              {t("take.notMelody.button")}
             </button>
           )}
         </div>
@@ -632,30 +637,30 @@ function TakeOf() {
           <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl bg-accent-500/10 px-3 py-2 text-sm text-accent-100">
             {sel ? (
               <>
-                <span className="tabular">{clock(sel[0])} to {clock(sel[1])}</span>
+                <span className="tabular">{t("take.notMelody.span", { from: clock(sel[0]), to: clock(sel[1]) })}</span>
                 <button onClick={leaveOut} disabled={saving}
                         className="rounded-lg bg-accent-500 px-3 py-1 text-sm font-medium text-white transition hover:bg-accent-400 disabled:opacity-60">
-                  {saving ? "Scoring again…" : "Leave it out of the score"}
+                  {saving ? t("take.notMelody.saving") : t("take.notMelody.leaveOut")}
                 </button>
               </>
             ) : (
-              <span>Drag across the part where the notes follow a backing vocal or harmony instead of the melody.</span>
+              <span>{t("take.notMelody.drag")}</span>
             )}
             {/* how it goes, until you've left a part out once */}
             {!sel && !leftOutBefore() && <div className="order-last basis-full"><div className="mt-1 max-w-[300px]"><LeaveOutGuide /></div></div>}
-            <button onClick={() => { setMarking(false); setSel(null); }} className="text-xs text-accent-300 underline-offset-2 hover:underline">Cancel</button>
-            <span className="basis-full text-xs text-accent-200/80">It’s left out of the score of every take of this song, and when you sing it next.</span>
+            <button onClick={() => { setMarking(false); setSel(null); }} className="text-xs text-accent-300 underline-offset-2 hover:underline">{t("take.notMelody.cancel")}</button>
+            <span className="basis-full text-xs text-accent-200/80">{t("take.notMelody.note")}</span>
           </div>
         )}
         {(leftOut.length > 0 || rescoredNote) && !marking && (
           <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 px-1 text-xs text-ink-400">
-            {leftOut.length > 0 && <span>Left out of the score, not the melody:</span>}
+            {leftOut.length > 0 && <span>{t("take.notMelody.leftOut")}</span>}
             {songNm.map(([a, b], i) => {
               if (r.song_offset == null || b - r.song_offset <= 0 || a - r.song_offset >= graphDur) return null;
               return (
                 <span key={`${a}-${b}`} className="flex items-center gap-1.5">
-                  <span className="tabular text-ink-200">{clock(a - r.song_offset)} to {clock(b - r.song_offset)}</span>
-                  <button onClick={() => putBack(i)} disabled={saving} className="text-accent-300 underline-offset-2 hover:underline disabled:opacity-60">Put it back</button>
+                  <span className="tabular text-ink-200">{t("take.notMelody.span", { from: clock(a - r.song_offset), to: clock(b - r.song_offset) })}</span>
+                  <button onClick={() => putBack(i)} disabled={saving} className="text-accent-300 underline-offset-2 hover:underline disabled:opacity-60">{t("take.notMelody.putBack")}</button>
                 </span>
               );
             })}
@@ -664,17 +669,17 @@ function TakeOf() {
         )}
       </section>
       <div className="mt-3 flex items-center justify-end gap-4">
-        <DevCopy label="Copy take link" text={() => takeLink("take", id, { t, song: r.song_offset != null ? songAt(t) : null })} />
+        <DevCopy label="Copy take link" text={() => takeLink("take", id, { t: head, song: r.song_offset != null ? songAt(head) : null })} />
         <button onClick={() => reportProblem(id)} className="text-xs text-ink-400 underline-offset-2 transition hover:text-white hover:underline">
-          Report a problem with this take
+          {t("take.report")}
         </button>
       </div>
 
       <section className="mt-8">
-        <h2 className="mb-3 text-sm font-medium text-ink-200">Line by line</h2>
-        {r.lines.length === 0 ? <p className="text-ink-400">{lyricsOff ? "Lyrics are off (Settings), so this take has no line-by-line report." : "No synced lyrics were found for this song."}</p> : (
+        <h2 className="mb-3 text-sm font-medium text-ink-200">{t("take.lines.title")}</h2>
+        {r.lines.length === 0 ? <p className="text-ink-400">{lyricsOff ? t("take.lines.lyricsOff") : t("take.lines.none")}</p> : (
           <div className="glass divide-y divide-white/5 overflow-hidden rounded-3xl">
-            {r.lines.map((l, i) => <LineRow key={i} n={i + 1} l={l} level={r.level} active={t >= l.t0 && t < l.t1} onClick={() => seek(l.t0)} />)}
+            {r.lines.map((l, i) => <LineRow key={i} n={i + 1} l={l} level={r.level} active={head >= l.t0 && head < l.t1} onClick={() => seek(l.t0)} />)}
           </div>
         )}
       </section>
@@ -688,17 +693,19 @@ const leftOutBefore = () => { try { return localStorage.getItem(LEFT_OUT_ONCE) =
 
 // the normal way (notes shown) has no tag
 function ModeBadge({ mode, blind }: { mode?: string; blind: boolean }) {
-  const [label, why] = mode === "learn" ? ["First play", "The first time this song played: OnKey learned its melody, with no notes shown"]
-    : blind ? ["Blind", "Sung with no notes shown"] : [null, null];
+  const t = useT();
+  const [label, why] = mode === "learn" ? [t("take.mode.firstPlay"), t("take.mode.firstPlayWhy")]
+    : blind ? [t("take.mode.blind"), t("take.mode.blindWhy")] : [null, null];
   return label ? <span className="rounded-full bg-white/6 px-2 py-0.5 text-xs font-medium text-ink-200" title={why!}>{label}</span> : null;
 }
 
 function Shell({ children }: { children: React.ReactNode }) {
+  const t = useT();
   return (
     <div className="min-h-dvh bg-[radial-gradient(1200px_500px_at_50%_-10%,rgba(124,108,246,.10),transparent)]">
       <header data-tauri-drag-region className="app-header flex items-center gap-5 px-6 pt-4 pb-3"><Logo /><Nav /><span className="ml-auto"><WhatsNew /></span></header>
       <main className="mx-auto max-w-6xl px-6 pb-16">
-        <Link href="/history" className="text-sm text-ink-400 transition hover:text-white">← All takes</Link>
+        <Link href="/history" className="text-sm text-ink-400 transition hover:text-white">{t("take.allTakes")}</Link>
         {children}
       </main>
     </div>
@@ -713,7 +720,7 @@ function ScoreRing({ score }: { score: number }) {
         <circle cx={74} cy={74} r={R} fill="none" stroke="rgba(255,255,255,.07)" strokeWidth={10} />
         <circle cx={74} cy={74} r={R} fill="none" stroke="url(#ring)" strokeWidth={10} strokeLinecap="round"
                 strokeDasharray={`${(C * score) / 100} ${C}`} />
-        <defs><linearGradient id="ring" x1="0" x2="1"><stop offset="0" stopColor="#b5a8ff" /><stop offset="1" stopColor="#6252e0" /></linearGradient></defs>
+        <defs><linearGradient id="ring" x1="0" x2="1"><stop offset="0" stopColor={ACCENT[300]} /><stop offset="1" stopColor={ACCENT[600]} /></linearGradient></defs>
       </svg>
       <div className="absolute text-center">
         <div className="tabular text-3xl font-bold tracking-tight md:text-5xl">{score}</div>
@@ -726,11 +733,11 @@ function ScoreRing({ score }: { score: number }) {
 /** The score from its parts, as the engine makes it (dsp::score): how in tune what you sang was, counted in full once
  *  you sing 40% of the singer's part, less below that. */
 function ScoreStory({ r }: { r: Result }) {
+  const t = useT();
   const sang = Math.round(100 * r.coverage), tune = Math.round(100 * r.accuracy);
-  const n = (v: number) => <span className="tabular font-semibold text-ink-100">{v}%</span>;
-  if (r.coverage <= 0) return <>You didn’t sing along with the singer’s part, so there was nothing to score.</>;
-  return <>You sang {n(sang)} of the singer’s part, and what you sang was {n(tune)} in tune.{" "}
-    {r.score >= tune ? "That’s your score." : "Your score counts it in full once you sing 40% or more of the part."}</>;
+  if (r.coverage <= 0) return <>{t("take.story.none")}</>;
+  return <>{t.rich("take.story.main", { sang, tune, full: r.score >= tune ? "yes" : "no",
+    n: c => <span className="tabular font-semibold text-ink-100">{c}</span> })}</>;
 }
 
 function Key({ color, label, bar }: { color: string; label: string; bar?: boolean }) {
@@ -739,12 +746,13 @@ function Key({ color, label, bar }: { color: string; label: string; bar?: boolea
 
 // a click plays from the line: ▶ by its time on hover and keyboard focus, and on the line playing
 function LineRow({ l, n, level, active, onClick }: { l: Line; n: number; level?: string; active: boolean; onClick: () => void }) {
+  const t = useT();
   const scored = l.accuracy != null && l.ref_frames > 20 && l.coverage > 0.2;
   const b = l.bias == null ? 0 : Math.round(l.bias);
-  const note = l.ref_frames <= 20 ? "no lead vocal" : l.coverage <= 0.2 ? "not sung" : Math.abs(b) >= 25 ? offBy(b) : "";
+  const note = l.ref_frames <= 20 ? t("take.lines.noLead") : l.coverage <= 0.2 ? t("take.lines.notSung") : Math.abs(b) >= 25 ? offBy(b) : "";
   const col = !scored ? "" : COLORS[lineGrade(l.accuracy!, levelOf(level))];
   return (
-    <button onClick={onClick} title={`Play from ${clock(l.t0)}`} aria-current={active || undefined}
+    <button onClick={onClick} title={t("take.lines.playFrom", { time: clock(l.t0) })} aria-current={active || undefined}
             className={`group grid w-full grid-cols-[60px_1fr_minmax(80px,180px)_140px] items-center gap-4 px-5 py-3 text-left transition
                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-400
                         ${active ? "bg-accent-500/15 shadow-[inset_3px_0_0_var(--color-accent-400)]" : "hover:bg-white/4"}`}>
@@ -754,7 +762,7 @@ function LineRow({ l, n, level, active, onClick }: { l: Line; n: number; level?:
         </svg>
         {clock(l.t0)}
       </span>
-      <span className={`truncate ${active ? "font-medium text-white" : "text-ink-100"}`}>{l.text || <span className="text-ink-400">Line {n}</span>}</span>
+      <span className={`truncate ${active ? "font-medium text-white" : "text-ink-100"}`}>{l.text || <span className="text-ink-400">{t("take.lines.line", { n })}</span>}</span>
       <span className="h-1.5 overflow-hidden rounded-full bg-white/6">
         {scored && <span className="block h-full rounded-full" style={{ width: `${100 * l.accuracy!}%`, background: col }} />}
       </span>
@@ -763,21 +771,23 @@ function LineRow({ l, n, level, active, onClick }: { l: Line; n: number; level?:
   );
 }
 
-function verdict(r: Result) {
+function verdict(t: Translator, r: Result) {
   const parts: string[] = [];
   // the words loosen with the level, as the line colours do (lineGrade): Pro credits less per note
   const lv = levelOf(r.level), d = lv === "pro" ? 0.2 : lv === "steady" ? 0.1 : 0, a = r.accuracy + d;
-  parts.push(a > 0.85 ? "Beautifully in tune." : a > 0.7 ? "Mostly in tune, with a few wobbly patches." :
-             a > 0.5 ? "Often near the note, drifting off it at times." : "The melody got away from you in places.");
-  if (Math.abs(r.bias_cents) >= 20) parts.push(`On average you sat ${offBy(r.bias_cents)}.`);
+  parts.push(a > 0.85 ? t("take.verdict.great") : a > 0.7 ? t("take.verdict.mostly") :
+             a > 0.5 ? t("take.verdict.often") : t("take.verdict.away"));
+  if (Math.abs(r.bias_cents) >= 20) parts.push(t("take.verdict.bias", { off: offBy(r.bias_cents) }));
   const worst = r.lines.filter(l => l.accuracy != null && l.coverage > 0.3 && l.ref_frames > 30).sort((a, b) => a.accuracy! - b.accuracy!)[0];
-  if (worst && worst.accuracy! + d < 0.75) parts.push(worst.text ? `Worth another go: “${worst.text}”.` : `Worth another go: the line at ${clock(worst.t0)}.`);
+  if (worst && worst.accuracy! + d < 0.75) parts.push(worst.text ? t("take.verdict.worstLine", { text: worst.text }) : t("take.verdict.worstAt", { time: clock(worst.t0) }));
   return parts.join(" ");
 }
 
 // ------------------------------------------------------------------ the pitch view
-function PitchView({ r, t, playing, onSeek, clock, leftOut, marking, sel, onSel }: { r: Result; t: number; playing: boolean; onSeek: (s: number) => void;
+function PitchView({ r, head, playing, onSeek, clock, leftOut, marking, sel, onSel }: { r: Result; head: number; playing: boolean; onSeek: (s: number) => void;
                      clock: () => number; leftOut: Span[]; marking: boolean; sel: Span | null; onSel: (s: Span | null) => void }) {
+  const t = useT();
+  const notMelody = t("take.graph.notMelody");
   const cv = useRef<HTMLCanvasElement>(null), ov = useRef<HTMLCanvasElement>(null);
   const dt = r.frame_s, N = r.ref.length, dur = N * dt;
   const WIN = 12;
@@ -793,8 +803,8 @@ function PitchView({ r, t, playing, onSeek, clock, leftOut, marking, sel, onSel 
   }, [r]);
   // follow playback (only while your take is playing, so browsing isn't yanked back)
   useEffect(() => {
-    if (playing && (t > view0 + WIN * 0.8 || t < view0)) setView0(Math.max(0, Math.min(dur - WIN, t - WIN * 0.2)));
-  }, [t, playing]); // eslint-disable-line
+    if (playing && (head > view0 + WIN * 0.8 || head < view0)) setView0(Math.max(0, Math.min(dur - WIN, head - WIN * 0.2)));
+  }, [head, playing]); // eslint-disable-line
 
   useEffect(() => {
     const c = cv.current!, g = c.getContext("2d")!, dpr = devicePixelRatio || 1;
@@ -808,7 +818,7 @@ function PitchView({ r, t, playing, onSeek, clock, leftOut, marking, sel, onSel 
     for (let m = Math.ceil(lo); m <= hi; m++) {
       if (m % 12 !== 0 && m % 12 !== 7) continue;
       g.fillStyle = "rgba(255,255,255,.05)"; g.fillRect(L, y(m), W - L, 1);
-      g.fillStyle = "#5d6780"; g.font = `11px ${FONT}`; g.textBaseline = "middle"; g.fillText(noteName(m), 4, y(m));
+      g.fillStyle = INK[400]; g.font = `11px ${FONT}`; g.textBaseline = "middle"; g.fillText(noteName(m), 4, y(m));
     }
     const f0 = Math.max(0, Math.floor(view0 / dt)), f1 = Math.min(N, Math.ceil((view0 + WIN) / dt));
     // singer's notes as bars, lit by how much of each you held
@@ -845,17 +855,17 @@ function PitchView({ r, t, playing, onSeek, clock, leftOut, marking, sel, onSel 
       g.fillStyle = "rgba(11,13,24,.62)"; g.fillRect(x0, 0, x1 - x0, plotH);
       g.fillStyle = "rgba(255,255,255,.12)"; g.fillRect(x0, 0, 1, plotH); g.fillRect(x1 - 1, 0, 1, plotH);
       g.save(); g.beginPath(); g.rect(x0, 0, Math.max(0, x1 - x0 - 6), plotH); g.clip();
-      g.fillStyle = "#8b94ab"; g.font = `11px ${FONT}`; g.textBaseline = "top"; g.fillText("Not the melody", x0 + 6, 6); g.restore();
+      g.fillStyle = INK[300]; g.font = `11px ${FONT}`; g.textBaseline = "top"; g.fillText(notMelody, x0 + 6, 6); g.restore();
     }
     // lyrics under the plot
-    g.fillStyle = "#8b94ab"; g.font = `12px ${FONT}`; g.textBaseline = "alphabetic";
+    g.fillStyle = INK[300]; g.font = `12px ${FONT}`; g.textBaseline = "alphabetic";
     for (const l of r.lines) {
       if (l.t1 < view0 || l.t0 > view0 + WIN) continue;
       const xs = Math.max(L, x(l.t0));
       g.save(); g.beginPath(); g.rect(xs, plotH, Math.max(0, x(l.t1) - xs - 8), B); g.clip();
       g.fillText(l.text, xs + 2, H - 6); g.restore();
     }
-  }, [r, view0, range, dt, N, leftOut.map(s => s.join()).join()]); // eslint-disable-line
+  }, [r, view0, range, dt, N, leftOut.map(s => s.join()).join(), notMelody]); // eslint-disable-line
 
   // playhead on its own layer: while playing, redrawn every frame from the heard time (only this small canvas,
   // never the page: React re-rendering at 60 fps made playback stutter); otherwise at `t` (heard time too)
@@ -874,13 +884,13 @@ function PitchView({ r, t, playing, onSeek, clock, leftOut, marking, sel, onSel 
       const px = 40 + ((at - view0) / WIN) * (W - 40);
       if (px >= 40 && px <= W) { g.fillStyle = "rgba(255,255,255,.8)"; g.fillRect(px - 1, 0, 2, H - 22); }
     };
-    draw(t);
+    draw(head);
     if (!playing) return;
     let raf = 0;
     const step = () => { draw(clock()); raf = requestAnimationFrame(step); };
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
-  }, [t, view0, playing, sel]); // eslint-disable-line
+  }, [head, view0, playing, sel]); // eslint-disable-line
 
   // drag to scroll, click to seek; choosing a stretch ("Not the melody"), drag across it
   const drag = useRef<{ x: number; v: number; moved: boolean } | null>(null);

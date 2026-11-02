@@ -1,0 +1,176 @@
+{
+  "page": {
+    "title": "Wat is er nieuw",
+    "description": "Elke functie en oplossing in OnKey, nieuwste eerst, met de versie die hem bracht.",
+    "kicker": "Changelog",
+    "heading": "Wat is er nieuw in OnKey",
+    "intro": "Elke functie en oplossing, nieuwste eerst, en de versie die hem bracht. OnKey werkt zichzelf bij, dus dit komt vanzelf bij je terecht.",
+    "release": "OnKey {version}",
+    "latest": "Nieuwste",
+    "kind": {
+      "new": "Nieuw",
+      "better": "Beter",
+      "fix": "Opgelost"
+    },
+    "github": "Elke wijziging staat op <link>GitHub</link>, waar OnKey open source is."
+  },
+  "releases": {
+    "0-3-0": {
+      "note": "OnKey in 19 talen, en songteksten die meelopen met de zang in het Spaans, Portugees, Italiaans, Frans en Duits."
+    },
+    "0-2-0": {
+      "note": "Downloadt en installeert zichzelf op Macs waar OnKey al op draait."
+    },
+    "0-1-0": {
+      "note": "De eerste openbare versie.",
+      "link": "Gelanceerd op Hacker News"
+    }
+  },
+  "entries": {
+    "onkey-in-your-language": {
+      "title": "OnKey in jouw taal",
+      "summary": "OnKey spreekt nu 19 talen. Het volgt vanzelf de taal van je Mac, of kies er een via de wereldbol in de bovenbalk, op het welkomstscherm of in Instellingen.",
+      "p1": "Zes hebben volledige ondersteuning, songteksten inbegrepen: Spaans (Latijns-Amerika en Spanje), Portugees, Italiaans, Frans en Duits",
+      "p2": "Twaalf andere zijn voorlopige vertalingen: Nederlands, Japans, Chinees (vereenvoudigd en traditioneel), Koreaans, Hindi, Russisch, Turks, Pools, Indonesisch, Vietnamees en Thai. Elke taal zegt dat zelf, met een link om hem te verbeteren",
+      "p3": "Alle vertalingen zijn voorlopig machinevertalingen: leest iets raar, dan opent de link in Instellingen de tekst om hem te verbeteren",
+      "p4": "Het OnKey-menu, de toestemmingsvragen van de Mac en het bewaarvenster zijn ook in je taal, en albumhoezen komen uit de winkel van je eigen land",
+      "p5": "Net als deze website, de handleidingen en dit changelog: die volgen de taal van je browser, en een wereldbol in de koptekst schakelt om"
+    },
+    "lyrics-keep-time-in-more-languages": {
+      "title": "Songteksten lopen mee in meer talen",
+      "summary": "Woorden in het Spaans, Portugees, Italiaans, Frans en Duits lichten nu op terwijl ze gezongen worden. Letters met accenten (corazón, Straße, cœur) worden goed gelezen, en lettergrepen worden geteld volgens de regels van elke taal in plaats van die van het Engels.",
+      "p1": "Nummers in het Japans, Chinees, Koreaans, Hindi, Russisch, Thai en andere schriften tonen hun regels in één geheel, gelijk met het nummer, voorlopig zonder timing per woord",
+      "p2": "Engelse songteksten zijn precies zoals voorheen"
+    },
+    "songs-to-try-in-your-language": {
+      "title": "Nummers om te proberen in jouw taal",
+      "summary": "Met Spaans, Portugees, Italiaans, Frans of Duits gekozen, stelt de pagina Zingen acht nummers in die taal voor, van makkelijk tot moeilijk, elk met een reden.",
+      "p1": "Klik op een voorgesteld nummer en het start in Spotify, net als een kaart in de Bibliotheek",
+      "p2": "De links om het in Apple Music te vinden zijn er nog steeds"
+    },
+    "when-a-song-has-no-lyrics": {
+      "title": "Als een nummer geen songtekst heeft",
+      "summary": "Songteksten komen van LRCLIB, een gratis bibliotheek waar iedereen aan kan bijdragen. Heeft het niets voor een nummer, dan staat dat nu onder de notenbaan en op de pagina van het nummer, met een knop Zoek opnieuw die LRCLIB meteen opnieuw vraagt.",
+      "p1": "Eerder onthield OnKey een ‘niets’-antwoord een dag lang, zodat een songtekst die iemand net had toegevoegd pas morgen verscheen",
+      "p2": "Als LRCLIB zelf niet werkt, zegt de pagina Zingen dat: de noten gaan gewoon door, de woorden komen erbij als de dienst terugkomt, en een nummer dat intussen geleerd wordt, krijgt zijn woorden de volgende keer dat je het zingt"
+    },
+    "smoother-switching-in-spotify": {
+      "title": "Soepeler wisselen in Spotify",
+      "summary": "Vraag je om een ander nummer terwijl er een speelt, dan pauzeert OnKey het eerste nu even voordat het volgende start, zodat de wissel schoner is."
+    },
+    "a-clearer-settings-page": {
+      "title": "Een duidelijkere pagina Instellingen",
+      "summary": "De microfoon kies je uit het eigen menu van OnKey, met virtuele apparaten en een losgekoppelde microfoon apart vermeld. Menu’s openen over de pagina heen, zodat een lange lijst nooit afgesneden wordt.",
+      "p1": "Op kaarten in de Bibliotheek is de bereiklijn van een nummer groen als het bij je past en perzikkleurig als het niet zomaar past (een octaaf verderop, een paar noten erbuiten, of breder)",
+      "p2": "De stappenbalkjes van de configuratie blijven op één lijn als de naam van een stap twee regels nodig heeft"
+    },
+    "small-fixes-0-3-0": {
+      "title": "Kleine fixes",
+      "summary": "Dingen die net niet klopten, nu wel.",
+      "p1": "De stip bij Wat is er nieuw verschijnt na een update tot je het opent, en nooit bij een verse installatie",
+      "p2": "Meld een probleem houdt zijn tekstvak op volle hoogte, en het venster is ondoorzichtig boven Instellingen",
+      "p3": "Het meldingenaantal van een YouTube-tab, ‘(3) Artiest - Titel’, zit het benoemen van het nummer niet meer in de weg"
+    },
+    "pause-listening": {
+      "title": "Luisteren pauzeren",
+      "summary": "Kijk je een stream of luister je een podcast? Pauzeer het luisteren van OnKey, en het hoort niets meer tot je verdergaat. Ondertussen wordt er niets gevolgd, herkend of geleerd.",
+      "p1": "Druk op ⌘⇧P, klik op de Live-chip op de pagina Zingen, of kies OnKey → Pauzeer luisteren",
+      "p2": "Een kleine pil ‘Luisteren gepauzeerd · Ga verder’ blijft bovenaan elke pagina staan, zodat je het niet vergeet",
+      "p3": "Het blijft gepauzeerd na een herstart, tot je verdergaat"
+    },
+    "see-when-a-paused-take-will-be-scored": {
+      "title": "Zie wanneer een gepauzeerde take gescoord wordt",
+      "summary": "Pauzeer je halverwege een nummer, dan wacht OnKey een minuut voor het geval je verdergaat. Dat zegt het nu, en je kunt het wachten overslaan.",
+      "p1": "De pagina Zingen telt af: ‘Gepauzeerd · gescoord over 0:45 · Rond nu af’",
+      "p2": "Geschiedenis toont het nummer dat je zingt als eerste kaart, zodat een beurt die je net pauzeerde nooit verloren lijkt",
+      "p3": "Elke nummerkaart in Geschiedenis tekent je scores vanaf de tweede keer"
+    },
+    "audio-interfaces-and-your-microphone-list": {
+      "title": "Audio-interfaces en je microfoonlijst",
+      "summary": "OnKey neemt je stem nu van de ingang waar hij echt op zit, dus een microfoon op ingang 2 van een Focusrite (of elke interface met meerdere ingangen) werkt gewoon.",
+      "p1": "Geen instelling nodig: OnKey volgt de ingang waar je stem op zit",
+      "p2": "Virtuele apparaten die andere apps toevoegen (Krisp, Loopback, BlackHole, Zoom) staan apart van je echte microfoons"
+    },
+    "listening-back-stays-in-step-after-a-skip": {
+      "title": "Terugluisteren blijft gelijk lopen na een sprong",
+      "summary": "Sprong je vooruit tijdens het zingen, dan kon ‘Met het nummer’ het deel vóór de sprong uit de maat afspelen. Elk deel van de take loopt nu gelijk met het nummer."
+    },
+    "reliability-fixes": {
+      "title": "Betrouwbaarheidsfixes",
+      "summary": "Dingen die halverwege een nummer mis konden gaan, nu opgelost.",
+      "p1": "Afronden gooit een take niet meer weg als je drukt terwijl OnKey de speler controleert",
+      "p2": "Een nummer kan niet meer voorgoed op ‘Wachten’ of ‘Scoren’ blijven staan na een zeldzame fout",
+      "p3": "‘Verwijder alles’ in Bibliotheek blijft niet meer hangen, en ‘Stop met leren en verwijder’ verwijdert alleen het nummer dat je koos",
+      "p4": "Sneltoetsen bereiken de muziek achter dialoogvensters niet meer",
+      "p5": "De score komt meteen als een nummer gepauzeerd afloopt",
+      "p6": "Een radiostream of urenlange mix stopt na 20 minuten in plaats van door te lopen als één take",
+      "p7": "Stoppen is direct: OnKey verdwijnt meteen en bewaart wat het leerde buiten beeld"
+    },
+    "songs-start-cleanly": {
+      "title": "Nummers starten schoon",
+      "summary": "Op Zing drukken op een kaart kon de muziek twee keer starten, of een flits van het nummer afspelen voor het opnieuw begon. Eén druk betekent nu één schone start."
+    },
+    "guides-and-help-and-beyond-pitch": {
+      "title": "Handleidingen en hulp, en Meer dan zuiverheid",
+      "summary": "Instellingen linkt nu naar deze documentatie. Een nieuwe handleiding, Meer dan zuiverheid, gaat over wat OnKey niet kan horen (klank, adem, stijl) en gratis docenten om het van te leren."
+    },
+    "smoother-setup-and-youtube": {
+      "title": "Soepeler instellen en YouTube",
+      "summary": "Oplossingen voor de eerste dingen waar onze testers tegenaan liepen.",
+      "p1": "De stap muziekapps bij het instellen gaat meteen door als macOS niets te vragen heeft",
+      "p2": "Een YouTube-tab die Chrome in slaap heeft gezet, houdt OnKey niet meer op",
+      "p3": "Een muziekapp die je niet geïnstalleerd hebt, staat op uit in plaats van aan"
+    },
+    "learn-a-song-again": {
+      "title": "Een nummer opnieuw leren",
+      "summary": "Verschuiven de songtekst of noten van een nummer, laat OnKey het dan opnieuw leren: bij de volgende keer leert het het nummer, en vervangt het de oude kopie zodra het genoeg gehoord heeft.",
+      "p1": "Kies Leer opnieuw in het ⋯-menu van de Bibliotheek of op de pagina van het nummer",
+      "p2": "OnKey stelt het voor als de woorden van een nummer twee keer op dezelfde manier afdrijven"
+    },
+    "a-tidier-app-page-by-page": {
+      "title": "Een opgeruimdere app, pagina voor pagina",
+      "summary": "Elke take krijgt een duidelijker rapport, en in Zingen, Geschiedenis, Bibliotheek en Instellingen vind je makkelijker je weg.",
+      "p1": "Zingen biedt ‘Ga verder waar je was’: je laatste paar nummers, elk met zijn laatste score en een Zing-knop",
+      "p2": "Speel af in Bibliotheek start het nummer voor je, en Zingen toont dat het start (of zegt waarom het niet kan)"
+    },
+    "scoring-levels-relaxed-steady-and-pro": {
+      "title": "Scoreniveaus: Ontspannen, Stabiel en Pro",
+      "summary": "Kies in Instellingen hoe streng je takes gescoord worden. Ontspannen is hoe OnKey altijd al scoorde; Stabiel en Pro vragen meer.",
+      "p1": "Vibrato wordt beoordeeld op het midden van de noot, dus een goed vibrato wordt op geen enkel niveau afgestraft",
+      "p2": "Elke take toont het niveau waarop hij gescoord is"
+    },
+    "leave-out-what-isn-t-the-melody": {
+      "title": "Laat weg wat niet de melodie is",
+      "summary": "Heeft OnKey een achtergrondzang of ad-lib opgepikt in plaats van de melodie, markeer dat stuk dan als ‘Niet de melodie’ op de pagina van de take. Het wordt buiten elke score voor dat nummer gelaten, eerdere takes inbegrepen."
+    },
+    "your-vocal-range": {
+      "title": "Je stembereik",
+      "summary": "OnKey bepaalt je bereik uit de nummers die je zingt, en laat zien hoe elk nummer erin past.",
+      "p1": "Geschiedenis toont je bereik op een strook toetsen, met je prettige midden gemarkeerd",
+      "p2": "De Bibliotheek toont hoe elk nummer past, met een filter voor nummers in je bereik",
+      "p3": "Ligt een nummer hoog of laag, dan zegt het of een octaaf hoger of lager beter bij je past"
+    },
+    "challenge-a-friend-and-share-your-best-takes": {
+      "title": "Daag iemand uit, en deel je beste takes",
+      "summary": "Kopieer vanuit een take een link die zegt wat je scoorde en iemand vraagt dat te verbeteren. Hij bevat alleen het nummer, de artiest, je score en, als je wilt, je voornaam.",
+      "p1": "Na een beste score op een nummer of een grote sprong vooruit biedt de pagina van de take ‘Deel deze take’",
+      "p2": "Een gedeelde clip eindigt op een OnKey-kaart: je stem, nooit de muziek"
+    },
+    "fade-the-guide": {
+      "title": "Notenhulp afbouwen",
+      "summary": "Zet het aan in Instellingen, en bij nummers die je al goed zingt vervaagt je stemlijn zolang je op de noot zit, zodat je op je gehoor zingt en niet op het oog. Ze komt terug zodra je afdrijft."
+    },
+    "lyrics-line-up-better": {
+      "title": "Songteksten lopen beter gelijk",
+      "summary": "Regels en woorden lichten nu dichter bij het moment op waarop ze gezongen worden, ook regels die beginnen met een ‘oh’ of ‘whoa’."
+    },
+    "onkey-s-first-release": {
+      "title": "De eerste versie van OnKey",
+      "summary": "Gratis, open source, en alles op je Mac.",
+      "p1": "Leert de melodie van elk nummer dat je afspeelt in Spotify, Apple Music of YouTube, de eerste keer dat je het speelt",
+      "p2": "Een live stemlijn over de noten van de zanger, met gesynchroniseerde songtekst en een score voor elke take",
+      "p3": "Takes om terug te luisteren, en een korte video van een take om te delen: je stem, geen muziek",
+      "p4": "Startnummers, een bibliotheek van wat je geleerd hebt, en updates die zichzelf installeren"
+    }
+  }
+}

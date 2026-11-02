@@ -1,20 +1,24 @@
 {
   "name": "onkey-ui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/catalogs.mjs",
     "build": "next build",
     "start": "next start",
-    "test": "node --experimental-strip-types --test lib/*.test.mjs"
+    "test": "node --experimental-strip-types --no-warnings --import ./scripts/test-resolve.mjs --test lib/*.test.mjs",
+    "english-same": "node --experimental-strip-types --no-warnings --import ./scripts/test-resolve.mjs scripts/english-same.mjs"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.5.0",
     "next": "15.5.27",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "use-intl": "4.14.9"
   },
   "devDependencies": {
+    "@formatjs/icu-messageformat-parser": "3.5.22",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -8,7 +8,7 @@ import { Logo, Nav, WhatsNew } from "@/components/Nav";
 import LearnBar from "@/components/LearnBar";
 import { OpenTake } from "@/components/LiveBits";
 import { deleteTake, getLibrary, getTakes, learnLabel, learnOf, live, playTrack, setFavorite, useLearn, useSession, type TakeSummary } from "@/lib/session";
-import { LEVELS, levelOf, scoreWord, when } from "@/lib/music";
+import { levelAbout, levelName, levelOf, scoreWord, when } from "@/lib/music";
 import Trend from "@/components/Trend";
 import { bestAtLatestLevel } from "@/components/LevelTag";
 import { changeWords, vsBefore } from "@/lib/trend";
@@ -18,14 +18,14 @@ import ReadError from "@/components/ReadError";
 import { DifficultyPicker, SortMenu, pill } from "@/components/ListControls";
 import { HEART } from "@/components/Heart";
 import TakeTags, { BIN } from "@/components/TakeTags";
+import { useT } from "@/lib/i18n";
 
 const TREND = "#8a78ff";
 
 // filters and sort, kept on this Mac as Library's are
 type Show = "all" | "favorites";
 type Sort = "recent" | "best" | "most" | "improved" | "easy" | "hard" | "az";
-const SORTS: [Sort, string][] = [["recent", "Recent"], ["best", "Best score"], ["most", "Most sung"], ["improved", "Most improved"],
-                                 ["easy", "Easiest first"], ["hard", "Hardest first"], ["az", "A–Z"]];
+const SORTS: Sort[] = ["recent", "best", "most", "improved", "easy", "hard", "az"];
 type Col = "when" | "sung" | "pitch" | "score";
 type View = "songs" | "takes";
 const KEY = { show: "onkey.historyShow", levels: "onkey.historyLevels", sort: "onkey.historySort", view: "onkey.historyView" };
@@ -38,12 +38,13 @@ const save = (k: string, v: string) => { try { localStorage.setItem(k, v); } cat
 const songKey = (t: { name: string; artist: string }) => `${t.artist}\u0000${t.name}`.toLowerCase().replace(/[\s!-/:-@[-`{-~]/g, "");
 
 export default function History() {
+  const t = useT();
   const [takes, setTakes] = useState<TakeSummary[] | null>(null);
   // takes from this session still being scored or learned; the saved list reloads as each one finishes
   useEffect(() => { live.start(); }, []);
   const { takes: session, learning } = useSession();
-  const pending = session.filter(t => t.status === "scoring" || t.status === "learning");
-  const finished = session.filter(t => t.status === "done").length;
+  const pending = session.filter(tk => tk.status === "scoring" || tk.status === "learning");
+  const finished = session.filter(tk => tk.status === "done").length;
   // a read that fails shows as that (with a retry), never as "No takes yet"
   const [readErr, setReadErr] = useState<{ error: string; detail: string } | null>(null);
   const [tries, setTries] = useState(0);
@@ -63,7 +64,7 @@ export default function History() {
       setHearts(m); setDiffs(d);
     }).catch(() => {});
   }, [finished]);
-  const difficulty = (t: TakeSummary["track"]) => diffs.get(t.id) ?? diffs.get(songKey(t));
+  const difficulty = (tk: TakeSummary["track"]) => diffs.get(tk.id) ?? diffs.get(songKey(tk));
 
   // search, filters and sort
   const [q, setQ] = useState("");
@@ -77,7 +78,7 @@ export default function History() {
     if (load(KEY.view) === "takes") setViewState("takes");
     try { const l = JSON.parse(load(KEY.levels) ?? "[]"); if (Array.isArray(l)) setLevelsState(l.filter(n => [1, 2, 3, 4, 5].includes(n))); } catch {}
     const o = load(KEY.sort);
-    if (SORTS.some(([k]) => k === o)) setSortState(o as Sort);
+    if (SORTS.some(k => k === o)) setSortState(o as Sort);
   }, []);
   const setShow = (v: Show) => { setShowState(v); save(KEY.show, v); };
   const setLevels = (l: number[]) => { setLevelsState(l); save(KEY.levels, JSON.stringify(l)); };
@@ -89,21 +90,21 @@ export default function History() {
   useEffect(() => setPages(1), [q, show, levels, sort, col, view]);
   const narrowed = q.trim() !== "" || show !== "all" || levels.length > 0;
   const clearAll = () => { setQ(""); setShow("all"); setLevels([]); };
-  const hearted = (t: TakeSummary["track"]) => hearts.get(t.id) ?? hearts.get(songKey(t)) ?? false;
-  function heart(t: TakeSummary["track"], on: boolean) {
-    setHearts(h => new Map(h).set(t.id, on).set(songKey(t), on));
-    void setFavorite(t, on);
+  const hearted = (tk: TakeSummary["track"]) => hearts.get(tk.id) ?? hearts.get(songKey(tk)) ?? false;
+  function heart(tk: TakeSummary["track"], on: boolean) {
+    setHearts(h => new Map(h).set(tk.id, on).set(songKey(tk), on));
+    void setFavorite(tk, on);
   }
-  const real = useMemo(() => (takes ?? []).filter(t => t.coverage >= 0.1), [takes]);
+  const real = useMemo(() => (takes ?? []).filter(tk => tk.coverage >= 0.1), [takes]);
   // deleted one by one; if one can't go to the Trash it stops there (the error shows by the button) and only those
   // deleted leave the list
   async function remove(ids: string[]) {
-    await deleteEach(ids, deleteTake, gone => setTakes(ts => (ts ?? []).filter(t => !gone.includes(t.id))));
+    await deleteEach(ids, deleteTake, gone => setTakes(ts => (ts ?? []).filter(tk => !gone.includes(tk.id))));
   }
 
   const allSongs = useMemo(() => {
     const by = new Map<string, TakeSummary[]>();
-    for (const t of real) by.set(t.track.id, [...(by.get(t.track.id) ?? []), t]);
+    for (const tk of real) by.set(tk.track.id, [...(by.get(tk.track.id) ?? []), tk]);
     return [...by.values()].map(ts => {
       const asc = ts.slice().sort((a, b) => a.recorded.localeCompare(b.recorded));
       const b = bestAtLatestLevel(ts)!;   // like with like: the best at the level of your latest take
@@ -111,10 +112,10 @@ export default function History() {
     }).sort((a, b) => b.last.recorded.localeCompare(a.last.recorded));
   }, [real]);
   // a song shown: matches the search, hearted (Favourites), at a difficulty picked
-  const keep = (t: TakeSummary["track"]) => {
-    const d = difficulty(t);
-    return `${t.name} ${t.artist}`.toLowerCase().includes(q.trim().toLowerCase())
-      && (show !== "favorites" || hearted(t)) && (!levels.length || (d != null && levels.includes(d)));
+  const keep = (tk: TakeSummary["track"]) => {
+    const d = difficulty(tk);
+    return `${tk.name} ${tk.artist}`.toLowerCase().includes(q.trim().toLowerCase())
+      && (show !== "favorites" || hearted(tk)) && (!levels.length || (d != null && levels.includes(d)));
   };
   const songs = useMemo(() => {
     const s = allSongs.filter(x => keep(x.track));
@@ -132,9 +133,9 @@ export default function History() {
   }, [allSongs, q, show, levels, sort, hearts, diffs]); // eslint-disable-line react-hooks/exhaustive-deps
   const perLevel = [1, 2, 3, 4, 5].map(n => allSongs.filter(x => difficulty(x.track) === n).length);
   const rows = useMemo(() => {
-    const r = real.filter(t => keep(t.track));
-    const v = (t: TakeSummary) => col.by === "score" ? t.score : col.by === "pitch" ? t.accuracy
-      : col.by === "sung" ? t.coverage : 0;
+    const r = real.filter(tk => keep(tk.track));
+    const v = (tk: TakeSummary) => col.by === "score" ? tk.score : col.by === "pitch" ? tk.accuracy
+      : col.by === "sung" ? tk.coverage : 0;
     const by = col.by === "when" ? (a: TakeSummary, b: TakeSummary) => a.recorded.localeCompare(b.recorded) : (a: TakeSummary, b: TakeSummary) => v(a) - v(b);
     return r.sort((a, b) => (col.down ? -1 : 1) * by(a, b));
   }, [real, q, show, levels, col, hearts, diffs]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -142,15 +143,15 @@ export default function History() {
   // each play's number for its song (1 = the first time you sang it)
   const playNo = useMemo(() => {
     const m = new Map<string, number>();
-    for (const s of allSongs) s.takes.forEach((t, i) => m.set(t.id, i + 1));
+    for (const s of allSongs) s.takes.forEach((tk, i) => m.set(tk.id, i + 1));
     return m;
   }, [allSongs]);
 
   const recent10 = real.slice(0, 10);
-  const avg = recent10.length ? Math.round(recent10.reduce((s, t) => s + t.score, 0) / recent10.length) : null;
-  const vs = vsBefore(real.map(t => t.score));   // your last 10 against the 10 before (with 20 takes or more)
-  const level = LEVELS[levelOf(real[0]?.level)];   // every score is shown at the level chosen in Settings
-  const best = real.length ? Math.max(...real.map(t => t.score)) : null;
+  const avg = recent10.length ? Math.round(recent10.reduce((s, tk) => s + tk.score, 0) / recent10.length) : null;
+  const vs = vsBefore(real.map(tk => tk.score));   // your last 10 against the 10 before (with 20 takes or more)
+  const level = levelOf(real[0]?.level);   // every score is shown at the level chosen in Settings
+  const best = real.length ? Math.max(...real.map(tk => tk.score)) : null;
 
   return (
     <div className="min-h-dvh bg-[radial-gradient(1200px_500px_at_50%_-10%,rgba(124,108,246,.10),transparent)]">
@@ -158,34 +159,34 @@ export default function History() {
       <main className="mx-auto max-w-6xl px-6 pb-16">
         <div className="mt-6 mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight">Your singing</h1>
-            <p className="mt-1 text-ink-300">Every song you sing becomes a take. Here’s how they’re going.</p>
+            <h1 className="text-3xl font-semibold tracking-tight">{t("history.title")}</h1>
+            <p className="mt-1 text-ink-300">{t("history.intro")}</p>
             {real.length > 0 && (
-              <p className="mt-1 text-xs text-ink-400" title={level.about}>Scores at {level.name} · <Link href="/settings"
-                 className="text-accent-300 underline-offset-2 hover:underline">change</Link></p>
+              <p className="mt-1 text-xs text-ink-400" title={levelAbout(level)}>{t.rich("history.scoresAt", { level: levelName(level), link: c => <Link href="/settings"
+                 className="text-accent-300 underline-offset-2 hover:underline">{c}</Link> })}</p>
             )}
           </div>
           {!readErr && real.length > 0 && (
-            <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search songs"
+            <input value={q} onChange={e => setQ(e.target.value)} placeholder={t("history.search")}
                    className="w-64 rounded-xl border border-white/8 bg-white/4 px-3.5 py-2 text-sm text-ink-100 placeholder:text-ink-400 outline-none transition focus:border-accent-400/50 focus:bg-white/6" />
           )}
         </div>
 
         {pending.length > 0 && (
           <section className="mb-4 space-y-2">
-            {pending.map((t, i) => {
+            {pending.map((tk, i) => {
               // how far its learning has got (a take only scored has no learn going on)
-              const job = learnOf(learning, [], { id: t.track_id ?? "", name: t.name, artist: t.artist });
+              const job = learnOf(learning, [], { id: tk.track_id ?? "", name: tk.name, artist: tk.artist });
               return (
               <div key={i} className="glass flex items-center gap-4 rounded-2xl px-5 py-3.5">
                 <span className="relative flex h-2.5 w-2.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-400 opacity-60 motion-reduce:animate-none" /><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent-400" /></span>
                 <div className="min-w-0 flex-1">
-                  <div className="truncate font-medium">{t.name}</div>
-                  <div className="truncate text-xs text-ink-400">{t.artist}</div>
+                  <div className="truncate font-medium">{tk.name}</div>
+                  <div className="truncate text-xs text-ink-400">{tk.artist}</div>
                 </div>
                 {job && job.fraction != null
                   ? <LearnBar job={job} className="w-56 shrink-0" />
-                  : <div className="text-sm text-ink-300">{t.status === "learning" ? "Learning the song, then scoring your take…" : "Scoring…"}</div>}
+                  : <div className="text-sm text-ink-300">{tk.status === "learning" ? t("history.pending.learning") : t("history.pending.scoring")}</div>}
               </div>
             ); })}
           </section>
@@ -193,55 +194,55 @@ export default function History() {
         {readErr ? <ReadError {...readErr} onRetry={() => setTries(n => n + 1)} /> : takes === null ? <Skeleton /> : real.length === 0 ? (pending.length ? null : <Empty />) : (
           <>
             <section className="grid grid-cols-2 gap-3 md:grid-cols-4">
-              <Stat label="Takes" value={real.length} />
-              <Stat label="Average, last 10" value={avg ?? "–"} sub={vs ? changeWords(vs.change) : avg != null ? scoreWord(avg) : ""} />
-              <Stat label="Best" value={best ?? "–"} sub={best != null ? real.find(t => t.score === best)?.track.name : ""} />
-              <Stat label="Songs sung" value={allSongs.length} />
+              <Stat label={t("history.stat.takes")} value={real.length} />
+              <Stat label={t("history.stat.average")} value={avg ?? "–"} sub={vs ? changeWords(vs.change) : avg != null ? scoreWord(avg) : ""} />
+              <Stat label={t("history.stat.best")} value={best ?? "–"} sub={best != null ? real.find(tk => tk.score === best)?.track.name : ""} />
+              <Stat label={t("history.stat.songs")} value={allSongs.length} />
             </section>
 
             <VoiceRange refresh={finished} />
 
             <section className="glass mt-4 rounded-3xl p-5">
               <div className="mb-3 flex items-baseline justify-between">
-                <h2 className="text-sm font-medium text-ink-200">Score per take</h2>
-                <span className="text-xs text-ink-400">oldest → newest</span>
+                <h2 className="text-sm font-medium text-ink-200">{t("history.chart.title")}</h2>
+                <span className="text-xs text-ink-400">{t("history.chart.axis")}</span>
               </div>
               <Trend takes={real.slice().reverse()} />
             </section>
 
-            <div role="radiogroup" aria-label="View" className="mt-8 inline-flex rounded-full border border-white/8 bg-white/4 p-1 text-sm">
-              {([["songs", "Songs"], ["takes", "All takes"]] as const).map(([v, label]) => (
+            <div role="radiogroup" aria-label={t("history.view.label")} className="mt-8 inline-flex rounded-full border border-white/8 bg-white/4 p-1 text-sm">
+              {(["songs", "takes"] as const).map(v => (
                 <button key={v} role="radio" aria-checked={view === v} onClick={() => setView(v)}
                         className={`rounded-full px-3.5 py-1.5 outline-none transition focus-visible:ring-2 focus-visible:ring-accent-400/60
-                                    ${view === v ? "bg-white/10 text-white" : "text-ink-300 hover:text-white"}`}>{label}</button>
+                                    ${view === v ? "bg-white/10 text-white" : "text-ink-300 hover:text-white"}`}>{t(`history.view.${v}`)}</button>
               ))}
             </div>
 
             <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3">
-              <div role="radiogroup" aria-label="Show" className="inline-flex rounded-full border border-white/8 bg-white/4 p-1 text-sm">
-                {([["all", "All"], ["favorites", "Favourites"]] as const).map(([v, label]) => (
+              <div role="radiogroup" aria-label={t("history.show.label")} className="inline-flex rounded-full border border-white/8 bg-white/4 p-1 text-sm">
+                {(["all", "favorites"] as const).map(v => (
                   <button key={v} role="radio" aria-checked={show === v} onClick={() => setShow(v)}
                           className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 outline-none transition focus-visible:ring-2 focus-visible:ring-accent-400/60
                                       ${show === v ? "bg-white/10 text-white" : "text-ink-300 hover:text-white"}`}>
                     {v === "favorites" && <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden className={show === v ? "text-accent-400" : ""}><path d={HEART} /></svg>}
-                    {label}
+                    {t(`history.show.${v}`)}
                   </button>
                 ))}
               </div>
               <DifficultyPicker levels={levels} onToggle={toggleLevel} onClear={() => setLevels([])} counts={perLevel} />
-              {narrowed && <button onClick={clearAll} className={pill(false)}>Clear filters</button>}
-              <SortMenu sorts={SORTS} sort={sort} onSort={setSort} />
-              <span className="tabular text-sm text-ink-500">{songs.length} song{songs.length === 1 ? "" : "s"} sung · {rows.length} take{rows.length === 1 ? "" : "s"}</span>
+              {narrowed && <button onClick={clearAll} className={pill(false)}>{t("history.clearFilters")}</button>}
+              <SortMenu sorts={SORTS.map(k => [k, t(`history.sort.${k}`)] as [Sort, string])} sort={sort} onSort={setSort} />
+              <span className="tabular text-sm text-ink-500">{t("history.counts", { songs: songs.length, takes: rows.length })}</span>
             </div>
             {songs.length === 0 && (
               <p className="px-1 py-10 text-center text-ink-400">
-                {q.trim() ? <>No songs match “{q.trim()}”.</> : show === "favorites" && !levels.length ? "Tap ♥ on a song to keep it here." : "No songs match these filters."}
-                <button onClick={clearAll} className="ml-2 text-accent-300 underline-offset-2 hover:underline">Clear</button>
+                {q.trim() ? t("history.none.search", { q: q.trim() }) : show === "favorites" && !levels.length ? t("history.none.favourites") : t("history.none.filters")}
+                <button onClick={clearAll} className="ml-2 text-accent-300 underline-offset-2 hover:underline">{t("history.none.clear")}</button>
               </p>
             )}
             {songs.length > 0 && view === "songs" && (
             <section className="mt-4">
-              <h2 className="sr-only">Songs</h2>
+              <h2 className="sr-only">{t("history.view.songs")}</h2>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                 <OpenTake />
                 {songs.slice(0, pages * PAGE.songs).map(s => <SongCard key={s.track.id} s={s} fav={hearted(s.track)} onFav={on => heart(s.track, on)} />)}
@@ -252,34 +253,34 @@ export default function History() {
 
             {songs.length > 0 && view === "takes" && (
             <section className="mt-4">
-              <h2 className="sr-only">All takes</h2>
+              <h2 className="sr-only">{t("history.view.takes")}</h2>
               <div className="glass overflow-hidden rounded-3xl">
                 <table className="w-full text-sm">
                   <thead className="text-left text-xs text-ink-400">
                     <tr className="border-b border-white/6">
-                      <th className="px-5 py-3 font-medium">Song</th>
-                      <ColHead c="when" label="When" col={col} onCol={setCol} />
-                      <ColHead c="sung" label="Sung" col={col} onCol={setCol} right />
-                      <ColHead c="pitch" label="Pitch" col={col} onCol={setCol} right />
-                      <ColHead c="score" label="Score" col={col} onCol={setCol} right /><th className="w-12 pr-3" />
+                      <th className="px-5 py-3 font-medium">{t("history.col.song")}</th>
+                      <ColHead c="when" label={t("history.col.when")} col={col} onCol={setCol} />
+                      <ColHead c="sung" label={t("history.col.sung")} col={col} onCol={setCol} right />
+                      <ColHead c="pitch" label={t("history.col.pitch")} col={col} onCol={setCol} right />
+                      <ColHead c="score" label={t("history.col.score")} col={col} onCol={setCol} right /><th className="w-12 pr-3" />
                     </tr>
                   </thead>
                   <tbody>
-                    {rows.slice(0, pages * PAGE.takes).map(t => (
-                      <tr key={t.id} className="group border-b border-white/4 transition last:border-0 hover:bg-white/3">
-                        <td className="px-5 py-3"><Link href={`/take?id=${encodeURIComponent(t.id)}`} className="block">
-                          <div className="font-medium">{t.track.name} <span className="tabular text-xs font-normal text-ink-400">#{playNo.get(t.id)}</span></div>
-                          <div className="flex items-center gap-2 text-xs text-ink-400">{t.track.artist}
-                            <TakeTags t={t} />
-                            {t.rescored && <span className="rounded-full bg-white/6 px-1.5 py-px text-[10px] font-medium text-ink-300"
-                                                 title="Scored again, without a part of the song marked not the melody">Rescored</span>}</div></Link></td>
-                        <td className="px-3 py-3 text-ink-300">{when(t.recorded)}</td>
-                        <td className="tabular px-3 py-3 text-right text-ink-200">{Math.round(100 * t.coverage)}%</td>
-                        <td className="tabular px-3 py-3 text-right text-ink-200">{Math.round(100 * t.accuracy)}%</td>
-                        <td className="tabular px-3 py-3 text-right text-lg font-semibold">{t.score}</td>
+                    {rows.slice(0, pages * PAGE.takes).map(tk => (
+                      <tr key={tk.id} className="group border-b border-white/4 transition last:border-0 hover:bg-white/3">
+                        <td className="px-5 py-3"><Link href={`/take?id=${encodeURIComponent(tk.id)}`} className="block">
+                          <div className="font-medium">{tk.track.name} <span className="tabular text-xs font-normal text-ink-400">#{playNo.get(tk.id)}</span></div>
+                          <div className="flex items-center gap-2 text-xs text-ink-400">{tk.track.artist}
+                            <TakeTags t={tk} />
+                            {tk.rescored && <span className="rounded-full bg-white/6 px-1.5 py-px text-[10px] font-medium text-ink-300"
+                                                 title={t("history.rescoredTitle")}>{t("history.rescored")}</span>}</div></Link></td>
+                        <td className="px-3 py-3 text-ink-300">{when(tk.recorded)}</td>
+                        <td className="tabular px-3 py-3 text-right text-ink-200">{Math.round(100 * tk.coverage)}%</td>
+                        <td className="tabular px-3 py-3 text-right text-ink-200">{Math.round(100 * tk.accuracy)}%</td>
+                        <td className="tabular px-3 py-3 text-right text-lg font-semibold">{tk.score}</td>
                         <td className="relative pr-3 text-right">
                           <span className={`inline-flex justify-end ${BIN}`}>
-                            <DeleteButton what="Delete this take (it goes to the Trash)" confirm="Delete this take?" onDelete={() => remove([t.id])} />
+                            <DeleteButton what={t("history.deleteWhat")} confirm={t("history.deleteConfirm")} onDelete={() => remove([tk.id])} />
                           </span>
                         </td>
                       </tr>
@@ -298,10 +299,11 @@ export default function History() {
 }
 
 function More({ left, onMore }: { left: number; onMore: () => void }) {
+  const t = useT();
   if (left <= 0) return null;
   return (
     <div className="mt-4 text-center">
-      <button onClick={onMore} className={pill(false)}>Show more <span className="tabular text-ink-400">({left} left)</span></button>
+      <button onClick={onMore} className={pill(false)}>{t.rich("history.showMore", { left, n: c => <span className="tabular text-ink-400">{c}</span> })}</button>
     </div>
   );
 }
@@ -333,7 +335,8 @@ function Stat({ label, value, sub }: { label: string; value: React.ReactNode; su
 
 function SongCard({ s, fav, onFav }: { s: { track: TakeSummary["track"]; takes: TakeSummary[]; best: number; last: TakeSummary };
                                        fav: boolean; onFav: (on: boolean) => void }) {
-  const pts = s.takes.map(t => t.score);
+  const t = useT();
+  const pts = s.takes.map(tk => tk.score);
   // the song page's line, small: every play, first to latest, across the room the text leaves (x in % of it)
   const H = 34;
   const sx = (i: number) => (pts.length <= 1 ? 50 : (i / (pts.length - 1)) * 100), sy = (v: number) => 4 + (1 - v / 100) * (H - 8);
@@ -354,7 +357,7 @@ function SongCard({ s, fav, onFav }: { s: { track: TakeSummary["track"]; takes: 
           <Heart on={fav} onToggle={onFav} subtle />
           <div className="text-right">
             <div className="tabular text-2xl font-bold leading-none">{s.best}</div>
-            <div className="text-[10px] uppercase tracking-wider text-ink-400">best</div>
+            <div className="text-[10px] uppercase tracking-wider text-ink-400">{t("history.card.best")}</div>
           </div>
         </div>
       </div>
@@ -362,7 +365,7 @@ function SongCard({ s, fav, onFav }: { s: { track: TakeSummary["track"]; takes: 
         {/* (from two plays, as on the song page; the dot is drawn outside the stretched line so it stays round,
             and the line stops short of the edge so the dot isn't cut off) */}
         {pts.length >= 2 ? (
-          <div className="relative mr-2 ml-1 h-[34px] min-w-0 flex-1" aria-label={`Scores: ${pts.join(", ")}`}>
+          <div className="relative mr-2 ml-1 h-[34px] min-w-0 flex-1" aria-label={t("history.card.scores", { list: pts.join(", ") })}>
             <svg className="absolute inset-0 h-full w-full overflow-visible" viewBox={`0 0 100 ${H}`} preserveAspectRatio="none" aria-hidden>
               <path d={pts.map((v, i) => `${i ? "L" : "M"}${sx(i)},${sy(v)}`).join(" ")} fill="none" stroke={TREND} strokeWidth={2}
                     strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
@@ -372,10 +375,10 @@ function SongCard({ s, fav, onFav }: { s: { track: TakeSummary["track"]; takes: 
           </div>
         ) : <span />}
         <div className="flex shrink-0 items-center gap-3">
-          <div className="whitespace-nowrap text-right text-xs text-ink-400 transition group-hover:text-ink-100">{s.takes.length} play{s.takes.length > 1 ? "s" : ""} · last {s.last.score}</div>
+          <div className="whitespace-nowrap text-right text-xs text-ink-400 transition group-hover:text-ink-100">{t("history.card.plays", { count: s.takes.length, last: s.last.score })}</div>
           <button onClick={e => { e.preventDefault(); e.stopPropagation(); if (!job) void playTrack(s.track.id, true, s.track.name); }}
                   onKeyDown={e => e.stopPropagation()} disabled={!!job}
-                  title={job ? `${learnLabel(job)} It can be sung once it’s learned` : "Sing it again"} aria-label={job ? learnLabel(job) : "Sing it again"}
+                  title={job ? t("history.card.whenLearned", { label: learnLabel(job) }) : t("history.card.singAgain")} aria-label={job ? learnLabel(job) : t("history.card.singAgain")}
                   className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/6 text-ink-100 outline-none transition hover:bg-accent-500 hover:text-white
                              focus-visible:ring-2 focus-visible:ring-accent-400/60 disabled:cursor-default disabled:text-ink-500 disabled:hover:bg-white/6">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M8 5.5v13l11-6.5z" /></svg>
@@ -388,12 +391,13 @@ function SongCard({ s, fav, onFav }: { s: { track: TakeSummary["track"]; takes: 
 }
 
 function Empty() {
+  const t = useT();
   return (
     <div className="glass grid place-items-center rounded-3xl px-6 py-20 text-center">
       <div>
-        <h2 className="text-xl font-semibold">No takes yet</h2>
-        <p className="mt-1 text-ink-300">Sing along to a song for at least 20 seconds and it’ll show up here.</p>
-        <Link href="/" className="mt-5 inline-block rounded-xl bg-accent-500 px-4 py-2 font-medium text-white transition hover:bg-accent-400">Start singing</Link>
+        <h2 className="text-xl font-semibold">{t("history.empty.title")}</h2>
+        <p className="mt-1 text-ink-300">{t("history.empty.body")}</p>
+        <Link href="/" className="mt-5 inline-block rounded-xl bg-accent-500 px-4 py-2 font-medium text-white transition hover:bg-accent-400">{t("history.empty.start")}</Link>
       </div>
     </div>
   );

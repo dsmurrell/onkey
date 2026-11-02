@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "OnKey",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "identifier": "audio.onkey.app",
   "build": {
     "frontendDist": "../ui/out",
@@ -63,7 +63,28 @@
     "category": "Music",
     "shortDescription": "A singing trainer: learn to sing the songs you love",
     "macOS": {
-      "minimumSystemVersion": "14.2"
+      "minimumSystemVersion": "14.2",
+      "files": {
+        "Resources/de.lproj": "gen/lproj/de.lproj",
+        "Resources/en.lproj": "gen/lproj/en.lproj",
+        "Resources/es.lproj": "gen/lproj/es.lproj",
+        "Resources/es-419.lproj": "gen/lproj/es-419.lproj",
+        "Resources/fr.lproj": "gen/lproj/fr.lproj",
+        "Resources/hi.lproj": "gen/lproj/hi.lproj",
+        "Resources/id.lproj": "gen/lproj/id.lproj",
+        "Resources/it.lproj": "gen/lproj/it.lproj",
+        "Resources/ja.lproj": "gen/lproj/ja.lproj",
+        "Resources/ko.lproj": "gen/lproj/ko.lproj",
+        "Resources/nl.lproj": "gen/lproj/nl.lproj",
+        "Resources/pl.lproj": "gen/lproj/pl.lproj",
+        "Resources/pt.lproj": "gen/lproj/pt.lproj",
+        "Resources/ru.lproj": "gen/lproj/ru.lproj",
+        "Resources/th.lproj": "gen/lproj/th.lproj",
+        "Resources/tr.lproj": "gen/lproj/tr.lproj",
+        "Resources/vi.lproj": "gen/lproj/vi.lproj",
+        "Resources/zh-Hans.lproj": "gen/lproj/zh-Hans.lproj",
+        "Resources/zh-Hant.lproj": "gen/lproj/zh-Hant.lproj"
+      }
     },
     "resources": {
       "../THIRD_PARTY_NOTICES.md": "THIRD_PARTY_NOTICES.md",

@@ -10,15 +10,23 @@ import { useEffect, useState } from "react";
 import { Logo, Nav, WhatsNew } from "@/components/Nav";
 import { reportProblem } from "@/components/ReportProblem";
 import { checkForUpdate, restartToUpdate, setAutoUpdate, useUpdate } from "@/lib/update";
-import { allowControl, getMics, getOutputTiming, getSettings, openLink, setMic, setScoringLevel, setSetting, setupControl, setupStatus, setYouTube, type Mics, type OutputTiming, type Settings } from "@/lib/session";
-import { LEVELS, levelOf, type Level } from "@/lib/music";
-import { errorText } from "@/lib/dataSafety";
+import { updateLine } from "@/lib/updateLine";
+import { allowControl, getMics, getOutputTiming, getSettings, openLink, setMic, setLanguage, setScoringLevel, setSetting, setupControl, setupStatus, setYouTube, type Mics, type OutputTiming, type Settings } from "@/lib/session";
+import { LEVELS, levelAbout, levelName, levelOf, type Level } from "@/lib/music";
+import { usePc, useWindows } from "@/lib/platform";
+import { engineErrorText } from "@/lib/engineText";
+import { useT } from "@/lib/i18n";
+import Dropdown from "@/components/Dropdown";
+import LanguagePicker from "@/components/LanguagePicker";
 
 /** Audio: the output you hear the music on, which microphone OnKey listens to (automatic: the Mac's input, as chosen
  *  in System Settings → Sound, or one picked here; Setup's mic check and your takes use the same one), and setup again
  *  (the Sing page opens it with ?setup). */
 function Audio() {
+  const t = useT();
   const [m, setM] = useState<Mics | null>(null);
+  const win = useWindows();
+  const pc = usePc();
   const [out, setOut] = useState<OutputTiming | null>(null);
   useEffect(() => {
     let alive = true;
@@ -27,53 +35,52 @@ function Audio() {
       getOutputTiming().then(v => { if (alive) setOut(v); }).catch(() => {});
     };
     load();
-    const t = window.setInterval(() => { if (document.visibilityState === "visible") load(); }, 3000);   // a mic or headphones plugged in or out shows up
-    return () => { alive = false; clearInterval(t); };
+    const timer = window.setInterval(() => { if (document.visibilityState === "visible") load(); }, 3000);   // a mic or headphones plugged in or out shows up
+    return () => { alive = false; clearInterval(timer); };
   }, []);
   const missing = !!m && m.preferred != null && !m.devices.some(d => d.uid === m.preferred);
   const pick = async (uid: string) => { await setMic(uid === "" ? null : uid); setM(await getMics()); };
   return (
     <>
-      <h2 className="mt-6 mb-2 px-1 text-sm font-medium text-ink-200">Audio</h2>
+      <h2 className="mt-6 mb-2 px-1 text-sm font-medium text-ink-200">{t("settings.audio.title")}</h2>
       <section className="glass overflow-hidden rounded-3xl">
         {m && (
           <div className="flex items-start justify-between gap-6 border-b border-white/6 px-5 py-4">
             <div className="min-w-0">
-              <label htmlFor="set-mic" className="text-sm font-medium text-ink-100">Microphone</label>
+              <div className="text-sm font-medium text-ink-100">{t("settings.audio.mic.label")}</div>
               <p className="mt-1 text-xs text-ink-400">
-                {m.chosen ? <>Now: {m.chosen.name}.</> : <span className="text-amber-200">No microphone is connected.</span>}
-                {missing && " The one you chose isn’t connected, so OnKey uses the Mac’s own input until it is."}
+                {m.chosen
+                  ? (!missing ? t("settings.audio.mic.now", { name: m.chosen.name })
+                    : win ? t("settings.audio.mic.nowMissingPc", { name: m.chosen.name, input: pc.defaultInput })
+                    : t("settings.audio.mic.nowMissingMac", { name: m.chosen.name }))
+                  : !missing ? <span className="text-notice">{t("settings.audio.mic.none")}</span>
+                  : t.rich(win ? "settings.audio.mic.noneMissingPc" : "settings.audio.mic.noneMissingMac",
+                           { input: pc.defaultInput, warn: c => <span className="text-notice">{c}</span> })}
               </p>
               <More>
-                Automatic uses your Mac’s input (System Settings → Sound), but not Bluetooth headphones’ mic while the Mac
-                has its own, so the music stays at full quality in them. Setup’s mic check and your takes use the same one.
-                Virtual devices other apps add (Krisp, Loopback, BlackHole, Zoom, Teams) are listed apart: pick one only to
-                sing through it on purpose, as it gives OnKey that app’s sound, not your mic’s.
+                {win ? t("settings.audio.mic.morePc", { input: pc.defaultInput, soundInput: pc.soundInput })
+                  : t("settings.audio.mic.moreMac")}
               </More>
             </div>
-            <select id="set-mic" value={m.preferred ?? ""} onChange={e => pick(e.target.value)}
-                    className="mt-0.5 max-w-56 shrink-0 rounded-lg border border-white/8 bg-white/4 px-2.5 py-1.5 text-sm text-ink-100 outline-none focus:border-accent-400">
-              <option value="">Automatic</option>
-              {m.devices.filter(d => !d.virtual).map(d => <option key={d.uid} value={d.uid}>{d.name}</option>)}
-              {m.devices.some(d => d.virtual) && (
-                <optgroup label="Virtual (from other apps)">
-                  {m.devices.filter(d => d.virtual).map(d => <option key={d.uid} value={d.uid}>{d.name}</option>)}
-                </optgroup>
-              )}
-              {missing && <option value={m.preferred!}>Not connected</option>}
-            </select>
+            <Dropdown id="set-mic" value={m.preferred ?? ""} onChange={pick} label={t("settings.audio.mic.label")}
+                      groups={[
+                        { items: [{ value: "", label: t("settings.audio.mic.automatic") },
+                                  ...m.devices.filter(d => !d.virtual).map(d => ({ value: d.uid, label: d.name }))] },
+                        { heading: t("settings.audio.mic.virtual"), items: m.devices.filter(d => d.virtual).map(d => ({ value: d.uid, label: d.name })) },
+                        { items: missing ? [{ value: m.preferred!, label: t("settings.audio.mic.notConnected") }] : [] },
+                      ]} />
           </div>
         )}
         {out && (
           <div className="border-b border-white/6 px-5 py-4">
-            <div className="text-sm font-medium text-ink-100">Output</div>
-            <p className="mt-1 text-xs text-ink-400">Now: {out.name}. Change it in System Settings → Sound.</p>
+            <div className="text-sm font-medium text-ink-100">{t("settings.audio.output.label")}</div>
+            <p className="mt-1 text-xs text-ink-400">{t("settings.audio.output.now", { name: out.name, os: win ? "pc" : "mac", sound: pc.sound })}</p>
           </div>
         )}
         <Link href="/?setup" className="flex items-center justify-between gap-6 px-5 py-4 text-sm text-ink-100 hover:bg-white/4">
           <span>
-            Run setup again
-            <span className="mt-1 block text-xs text-ink-400">Permissions and the mic check, as on the first day.</span>
+            {t("settings.audio.setup.title")}
+            <span className="mt-1 block text-xs text-ink-400">{t("settings.audio.setup.sub")}</span>
           </span>
           <span aria-hidden className="text-ink-400">›</span>
         </Link>
@@ -84,26 +91,28 @@ function Audio() {
 
 /** Keyboard shortcuts on the Sing page (LiveBits.tsx Transport and app/page.tsx), not while typing; ⌘⇧P, from the
  *  app menu, on every page. */
-const SHORTCUTS: [string[], string][] = [
-  [["⌘", "⇧", "P"], "Pause or resume listening (on any page)"],
-  [["Space"], "Play or pause"],
-  [["R"], "Start the song over"],
-  [["←"], "Previous song"],
-  [["→"], "Next song, or skip to the singing"],
-  [["B"], "Show or hide the notes (Blind take)"],
-  [["F"], "Favourite the song"],
-  [["M"], "Mini mode: a small lyrics bar on top of other apps"],
+// (the keys as shown: symbols and letters, except "space", which is a word: settings.shortcuts.space)
+const SHORTCUTS: [string[], "pause" | "playPause" | "restart" | "previous" | "next" | "blind" | "favourite" | "mini"][] = [
+  [["⌘", "⇧", "P"], "pause"],
+  [["space"], "playPause"],
+  [["R"], "restart"],
+  [["←"], "previous"],
+  [["→"], "next"],
+  [["B"], "blind"],
+  [["F"], "favourite"],
+  [["M"], "mini"],
 ];
 function Shortcuts() {
+  const t = useT();
   return (
     <>
-      <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">Keyboard shortcuts</h2>
+      <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">{t("settings.shortcuts.title")}</h2>
       <section className="glass overflow-hidden rounded-3xl px-5 py-2">
         {SHORTCUTS.map(([keys, what]) => (
           <div key={what} className="flex items-center justify-between gap-6 py-2 text-sm text-ink-100">
-            <span>{what}</span>
+            <span>{t(`settings.shortcuts.${what}`)}</span>
             <span className="shrink-0">{keys.map(k => (
-              <kbd key={k} className="mx-0.5 rounded-md border border-white/10 bg-white/5 px-1.5 py-0.5 font-sans text-[11px] text-ink-200">{k}</kbd>
+              <kbd key={k} className="mx-0.5 rounded-md border border-white/10 bg-white/5 px-1.5 py-0.5 font-sans text-[11px] text-ink-200">{k === "space" ? t("settings.shortcuts.space") : k}</kbd>
             ))}</span>
           </div>
         ))}
@@ -114,36 +123,30 @@ function Shortcuts() {
 
 /** Updates: this version, "Check for updates automatically" (on), and "Check now". */
 function Updates() {
+  const t = useT();
   const [u, setU] = useUpdate();
   const [busy, setBusy] = useState(false);
+  const win = useWindows();
   if (!u) return null;
   const check = async () => { setBusy(true); try { setU(await checkForUpdate()); } finally { setBusy(false); } };
-  const line = !u.supported ? "Development build: it doesn’t update itself."
-    : u.waiting ? `OnKey ${u.available} is installed when this song is over, then OnKey restarts.`
-    : u.state === "ready" ? `OnKey ${u.available} is ready. Restart to update, or it’s installed when you quit.`
-    : u.state === "downloading" ? `Downloading OnKey ${u.available}…`
-    : u.state === "checking" ? "Checking…"
-    : u.state === "current" ? "You have the latest version."
-    : u.state === "error" ? (u.available ? `Couldn’t update to OnKey ${u.available}${u.error ? ` (${u.error})` : ""}. Check now tries again.`
-                                          : `Couldn’t check for updates just now${u.error ? ` (${u.error})` : ""}.`)
-    : "";
+  const line = updateLine(t, u, win);
   return (
     <>
       <div className="flex items-start justify-between gap-6 border-b border-white/6 px-5 py-4">
         <div className="min-w-0">
-          <div className="text-sm font-medium text-ink-100">OnKey {u.version}</div>
+          <div className="text-sm font-medium text-ink-100">{t("settings.updates.version", { version: String(u.version) })}</div>
           {line && <p className="mt-1 text-xs text-ink-400">{line}</p>}
         </div>
         {u.supported && (u.state === "ready" && !u.waiting
-          ? <button onClick={async () => setU(await restartToUpdate())}
-                    className="shrink-0 rounded-lg bg-accent-500 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-accent-400">Restart to update</button>
+          ? <button onClick={async () => { const v = await restartToUpdate(); if (v) setU(v); }}
+                    className="shrink-0 rounded-lg bg-accent-500 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-accent-400">{t("settings.updates.restart")}</button>
           : <button onClick={check} disabled={busy || u.state === "checking" || u.state === "downloading" || u.waiting}
-                    className="shrink-0 rounded-lg border border-white/8 bg-white/4 px-3 py-1.5 text-sm text-ink-100 transition hover:bg-white/8 disabled:opacity-40">Check now</button>)}
+                    className="shrink-0 rounded-lg border border-white/8 bg-white/4 px-3 py-1.5 text-sm text-ink-100 transition hover:bg-white/8 disabled:opacity-40">{t("settings.updates.checkNow")}</button>)}
       </div>
       {u.supported && (
-        <Row id="set-auto-update" title="Check for updates automatically" on={u.auto} onChange={async on => setU(await setAutoUpdate(on))}
-             sub="Once a day, in the background. It never interrupts a song."
-             more="OnKey asks GitHub for a newer version and downloads it in the background. It’s installed when you restart or quit." />
+        <Row id="set-auto-update" title={t("settings.updates.auto.title")} on={u.auto} onChange={async on => setU(await setAutoUpdate(on))}
+             sub={t("settings.updates.auto.sub")}
+             more={t("settings.updates.auto.more")} />
       )}
     </>
   );
@@ -151,12 +154,13 @@ function Updates() {
 
 /** "See how it looks": an animation under a setting, on request. */
 function SeeHow({ children }: { children: React.ReactNode }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   return (
     <>
       <button onClick={() => setOpen(v => !v)} aria-expanded={open}
               className="mt-1.5 text-xs text-accent-300 underline-offset-2 transition hover:text-accent-200 hover:underline">
-        {open ? "Hide" : "See how it looks"}
+        {open ? t("settings.seeHow.hide") : t("settings.seeHow.show")}
       </button>
       {open && <div className="mt-3 max-w-xl">{children}</div>}
     </>
@@ -165,12 +169,13 @@ function SeeHow({ children }: { children: React.ReactNode }) {
 
 /** "More": the rest of a setting's explanation, on request (the row itself says it in one line). */
 function More({ children }: { children: React.ReactNode }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   return (
     <>
       <button onClick={() => setOpen(v => !v)} aria-expanded={open}
-              className="mt-1 text-xs text-ink-500 underline-offset-2 transition hover:text-ink-200 hover:underline">
-        {open ? "Less" : "More"}
+              className="mt-1 mr-3 text-xs text-ink-500 underline-offset-2 transition hover:text-ink-200 hover:underline">   {/* (mr-3: apart from "See how it looks" beside it) */}
+        {open ? t("settings.more.less") : t("settings.more.more")}
       </button>
       {open && <p className="mt-1 text-xs text-ink-400">{children}</p>}
     </>
@@ -189,7 +194,7 @@ function Row({ id, title, sub, more, on, onChange, badge, warn, disabled, extra 
       <div className="min-w-0">
         <label htmlFor={id} className="flex items-center gap-2 text-sm font-medium text-ink-100">
           {title}
-          {badge && <span className={`rounded-full px-1.5 py-px text-[10px] font-normal ${warn ? "bg-amber-400/12 text-amber-200" : "bg-white/6 text-ink-300"}`}>{badge}</span>}
+          {badge && <span className={`rounded-full px-1.5 py-px text-[10px] font-normal ${warn ? "bg-notice-fill/12 text-notice" : "bg-white/6 text-ink-300"}`}>{badge}</span>}
         </label>
         <p className="mt-1 text-xs text-ink-400">{sub}</p>
         {more && <More>{more}</More>}
@@ -205,27 +210,30 @@ function Row({ id, title, sub, more, on, onChange, badge, warn, disabled, extra 
 
 /** How strictly takes are scored: Relaxed (the default), Steady or Pro, from the next take on. */
 function ScoringLevel({ level, onChange }: { level: Level; onChange: (l: Level) => void }) {
+  const t = useT();
   return (
     <section className="glass overflow-hidden rounded-3xl px-5 py-4">
-      <div role="radiogroup" aria-label="Scoring level" className="flex gap-1 rounded-full bg-white/6 p-1">
+      <div role="radiogroup" aria-label={t("settings.scoring.label")} className="flex gap-1 rounded-full bg-white/6 p-1">
         {(Object.keys(LEVELS) as Level[]).map(l => (
           <button key={l} id={`set-level-${l}`} role="radio" aria-checked={level === l} onClick={() => level !== l && onChange(l)}
                   className={`flex-1 rounded-full px-3 py-1.5 text-sm transition ${level === l ? "bg-accent-500 font-medium text-white" : "text-ink-300 hover:bg-white/6"}`}>
-            {LEVELS[l].name}
+            {levelName(l)}
           </button>
         ))}
       </div>
-      <p className="mt-3 text-xs text-ink-400">{LEVELS[level].about}</p>
+      <p className="mt-3 text-xs text-ink-400">{levelAbout(level)}</p>
       <More>
-        {level !== "relaxed" && "Vibrato is fine: your pitch is judged by the middle of its wobble. "}
-        Every score in OnKey is shown at this level, your earlier takes too: they’re scored again from your singing as it was kept.
+        {level !== "relaxed" ? t("settings.scoring.more") : t("settings.scoring.moreRelaxed")}
       </More>
     </section>
   );
 }
 
 export default function SettingsPage() {
+  const t = useT();
   const [s, setS] = useState<Settings | null>(null);
+  const win = useWindows();
+  const pc = usePc();
   // a setting that couldn't be saved (a full disk, say): said, rather than seeming to stick and reverting at restart
   const [unsaved, setUnsaved] = useState<string | null>(null);
   useEffect(() => { getSettings().then(setS).catch(() => setS(null)); }, []);
@@ -242,13 +250,13 @@ export default function SettingsPage() {
   }, []);
   // listening only: Spotify, Apple Music and YouTube all off (settings.rs `listen_only`)
   const listenOnly = !!s?.listen_only;
-  const change = async (key: Exclude<keyof Settings, "small_mac" | "listen_only" | "scoring_level">, on: boolean) => {
+  const change = async (key: Exclude<keyof Settings, "small_mac" | "listen_only" | "scoring_level" | "language">, on: boolean) => {
     setUnsaved(null);
     try { await changeSetting(key, on); }
-    catch (e) { setUnsaved(errorText(e, "Couldn’t save the setting.")); }
+    catch (e) { setUnsaved(engineErrorText(t, e, t("settings.saveFailed"))); }
     setS(await getSettings());
   };
-  const changeSetting = async (key: Exclude<keyof Settings, "small_mac" | "listen_only" | "scoring_level">, on: boolean) => {
+  const changeSetting = async (key: Exclude<keyof Settings, "small_mac" | "listen_only" | "scoring_level" | "language">, on: boolean) => {
     if (key === "youtube") await setYouTube(on);
     else if (key === "keep_models" || key === "battery_30fps" || key === "voice_breaks" || key === "shazam" || key === "show_lyrics" || key === "fade_guide") await setSetting(key, on);
     else if ((key === "control_spotify" || key === "control_music") && !on && s && !s.listening) {
@@ -265,104 +273,126 @@ export default function SettingsPage() {
     <div className="min-h-dvh bg-[radial-gradient(1200px_500px_at_50%_-10%,rgba(124,108,246,.10),transparent)]">
       <header data-tauri-drag-region className="app-header flex items-center gap-5 px-6 pt-4 pb-3"><Logo /><Nav /><span className="ml-auto"><WhatsNew /></span></header>
       <main className="mx-auto max-w-2xl px-6 pb-16">
-        <h1 className="mt-6 text-3xl font-semibold tracking-tight">Settings</h1>
+        <h1 className="mt-6 text-3xl font-semibold tracking-tight">{t("settings.title")}</h1>
         {unsaved && <p role="alert" className="mt-3 rounded-xl bg-off/10 px-4 py-2 text-sm text-off">{unsaved}</p>}
         <Audio />
         {!s ? <div className="glass mt-8 h-40 rounded-3xl shimmer" /> : (
           <>
-            <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">Let OnKey control</h2>
+            <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">{t("settings.control.title")}</h2>
             <p className="mb-3 px-1 text-xs text-ink-400">
               {s.listening
-                ? "On by default: OnKey reads what’s playing and where (exact, instant positions), and can play, pause, seek and start songs. Nothing else. macOS asks once for each."
-                : "OnKey follows Spotify and Apple Music by asking them, so it controls them already."}
+                ? win ? t("settings.control.introPc") : t("settings.control.introMac")
+                : t("settings.control.introAsking")}
             </p>
             <section className="glass overflow-hidden rounded-3xl">
-              <Row id="set-spotify" title="Spotify" on={!missing.spotify && (!s.listening || s.control_spotify)} disabled={missing.spotify}
+              <Row id="set-spotify" title={t("settings.control.spotify.title")} on={!missing.spotify && (!s.listening || s.control_spotify)} disabled={missing.spotify}
                    onChange={on => change("control_spotify", on)}
-                   sub={missing.spotify ? "Spotify isn’t installed on this Mac." : "Start, pause and skip songs in Spotify from OnKey."} />
-              <Row id="set-music" title="Apple Music" on={!missing.music && (!s.listening || s.control_music)} disabled={missing.music}
+                   sub={missing.spotify ? t("settings.control.spotify.missing", { os: win ? "pc" : "mac" }) : t("settings.control.spotify.sub")} />
+              <Row id="set-music" title={t("settings.control.music.title")} on={!missing.music && (!s.listening || s.control_music)} disabled={missing.music}
                    onChange={on => change("control_music", on)}
-                   sub={missing.music ? "The Music app isn’t on this Mac." : "The same for the Music app (songs in your library)."} />
-              <Row id="set-youtube" title="YouTube in your browser" badge="Bigger permission" warn on={s.youtube} onChange={on => change("youtube", on)}
-                   sub="Read and control the YouTube tab in Chrome, Brave, Edge or Safari."
-                   more="Needs “Allow JavaScript from Apple Events” turned on in the browser. While it’s on (and for 10 minutes after you open a YouTube song from OnKey), OnKey listens to your browser’s sound, whatever it is, calls and podcasts included: sound it doesn’t recognise may go to Shazam as a short fingerprint (never the audio) unless Shazam is off below." />
+                   sub={missing.music ? (win ? t("settings.control.music.missingPc") : t("settings.control.music.missingMac"))
+                                      : win ? t("settings.control.music.subPc") : t("settings.control.music.subMac")} />
+              {/* (Windows: followed through the browser's media session, nothing for the browser or Windows to allow) */}
+              {win
+                ? <Row id="set-youtube" title={t("settings.control.youtube.title")} on={s.youtube} onChange={on => change("youtube", on)}
+                       sub={t("settings.control.youtube.subPc")}
+                       more={t("settings.control.youtube.morePc", { os: pc.os })} />
+                : <Row id="set-youtube" title={t("settings.control.youtube.title")} badge={t("settings.control.youtube.badge")} warn on={s.youtube} onChange={on => change("youtube", on)}
+                       sub={t("settings.control.youtube.subMac")}
+                       more={t("settings.control.youtube.moreMac")} />}
             </section>
             {s.listening && (
               <p role="status" className="mt-3 px-1 text-xs text-ink-400">
-                {listenOnly
-                  ? <>OnKey is listening only: it follows songs by their sound, and doesn’t touch any app. Positions are a little
-                      less exact, and it can’t start or restart songs. Turning an app off here doesn’t take back macOS’s
-                      permission: that’s in System Settings → Privacy &amp; Security → Automation.</>
-                  : "With all of these off, OnKey follows songs by their sound alone."}
+                {listenOnly && win
+                  ? t("settings.control.listenOnlyPc", { os: pc.os, apps: pc.apps })
+                  : listenOnly
+                  ? t("settings.control.listenOnlyMac")
+                  : t("settings.control.allOff")}
               </p>
             )}
-            <section className="glass mt-8 overflow-hidden rounded-3xl">
-              <Row id="set-shazam" title="Use Shazam to name new songs" on={s.shazam !== false} onChange={on => change("shazam", on)}
-                   sub="Names new songs from a short fingerprint of the sound, not the audio."
-                   more="Songs you’ve sung before are recognised on this Mac. New songs from Spotify and Apple Music are named by the app itself while OnKey may control it; Shazam names the rest. When off, nothing is sent to Shazam and only songs already learned on this Mac are recognised there. Album covers are still looked up by artist and title in Apple’s iTunes catalogue." />
+            {/* Windows has no Shazam: nothing to switch, only what happens */}
+            {win ? (
+              <section className="glass mt-8 overflow-hidden rounded-3xl px-5 py-4">
+                <h3 className="text-sm font-medium text-ink-100">{t("settings.naming.title")}</h3>
+                <p className="mt-1 text-xs text-ink-400">
+                  {t("settings.naming.pc")}
+                </p>
+              </section>
+            ) : <section className="glass mt-8 overflow-hidden rounded-3xl">
+              <Row id="set-shazam" title={t("settings.naming.shazam.title")} on={s.shazam !== false} onChange={on => change("shazam", on)}
+                   sub={t("settings.naming.shazam.sub")}
+                   more={t("settings.naming.shazam.more")} />
               {s.listening && !s.control_spotify && !s.control_music && s.shazam === false && (
-                <p role="status" className="bg-amber-400/8 px-5 py-3 text-xs text-amber-200">
-                  With Spotify and Apple Music off, new songs can only be learned with Shazam on. Songs already learned still work.
+                <p role="status" className="bg-notice-fill/8 px-5 py-3 text-xs text-notice">
+                  {t("settings.naming.shazam.warn")}
                 </p>
               )}
-            </section>
-            <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">Lyrics</h2>
+            </section>}
+            <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">{t("settings.lyrics.title")}</h2>
             <section className="glass overflow-hidden rounded-3xl">
-              <Row id="set-show-lyrics" title="Show lyrics" on={s.show_lyrics !== false} onChange={on => change("show_lyrics", on)}
-                   sub="From LRCLIB, a free community lyrics database."
-                   more="When off, OnKey doesn’t ask LRCLIB for any, and you sing to the notes alone: the pitch guide and your score work as usual." />
+              <Row id="set-show-lyrics" title={t("settings.lyrics.show.title")} on={s.show_lyrics !== false} onChange={on => change("show_lyrics", on)}
+                   sub={t("settings.lyrics.show.sub")}
+                   more={t("settings.lyrics.show.more")} />
             </section>
           </>
         )}
         {s && (
           <>
-            <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">Scoring</h2>
+            <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">{t("settings.scoring.title")}</h2>
             <ScoringLevel level={levelOf(s.scoring_level)} onChange={async l => { await setScoringLevel(l); setS(await getSettings()); }} />
-            <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">Your voice</h2>
+            <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">{t("settings.voice.title")}</h2>
             <section className="glass overflow-hidden rounded-3xl">
-              <Row id="set-voice-breaks" title="Remind me to rest my voice" on={s.voice_breaks !== false} onChange={on => change("voice_breaks", on)}
-                   sub="A quiet reminder to take a break after about 35 minutes of singing."
-                   more="A 20-minute pause from singing starts the count again." />
-              <Row id="set-fade-guide" title="Fade the guide on songs you know" on={!!s.fade_guide} onChange={on => change("fade_guide", on)}
-                   sub="Your pitch line fades while you’re on the note, so you listen to yourself more."
-                   more="It starts once you’ve sung a song well (your best 80 or more, or your last two takes 75 or more). The better you know it, the fainter it gets; more than a semitone off, it shows as usual. The notes always stay, and you can bring the full guide back for any take."
+              <Row id="set-voice-breaks" title={t("settings.voice.breaks.title")} on={s.voice_breaks !== false} onChange={on => change("voice_breaks", on)}
+                   sub={t("settings.voice.breaks.sub")}
+                   more={t("settings.voice.breaks.more")} />
+              <Row id="set-fade-guide" title={t("settings.voice.fadeGuide.title")} on={!!s.fade_guide} onChange={on => change("fade_guide", on)}
+                   sub={t("settings.voice.fadeGuide.sub")}
+                   more={t("settings.voice.fadeGuide.more")}
                    extra={<SeeHow><FadeGuideDemo /></SeeHow>} />
             </section>
-            <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">Performance</h2>
+            <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">{t("settings.performance.title")}</h2>
             <section className="glass overflow-hidden rounded-3xl">
-              <Row id="set-battery-30" title="Save battery while singing" on={s.battery_30fps !== false} onChange={on => change("battery_30fps", on)}
-                   sub="On battery, the notes are drawn a little less often. Still smooth."
-                   more="30 times a second instead of 60: half the drawing work for your Mac." />
-              {!s.small_mac && <Row id="set-keep-models" title="Keep learning models ready" on={!!s.keep_models} onChange={on => change("keep_models", on)}
-                   sub="New songs are learned faster, but OnKey uses more memory."
-                   more="About 1.5 GB more, also while you sing songs OnKey already knows. Off, the models are loaded when a new song is learned and let go after. On by default on Macs with 32 GB or more." />}
+              {/* (not on Windows: the engine doesn't see the battery there yet) */}
+              {!win && <Row id="set-battery-30" title={t("settings.performance.battery.title")} on={s.battery_30fps !== false} onChange={on => change("battery_30fps", on)}
+                   sub={t("settings.performance.battery.sub")}
+                   more={t("settings.performance.battery.more")} />}
+              {!s.small_mac && <Row id="set-keep-models" title={t("settings.performance.keepModels.title")} on={!!s.keep_models} onChange={on => change("keep_models", on)}
+                   sub={t("settings.performance.keepModels.sub")}
+                   more={t("settings.performance.keepModels.more", { os: win ? "pc" : "mac" })} />}
             </section>
           </>
         )}
+        {s && <LanguagePicker choice={s.language ?? "auto"} onChange={async code => {
+          setUnsaved(null);
+          try { await setLanguage(code); } catch (e) { setUnsaved(engineErrorText(t, e, t("settings.saveFailed"))); }
+          setS(await getSettings());
+        }} />}
         <Shortcuts />
-        <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">About</h2>
+        <h2 className="mt-8 mb-2 px-1 text-sm font-medium text-ink-200">{t("settings.about.title")}</h2>
         <section className="glass overflow-hidden rounded-3xl">
           <Updates />
           <button onClick={() => reportProblem()} className="flex w-full items-center justify-between gap-6 border-b border-white/6 px-5 py-4 text-left text-sm text-ink-100 hover:bg-white/4">
             <span>
-              Report a problem
-              <span className="mt-1 block text-xs text-ink-400">Save OnKey’s logs and timings as a zip to attach to a GitHub issue. You see what’s in it first; no lyrics or audio, nothing uploaded.</span>
+              {t("settings.about.report.title")}
+              <span className="mt-1 block text-xs text-ink-400">{win
+                ? t("settings.about.report.subPc")
+                : t("settings.about.report.subMac")}</span>
             </span>
             <span aria-hidden className="text-ink-400">›</span>
           </button>
           <button onClick={() => void openLink("https://singonkey.app/docs/")}
                   className="flex w-full items-center justify-between gap-6 border-b border-white/6 px-5 py-4 text-left text-sm text-ink-100 hover:bg-white/4">
             <span>
-              Guides and help
-              <span className="mt-1 block text-xs text-ink-400">How OnKey works, scoring, fixing problems and singing comfortably, on singonkey.app.</span>
+              {t("settings.about.guides.title")}
+              <span className="mt-1 block text-xs text-ink-400">{t("settings.about.guides.sub")}</span>
             </span>
             <span aria-hidden className="text-ink-400">↗</span>
           </button>
           <button onClick={() => void openLink("https://discord.gg/afHvqTNS6r")}
                   className="flex w-full items-center justify-between gap-6 border-b border-white/6 px-5 py-4 text-left text-sm text-ink-100 hover:bg-white/4">
             <span>
-              Join OnKey’s Discord
-              <span className="mt-1 block text-xs text-ink-400">Ask questions, report a song that’s out of step, and suggest ideas.</span>
+              {t("settings.about.discord.title")}
+              <span className="mt-1 block text-xs text-ink-400">{t("settings.about.discord.sub")}</span>
             </span>
             <span aria-hidden className="text-ink-400">↗</span>
           </button>
@@ -370,29 +400,28 @@ export default function SettingsPage() {
                   className="flex w-full items-center gap-3 border-b border-white/6 px-5 py-4 text-left text-sm text-ink-100 hover:bg-white/4">
             <img src="/dsmurrell.png" alt="" width={20} height={20} className="rounded" />
             <span className="flex-1">
-              Made by Daniel Murrell
-              <span className="mt-1 block text-xs italic text-ink-500">Saving shower singers from themselves since 2026</span>
+              {t("settings.about.madeBy.title")}
+              <span className="mt-1 block text-xs italic text-ink-500">{t("settings.about.madeBy.tagline")}</span>
             </span>
             <span aria-hidden className="text-ink-400">↗</span>
           </button>
           <Link href="/fair-use" className="flex items-center justify-between gap-6 border-b border-white/6 px-5 py-4 text-sm text-ink-100 hover:bg-white/4">
             <span>
-              Using OnKey fairly
-              <span className="mt-1 block text-xs text-ink-400">What OnKey is for, and how to share your singing without sharing the music.</span>
+              {t("settings.about.fairUse.title")}
+              <span className="mt-1 block text-xs text-ink-400">{t("settings.about.fairUse.sub")}</span>
             </span>
             <span aria-hidden className="text-ink-400">›</span>
           </Link>
           <Link href="/licences" className="flex items-center justify-between gap-6 px-5 py-4 text-sm text-ink-100 hover:bg-white/4">
             <span>
-              Open-source licences
-              <span className="mt-1 block text-xs text-ink-400">The models, data, fonts and libraries OnKey is built on, and their licences.</span>
+              {t("settings.about.licences.title")}
+              <span className="mt-1 block text-xs text-ink-400">{t("settings.about.licences.sub")}</span>
             </span>
             <span aria-hidden className="text-ink-400">›</span>
           </Link>
         </section>
         <p className="mt-3 px-1 text-xs text-ink-400">
-          For personal practice at home. What OnKey learns stays on this Mac: please keep it to yourself, and don’t post
-          takes or screen recordings with the music in them.
+          {t("settings.about.footer", { os: win ? "pc" : "mac" })}
         </p>
       </main>
     </div>

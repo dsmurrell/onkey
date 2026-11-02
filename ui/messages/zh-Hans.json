@@ -1,0 +1,1504 @@
+{
+  "app": {
+    "title": "OnKey",
+    "description": "一款唱歌练习工具：用你平时听的音乐，学会唱你喜欢的歌。"
+  },
+  "settings": {
+    "language": {
+      "title": "语言",
+      "label": "语言",
+      "sub": "OnKey 显示的文字。“自动”跟随电脑的语言。",
+      "autoNamed": "自动（{language}）",
+      "autoOs": "{language}（{os, select, mac {Mac 的语言} other {这台电脑的语言}}）",
+      "early": "初版",
+      "earlyNote": "{language}歌曲的歌词暂时只按行显示，没有逐字对齐。愿意帮忙？<link>改进这份翻译。</link>",
+      "credits": "翻译：{names}"
+    },
+    "title": "设置",
+    "saveFailed": "无法保存这项设置。",
+    "audio": {
+      "title": "音频",
+      "mic": {
+        "label": "麦克风",
+        "now": "当前：{name}。",
+        "none": "没有连接麦克风。",
+        "nowMissingMac": "当前：{name}。你选的那个没有连接，所以 OnKey 暂时使用 Mac 自带的输入，直到它接上为止。",
+        "nowMissingPc": "当前：{name}。你选的那个没有连接，所以 OnKey 暂时使用{input}，直到它接上为止。",
+        "noneMissingMac": "<warn>没有连接麦克风。</warn>你选的那个没有连接，所以 OnKey 暂时使用 Mac 自带的输入，直到它接上为止。",
+        "noneMissingPc": "<warn>没有连接麦克风。</warn>你选的那个没有连接，所以 OnKey 暂时使用{input}，直到它接上为止。",
+        "moreMac": "“自动”使用 Mac 的输入（系统设置 → 声音），但只要 Mac 有自己的麦克风，就不用蓝牙耳机的麦克风，这样耳机里的音乐能保持满质量。设置向导里的麦克风检查和你的演唱用的是同一个。其他应用添加的虚拟设备（Krisp、Loopback、BlackHole、Zoom、Teams）单独列出：只有当你确实想通过它来唱时才选它，因为它传给 OnKey 的是那个应用的声音，而不是你的麦克风。",
+        "morePc": "“自动”使用{input}（{soundInput}）。设置向导里的麦克风检查和你的演唱用的是同一个。",
+        "automatic": "自动",
+        "virtual": "虚拟（来自其他应用）",
+        "notConnected": "未连接"
+      },
+      "output": {
+        "label": "输出",
+        "now": "当前：{name}。可在{os, select, mac {“系统设置 → 声音”} other {{sound}}}中更改。"
+      },
+      "setup": {
+        "title": "重新运行设置向导",
+        "sub": "权限和麦克风检查，和第一天一样。"
+      }
+    },
+    "shortcuts": {
+      "title": "键盘快捷键",
+      "space": "空格键",
+      "pause": "暂停或继续聆听（任何页面）",
+      "playPause": "播放或暂停",
+      "restart": "从头播放这首歌",
+      "previous": "上一首",
+      "next": "下一首，或跳到开唱处",
+      "blind": "显示或隐藏音符（盲唱）",
+      "favourite": "收藏这首歌",
+      "mini": "迷你模式：一条浮在其他应用上方的小歌词栏"
+    },
+    "updates": {
+      "version": "OnKey {version}",
+      "unsupportedMac": "开发版本：不会自动更新。",
+      "unsupportedPc": "这个测试版本不会自动更新：有新版本时，直接覆盖安装即可。",
+      "waiting": "这首歌结束后安装 OnKey {version}，然后 OnKey 会重新启动。",
+      "ready": "OnKey {version} 已准备好。重新启动即可更新，或者在你退出时自动安装。",
+      "downloading": "正在下载 OnKey {version}…",
+      "checking": "正在检查…",
+      "official": "原项目已在 singonkey.app 发布 OnKey {version}。这个副本是从源码构建的，不会自动更新。",
+      "current": "你用的已经是最新版本。",
+      "currentSource": "你用的已经是最新版本。这个副本是从源码构建的：有新版本时会提醒你，但不会自动更新。",
+      "updateFailed": "无法更新到 OnKey {version}。点“立即检查”再试一次。",
+      "updateFailedWhy": "无法更新到 OnKey {version}（{error}）。点“立即检查”再试一次。",
+      "checkFailed": "刚才无法检查更新。",
+      "checkFailedWhy": "刚才无法检查更新（{error}）。",
+      "restart": "重新启动以更新",
+      "checkNow": "立即检查",
+      "auto": {
+        "title": "自动检查更新",
+        "sub": "每天一次，在后台进行。绝不会打断一首歌。",
+        "more": "OnKey 向 GitHub 查询新版本并在后台下载。在你重新启动或退出时安装。"
+      }
+    },
+    "seeHow": {
+      "show": "看看效果",
+      "hide": "隐藏"
+    },
+    "more": {
+      "more": "更多",
+      "less": "收起"
+    },
+    "scoring": {
+      "title": "评分",
+      "label": "评分难度",
+      "more": "有颤音没关系：音准按颤动的中心来判断。OnKey 里的每个分数都按这个难度显示，之前的演唱也一样：会根据保存下来的演唱重新评分。",
+      "moreRelaxed": "OnKey 里的每个分数都按这个难度显示，之前的演唱也一样：会根据保存下来的演唱重新评分。"
+    },
+    "control": {
+      "title": "允许 OnKey 控制",
+      "introMac": "默认开启：OnKey 读取正在播放什么、播到哪里（精确、即时的位置），并能播放、暂停、跳转和开始歌曲。仅此而已。macOS 会为每个应用询问一次。",
+      "introPc": "默认开启：OnKey 读取正在播放什么、播到哪里，并能播放、暂停、跳转和开始歌曲。仅此而已。",
+      "introAsking": "OnKey 通过询问 Spotify 和 Apple Music 来跟随它们，所以已经可以控制它们。",
+      "spotify": {
+        "title": "Spotify",
+        "missing": "这台{os, select, mac { Mac } other {电脑}}上没有安装 Spotify。",
+        "sub": "从 OnKey 开始、暂停和跳过 Spotify 里的歌曲。"
+      },
+      "music": {
+        "title": "Apple Music",
+        "missingMac": "这台 Mac 上没有“音乐”App。",
+        "missingPc": "这台电脑上没有 Apple Music 应用。",
+        "subMac": "“音乐”App 同样如此（你资料库中的歌曲）。",
+        "subPc": "Apple Music 应用同样如此。"
+      },
+      "youtube": {
+        "title": "浏览器中的 YouTube",
+        "badge": "更大的权限",
+        "subMac": "读取并控制 Chrome、Brave、Edge 或 Safari 里的 YouTube 标签页。",
+        "moreMac": "需要在浏览器中打开“允许来自 Apple 事件的 JavaScript”。开启期间（以及从 OnKey 打开一首 YouTube 歌曲后的 10 分钟内），OnKey 会聆听浏览器的全部声音，包括通话和播客：它不认识的声音可能会以一小段指纹（绝不是音频本身）发送给 Shazam，除非下方关闭了 Shazam。",
+        "subPc": "跟随 Chrome、Edge、Firefox、Brave、Opera 或 Vivaldi 中播放的歌曲。",
+        "morePc": "根据浏览器告诉 {os} 的播放信息；OnKey 可以在浏览器里播放、暂停和跳转。歌曲学会之前，位置可能比 Spotify 稍微不那么精确。"
+      },
+      "listenOnlyMac": "OnKey 只在聆听：靠声音跟随歌曲，不碰任何应用。位置会稍微不那么精确，也无法开始或重播歌曲。在这里关闭某个应用并不会撤回 macOS 的权限：那在“系统设置 → 隐私与安全性 → 自动化”里。",
+      "listenOnlyPc": "OnKey 只在聆听：靠声音跟随歌曲，不碰任何应用。在 {os} 上，这样只能识别它已经学会的歌：新歌需要在这里开启 {apps} 才能被命名。",
+      "allOff": "全部关闭时，OnKey 只靠声音跟随歌曲。"
+    },
+    "naming": {
+      "title": "识别歌名",
+      "pc": "你唱过的歌会在这台电脑上靠声音识别。新歌由 Spotify、Apple Music 或浏览器（开启 YouTube 后）根据它们报告的播放内容命名。识别歌名不会向任何地方发送任何东西。",
+      "shazam": {
+        "title": "用 Shazam 识别新歌",
+        "sub": "根据声音的一小段指纹（而不是音频本身）识别新歌。",
+        "more": "你唱过的歌会在这台 Mac 上直接识别。来自 Spotify 和 Apple Music 的新歌，只要 OnKey 可以控制该应用，就由应用自己报告歌名；其余的由 Shazam 识别。关闭后，不会向 Shazam 发送任何东西，靠声音只能识别这台 Mac 上已学会的歌。专辑封面仍会按歌手和歌名在 Apple 的 iTunes 目录中查找。",
+        "warn": "Spotify 和 Apple Music 都关闭时，只有开启 Shazam 才能学习新歌。已学会的歌不受影响。"
+      }
+    },
+    "lyrics": {
+      "title": "歌词",
+      "show": {
+        "title": "显示歌词",
+        "sub": "来自 LRCLIB，一个免费的社区歌词数据库。",
+        "more": "关闭后，OnKey 不会向 LRCLIB 请求任何歌词，你只看着音符唱：音高提示和评分照常工作。"
+      }
+    },
+    "voice": {
+      "title": "你的嗓子",
+      "breaks": {
+        "title": "提醒我让嗓子休息",
+        "sub": "唱了大约 35 分钟后，轻声提醒你休息一下。",
+        "more": "停唱 20 分钟后重新计时。"
+      },
+      "fadeGuide": {
+        "title": "熟悉的歌逐渐隐藏提示",
+        "sub": "你唱在音上时，音高线会淡去，让你更多地听自己。",
+        "more": "一首歌唱得不错之后开始生效（最佳成绩 80 分以上，或最近两次 75 分以上）。越熟，线越淡；偏离超过半音时照常显示。音符始终保留，任何一次演唱都可以把完整提示调回来。"
+      }
+    },
+    "performance": {
+      "title": "性能",
+      "battery": {
+        "title": "唱歌时省电",
+        "sub": "使用电池时，音符的刷新稍微慢一点。依然流畅。",
+        "more": "每秒 30 次而不是 60 次：Mac 的绘制工作量减半。"
+      },
+      "keepModels": {
+        "title": "让学习模型保持就绪",
+        "sub": "新歌学得更快，但 OnKey 会占用更多内存。",
+        "more": "多占约 1.5 GB，在你唱 OnKey 已经学会的歌时也一样。关闭后，模型在学习新歌时加载，学完就释放。32 GB 及以上的{os, select, mac { Mac } other {电脑}}默认开启。"
+      }
+    },
+    "about": {
+      "title": "关于",
+      "report": {
+        "title": "报告问题",
+        "subMac": "把 OnKey 的日志和时间记录保存为一个 zip，附到 GitHub issue 里。你会先看到里面有什么；没有歌词和音频，也不会上传任何东西。",
+        "subPc": "把 OnKey 的日志和时间记录保存为桌面上的一个 zip，附到消息或 GitHub issue 里。你会先看到里面有什么；没有歌词和音频，也不会上传任何东西。"
+      },
+      "guides": {
+        "title": "指南与帮助",
+        "sub": "OnKey 的工作原理、评分、排除问题和舒服地唱歌，都在 singonkey.app。"
+      },
+      "discord": {
+        "title": "加入 OnKey 的 Discord",
+        "sub": "提问、报告节奏对不上的歌，以及提出建议。"
+      },
+      "madeBy": {
+        "title": "作者：Daniel Murrell",
+        "tagline": "自 2026 年起，让浴室歌手不再跑调"
+      },
+      "fairUse": {
+        "title": "合理使用 OnKey",
+        "sub": "OnKey 的用途，以及如何分享你的演唱而不分享音乐。"
+      },
+      "licences": {
+        "title": "开源许可证",
+        "sub": "OnKey 所依赖的模型、数据、字体和库，以及它们的许可证。"
+      },
+      "footer": "供在家个人练习使用。OnKey 学到的内容只留在这台{os, select, mac { Mac } other {电脑}}上：请自己保留，不要发布含有音乐的演唱或屏幕录像。"
+    }
+  },
+  "music": {
+    "levels": {
+      "relaxed": {
+        "name": "轻松",
+        "about": "宽松：半音以内都算满分。适合初学者和孩子。"
+      },
+      "steady": {
+        "name": "稳健",
+        "about": "音准和节奏要求更严，适合基本唱得准的人。"
+      },
+      "pro": {
+        "name": "专业",
+        "about": "严格，适合受过训练的歌手：四分之一半音以内才算满分。"
+      }
+    },
+    "offBy": {
+      "cents": "{dir, select, up {偏高} other {偏低}} {cents}¢",
+      "octaves": "{dir, select, up {高} other {低}}了约 {count, plural, other {{count} 个八度}}",
+      "semitones": "{dir, select, up {偏高} other {偏低}}约 {count, plural, other {{count} 个半音}}"
+    },
+    "scoreWord": {
+      "superb": "出色",
+      "great": "很棒",
+      "good": "不错",
+      "gettingThere": "快到了",
+      "keepAtIt": "继续加油"
+    }
+  },
+  "platform": {
+    "linux": {
+      "os": "Linux",
+      "settings": "声音设置",
+      "sound": "系统的“声音”设置",
+      "soundInput": "系统的“声音”设置 → 输入",
+      "defaultInput": "系统的默认输入",
+      "files": "文件管理器",
+      "filesThe": "文件管理器",
+      "apps": "Spotify 或浏览器中的 YouTube"
+    },
+    "windows": {
+      "os": "Windows",
+      "settings": "Windows 设置",
+      "sound": "Windows 设置 → 系统 → 声音",
+      "soundInput": "Windows 设置 → 系统 → 声音 → 输入",
+      "defaultInput": "Windows 的默认输入",
+      "files": "文件资源管理器",
+      "filesThe": "文件资源管理器",
+      "apps": "Spotify、Apple Music 或浏览器中的 YouTube"
+    },
+    "setupStep": {
+      "welcome": "欢迎",
+      "permissions": "权限",
+      "musicApps": "音乐应用",
+      "micCheck": "麦克风检查",
+      "ready": "就绪"
+    },
+    "savedFolder": {
+      "desktop": "桌面",
+      "home": "个人文件夹",
+      "named": "文件夹“{folder}”"
+    }
+  },
+  "learn": {
+    "stage": {
+      "playing": "边播边学",
+      "waiting": "等待轮到它",
+      "queued": "等待学习",
+      "paused": "等你唱完",
+      "separating": "分离人声",
+      "pitch": "跟踪旋律",
+      "scoring": "为你的演唱评分",
+      "words": "对齐歌词",
+      "bars": "生成音符条",
+      "notes": "找出每个音",
+      "saving": "正在保存",
+      "other": "正在学习"
+    },
+    "label": {
+      "queued": "等待学习",
+      "going": "正在学习…",
+      "percent": "正在学习… {pct}%"
+    }
+  },
+  "starting": {
+    "yourApp": "你的音乐应用",
+    "theSong": "这首歌",
+    "noId": {
+      "title": "OnKey 无法在 {app} 中开始“{song}”",
+      "sub": "OnKey 还不知道这首歌在 {app} 里的位置（它是从别的应用或靠听学会的）。在 {app} 里打开它并按播放：OnKey 会跟上，之后就能帮你开始了。"
+    },
+    "failed": {
+      "title": "{app} 没有开始“{song}”",
+      "subMusic": "OnKey 能开始你 Apple Music 资料库里的歌。在 Apple Music 里打开它并按播放：OnKey 会跟上。",
+      "sub": "在 {app} 里打开它并按播放：OnKey 会跟上。"
+    },
+    "going": {
+      "title": "正在 {app} 中开始“{song}”…",
+      "sub": "一开始播放，音符轨道就会出现。"
+    }
+  },
+  "errors": {
+    "deleteFailed": "无法删除。",
+    "readFailed": "无法读取你的{what, select, takes {演唱记录} songs {歌曲} other {{what}}}",
+    "reportsInApp": "请在 OnKey 应用里报告问题。"
+  },
+  "sing": {
+    "header": {
+      "miniTitle": "迷你模式：一条始终浮在其他应用上方的小歌词栏（M）"
+    },
+    "learning": {
+      "badge": "正在学这首歌",
+      "title": "你的盲唱",
+      "body": "跟着唱，没有提示。下次你就能看到每个音迎面而来。",
+      "scoreAfter": "<time>{clock}</time> · 歌曲结束后评分"
+    },
+    "learningLine": {
+      "waiting": "等待学习<hl>{name}</hl>",
+      "learning": "正在学习<hl>{name}</hl>：{stage}",
+      "stage": {
+        "playing": "边播边学",
+        "waiting": "等待轮到它",
+        "queued": "等待学习",
+        "paused": "等你唱完",
+        "separating": "分离人声",
+        "pitch": "跟踪旋律",
+        "scoring": "为你的演唱评分",
+        "words": "对齐歌词",
+        "bars": "生成音符条",
+        "notes": "找出每个音",
+        "saving": "正在保存",
+        "other": "正在学习"
+      }
+    },
+    "lineSub": {
+      "mac": {
+        "finding": "OnKey 正在靠声音识别这首歌。需要几秒钟，这次演唱从歌曲开头开始计算。",
+        "new_song": "OnKey 正在识别下一首歌。它的演唱从歌曲开头开始计算。",
+        "unnamed": "OnKey 和 Shazam 都不认识这首歌。声音变化时 OnKey 会再问一次。",
+        "no_shazam": "暂时连不上 Shazam，所以只能识别这台 Mac 上已学会的歌。OnKey 会继续尝试。",
+        "shazam_off": "Shazam 已关闭（设置），所以只靠声音，OnKey 只能识别这台 Mac 上已学会的歌。开启 Shazam 才能识别新歌。",
+        "podcast": "播放一首歌，OnKey 就会跟上。",
+        "stopped": "你停止了学习这首歌，所以 OnKey 不再管它。播放另一首歌，OnKey 就会跟上。",
+        "elsewhere": "OnKey 听的是这台 Mac 上播放的声音。如果它在另一台设备（手机、音箱）上播放，请在应用的设备菜单里切换到这台 Mac。"
+      },
+      "pc": {
+        "unnamed": "这不是 OnKey 学过的歌，也没有音乐应用报告它是什么。声音变化时 OnKey 会再问一次。",
+        "no_shazam": "这首歌 OnKey 还没学过。在 {os} 上，新歌由 {apps}（开启 YouTube 后）命名：在那里播放，OnKey 就会学习它。",
+        "shazam_off": "这首歌 OnKey 还没学过。在 {os} 上，新歌由 {apps}（开启 YouTube 后）命名：在那里播放，OnKey 就会学习它。",
+        "elsewhere": "OnKey 听的是这台电脑上播放的声音。如果它在另一台设备（手机、音箱）上播放，请在应用的设备菜单里切换到这台电脑。"
+      }
+    },
+    "waiting": {
+      "title": {
+        "starting": "正在启动 OnKey…",
+        "gettingReady": "正在准备…",
+        "notASong": "这不是歌",
+        "stillListening": "仍在聆听",
+        "idle": "播放一首歌，跟着唱"
+      },
+      "sub": {
+        "connecting": "正在连接这台{os, select, pc {电脑} other { Mac }}上的引擎。",
+        "listeningTo": "正在聆听“{name}”。音符轨道马上出现。",
+        "idle": "在 Spotify{youtube, select, yes {、Apple Music 或 YouTube} other { 或 Apple Music}} 中播放。OnKey 会跟着听，每首歌都会留下一次可以回看的演唱记录。"
+      },
+      "openIn": "在 {app} 中打开",
+      "notNow": "暂时不用",
+      "keys": {
+        "playPause": "<kbd>空格</kbd> 播放 / 暂停",
+        "startOver": "<kbd>R</kbd> 从头播放",
+        "skip": "<kbd>←</kbd><kbd>→</kbd> 跳转",
+        "favourite": "<kbd>F</kbd> 收藏"
+      },
+      "songsToTry": "推荐歌曲",
+      "youtube": {
+        "title": "YouTube 和 YouTube Music <badge>实验性</badge>",
+        "turnOff": "关闭",
+        "turnOn": "开启",
+        "pcOn": "已开启。OnKey 根据浏览器告诉 {os} 的播放信息来跟随歌曲。",
+        "pcOff": "已关闭，所以浏览器里播放的歌不会被识别。开启后就能在 Chrome、Edge、Firefox、Brave、Opera 或 Vivaldi 里跟着唱。",
+        "macOn": "已开启。macOS 会询问一次是否允许 OnKey 控制浏览器，以便读取视频播放到哪里。",
+        "macOff": "已关闭，所以浏览器里播放的歌不会被识别。开启后就能在 Chrome、Safari、Brave 或 Edge 里跟着唱：macOS 会询问一次是否允许 OnKey 控制浏览器。"
+      }
+    },
+    "paused": {
+      "text": "已暂停聆听。继续后即可跟着唱。",
+      "resumeTitle": "继续聆听（⌘⇧P）",
+      "resume": "继续"
+    },
+    "rename": {
+      "saveFailed": "无法保存歌名。",
+      "buttonTitle": "歌名不对？修正歌手和歌名（用于查找歌词）",
+      "title": "修正歌名",
+      "about": "读取自 YouTube 视频。OnKey 按这个名字查找歌词。",
+      "artist": "歌手",
+      "songTitle": "歌名",
+      "cancel": "取消",
+      "save": "保存"
+    },
+    "notices": {
+      "dismiss": "关闭",
+      "openWindowsSettings": "打开 Windows 设置",
+      "openSystemSettings": "打开系统设置",
+      "mic": {
+        "title": "OnKey 听不到你的麦克风",
+        "deniedPc": "在它能听到之前，你的演唱不会被收录或评分。在<b>Windows 设置 → 隐私和安全性 → 麦克风</b>中，打开<b>麦克风访问</b>和<b>允许桌面应用访问你的麦克风</b>。",
+        "deniedMac": "在它能听到之前，你的演唱不会被收录或评分。在<b>系统设置 → 隐私与安全性 → 麦克风</b>中打开 OnKey。",
+        "restrictedPc": "这台电脑的设置不允许 OnKey 使用麦克风。请联系管理这台电脑的人。",
+        "restrictedMac": "这台 Mac 的设置不允许 OnKey 使用麦克风。请联系管理这台 Mac 的人。",
+        "noneMac": "没有连接麦克风，所以你的演唱不会被收录或评分。接上一个，或在<b>系统设置 → 声音 → 输入</b>中选择一个。",
+        "nonePc": "没有连接麦克风，所以你的演唱不会被收录或评分。接上一个，或在<b>{soundInput}</b>中选择一个。"
+      },
+      "musicQuiet": {
+        "title": "{app} 的音量太低",
+        "body": "OnKey 听不清这首歌{at, select, yes {（{app} 的音量是 {volume}%）} other {}}，所以不会给你的演唱评分。把 {app} 调大，改用{os, select, pc {电脑} other { Mac }}的音量来控制大小。"
+      },
+      "automation": {
+        "title": "OnKey 没有获准控制 {app}",
+        "body": "{listening, select, yes {OnKey 改为靠听来跟随它，因此无法在那里开始、暂停或跳过歌曲。} other {因此它无法知道那里在播放什么。}}在<b>系统设置 → 隐私与安全性 → 自动化 → OnKey</b> 中打开 {app}{listening, select, yes {，或者在 OnKey 的设置中把它关掉} other {}}。"
+      },
+      "notAnswering": {
+        "title": "{app} 没有回应 OnKey",
+        "body": "macOS 可能正在询问是否允许 OnKey 控制 {app}，而窗口被挡在其他窗口后面：找到它并选择<b>允许</b>。或者在<b>系统设置 → 隐私与安全性 → 自动化 → OnKey</b> 中打开 {app}。OnKey 一分钟后再试。"
+      },
+      "lyricsDown": {
+        "title": "歌词暂时不可用",
+        "body": "OnKey 使用的免费歌词服务 LRCLIB 目前无法访问。音符照常显示，如果它在歌曲播放期间恢复，歌词会接着加上。期间学会的歌，下次唱时会补上歌词。"
+      },
+      "models": {
+        "title": "OnKey 暂时无法学习新歌",
+        "body": "随应用自带的学习模型丢失或已损坏{hasError, select, yes {（{error}）} other {}}。已学会的歌仍然可以唱。要修复，请重新下载 OnKey 并{os, select, pc {覆盖安装} other {替换“应用程序”文件夹里的应用}}：你的歌曲和演唱记录会保留。"
+      },
+      "modelsBroken": {
+        "title": "OnKey 暂时听不到你的歌声",
+        "body": "随应用自带的音高模型无法加载{hasError, select, yes {（{error}）} other {}}。要修复，请重新下载 OnKey 并替换“应用程序”文件夹里的应用：你的歌曲和演唱记录会保留。"
+      },
+      "youtubeBlocked": {
+        "title": "要跟着 YouTube 唱，请允许 OnKey 在 {browser} 中读取视频",
+        "body": "在 {browser} 中选择<b>{setting}</b>。OnKey 只读取视频的进度和歌名，不读取页面上的其他任何内容。"
+      },
+      "youtubeOff": {
+        "title": "正在 {browser} 里播放 YouTube 或 YouTube Music？",
+        "turnOn": "开启 YouTube",
+        "pc": "只有开启 YouTube 后，OnKey 才会识别浏览器里的歌。之后它会跟随 {browser} 告诉 {os} 正在播放的歌，并像其他歌一样学习它。",
+        "mac": "只有开启 YouTube 后，OnKey 才会识别浏览器里的歌。之后 macOS 会询问一次是否允许 OnKey 控制 {browser}，以便读取视频播放到哪里。",
+        "cantFollow": "OnKey 无法跟随 {browser} 里的歌。请在 <b>Chrome、Safari、Brave 或 Edge</b> 中播放并开启 YouTube（在这里或在设置里），或者在设置里开启<b>聆听模式</b>，它在任何浏览器里都能用。"
+      }
+    },
+    "notASong": {
+      "text": "<hl>{name}</hl>听起来像说话，不像歌，所以 OnKey 停止了学习。",
+      "dismiss": "关闭",
+      "learnIt": "这是歌：下次播放时学习它"
+    },
+    "speakerHint": {
+      "text": "音乐声盖住了你，OnKey 听不到你。如果你在唱，把音乐调小一点或戴上耳机，评分才公平。",
+      "dismiss": "关闭",
+      "never": "不再显示"
+    },
+    "ended": {
+      "title": "这一场结束了",
+      "howYouDid": "看看你唱得怎么样。",
+      "noTakes": "这次没有足够长、可以评分的演唱。"
+    },
+    "permission": {
+      "yourApp": "你的音乐应用",
+      "title": "OnKey 还听不到 {app}",
+      "body": "为了跟随歌曲，OnKey 会聆听 Mac 上 {app} 的声音。声音不会被保存或发送；在聆听模式下，它的一小段指纹（而不是音频本身）会发给 Apple 的 Shazam 来识别歌名。",
+      "step1": "1. 打开<b>系统设置 → 隐私与安全性</b>",
+      "step2": "2. 选择<b>录屏与系统录音</b>",
+      "step3": "3. 在<b>仅系统录音</b>下打开 OnKey",
+      "open": "打开系统设置"
+    },
+    "mini": {
+      "playASong": "在 Spotify 或 Apple Music 中播放一首歌",
+      "score": "得分",
+      "hideDancer": "在这里隐藏小舞者",
+      "expand": "打开完整窗口（M）",
+      "showDancer": "显示小舞者",
+      "progress": "歌曲进度"
+    }
+  },
+  "live": {
+    "lyrics": {
+      "none": "这首歌没有同步歌词",
+      "off": "歌词已关闭（设置）",
+      "findingPlace": "正在找你的位置…",
+      "countdown": "♪ <num>{secs} 秒后{which, select, next {下一句} other {第一句}}</num>"
+    },
+    "score": {
+      "label": "得分",
+      "afterSong": "歌曲结束后",
+      "onPitch": "✓ 音准到位",
+      "higher": "▲ 唱高一点",
+      "lower": "▼ 唱低一点"
+    },
+    "transport": {
+      "restart": "从头播放这首歌（R）",
+      "previous": "上一首（←）",
+      "pause": "暂停（空格）",
+      "play": "播放（空格）",
+      "skipToSinging": "跳到开唱处（→）",
+      "next": "下一首（→）"
+    },
+    "take": {
+      "done": "{blind, select, yes {盲唱 · } other {}}{hasNotes, select, yes {{hit}/{total} 个音} other {查看}} →",
+      "couldntScore": "无法评分",
+      "singNow": "开始唱",
+      "learnedPct": "已学会 {pct}%",
+      "playThrough": "完整播放一遍",
+      "learningPct": "正在学习… {pct}%",
+      "waiting": "等待学习",
+      "learning": "正在学习…",
+      "scoring": "正在评分…",
+      "learned": "已学会 · 可以唱了"
+    },
+    "timing": {
+      "title": "用这个设备时歌词偏早或偏晚？跟着节拍声敲击，测一下它的延迟",
+      "check": "检测<hl>{name}</hl>的延迟 ›",
+      "theseHeadphones": "这副耳机",
+      "dismiss": "不再建议"
+    },
+    "chips": {
+      "connectionTitle": "与引擎的连接",
+      "reconnecting": "正在重新连接",
+      "resumeTitle": "继续聆听（⌘⇧P）",
+      "paused": "已暂停聆听",
+      "pauseTitle": "暂停聆听（⌘⇧P）",
+      "live": "实时",
+      "outputTitle": "声音通过 {device} 播放。你听到它比音乐应用播放它晚 {ms} 毫秒；评分已把这一点算进去{checked, select, yes {（来自你在设置里做的延迟检测）} other {}}。",
+      "thisDevice": "这个设备",
+      "bluetooth": "蓝牙",
+      "headphones": "耳机或扬声器",
+      "micTitle": "OnKey 正在聆听的麦克风（在设置里可以换一个）",
+      "noMic": "没有麦克风"
+    },
+    "switches": {
+      "blindTitle": "隐藏音符来考考自己：盲唱（B）",
+      "showNotes": "显示音符",
+      "echoTitle": "从麦克风中去掉音乐的声音。关闭后可以测试歌曲直接从扬声器播放的效果。",
+      "echo": "回声消除",
+      "dancerTitle": "一个随歌起舞的小人，陪你一起唱",
+      "dancer": "小舞者"
+    },
+    "finish": {
+      "lastLine": "这是最后一句了",
+      "seeScore": "结束并查看得分",
+      "now": "现在结束",
+      "paused": "已暂停",
+      "pausedIn": "{time} 后{learning, select, yes {学完} other {评分}}",
+      "learning": "正在学习…",
+      "scoring": "正在评分…"
+    },
+    "openTake": {
+      "countdown": "已暂停 · {time} 后{learning, select, yes {学完} other {评分}}",
+      "learning": "正在学习…",
+      "scoring": "正在评分…",
+      "state": "{state, select, paused {已暂停} learning {边播边学} other {正在唱}} · 结束时{learning, select, yes {学完} other {评分}}",
+      "paused": "已暂停",
+      "now": "现在",
+      "finish": "现在结束"
+    },
+    "skip": {
+      "singingIn": "{secs} 秒后开唱",
+      "skipAhead": "直接跳过"
+    },
+    "pitchTitle": "你的音高相对于当前音符",
+    "toast": {
+      "view": "查看",
+      "learned": "已学会 · 下次就有音符"
+    }
+  },
+  "lane": {
+    "verdict": {
+      "perfect": "完美",
+      "excellent": "出色",
+      "great": "很棒",
+      "good": "不错",
+      "ok": "还行"
+    },
+    "blind": "盲唱 · 音符已隐藏 · 按 B 显示",
+    "findingPlace": "正在找你在歌里的位置…",
+    "liningUp": "正在和歌曲对齐…",
+    "singingStarts": "{secs} 秒后开唱"
+  },
+  "take": {
+    "allTakes": "← 全部演唱",
+    "notFound": "找不到这次演唱。",
+    "header": {
+      "singAgainBlocked": "学会之后就可以唱",
+      "singAgain": "再唱一次",
+      "shareTitle": "一段 20 秒的视频，有你的声音和音符，可发到 Instagram",
+      "share": "分享",
+      "within50Title": "你 {pct}% 的演唱与原唱相差在 50 音分以内。",
+      "sungLevelTitle": "根据保存下来的演唱，按设置里选的难度重新评分",
+      "sungLevel": "按{level}显示。当时按{sungLevel}唱，得了 {score} 分。",
+      "leftOut": "评分时已排除{count, plural, other {标为非主旋律的部分}}{changed, select, yes {（原本是 {first}）} other {}}。"
+    },
+    "mode": {
+      "firstPlay": "首次播放",
+      "firstPlayWhy": "这首歌第一次播放：OnKey 学习了它的旋律，没有显示音符",
+      "blind": "盲唱",
+      "blindWhy": "没有显示音符的演唱"
+    },
+    "story": {
+      "none": "你没有跟着主唱的部分唱，所以没有可评分的内容。",
+      "main": "你唱了主唱部分的 <n>{sang}%</n>，唱出来的部分有 <n>{tune}%</n> 在音上。{full, select, yes {这就是你的得分。} other {唱够主唱部分的 40% 以后，得分才会完整计入。}}"
+    },
+    "verdict": {
+      "great": "音准漂亮。",
+      "mostly": "大部分在音上，有几处晃动。",
+      "often": "经常接近音准，偶尔跑偏。",
+      "away": "有几处旋律没跟上。",
+      "bias": "平均来说你{off}。",
+      "worstLine": "值得再试一次：“{text}”。",
+      "worstAt": "值得再试一次：{time} 处的那一句。"
+    },
+    "proud": {
+      "share": "分享这次演唱",
+      "notNow": "暂时不用"
+    },
+    "player": {
+      "notKept": "这次演唱的录音已不再保留：OnKey 保留每次演唱的录音，直到总共超过 2 GB，然后放掉最早的（收藏的歌和每首歌的最佳演唱除外）。分数会一直保留。",
+      "stop": "停止",
+      "play": "播放",
+      "playWithSong": "和歌曲一起播放你的录音",
+      "playVoice": "播放你的录音",
+      "whatPlays": "播放内容",
+      "withSong": "和歌曲一起",
+      "voiceOnly": "只有你的声音",
+      "backToStart": "回到开头",
+      "lining": "正在和歌曲对齐…",
+      "voiceTitle": "你的声音相对于歌曲的音量",
+      "yourVoice": "你的声音",
+      "voiceNormal": "正常",
+      "voiceDb": "{db} dB",
+      "aboutJoin": "OnKey 保留的是你的声音，不是音乐。“和歌曲一起”会在你用 {app} 播放“{song}”时，同步播放你的录音。麦克风的延迟（{ms} 毫秒）已自动补偿。",
+      "aboutPlay": "OnKey 保留的是你的声音，不是音乐。“和歌曲一起”会在 {app} 中播放这首歌，并同时播放你的录音。麦克风的延迟（{ms} 毫秒）已自动补偿。"
+    },
+    "join": {
+      "play": "在 {app} 中播放“{song}”，OnKey 会跟着加入。",
+      "playFromStart": "在 {app} 中从头播放“{song}”，OnKey 会跟着加入。",
+      "goTo": "在 {app} 中跳到 {time}，就是这一段。",
+      "letStart": "让 OnKey 帮你开始"
+    },
+    "graph": {
+      "singer": "原唱的音",
+      "within50": "你，50¢ 以内",
+      "within100": "100¢ 以内",
+      "further": "偏得更远",
+      "heldTitle": "你在至少一半时长内保持在半音以内的音。它们的条会亮成绿色。",
+      "held": "{total} 个音中唱稳了 <n>{hit}</n> 个",
+      "biasTitle": "你的音高相对于原唱平均落在哪里",
+      "centred": "平均居中",
+      "bias": "平均{off}",
+      "notMelody": "非主旋律"
+    },
+    "notMelody": {
+      "buttonTitle": "排除音符跟着和声或伴唱、而不是主旋律的一段",
+      "button": "不是主旋律？",
+      "span": "{from} 到 {to}",
+      "saving": "正在重新评分…",
+      "leaveOut": "从评分中排除",
+      "drag": "拖选音符跟着伴唱或和声、而不是主旋律的那一段。",
+      "cancel": "取消",
+      "note": "这首歌每次演唱的评分都会排除它，下次唱时也一样。",
+      "leftOut": "已从评分中排除，非主旋律：",
+      "putBack": "恢复",
+      "notLearned": "这首歌还没学会，所以没有排除任何内容。",
+      "noChange": "没有演唱的分数发生变化。",
+      "rescored": "这首歌的 {count, plural, other {{count} 次演唱}}已重新评分。"
+    },
+    "report": "报告这次演唱的问题",
+    "lines": {
+      "title": "逐句分析",
+      "lyricsOff": "歌词已关闭（设置），所以这次演唱没有逐句分析。",
+      "none": "没有找到这首歌的同步歌词。",
+      "playFrom": "从 {time} 播放",
+      "line": "第 {n} 句",
+      "noLead": "没有主唱",
+      "notSung": "没有唱"
+    }
+  },
+  "share": {
+    "saved": "已保存到“下载”。在 Instagram 中添加“{song}”，从 {at} 开始（已复制）。",
+    "failed": "无法生成视频：{error}",
+    "clip": "<b>{at}–{to}</b><dim> · {notes} 个音中唱准 {hits} 个</dim>",
+    "cantShare": "这次演唱无法分享",
+    "finding": "正在找片段…",
+    "which": "选哪 20 秒",
+    "fromPlayhead": "从播放头开始",
+    "best": "最精彩的一段",
+    "playIt": "播放",
+    "making": "正在生成视频…",
+    "make": "生成视频",
+    "close": "关闭",
+    "noBest": "这次演唱没有唱准的音，所以没有最精彩的一段：从播放头开始。",
+    "about": "你录下的声音、音符和得分，没有加入音乐。请在 Instagram 里从它自己的音乐库添加这首歌，从显示的时间开始。用扬声器放着歌唱的？那录音里会混进一些音乐：戴耳机唱的最适合分享。<why>{open, select, yes {隐藏} other {为什么要耳机？}}</why>请不要发布带有音乐的屏幕录像。"
+  },
+  "challenge": {
+    "button": "挑战好友",
+    "says": "一个链接，告诉对方你在“{song}”上得了 <b>{score}</b> 分，并请他们来超越。",
+    "nameLabel": "你的名字（可选）",
+    "namePlaceholder": "留空则匿名",
+    "copied": "已复制：发给好友吧",
+    "failed": "无法复制",
+    "copy": "复制链接",
+    "holds": "它只包含歌名、歌手和你的得分。没有录音、音符或歌词。",
+    "holdsNamed": "它只包含歌名、歌手、你的得分和你的名字。没有录音、音符或歌词。"
+  },
+  "voiceRange": {
+    "title": "你的音域",
+    "working": "正在根据你的演唱计算…",
+    "empty": "唱几首歌，OnKey 就会在这里显示你的音域。",
+    "from": "来自 {count, plural, other {{count} 次演唱}}",
+    "fromPending": "来自 {count, plural, other {{count} 次演唱}}；还有 {pending} 次更早的仍在测量",
+    "summary": "<range>{low}–{high}</range><dim>，最舒服的区间约在 </dim><mid>{midLo}–{midHi}</mid>",
+    "aria": "你的音域从 {low} 到 {high}，最舒服的是 {midLo} 到 {midHi}",
+    "note": "你唱得最多的音，来自你的演唱（去掉了最低和最高的 5%）。唱的歌越多，它越完整。"
+  },
+  "voiceBreak": {
+    "text": "你已经唱了 {minutes} 分钟。让嗓子休息几分钟，喝点水。",
+    "dismiss": "关闭",
+    "ok": "好"
+  },
+  "takeTags": {
+    "firstPlay": "首次播放",
+    "blind": "盲唱"
+  },
+  "timingCheck": {
+    "macOs": "macOS",
+    "title": "你的输出",
+    "experimental": "实验性",
+    "checkOn": "检测 {name} 的延迟",
+    "thisOutput": "这个输出",
+    "thisOutputCap": "这个输出",
+    "checked": "你已检测：OnKey 按 {heard} 毫秒计算音乐传到你耳朵的时间（{os} 报告的是 {reported} 毫秒）。",
+    "unchecked": "OnKey 按 {os} 报告的 {reported} 毫秒计算音乐传到你耳朵的时间。蓝牙耳机常常比 {os} 报告的更慢，这会让歌词和音符显得偏早。跟着节拍声敲击来测量（两次：两次结果要一致）。",
+    "how": "跟着节奏敲，就像跟着节拍拍手。不要等听到每一声再敲：跟着它们保持节奏。",
+    "pauseFirst": "请先暂停音乐。",
+    "reset": "重置",
+    "checkAgain": "再测一次",
+    "redo": "重做",
+    "check": "检测延迟",
+    "tapAria": "跟着每一声敲击",
+    "tapTitle": "跟着节拍声按空格（或点这里），保持节奏",
+    "keepTime": "跟到最后，靠听而不是靠看。按 Esc 停止。",
+    "cancel": "取消",
+    "cantPlay": "检测无法播放节拍声（{error}）。",
+    "said": {
+      "confirmBefore": "这次测出 {measured} 毫秒，和上一次（{before} 毫秒）不一致。再来一次确认。",
+      "confirm": "你听到声音比它播放时晚 {measured} 毫秒（{os} 报告的是 {reported} 毫秒）。再来一次确认。",
+      "onTime": "{name}{plural, select, yes {} other {}} 时间正好：与 OnKey 原先的估计相差不到 {ms} 毫秒。",
+      "behind": "{name}{plural, select, yes {} other {}} 比 OnKey 原先的估计晚 {ms} 毫秒；已调整。",
+      "ahead": "{name}{plural, select, yes {} other {}} 比 OnKey 原先的估计早 {ms} 毫秒；已调整。"
+    }
+  },
+  "setup": {
+    "dialogLabel": "设置 OnKey",
+    "stepsLabel": "设置步骤",
+    "welcome": {
+      "title": "欢迎使用 OnKey",
+      "lead": "用你平时听的音乐，学会唱你喜欢的歌。",
+      "play": "像平常一样，在音乐应用里播放一首歌。OnKey 聆听{os, select, mac { Mac } other {电脑}}上播放的音乐，自己跟上。",
+      "learn": "一首歌第一次播放时，OnKey 学习原唱的旋律。之后你就能看到每个音迎面而来，以及自己哪里偏高、哪里偏低。",
+      "privacyPc": "OnKey 绝不保存它听到的音乐。你的演唱录音留在这台电脑上，供你回听。歌名也在这台电脑上识别，根据音乐应用报告的播放内容：识别歌名不会发送任何东西。",
+      "privacyMac": "OnKey 绝不保存它听到的音乐。你的演唱录音留在这台 Mac 上，供你回听。要识别一首新歌，聆听模式会把音乐应用声音的一小段指纹（而不是音频本身）发给 Apple 的 Shazam。",
+      "entitled": "OnKey 供你在家用有权播放的音乐练习。它学到的旋律仅供你自己练习，请不要外传。",
+      "macosOld": "OnKey 需要 macOS 14.2 或更高版本才能听到其他应用。请在“系统设置 → 通用 → 软件更新”中更新 macOS。",
+      "later": "稍后设置",
+      "start": "开始"
+    },
+    "permissions": {
+      "title": "两项权限",
+      "sub": "macOS 对每项询问一次。以后可以在“系统设置 → 隐私与安全性”中更改。",
+      "mic": {
+        "title": "麦克风",
+        "why": "用来听你唱。",
+        "hint": "在“麦克风”下打开 OnKey。"
+      },
+      "audio": {
+        "title": "系统录音",
+        "why": "用来听 Mac 上播放的音乐，让 OnKey 学习旋律。OnKey 绝不保存或发送音乐；为了识别不认识的歌，它的一小段指纹（而不是音频本身）可能会发给 Apple 的 Shazam。",
+        "hint": "打开“录屏与系统录音”，在“仅系统录音”下打开 OnKey。"
+      },
+      "reopen": "如果你允许某项后 macOS 要求退出并重新打开 OnKey，照做就行。设置会从中断处继续。",
+      "skip": "暂时跳过",
+      "continue": "继续",
+      "allowed": "已允许",
+      "openSettings": "打开系统设置",
+      "asking": "正在询问…",
+      "allow": "允许",
+      "restricted": "这台 Mac 的设置不允许此操作。请联系管理它的人。"
+    },
+    "musicApps": {
+      "title": "允许 OnKey 跟随 Spotify 和 Apple Music",
+      "recommended": "推荐",
+      "why": "这样从第一秒起歌词和音符就在正确的位置，OnKey 也能帮你播放和重播歌曲。",
+      "scope": "它可以读取正在播放什么、播到哪里，并能播放、暂停和跳转。仅此而已。macOS 会为每个应用询问一次。",
+      "waitingMac": "正在等待 macOS。如果它在询问 Spotify 或 Apple Music 的事（询问窗口可能开在这个窗口后面），请回答它。没有询问？继续就好：你第一次在那里播放歌曲时 macOS 会问。",
+      "noAnswer": "macOS 还没有收到回答。如果它的询问正在显示，请回答；否则你第一次在那里播放歌曲时它会问。",
+      "listenOnly": "只聆听",
+      "continue": "继续",
+      "carryOn": "继续",
+      "asking": "正在询问…",
+      "allow": "允许",
+      "appSpotify": "Spotify",
+      "appAppleMusic": "Apple Music",
+      "state": {
+        "allowed": "已允许",
+        "notAllowed": "未允许",
+        "notRunning": "你第一次在里面播放歌曲时 macOS 会询问",
+        "waiting": "尚未回答",
+        "ask": "尚未询问"
+      },
+      "openSettings": "打开系统设置"
+    },
+    "micCheck": {
+      "title": "OnKey 能听到你吗？",
+      "micOffPc": "Windows 已对应用关闭了麦克风。在<b>Windows 设置 → 隐私和安全性 → 麦克风</b>中，打开<b>麦克风访问</b>和<b>允许桌面应用访问你的麦克风</b>。",
+      "micFirst": "OnKey 需要先获得麦克风权限：返回去允许它。",
+      "noMicDevice": "没有连接麦克风。接上一个，或在{soundInput}中选择一个。",
+      "macSoundInput": "“系统设置 → 声音 → 输入”",
+      "say": "说点什么，或者唱一个音。",
+      "device": "正在聆听 {device}。可以在设置里换一个。",
+      "meterLabel": "麦克风电平",
+      "heard": "听到你了",
+      "listening": "正在聆听…",
+      "notAllowed": "未允许",
+      "starting": "正在启动…",
+      "noMic": "没有麦克风",
+      "headphones": "戴耳机评分最稳定。笔记本的扬声器也可以：OnKey 会把音乐从麦克风听到的声音中去掉。",
+      "skip": "跳过",
+      "continue": "继续",
+      "openSettings": "打开 {settings}",
+      "back": "返回权限"
+    },
+    "ready": {
+      "title": "准备好了",
+      "lead": "在音乐应用里播放一首歌，开始唱。每首歌第一次播放时，OnKey 学习它的旋律。",
+      "tipsLabel": "学习是怎么进行的",
+      "tip": {
+        "toEnd": "把歌完整播放一遍。如果 OnKey 只听到一部分，下次播放时它会学完剩下的。",
+        "talk": "随便说话或跟着唱都可以。OnKey 从音乐应用的声音学习，不是从你的麦克风。",
+        "volumePc": "音乐应用自己的音量保持在四分之一或以上。",
+        "learnPc": "歌曲结束后，学习会在这台电脑上进行几分钟。期间请继续聆听。",
+        "volumeMac": "音乐应用自己的音量保持在四分之一或以上。Mac 的音量随意，关掉也行。",
+        "learnMac": "歌曲结束后，学习会在 Mac 上进行一两分钟，8 GB 内存的 Mac 要更久。期间请继续聆听。"
+      },
+      "quickest": "<b>最快的上手方式：</b>播放 OnKey 入门歌单，让它放半个小时。",
+      "openPlaylist": "在 {app} 中打开歌单",
+      "playIn": "在 {app} 中播放",
+      "comfortable": "用舒服的音量唱：OnKey 评的是音准，不是音量。嗓子累了就休息，喉咙疼就停下。",
+      "start": "开始唱歌"
+    }
+  },
+  "controlPrompt": {
+    "titleAllow": "允许 OnKey 控制 {app}？",
+    "titleCant": "OnKey 无法控制 {app}",
+    "bodyAllow": "OnKey 正在聆听 {app}，而不是控制它。要从 OnKey 开始歌曲、跳到开唱处和暂停，需要你的许可。{os, select, mac { macOS 也会再问你一次。} other {}}",
+    "bodyCant": "OnKey 只靠聆听来跟随 {app}。请在那里播放、暂停和跳过。",
+    "browserPc": "之后 OnKey 就能跟随浏览器里的歌，并在那里播放、暂停和跳转。",
+    "browserMac": "这是更大的权限：之后 OnKey 可以读取并控制浏览器里的 YouTube 标签页，并聆听浏览器的全部声音（包括通话）：它不认识的声音可能会以一小段指纹发给 Shazam，绝不是音频本身。浏览器还需要打开“允许来自 Apple 事件的 JavaScript”。",
+    "notNow": "暂时不用",
+    "yourBrowser": "浏览器",
+    "openIn": "在 {app} 中打开",
+    "allow": "允许控制",
+    "changeLater": "随时可以在设置里更改。"
+  },
+  "starters": {
+    "label": "推荐歌曲",
+    "heading": "试试这些<dim> · OnKey 跟得很好的歌</dim>",
+    "hide": "隐藏推荐",
+    "close": "关闭",
+    "earlier": "之前的歌",
+    "more": "更多歌曲",
+    "why": {
+      "en": {
+        "standByMe": "简单：旋律平稳、简洁",
+        "wonderwall": "人人都会跟着唱的歌",
+        "fastCar": "低而平稳，容易跟",
+        "youngAndBeautiful": "长音多，练稳定",
+        "someoneYouLoved": "主歌轻柔，副歌宏大",
+        "someoneLikeYou": "一个清晰的人声，副歌往上走",
+        "hallelujah": "慢而富有表现力：很适合练音准",
+        "iWillAlwaysLoveYou": "挑战：音域极宽"
+      },
+      "es": {
+        "laCamisaNegra": "简单：音域窄、旋律上口",
+        "meVoy": "轻快平稳，容易跟",
+        "deMusicaLigera": "人人都会跟着唱的摇滚",
+        "comoLaFlor": "甜美摇曳的经典",
+        "rayandoElSol": "主歌轻柔，副歌宏大",
+        "rosas": "一个清晰的人声，副歌往上走",
+        "hijoDeLaLuna": "慢而幽远：很适合练音准",
+        "volverVolver": "挑战：牧歌式的大高音"
+      },
+      "pt": {
+        "comoUmaOnda": "简单：旋律平稳、简洁",
+        "velhaInfancia": "柔和甜美，容易跟",
+        "gostavaTantoDeVoce": "灵魂乐经典，人人都唱的副歌",
+        "tempoPerdido": "人人都知道的摇滚颂歌",
+        "comoEuQuero": "轻盈的流行，旋律清晰",
+        "infiel": "乡村伤情歌，天生适合合唱",
+        "amarPelosDois": "慢而温柔：很适合练音准",
+        "oceano": "挑战：绵长曲折的旋律"
+      },
+      "it": {
+        "azzurro": "简单：旋律平稳、简洁",
+        "lItaliano": "人人都会跟着唱的歌",
+        "saraPercheTiAmo": "欢快有趣，适合一群人唱",
+        "albachiara": "低而平稳，容易跟",
+        "laSolitudine": "一个清晰的人声，副歌往上走",
+        "emozioni": "慢而富有表现力：很适合练音准",
+        "grandeGrandeGrande": "从轻柔渐强到宏大",
+        "caruso": "挑战：高扬的歌剧式副歌"
+      },
+      "fr": {
+        "lesChampsElysees": "简单：旋律平稳、简洁",
+        "jeLAimeAMourir": "轻柔低沉，容易跟",
+        "laVieEnRose": "人人都知道的经典",
+        "avenir": "轻盈的流行，清晰上口",
+        "jeVeux": "明亮摇摆，唱起来有趣",
+        "derniereDanse": "长音多，练稳定",
+        "laBoheme": "慢而富有表现力：很适合练音准",
+        "pourQueTuMAimesEncore": "挑战：逐步推向大高音"
+      },
+      "de": {
+        "uberDenWolken": "简单：平稳的民谣旋律",
+        "n99Luftballons": "人人都会跟着唱的歌",
+        "perfekteWelle": "主歌平稳，副歌宏大",
+        "atemlosDurchDieNacht": "欢快的流行舞曲，天生适合合唱",
+        "griechischerWein": "每一代人都知道的经典",
+        "dasBeste": "一个清晰的人声，副歌往上走",
+        "aufUns": "开阔宏大的副歌，放声唱",
+        "derWeg": "挑战：慢、质朴、富有表现力"
+      }
+    },
+    "in": "在",
+    "appSpotify": "Spotify",
+    "appAppleMusic": "Apple Music",
+    "searchIn": "在 {app} 中搜索",
+    "openItInAppleMusic": "在 Apple Music 中打开",
+    "openInAppleMusic": "在 Apple Music 中打开",
+    "openSongInAppleMusic": "在 Apple Music 中打开 {artist} 的“{title}”",
+    "playlist": {
+      "title": "播放 OnKey 入门歌单",
+      "sub": "这些歌和更多，从简单到有挑战：按下播放，开口唱",
+      "orAppleMusic": "或 Apple Music",
+      "openInAppleMusic": "在 Apple Music 中打开歌单",
+      "open": "在 {app} 中打开歌单",
+      "playIn": "在 {app} 中播放"
+    }
+  },
+  "demo": {
+    "title": "现在就试：唱一首示例歌",
+    "starting": "正在启动…",
+    "tryIt": "现在就试",
+    "about": "一首示例歌，让你看看 OnKey 是怎么工作的。你自己的歌需要先播放一遍来学习。"
+  },
+  "guides": {
+    "systemAudio": {
+      "summary": "如何在 Mac 上允许 OnKey 录制系统音频。在“系统设置”中打开“隐私与安全性”，选择“录屏与系统录音”，在“仅系统录音”下打开 OnKey。如果 macOS 询问，选择“退出并重新打开”。OnKey 重新打开后，系统录音已勾上，设置继续进行。",
+      "step": {
+        "openPrivacy": "打开“隐私与安全性”",
+        "screenRecording": "录屏与系统录音",
+        "turnOn": "在“仅系统录音”下打开 OnKey",
+        "quitReopen": "如果 macOS 询问，退出并重新打开。设置会继续"
+      },
+      "dots": "步骤",
+      "stepOf": "第 {step} 步，共 {count} 步：{caption}",
+      "mock": {
+        "privacySecurity": "隐私与安全性",
+        "screenRecording": "录屏与系统录音",
+        "audioOnly": "仅系统录音",
+        "appName": "OnKey",
+        "quitReopenQuestion": "退出并重新打开？",
+        "later": "以后",
+        "quitReopen": "退出并重新打开",
+        "setup": "设置",
+        "systemAudioRow": "系统录音"
+      }
+    },
+    "musicApps": {
+      "caption": {
+        "ask": "macOS 为每个应用询问一次",
+        "allow": "选择“允许”",
+        "done": "之后它就能跟随正在播放的歌",
+        "behind": "询问窗口可能开在这个窗口后面：找一找"
+      },
+      "labelOne": "动画：macOS 弹出询问，是否允许 OnKey 控制 {app}。指针选择“允许”，询问关闭，该应用在 OnKey 窗口中打上对勾。最后，询问窗口半掩在 OnKey 窗口后面，并提醒去那里找它。",
+      "labelTwo": "动画：macOS 弹出询问，是否允许 OnKey 控制 {first}，然后是 {second}。指针选择“允许”，询问关闭，该应用在 OnKey 窗口中打上对勾。最后，询问窗口半掩在 OnKey 窗口后面，并提醒去那里找它。",
+      "app": {
+        "spotify": "Spotify",
+        "appleMusic": "Apple Music"
+      },
+      "asked": {
+        "spotify": "Spotify",
+        "appleMusic": "音乐"
+      },
+      "alert": {
+        "wantsAccess": "“OnKey”想要",
+        "control": "控制“{app}”",
+        "allowing": "允许控制将可访问“{app}”中的文稿和数据。",
+        "dontAllow": "不允许",
+        "allow": "允许"
+      },
+      "window": {
+        "title": "OnKey",
+        "note": "A4",
+        "musicApps": "音乐应用"
+      },
+      "menuBar": {
+        "appName": "OnKey"
+      },
+      "dots": "步骤",
+      "stepOf": "第 {step} 步，共 {count} 步：{caption}",
+      "stepOfApp": "第 {step} 步，共 {count} 步：{caption}（{app}）"
+    },
+    "stillSteps": {
+      "dots": "步骤",
+      "stepOf": "第 {step} 步，共 {count} 步",
+      "again": "再看一遍",
+      "next": "下一步"
+    },
+    "learnSong": {
+      "steps": {
+        "s0": "把一首歌完整播放一遍",
+        "s1": "OnKey 从音乐中学习旋律，不是从你的麦克风",
+        "s2": "结束后一两分钟",
+        "s3": "下次就能看着音符唱"
+      },
+      "summary": "OnKey 学习一首歌。一首歌在音乐播放器中完整播放一遍，声波流入 OnKey，它的旋律被画成音符条。结束后一两分钟，“正在学习”的圆环变成绿色对勾：已学会。下次播放这首歌时，音符滚动而过，原唱的绿色音高线骑在上面，歌词在下方。",
+      "learning": "正在学习…",
+      "learned": "已学会",
+      "appName": "OnKey",
+      "melody": "旋律",
+      "you": "你",
+      "lyric": {
+        "w0": "让",
+        "w1": "这",
+        "w2": "光",
+        "w3": "再",
+        "w4": "亮",
+        "w5": "一",
+        "w6": "会",
+        "w7": "儿",
+        "w8": "陪",
+        "w9": "着",
+        "w10": "夜"
+      },
+      "stepsGroup": "动画步骤",
+      "stepLabel": "第 {n} 步，共 {count} 步：{caption}"
+    },
+    "leaveOut": {
+      "steps": {
+        "s0": "音符跟着伴唱走了？",
+        "s1": "拖选那一段",
+        "s2": "这首歌每次演唱的评分都会排除它"
+      },
+      "ariaLabel": "动画：一首歌某次演唱的音高图。紫色条是评分期望的音，一条线是演唱者唱出的音，吻合处为绿色。有一段紫色条突然跳高，跟着伴唱走，而演唱者仍在主旋律上，线变成琥珀色。光标拖过那一段选中它，并点击“从评分中排除”。那一段变成灰色条纹，得分从 {before} 升到 {after}，这首歌的每次演唱都排除同一段。",
+      "score": "得分",
+      "take": "第 {n} 次演唱",
+      "leftOut": "已排除",
+      "leaveOutButton": "从评分中排除",
+      "stepsGroup": "动画步骤",
+      "stepLabel": "第 {n} 步：{caption}"
+    },
+    "speakers": {
+      "steps": {
+        "s0": "用扬声器时，歌声会混进你的录音",
+        "s1": "戴耳机时，录下的只有你的声音"
+      },
+      "label": "两个短场景。用笔记本扬声器时，伴奏的歌声漏出来，卷进麦克风，录音里你的声音和音乐混在一起。戴耳机时，音乐留在你耳朵里，录音里只有你的声音。",
+      "rec": "录",
+      "voice": "声音",
+      "song": "歌曲",
+      "stepsGroup": "步骤",
+      "stepLabel": "第 {n} 步，共 {count} 步：{caption}"
+    },
+    "fadeDemo": {
+      "captions": {
+        "c0": "当你把一首歌唱得不错之后",
+        "c1": "唱在音上时，你的线会淡去",
+        "c2": "偏离了，就照常显示",
+        "c3": "任何一次演唱都可以调回完整提示"
+      },
+      "take": "第 {n} 次演唱",
+      "ariaLabel": "同一首歌的四次演唱，以音符轨道显示：第 1、3、5、8 次。每次演唱中紫色的音符都相同。你的绿色音高线在第 1 次很亮，之后每次在音上时都更淡；第 5 次中它有一瞬间偏离超过半音，那一段完整显示为红色。“完整提示”开关会让整条线回来。",
+      "fullGuide": "完整提示",
+      "stepsGroup": "动画步骤",
+      "stepLabel": "第 {n} 步，共 {count} 步：{caption}"
+    }
+  },
+  "guideFade": {
+    "title": "你唱在音上时，音高线会淡去（{amount, select, little {略微} more {更多} other {完全}}），偏离超过半音时才显示。可在设置里关闭。",
+    "note": "提示已淡去：这首你很熟",
+    "showFull": "显示完整提示"
+  },
+  "update": {
+    "failed": {
+      "text": "无法更新到 OnKey {version}",
+      "why": "原因：{error}。设置 → 立即检查，可以再试。",
+      "again": "设置 → 立即检查，可以再试。"
+    },
+    "official": {
+      "text": "原项目已发布 OnKey {version}",
+      "why": "这个 OnKey 是从源码构建的，不会自动更新。",
+      "download": "下载"
+    },
+    "ready": {
+      "why": "OnKey {version} 已准备好。如果现在不重新启动，会在你退出时安装。",
+      "waiting": "这首歌结束后更新…",
+      "available": "有可用更新",
+      "restart": "重新启动以更新",
+      "later": "稍后",
+      "laterWhy": "稍后（在你退出时安装）"
+    },
+    "hide": "隐藏"
+  },
+  "report": {
+    "title": "报告问题",
+    "titleTake": "报告这次演唱的问题",
+    "savedPc": "已保存到{folder}，文件名 <file>{name}</file>，并在{files}中显示。把这一个文件附到消息（或 GitHub issue）里。没有向任何地方发送任何东西。",
+    "savedMac": "已保存到 <file>{path}</file>。要发送，请在 GitHub 上开一个 issue 并附上这个 zip（拖进输入框）。没有向任何地方发送任何东西。",
+    "showInPc": "在{files}中显示",
+    "showInFinder": "在访达中显示",
+    "openIssue": "开一个 GitHub issue",
+    "done": "完成",
+    "introPc": "OnKey 把它的记录打包成桌面上的一个 zip，供你附到消息里：最近三天的日志、每次播放的摘要，以及这台电脑、它的声音设备和跟随过的音乐应用的摘要。没有歌词、音频、歌曲文件，也没有用户名或个人文件夹。不会上传任何东西。",
+    "introMac": "OnKey 把它的记录打包成一个 zip，供你保存并附到问题报告里：最近三天的日志和每次播放的摘要（时间、CPU、哪个版本、哪台 Mac）。没有歌词、音频、歌曲文件，也没有用户名或个人文件夹。不会上传任何东西。",
+    "askLabel": "出了什么问题？<muted>（可选）</muted>",
+    "placeholder": "例如：Bad Day 的歌词晚了，或者卡在“正在启动 OnKey”",
+    "preparing": "正在打包…",
+    "inZip": "zip 内容（{count} 个文件，{size}）：",
+    "logs": "OnKey {count, plural, other {{count} 天}}的日志（{size}）",
+    "size": {
+      "b": "{n} B",
+      "kb": "{n} KB",
+      "mb": "{n} MB"
+    },
+    "showFiles": "显示文件",
+    "cancel": "取消",
+    "saveMac": "保存…",
+    "savePc": "保存到桌面"
+  },
+  "nav": {
+    "appName": "OnKey",
+    "songsToTry": "推荐歌曲",
+    "sing": "唱歌",
+    "library": "资料库",
+    "history": "历史记录",
+    "settings": "设置",
+    "paused": "已暂停聆听",
+    "resume": "继续",
+    "resumeWhy": "继续聆听（⌘⇧P）",
+    "whatsNew": "OnKey 的新功能",
+    "whatsNewFresh": "OnKey 的新功能（有更新）",
+    "testBuild": "测试版",
+    "testBuildTitle": "OnKey 的 Windows / Linux 测试版：新版本发布后直接覆盖安装"
+  },
+  "licences": {
+    "back": "← 设置",
+    "title": "开源许可证",
+    "intro": "OnKey 是免费的开源软件，采用 MIT 许可证。它构建于以下模型、数据、字体和库之上。",
+    "error": "无法打开声明文件：{error}",
+    "missing": "声明在源码旁的 THIRD_PARTY_NOTICES.md 中。"
+  },
+  "fairUse": {
+    "back": "← 设置",
+    "title": "合理使用 OnKey",
+    "intro": "OnKey 供你在家用有权播放的音乐练习。请：",
+    "keep": {
+      "title": "把它学到的内容留给自己。",
+      "body": "它对每首歌旋律的转录仅供你练习，请不要分享或发布。欢迎分享 OnKey 本身。"
+    },
+    "share": {
+      "title": "要分享一次演唱，用它页面上的“分享”。",
+      "body": "它会生成一段只有你的声音和音高线、没有音乐的短视频，你可以在 Instagram 里从它自己有授权的音乐库添加这首歌。戴耳机唱的最合适：用扬声器唱时，录音里会混进一些歌曲。请不要发布带有音乐的屏幕录像。"
+    },
+    "venue": {
+      "title": "酒吧或活动请使用有授权的卡拉 OK 服务。",
+      "body": "OnKey 的歌词来自一个免费的社区数据库。"
+    },
+    "modify": {
+      "title": "不要修改 OnKey 来保存音乐。"
+    },
+    "contact": "OnKey 绝不保存它听到的音乐。版权方可通过 <email>hello@singonkey.app</email> 联系我。"
+  },
+  "library": {
+    "title": "资料库",
+    "intro": "OnKey 已学会的歌。选一首，看着前方的每个音符唱。",
+    "search": "搜索歌曲",
+    "empty": {
+      "title": "还没学会任何歌",
+      "body": "OnKey 打开时把一首歌完整播放一遍，它就会学习旋律。整个歌单也可以：让它播就行。",
+      "start": "开始",
+      "showStarters": "显示推荐歌曲"
+    },
+    "filter": {
+      "label": "显示",
+      "all": "全部",
+      "favorites": "收藏",
+      "unscored": "还没评分",
+      "partial": "部分学会",
+      "count": "{count, plural, other {{count} 首歌}}"
+    },
+    "inRange": {
+      "title": "适合你音域的歌，原调或高低一个八度都算（八度不扣分）：{count, plural, other {{count} 首歌}}",
+      "label": "适合你的音域"
+    },
+    "sort": {
+      "recent": "最近",
+      "easy": "从易到难",
+      "hard": "从难到易",
+      "best": "最高分",
+      "most": "唱得最多",
+      "az": "A–Z"
+    },
+    "shownPartly": "{count} 首部分学会",
+    "shownLearned": "{count} 首已学会",
+    "partlyNote": "OnKey 只听到了这些歌的一部分。完整播放一遍，它就会学完，然后移到“全部”。",
+    "noFavourites": "点歌曲上的 ♥，把它留在这里。",
+    "none": {
+      "partly": "没有部分学会的歌：每首歌都准备好了。",
+      "unscored": "每首歌都有分数了。很好。",
+      "search": "没有歌曲匹配“{q}”。",
+      "filters": "没有歌曲符合这些筛选条件。",
+      "clear": "清除"
+    },
+    "card": {
+      "sing": "唱 {artist} 的“{name}”",
+      "whenLearned": "学会之后就可以唱",
+      "playThrough": "完整播放一遍以学完",
+      "learning": "正在学习",
+      "learnsAgain": "下次播放时重新学习",
+      "learnsAgainTitle": "下次播放时从头重新学习；在那之前照原来的唱",
+      "pctLearned": "已学会 {pct}%",
+      "relearn": "建议重新学习",
+      "relearnTitle": "你播放时歌词在 {at} 处错位：重新学习应该能解决（⋯ 菜单）",
+      "notScored": "还没评分",
+      "notScoredTitle": "你还没有用 OnKey 唱过这首歌",
+      "playsTitle": "你播放这首歌的次数",
+      "plays": "{count, plural, other {{count} 次播放}}",
+      "playsBest": "{count, plural, other {{count} 次播放}} · 最高 <n>{best}</n>",
+      "demo": "示例歌",
+      "demoTitle": "OnKey 自带的示例歌曲",
+      "fitTitle": "{label}。它的音：{low}–{high}",
+      "starting": "正在启动…",
+      "singButton": "唱"
+    },
+    "menu": {
+      "more": "“{name}”的更多操作",
+      "openIn": "在 {app} 中打开 ↗",
+      "learnAgain": "重新学习",
+      "dontLearnAgain": "不要重新学习",
+      "deleteWhat": "删除这首歌（你的演唱记录会留在历史记录中；它会移到废纸篓）",
+      "deleteConfirm": "删除这首歌？",
+      "stopWhat": "停止学习并删除（比如它不是歌）",
+      "stopConfirm": "停止学习并删除？",
+      "stop": "停止学习并删除",
+      "delete": "删除"
+    },
+    "startersLink": "推荐歌曲",
+    "footer": "OnKey 绝不保存音乐：它只保留学到的音符和你自己的声音。歌词来自 <link>LRCLIB</link>。OnKey 与 Spotify、Apple 或 Google 没有关联，也未获其认可；它们的名称是各自所有者的商标。",
+    "difficulty": {
+      "label": "难度 {level}/5：{word}",
+      "title": "难度 {level}/5：{word}。主要看旋律的音域有多宽。"
+    },
+    "clearPartly": {
+      "button": "全部删除（{count}）",
+      "label": "删除所有部分学会的歌",
+      "ask": "要删除{count, plural, other {{shown, select, yes {显示的} other {}}这 {count} 首部分学会的歌}}吗？演唱记录会留在历史记录中{hearted, plural, =0 {} other {；{hearted} 首已收藏的会保留}}。",
+      "deleting": "正在删除…",
+      "tryAgain": "重试",
+      "deleteAll": "全部删除",
+      "cancel": "取消"
+    }
+  },
+  "history": {
+    "title": "你的演唱",
+    "intro": "你唱的每一首歌都会留下一次演唱记录。看看进展如何。",
+    "scoresAt": "按{level}评分 · <link>更改</link>",
+    "search": "搜索歌曲",
+    "pending": {
+      "learning": "正在学习这首歌，然后为你的演唱评分…",
+      "scoring": "正在评分…"
+    },
+    "stat": {
+      "takes": "演唱次数",
+      "average": "最近 10 次平均",
+      "best": "最高",
+      "songs": "唱过的歌"
+    },
+    "chart": {
+      "title": "每次演唱的得分",
+      "axis": "最早 → 最近"
+    },
+    "view": {
+      "label": "查看",
+      "songs": "歌曲",
+      "takes": "全部演唱"
+    },
+    "show": {
+      "label": "显示",
+      "all": "全部",
+      "favorites": "收藏"
+    },
+    "clearFilters": "清除筛选",
+    "sort": {
+      "recent": "最近",
+      "best": "最高分",
+      "most": "唱得最多",
+      "improved": "进步最大",
+      "easy": "从易到难",
+      "hard": "从难到易",
+      "az": "A–Z"
+    },
+    "counts": "唱过 {songs, plural, other {{songs} 首歌}} · {takes, plural, other {{takes} 次演唱}}",
+    "none": {
+      "search": "没有歌曲匹配“{q}”。",
+      "favourites": "点歌曲上的 ♥，把它留在这里。",
+      "filters": "没有歌曲符合这些筛选条件。",
+      "clear": "清除"
+    },
+    "col": {
+      "song": "歌曲",
+      "when": "时间",
+      "sung": "唱了",
+      "pitch": "音准",
+      "score": "得分"
+    },
+    "rescored": "已重新评分",
+    "rescoredTitle": "排除了标为非主旋律的一段后重新评分",
+    "deleteWhat": "删除这次演唱（它会移到废纸篓）",
+    "deleteConfirm": "删除这次演唱？",
+    "showMore": "显示更多<n>（还有 {left} 条）</n>",
+    "card": {
+      "best": "最高",
+      "scores": "得分：{list}",
+      "plays": "{count, plural, other {{count} 次播放}} · 最近 {last}",
+      "whenLearned": "{label}学会之后就可以唱",
+      "singAgain": "再唱一次"
+    },
+    "empty": {
+      "title": "还没有演唱记录",
+      "body": "跟着一首歌唱至少 20 秒，它就会出现在这里。",
+      "start": "开始唱歌"
+    }
+  },
+  "song": {
+    "back": "← 你的演唱",
+    "none": "还没有播放过这首歌。",
+    "scoresAt": "按{level}评分 · <link>更改</link>",
+    "whenLearned": "学会之后就可以唱",
+    "singAgain": "再唱一次",
+    "learnsAgain": "下次播放时重新学习 · <cancel>取消</cancel>",
+    "learnAgain": "重新学习",
+    "learnAgainTitle": "现在播放它并从头重新学习，就像它第一次播放时那样。你的播放和分数会保留；中途停止的话，它保持原样。",
+    "relearn": "每次播放时歌词在 {at} 处都错位约 {by} 秒。重新学习应该能解决。",
+    "learnItAgain": "重新学习",
+    "stat": {
+      "plays": "播放次数",
+      "best": "最高",
+      "latest": "最近",
+      "gainBoth": "最近 3 次 vs 最早 3 次",
+      "gainOne": "最近 vs 第一次",
+      "fromTo": "从 {from} 到 {to}",
+      "fromToAverage": "平均从 {from} 到 {to}",
+      "singToSee": "再唱一次就能看到"
+    },
+    "chart": {
+      "title": "每次播放的得分",
+      "axis": "第一次 → 最近"
+    },
+    "table": {
+      "title": "每次播放",
+      "play": "播放",
+      "when": "时间",
+      "sung": "唱了",
+      "sungTitle": "你唱了这首歌的多少",
+      "pitch": "音准",
+      "score": "得分"
+    },
+    "deleteWhat": "删除这次播放（它会移到废纸篓）",
+    "deleteConfirm": "删除这次播放？"
+  },
+  "noLyrics": {
+    "line": "这首歌还没有歌词。歌词来自 <link>LRCLIB</link>，一个任何人都可以添加歌词的免费歌词库。",
+    "lookAgain": "再找一次",
+    "looking": "正在查找…",
+    "found": "找到了",
+    "stillNone": "仍然没有",
+    "notAnswering": "LRCLIB 没有响应"
+  },
+  "cover": {
+    "openApple": "在 Apple Music 中打开",
+    "openAppleNamed": "在 Apple Music 中打开“{name}”",
+    "openIn": "在 {app} 中打开",
+    "inAppLink": "在 {app} 中 ↗",
+    "inApp": "在 {app} 中",
+    "following": "OnKey 正在跟随的应用",
+    "otherLink": "{app} ↗",
+    "appleMusicLink": "Apple Music ↗"
+  },
+  "recent": {
+    "title": "接着上次继续",
+    "last": "上次 <n>{score}</n>",
+    "whenLearned": "学会之后就可以唱",
+    "singNamed": "唱“{name}”",
+    "starting": "正在启动…",
+    "sing": "唱"
+  },
+  "trend": {
+    "legend": "{unit, select, play {线：你最近 {avg} 次播放的平均 · 点：每次播放} other {线：你最近 {avg} 次演唱的平均 · 点：每次演唱}}",
+    "tipScore": "得分 <n>{score}</n> · 唱了 {pct}%",
+    "tipAverage": "当时的平均 <n>{avg}</n>"
+  },
+  "listControls": {
+    "sort": "排序",
+    "difficultyLabel": "难度",
+    "difficulty": {
+      "easy": "简单",
+      "moderate": "较易",
+      "medium": "中等",
+      "hard": "较难",
+      "veryHard": "很难"
+    },
+    "levelTitle": "{level}：{count, plural, other {{count} 首歌}}",
+    "levelLabel": "{level}（{n}/5）",
+    "clear": "清除"
+  },
+  "deleteButton": {
+    "tryAgain": "重试",
+    "delete": "删除",
+    "cancel": "取消"
+  },
+  "readError": {
+    "body": "它们很可能还在：只是 OnKey 这次没能打开。没有任何内容被更改或删除。",
+    "tryAgain": "重试"
+  },
+  "levelTag": {
+    "title": "按{level}评分：{about}"
+  },
+  "learnBar": {
+    "label": "正在学习“{name}”",
+    "valueText": "{stage}，{pct}%"
+  },
+  "heart": {
+    "remove": "取消收藏",
+    "add": "收藏"
+  },
+  "engine": {
+    "line": {
+      "finding": "听到音乐了… 正在识别歌曲",
+      "new_song": "新歌… 正在识别",
+      "unnamed": "无法识别这首歌",
+      "no_shazam": "Shazam 不可用：只能识别这里学过的歌",
+      "shazam_off": "不是这里学过的歌：Shazam 已在设置中关闭",
+      "elsewhere": "{app} 正在播放，但不在这台 Mac 上",
+      "learning": "正在学习：跟着唱，从下次播放开始评分",
+      "stopped": "不学习“{song}”",
+      "podcast": "正在播放播客：OnKey 只跟着音乐唱"
+    },
+    "share": {
+      "first": "第一次唱“{song}”就得了 {score} 分",
+      "over80": "你在“{song}”上第一次超过 {over} 分",
+      "best": "你在“{song}”上的最高分，高出 {points, plural, other {{points} 分}}",
+      "up": "比你上次唱“{song}”高了 {points, plural, other {{points} 分}}"
+    },
+    "timing": {
+      "output_changed": "检测期间输出设备变了。请再试一次。",
+      "few_taps": "跟上节拍声的敲击不够多。请跟着节奏敲，每一声敲一次。",
+      "uneven": "你的敲击太不均匀，无法测量。请再试一次，跟着节奏敲，就像跟着节拍拍手。",
+      "reacting": "看起来你在等每一声响了才敲。请改为跟着节奏敲。",
+      "unbelievable": "结果不太对：你是不是在等每一声响了才敲？请再试一次，跟着节奏敲，就像跟着节拍拍手。",
+      "untimed": "检测无法给节拍声计时。请再试一次。",
+      "stalled": "检测期间声音卡顿或重新开始了，所以无法计时。请再试一次。"
+    },
+    "settingUnsaved": "无法保存这项设置（{error}）。在 OnKey 退出前它仍然有效。",
+    "fit": {
+      "fits": "适合你的音域",
+      "few_above": "有几个音高于你的音域",
+      "few_below": "有几个音低于你的音域",
+      "octave_lower": "大多高于你的音域：降一个八度唱",
+      "octave_higher": "大多低于你的音域：升一个八度唱",
+      "above": "大多高于你的音域",
+      "below": "大多低于你的音域",
+      "wider": "比你的音域更宽"
+    },
+    "reportWhat": {
+      "log": "OnKey 当天的日志",
+      "take": "一次演唱的摘要：{artist} - {name}",
+      "take_reported": "所报告的演唱：一次演唱的摘要：{artist} - {name}",
+      "builds": "在这台 {os, select, pc {PC} other {Mac}} 上运行过的 OnKey 版本",
+      "summary": "日志摘要：这台{os, select, pc { PC} other {电脑}}、音频、音乐应用、学习、演唱、错误",
+      "about": "OnKey 的版本、这台{os, select, pc { PC} other { Mac}}、设置，以及你写的内容"
+    },
+    "models": {
+      "unloadable": "无法加载"
+    },
+    "youtubeSetting": {
+      "safari": "Safari ▸ 设置 ▸ 高级：勾选“显示网页开发者功能”，然后选择 开发 ▸ 允许来自 Apple 事件的 JavaScript",
+      "chromium": "视图 ▸ 开发者 ▸ 允许来自 Apple 事件的 JavaScript"
+    },
+    "app": {
+      "music_app": "你的音乐应用",
+      "browser": "你的浏览器"
+    }
+  }
+}

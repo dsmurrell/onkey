@@ -1,0 +1,54 @@
+# Checks for pull requests on the public repo: the interface's tests and type check, and the website's.
+# Cheap on purpose: no secrets, no model downloads, no Rust build, read-only token. Actions pinned to commit SHAs.
+# The one workflow the public export publishes (lab list public-paths.txt); the private repo's other workflows
+# stay private. It runs on pull requests and on pushes to main, which only the public repo has.
+name: Checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  ui:
+    name: App interface (ui/)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: ui
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ui/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - run: npx --no-install tsc --noEmit
+  site:
+    name: Website (site/)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm test --if-present
+      - run: npm run build   # static export; also type-checks (and writes next-env.d.ts, which isn't committed)

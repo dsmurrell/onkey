@@ -1,0 +1,176 @@
+{
+  "page": {
+    "title": "Có gì mới",
+    "description": "Mọi tính năng và bản sửa lỗi của OnKey, mới nhất ở trên, cùng bản phát hành đem đến nó.",
+    "kicker": "Nhật ký thay đổi",
+    "heading": "Có gì mới trong OnKey",
+    "intro": "Mọi tính năng và bản sửa lỗi, mới nhất ở trên, cùng bản phát hành đem đến nó. OnKey tự cập nhật, nên những thứ này tự đến với bạn.",
+    "release": "OnKey {version}",
+    "latest": "Mới nhất",
+    "kind": {
+      "new": "Mới",
+      "better": "Tốt hơn",
+      "fix": "Đã sửa"
+    },
+    "github": "Mọi thay đổi đều có trên <link>GitHub</link>, nơi OnKey là mã nguồn mở."
+  },
+  "releases": {
+    "0-3-0": {
+      "note": "OnKey bằng 19 ngôn ngữ, và lời bài hát chạy đúng nhịp bằng tiếng Tây Ban Nha, Bồ Đào Nha, Ý, Pháp và Đức."
+    },
+    "0-2-0": {
+      "note": "Tự tải và cài trên các máy Mac đang chạy OnKey."
+    },
+    "0-1-0": {
+      "note": "Bản phát hành công khai đầu tiên.",
+      "link": "Ra mắt trên Hacker News"
+    }
+  },
+  "entries": {
+    "onkey-in-your-language": {
+      "title": "OnKey bằng ngôn ngữ của bạn",
+      "summary": "OnKey giờ nói 19 ngôn ngữ. Nó tự theo ngôn ngữ máy Mac của bạn, hoặc bạn chọn một ngôn ngữ từ biểu tượng quả cầu trên thanh trên cùng, ở màn hình chào mừng hay trong Cài đặt.",
+      "p1": "Sáu ngôn ngữ được hỗ trợ đầy đủ, gồm cả lời bài hát: tiếng Tây Ban Nha (Mỹ Latinh và Tây Ban Nha), Bồ Đào Nha, Ý, Pháp và Đức",
+      "p2": "Mười hai ngôn ngữ nữa là bản dịch sơ bộ: tiếng Hà Lan, Nhật, Trung (Giản thể và Phồn thể), Hàn, Hindi, Nga, Thổ Nhĩ Kỳ, Ba Lan, Indonesia, Việt và Thái. Mỗi ngôn ngữ đều ghi rõ điều đó, kèm liên kết để cải thiện",
+      "p3": "Hiện tất cả đều là bản dịch máy: nếu chỗ nào đọc thấy lạ, liên kết trong Cài đặt sẽ mở nó ra để sửa",
+      "p4": "Menu OnKey, các lời nhắc cấp quyền của máy Mac và hộp thoại lưu cũng bằng ngôn ngữ của bạn, và ảnh bìa lấy từ cửa hàng của chính nước bạn",
+      "p5": "Trang web này, các hướng dẫn và nhật ký thay đổi này cũng vậy: theo ngôn ngữ trình duyệt của bạn, và biểu tượng quả cầu ở đầu trang để chuyển đổi"
+    },
+    "lyrics-keep-time-in-more-languages": {
+      "title": "Lời bài hát đúng nhịp trong nhiều ngôn ngữ hơn",
+      "summary": "Lời bằng tiếng Tây Ban Nha, Bồ Đào Nha, Ý, Pháp và Đức giờ sáng lên đúng lúc được hát. Các chữ có dấu (corazón, Straße, cœur) được đọc đúng, và âm tiết được đếm theo quy tắc của từng ngôn ngữ thay vì của tiếng Anh.",
+      "p1": "Bài hát bằng tiếng Nhật, Trung, Hàn, Hindi, Nga, Thái và các hệ chữ khác hiện cả dòng một lúc, đúng nhịp với bài, hiện chưa canh thời gian theo từng từ",
+      "p2": "Lời tiếng Anh vẫn y như trước"
+    },
+    "songs-to-try-in-your-language": {
+      "title": "Bài hát nên thử bằng ngôn ngữ của bạn",
+      "summary": "Khi chọn tiếng Tây Ban Nha, Bồ Đào Nha, Ý, Pháp hoặc Đức, trang Hát gợi ý tám bài bằng ngôn ngữ đó, từ dễ đến khó, kèm lý do cho mỗi bài.",
+      "p1": "Bấm vào một bài được gợi ý và nó bắt đầu trong Spotify, như một thẻ trong Thư viện",
+      "p2": "Các liên kết để tìm bài đó trên Apple Music vẫn còn"
+    },
+    "when-a-song-has-no-lyrics": {
+      "title": "Khi một bài không có lời",
+      "summary": "Lời bài hát lấy từ LRCLIB, một thư viện miễn phí mà ai cũng có thể đóng góp. Bài nào LRCLIB chưa có lời giờ sẽ báo ngay dưới dải nốt và trên trang của bài, kèm nút Tìm lại để hỏi LRCLIB ngay lập tức.",
+      "p1": "Trước đây OnKey nhớ câu trả lời “không có” trong một ngày, nên lời ai đó vừa thêm phải đến mai mới hiện",
+      "p2": "Khi chính LRCLIB không hoạt động, trang Hát sẽ báo cho bạn: các nốt vẫn chạy, lời sẽ xuất hiện cùng nếu dịch vụ trở lại, và bài học trong lúc này sẽ có lời ở lần bạn hát tiếp theo"
+    },
+    "smoother-switching-in-spotify": {
+      "title": "Chuyển bài mượt hơn trong Spotify",
+      "summary": "Yêu cầu một bài khác trong khi một bài đang phát giờ sẽ tạm dừng bài đầu một lát trước khi bắt đầu bài tiếp, nên việc chuyển bài sạch hơn."
+    },
+    "a-clearer-settings-page": {
+      "title": "Trang Cài đặt rõ ràng hơn",
+      "summary": "Micrô được chọn từ menu riêng của OnKey, với thiết bị ảo và micrô đã ngắt kết nối được xếp riêng. Menu mở phía trên trang, nên danh sách dài không bao giờ bị cắt.",
+      "p1": "Trên thẻ trong Thư viện, đường quãng giọng của bài màu xanh lá khi hợp với bạn và màu hồng đào khi không hợp hẳn (cách một quãng tám, lệch vài nốt, hoặc rộng hơn)",
+      "p2": "Các thanh bước trong Thiết lập giữ thẳng hàng khi tên một bước chiếm hai dòng"
+    },
+    "small-fixes-0-3-0": {
+      "title": "Sửa lỗi nhỏ",
+      "summary": "Những thứ hơi lệch, giờ đã đúng.",
+      "p1": "Chấm ở Có gì mới hiện sau khi cập nhật cho đến khi bạn mở, và không bao giờ hiện khi cài mới",
+      "p2": "Báo cáo sự cố giữ ô văn bản ở chiều cao đầy đủ, và hộp thoại không bị trong suốt phía trên Cài đặt",
+      "p3": "Số thông báo của tab YouTube, “(3) Nghệ sĩ - Tên bài”, không còn cản việc gọi tên bài hát"
+    },
+    "pause-listening": {
+      "title": "Tạm dừng nghe",
+      "summary": "Đang xem stream hay podcast? Tạm dừng việc nghe của OnKey, và nó ngừng nghe mọi thứ cho đến khi bạn tiếp tục. Trong lúc đó không gì được theo, gọi tên hay học.",
+      "p1": "Nhấn ⌘⇧P, bấm chip Trực tiếp trên trang Hát, hoặc chọn OnKey → Tạm dừng nghe",
+      "p2": "Một nhãn nhỏ “Đã tạm dừng nghe · Tiếp tục” nằm trên đầu mọi trang, để bạn không quên",
+      "p3": "Vẫn tạm dừng sau khi khởi động lại, cho đến khi bạn tiếp tục"
+    },
+    "see-when-a-paused-take-will-be-scored": {
+      "title": "Biết khi nào lượt hát đang tạm dừng được chấm",
+      "summary": "Tạm dừng giữa bài và OnKey chờ một phút phòng khi bạn hát tiếp. Giờ nó báo cho bạn, và cho bạn bỏ qua phần chờ.",
+      "p1": "Trang Hát đếm ngược: “Đã tạm dừng · chấm sau 0:45 · Kết thúc ngay”",
+      "p2": "Lịch sử hiện bài bạn đang hát làm thẻ đầu tiên, nên lần phát vừa tạm dừng không bao giờ trông như bị mất",
+      "p3": "Mỗi thẻ bài trong Lịch sử vẽ điểm của bạn từ lần phát thứ hai"
+    },
+    "audio-interfaces-and-your-microphone-list": {
+      "title": "Card âm thanh và danh sách micrô của bạn",
+      "summary": "OnKey giờ lấy giọng bạn từ đúng đầu vào đang dùng, nên micrô ở đầu vào 2 của một Focusrite (hay bất kỳ card nào có nhiều đầu vào) dùng được ngay.",
+      "p1": "Không cần cài đặt: OnKey theo đầu vào có giọng bạn",
+      "p2": "Thiết bị ảo do ứng dụng khác thêm vào (Krisp, Loopback, BlackHole, Zoom) được xếp riêng khỏi micrô thật của bạn"
+    },
+    "listening-back-stays-in-step-after-a-skip": {
+      "title": "Nghe lại vẫn khớp nhịp sau khi tua",
+      "summary": "Nếu bạn tua tới trong lúc hát, “Cùng bài hát” có thể phát phần trước khi tua bị lệch nhịp. Giờ mọi phần của lượt hát đều phát khớp với bài."
+    },
+    "reliability-fixes": {
+      "title": "Sửa lỗi độ ổn định",
+      "summary": "Những thứ có thể hỏng giữa bài, giờ đã sửa.",
+      "p1": "Kết thúc không còn bỏ mất lượt hát nếu nhấn trong lúc OnKey kiểm tra trình phát",
+      "p2": "Một bài không còn kẹt mãi ở “Chờ học” hay “Đang chấm điểm” sau một lỗi hiếm gặp",
+      "p3": "Xóa tất cả trong Thư viện không còn treo, và “Dừng học và xóa” chỉ xóa bài bạn chọn",
+      "p4": "Phím tắt không còn lọt tới nhạc phía sau các hộp thoại",
+      "p5": "Điểm đến ngay khi bài kết thúc trong lúc tạm dừng",
+      "p6": "Một luồng radio hay bản mix dài hàng giờ dừng ở 20 phút thay vì chạy tiếp thành một lượt hát",
+      "p7": "Thoát là tức thì: OnKey biến mất ngay và lưu nốt những gì đã học ở phía sau"
+    },
+    "songs-start-cleanly": {
+      "title": "Bài hát bắt đầu gọn gàng",
+      "summary": "Nhấn Hát trên một thẻ có thể bắt đầu nhạc hai lần, hoặc phát một mẩu bài trước khi bắt đầu lại. Giờ một lần nhấn là một lần bắt đầu gọn."
+    },
+    "guides-and-help-and-beyond-pitch": {
+      "title": "Hướng dẫn, trợ giúp và Không chỉ cao độ",
+      "summary": "Cài đặt giờ liên kết tới các tài liệu này. Một hướng dẫn mới, Không chỉ cao độ, nói về những gì OnKey không nghe được (âm sắc, hơi thở, phong cách) và các thầy cô miễn phí để học."
+    },
+    "smoother-setup-and-youtube": {
+      "title": "Thiết lập mượt hơn và YouTube",
+      "summary": "Sửa những điều đầu tiên mà người thử nghiệm của chúng tôi gặp phải.",
+      "p1": "Bước ứng dụng nhạc khi thiết lập đi thẳng tiếp khi macOS không có gì để hỏi",
+      "p2": "Tab YouTube bị Chrome cho ngủ không còn làm OnKey chờ",
+      "p3": "Ứng dụng nhạc bạn chưa cài hiện là tắt, thay vì bật"
+    },
+    "learn-a-song-again": {
+      "title": "Học lại một bài",
+      "summary": "Nếu lời hay nốt của một bài bị lệch, hãy để OnKey học lại từ đầu: lần phát sau sẽ học, và thay bản cũ khi đã nghe đủ.",
+      "p1": "Chọn Học lại từ menu ⋯ trong Thư viện hoặc trang của bài",
+      "p2": "OnKey gợi ý việc này khi lời một bài lệch theo cùng một cách ở hai lần phát"
+    },
+    "a-tidier-app-page-by-page": {
+      "title": "Ứng dụng gọn hơn, từng trang một",
+      "summary": "Mỗi lượt hát có báo cáo rõ hơn, và Hát, Lịch sử, Thư viện cùng Cài đặt dễ tìm đường hơn.",
+      "p1": "Hát có mục “Tiếp tục từ chỗ bạn dừng”: vài bài gần nhất của bạn, mỗi bài kèm điểm lần cuối và một nút Hát",
+      "p2": "Nút Phát trong Thư viện bắt đầu bài cho bạn, và trang Hát cho thấy bài đang bắt đầu (hoặc nói vì sao không được)"
+    },
+    "scoring-levels-relaxed-steady-and-pro": {
+      "title": "Mức chấm điểm: Thoải mái, Vững vàng và Chuyên nghiệp",
+      "summary": "Chọn mức khắt khe khi chấm lượt hát của bạn trong Cài đặt. Thoải mái là cách OnKey vẫn chấm từ trước; Vững vàng và Chuyên nghiệp đòi hỏi nhiều hơn.",
+      "p1": "Rung giọng được xét theo tâm nốt, nên rung giọng đẹp không bị trừ điểm ở mức nào",
+      "p2": "Mỗi lượt hát hiện mức mà nó được chấm"
+    },
+    "leave-out-what-isn-t-the-melody": {
+      "title": "Bỏ phần không phải giai điệu chính",
+      "summary": "Nếu OnKey bắt nhầm giọng bè hay đoạn ngẫu hứng thay cho giai điệu, hãy đánh dấu đoạn đó là “Không phải giai điệu chính” trên trang của lượt hát. Đoạn đó được bỏ khỏi mọi điểm của bài, kể cả các lượt trước."
+    },
+    "your-vocal-range": {
+      "title": "Quãng giọng của bạn",
+      "summary": "OnKey tìm ra quãng giọng của bạn từ các bài bạn hát, và cho thấy mỗi bài hợp với nó thế nào.",
+      "p1": "Lịch sử hiện quãng giọng của bạn trên một dải phím, có đánh dấu vùng giữa thoải mái",
+      "p2": "Thư viện cho thấy độ hợp của mỗi bài, với bộ lọc bài trong quãng giọng của bạn",
+      "p3": "Khi một bài nằm cao hay thấp, nó cho biết hát cách một quãng tám có hợp với bạn hơn không"
+    },
+    "challenge-a-friend-and-share-your-best-takes": {
+      "title": "Thách đấu bạn bè, và chia sẻ lượt hát tốt nhất",
+      "summary": "Từ một lượt hát, sao chép liên kết cho biết điểm của bạn và mời một người bạn vượt qua. Liên kết chỉ mang tên bài, nghệ sĩ, điểm của bạn và, nếu muốn, tên của bạn.",
+      "p1": "Sau điểm cao nhất của một bài hay một bước tiến lớn, trang của lượt hát gợi ý “Chia sẻ lượt hát này”",
+      "p2": "Đoạn clip chia sẻ kết thúc bằng một thẻ OnKey: giọng của bạn, không có nhạc"
+    },
+    "fade-the-guide": {
+      "title": "Ẩn dần gợi ý",
+      "summary": "Bật trong Cài đặt, và ở những bài bạn đã hát tốt, đường cao độ của bạn mờ dần khi bạn đúng nốt, để bạn hát bằng tai chứ không bằng mắt. Nó hiện lại ngay khi bạn lệch."
+    },
+    "lyrics-line-up-better": {
+      "title": "Lời khớp hơn",
+      "summary": "Các dòng và từ giờ sáng lên gần hơn với lúc được hát, kể cả những dòng mở đầu bằng “oh” hay “whoa”."
+    },
+    "onkey-s-first-release": {
+      "title": "Bản phát hành đầu tiên của OnKey",
+      "summary": "Miễn phí, mã nguồn mở, và mọi thứ trên máy Mac của bạn.",
+      "p1": "Học giai điệu của bất kỳ bài nào bạn phát trong Spotify, Apple Music hoặc YouTube, ngay lần phát đầu",
+      "p2": "Đường cao độ trực tiếp trên các nốt của ca sĩ, với lời đồng bộ và điểm cho mỗi lượt hát",
+      "p3": "Lượt hát để nghe lại, và một video ngắn của lượt hát để chia sẻ: giọng của bạn, không có nhạc",
+      "p4": "Các bài khởi đầu, thư viện những gì bạn đã học, và các bản cập nhật tự cài"
+    }
+  }
+}

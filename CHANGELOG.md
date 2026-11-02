@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0 · 2026-11-02
+
+OnKey in 19 languages, lyrics that keep time in Spanish, Portuguese, Italian, French and German, and starter songs in your language.
+
+- Choose your language from the globe in the top bar, on the welcome screen or in Settings. Six have full support, lyrics included (Spanish for Latin America and Spain, Portuguese, Italian, French, German); twelve more are early. All are machine translations you can help improve.
+- Lyrics in Spanish, Portuguese, Italian, French and German now light up word by word in time with the singer; songs in Japanese, Chinese, Korean, Hindi and other scripts show their lines whole.
+- Songs to try in your language, and clicking a starter song now plays it in Spotify, as a Library card does.
+- A song with no lyrics says so, and "Look again" asks LRCLIB straight away; when LRCLIB is down, OnKey tells you and the notes carry on.
+- The Mac menu bar, system prompts and the website (singonkey.app) are in your language too.
+- Fixes: switching songs in Spotify is cleaner, the What's new dot shows only after an update, the microphone is chosen from OnKey's own menu, Report a problem no longer shrinks its text box, and a song's range line is peach when it doesn't simply fit.
+
+All the details: https://singonkey.app/changelog/
+
 ## 0.2.0 · 2026-10-31
 
 Scoring levels, your vocal range, Pause listening, and audio interfaces that just work.

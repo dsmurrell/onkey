@@ -9,8 +9,11 @@ import { createPortal } from "react-dom";
  *  - starts muted and unmutes on the press (a user gesture), falling back to muted if sound is refused
  *  - lightbox: the press opens it large over a dimmed page (the app's detail is small at half-page width);
  *    Esc, the backdrop or ✕ closes it */
-export function DemoVideo({ src, poster, lightbox = true, label = "1:35 · sound on" }:
-    { src: string; poster?: string; lightbox?: boolean; label?: string }) {
+export type DemoText = { label: string; video: string; play: string; dialog: string; close: string };
+
+/** `text`: the words in the page's language (home.video in messages). */
+export function DemoVideo({ src, poster, lightbox = true, text }:
+    { src: string; poster?: string; lightbox?: boolean; text: DemoText }) {
   const inline = useRef<HTMLVideoElement>(null);
   const big = useRef<HTMLVideoElement>(null);
   const closer = useRef<HTMLButtonElement>(null);
@@ -52,21 +55,21 @@ export function DemoVideo({ src, poster, lightbox = true, label = "1:35 · sound
         ref={inline} src={src} poster={poster} preload="none" playsInline muted controls={!overlay}
         {...{ "webkit-playsinline": "" }}
         className="absolute inset-0 h-full w-full object-cover"
-        aria-label="OnKey in use: Daniel sings along, the notes scroll towards him and his pitch is drawn over them"
+        aria-label={text.video}
       />
       {overlay && (
-        <button onClick={press} aria-label="Play the demo video, with sound"
+        <button onClick={press} aria-label={text.play}
                 className="group absolute inset-0 grid place-items-center bg-black/25 transition hover:bg-black/15">
           <span className="grid h-20 w-20 place-items-center rounded-full bg-white/90 shadow-xl shadow-black/40 transition group-hover:scale-105">
             <svg viewBox="0 0 24 24" className="ml-1 h-9 w-9 text-black" fill="currentColor" aria-hidden><path d="M8 5v14l11-7z" /></svg>
           </span>
-          <span className="absolute bottom-4 rounded-full bg-black/60 px-3 py-1 text-sm text-white">{label}</span>
+          <span className="absolute bottom-4 rounded-full bg-black/60 px-3 py-1 text-sm text-white">{text.label}</span>
         </button>
       )}
       {lightbox && open && typeof document !== "undefined" && createPortal(
-        <div role="dialog" aria-modal="true" aria-label="Demo video" onClick={() => setOpen(false)}
+        <div role="dialog" aria-modal="true" aria-label={text.dialog} onClick={() => setOpen(false)}
              className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm sm:p-10">
-          <button ref={closer} onClick={() => setOpen(false)} aria-label="Close the video"
+          <button ref={closer} onClick={() => setOpen(false)} aria-label={text.close}
                   className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20">✕</button>
           <video
             ref={big} src={src} poster={poster} preload="auto" playsInline controls

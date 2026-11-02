@@ -1,0 +1,54 @@
+{
+  "menu": {
+    "app": {
+      "about": "Über OnKey",
+      "services": "Dienste",
+      "pauseListening": "Zuhören pausieren",
+      "resumeListening": "Zuhören fortsetzen",
+      "hide": "OnKey ausblenden",
+      "hideOthers": "Andere ausblenden",
+      "quit": "OnKey beenden"
+    },
+    "file": {
+      "title": "Ablage",
+      "closeWindow": "Fenster schließen"
+    },
+    "edit": {
+      "title": "Bearbeiten",
+      "undo": "Widerrufen",
+      "redo": "Wiederholen",
+      "cut": "Ausschneiden",
+      "copy": "Kopieren",
+      "paste": "Einsetzen",
+      "selectAll": "Alles auswählen"
+    },
+    "view": {
+      "title": "Darstellung",
+      "fullScreen": "Vollbildmodus ein/aus"
+    },
+    "window": {
+      "title": "Fenster",
+      "minimize": "Minimieren",
+      "zoom": "Zoomen",
+      "closeWindow": "Fenster schließen"
+    },
+    "help": {
+      "title": "Hilfe",
+      "reportProblem": "Problem melden …"
+    }
+  },
+  "report": {
+    "savePanelMessage": "OnKeys Aufzeichnungen für einen Fehlerbericht: Logs und Zahlen, keine Songtexte, kein Audio."
+  },
+  "share": {
+    "endCard": {
+      "tagline": "Triff den Ton",
+      "free": "Kostenlos für den Mac"
+    }
+  },
+  "infoPlist": {
+    "NSMicrophoneUsageDescription": "OnKey hört deinem Gesang zu, um zu zeigen, wie gut du den Ton triffst. Deine Aufnahmen bleiben auf deinem Mac.",
+    "NSAudioCaptureUsageDescription": "OnKey hört die Musik, die auf deinem Mac läuft, um die Melodie der Gesangsstimme zu lernen. Die Musik wird nie gespeichert oder gesendet. Im Zuhörmodus geht ein kurzer Fingerabdruck davon (nicht das Audio) an Apples Shazam, um den Song zu erkennen.",
+    "NSAppleEventsUsageDescription": "OnKey fragt Spotify, Musik oder deinen Browser (für YouTube), was gerade läuft, und steuert die Wiedergabe, wenn du Play, Überspringen oder Von vorn drückst."
+  }
+}

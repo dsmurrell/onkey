@@ -16,12 +16,17 @@ pub struct Crepe {
     hi_bin: usize,
     /// also look for a pure tone in each frame (live: whistling), see `pure_tone`
     tones: Option<Tones>,
+    /// on DirectML (Windows): how to go to the CPU should a run fail there
+    gpu: Option<crate::gpu::Fallback>,
 }
 
 /// Bin limits: 39 = 50 Hz; 308 = 1100 Hz (the singers being learned); 360 = 1975 Hz, the top of CREPE's range
 /// (your voice live, so whistling and falsetto register too).
 pub const BIN_1100_HZ: usize = 308;
 pub const BIN_TOP: usize = 360;
+
+/// CREPE-tiny, built into the app (your voice, live).
+const TINY: &[u8] = include_bytes!("../models/crepe-tiny.onnx");
 
 /// A session for inputs whose size changes from run to run (a whole song's singer): no memory arena and no memory
 /// patterns, so what a run takes is given back after it. With them, ONNX Runtime keeps the most any run took, in
@@ -116,46 +121,47 @@ impl Crepe {
     /// spent ~45-55% of a core on it (each frame's first convolution unrolled into memory, two threads spinning
     /// between runs), so the engine fell behind your voice on a busy Mac (the dot 0.1-0.5 s late). Not on the Neural
     /// Engine: it needs fixed input sizes, and runs only part of it. If Core ML can't take it, ONNX Runtime's CPU
-    /// kernels as before (ONKEY_LIVE_PITCH_CPU=1 forces that in development builds, for comparison).
+    /// kernels as before (ONKEY_LIVE_PITCH_CPU=1 forces that in development builds, for comparison). Core ML is
+    /// Apple's: on Windows DirectML is tried instead (gpu.rs; its first run there checks it). Which is the platform's
+    /// (platform/*/gpu.rs `live_pitch`).
     pub fn new() -> ort::Result<Crepe> {
         if crate::devtest::knob!("ONKEY_LIVE_PITCH_CPU").is_none() {
-            use ort::execution_providers::{coreml::{CoreMLComputeUnits, CoreMLModelFormat}, CoreMLExecutionProvider, CPUExecutionProvider};
-            // (Core ML's compiler prints, on stdout, that the model's sizes don't suit the Neural Engine; it isn't
-            // asked to use it. Kept off stdout: tools print their results there)
-            let coreml = quiet_stdout(|| -> ort::Result<Crepe> {
-                let mut c = Crepe::tiny_with(|b| b.with_intra_threads(1)?.with_execution_providers([
-                    CoreMLExecutionProvider::default().with_model_format(CoreMLModelFormat::MLProgram)
-                        .with_compute_units(CoreMLComputeUnits::CPUOnly).build().error_on_failure(),
-                    CPUExecutionProvider::default().build()]))?;
-                c.frames(&[0.0; WIN + 2 * HOP], 3)?;       // (its first run prepares it)
-                Ok(c)
-            });
-            match coreml {
-                Ok(c) => return Ok(c),
-                Err(e) => crate::engine::log(&format!("live pitch: Core ML couldn't take CREPE-tiny ({e}); ONNX Runtime's CPU kernels instead")),
+            if let Some(c) = crate::platform::gpu::live_pitch()? {
+                return Ok(c);
             }
         }
         Crepe::tiny_with(|b| b.with_intra_threads(2))
     }
 
+    /// CREPE-tiny on a session made for it elsewhere (platform/*/gpu.rs), with how to go to the CPU should a run
+    /// fail there.
+    pub fn tiny_on(session: Session, gpu: Option<crate::gpu::Fallback>) -> Crepe {
+        Crepe { session, batch: None, hi_bin: BIN_TOP, tones: Some(Tones::new()), gpu }
+    }
+
+    /// CREPE-tiny itself (the model's bytes).
+    pub fn tiny_model() -> &'static [u8] {
+        TINY
+    }
+
     /// CREPE-tiny with the session set up by `configure` (threads, execution providers): for measuring how to run
     /// the very same model (examples/crepebench).
     pub fn tiny_with(configure: impl FnOnce(SessionBuilder) -> ort::Result<SessionBuilder>) -> ort::Result<Crepe> {
-        let bytes: &[u8] = include_bytes!("../models/crepe-tiny.onnx");
         let session = configure(Session::builder()?.with_optimization_level(GraphOptimizationLevel::Level3)?)?
-            .commit_from_memory(bytes)?;
-        Ok(Crepe { session, batch: None, hi_bin: BIN_TOP, tones: Some(Tones::new()) })
+            .commit_from_memory(TINY)?;
+        Ok(Crepe { session, batch: None, hi_bin: BIN_TOP, tones: Some(Tones::new()), gpu: None })
     }
 
     /// A CREPE model from a file (e.g. CREPE-full, for the singer's line when learning a song). With
-    /// `coreml_batch`, the model has that fixed batch size and runs on Core ML (GPU / Neural Engine).
+    /// `coreml_batch`, the model has that fixed batch size and runs on Core ML (GPU / Neural Engine), or on Windows
+    /// DirectML (gpu.rs).
     pub fn from_file(path: &std::path::Path, threads: usize, coreml_batch: Option<usize>) -> ort::Result<Crepe> {
-        let configure = |b: SessionBuilder| b.with_optimization_level(GraphOptimizationLevel::Level3)?.with_intra_threads(threads);
-        let session = match coreml_batch {
-            Some(_) => load_coreml(path, configure)?,
-            None => configure(Session::builder()?)?.commit_from_file(path)?,
+        let configure = move |b: SessionBuilder| b.with_optimization_level(GraphOptimizationLevel::Level3)?.with_intra_threads(threads);
+        let (session, gpu) = match coreml_batch {
+            Some(_) => crate::gpu::load("pitch", path, configure)?,
+            None => (configure(Session::builder()?)?.commit_from_file(path)?, None),
         };
-        Ok(Crepe { session, batch: coreml_batch, hi_bin: BIN_1100_HZ, tones: None })
+        Ok(Crepe { session, batch: coreml_batch, hi_bin: BIN_1100_HZ, tones: None, gpu })
     }
 
     /// Run `batch` frames at a time (the last run padded): a fixed input shape, which Core ML compiles once.
@@ -169,6 +175,18 @@ impl Crepe {
 
     /// Pitch for `k` frames, the last of which is centred 512 samples before the end of `x` (16 kHz mono).
     pub fn frames(&mut self, x: &[f32], k: usize) -> ort::Result<Vec<Frame>> {
+        let r = self.frames_here(x, k);
+        // (on the CPU from now on, if it failed on DirectML)
+        if let Err(e) = &r {
+            if let Some(f) = self.gpu.take() {
+                self.session = f.to_cpu(e)?;
+                return self.frames_here(x, k);
+            }
+        }
+        r
+    }
+
+    fn frames_here(&mut self, x: &[f32], k: usize) -> ort::Result<Vec<Frame>> {
         let need = (k.max(1) - 1) * HOP + WIN;
         if k == 0 || x.len() < need {
             return Ok(vec![Frame { midi: f32::NAN, confidence: 0.0, rms: 0.0, tone: f32::NAN }; k]);
@@ -202,30 +220,6 @@ impl Crepe {
             let (midi, confidence) = decode(&probs[j * 360..(j + 1) * 360], self.hi_bin);
             Frame { midi, confidence, rms: rms[j], tone: tone[j] }
         }).collect())
-    }
-}
-
-/// Run `f` with this process's stdout going nowhere (what native code prints to it meanwhile is dropped).
-fn quiet_stdout<R>(f: impl FnOnce() -> R) -> R {
-    extern "C" {
-        fn fflush(stream: *mut libc::FILE) -> libc::c_int;
-    }
-    unsafe {
-        fflush(std::ptr::null_mut());
-        let saved = libc::dup(1);
-        let null = libc::open(c"/dev/null".as_ptr(), libc::O_WRONLY);
-        if saved < 0 || null < 0 {
-            if saved >= 0 { libc::close(saved); }
-            if null >= 0 { libc::close(null); }
-            return f();
-        }
-        libc::dup2(null, 1);
-        libc::close(null);
-        let r = f();
-        fflush(std::ptr::null_mut());
-        libc::dup2(saved, 1);
-        libc::close(saved);
-        r
     }
 }
 

@@ -18,6 +18,7 @@
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { FocusEvent, PointerEvent } from "react";
+import { useT } from "@/lib/i18n";
 
 export type FadeGuideDemoProps = {
   /** "auto" animates (also with Reduce motion on); "reduce" shows the static strip. */
@@ -27,40 +28,20 @@ export type FadeGuideDemoProps = {
 
 /* ------------------------------------------------------------------ palette */
 
-const C = {
-  bg: "#0b0d13",
-  panel: "#151924",
-  line: "#2a3142",
-  muted: "#8b94ab",
-  text: "#e6e9f0",
-  accent: "#7c6cf6",
-  accentLight: "#b5a8ff",
-  accentDark: "#6252e0",
-  good: "#34d27b",
-  red: "#f06a6a",
-} as const;
+import { GUIDE as C } from "@/lib/colors";
 
 /* ------------------------------------------------------------------ content */
 
-const CAPTIONS = [
-  "Once you've sung a song well",
-  "Your line fades while you're on the note",
-  "Slip off it and it shows as usual",
-  "Bring the full guide back for any take",
-] as const;
+/** The step captions: guides.fadeDemo.captions.<id>. */
+const CAPTIONS = ["c0", "c1", "c2", "c3"] as const;
 
 /** fade = how strongly your line shows while on the note; slip = it goes more than a semitone off once. */
 const TAKES = [
-  { label: "Take 1", fade: 1, slip: false, score: 82 },
-  { label: "Take 3", fade: 0.5, slip: false, score: 86 },
-  { label: "Take 5", fade: 0.25, slip: true, score: 84 },
-  { label: "Take 8", fade: 0.12, slip: false, score: 90 },
+  { n: 1, fade: 1, slip: false, score: 82 },   // shown as "Take <n>"
+  { n: 3, fade: 0.5, slip: false, score: 86 },
+  { n: 5, fade: 0.25, slip: true, score: 84 },
+  { n: 8, fade: 0.12, slip: false, score: 90 },
 ] as const;
-
-const ARIA_LABEL =
-  "Four takes of the same song as note lanes: Take 1, 3, 5 and 8. The purple notes stay the same in every take. " +
-  "Your green pitch line is bright in Take 1 and fainter each take while it's on the note; in Take 5 it slips more " +
-  "than a semitone off for a moment and that part shows in full, in red. A Full guide switch brings the whole line back.";
 
 /* ----------------------------------------------------------------- timeline */
 
@@ -296,6 +277,7 @@ const CSS = `
 /* ---------------------------------------------------------------- drawing */
 
 function Header({ toggle }: { toggle: number }) {
+  const t = useT();
   return (
     <g>
       {/* The song: a note glyph and two placeholder bars for title and artist. */}
@@ -308,10 +290,10 @@ function Header({ toggle }: { toggle: number }) {
 
       {/* Full guide switch */}
       <text x={319} y={23.6} textAnchor="end" fontSize={10} fontWeight={500} fill={C.muted}>
-        Full guide
+        {t("guides.fadeDemo.fullGuide")}
       </text>
       <text x={319} y={23.6} textAnchor="end" fontSize={10} fontWeight={500} fill={C.accentLight} opacity={toggle}>
-        Full guide
+        {t("guides.fadeDemo.fullGuide")}
       </text>
       <rect x={326} y={14} width={22} height={12} rx={6} fill={C.panel} stroke={C.line} strokeWidth={1.5} />
       <rect x={326} y={14} width={22} height={12} rx={6} fill={C.accent} stroke={C.accent} strokeWidth={1.5} opacity={toggle} />
@@ -322,6 +304,7 @@ function Header({ toggle }: { toggle: number }) {
 }
 
 function Lane({ index, f }: { index: number; f: LaneFrame }) {
+  const t = useT();
   const take = TAKES[index];
   const x = LANE.x0 + index * (LANE.w + LANE.gap);
   const active = f.state === "active";
@@ -358,7 +341,7 @@ function Lane({ index, f }: { index: number; f: LaneFrame }) {
         style={{ stroke: active ? C.accent : C.line }}
       />
       <text className="gfl-label" x={10} y={16} fontSize={10} fontWeight={600} style={{ fill: active ? C.text : C.muted }}>
-        {take.label}
+        {t("guides.fadeDemo.take", { n: take.n })}
       </text>
 
       {/* Keyboard strip and black-key rows */}
@@ -452,10 +435,11 @@ function Lane({ index, f }: { index: number; f: LaneFrame }) {
 /* --------------------------------------------------------------- component */
 
 export default function FadeGuideDemo({ motion = "auto", className }: FadeGuideDemoProps) {
+  const t = useT();
   const prefersReduced = usePrefersReducedMotion();
   const isStatic = motion === "reduce" || prefersReduced;
 
-  const [t, setT] = useState(0);
+  const [time, setTime] = useState(0);
   const timeRef = useRef(0);
   const hoverRef = useRef(false);
   const focusRef = useRef(false);
@@ -472,7 +456,7 @@ export default function FadeGuideDemo({ motion = "auto", className }: FadeGuideD
       last = now;
       if (!hoverRef.current && !focusRef.current && inViewRef.current) {
         timeRef.current = (timeRef.current + dt) % LOOP_MS;
-        setT(timeRef.current);
+        setTime(timeRef.current);
       }
       raf = requestAnimationFrame(tick);
     };
@@ -493,7 +477,7 @@ export default function FadeGuideDemo({ motion = "auto", className }: FadeGuideD
 
   const jump = useCallback((step: number) => {
     timeRef.current = SCENE_START[step] + KEY_MS[step];
-    setT(timeRef.current);
+    setTime(timeRef.current);
   }, []);
 
   const onPointerEnter = (e: PointerEvent<HTMLDivElement>) => {
@@ -516,7 +500,7 @@ export default function FadeGuideDemo({ motion = "auto", className }: FadeGuideD
     if (!next || !rootRef.current?.contains(next)) focusRef.current = false;
   };
 
-  const frame = isStatic ? STATIC_FRAME : frameAt(t);
+  const frame = isStatic ? STATIC_FRAME : frameAt(time);
 
   return (
     <div
@@ -529,17 +513,17 @@ export default function FadeGuideDemo({ motion = "auto", className }: FadeGuideD
     >
       <style>{CSS}</style>
 
-      <svg viewBox={`0 0 ${VB_W} ${VB_H}`} role="img" aria-label={ARIA_LABEL}>
+      <svg viewBox={`0 0 ${VB_W} ${VB_H}`} role="img" aria-label={t("guides.fadeDemo.ariaLabel")}>
         <Header toggle={frame.toggle} />
         {TAKES.map((take, i) => (
-          <Lane key={take.label} index={i} f={frame.lanes[i]} />
+          <Lane key={take.n} index={i} f={frame.lanes[i]} />
         ))}
       </svg>
 
       {isStatic ? (
         <ol className="gfl-strip">
           {CAPTIONS.map((caption) => (
-            <li key={caption}>{caption}</li>
+            <li key={caption}>{t(`guides.fadeDemo.captions.${caption}`)}</li>
           ))}
         </ol>
       ) : (
@@ -547,11 +531,11 @@ export default function FadeGuideDemo({ motion = "auto", className }: FadeGuideD
           <p className="gfl-cap">
             {CAPTIONS.map((caption, i) => (
               <span key={caption} data-on={i === frame.scene} aria-hidden={i !== frame.scene}>
-                {caption}
+                {t(`guides.fadeDemo.captions.${caption}`)}
               </span>
             ))}
           </p>
-          <div className="gfl-dots" role="group" aria-label="Animation steps">
+          <div className="gfl-dots" role="group" aria-label={t("guides.fadeDemo.stepsGroup")}>
             {CAPTIONS.map((caption, i) => {
               const current = i === frame.scene;
               return (
@@ -559,7 +543,7 @@ export default function FadeGuideDemo({ motion = "auto", className }: FadeGuideD
                   key={caption}
                   type="button"
                   className="gfl-dot"
-                  aria-label={`Step ${i + 1} of ${CAPTIONS.length}: ${caption}`}
+                  aria-label={t("guides.fadeDemo.stepLabel", { n: i + 1, count: CAPTIONS.length, caption: t(`guides.fadeDemo.captions.${caption}`) })}
                   aria-current={current ? "step" : undefined}
                   onClick={() => jump(i)}
                 >
