@@ -16,7 +16,7 @@
     "targets": ["appimage"],
     "linux": {
       "appimage": {
-        "bundleMediaFramework": false
+        "bundleMediaFramework": true
       }
     }
   }
