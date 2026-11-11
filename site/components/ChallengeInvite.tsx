@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { DownloadButton, type DownloadText } from "@/components/DownloadButton";
 import { REQUIREMENTS } from "@/lib/site";
-import { type Challenge, STASH_KEY, readChallenge } from "@/lib/challenge";
+import { type Challenge, STASH_KEY, checkChallenge, readChallenge } from "@/lib/challenge";
 
 const btn = "inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 font-medium transition";
 const primary = `${btn} bg-accent text-white shadow-lg shadow-accent/25 hover:bg-accent-strong`;
@@ -20,6 +20,14 @@ function stashed(): string {
  *  challenge in it (or one that doesn't make sense). All text is set as text by React (no HTML from the link). */
 export function ChallengeInvite({ download }: { download: DownloadText }) {
   const [c, setC] = useState<Challenge | null>(null);
+  // whether the app's signature fits what the link says (null: being checked)
+  const [checked, setChecked] = useState<boolean | null>(null);
+  useEffect(() => {
+    let alive = true;
+    setChecked(null);
+    if (c) void checkChallenge(c).then(ok => { if (alive) setChecked(ok); });
+    return () => { alive = false; };
+  }, [c]);
   useEffect(() => {
     setC(readChallenge(stashed()));
     // another challenge link opened in this tab: read it, then take it out of the address as the first script does
@@ -42,12 +50,18 @@ export function ChallengeInvite({ download }: { download: DownloadText }) {
         <p className="text-sm font-medium text-accent-soft">A singing challenge</p>
         {c ? (
           <>
-            <div className="mx-auto grid size-28 place-items-center rounded-full border-4 border-accent/60 bg-panel shadow-lg shadow-accent/20">
-              <span className="text-5xl font-bold tabular-nums tracking-tight text-fg">{c.score}</span>
+            <div className={`mx-auto grid size-28 place-items-center rounded-full border-4 bg-panel shadow-lg ${checked === false ? "border-dashed border-line shadow-black/20" : "border-accent/60 shadow-accent/20"}`}>
+              <span className={`text-5xl font-bold tabular-nums tracking-tight ${checked === false ? "text-muted" : "text-fg"}`}>{c.score}</span>
             </div>
             <h1 className="text-balance text-[2rem] font-semibold leading-[1.15] tracking-tight text-fg sm:text-5xl sm:leading-[1.1]">
-              {who} scored {c.score}. Can you beat it?
+              {checked === false ? `${who} says they scored ${c.score}. Can you beat it?` : `${who} scored ${c.score}. Can you beat it?`}
             </h1>
+            {checked !== null && (
+              <p className={`-mt-2 text-sm ${checked ? "text-accent-soft" : "text-faint"}`}>
+                {checked ? "✓ Score checked: this link is as OnKey made it."
+                         : "This score isn't checked: the link was changed, or it was made by an older version of OnKey."}
+              </p>
+            )}
             <div className="mx-auto flex max-w-full items-center gap-4 rounded-2xl border border-line bg-panel px-5 py-4 text-left shadow-lg shadow-black/20">
               <div aria-hidden="true" className="grid size-12 shrink-0 place-items-center rounded-xl bg-accent/15 text-accent-soft">
                 <svg viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

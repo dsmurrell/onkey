@@ -75,6 +75,10 @@ export function PrivacyPage({ locale }: { locale: string }) {
               <td><strong>GitHub</strong></td>
               <td>{rich("leaves.githubWhat")}</td>
             </tr>
+            <tr>
+              <td>{rich("leaves.feedback")}</td>
+              <td>{rich("leaves.feedbackWhat")}</td>
+            </tr>
           </tbody>
         </table>
       </div>

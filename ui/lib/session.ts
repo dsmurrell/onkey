@@ -1186,6 +1186,21 @@ export async function sharePrompt(id: string): Promise<SharePrompt | null> {
 export async function sharePromptSeen(id: string): Promise<void> {
   if (inApp()) await invoke("share_prompt_seen", { id });
 }
+/** The take page's "How's OnKey working for you?" card: the ask stage (after the 3rd sung take, then the 20th), or
+ *  null. `feedbackAsked` once it's on screen, so it's asked once per stage (feedback.rs). */
+export async function feedbackAsk(id: string): Promise<number | null> {
+  if (!inApp()) return null;
+  return (await invoke("feedback_ask", { id })) as number | null;
+}
+export async function feedbackAsked(stage: number): Promise<void> {
+  if (inApp()) await invoke("feedback_asked", { stage });
+}
+export type Mood = "up" | "down";
+/** "Send feedback": a thumb and/or words to OnKey's maker (feedback.rs says exactly what goes). Throws if it couldn't. */
+export async function sendFeedback(f: { mood: Mood | null; text: string; email: string; from: "take" | "settings" | "bar"; language: string }): Promise<void> {
+  if (!inApp()) throw new Error("not in the app");
+  await invoke("feedback_send", { mood: f.mood, text: f.text, email: f.email, from: f.from, language: f.language });
+}
 /** Makes the share video into Downloads (shown in Finder; the song's start time copied). Its path. */
 export async function shareTake(id: string, start: number): Promise<{ path: string; at: string }> {
   return (await invoke("share_take", { id, start })) as { path: string; at: string };

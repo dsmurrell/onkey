@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "OnKey",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "identifier": "audio.onkey.app",
   "build": {
     "frontendDist": "../ui/out",

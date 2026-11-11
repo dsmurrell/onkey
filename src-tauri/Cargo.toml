@@ -1,6 +1,6 @@
 [package]
 name = "onkey"
-version = "0.3.0"
+version = "0.3.1"
 description = "Sing along and see how in tune you are"
 authors = ["OnKey contributors"]
 license = "MIT"
@@ -26,6 +26,8 @@ serde = { version = "1.0", features = ["derive"] }
 log = "0.4"
 tauri = { version = "2.5.0", features = ["protocol-asset", "macos-private-api"] }
 rtrb = "0.3"
+# a challenge link's signature (challenge.rs): ECDSA P-256, which every browser's WebCrypto can check on the site
+p256 = { version = "0.13", default-features = false, features = ["ecdsa", "std"] }
 # (Core ML on macOS and DirectML on Windows, below: elsewhere the models run on the CPU)
 ort = "=2.0.0-rc.10"
 ndarray = "0.16"

@@ -15,6 +15,9 @@
     "github": "Her değişiklik <link>GitHub</link>’da; OnKey orada açık kaynak."
   },
   "releases": {
+    "0-3-1": {
+      "note": "OnKey’in içinden geri bildirim gönderme ve zamanlaması şarkının başka bir sürümüne göre yapılmış olsa da şarkıya ayak uyduran sözler."
+    },
     "0-3-0": {
       "note": "OnKey 19 dilde, ve İspanyolca, Portekizce, İtalyanca, Fransızca ve Almanca sözler şarkıya ayak uyduruyor."
     },
@@ -27,6 +30,39 @@
     }
   },
   "entries": {
+    "send-feedback": {
+      "title": "Geri bildirim gönder",
+      "summary": "OnKey’i yapan Daniel’e işlerin nasıl gittiğini anlatın: yukarı ya da aşağı bir başparmak ve birkaç kelime, uygulamanın içinden gönderilir.",
+      "p1": "Üst çubuktaki konuşma balonu onu açar; Ayarlar’da da bulunur, bir denemenin sayfası da arada bir sorar",
+      "p2": "Yanıt isterseniz e-postanızı ekleyin",
+      "p3": "Geri bildirim gönder kutusunda, Gönder’e basana kadar hiçbir şey gönderilmez ve kutu tam olarak neyin gideceğini gösterir: başparmağınız, yazdıklarınız, verdiyseniz e-postanız, OnKey’in sürümü, sisteminiz ve uygulamanın dili",
+      "p4": "Bir denemenin sayfasındaki kartta dokunduğunuz başparmak, OnKey’in sürümü, sisteminiz ve uygulamanın diliyle birlikte o tek dokunuşla gönderilir"
+    },
+    "lyrics-timed-for-another-version-of-the-song": {
+      "title": "Şarkının başka bir sürümüne göre zamanlanmış sözler",
+      "summary": "Bazı sözler farklı bir kayda göre zamanlanmış olarak gelir, örneğin solosu daha uzun bir canlı kayda; bu sözler solodan sonra saniyelerce geride ya da önde kalıyordu. OnKey artık şarkının her bölümünde onları şarkıcıyla hizalıyor.",
+      "p1": "Uzun bir enstrümantal aradan sonra gelen satırlar, ara sözlerin beklediğinden uzun ya da kısa olsa bile söylendikleri yere yerleştirilir",
+      "p2": "Şarkı ilerledikçe gittikçe daha çok kayan zamanlamalar da takip edilir",
+      "p3": "Bu, şarkı öğrenilirken olur. Daha önce öğrenilmiş bir şarkı için menüsünden Yeniden öğren’i seçin ve şarkıyı bir kez baştan sona çalın"
+    },
+    "challenge-links-are-signed": {
+      "title": "Meydan okuma bağlantıları imzalı",
+      "summary": "Meydan okuma bağlantısı puanı düz metin olarak içeriyordu, bu yüzden herkes adres çubuğunda puanı yükseltebiliyordu. OnKey artık bağlantıyı imzalıyor; singonkey.app bir puanı yalnızca bağlantı OnKey’in oluşturduğu hâliyle duruyorsa doğrulanmış olarak gösteriyor.",
+      "p1": "Değiştirilmiş ya da OnKey’in eski bir sürümüyle oluşturulmuş bir bağlantı yine açılır, ama puanı doğrulanmamış olarak işaretlenir",
+      "p2": "Doğrulama tarayıcınızda yapılır. Bağlantı hâlâ yalnızca şarkıyı, puanı ve yazdığınız adı içerir ve bunların hiçbiri bir sunucuya gönderilmez"
+    },
+    "a-loopback-input-is-never-your-microphone": {
+      "title": "Loopback girişi asla mikrofonunuz sayılmaz",
+      "summary": "Bazı ses arabirimlerinde bilgisayarın kendi sesini taşıyan girişler vardır. Bir şarkı çalarken en yüksek ses bu girişlerdeydi; bu yüzden OnKey şarkıyı sizin sesiniz sanıp söylediklerinizin hiçbirini duymayabiliyordu.",
+      "p1": "OnKey artık hangi girişlerin müziğin bir kopyası olduğunu ayırt ediyor ve onları sesiniz için hiç kullanmıyor",
+      "p2": "Mikrofonunuzun girişi, üzerinde ses olur olmaz seçilir"
+    },
+    "small-fixes-0-3-1": {
+      "title": "Küçük düzeltmeler",
+      "summary": "Biraz yanlış olan şeyler, artık yerli yerinde.",
+      "p1": "“Bitir ve puanını gör”, YouTube bir sonraki videoya geçtikten sonra artık hiçbir işe yaramadan ekranda kalmıyor",
+      "p2": "Yazılar her dilde düğmelere ve rehberlere sığıyor"
+    },
     "onkey-in-your-language": {
       "title": "OnKey kendi dilinizde",
       "summary": "OnKey artık 19 dil konuşuyor. Mac’inizin dilini kendiliğinden izler; dilerseniz üst çubuktaki, karşılama ekranındaki veya Ayarlar’daki küre simgesinden bir dil seçin.",

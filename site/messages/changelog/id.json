@@ -15,6 +15,9 @@
     "github": "Setiap perubahan ada di <link>GitHub</link>, tempat OnKey bersumber terbuka."
   },
   "releases": {
+    "0-3-1": {
+      "note": "Kirim masukan dari dalam OnKey, dan lirik yang tetap seirama meski pewaktuannya dibuat untuk versi lain lagu itu."
+    },
     "0-3-0": {
       "note": "OnKey dalam 19 bahasa, dan lirik yang seirama dengan lagu dalam bahasa Spanyol, Portugis, Italia, Prancis dan Jerman."
     },
@@ -27,6 +30,39 @@
     }
   },
   "entries": {
+    "send-feedback": {
+      "title": "Kirim masukan",
+      "summary": "Beri tahu Daniel, pembuat OnKey, bagaimana pengalaman Anda: jempol ke atas atau ke bawah dan beberapa kata, dikirim dari dalam aplikasi.",
+      "p1": "Ikon gelembung percakapan di bilah atas membukanya; ada juga di Pengaturan, dan halaman take sesekali menanyakannya",
+      "p2": "Tambahkan email Anda jika ingin dibalas",
+      "p3": "Dari kotak Kirim masukan, tidak ada yang terkirim sebelum Anda menekan Kirim, dan kotak itu menunjukkan persis apa yang dikirim: jempol Anda, apa yang Anda tulis, email jika diisi, versi OnKey, sistem yang dipakai dan bahasa aplikasi",
+      "p4": "Jempol yang ditekan pada kartu di halaman take langsung terkirim dengan satu ketukan itu, bersama versi OnKey, sistem yang dipakai dan bahasa aplikasi"
+    },
+    "lyrics-timed-for-another-version-of-the-song": {
+      "title": "Lirik dengan pewaktuan dari versi lain lagu",
+      "summary": "Sebagian lirik datang dengan pewaktuan untuk rekaman yang berbeda, misalnya versi live dengan solo yang lebih panjang, lalu setelah solo itu jadi terlambat atau terlalu cepat beberapa detik. Kini OnKey menyelaraskannya dengan penyanyi di setiap bagian lagu.",
+      "p1": "Setelah jeda instrumental yang panjang, baris-baris berikutnya ditempatkan tepat saat dinyanyikan, meski jeda itu lebih panjang atau lebih pendek dari yang diperkirakan liriknya",
+      "p2": "Pewaktuan yang makin meleset seiring lagu berjalan juga diikuti",
+      "p3": "Ini terjadi saat sebuah lagu dipelajari. Untuk lagu yang sudah Anda pelajari, pilih Pelajari lagi di menunya lalu putar lagu itu sekali sampai selesai"
+    },
+    "challenge-links-are-signed": {
+      "title": "Tautan tantangan ditandatangani",
+      "summary": "Tautan tantangan dulu menulis skornya sebagai teks biasa, jadi siapa saja bisa menaikkannya di bilah alamat. Kini OnKey menandatangani tautan itu, dan singonkey.app menampilkan skor sebagai terverifikasi hanya jika tautannya masih persis seperti yang dibuat OnKey.",
+      "p1": "Tautan yang diubah, atau dibuat oleh versi OnKey yang lebih lama, tetap bisa dibuka, dengan skornya ditandai tidak terverifikasi",
+      "p2": "Pemeriksaannya terjadi di browser Anda. Tautan itu tetap hanya berisi lagu, skor dan nama yang Anda ketik, dan tidak satu pun dikirim ke server"
+    },
+    "a-loopback-input-is-never-your-microphone": {
+      "title": "Input loopback tidak pernah dianggap mikrofon Anda",
+      "summary": "Sebagian antarmuka audio punya input yang membawa suara komputer itu sendiri. Saat lagu diputar, input itulah yang paling keras, sehingga OnKey bisa mengira lagu itu suara Anda dan sama sekali tidak mendengar nyanyian Anda.",
+      "p1": "Kini OnKey mengenali input mana yang berisi salinan musik dan tidak pernah memakainya untuk suara Anda",
+      "p2": "Input mikrofon Anda dipilih begitu ada suara yang masuk"
+    },
+    "small-fixes-0-3-1": {
+      "title": "Perbaikan kecil",
+      "summary": "Hal-hal yang sedikit melenceng, kini sudah benar.",
+      "p1": "“Selesai dan lihat skor Anda” tidak lagi tertinggal di layar tanpa berfungsi setelah YouTube beralih ke video berikutnya",
+      "p2": "Teks muat di tombol dan panduannya dalam setiap bahasa"
+    },
     "onkey-in-your-language": {
       "title": "OnKey dalam bahasa Anda",
       "summary": "OnKey kini berbicara dalam 19 bahasa. Ia mengikuti bahasa Mac Anda dengan sendirinya, atau pilih satu dari ikon globe di bilah atas, di layar sambutan atau di Pengaturan.",

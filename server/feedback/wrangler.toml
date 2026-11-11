@@ -1,0 +1,20 @@
+# feedback.singonkey.app: OnKey's "Send feedback" (README.md here). The address it emails is a secret (TO), not in
+# this file: `npx wrangler secret put TO`. It must be a verified destination address in singonkey.app's Email Routing.
+name = "onkey-feedback"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+routes = [{ pattern = "feedback.singonkey.app", custom_domain = true }]
+
+# sends only from singonkey.app, to verified destination addresses
+[[send_email]]
+name = "MAIL"
+
+# at most 10 a minute from one address
+[[ratelimits]]
+name = "LIMIT"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60

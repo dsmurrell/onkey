@@ -34,12 +34,18 @@ export const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").r
 
 /** Each release, newest first: a divider in the timeline above the features it brought. */
 export const RELEASES: Release[] = [
+  { version: "0.3.1", date: "2026-11-11" },
   { version: "0.3.0", date: "2026-11-02" },
   { version: "0.2.0", date: "2026-10-31" },
   { version: "0.1.0", date: "2026-10-22", link: { href: "https://news.ycombinator.com/item?id=50195488", track: "Launched on Hacker News" } },
 ];
 
 export const ENTRIES: Entry[] = [
+  { id: "send-feedback", date: "2026-11-03", version: "0.3.1", kind: "new" },
+  { id: "lyrics-timed-for-another-version-of-the-song", date: "2026-11-11", version: "0.3.1", kind: "better" },
+  { id: "challenge-links-are-signed", date: "2026-11-11", version: "0.3.1", kind: "better" },
+  { id: "a-loopback-input-is-never-your-microphone", date: "2026-11-11", version: "0.3.1", kind: "fix" },
+  { id: "small-fixes-0-3-1", date: "2026-11-11", version: "0.3.1", kind: "fix" },
   { id: "onkey-in-your-language", date: "2026-11-01", version: "0.3.0", kind: "new" },
   { id: "lyrics-keep-time-in-more-languages", date: "2026-11-01", version: "0.3.0", kind: "new" },
   { id: "songs-to-try-in-your-language", date: "2026-11-01", version: "0.3.0", kind: "new" },

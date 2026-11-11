@@ -1046,8 +1046,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "9f10b3982fa7808b",
+      "en": "6dcde67ed64e90fb",
+      "out": "7c0877850b83157c",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -1260,6 +1260,16 @@
       "out": "63b7435f27cf3482",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "c6f579e52d18337c",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "4307efcd72e83d1a",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "3140dca339ce8d4d",
@@ -1286,8 +1296,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "68c44338c0b7063c",
+      "en": "0cacc7ec77e2c15e",
+      "out": "d18ae56d7e77db48",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -1995,6 +2005,11 @@
       "out": "acc3167eca75571a",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "6f667a2676e8ec47",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "ffc0adeea6efede4",
@@ -2011,8 +2026,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "34e4c6b128c6bd95",
+      "en": "3fed681c1221ce95",
+      "out": "cdd584d84dbe86a4",
       "human": false
     },
     "faq.network.q": {
@@ -3863,8 +3878,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "de36ba1bbcb33647",
+      "en": "6dcde67ed64e90fb",
+      "out": "88e05cd1a1218ff4",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -4077,6 +4092,16 @@
       "out": "e043c605e1f64101",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "0e874f1068d2d961",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "b745c8e994d3908b",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "f7a29f351db34939",
@@ -4103,8 +4128,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "d46f710e5c310279",
+      "en": "0cacc7ec77e2c15e",
+      "out": "e18959ea53b1845a",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -4812,6 +4837,11 @@
       "out": "3767572d79825ce9",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "07907e265e47027a",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "666d421369a703bf",
@@ -4828,8 +4858,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "7e53767d187d435e",
+      "en": "3fed681c1221ce95",
+      "out": "c3eef75ac6950d4d",
       "human": false
     },
     "faq.network.q": {
@@ -6680,8 +6710,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "de36ba1bbcb33647",
+      "en": "6dcde67ed64e90fb",
+      "out": "88e05cd1a1218ff4",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -6894,6 +6924,16 @@
       "out": "e043c605e1f64101",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "0e874f1068d2d961",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "359e3540032b208e",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "f7a29f351db34939",
@@ -6920,8 +6960,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "d46f710e5c310279",
+      "en": "0cacc7ec77e2c15e",
+      "out": "e18959ea53b1845a",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -7629,6 +7669,11 @@
       "out": "3767572d79825ce9",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "e436d951c4d77b01",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "666d421369a703bf",
@@ -7645,8 +7690,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "7e53767d187d435e",
+      "en": "3fed681c1221ce95",
+      "out": "c3eef75ac6950d4d",
       "human": false
     },
     "faq.network.q": {
@@ -9497,8 +9542,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "e78c227faa670df1",
+      "en": "6dcde67ed64e90fb",
+      "out": "c01d52f09f3b0818",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -9711,6 +9756,16 @@
       "out": "cef426828f46adca",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "cdcd1423be6d223c",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "15a4e8b47e23330d",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "bcd65c8559e35dc3",
@@ -9737,8 +9792,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "5830da6648923e96",
+      "en": "0cacc7ec77e2c15e",
+      "out": "d674c7e47c545338",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -10446,6 +10501,11 @@
       "out": "3ff66111918f5d49",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "57f41d04ef922287",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "dd53aa7adc590c4b",
@@ -10462,8 +10522,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "b22e844ea270d7c4",
+      "en": "3fed681c1221ce95",
+      "out": "1673dd82b399f3b2",
       "human": false
     },
     "faq.network.q": {
@@ -12314,8 +12374,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "8a432f66fd8f0aea",
+      "en": "6dcde67ed64e90fb",
+      "out": "7d5cb2dd9f972967",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -12528,6 +12588,16 @@
       "out": "6405bbe9e5212d43",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "3e28006c4f4ef1f7",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "2f7cc218d13065e9",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "b61d6a5bd5fb3a6a",
@@ -12554,8 +12624,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "e24a2212610a6fe7",
+      "en": "0cacc7ec77e2c15e",
+      "out": "1fb942eecec7d309",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -13263,6 +13333,11 @@
       "out": "913663b2ecb88267",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "5624a53a4129459b",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "ee7eb02aa64fafa8",
@@ -13279,8 +13354,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "5a50c5f658ec942d",
+      "en": "3fed681c1221ce95",
+      "out": "10f8515f79efdae1",
       "human": false
     },
     "faq.network.q": {
@@ -15131,8 +15206,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "8e1e02eca9f43b7a",
+      "en": "6dcde67ed64e90fb",
+      "out": "11b665a21f405164",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -15345,6 +15420,16 @@
       "out": "f2fa285f36d5663c",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "66349ae4a68a12d9",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "b3b73b9fa9a75fad",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "4e80d06acdb1de0f",
@@ -15371,8 +15456,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "f0eef21de21723a5",
+      "en": "0cacc7ec77e2c15e",
+      "out": "3eaf5716d6554ec9",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -16080,6 +16165,11 @@
       "out": "2b6a906401f490dd",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "d434ea9d40926ab1",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "553a0d22737c4fc2",
@@ -16096,8 +16186,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "4b99830069357d13",
+      "en": "3fed681c1221ce95",
+      "out": "88b9e205deef6c9b",
       "human": false
     },
     "faq.network.q": {
@@ -17948,8 +18038,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "2b9b8e7a13c632d1",
+      "en": "6dcde67ed64e90fb",
+      "out": "d93cae910de7a12b",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -18162,6 +18252,16 @@
       "out": "a1ad1a020b2969f7",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "6dbd26a4eeb33a49",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "b387fcae7c26496c",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "ae6805e5ac51b7ee",
@@ -18188,8 +18288,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "29c1fa6a59e63e68",
+      "en": "0cacc7ec77e2c15e",
+      "out": "46924eff4fbaa7a4",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -18897,6 +18997,11 @@
       "out": "ebe6b8a188b52625",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "cba1430eaf00c6b9",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "63c9f8f1f7eb074a",
@@ -18913,8 +19018,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "69936b6964a748ad",
+      "en": "3fed681c1221ce95",
+      "out": "f98b1bb584cf4928",
       "human": false
     },
     "faq.network.q": {
@@ -20765,8 +20870,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "570879a75e9ced44",
+      "en": "6dcde67ed64e90fb",
+      "out": "94f28e86a2e8aef0",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -20979,6 +21084,16 @@
       "out": "0f1a0dcf5e0c098f",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "7f0144a451ac8180",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "3d3e1dcb0d479060",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "190653f47e95e844",
@@ -21005,8 +21120,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "9158dba5753c0d0f",
+      "en": "0cacc7ec77e2c15e",
+      "out": "409decef8fa95c16",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -21714,6 +21829,11 @@
       "out": "21276527d71dde56",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "de8bbdac992dce31",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "317f07d034258dff",
@@ -21730,8 +21850,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "04403405127762c8",
+      "en": "3fed681c1221ce95",
+      "out": "f94e37b1e5682124",
       "human": false
     },
     "faq.network.q": {
@@ -23582,8 +23702,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "f8254816a39baca0",
+      "en": "6dcde67ed64e90fb",
+      "out": "aa14a06b1c532b08",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -23796,6 +23916,16 @@
       "out": "37c66060a7431914",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "654a79078621cc07",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "58219ec06dd90a95",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "e66c0f3e2a6beff1",
@@ -23822,8 +23952,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "396f2e526d0d2eb6",
+      "en": "0cacc7ec77e2c15e",
+      "out": "230be1c9a5be8b8c",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -24531,6 +24661,11 @@
       "out": "0d3a36c2c7a5c916",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "66b36f0f5683eda9",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "6d11be4432196897",
@@ -24547,8 +24682,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "2e046fa76fdc6ed6",
+      "en": "3fed681c1221ce95",
+      "out": "969640ca52d80343",
       "human": false
     },
     "faq.network.q": {
@@ -26399,8 +26534,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "9dcf93b09c98105d",
+      "en": "6dcde67ed64e90fb",
+      "out": "9cb9608c52403d97",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -26613,6 +26748,16 @@
       "out": "079e46fb63054e8e",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "2cbb6552fb632404",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "74713704d6f4ae80",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "ec2be6d46de4b18a",
@@ -26639,8 +26784,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "185859c9a7afcc3f",
+      "en": "0cacc7ec77e2c15e",
+      "out": "6d93f6b0b4daf7da",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -27348,6 +27493,11 @@
       "out": "29954ef75c378ef7",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "4aa8daca73f93637",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "b5779480616e2f68",
@@ -27364,8 +27514,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "72d2792cfe707467",
+      "en": "3fed681c1221ce95",
+      "out": "19015671680cb843",
       "human": false
     },
     "faq.network.q": {
@@ -29216,8 +29366,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "e5bf344c25322f22",
+      "en": "6dcde67ed64e90fb",
+      "out": "e8f637eb7ca71f3b",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -29430,6 +29580,16 @@
       "out": "362c49b9df97f86b",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "59926480252c26ee",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "3d89af1cc7ba0d86",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "a8328164858e9ea1",
@@ -29456,8 +29616,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "96007d033d263cd6",
+      "en": "0cacc7ec77e2c15e",
+      "out": "4b4d8c8cab3d90f3",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -30165,6 +30325,11 @@
       "out": "991899dce88a7d12",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "b42ad9499b6b2c21",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "08305287b8086587",
@@ -30181,8 +30346,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "cbdae61a703cc8a4",
+      "en": "3fed681c1221ce95",
+      "out": "0c80c2df6e345461",
       "human": false
     },
     "faq.network.q": {
@@ -32033,8 +32198,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "918625fe597f0339",
+      "en": "6dcde67ed64e90fb",
+      "out": "6582513deb376564",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -32247,6 +32412,16 @@
       "out": "8f4958e751c25c43",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "7cbbd75221f0beff",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "d4dc32826cc05c0d",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "56dec1e88b7bf4e5",
@@ -32273,8 +32448,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "2ca9e5c0a2955d49",
+      "en": "0cacc7ec77e2c15e",
+      "out": "0b19a9ffa3f1544f",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -32982,6 +33157,11 @@
       "out": "4afbf40c56e43178",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "777a39064d856633",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "e65b9f8a92b1e4f0",
@@ -32998,8 +33178,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "3aeef88dacae8273",
+      "en": "3fed681c1221ce95",
+      "out": "3c51fbd803b8b5a9",
       "human": false
     },
     "faq.network.q": {
@@ -34850,8 +35030,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "67528e378b2eec5f",
+      "en": "6dcde67ed64e90fb",
+      "out": "6df9189388f28069",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -35064,6 +35244,16 @@
       "out": "0fd28b9716c8204a",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "6e8b7554eb46bb0c",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "4c37546c24dcf37f",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "c54a15c930790a64",
@@ -35090,8 +35280,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "cbb9040a5071932e",
+      "en": "0cacc7ec77e2c15e",
+      "out": "175cfec8c51ee367",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -35799,6 +35989,11 @@
       "out": "d61096bf776425a6",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "fbc4073e7b847e5c",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "bf7faee525bb2bb8",
@@ -35815,8 +36010,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "36b7d322f67cc7c1",
+      "en": "3fed681c1221ce95",
+      "out": "1a428721acb33d98",
       "human": false
     },
     "faq.network.q": {
@@ -37667,8 +37862,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "a0ee1fe8cb13f80e",
+      "en": "6dcde67ed64e90fb",
+      "out": "90c09be1910bdbee",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -37881,6 +38076,16 @@
       "out": "93ef6805e5b3a518",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "2bb81b7eb74d17a7",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "f11cb52165fb13c0",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "beb3f0b0a9a34999",
@@ -37907,8 +38112,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "06edca5d207e4637",
+      "en": "0cacc7ec77e2c15e",
+      "out": "829e38263e19286e",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -38616,6 +38821,11 @@
       "out": "90b828d648d4a852",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "8aaac78b57d284b5",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "f7cbfa6364e68ac6",
@@ -38632,8 +38842,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "e1eaa0ba8700b518",
+      "en": "3fed681c1221ce95",
+      "out": "097f5a1e2b7fd232",
       "human": false
     },
     "faq.network.q": {
@@ -40484,8 +40694,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "9592cc022d45b0ef",
+      "en": "6dcde67ed64e90fb",
+      "out": "dbfb15a34aa75267",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -40698,6 +40908,16 @@
       "out": "544e02f8e9231275",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "b682673113604c69",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "7560f2c0e87322af",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "7fcba6616691140e",
@@ -40724,8 +40944,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "eddd4aa16ad5833f",
+      "en": "0cacc7ec77e2c15e",
+      "out": "c53385052d3c0bf3",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -41433,6 +41653,11 @@
       "out": "506e1a5103c4d9dc",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "34aa487e8edd123f",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "ee37fd354e0f4d8d",
@@ -41449,8 +41674,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "9881b5f46c3deaa1",
+      "en": "3fed681c1221ce95",
+      "out": "6a0a2a1fe57b29a0",
       "human": false
     },
     "faq.network.q": {
@@ -43301,8 +43526,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "4aaf845c6d9dc0b5",
+      "en": "6dcde67ed64e90fb",
+      "out": "182118439c49e6ee",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -43515,6 +43740,16 @@
       "out": "02517fca4d82ff75",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "ef57e18bd2089d54",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "e7685084afdf1ecd",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "7aea5a7847fa5f52",
@@ -43541,8 +43776,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "1617010233159f66",
+      "en": "0cacc7ec77e2c15e",
+      "out": "257c6c59ee1e45c2",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -44250,6 +44485,11 @@
       "out": "9a3108269e2f4077",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "eef050881e93a95e",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "9cc9633790214c68",
@@ -44266,8 +44506,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "0b0504bb0063599b",
+      "en": "3fed681c1221ce95",
+      "out": "47242ef9e1e640a6",
       "human": false
     },
     "faq.network.q": {
@@ -46118,8 +46358,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "084eb5e5a8861bff",
+      "en": "6dcde67ed64e90fb",
+      "out": "7abac8f43ac66613",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -46332,6 +46572,16 @@
       "out": "770e3167f689a4aa",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "b8a92fcec1255252",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "cb61a9b519f3af72",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "94bfd71ec85d228b",
@@ -46358,8 +46608,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "5ad4ec0681ed8848",
+      "en": "0cacc7ec77e2c15e",
+      "out": "7bb684621f363d83",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -47067,6 +47317,11 @@
       "out": "9fa0d167b0a96b82",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "765512ca77e5d482",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "cc35d6a66afd5c45",
@@ -47083,8 +47338,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "4a1fa2cf040789e5",
+      "en": "3fed681c1221ce95",
+      "out": "3e7e35a3f2939556",
       "human": false
     },
     "faq.network.q": {
@@ -48935,8 +49190,8 @@
       "human": false
     },
     "docs.howItWorks.privacy.hood.network": {
-      "en": "a40cdfd4893bfb1d",
-      "out": "f16f0995a3a6310f",
+      "en": "6dcde67ed64e90fb",
+      "out": "c19095462e994f4d",
       "human": false
     },
     "docs.howItWorks.privacy.hood.stored": {
@@ -49149,6 +49404,16 @@
       "out": "1f1f70e8da008092",
       "human": false
     },
+    "docs.privacy.leaves.feedback": {
+      "en": "e61536d55fa8f4a8",
+      "out": "03f02e42bbb5b283",
+      "human": false
+    },
+    "docs.privacy.leaves.feedbackWhat": {
+      "en": "cd26270800dcaab5",
+      "out": "4c9c544008a6b236",
+      "human": false
+    },
     "docs.privacy.leaves.flowMyna": {
       "en": "485c02dc89bdcc88",
       "out": "d99718e2c1b01a99",
@@ -49175,8 +49440,8 @@
       "human": false
     },
     "docs.privacy.leaves.nothingElse": {
-      "en": "f503152b61eeadd6",
-      "out": "a325d8dff409e307",
+      "en": "0cacc7ec77e2c15e",
+      "out": "a19588ac9877f48c",
       "human": false
     },
     "docs.privacy.leaves.sentTo": {
@@ -49884,6 +50149,11 @@
       "out": "bbf6ac91b8159747",
       "human": false
     },
+    "faq.network.feedback": {
+      "en": "4699af5e8304a557",
+      "out": "86ae49dbd616efcf",
+      "human": false
+    },
     "faq.network.github": {
       "en": "4a7143cd6b5084f9",
       "out": "8147218923008741",
@@ -49900,8 +50170,8 @@
       "human": false
     },
     "faq.network.outro": {
-      "en": "3fc91e397b9fa076",
-      "out": "f4f77d9a718d1a7a",
+      "en": "3fed681c1221ce95",
+      "out": "861068e1924b1887",
       "human": false
     },
     "faq.network.q": {

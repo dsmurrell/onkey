@@ -194,7 +194,8 @@
       "lrclib": "<strong>LRCLIB</strong>: el artista, el título, el álbum y la duración de la canción, para obtener la letra sincronizada (salvo que Mostrar letras esté desactivado).",
       "apple": "<strong>Apple</strong>: el artista y el título para buscar las carátulas, y el id de Apple Music de una canción reconocida para saber su duración. Las carátulas en sí se cargan desde los servidores de imágenes de Spotify, Apple o YouTube.",
       "github": "<strong>GitHub</strong>: una comprobación diaria de si hay una versión nueva, y su descarga. Puedes desactivarlo en Ajustes.",
-      "outro": "No hay cuenta, ni analíticas, ni servidor mío. \"Informar de un problema\" solo guarda un archivo en tu Mac, para que lo adjuntes a un issue de GitHub si quieres. <link>La privacidad al completo</link>."
+      "feedback": "<strong>Comentarios</strong>: solo cuando haces clic en Enviar en “Enviar comentarios”, o tocas un pulgar en la tarjeta de una toma: tu pulgar, lo que escribiste, tu correo si lo diste, la versión de OnKey, tu sistema y el idioma de la app.",
+      "outro": "No hay cuenta ni analíticas. \"Informar de un problema\" solo guarda un archivo en tu Mac, para que lo adjuntes a un issue de GitHub si quieres. <link>La privacidad al completo</link>."
     },
     "music": {
       "q": "¿OnKey ofrece o descarga música?",
@@ -618,7 +619,7 @@
         },
         "hood": {
           "stored": "Guardado en <code>{dataDir}</code>: <code>songs/</code> (línea de afinación, barras, huella, tiempos de la letra y una firma de Shazam, guardados para cada canción aprendida en cualquiera de los dos modos), <code>takes/</code> (<code>mic.m4a</code>: tu micrófono, AAC mono a unos 64 kbps, unos 0.5 MB por minuto, todo conservado hasta 2 GB en total, más las puntuaciones y el informe con las líneas de la letra) y <code>records/</code> (registros y un resumen de cada reproducción, solo números, conservados 30 días, como máximo 200 MB). Eliminar una canción o una toma la mueve a la Papelera.",
-          "network": "Red: Shazam (modo de escucha, se puede desactivar) para canciones aún no aprendidas, búsquedas de letras en LRCLIB (salvo que Mostrar letras esté desactivado), iTunes Search para carátulas, iTunes Lookup para la duración de una canción reconocida, las imágenes de las carátulas (de Apple, o la miniatura de YouTube) y una comprobación diaria de actualizaciones en GitHub Releases. Sin cuenta, sin analíticas y sin ningún servidor mío.",
+          "network": "Red: Shazam (modo de escucha, se puede desactivar) para canciones aún no aprendidas, búsquedas de letras en LRCLIB (salvo que Mostrar letras esté desactivado), iTunes Search para carátulas, iTunes Lookup para la duración de una canción reconocida, las imágenes de las carátulas (de Apple, o la miniatura de YouTube), una comprobación diaria de actualizaciones en GitHub Releases y los comentarios, solo cuando haces clic en Enviar. Sin cuenta y sin analíticas.",
           "more": "Más en <link>Privacidad y legal</link>."
         }
       }
@@ -725,7 +726,9 @@
         "covers": "<strong>Imágenes de carátulas</strong>",
         "coversWhat": "Peticiones de imagen normales a los servidores de imágenes de Spotify, Apple o YouTube cuando se muestra una carátula.",
         "githubWhat": "Una comprobación de si hay una versión más nueva de OnKey un minuto después de abrirlo y luego una vez al día, y la descarga si la hay. Con <strong>Buscar actualizaciones automáticamente</strong> desactivado en Ajustes, solo comprueba cuando haces clic en <strong>Comprobar ahora</strong>.",
-        "nothingElse": "No sale nada más: no hay cuenta, ni analíticas, ni informes de fallos, ni ningún servidor mío. Tus grabaciones nunca se suben. “Informar de un problema” te muestra lo que va en su zip de números y registros, lo guarda en tu Mac y no envía nada. Tú decides si lo adjuntas a un issue de GitHub. Los modelos vienen dentro de la app, así que nunca los descarga.",
+        "feedback": "<strong>Comentarios</strong> (feedback.singonkey.app, mío)",
+        "feedbackWhat": "Solo cuando haces clic en <strong>Enviar</strong> en “Enviar comentarios” (en Ajustes, o en la tarjeta “¿Qué tal te está funcionando OnKey?” que la página de una toma muestra dos veces: después de tu 3.ª toma y de la 20.ª): tu pulgar arriba o abajo, lo que escribiste, tu correo si lo diste para recibir respuesta, la versión de OnKey, tu sistema y su versión, y el idioma de la app. Me llega por correo y no se guarda en ningún otro lugar. Un pulgar en la tarjeta se envía con ese único clic.",
+        "nothingElse": "No sale nada más: no hay cuenta, ni analíticas, ni informes de fallos. Tus grabaciones nunca se suben. “Informar de un problema” te muestra lo que va en su zip de números y registros, lo guarda en tu Mac y no envía nada. Tú decides si lo adjuntas a un issue de GitHub. Los modelos vienen dentro de la app, así que nunca los descarga.",
         "website": "Este sitio web (no la app) cuenta las visitas con Plausible. No usa cookies ni nada que te identifique, y solo guarda totales, como cuántas personas lo visitaron, desde dónde y cuántas hicieron clic en Descargar.",
         "flowMyna": "Los recorridos anónimos de las visitas también van a Flow Myna, mi propia herramienta de analíticas: qué partes del sitio leyó una visita, en qué orden, y la ubicación aproximada desde la que llegó la conexión (como el país). Sin cookies, y tu dirección IP no se guarda.",
         "stars": "El número de estrellas de los botones de GitHub viene directamente de GitHub, así que tu navegador se lo pide a GitHub."

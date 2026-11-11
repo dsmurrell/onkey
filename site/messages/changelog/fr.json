@@ -15,6 +15,9 @@
     "github": "Chaque changement est sur <link>GitHub</link>, où OnKey est open source."
   },
   "releases": {
+    "0-3-1": {
+      "note": "Envoyez un avis depuis OnKey, et des paroles qui restent calées même quand leur synchronisation a été faite pour une autre version de la chanson."
+    },
     "0-3-0": {
       "note": "OnKey en 19 langues, et des paroles bien calées en espagnol, portugais, italien, français et allemand."
     },
@@ -27,6 +30,39 @@
     }
   },
   "entries": {
+    "send-feedback": {
+      "title": "Envoyer un avis",
+      "summary": "Dites à Daniel, qui crée OnKey, comment ça se passe : un pouce levé ou baissé et quelques mots, envoyés depuis l’app.",
+      "p1": "La bulle de la barre du haut l’ouvre ; il est aussi dans les Réglages, et la page d’une prise vous le propose de temps en temps",
+      "p2": "Ajoutez votre e-mail si vous voulez une réponse",
+      "p3": "Depuis la fenêtre Envoyer un avis, rien n’est envoyé avant que vous appuyiez sur Envoyer, et elle montre exactement ce qui part : votre pouce, ce que vous avez écrit, votre e-mail si vous l’avez donné, la version d’OnKey, votre système et la langue de l’app",
+      "p4": "Appuyer sur un pouce dans la carte de la page d’une prise l’envoie en un seul appui, avec la version d’OnKey, votre système et la langue de l’app"
+    },
+    "lyrics-timed-for-another-version-of-the-song": {
+      "title": "Paroles calées sur une autre version de la chanson",
+      "summary": "Certaines paroles sont synchronisées sur un autre enregistrement, par exemple une version live avec un solo plus long, et se retrouvaient ensuite en retard ou en avance de plusieurs secondes. OnKey les cale maintenant sur la voix dans chaque partie de la chanson.",
+      "p1": "Après un long passage instrumental, les lignes qui suivent sont placées là où elles sont chantées, même quand ce passage est plus long ou plus court que ne le prévoient les paroles",
+      "p2": "Les décalages qui s’accentuent au fil de la chanson sont suivis aussi",
+      "p3": "Cela se fait quand une chanson est apprise. Pour une chanson déjà apprise, choisissez Réapprendre dans son menu et lancez-la une fois jusqu’au bout"
+    },
+    "challenge-links-are-signed": {
+      "title": "Les liens de défi sont signés",
+      "summary": "Un lien de défi affichait son score en clair, si bien que n’importe qui pouvait l’augmenter dans la barre d’adresse. OnKey signe maintenant le lien, et singonkey.app n’affiche un score comme vérifié que si le lien est tel qu’OnKey l’a créé.",
+      "p1": "Un lien modifié, ou créé par une ancienne version d’OnKey, s’ouvre toujours, avec son score marqué comme non vérifié",
+      "p2": "La vérification se fait dans votre navigateur. Le lien ne contient toujours que la chanson, le score et le prénom que vous avez saisi, et rien de tout cela n’est envoyé à un serveur"
+    },
+    "a-loopback-input-is-never-your-microphone": {
+      "title": "Une entrée loopback n’est jamais votre micro",
+      "summary": "Certaines interfaces audio ont des entrées qui transportent le son de l’ordinateur lui-même. Pendant qu’une chanson jouait, c’étaient les entrées les plus fortes, alors OnKey pouvait prendre la chanson pour votre voix et ne rien entendre de votre chant.",
+      "p1": "OnKey repère maintenant les entrées qui sont une copie de la musique et ne les utilise jamais pour votre voix",
+      "p2": "L’entrée de votre micro est choisie dès qu’elle reçoit du son"
+    },
+    "small-fixes-0-3-1": {
+      "title": "Petites corrections",
+      "summary": "Des choses qui n’étaient pas tout à fait justes, maintenant au point.",
+      "p1": "« Terminer et voir le score » ne reste plus à l’écran sans effet quand YouTube passe à la vidéo suivante",
+      "p2": "Les textes tiennent dans leurs boutons et leurs guides, dans toutes les langues"
+    },
     "onkey-in-your-language": {
       "title": "OnKey dans votre langue",
       "summary": "OnKey parle maintenant 19 langues. Il suit tout seul la langue de votre Mac, ou choisissez-en une depuis le globe de la barre du haut, sur l’écran d’accueil ou dans les Réglages.",

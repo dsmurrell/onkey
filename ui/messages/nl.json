@@ -170,6 +170,10 @@
         "subMac": "Bewaar de logboeken en timings van OnKey als zip om bij een GitHub-issue te voegen. Je ziet eerst wat erin zit; geen songteksten of audio, niets wordt geüpload.",
         "subPc": "Bewaar de logboeken en timings van OnKey als één zip op je bureaublad, om bij een bericht of een GitHub-issue te voegen. Je ziet eerst wat erin zit; geen songteksten of audio, niets wordt geüpload."
       },
+      "feedback": {
+        "title": "Stuur feedback",
+        "sub": "Vertel Daniel, die OnKey maakt, wat werkt, wat niet en wat je hierna graag zou willen. Hij leest alles."
+      },
       "guides": {
         "title": "Handleidingen en hulp",
         "sub": "Hoe OnKey werkt, de score, problemen oplossen en comfortabel zingen, op singonkey.app."
@@ -610,6 +614,14 @@
     },
     "proud": {
       "share": "Deel deze take",
+      "notNow": "Niet nu"
+    },
+    "feedback": {
+      "ask": "Hoe bevalt OnKey?",
+      "up": "Goed",
+      "down": "Niet zo",
+      "thanks": "Bedankt. Wil je meer vertellen?",
+      "more": "Vertel meer",
       "notNow": "Niet nu"
     },
     "player": {
@@ -1137,6 +1149,24 @@
     "saveMac": "Bewaar…",
     "savePc": "Bewaar op bureaublad"
   },
+  "feedback": {
+    "title": "Stuur feedback",
+    "intro": "Daniel, die OnKey maakt, leest alles. Zeg wat je goed vindt, wat in de weg zit of wat je zou willen dat het kan.",
+    "how": "Hoe bevalt OnKey?",
+    "up": "Goed",
+    "down": "Niet zo",
+    "label": "Nog iets toe te voegen? <muted>(optioneel)</muted>",
+    "placeholder": "bijv. ik zou graag willen dat het werkt met mijn eigen muziekbestanden",
+    "emailLabel": "Je e-mailadres, als je een antwoord wilt <muted>(optioneel)</muted>",
+    "emailPlaceholder": "you@example.com",
+    "sends": "Verstuurd: je duim omhoog of omlaag, wat je schreef, je e-mailadres als je dat gaf, de versie van OnKey, welk systeem je gebruikt (en de versie ervan) en de taal van de app. Verder niets: geen nummers, geen opnamen, geen logboeken.",
+    "send": "Verstuur",
+    "sending": "Versturen…",
+    "cancel": "Annuleer",
+    "sent": "Bedankt, het is onderweg.",
+    "done": "Gereed",
+    "failed": "Het kon niet worden verstuurd. Controleer of je online bent en probeer het opnieuw, of mail naar hello@singonkey.app."
+  },
   "nav": {
     "appName": "OnKey",
     "songsToTry": "Nummers om te proberen",
@@ -1147,6 +1177,7 @@
     "paused": "Luisteren gepauzeerd",
     "resume": "Ga verder",
     "resumeWhy": "Hervat luisteren (⌘⇧P)",
+    "feedback": "Stuur feedback",
     "whatsNew": "Wat is er nieuw in OnKey",
     "whatsNewFresh": "Wat is er nieuw in OnKey (nieuw)",
     "testBuild": "Testversie",

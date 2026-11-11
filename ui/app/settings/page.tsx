@@ -9,6 +9,7 @@ import FadeGuideDemo from "@/components/guides/FadeGuideDemo";
 import { useEffect, useState } from "react";
 import { Logo, Nav, WhatsNew } from "@/components/Nav";
 import { reportProblem } from "@/components/ReportProblem";
+import { openFeedback } from "@/components/Feedback";
 import { checkForUpdate, restartToUpdate, setAutoUpdate, useUpdate } from "@/lib/update";
 import { updateLine } from "@/lib/updateLine";
 import { allowControl, getMics, getOutputTiming, getSettings, openLink, setMic, setLanguage, setScoringLevel, setSetting, setupControl, setupStatus, setYouTube, type Mics, type OutputTiming, type Settings } from "@/lib/session";
@@ -377,6 +378,13 @@ export default function SettingsPage() {
               <span className="mt-1 block text-xs text-ink-400">{win
                 ? t("settings.about.report.subPc")
                 : t("settings.about.report.subMac")}</span>
+            </span>
+            <span aria-hidden className="text-ink-400">›</span>
+          </button>
+          <button onClick={() => openFeedback("settings")} className="flex w-full items-center justify-between gap-6 border-b border-white/6 px-5 py-4 text-left text-sm text-ink-100 hover:bg-white/4">
+            <span>
+              {t("settings.about.feedback.title")}
+              <span className="mt-1 block text-xs text-ink-400">{t("settings.about.feedback.sub")}</span>
             </span>
             <span aria-hidden className="text-ink-400">›</span>
           </button>

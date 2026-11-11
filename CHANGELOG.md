@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.1 · 2026-11-11
+
+Send feedback from inside OnKey, and lyrics that stay in time when their timings were made for another version of the song.
+
+- Send feedback: the speech bubble in the top bar (also in Settings and on a take's page) sends a thumb and a few words to Daniel, who makes OnKey. It's sent when you press Send, or when you tap a thumb on a take's card.
+- Lyrics timed for another version of a song, with a longer solo or at another speed, are now lined up with the singer when the song is learned. For a song you've already learned, choose Learn again.
+- Challenge links are signed: a score changed in the link shows as not checked on singonkey.app.
+- Audio interfaces: an input that carries the computer's own sound (a "loopback" input) is never used as your microphone.
+- Fixes: "Finish and see your score" no longer stays on screen after YouTube moves on to the next video, and text fits its buttons and guides in every language.
+
+All the details: https://singonkey.app/changelog/
+
 ## 0.3.0 · 2026-11-02
 
 OnKey in 19 languages, lyrics that keep time in Spanish, Portuguese, Italian, French and German, and starter songs in your language.

@@ -15,6 +15,9 @@
     "github": "Jede Änderung steht auf <link>GitHub</link>, wo OnKey Open Source ist."
   },
   "releases": {
+    "0-3-1": {
+      "note": "Feedback direkt aus OnKey senden, und Songtexte, die im Takt bleiben, wenn ihr Timing für eine andere Version des Songs gemacht wurde."
+    },
     "0-3-0": {
       "note": "OnKey in 19 Sprachen, und Texte, die auf Spanisch, Portugiesisch, Italienisch, Französisch und Deutsch im Takt bleiben."
     },
@@ -27,6 +30,39 @@
     }
   },
   "entries": {
+    "send-feedback": {
+      "title": "Feedback senden",
+      "summary": "Sag Daniel, der OnKey macht, wie es läuft: Daumen hoch oder runter und ein paar Worte, direkt aus der App gesendet.",
+      "p1": "Die Sprechblase in der oberen Leiste öffnet es; es ist auch in den Einstellungen, und die Seite eines Takes fragt ab und zu danach",
+      "p2": "Gib deine E-Mail an, wenn du eine Antwort möchtest",
+      "p3": "Im Fenster „Feedback senden“ wird nichts gesendet, bevor du auf Senden drückst, und es zeigt genau, was rausgeht: dein Daumen, was du geschrieben hast, deine E-Mail, falls angegeben, OnKeys Version, dein System und die Sprache der App",
+      "p4": "Ein Daumen, den du auf der Karte auf der Seite eines Takes antippst, wird mit diesem einen Tippen gesendet, zusammen mit OnKeys Version, deinem System und der Sprache der App"
+    },
+    "lyrics-timed-for-another-version-of-the-song": {
+      "title": "Texte mit Timing für eine andere Version des Songs",
+      "summary": "Manche Texte haben ihr Timing von einer anderen Aufnahme, etwa einer Live-Version mit längerem Solo, und lagen danach Sekunden zu spät oder zu früh. Jetzt richtet OnKey sie in jedem Teil des Songs an der Gesangsstimme aus.",
+      "p1": "Nach einem langen Instrumentalteil stehen die folgenden Zeilen dort, wo sie gesungen werden, auch wenn der Teil länger oder kürzer ist, als der Text erwartet",
+      "p2": "Auch ein Timing, das im Lauf des Songs immer weiter abdriftet, wird mitverfolgt",
+      "p3": "Das passiert, wenn ein Song gelernt wird. Bei einem Song, den du schon gelernt hast, wähl Neu lernen in seinem Menü und spiel ihn einmal ganz durch"
+    },
+    "challenge-links-are-signed": {
+      "title": "Herausforderungslinks sind signiert",
+      "summary": "Ein Herausforderungslink zeigte seine Punktzahl im Klartext, sodass man sie in der Adressleiste erhöhen konnte. Jetzt signiert OnKey den Link, und singonkey.app zeigt eine Punktzahl nur dann als geprüft, wenn der Link so ist, wie OnKey ihn erstellt hat.",
+      "p1": "Ein veränderter Link oder einer von einer älteren OnKey-Version öffnet sich weiterhin, aber seine Punktzahl ist als nicht geprüft markiert",
+      "p2": "Die Prüfung passiert in deinem Browser. Der Link enthält weiterhin nur den Song, die Punktzahl und den Namen, den du eingegeben hast, und nichts davon wird an einen Server gesendet"
+    },
+    "a-loopback-input-is-never-your-microphone": {
+      "title": "Ein Loopback-Eingang ist nie dein Mikrofon",
+      "summary": "Manche Audio-Interfaces haben Eingänge, die den Ton des Computers selbst liefern. Lief ein Song, waren das die lautesten Eingänge, sodass OnKey den Song für deine Stimme halten konnte und nichts von deinem Gesang hörte.",
+      "p1": "OnKey erkennt jetzt, welche Eingänge eine Kopie der Musik sind, und nutzt sie nie für deine Stimme",
+      "p2": "Der Eingang deines Mikrofons wird gewählt, sobald dort Ton ankommt"
+    },
+    "small-fixes-0-3-1": {
+      "title": "Kleine Fixes",
+      "summary": "Dinge, die ein bisschen daneben waren, jetzt richtig.",
+      "p1": "„Beenden und Punktzahl sehen“ bleibt nicht mehr wirkungslos auf dem Bildschirm stehen, wenn YouTube zum nächsten Video weitergeht",
+      "p2": "Wörter passen in jeder Sprache in ihre Buttons und Anleitungen"
+    },
     "onkey-in-your-language": {
       "title": "OnKey in deiner Sprache",
       "summary": "OnKey spricht jetzt 19 Sprachen. Es folgt von allein der Sprache deines Macs, oder du wählst eine über den Globus in der oberen Leiste, auf dem Willkommensbildschirm oder in den Einstellungen.",

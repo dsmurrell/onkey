@@ -10,6 +10,7 @@ lrclib.net              contacts  # synced lyrics for a song (lyrics.rs); also a
 itunes.apple.com        contacts  # Apple's public song search and lookup: names, lengths, covers (music.rs, recognize.rs)
 *.mzstatic.com          contacts  # Apple's cover images, only from addresses Apple's search returned (music.rs)
 i.ytimg.com             contacts  # a YouTube video's thumbnail as its cover (youtube.rs)
+feedback.singonkey.app  contacts  # "Send feedback" (Settings, and the take page's card): only when you press Send, or tap a thumb on the card (feedback.rs); a Cloudflare Worker that emails it on
 github.com              contacts  # update check (latest.json from this repo's releases); "Report a problem" opens an issue form; Settings → Language opens a language's file (Improve this translation)
 open.spotify.com        link      # open a song or the starter playlist in Spotify
 music.apple.com         link      # open a song in Apple Music

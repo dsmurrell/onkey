@@ -15,6 +15,9 @@
     "github": "Toda mudança está no <link>GitHub</link>, onde o OnKey é código aberto."
   },
   "releases": {
+    "0-3-1": {
+      "note": "Envie feedback de dentro do OnKey, e letras que ficam no tempo mesmo quando foram sincronizadas para outra versão da música."
+    },
     "0-3-0": {
       "note": "OnKey em 19 idiomas, e letras que acompanham o ritmo em espanhol, português, italiano, francês e alemão."
     },
@@ -27,6 +30,39 @@
     }
   },
   "entries": {
+    "send-feedback": {
+      "title": "Enviar feedback",
+      "summary": "Conte ao Daniel, que faz o OnKey, como está indo: um polegar para cima ou para baixo e algumas palavras, enviados de dentro do app.",
+      "p1": "Ele abre pelo balão de fala na barra superior; também está em Ajustes, e a página de um take pergunta de vez em quando",
+      "p2": "Coloque seu e-mail se quiser uma resposta",
+      "p3": "Na caixa Enviar feedback, nada é enviado até você clicar em Enviar, e ela mostra exatamente o que vai: seu polegar, o que você escreveu, seu e-mail se você informou, a versão do OnKey, seu sistema e o idioma do app",
+      "p4": "Um polegar tocado no card da página de um take é enviado com esse único toque, junto com a versão do OnKey, seu sistema e o idioma do app"
+    },
+    "lyrics-timed-for-another-version-of-the-song": {
+      "title": "Letras sincronizadas para outra versão da música",
+      "summary": "Algumas letras vêm sincronizadas para outra gravação, por exemplo uma ao vivo com um solo mais longo, e depois dele ficavam segundos atrasadas ou adiantadas. Agora o OnKey alinha a letra com a voz em cada parte da música.",
+      "p1": "Depois de uma parte instrumental longa, as linhas seguintes ficam onde são cantadas, mesmo quando essa parte é mais longa ou mais curta do que a letra espera",
+      "p2": "Tempos que vão se desviando cada vez mais ao longo da música também são acompanhados",
+      "p3": "Isso acontece quando uma música é aprendida. Para uma música que você já aprendeu, escolha Aprender de novo no menu dela e toque a música inteira uma vez"
+    },
+    "challenge-links-are-signed": {
+      "title": "Links de desafio são assinados",
+      "summary": "Um link de desafio trazia a pontuação em texto simples, então qualquer pessoa podia aumentá-la na barra de endereço. Agora o OnKey assina o link, e o singonkey.app só mostra uma pontuação como verificada quando o link está do jeito que o OnKey o criou.",
+      "p1": "Um link alterado, ou criado por uma versão mais antiga do OnKey, ainda abre, com a pontuação marcada como não verificada",
+      "p2": "A verificação acontece no seu navegador. O link continua levando só a música, a pontuação e o nome que você digitou, e nada disso é enviado para um servidor"
+    },
+    "a-loopback-input-is-never-your-microphone": {
+      "title": "Uma entrada de loopback nunca é o seu microfone",
+      "summary": "Algumas interfaces de áudio têm entradas que levam o próprio som do computador. Com uma música tocando, essas eram as entradas mais altas, então o OnKey podia confundir a música com a sua voz e não ouvir nada do que você cantava.",
+      "p1": "O OnKey agora identifica quais entradas são uma cópia da música e nunca as usa para a sua voz",
+      "p2": "A entrada do seu microfone é escolhida assim que chega som nela"
+    },
+    "small-fixes-0-3-1": {
+      "title": "Pequenas correções",
+      "summary": "Coisas que estavam um pouco fora do lugar, agora no lugar.",
+      "p1": "“Terminar e ver a pontuação” não fica mais na tela, sem fazer nada, depois que o YouTube passa para o próximo vídeo",
+      "p2": "As palavras cabem nos botões e nos guias em todos os idiomas"
+    },
     "onkey-in-your-language": {
       "title": "OnKey no seu idioma",
       "summary": "O OnKey agora fala 19 idiomas. Ele segue o idioma do seu Mac sozinho, ou escolha um no globo da barra superior, na tela de boas-vindas ou em Ajustes.",

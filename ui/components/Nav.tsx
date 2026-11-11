@@ -7,6 +7,7 @@ import { updateStatus } from "@/lib/update";
 import { markSeen, seenRelease, showWhatsNewDot } from "@/lib/whatsNew";
 import { useLanguageSetting, useT } from "@/lib/i18n";
 import LanguageSelect from "@/components/LanguageSelect";
+import { openFeedback } from "@/components/Feedback";
 
 export function Logo() {
   const t = useT();
@@ -88,6 +89,7 @@ export function WhatsNew() {
   };
   return (
     <span className="inline-flex items-center gap-1">
+    <FeedbackBubble />
     <LanguageGlobe />
     <button onClick={open} title={t("nav.whatsNew")} aria-label={fresh ? t("nav.whatsNewFresh") : t("nav.whatsNew")}
             className="relative grid h-8 w-8 shrink-0 place-items-center rounded-full text-ink-300 transition hover:bg-white/8 hover:text-white">
@@ -99,6 +101,20 @@ export function WhatsNew() {
       {fresh && <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-accent-400 ring-2 ring-ink-900" />}
     </button>
     </span>
+  );
+}
+
+/** The top bar's speech bubble, before the globe: "Send feedback" (components/Feedback.tsx), in plain sight while
+ *  OnKey is new. The email says it came from here ("bar"), so it can go back to Settings only if nobody uses it. */
+function FeedbackBubble() {
+  const t = useT();
+  return (
+    <button onClick={() => openFeedback("bar")} title={t("nav.feedback")} aria-label={t("nav.feedback")}
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-ink-300 transition hover:bg-white/8 hover:text-white">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M20 11.5c0 4.1-3.6 7.5-8 7.5-1.2 0-2.3-.2-3.3-.6L4 20l1.3-3.6C4.5 15 4 13.3 4 11.5 4 7.4 7.6 4 12 4s8 3.4 8 7.5Z" />
+      </svg>
+    </button>
   );
 }
 

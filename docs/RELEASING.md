@@ -73,6 +73,16 @@ Builds: Apple Silicon (`darwin-aarch64`), Windows x64 (`windows-x86_64`), Linux 
    can't be updated any more**: everyone would have to download the DMG again by hand. If it leaks, someone with
    the key and control of the release could push an "update": make a new key, ship it in a release signed with
    the old one, and treat the old one as gone.
+   **The challenge key** (made 11 Nov 2026) signs "Challenge a friend" links, so a score changed in a link shows
+   on the site as not checked (`src-tauri/src/challenge.rs`):
+   - private key: `~/.tauri/onkey-challenge.key` (64 hex digits; not in the repo, and never to be). `./run --build`
+     and `scripts/make-dmg.sh` give it to the build as `ONKEY_CHALLENGE_KEY`; CI reads the repo secret
+     `ONKEY_CHALLENGE_KEY` (add it by hand, with the file's contents).
+   - public key: `site/lib/challenge.ts` → `CHALLENGE_KEYS`.
+
+   Back it up with the updater key. If it is lost, make a new one, add its public half to `CHALLENGE_KEYS` and
+   deploy the site before releasing an app that uses it; links from older versions keep checking while the old
+   public key stays listed. A build without the key works, and its links show as not checked.
 2. **GitHub CLI:** `gh auth login` (GitHub.com, HTTPS, log in with a browser). `gh auth status` checks it.
 3. **Notarisation** is already set up for `scripts/make-dmg.sh` (Developer ID certificate in the keychain,
    notarytool profile `onkey-notary`, the provisioning profile in `~/Documents/Apple Developer/`).

@@ -179,6 +179,42 @@ pub fn note_mic_channel() {
     if LAST.swap(now, std::sync::atomic::Ordering::Relaxed) != now {
         crate::engine::log(&format!("mic: using input {} of {count}", ch + 1));
     }
+    #[cfg(target_os = "macos")]
+    note_music_inputs();
+}
+
+/// Inputs of the mic's device that carry the music instead of a voice (an interface's loopback inputs) are found and
+/// told to the capture, which then never takes the voice from them (miccopy.rs). Judged on each of the first few
+/// snapshots with music, then twice a minute.
+#[cfg(target_os = "macos")]
+fn note_music_inputs() {
+    use std::sync::atomic::{AtomicU32, Ordering::Relaxed};
+    static JUDGED: AtomicU32 = AtomicU32::new(0);
+    static CALLS: AtomicU32 = AtomicU32::new(0);
+    if JUDGED.load(Relaxed) >= 5 && CALLS.fetch_add(1, Relaxed) % 30 != 0 {
+        return;
+    }
+    const ROWS: usize = 10;
+    let mut buf = vec![0f32; ROWS * 3072];
+    let (mut n, mut inputs, mut before) = (0i32, 0i32, 0u32);
+    if unsafe { onkey_mic_snapshot(buf.as_mut_ptr(), buf.len() as i32, &mut n, &mut inputs, &mut before) } != 1 {
+        return;
+    }
+    let (n, inputs) = (n as usize, inputs as usize);
+    if n == 0 || (2 + inputs) * n > buf.len() {
+        return;
+    }
+    let rows: Vec<&[f32]> = buf.chunks(n).take(2 + inputs).collect();
+    let Some(mask) = crate::miccopy::copies(rows[0], rows[1], &rows[2..], before) else { return };
+    JUDGED.fetch_add(1, Relaxed);
+    if mask != before {
+        unsafe { onkey_mic_set_copies(mask) };
+        let list = |m: u32| (0..inputs).filter(|k| m >> k & 1 == 1).map(|k| (k + 1).to_string()).collect::<Vec<_>>().join(", ");
+        crate::engine::log(&if mask == 0 { "mic: no input carries the music any more: any may be used".to_string() } else {
+            format!("mic: input {} of {inputs} carries the music, not a voice (a loopback): not used for the voice", list(mask))
+        });
+        crate::records::note("mic_inputs", serde_json::json!({"inputs": inputs, "music_on": mask}));
+    }
 }
 
 /// Whether an app (bundle id prefix) is playing any sound right now.

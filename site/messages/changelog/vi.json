@@ -15,6 +15,9 @@
     "github": "Mọi thay đổi đều có trên <link>GitHub</link>, nơi OnKey là mã nguồn mở."
   },
   "releases": {
+    "0-3-1": {
+      "note": "Gửi góp ý ngay trong OnKey, và lời bài hát vẫn khớp nhịp khi được canh thời gian cho một phiên bản khác của bài."
+    },
     "0-3-0": {
       "note": "OnKey bằng 19 ngôn ngữ, và lời bài hát chạy đúng nhịp bằng tiếng Tây Ban Nha, Bồ Đào Nha, Ý, Pháp và Đức."
     },
@@ -27,6 +30,39 @@
     }
   },
   "entries": {
+    "send-feedback": {
+      "title": "Gửi góp ý",
+      "summary": "Cho Daniel, người làm ra OnKey, biết bạn thấy thế nào: một lượt thích hay không thích kèm vài lời, gửi ngay trong ứng dụng.",
+      "p1": "Biểu tượng bong bóng chat trên thanh trên cùng mở mục này; mục này cũng có trong Cài đặt, và thỉnh thoảng trang của một lượt hát sẽ hỏi bạn",
+      "p2": "Thêm email nếu bạn muốn được trả lời",
+      "p3": "Từ khung Gửi góp ý, không gì được gửi đi cho đến khi bạn nhấn Gửi, và khung này cho thấy chính xác những gì được gửi: lượt thích hay không thích, những gì bạn viết, email nếu bạn để lại, phiên bản OnKey, hệ điều hành bạn dùng và ngôn ngữ của ứng dụng",
+      "p4": "Lượt thích hay không thích bạn bấm trên thẻ ở trang của một lượt hát được gửi ngay với lần bấm đó, kèm phiên bản OnKey, hệ điều hành bạn dùng và ngôn ngữ của ứng dụng"
+    },
+    "lyrics-timed-for-another-version-of-the-song": {
+      "title": "Lời được canh thời gian cho phiên bản khác của bài",
+      "summary": "Một số lời bài hát được canh thời gian cho một bản thu khác, chẳng hạn bản live có đoạn solo dài hơn, và sau đoạn đó thì chạy trễ hoặc sớm vài giây. Giờ OnKey khớp lời với ca sĩ ở từng phần của bài.",
+      "p1": "Sau một đoạn nhạc không lời dài, các dòng tiếp theo được đặt đúng lúc chúng được hát, kể cả khi đoạn nhạc đó dài hơn hay ngắn hơn so với lời bài hát tính sẵn",
+      "p2": "Những chỗ thời gian lệch dần thêm khi bài hát tiếp diễn cũng được bám theo",
+      "p3": "Việc này diễn ra khi một bài được học. Với bài bạn đã học, chọn Học lại trong menu của bài và phát hết bài một lần"
+    },
+    "challenge-links-are-signed": {
+      "title": "Liên kết thách đấu có chữ ký số",
+      "summary": "Liên kết thách đấu từng ghi điểm dưới dạng văn bản thường, nên ai cũng có thể sửa cho cao lên ngay trên thanh địa chỉ. Giờ OnKey ký số liên kết, và singonkey.app chỉ hiện điểm là đã xác minh khi liên kết còn nguyên như OnKey tạo ra.",
+      "p1": "Liên kết đã bị sửa, hoặc do phiên bản OnKey cũ hơn tạo ra, vẫn mở được, với điểm được đánh dấu là chưa xác minh",
+      "p2": "Việc kiểm tra diễn ra trong trình duyệt của bạn. Liên kết vẫn chỉ chứa bài hát, điểm và tên bạn đã nhập, không thứ nào trong đó được gửi tới máy chủ"
+    },
+    "a-loopback-input-is-never-your-microphone": {
+      "title": "Đầu vào loopback không bao giờ bị coi là micrô của bạn",
+      "summary": "Một số card âm thanh có đầu vào mang chính âm thanh của máy tính. Khi đang phát nhạc, đó là những đầu vào to nhất, nên OnKey có thể nhầm bài hát là giọng bạn và không nghe thấy chút nào tiếng hát của bạn.",
+      "p1": "Giờ OnKey nhận ra đầu vào nào là bản sao của nhạc và không bao giờ dùng chúng cho giọng bạn",
+      "p2": "Đầu vào của micrô được chọn ngay khi có âm thanh trên đó"
+    },
+    "small-fixes-0-3-1": {
+      "title": "Sửa lỗi nhỏ",
+      "summary": "Những thứ hơi lệch, giờ đã đúng.",
+      "p1": "“Kết thúc và xem điểm” không còn nằm lại trên màn hình mà không làm gì sau khi YouTube chuyển sang video tiếp theo",
+      "p2": "Chữ nằm vừa trong nút và các hướng dẫn ở mọi ngôn ngữ"
+    },
     "onkey-in-your-language": {
       "title": "OnKey bằng ngôn ngữ của bạn",
       "summary": "OnKey giờ nói 19 ngôn ngữ. Nó tự theo ngôn ngữ máy Mac của bạn, hoặc bạn chọn một ngôn ngữ từ biểu tượng quả cầu trên thanh trên cùng, ở màn hình chào mừng hay trong Cài đặt.",

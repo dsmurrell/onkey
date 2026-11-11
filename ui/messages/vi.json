@@ -170,6 +170,10 @@
         "subMac": "Lưu nhật ký và số liệu thời gian của OnKey thành tệp zip để đính kèm vào issue trên GitHub. Bạn xem nội dung trước; không có lời bài hát hay âm thanh, không gì được tải lên.",
         "subPc": "Lưu nhật ký và số liệu thời gian của OnKey thành một tệp zip trên Màn hình nền, để đính kèm vào tin nhắn hoặc issue trên GitHub. Bạn xem nội dung trước; không có lời bài hát hay âm thanh, không gì được tải lên."
       },
+      "feedback": {
+        "title": "Gửi góp ý",
+        "sub": "Cho Daniel, người làm ra OnKey, biết điều gì ổn, điều gì chưa và bạn muốn có gì tiếp theo. Anh ấy đọc từng góp ý."
+      },
       "guides": {
         "title": "Hướng dẫn và trợ giúp",
         "sub": "Cách OnKey hoạt động, chấm điểm, khắc phục sự cố và hát sao cho thoải mái, tại singonkey.app."
@@ -610,6 +614,14 @@
     },
     "proud": {
       "share": "Chia sẻ lượt hát này",
+      "notNow": "Để sau"
+    },
+    "feedback": {
+      "ask": "OnKey dùng có ổn với bạn không?",
+      "up": "Tốt",
+      "down": "Chưa ổn",
+      "thanks": "Cảm ơn bạn. Bạn muốn nói thêm không?",
+      "more": "Kể thêm",
       "notNow": "Để sau"
     },
     "player": {
@@ -1137,6 +1149,24 @@
     "saveMac": "Lưu…",
     "savePc": "Lưu vào Màn hình nền"
   },
+  "feedback": {
+    "title": "Gửi góp ý",
+    "intro": "Daniel, người làm ra OnKey, đọc từng góp ý. Hãy nói điều bạn thích, điều gây vướng víu hoặc điều bạn rất muốn nó làm được.",
+    "how": "OnKey dùng có ổn với bạn không?",
+    "up": "Tốt",
+    "down": "Chưa ổn",
+    "label": "Bạn muốn thêm gì không? <muted>(không bắt buộc)</muted>",
+    "placeholder": "ví dụ: tôi rất muốn nó dùng được với tệp nhạc của riêng tôi",
+    "emailLabel": "Email của bạn, nếu bạn muốn được trả lời <muted>(không bắt buộc)</muted>",
+    "emailPlaceholder": "you@example.com",
+    "sends": "Nội dung gửi đi: lượt thích hay không thích của bạn, những gì bạn viết, email nếu bạn để lại, phiên bản OnKey, hệ điều hành bạn dùng (và phiên bản của nó) và ngôn ngữ của ứng dụng. Không gì khác: không bài hát, không bản ghi, không nhật ký.",
+    "send": "Gửi",
+    "sending": "Đang gửi…",
+    "cancel": "Hủy",
+    "sent": "Cảm ơn bạn. Đã gửi đi.",
+    "done": "Xong",
+    "failed": "Không gửi được. Hãy kiểm tra bạn đang có mạng rồi thử lại hoặc gửi email đến hello@singonkey.app."
+  },
   "nav": {
     "appName": "OnKey",
     "songsToTry": "Bài hát nên thử",
@@ -1147,6 +1177,7 @@
     "paused": "Đã tạm dừng nghe",
     "resume": "Tiếp tục",
     "resumeWhy": "Tiếp tục nghe (⌘⇧P)",
+    "feedback": "Gửi góp ý",
     "whatsNew": "Có gì mới trong OnKey",
     "whatsNewFresh": "Có gì mới trong OnKey (mới)",
     "testBuild": "Bản thử nghiệm",

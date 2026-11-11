@@ -194,7 +194,8 @@
       "lrclib": "<strong>LRCLIB</strong>: the song's artist, title, album, and length, to fetch synced lyrics (unless Show lyrics is off).",
       "apple": "<strong>Apple</strong>: the artist and title to find album covers, and a recognised song's Apple Music id to get its length. The covers themselves load from Spotify's, Apple's, or YouTube's image servers.",
       "github": "<strong>GitHub</strong>: a daily check for a new version, and its download. You can turn this off in Settings.",
-      "outro": "There's no account, no analytics, and no server of mine. \"Report a problem\" only saves a file on your Mac, for you to attach to a GitHub issue if you want to. <link>Privacy in full</link>."
+      "feedback": "<strong>Feedback</strong>: only when you press Send in “Send feedback”, or tap a thumb on a take's card: your thumb, what you wrote, your email if you gave one, OnKey's version, your system and the app's language.",
+      "outro": "There's no account and no analytics. \"Report a problem\" only saves a file on your Mac, for you to attach to a GitHub issue if you want to. <link>Privacy in full</link>."
     },
     "music": {
       "q": "Does OnKey provide or download music?",
@@ -618,7 +619,7 @@
         },
         "hood": {
           "stored": "Stored in <code>{dataDir}</code>: <code>songs/</code> (pitch line, bars, fingerprint, lyric timings and a Shazam signature, saved for every learned song in either mode), <code>takes/</code> (<code>mic.m4a</code>: your microphone, AAC mono at about 64 kbps, about 0.5 MB a minute, all kept up to 2 GB in total, plus scores and the report with the lyric lines) and <code>records/</code> (logs and a summary of each play, numbers only, kept 30 days, at most 200 MB). Deleting a song or take moves it to the Trash.",
-          "network": "Network: Shazam (listening mode, can be turned off) for songs not yet learned, LRCLIB lyric lookups (unless Show lyrics is off), iTunes Search for covers, iTunes Lookup for a recognised song's length, the cover images (from Apple, or YouTube's thumbnail), and a daily check of GitHub Releases for updates. No account, no analytics, and no server of mine.",
+          "network": "Network: Shazam (listening mode, can be turned off) for songs not yet learned, LRCLIB lyric lookups (unless Show lyrics is off), iTunes Search for covers, iTunes Lookup for a recognised song's length, the cover images (from Apple, or YouTube's thumbnail), a daily check of GitHub Releases for updates, and feedback only when you press Send. No account and no analytics.",
           "more": "More in <link>Privacy & legal</link>."
         }
       }
@@ -725,7 +726,9 @@
         "covers": "<strong>Cover images</strong>",
         "coversWhat": "Ordinary image requests to Spotify's, Apple's or YouTube's image servers when a cover is shown.",
         "githubWhat": "A check for a newer version of OnKey a minute after launch and then once a day, and the download if there is one. With <strong>Check for updates automatically</strong> off in Settings, it only checks when you press <strong>Check now</strong>.",
-        "nothingElse": "Nothing else goes out: there's no account, no analytics, no crash reporting, and no server of mine. Your recordings are never uploaded. “Report a problem” shows you what's in its zip of numbers and logs, saves it on your Mac, and sends nothing. You choose whether to attach it to a GitHub issue. The models come inside the app, so it never downloads them.",
+        "feedback": "<strong>Feedback</strong> (feedback.singonkey.app, mine)",
+        "feedbackWhat": "Only when you press <strong>Send</strong> in “Send feedback” (Settings, or the “How's OnKey working for you?” card that a take's page shows twice: after your 3rd take and your 20th): your thumb up or down, what you wrote, your email if you gave one for a reply, OnKey's version, your system and its version, and the app's language. It's emailed to me and not kept anywhere else. A thumb on the card is sent with that one tap.",
+        "nothingElse": "Nothing else goes out: there's no account, no analytics, and no crash reporting. Your recordings are never uploaded. “Report a problem” shows you what's in its zip of numbers and logs, saves it on your Mac, and sends nothing. You choose whether to attach it to a GitHub issue. The models come inside the app, so it never downloads them.",
         "website": "This website (not the app) counts visits with Plausible. It uses no cookies and nothing that identifies you, and only keeps totals, such as how many people visited, where from, and how many clicked Download.",
         "flowMyna": "Anonymous visit paths also go to Flow Myna, my own analytics tool: which parts of the site a visit read, in order, and the rough location the connection came from (such as the country). No cookies, and your IP address isn't kept.",
         "stars": "The star count on the GitHub buttons comes straight from GitHub, so your browser asks GitHub for it."

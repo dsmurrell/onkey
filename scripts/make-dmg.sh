@@ -55,6 +55,12 @@ else
   mkdir -p "$CARGO_TARGET_DIR"
   STAMP="$CARGO_TARGET_DIR/.build-started"
   rm -rf "$APP"; touch "$STAMP"
+  # the key challenge links are signed with (src-tauri/src/challenge.rs), if this Mac has it: without it the build's
+  # links are unsigned and singonkey.app shows their scores as not checked
+  if [ -z "${ONKEY_CHALLENGE_KEY:-}" ] && [ -f "$HOME/.tauri/onkey-challenge.key" ]; then
+    export ONKEY_CHALLENGE_KEY="$(cat "$HOME/.tauri/onkey-challenge.key")"
+  fi
+  [ -n "${ONKEY_CHALLENGE_KEY:-}" ] || echo "note: no challenge key (~/.tauri/onkey-challenge.key): this build's challenge links will be unsigned" >&2
   status=0
   # the build machine's folders (home, the checkout) out of the binary's panic and error paths
   export RUSTFLAGS="${RUSTFLAGS:-} --remap-path-prefix=$PWD=onkey --remap-path-prefix=$HOME=~"

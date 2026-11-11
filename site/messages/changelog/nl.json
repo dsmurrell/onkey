@@ -15,6 +15,9 @@
     "github": "Elke wijziging staat op <link>GitHub</link>, waar OnKey open source is."
   },
   "releases": {
+    "0-3-1": {
+      "note": "Stuur feedback vanuit OnKey, en songteksten die meelopen met de zang, ook als hun timing voor een andere versie van het nummer is gemaakt."
+    },
     "0-3-0": {
       "note": "OnKey in 19 talen, en songteksten die meelopen met de zang in het Spaans, Portugees, Italiaans, Frans en Duits."
     },
@@ -27,6 +30,39 @@
     }
   },
   "entries": {
+    "send-feedback": {
+      "title": "Stuur feedback",
+      "summary": "Laat Daniel, die OnKey maakt, weten hoe het gaat: een duim omhoog of omlaag en een paar woorden, verstuurd vanuit de app.",
+      "p1": "Je opent het met de spreekballon in de bovenbalk; het staat ook in Instellingen, en de pagina van een take vraagt er af en toe om",
+      "p2": "Voeg je e-mailadres toe als je een antwoord wilt",
+      "p3": "In het venster Stuur feedback wordt niets verstuurd tot je op Verstuur drukt, en het laat precies zien wat er meegaat: je duim, wat je schreef, je e-mailadres als je dat gaf, de versie van OnKey, je systeem en de taal van de app",
+      "p4": "Een duim die je aantikt op de kaart op de pagina van een take, wordt met die ene tik verstuurd, samen met de versie van OnKey, je systeem en de taal van de app"
+    },
+    "lyrics-timed-for-another-version-of-the-song": {
+      "title": "Songteksten met de timing van een andere versie van het nummer",
+      "summary": "Sommige songteksten hebben de timing van een andere opname, bijvoorbeeld een liveversie met een langere solo, en liepen daarna seconden voor of achter. OnKey legt ze nu in elk deel van het nummer gelijk met de zang.",
+      "p1": "Na een lang instrumentaal tussenstuk komen de regels die volgen op de plek waar ze gezongen worden, ook als het tussenstuk langer of korter is dan de songtekst verwacht",
+      "p2": "OnKey volgt ook timing die in de loop van het nummer steeds verder afdrijft",
+      "p3": "Dit gebeurt als een nummer geleerd wordt. Is een nummer al geleerd, kies dan Leer opnieuw in het menu ervan en speel het één keer helemaal af"
+    },
+    "challenge-links-are-signed": {
+      "title": "Uitdagingslinks zijn ondertekend",
+      "summary": "Een uitdagingslink zette de score er als gewone tekst in, dus iedereen kon die in de adresbalk verhogen. OnKey ondertekent de link nu, en singonkey.app toont een score alleen als gecontroleerd wanneer de link is zoals OnKey hem maakte.",
+      "p1": "Een link die is aangepast, of gemaakt door een oudere versie van OnKey, opent nog steeds, met de score gemarkeerd als niet gecontroleerd",
+      "p2": "De controle gebeurt in je browser. De link bevat nog steeds alleen het nummer, de score en de naam die je typte, en niets daarvan wordt naar een server gestuurd"
+    },
+    "a-loopback-input-is-never-your-microphone": {
+      "title": "Een loopback-ingang is nooit je microfoon",
+      "summary": "Sommige audio-interfaces hebben ingangen die het eigen geluid van de computer doorgeven. Als er een nummer speelde, waren dat de luidste ingangen, dus kon OnKey het nummer voor je stem aanzien en niets van je zang horen.",
+      "p1": "OnKey herkent nu welke ingangen een kopie van de muziek zijn en gebruikt die nooit voor je stem",
+      "p2": "De ingang van je microfoon wordt gekozen zodra er geluid op zit"
+    },
+    "small-fixes-0-3-1": {
+      "title": "Kleine fixes",
+      "summary": "Dingen die net niet klopten, nu wel.",
+      "p1": "‘Rond af en bekijk je score’ blijft niet meer werkloos op het scherm staan nadat YouTube naar de volgende video is gegaan",
+      "p2": "Woorden passen in elke taal in hun knoppen en handleidingen"
+    },
     "onkey-in-your-language": {
       "title": "OnKey in jouw taal",
       "summary": "OnKey spreekt nu 19 talen. Het volgt vanzelf de taal van je Mac, of kies er een via de wereldbol in de bovenbalk, op het welkomstscherm of in Instellingen.",

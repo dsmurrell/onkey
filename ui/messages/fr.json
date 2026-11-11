@@ -170,6 +170,10 @@
         "subMac": "Enregistre les journaux et chronométrages d’OnKey dans un zip à joindre à une issue GitHub. Vous voyez d’abord ce qu’il contient ; pas de paroles ni d’audio, rien n’est envoyé.",
         "subPc": "Enregistre les journaux et chronométrages d’OnKey dans un seul zip sur votre Bureau, à joindre à un message ou à une issue GitHub. Vous voyez d’abord ce qu’il contient ; pas de paroles ni d’audio, rien n’est envoyé."
       },
+      "feedback": {
+        "title": "Envoyer un avis",
+        "sub": "Dites à Daniel, qui crée OnKey, ce qui marche, ce qui ne marche pas et ce que vous aimeriez ensuite. Il lit chaque message."
+      },
       "guides": {
         "title": "Guides et aide",
         "sub": "Comment OnKey fonctionne, la notation, la résolution des problèmes et chanter sans se fatiguer, sur singonkey.app."
@@ -610,6 +614,14 @@
     },
     "proud": {
       "share": "Partager cette prise",
+      "notNow": "Pas maintenant"
+    },
+    "feedback": {
+      "ask": "Comment ça se passe avec OnKey ?",
+      "up": "Bien",
+      "down": "Pas terrible",
+      "thanks": "Merci. Vous voulez en dire plus ?",
+      "more": "En dire plus",
       "notNow": "Pas maintenant"
     },
     "player": {
@@ -1137,6 +1149,24 @@
     "saveMac": "Enregistrer…",
     "savePc": "Enregistrer sur le Bureau"
   },
+  "feedback": {
+    "title": "Envoyer un avis",
+    "intro": "Daniel, qui crée OnKey, lit chaque message. Dites ce qui vous plaît, ce qui vous gêne ou ce que vous aimeriez qu’il fasse.",
+    "how": "Comment ça se passe avec OnKey ?",
+    "up": "Bien",
+    "down": "Pas terrible",
+    "label": "Quelque chose à ajouter ? <muted>(facultatif)</muted>",
+    "placeholder": "ex. j’aimerais qu’il fonctionne avec mes propres fichiers musicaux",
+    "emailLabel": "Votre e-mail, si vous voulez une réponse <muted>(facultatif)</muted>",
+    "emailPlaceholder": "you@example.com",
+    "sends": "Envoyé : votre pouce levé ou baissé, ce que vous avez écrit, votre e-mail si vous l’avez donné, la version d’OnKey, votre système (et sa version) et la langue de l’app. Rien d’autre : pas de chansons, pas d’enregistrements, pas de journaux.",
+    "send": "Envoyer",
+    "sending": "Envoi…",
+    "cancel": "Annuler",
+    "sent": "Merci, c’est envoyé.",
+    "done": "Terminé",
+    "failed": "Impossible de l’envoyer. Vérifiez que vous êtes en ligne et réessayez, ou écrivez à hello@singonkey.app."
+  },
   "nav": {
     "appName": "OnKey",
     "songsToTry": "Chansons à essayer",
@@ -1147,6 +1177,7 @@
     "paused": "Écoute en pause",
     "resume": "Reprendre",
     "resumeWhy": "Reprendre l’écoute (⌘⇧P)",
+    "feedback": "Envoyer un avis",
     "whatsNew": "Nouveautés d’OnKey",
     "whatsNewFresh": "Nouveautés d’OnKey (nouveau)",
     "testBuild": "Version de test",

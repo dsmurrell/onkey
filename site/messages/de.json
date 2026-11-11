@@ -194,7 +194,8 @@
       "lrclib": "<strong>LRCLIB</strong>: Interpret, Titel, Album und Länge des Songs, um synchronisierte Texte zu holen (außer „Songtexte anzeigen“ ist aus).",
       "apple": "<strong>Apple</strong>: Interpret und Titel, um Albumcover zu finden, und die Apple-Music-ID eines erkannten Songs, um seine Länge zu erfahren. Die Cover selbst werden von den Bildservern von Spotify, Apple oder YouTube geladen.",
       "github": "<strong>GitHub</strong>: einmal täglich eine Prüfung auf eine neue Version und deren Download. Das kannst du in den Einstellungen abschalten.",
-      "outro": "Es gibt keinen Account, kein Tracking und keinen Server von mir. „Problem melden“ speichert nur eine Datei auf deinem Mac, die du bei einem GitHub-Issue anhängen kannst, wenn du willst. <link>Datenschutz im Detail</link>."
+      "feedback": "<strong>Feedback</strong>: nur wenn du in „Feedback senden“ auf Senden drückst oder auf der Karte eines Takes einen Daumen antippst: dein Daumen, was du geschrieben hast, deine E-Mail, falls angegeben, OnKeys Version, dein System und die Sprache der App.",
+      "outro": "Es gibt keinen Account und kein Tracking. „Problem melden“ speichert nur eine Datei auf deinem Mac, die du bei einem GitHub-Issue anhängen kannst, wenn du willst. <link>Datenschutz im Detail</link>."
     },
     "music": {
       "q": "Liefert OnKey Musik oder lädt es welche herunter?",
@@ -618,7 +619,7 @@
         },
         "hood": {
           "stored": "Gespeichert in <code>{dataDir}</code>: <code>songs/</code> (Tonhöhenlinie, Balken, Fingerabdruck, Text-Timing und eine Shazam-Signatur, für jeden gelernten Song in beiden Modi gespeichert), <code>takes/</code> (<code>mic.m4a</code>: dein Mikrofon, AAC mono mit etwa 64 kbit/s, etwa 0,5 MB pro Minute, insgesamt bis 2 GB behalten, plus Punkte und der Bericht mit den Textzeilen) und <code>records/</code> (Logs und eine Zusammenfassung jedes Durchlaufs, nur Zahlen, 30 Tage behalten, höchstens 200 MB). Einen Song oder Take zu löschen, verschiebt ihn in den Papierkorb.",
-          "network": "Netzwerk: Shazam (Zuhörmodus, abschaltbar) für noch nicht gelernte Songs, LRCLIB-Textabfragen (außer „Songtexte anzeigen“ ist aus), iTunes Search für Cover, iTunes Lookup für die Länge eines erkannten Songs, die Coverbilder (von Apple, oder YouTubes Vorschaubild) und einmal täglich eine Prüfung auf Updates bei GitHub Releases. Kein Account, kein Tracking und kein Server von mir.",
+          "network": "Netzwerk: Shazam (Zuhörmodus, abschaltbar) für noch nicht gelernte Songs, LRCLIB-Textabfragen (außer „Songtexte anzeigen“ ist aus), iTunes Search für Cover, iTunes Lookup für die Länge eines erkannten Songs, die Coverbilder (von Apple, oder YouTubes Vorschaubild), einmal täglich eine Prüfung auf Updates bei GitHub Releases und Feedback, nur wenn du auf Senden drückst. Kein Account und kein Tracking.",
           "more": "Mehr unter <link>Datenschutz & Rechtliches</link>."
         }
       }
@@ -725,7 +726,9 @@
         "covers": "<strong>Coverbilder</strong>",
         "coversWhat": "Gewöhnliche Bildanfragen an die Bildserver von Spotify, Apple oder YouTube, wenn ein Cover angezeigt wird.",
         "githubWhat": "Eine Prüfung auf eine neuere Version von OnKey eine Minute nach dem Start und dann einmal täglich, und der Download, wenn es eine gibt. Ist <strong>Automatisch nach Updates suchen</strong> in den Einstellungen aus, prüft es nur, wenn du <strong>Jetzt prüfen</strong> drückst.",
-        "nothingElse": "Sonst geht nichts raus: kein Account, kein Tracking, keine Absturzberichte und kein Server von mir. Deine Aufnahmen werden nie hochgeladen. „Problem melden“ zeigt dir, was in seinem Zip aus Zahlen und Logs steckt, speichert es auf deinem Mac und sendet nichts. Du entscheidest, ob du es an ein GitHub-Issue anhängst. Die Modelle stecken in der App, sie lädt sie also nie herunter.",
+        "feedback": "<strong>Feedback</strong> (feedback.singonkey.app, meiner)",
+        "feedbackWhat": "Nur wenn du in „Feedback senden“ auf <strong>Senden</strong> drückst (in den Einstellungen oder auf der Karte „Wie läuft’s mit OnKey?“, die die Seite eines Takes zweimal zeigt: nach deinem 3. Take und nach deinem 20.): dein Daumen hoch oder runter, was du geschrieben hast, deine E-Mail, falls du sie für eine Antwort angegeben hast, OnKeys Version, dein System und dessen Version und die Sprache der App. Es kommt per E-Mail zu mir und wird nirgends sonst gespeichert. Ein Daumen auf der Karte wird mit diesem einen Klick gesendet.",
+        "nothingElse": "Sonst geht nichts raus: kein Account, kein Tracking und keine Absturzberichte. Deine Aufnahmen werden nie hochgeladen. „Problem melden“ zeigt dir, was in seinem Zip aus Zahlen und Logs steckt, speichert es auf deinem Mac und sendet nichts. Du entscheidest, ob du es an ein GitHub-Issue anhängst. Die Modelle stecken in der App, sie lädt sie also nie herunter.",
         "website": "Diese Website (nicht die App) zählt Besuche mit Plausible. Sie nutzt keine Cookies und nichts, was dich identifiziert, und behält nur Summen, etwa wie viele Menschen da waren, woher, und wie viele auf Download geklickt haben.",
         "flowMyna": "Anonyme Besuchspfade gehen außerdem an Flow Myna, mein eigenes Analysetool: welche Teile der Site ein Besuch gelesen hat, in welcher Reihenfolge, und der grobe Ort, aus dem die Verbindung kam (etwa das Land). Keine Cookies, und deine IP-Adresse wird nicht behalten.",
         "stars": "Die Sternzahl auf den GitHub-Buttons kommt direkt von GitHub, dein Browser fragt also GitHub danach."

@@ -170,6 +170,10 @@
         "subMac": "把 OnKey 的日誌和時間紀錄存成一個 zip，附到 GitHub issue 裡。你會先看到裡面有什麼；沒有歌詞和音訊，也不會上傳任何東西。",
         "subPc": "把 OnKey 的日誌和時間紀錄存成桌面上的一個 zip，附到訊息或 GitHub issue 裡。你會先看到裡面有什麼；沒有歌詞和音訊，也不會上傳任何東西。"
       },
+      "feedback": {
+        "title": "傳送意見回饋",
+        "sub": "告訴 OnKey 的作者 Daniel 哪些好用、哪些不好用，以及你接下來想要什麼。每一則他都會看。"
+      },
       "guides": {
         "title": "指南與說明",
         "sub": "OnKey 的運作方式、評分、疑難排解和舒服地唱歌，都在 singonkey.app。"
@@ -610,6 +614,14 @@
     },
     "proud": {
       "share": "分享這次演唱",
+      "notNow": "先不用"
+    },
+    "feedback": {
+      "ask": "OnKey 用起來怎麼樣？",
+      "up": "不錯",
+      "down": "不太好",
+      "thanks": "謝謝！想多說一些嗎？",
+      "more": "多說一些",
       "notNow": "先不用"
     },
     "player": {
@@ -1137,6 +1149,24 @@
     "saveMac": "儲存…",
     "savePc": "儲存到桌面"
   },
+  "feedback": {
+    "title": "傳送意見回饋",
+    "intro": "OnKey 的作者 Daniel 每一則都會看。說說你喜歡什麼、什麼在礙事，或你希望它能做什麼。",
+    "how": "OnKey 用起來怎麼樣？",
+    "up": "不錯",
+    "down": "不太好",
+    "label": "還有什麼要補充嗎？<muted>（選填）</muted>",
+    "placeholder": "例如：希望它能用我自己的音樂檔案",
+    "emailLabel": "你的電子郵件，如果想收到回覆<muted>（選填）</muted>",
+    "emailPlaceholder": "you@example.com",
+    "sends": "會傳送：你的讚或倒讚、你寫的內容、你留下的電子郵件（如果有）、OnKey 的版本、你用的系統（及其版本）和 App 的語言。其他什麼都不傳：沒有歌曲、沒有錄音、沒有日誌。",
+    "send": "傳送",
+    "sending": "傳送中…",
+    "cancel": "取消",
+    "sent": "謝謝！已經送出了。",
+    "done": "完成",
+    "failed": "無法傳送。請確認已連上網路後再試一次，或寄信到 hello@singonkey.app。"
+  },
   "nav": {
     "appName": "OnKey",
     "songsToTry": "推薦歌曲",
@@ -1147,6 +1177,7 @@
     "paused": "已暫停聆聽",
     "resume": "繼續",
     "resumeWhy": "繼續聆聽（⌘⇧P）",
+    "feedback": "傳送意見回饋",
     "whatsNew": "OnKey 的新功能",
     "whatsNewFresh": "OnKey 的新功能（有更新）",
     "testBuild": "測試版",

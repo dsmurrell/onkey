@@ -9,6 +9,7 @@ import { Logo, Nav, WhatsNew } from "@/components/Nav";
 import LearnBar from "@/components/LearnBar";
 import LevelTag from "@/components/LevelTag";
 import { reportProblem } from "@/components/ReportProblem";
+import { openFeedback } from "@/components/Feedback";
 import SharePanel from "@/components/SharePanel";
 import Challenge from "@/components/Challenge";
 import LeaveOutGuide from "@/components/guides/LeaveOutGuide";
@@ -16,10 +17,10 @@ import { DevCopy, devEar, takeLink, useDevTools } from "@/components/Dev";
 import { driveGraphAt } from "@/lib/devDrive";
 import { alongTiming } from "@/lib/alongTiming";
 import { songAtTake, takeAtSong, type Place } from "@/lib/places";
-import { allowControl, alongMode, type AlongMode, getSettings, getTake, joinAlong, setNotMelody, sharePrompt, sharePromptSeen, type SharePrompt, learnLabel, playAlong, playTrack, playerNow, type PlayerNow, stopPlayAlong, voiceClose, voiceGain, voiceOpen, voicePlay, voiceStop as voiceStopNative, takeAudioUrl, takePlaying, type Track, useLearn, useSession } from "@/lib/session";
+import { allowControl, alongMode, type AlongMode, feedbackAsk, feedbackAsked, getSettings, getTake, joinAlong, sendFeedback, type Mood, setNotMelody, sharePrompt, sharePromptSeen, type SharePrompt, learnLabel, playAlong, playTrack, playerNow, type PlayerNow, stopPlayAlong, voiceClose, voiceGain, voiceOpen, voicePlay, voiceStop as voiceStopNative, takeAudioUrl, takePlaying, type Track, useLearn, useSession } from "@/lib/session";
 import { ACCENT, INK } from "@/lib/colors";
 import { COLORS, clock, creditAt, grade, levelName, levelOf, lineGrade, noteName, offBy, scoreWord, sourceName, when } from "@/lib/music";
-import { useT, type Translator } from "@/lib/i18n";
+import { useLocale, useT, type Translator } from "@/lib/i18n";
 import { appText, shareReason } from "@/lib/engineText";
 
 type Line = { t0: number; t1: number; text: string; ref_frames: number; coverage: number; accuracy: number | null; bias: number | null };
@@ -206,6 +207,20 @@ function TakeOf() {
   useEffect(() => {
     void sharePrompt(id).then(p => { if (p) { setProud(p); void sharePromptSeen(id); } }).catch(() => {});
   }, [id]);
+  // "How's OnKey working for you?": after the 3rd sung take, then the 20th, on a take just sung (feedback.rs). A thumb
+  // is sent with one tap; "Tell me more" then opens the feedback window. Not on a take that offers "Share this take".
+  const locale = useLocale();
+  const [ask, setAsk] = useState<{ stage: number; sent: Mood | null } | null>(null);
+  useEffect(() => {
+    void feedbackAsk(id).then(stage => { if (stage) setAsk({ stage, sent: null }); }).catch(() => {});
+  }, [id]);
+  const askShown = ask && !proud;
+  useEffect(() => { if (askShown) void feedbackAsked(ask.stage).catch(() => {}); }, [askShown, ask?.stage]);
+  const sendThumb = (mood: Mood) => {
+    if (!ask) return;
+    setAsk({ ...ask, sent: mood });
+    void sendFeedback({ mood, text: "", email: "", from: "take", language: locale }).catch(() => {});
+  };
   const [playing, setPlaying] = useState(false);
   // "Play with the song" plays the recording natively (voice.rs), not in the window: WebKit holds its sound back
   // ~0.1-0.15 s more than it says, so the voice came out late. The native player says exactly where the voice is, read
@@ -488,6 +503,29 @@ function TakeOf() {
               </button>
               <button onClick={() => setProud(null)} aria-label={t("take.proud.notNow")} title={t("take.proud.notNow")}
                       className="shrink-0 px-1 text-accent-200/70 transition hover:text-white">✕</button>
+            </div>
+          )}
+          {askShown && (
+            <div className="mt-4 inline-flex max-w-full flex-wrap items-center gap-2 rounded-xl bg-white/5 py-1.5 pl-3 pr-1.5 text-sm text-ink-200">
+              {ask.sent ? (
+                <>
+                  <span className="min-w-0">{t("take.feedback.thanks")}</span>
+                  <button onClick={() => { openFeedback("take", ask.sent); setAsk(null); }}
+                          className="shrink-0 rounded-lg bg-white/8 px-3 py-1 text-xs font-medium text-ink-100 transition hover:bg-white/12">
+                    {t("take.feedback.more")}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <span className="min-w-0">{t("take.feedback.ask")}</span>
+                  <button onClick={() => sendThumb("up")} aria-label={t("take.feedback.up")} title={t("take.feedback.up")}
+                          className="shrink-0 rounded-lg bg-white/8 px-2.5 py-1 transition hover:bg-white/12">👍</button>
+                  <button onClick={() => sendThumb("down")} aria-label={t("take.feedback.down")} title={t("take.feedback.down")}
+                          className="shrink-0 rounded-lg bg-white/8 px-2.5 py-1 transition hover:bg-white/12">👎</button>
+                </>
+              )}
+              <button onClick={() => setAsk(null)} aria-label={t("take.feedback.notNow")} title={t("take.feedback.notNow")}
+                      className="shrink-0 px-1 text-ink-400 transition hover:text-white">✕</button>
             </div>
           )}
         </div>

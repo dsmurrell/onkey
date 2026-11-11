@@ -170,6 +170,10 @@
         "subMac": "OnKeys Logs und Timings als Zip-Datei sichern, um sie an ein GitHub-Issue anzuhängen. Du siehst vorher, was drin ist; keine Songtexte, kein Audio, nichts wird hochgeladen.",
         "subPc": "OnKeys Logs und Timings als eine Zip-Datei auf deinem Desktop sichern, um sie an eine Nachricht oder ein GitHub-Issue anzuhängen. Du siehst vorher, was drin ist; keine Songtexte, kein Audio, nichts wird hochgeladen."
       },
+      "feedback": {
+        "title": "Feedback senden",
+        "sub": "Sag Daniel, der OnKey macht, was gut läuft, was nicht und was du dir als Nächstes wünschst. Er liest jede Nachricht."
+      },
       "guides": {
         "title": "Anleitungen und Hilfe",
         "sub": "Wie OnKey funktioniert, die Bewertung, Probleme lösen und entspannt singen, auf singonkey.app."
@@ -610,6 +614,14 @@
     },
     "proud": {
       "share": "Diesen Take teilen",
+      "notNow": "Nicht jetzt"
+    },
+    "feedback": {
+      "ask": "Wie läuft’s mit OnKey?",
+      "up": "Gut",
+      "down": "Nicht so gut",
+      "thanks": "Danke. Möchtest du mehr erzählen?",
+      "more": "Mehr erzählen",
       "notNow": "Nicht jetzt"
     },
     "player": {
@@ -1137,6 +1149,24 @@
     "saveMac": "Sichern …",
     "savePc": "Auf dem Desktop sichern"
   },
+  "feedback": {
+    "title": "Feedback senden",
+    "intro": "Daniel, der OnKey macht, liest jede Nachricht. Sag, was dir gefällt, was dich stört oder was es unbedingt können sollte.",
+    "how": "Wie läuft’s mit OnKey?",
+    "up": "Gut",
+    "down": "Nicht so gut",
+    "label": "Noch etwas? <muted>(optional)</muted>",
+    "placeholder": "z. B. Ich fände es toll, wenn es mit meinen eigenen Musikdateien funktioniert",
+    "emailLabel": "Deine E-Mail, falls du eine Antwort möchtest <muted>(optional)</muted>",
+    "emailPlaceholder": "you@example.com",
+    "sends": "Gesendet wird: dein Daumen hoch oder runter, was du geschrieben hast, deine E-Mail, falls angegeben, OnKeys Version, welches System du nutzt (und dessen Version) und die Sprache der App. Sonst nichts: keine Songs, keine Aufnahmen, keine Logs.",
+    "send": "Senden",
+    "sending": "Wird gesendet…",
+    "cancel": "Abbrechen",
+    "sent": "Danke, ist unterwegs.",
+    "done": "Fertig",
+    "failed": "Konnte nicht gesendet werden. Prüf, ob du online bist, und versuch es noch mal, oder schreib an hello@singonkey.app."
+  },
   "nav": {
     "appName": "OnKey",
     "songsToTry": "Songs zum Ausprobieren",
@@ -1147,6 +1177,7 @@
     "paused": "Zuhören pausiert",
     "resume": "Fortsetzen",
     "resumeWhy": "Zuhören fortsetzen (⌘⇧P)",
+    "feedback": "Feedback senden",
     "whatsNew": "Neuigkeiten in OnKey",
     "whatsNewFresh": "Neuigkeiten in OnKey (neu)",
     "testBuild": "Testversion",

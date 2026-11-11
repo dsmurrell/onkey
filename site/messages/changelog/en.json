@@ -15,6 +15,9 @@
     "github": "Every change is on <link>GitHub</link>, where OnKey is open source."
   },
   "releases": {
+    "0-3-1": {
+      "note": "Send feedback from inside OnKey, and lyrics that stay in time when their timings were made for another version of the song."
+    },
     "0-3-0": {
       "note": "OnKey in 19 languages, and lyrics that keep time in Spanish, Portuguese, Italian, French and German."
     },
@@ -27,6 +30,39 @@
     }
   },
   "entries": {
+    "send-feedback": {
+      "title": "Send feedback",
+      "summary": "Tell Daniel, who makes OnKey, how it's going: a thumb up or down and a few words, sent from inside the app.",
+      "p1": "The speech bubble in the top bar opens it; it's in Settings too, and a take's page asks now and then",
+      "p2": "Add your email if you'd like a reply",
+      "p3": "From the Send feedback box, nothing is sent until you press Send, and it shows exactly what goes: your thumb, what you wrote, your email if you gave one, OnKey's version, your system and the app's language",
+      "p4": "A thumb tapped on the card on a take's page is sent with that one tap, with OnKey's version, your system and the app's language"
+    },
+    "lyrics-timed-for-another-version-of-the-song": {
+      "title": "Lyrics timed for another version of the song",
+      "summary": "Some lyrics come timed for a different recording, say a live one with a longer solo, and ran seconds late or early after it. OnKey now lines them up with the singer in each part of the song.",
+      "p1": "After a long instrumental break, the lines that follow are placed where they're sung, even when the break is longer or shorter than the lyrics expect",
+      "p2": "Timings that drift further out as the song goes on are followed too",
+      "p3": "It happens when a song is learned. For a song you've already learned, choose Learn again in its menu and play it through once"
+    },
+    "challenge-links-are-signed": {
+      "title": "Challenge links are signed",
+      "summary": "A challenge link said its score in plain text, so anyone could raise it in the address bar. OnKey now signs the link, and singonkey.app shows a score as checked only when the link is as OnKey made it.",
+      "p1": "A link that was changed, or made by an older version of OnKey, still opens, with its score marked as not checked",
+      "p2": "The check happens in your browser. The link still holds only the song, the score and the name you typed, and none of it is sent to a server"
+    },
+    "a-loopback-input-is-never-your-microphone": {
+      "title": "A loopback input is never your microphone",
+      "summary": "Some audio interfaces have inputs that carry the computer's own sound. With a song playing, those were the loudest inputs, so OnKey could take the song for your voice and hear none of your singing.",
+      "p1": "OnKey now tells which inputs are a copy of the music and never uses them for your voice",
+      "p2": "Your microphone's input is picked as soon as there's sound on it"
+    },
+    "small-fixes-0-3-1": {
+      "title": "Small fixes",
+      "summary": "Things that were a little off, now right.",
+      "p1": "\"Finish and see your score\" no longer stays on screen, doing nothing, after YouTube moves on to the next video",
+      "p2": "Words fit their buttons and guides in every language"
+    },
     "onkey-in-your-language": {
       "title": "OnKey in your language",
       "summary": "OnKey now speaks 19 languages. It follows your Mac's language on its own, or pick one from the globe in the top bar, on the welcome screen or in Settings.",

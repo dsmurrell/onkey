@@ -194,7 +194,8 @@
       "lrclib": "<strong>LRCLIB</strong>：歌曲的演出者、歌名、專輯和長度，用來取得同步歌詞（除非關閉了「顯示歌詞」）。",
       "apple": "<strong>Apple</strong>：演出者和歌名，用來尋找專輯封面；以及已辨識歌曲的 Apple Music id，用來取得長度。封面本身從 Spotify、Apple 或 YouTube 的圖片伺服器載入。",
       "github": "<strong>GitHub</strong>：每天一次檢查新版本，以及下載它。可以在設定裡關閉。",
-      "outro": "沒有帳號、沒有分析追蹤，也沒有我的伺服器。「回報問題」只在你的 Mac 上儲存一個檔案，由你決定要不要附到 GitHub issue 裡。<link>完整的隱私權說明</link>。"
+      "feedback": "<strong>意見回饋</strong>：只在你於「傳送意見回饋」裡按下傳送，或在演唱卡片上按讚或倒讚時：你的讚或倒讚、你寫的內容、你留下的電子郵件（如果有）、OnKey 的版本、你的系統和 App 的語言。",
+      "outro": "沒有帳號，也沒有分析追蹤。「回報問題」只在你的 Mac 上儲存一個檔案，由你決定要不要附到 GitHub issue 裡。<link>完整的隱私權說明</link>。"
     },
     "music": {
       "q": "OnKey 提供或下載音樂嗎？",
@@ -618,7 +619,7 @@
         },
         "hood": {
           "stored": "存放在 <code>{dataDir}</code>：<code>songs/</code>（音高線、音符條、指紋、歌詞時間和一個 Shazam 簽章，兩種模式下每首學會的歌都會儲存）、<code>takes/</code>（<code>mic.m4a</code>：你的麥克風，AAC 單聲道約 64 kbps，每分鐘約 0.5 MB，總共最多保留 2 GB，加上分數和帶歌詞行的報告）和 <code>records/</code>（日誌和每次播放的摘要，只有數字，保留 30 天，最多 200 MB）。刪除歌曲或演唱會把它移到垃圾桶。",
-          "network": "網路：Shazam（聆聽模式，可以關閉）用於還沒學會的歌，LRCLIB 歌詞查詢（除非關閉了「顯示歌詞」），iTunes Search 用於封面，iTunes Lookup 用於已辨識歌曲的長度，封面圖片（來自 Apple，或 YouTube 的縮圖），以及每天一次到 GitHub Releases 的更新檢查。沒有帳號、沒有分析追蹤，也沒有我的伺服器。",
+          "network": "網路：Shazam（聆聽模式，可以關閉）用於還沒學會的歌，LRCLIB 歌詞查詢（除非關閉了「顯示歌詞」），iTunes Search 用於封面，iTunes Lookup 用於已辨識歌曲的長度，封面圖片（來自 Apple，或 YouTube 的縮圖），每天一次到 GitHub Releases 的更新檢查，以及只在你按下傳送時才送出的意見回饋。沒有帳號，也沒有分析追蹤。",
           "more": "更多請見<link>隱私權與法律</link>。"
         }
       }
@@ -725,7 +726,9 @@
         "covers": "<strong>封面圖片</strong>",
         "coversWhat": "顯示封面時，向 Spotify、Apple 或 YouTube 的圖片伺服器發出的普通圖片請求。",
         "githubWhat": "啟動一分鐘後檢查一次有沒有更新的 OnKey 版本，之後每天一次，有的話就下載。在設定裡關閉<strong>自動檢查更新</strong>後，只有你按<strong>立即檢查</strong>時才會檢查。",
-        "nothingElse": "其他什麼都不會傳出去：沒有帳號、沒有分析追蹤、沒有當機回報，也沒有我的伺服器。你的錄音絕不上傳。「回報問題」會讓你看它那個裝著數字和日誌的 zip 裡有什麼，儲存在你的 Mac 上，什麼都不傳。要不要把它附到 GitHub issue 上由你決定。模型隨 App 一起提供，所以它絕不下載模型。",
+        "feedback": "<strong>意見回饋</strong>（feedback.singonkey.app，我的伺服器）",
+        "feedbackWhat": "只在你於「傳送意見回饋」裡按下<strong>傳送</strong>時（在設定裡，或演唱頁面上出現兩次的「OnKey 用起來怎麼樣？」卡片：在你第 3 次和第 20 次演唱之後）：你的讚或倒讚、你寫的內容、你為了收到回覆而留下的電子郵件（如果有）、OnKey 的版本、你的系統及其版本，以及 App 的語言。它會以電子郵件寄給我，不會保存在其他任何地方。在卡片上按一下讚或倒讚，就會隨這一下送出。",
+        "nothingElse": "其他什麼都不會傳出去：沒有帳號、沒有分析追蹤，也沒有當機回報。你的錄音絕不上傳。「回報問題」會讓你看它那個裝著數字和日誌的 zip 裡有什麼，儲存在你的 Mac 上，什麼都不傳。要不要把它附到 GitHub issue 上由你決定。模型隨 App 一起提供，所以它絕不下載模型。",
         "website": "這個網站（不是 App）用 Plausible 統計造訪量。它不用 cookie，也不用任何能識別你的東西，只保留總數，比如多少人來過、從哪裡來、多少人點了下載。",
         "flowMyna": "匿名的造訪路徑也會傳給 Flow Myna，我自己的分析工具：一次造訪依序讀了網站的哪些部分，以及連線來自的大致位置（比如國家）。不用 cookie，你的 IP 位址不保留。",
         "stars": "GitHub 按鈕上的星數直接來自 GitHub，所以你的瀏覽器會向 GitHub 請求它。"

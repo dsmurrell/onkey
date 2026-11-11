@@ -213,6 +213,17 @@ private final class Capture {
     let micLevel = UnsafeMutablePointer<Float>.allocate(capacity: Capture.maxMicChannels)
     var micChannel = 0
     var micChannels = 0
+    // Inputs that carry the music, not a voice (an interface's "loopback" inputs: a Scarlett's 3 and 4 of 4), as a
+    // bit mask: never the mic channel while another input has sound, however loud they are. Found by the engine
+    // (miccopy.rs) from a snapshot: about half a second of the music (left, right) and of the first 8 inputs at
+    // ~6 kHz, filled here on the real-time thread (snapState 0), then left alone until it has been read (1).
+    var copyMask: UInt32 = 0
+    static let snapN = 3072, snapInputs = 8
+    static var knownCopies: [String: UInt32] = [:]      // per mic device, kept through capture restarts (under `lock`)
+    let snap = UnsafeMutablePointer<Float>.allocate(capacity: (2 + Capture.snapInputs) * Capture.snapN)
+    let snapAcc = UnsafeMutablePointer<Float>.allocate(capacity: 2 + Capture.snapInputs)
+    var snapFill = 0, snapAccN = 0, snapChannels = 0
+    var snapState: Int32 = 0
     var rate: Double = 0
     var micName = ""
     var micUID = ""
@@ -220,8 +231,50 @@ private final class Capture {
     init(bundlePrefix: String) {
         self.bundlePrefix = bundlePrefix
         micLevel.initialize(repeating: 0, count: Capture.maxMicChannels)
+        snap.initialize(repeating: 0, count: (2 + Capture.snapInputs) * Capture.snapN)
+        snapAcc.initialize(repeating: 0, count: 2 + Capture.snapInputs)
     }
-    deinit { micLevel.deallocate() }
+    deinit { micLevel.deallocate(); snap.deallocate(); snapAcc.deallocate() }
+
+    /// One more block into the snapshot (see `copyMask`): the tap's left and right, then each input, every `dec`
+    /// frames averaged into one sample. Real-time thread; nothing happens while a full snapshot waits to be read.
+    func fillSnapshot(_ abl: UnsafeMutableAudioBufferListPointer, tap t: UnsafePointer<Float>, tapChannels tch: Int, frames: Int) {
+        if snapState != 0 { return }
+        let dec = rate > 0 ? max(1, Int((rate / 6000).rounded())) : 8
+        let (fill0, acc0) = (snapFill, snapAccN)
+        var (fill, accN) = (fill0, acc0)
+        // one row of the snapshot from one channel of a buffer; every row starts from the same place
+        func row(_ r: Int, _ p: UnsafePointer<Float>, _ stride: Int, _ at: Int, _ n: Int) {
+            var a = snapAcc[r], f = fill0, c = acc0, i = 0
+            let out = snap + r * Capture.snapN
+            while i < n && f < Capture.snapN {
+                a += p[i * stride + at]; c += 1; i += 1
+                if c >= dec { out[f] = a / Float(dec); f += 1; a = 0; c = 0 }
+            }
+            snapAcc[r] = a
+            fill = f; accN = c
+        }
+        row(0, t, tch, 0, frames)
+        row(1, t, tch, tch > 1 ? 1 : 0, frames)
+        var c = 0
+        for b in 0..<(abl.count - 1) where c < Capture.snapInputs {
+            let buf = abl[b], ch = max(1, Int(buf.mNumberChannels))
+            if let d = buf.mData {
+                let p = UnsafePointer(d.assumingMemoryBound(to: Float.self)), nf = min(Int(buf.mDataByteSize) / (4 * ch), frames)
+                // (an input with fewer frames than the tap this block: the snapshot starts again)
+                if nf < frames {
+                    snapFill = 0; snapAccN = 0
+                    for r in 0..<(2 + Capture.snapInputs) { snapAcc[r] = 0 }
+                    return
+                }
+                for k in 0..<ch where c + k < Capture.snapInputs { row(2 + c + k, p, ch, k, frames) }
+            }
+            c += ch
+        }
+        snapChannels = min(c, Capture.snapInputs)
+        snapFill = fill; snapAccN = accN
+        if fill >= Capture.snapN { snapState = 1 }
+    }
 
     /// Updates each input channel's level from this block and picks the loudest (see `micLevel`). The mic's
     /// buffers are all but the last (the tap's); each may hold several interleaved channels.
@@ -241,7 +294,16 @@ private final class Capture {
         }
         micChannels = min(c, Capture.maxMicChannels)
         var best = micChannel < micChannels ? micChannel : 0
-        for k in 0..<micChannels where micLevel[k] > 4 * micLevel[best] && micLevel[k] > 1e-8 { best = k }
+        // an input that carries the music is never the voice's: it can't take over, and it is left for the loudest
+        // other input as soon as one has sound (until then nothing is lost: nobody is heard on any)
+        let mask = copyMask
+        func voice(_ k: Int) -> Bool { k >= 32 || (mask >> UInt32(k)) & 1 == 0 }
+        if !voice(best) {
+            var alt = -1
+            for k in 0..<micChannels where voice(k) && micLevel[k] > 1e-8 && (alt < 0 || micLevel[k] > micLevel[alt]) { alt = k }
+            if alt >= 0 { best = alt }
+        }
+        for k in 0..<micChannels where voice(k) && micLevel[k] > 4 * micLevel[best] && micLevel[k] > 1e-8 { best = k }
         micChannel = best
     }
 
@@ -268,6 +330,7 @@ private final class Capture {
         let micUID = mic?.uid
         micName = mic?.name ?? ""
         self.micUID = micUID ?? ""
+        copyMask = Capture.knownCopies[self.micUID] ?? 0
         let clockUID = micUID ?? outUID
         let agg: [String: Any] = [
             kAudioAggregateDeviceNameKey: "OnKey",
@@ -294,6 +357,7 @@ private final class Capture {
             var mch = 1, micFrames = 0, mk = 0
             if withMic && abl.count >= 2 {
                 self.pickMicChannel(abl, frames: frames)
+                if self.micChannels > 1 { self.fillSnapshot(abl, tap: UnsafePointer(t), tapChannels: tch, frames: frames) }
                 // the buffer holding the channel in use, and its place among that buffer's channels
                 var c = 0
                 for b in 0..<(abl.count - 1) {
@@ -389,6 +453,38 @@ public func onkey_capture_start(_ bundle: UnsafePointer<CChar>,
 public func onkey_mic_channel(_ count: UnsafeMutablePointer<Int32>) -> Int32 {
     count.pointee = Int32(current?.micChannels ?? 0)
     return Int32(current?.micChannel ?? 0)
+}
+
+/// The snapshot for telling which inputs carry the music (see Capture.copyMask), once it is full: `n` samples each
+/// of the music's left and right, then of `inputs` inputs, one after the other in `out` (room for `cap` floats).
+/// `copies` is the mask in use now. Returns 1 and starts the next snapshot, or 0 when none is ready (or the mic has
+/// one input).
+@_cdecl("onkey_mic_snapshot")
+public func onkey_mic_snapshot(_ out: UnsafeMutablePointer<Float>, _ cap: Int32, _ n: UnsafeMutablePointer<Int32>,
+                               _ inputs: UnsafeMutablePointer<Int32>, _ copies: UnsafeMutablePointer<UInt32>) -> Int32 {
+    lock.lock(); defer { lock.unlock() }
+    guard let c = current, c.snapState == 1 else { return 0 }
+    let rows = 2 + c.snapChannels, total = rows * Capture.snapN
+    let ok = c.snapChannels > 1 && total <= Int(cap)
+    if ok {
+        out.update(from: c.snap, count: total)
+        n.pointee = Int32(Capture.snapN)
+        inputs.pointee = Int32(c.snapChannels)
+        copies.pointee = c.copyMask
+    }
+    c.snapFill = 0; c.snapAccN = 0
+    for r in 0..<(2 + Capture.snapInputs) { c.snapAcc[r] = 0 }
+    c.snapState = 0
+    return ok ? 1 : 0
+}
+
+/// The inputs found to carry the music (bit k: input k), for the capture running now and the next ones of its mic.
+@_cdecl("onkey_mic_set_copies")
+public func onkey_mic_set_copies(_ mask: UInt32) {
+    lock.lock(); defer { lock.unlock() }
+    guard let c = current else { return }
+    c.copyMask = mask
+    Capture.knownCopies[c.micUID] = mask
 }
 
 @_cdecl("onkey_capture_stop")

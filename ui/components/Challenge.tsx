@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { inApp } from "@/lib/session";
-import { challengeLink, MAX } from "@/lib/challenge";
+import { challengeLink, challengeParts, MAX } from "@/lib/challenge";
 import { useT } from "@/lib/i18n";
 
 const NAME_KEY = "onkey.challengeName";
@@ -27,9 +27,20 @@ export default function Challenge({ song, artist, score }: { song: string; artis
     return () => { window.removeEventListener("keydown", esc); window.removeEventListener("pointerdown", away); };
   }, [open]);
 
-  const link = challengeLink(song, artist, score, name);
+  // the app's signature of what the link says (lib/challenge.ts): asked for again whenever the name typed changes
+  const sign = () => inApp() ? invoke<string>("sign_challenge", { ...challengeParts(song, artist, score, name) }).catch(() => "") : Promise.resolve("");
+  const [sig, setSig] = useState({ name: "", sig: "" });
+  useEffect(() => {
+    if (!open) return;
+    let alive = true;
+    void sign().then(s => { if (alive) setSig({ name, sig: s }); });
+    return () => { alive = false; };
+  }, [open, song, artist, score, name]);   // eslint-disable-line react-hooks/exhaustive-deps
+  const link = challengeLink(song, artist, score, name, sig.name === name ? sig.sig : "");
   const copy = async () => {
     try { localStorage.setItem(NAME_KEY, name.trim()); } catch {}
+    // (signed afresh: the one shown may still be for the name before the last key pressed)
+    const link = challengeLink(song, artist, score, name, await sign());
     let ok = false;
     if (inApp()) ok = await invoke<boolean>("copy_challenge", { link }).catch(() => false);
     else ok = await navigator.clipboard?.writeText(link).then(() => true, () => false) ?? false;

@@ -50,6 +50,8 @@ These requests do go out:
 - iTunes Search and Lookup (Apple): an artist and title, or the ID Shazam returned, for covers and the song's
   length. The cover images come from Spotify's, Apple's or YouTube's image hosts.
 - GitHub: a check for a new version a minute after launch and once a day, and its download.
+- Feedback (feedback.singonkey.app, mine): only when you press Send in "Send feedback", or tap a thumb on a take's card: your thumb, what you
+  wrote, your email if you gave one, OnKey's version, your system and the app's language. It's emailed to me.
 
 Settings has a switch for Shazam, for lyrics and for the update check. [Privacy](https://singonkey.app/docs/privacy/)
 lists everything OnKey keeps and sends, and [scripts/release-hosts.txt](scripts/release-hosts.txt) lists every web

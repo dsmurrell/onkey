@@ -16,6 +16,8 @@ extern "C" {
     pub fn onkey_set_mic_preference(uid: *const c_char);
     pub fn onkey_output_latency_ms() -> i32;
     pub fn onkey_mic_channel(count: *mut i32) -> i32;
+    pub fn onkey_mic_snapshot(out: *mut f32, cap: i32, n: *mut i32, inputs: *mut i32, copies: *mut u32) -> i32;
+    pub fn onkey_mic_set_copies(mask: u32);
     pub fn onkey_output_uid(uid: *mut c_char, len: i32);
     pub fn onkey_output_name(name: *mut c_char, len: i32);
     pub fn onkey_app_sounding(bundle: *const c_char) -> i32;

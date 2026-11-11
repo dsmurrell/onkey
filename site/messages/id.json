@@ -194,7 +194,8 @@
       "lrclib": "<strong>LRCLIB</strong>: artis, judul, album dan durasi lagu, untuk mengambil lirik tersinkron (kecuali Tampilkan lirik dimatikan).",
       "apple": "<strong>Apple</strong>: artis dan judul untuk mencari sampul album, dan id Apple Music dari lagu yang dikenali untuk mendapatkan durasinya. Sampulnya sendiri dimuat dari server gambar Spotify, Apple atau YouTube.",
       "github": "<strong>GitHub</strong>: pengecekan harian untuk versi baru, dan unduhannya. Anda dapat mematikannya di Pengaturan.",
-      "outro": "Tidak ada akun, tidak ada analitik, dan tidak ada server milik saya. “Laporkan masalah” hanya menyimpan file di Mac Anda, untuk Anda lampirkan ke issue GitHub jika mau. <link>Privasi selengkapnya</link>."
+      "feedback": "<strong>Masukan</strong>: hanya saat Anda menekan Kirim di “Kirim masukan”, atau mengetuk jempol di kartu sebuah take: jempol Anda, apa yang Anda tulis, email Anda jika diisi, versi OnKey, sistem Anda, dan bahasa aplikasi.",
+      "outro": "Tidak ada akun dan tidak ada analitik. “Laporkan masalah” hanya menyimpan file di Mac Anda, untuk Anda lampirkan ke issue GitHub jika mau. <link>Privasi selengkapnya</link>."
     },
     "music": {
       "q": "Apakah OnKey menyediakan atau mengunduh musik?",
@@ -618,7 +619,7 @@
         },
         "hood": {
           "stored": "Disimpan di <code>{dataDir}</code>: <code>songs/</code> (garis nada, bilah, sidik jari, pewaktuan lirik dan tanda tangan Shazam, disimpan untuk setiap lagu yang dipelajari di kedua mode), <code>takes/</code> (<code>mic.m4a</code>: mikrofon Anda, AAC mono sekitar 64 kbps, sekitar 0,5 MB per menit, semuanya disimpan sampai total 2 GB, plus skor dan laporan dengan baris liriknya) dan <code>records/</code> (log dan ringkasan setiap putaran, hanya angka, disimpan 30 hari, paling banyak 200 MB). Menghapus lagu atau take memindahkannya ke Tong Sampah.",
-          "network": "Jaringan: Shazam (mode mendengarkan, bisa dimatikan) untuk lagu yang belum dipelajari, pencarian lirik LRCLIB (kecuali Tampilkan lirik mati), iTunes Search untuk sampul, iTunes Lookup untuk durasi lagu yang dikenali, gambar sampul (dari Apple, atau thumbnail YouTube), dan pemeriksaan harian GitHub Releases untuk pembaruan. Tanpa akun, tanpa analitik, dan tanpa server milik saya.",
+          "network": "Jaringan: Shazam (mode mendengarkan, bisa dimatikan) untuk lagu yang belum dipelajari, pencarian lirik LRCLIB (kecuali Tampilkan lirik mati), iTunes Search untuk sampul, iTunes Lookup untuk durasi lagu yang dikenali, gambar sampul (dari Apple, atau thumbnail YouTube), pemeriksaan harian GitHub Releases untuk pembaruan, dan masukan hanya saat Anda menekan Kirim. Tanpa akun dan tanpa analitik.",
           "more": "Selengkapnya di <link>Privasi & hukum</link>."
         }
       }
@@ -725,7 +726,9 @@
         "covers": "<strong>Gambar sampul</strong>",
         "coversWhat": "Permintaan gambar biasa ke server gambar Spotify, Apple atau YouTube saat sampul ditampilkan.",
         "githubWhat": "Pemeriksaan versi OnKey yang lebih baru semenit setelah dibuka lalu sekali sehari, dan unduhannya jika ada. Dengan <strong>Periksa pembaruan secara otomatis</strong> mati di Pengaturan, ia hanya memeriksa saat Anda menekan <strong>Periksa sekarang</strong>.",
-        "nothingElse": "Tidak ada lagi yang keluar: tidak ada akun, tidak ada analitik, tidak ada pelaporan crash, dan tidak ada server milik saya. Rekaman Anda tidak pernah diunggah. “Laporkan masalah” menunjukkan kepada Anda isi zip berisi angka dan log, menyimpannya di Mac Anda, dan tidak mengirim apa pun. Anda yang memilih apakah akan melampirkannya ke issue GitHub. Model sudah ada di dalam aplikasi, jadi ia tidak pernah mengunduhnya.",
+        "feedback": "<strong>Masukan</strong> (feedback.singonkey.app, milik saya)",
+        "feedbackWhat": "Hanya saat Anda menekan <strong>Kirim</strong> di “Kirim masukan” (di Pengaturan, atau di kartu “Bagaimana OnKey menurut Anda?” yang ditampilkan halaman take dua kali: setelah take ke-3 dan ke-20 Anda): jempol naik atau turun, apa yang Anda tulis, email Anda jika diisi agar bisa dibalas, versi OnKey, sistem Anda dan versinya, serta bahasa aplikasi. Semua itu dikirim ke saya lewat email dan tidak disimpan di tempat lain. Jempol di kartu langsung dikirim dengan satu klik itu.",
+        "nothingElse": "Tidak ada lagi yang keluar: tidak ada akun, tidak ada analitik, dan tidak ada pelaporan crash. Rekaman Anda tidak pernah diunggah. “Laporkan masalah” menunjukkan kepada Anda isi zip berisi angka dan log, menyimpannya di Mac Anda, dan tidak mengirim apa pun. Anda yang memilih apakah akan melampirkannya ke issue GitHub. Model sudah ada di dalam aplikasi, jadi ia tidak pernah mengunduhnya.",
         "website": "Situs web ini (bukan aplikasinya) menghitung kunjungan dengan Plausible. Ia tidak memakai cookie dan tidak ada yang mengidentifikasi Anda, dan hanya menyimpan total, seperti berapa orang yang berkunjung, dari mana, dan berapa yang mengklik Unduh.",
         "flowMyna": "Jalur kunjungan anonim juga dikirim ke Flow Myna, alat analitik saya sendiri: bagian situs mana yang dibaca sebuah kunjungan, berurutan, dan lokasi kasar asal koneksinya (misalnya negaranya). Tanpa cookie, dan alamat IP Anda tidak disimpan.",
         "stars": "Jumlah bintang pada tombol GitHub datang langsung dari GitHub, jadi browser Anda memintanya ke GitHub."

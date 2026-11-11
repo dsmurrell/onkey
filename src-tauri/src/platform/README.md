@@ -111,7 +111,8 @@ Runs on 64-bit Intel/AMD Linux with glibc 2.35 or newer (built on Ubuntu 22.04):
 36+, Linux Mint 21+, Pop!_OS 22.04+, recent Arch. Needs a desktop with PipeWire (with pipewire-pulse) or PulseAudio,
 which nearly every desktop has.
 
-1. Download `OnKey_<version>_amd64.AppImage` (CI artifact `onkey-linux-<commit>`, a zip holding it), then
+1. Download `OnKey_<version>_amd64.AppImage` (CI artifact `onkey-linux-<commit>`, a zip holding it, kept by runs on
+   linux-port / lp-* and by hand; a push to develop builds it but keeps no artifact), then
    `chmod +x OnKey_*.AppImage` and run it (double-click, or `./OnKey_*.AppImage` in a terminal to see its output).
    If it says FUSE is missing: install `libfuse2` (Ubuntu 22.04: `sudo apt install libfuse2`; 24.04:
    `sudo apt install libfuse2t64`), or run it with `--appimage-extract-and-run`.

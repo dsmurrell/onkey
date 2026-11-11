@@ -20,6 +20,26 @@
       "out": "461b718c50093efa",
       "human": false
     },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "076a551d79485551",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "5b49c5ceacdb5be6",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "23897eee95d2267f",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "6e00601ed7e78d21",
+      "human": false
+    },
     "entries.a-tidier-app-page-by-page.p1": {
       "en": "51224889c3c1afb4",
       "out": "275ce1ed535ff88e",
@@ -78,6 +98,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "8c4c9f55be56a91c",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "852c6c9da63769cd",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "28dac8484da0f2e3",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "163a450439f9e258",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "9ba4ef9cf122f217",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -168,6 +208,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "ce5a49c90d24eebc",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "18e3e08c63195c53",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "1708460864ac0e62",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "77fb2a152b43bace",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "56ea3b6b4139f1fa",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "afe8de4958bda4e2",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -350,6 +415,36 @@
       "out": "5ce1a8f76f0c163c",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "c28ce2406d9a670b",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "e31ccb225283aa35",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "4ee948ecad2d15bc",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "09ae9af3fa395410",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "92aa6d04ebb066fe",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "738b8c7ce6f6449a",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "30ba3df7aff1e201",
@@ -371,6 +466,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "25f4b78a88f9ec3d",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "b2ef356b764a3066",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "defb4fc19d5ba19a",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "67f5457209816d0e",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "25f4b78a88f9ec3d",
       "human": false
@@ -559,6 +674,11 @@
       "en": "246ce762372aeb69",
       "out": "42ec2cd2ff317252",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "7d4fc3198781e966",
+      "human": false
     }
   },
   "es": {
@@ -580,6 +700,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "616314c245a20901",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "788b5fdfca407364",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "57dc3b1b1068b925",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "03548b7298a2efd7",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "08ac275cfebdf8a2",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -640,6 +780,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "12f18458a197f1c4",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "d37176a904662427",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "71ba86496aeef674",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "289439139841c2b1",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "136fd387b6ae95a0",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -730,6 +890,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "ad120c6e42ea0346",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "cbe605f41959d2c5",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "01f678bfb077afcd",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "7844252aad1527ca",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "5ed51bb65400527f",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "dc373594ce55aa8e",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -912,6 +1097,36 @@
       "out": "8f375877af5bf8c4",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "6e8829bddbc385e3",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "acf3c0ce244a2d02",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "278df871db61826c",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "716f7c44c3406e1e",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "1982ad3dc44e56db",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "4f7020a41b77adde",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "1348e82619b1bc30",
@@ -933,6 +1148,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "69766c8cdd4b6303",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "e42363ea5e43fbe3",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "7fbe03795ccc3939",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "191dc0813401cadc",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "69766c8cdd4b6303",
       "human": false
@@ -1121,6 +1356,11 @@
       "en": "246ce762372aeb69",
       "out": "9ca037eebcd9b11a",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "7599bbe0ec0272d5",
+      "human": false
     }
   },
   "es-ES": {
@@ -1142,6 +1382,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "616314c245a20901",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "788b5fdfca407364",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "57dc3b1b1068b925",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "424eab98985fe2ed",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "08ac275cfebdf8a2",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -1202,6 +1462,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "12f18458a197f1c4",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "8c3d018ef6b0b7d7",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "b8c8729f8dc30c9c",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "be0719d95463e115",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "136fd387b6ae95a0",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -1292,6 +1572,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "ad120c6e42ea0346",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "cbe605f41959d2c5",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "01f678bfb077afcd",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "5e77bcf370394a2c",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "95ee0a7b6462ccf9",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "dc373594ce55aa8e",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -1474,6 +1779,36 @@
       "out": "8f375877af5bf8c4",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "606615421b2ed0ba",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "acf3c0ce244a2d02",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "e73966d88dd19772",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "55060982c642e1fc",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "1982ad3dc44e56db",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "4f7020a41b77adde",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "1348e82619b1bc30",
@@ -1495,6 +1830,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "69766c8cdd4b6303",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "1760224c2a02c6d2",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "7fbe03795ccc3939",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "191dc0813401cadc",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "69766c8cdd4b6303",
       "human": false
@@ -1683,6 +2038,11 @@
       "en": "246ce762372aeb69",
       "out": "9ca037eebcd9b11a",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "7599bbe0ec0272d5",
+      "human": false
     }
   },
   "fr": {
@@ -1704,6 +2064,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "378ec2c0fd4a7a9b",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "818bb415a96ef35c",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "420b3eda760ff0c4",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "9371c602258c99d7",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "4ca604c0f35e225b",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -1764,6 +2144,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "9d77e10dffe1f862",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "0c808c504662d750",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "8fe88754bd4fc15b",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "5062f00ad4ad0205",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "58d0314a29917e35",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -1854,6 +2254,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "c6cc04a20bfb5783",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "8c7e9fff15e7b1d2",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "59aa8d76776ca360",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "7c748122411f197d",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "5b3acef89075df53",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "0d7f71476a059bb8",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -2036,6 +2461,36 @@
       "out": "515252973890d923",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "af5e2229f5040f01",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "f292c65100b6dc12",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "d2d824faad9ffa87",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "7175ab9c1e876f69",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "96a7eed929e25820",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "20aaa2ce3b724010",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "c124f33779009396",
@@ -2057,6 +2512,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "5c4d6a5b2a9bc5d4",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "72306c9e60d5c1a7",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "a83d4a22a05f5cbf",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "23cfd198dea5b954",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "5c4d6a5b2a9bc5d4",
       "human": false
@@ -2245,6 +2720,11 @@
       "en": "246ce762372aeb69",
       "out": "c186075d9daab070",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "7cf9d9d919e50525",
+      "human": false
     }
   },
   "hi": {
@@ -2266,6 +2746,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "8dab09aba3667bcd",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "3cb366b3280a75af",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "d84e0fc649865373",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "2164cdbc8a580da1",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "c7bb12a90d7d0992",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -2326,6 +2826,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "33751cdbc6b436df",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "cfaf424e6190ebd5",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "ed73b2ea97302442",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "673edb65e0606626",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "c49685f33c2814b3",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -2416,6 +2936,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "eeb345833fe82af9",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "f41cda3473e8ae22",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "ee784defc490a2b7",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "ffa2634f30ab3362",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "92cbfa51c203cc9c",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "c37ee998e15a8ed2",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -2598,6 +3143,36 @@
       "out": "3d55943b096952df",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "2252edb395b4ff85",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "deeac9b8f9f2f201",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "e7e5bf94b744fb39",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "cd50377191e4a443",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "1804bcced80da8b7",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "28f8555575a8363c",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "f17a8d47cbcce811",
@@ -2619,6 +3194,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "b3e000d6ed4208fc",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "54a2fe3f31e9e6ac",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "dd44ed005f1e348e",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "054377c7e6a613d5",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "b3e000d6ed4208fc",
       "human": false
@@ -2807,6 +3402,11 @@
       "en": "246ce762372aeb69",
       "out": "f6a816265dc644df",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "f66d1c6e31630a94",
+      "human": false
     }
   },
   "id": {
@@ -2828,6 +3428,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "5a2da30e73e4801d",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "f61e3181228f5c19",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "c33c87ffe998abf4",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "de749f12a1dbfe86",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "480f03817d675dd7",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -2888,6 +3508,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "45ea27d6aab59a8a",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "7a53ef9862895ee9",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "5a80fe1c893d6d1c",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "dd3d32dab8be952a",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "a5dd3685755f093c",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -2978,6 +3618,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "8084da1da16fbddc",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "fc196b65b5a868ab",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "5f36fa58ff0d1b10",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "98fb940ba475b652",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "a37ee9461b370836",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "ab16ca72b9e71c1a",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -3160,6 +3825,36 @@
       "out": "ae2236b4f514fff7",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "708f41b859b59865",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "b5b72068304c9c09",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "015f6b384d67f0bd",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "1e70477243364799",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "82595fbdf6c699ca",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "b9a21337b0ae7389",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "589ac71387e5bedd",
@@ -3181,6 +3876,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "16777a4aebb85e9f",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "b793f011731a504d",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "e350eeb26ae685a4",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "54bd006382d4fd6d",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "16777a4aebb85e9f",
       "human": false
@@ -3369,6 +4084,11 @@
       "en": "246ce762372aeb69",
       "out": "acde30002be9af15",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "edaf1a2ec952f538",
+      "human": false
     }
   },
   "it": {
@@ -3390,6 +4110,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "58052e39a808ec6f",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "6670348723f89788",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "f395a39eb7cdabbd",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "5a88f4a1bf95d2b3",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "d7d87d9d9e95bd1d",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -3450,6 +4190,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "e0719dc439b00885",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "27a2a7ef20c52b7c",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "8d4f66df920177b6",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "ff4438c1ef2c5755",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "8297dbe2c95ae425",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -3540,6 +4300,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "842d57aaa94ef9f0",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "30fd3c6e38d1cee2",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "83a1522178844ab6",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "177057547655fb0e",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "a811b9b61cd88ddc",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "14f933d76c63735a",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -3722,6 +4507,36 @@
       "out": "e91a9dbadf3e6cce",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "0348f618557127fb",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "2097058a06b32801",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "e473b9f34c8039f6",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "fa61ea35cc445fef",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "315bc8d38f19bd15",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "1f9bf4e1a5542392",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "53accf06325b5ab2",
@@ -3743,6 +4558,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "5c54033dbc67a0a9",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "e5e6e1035a878994",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "bbdf7f3829822509",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "aafd729c3a8f94b9",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "5c54033dbc67a0a9",
       "human": false
@@ -3931,6 +4766,11 @@
       "en": "246ce762372aeb69",
       "out": "74b0f26bdab667b4",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "c01a56e196ee988a",
+      "human": false
     }
   },
   "ja": {
@@ -3952,6 +4792,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "c1a61b2f598b155c",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "8531d236f539b10d",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "27af78c132dd1a4e",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "3ec54b3ba52c96ec",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "d6188c1846ebb640",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -4012,6 +4872,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "dcec9def92f1d330",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "a28bb5a69f80ef67",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "dbf9c7b33ff68e9d",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "e126485145c99161",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "2fee521ea4b55164",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -4102,6 +4982,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "f632b899a2b86c03",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "6ace3eb2b15131f5",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "f2ffb0afd4e7207d",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "7a5e36c1de298fe2",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "72ee68c1ab9ed276",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "b78cabc9072904e6",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -4284,6 +5189,36 @@
       "out": "c2a8b10d541be19a",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "6bb8d53444248f4b",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "b1927abfd67c2558",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "336276a569f559fe",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "3fe0e860ba8a42a3",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "227586dbb42a012d",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "3c15636ce697f5a8",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "ec9f6444307ead79",
@@ -4305,6 +5240,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "f8c4f8af9e49f074",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "bdc72cf5d3331643",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "d24b7b345ac379fc",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "8006cd07a0b3b676",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "f8c4f8af9e49f074",
       "human": false
@@ -4493,6 +5448,11 @@
       "en": "246ce762372aeb69",
       "out": "8702069a356807ac",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "76e27f433df0d23a",
+      "human": false
     }
   },
   "ko": {
@@ -4514,6 +5474,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "54e0a994647906a8",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "ff3bda42b523d595",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "a7fb181beadb4eb7",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "35f097b12daa3e70",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "7ddda45a0fba8262",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -4574,6 +5554,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "664e999d05f026e9",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "c92ca2a2dc6669fc",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "cd3f9c822f8d8507",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "20c17f1e50c15f3a",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "b70e0310ca1b00d7",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -4664,6 +5664,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "6d5e5b68fe2eac3a",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "4acabc6e240b56f3",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "14156d0896718066",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "99b92795920542dc",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "932acd821c2750a7",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "a0814e6008ed2677",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -4846,6 +5871,36 @@
       "out": "39eb82247da2d8f8",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "4d8b7bce24a5e2fe",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "2faa0f219d860bde",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "3aabdd2f783392b7",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "02e90bd08ef9d264",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "bdd6be95bd7baa63",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "1b285f237b4dc0a1",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "ee4ecbf66c6ac2f4",
@@ -4867,6 +5922,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "9ed688f7229d1a26",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "60f5cd39a8967af8",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "69627ebef57a0ebc",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "74e4c4ea8d1ec8c5",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "9ed688f7229d1a26",
       "human": false
@@ -5055,6 +6130,11 @@
       "en": "246ce762372aeb69",
       "out": "2c7362a125ab39cb",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "40b730e21f85c755",
+      "human": false
     }
   },
   "nl": {
@@ -5076,6 +6156,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "0116b7b184adf6ba",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "75b2b32df6d4d64e",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "2f544bf70f2c2e5c",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "646d059827064f57",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "fd4431846cb6d398",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -5136,6 +6236,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "4072ea3b9e4b6278",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "a59400a772a42cfa",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "3268294472aafc91",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "af4ce1defce16058",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "91ada05631832784",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -5226,6 +6346,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "d6082a58eff5c747",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "6b1e767a33b7bb4a",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "b8503cf3299d678c",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "90d594cd537740f4",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "bf4e90fc4783dc43",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "0afa2a38b7b457d3",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -5408,6 +6553,36 @@
       "out": "6a739d1c9bf176fd",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "4944bf7567d74461",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "e62470e35efda0d8",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "808961d54bdf1705",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "48671874266fff2d",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "ccc5f7f7e30b7536",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "6cf48fe43a1710aa",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "991ccbaaf19d34fb",
@@ -5429,6 +6604,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "3a509f36912951f3",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "e926f4668520a80e",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "2fc576508ea0f369",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "98bf55ea352f176a",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "3a509f36912951f3",
       "human": false
@@ -5617,6 +6812,11 @@
       "en": "246ce762372aeb69",
       "out": "1d99688625ba297f",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "fabe7b38a19b4432",
+      "human": false
     }
   },
   "pl": {
@@ -5638,6 +6838,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "b7bb4ef453b27972",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "60dcc199ff9c8351",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "68aee9373f30df1b",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "d60b8f337941cd74",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "6790f1074f530132",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -5698,6 +6918,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "7203680653cd6db4",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "3997bb145731e8f6",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "8bc86ee849317ca6",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "d47ab968e3e32378",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "f9ebfa7dc6097890",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -5788,6 +7028,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "738e38111ff7256d",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "31c2d50056d66aef",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "4788e4fd8d8ccf0f",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "1fd1a35a44749a5d",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "8d552a84fa4662aa",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "a896d009b4157983",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -5970,6 +7235,36 @@
       "out": "6bb122405c14154c",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "0fb45defd7d47feb",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "2cadcaecedc63320",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "bcec5bd93cf2c337",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "a2bdc0293c591ae9",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "5063a959a04f4f96",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "b7df19de5c6bc254",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "bf393cffe6fffaab",
@@ -5991,6 +7286,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "448504b6d7a0a33a",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "774c6ea338d379a5",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "0bb419f7b01a836c",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "e45e69247c6f3fe1",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "448504b6d7a0a33a",
       "human": false
@@ -6179,6 +7494,11 @@
       "en": "246ce762372aeb69",
       "out": "0f759d2814c6f09e",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "3b0bedeba828d157",
+      "human": false
     }
   },
   "pt": {
@@ -6200,6 +7520,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "135a74ca0c083b58",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "cc134a55b466067f",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "a381804c11fb7dc2",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "76de6cfe2b332991",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "e503eba6360e0923",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -6260,6 +7600,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "87a50effa3f93baa",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "dad2e9dc357ba051",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "4e2bd2731c7a98f2",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "148f3160a28fa82e",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "5c5a9e0d6538865b",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -6350,6 +7710,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "f763e474648031aa",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "713231410610dfb6",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "328de0e018511e33",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "6033fb43f0d54b69",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "cba18cb7920aee03",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "ac772e2cae84937b",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -6532,6 +7917,36 @@
       "out": "098e434024ad17ec",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "17a4f272e621ccef",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "82605d43222c47d5",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "7f93fff9a938aab3",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "57f096270d16dcf7",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "0559b884fbce8295",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "d63f087f9faa20d2",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "11d70988bca32a30",
@@ -6553,6 +7968,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "97283c96b8b491e6",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "54635545ed04c32b",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "9c8bf530988fdd01",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "4b847d6f27ea21d4",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "97283c96b8b491e6",
       "human": false
@@ -6741,6 +8176,11 @@
       "en": "246ce762372aeb69",
       "out": "42f83a24eb6f384c",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "5f97cfa2d56add11",
+      "human": false
     }
   },
   "ru": {
@@ -6762,6 +8202,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "c962d2d07bbccdf4",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "d15fedac9ca71a56",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "c11e48227c4fa454",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "2f6f8e9c199d59ec",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "3ab2e753dd467d2f",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -6822,6 +8282,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "e59134267a75b0ca",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "f11e5db91471de3a",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "9201fddae6bf6cb0",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "e329155305d1d5dc",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "b76079d745e1d4af",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -6912,6 +8392,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "07c20ef97c2dd121",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "41a136b5d938846c",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "da3d1b6ba9936ef8",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "7f0fd167d4eb51eb",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "d53de93c2d080052",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "a167e3d56ec21f6e",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -7094,6 +8599,36 @@
       "out": "80867816e43265c0",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "038353707a930a30",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "ef4e168e8b4177a1",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "4b69cf5a53e53630",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "dcbf173f897207cd",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "32f51eec7b16a945",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "7d221fc1cee933fe",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "e588a2c6336b9653",
@@ -7115,6 +8650,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "b1d643fabcb0ee47",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "d0a3ae5acc783cf6",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "3c1836e53d6a0a07",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "21e8c8c5abdc39d1",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "b1d643fabcb0ee47",
       "human": false
@@ -7303,6 +8858,11 @@
       "en": "246ce762372aeb69",
       "out": "8c7f9c54049ddba0",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "e664a969c0899c9a",
+      "human": false
     }
   },
   "th": {
@@ -7324,6 +8884,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "0a76f6f9e3d872f8",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "d15eff60d5cac6f5",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "fabfcae912d3cc77",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "7bd6f2132d6f4feb",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "bc591b2f547e55cb",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -7384,6 +8964,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "aa78aaad46a1ec7f",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "cc22abec966e9886",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "bd571457051776a6",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "37dc49690e54fd40",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "1754ebde957cca7e",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -7474,6 +9074,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "11ced602081b7f73",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "a1b8c7bff0b72c80",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "154cf6521bccf47e",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "5af3a8048bc0fa69",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "014be4dc8020b224",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "12960614e4f037ac",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -7656,6 +9281,36 @@
       "out": "75ec1acc6d208984",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "1e1470e484b5feac",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "8f340739962cd1a2",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "b68ff4176c1b0ccc",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "6d6b4f562f3c9adc",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "702b720cb7e10c88",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "fbf58efc3a307802",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "8aa0a5f1aa0e9156",
@@ -7677,6 +9332,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "b14405dbf4424520",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "a60d3715736bf6b3",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "f1fccd9bdba10a63",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "092bf2a777fa0c3e",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "b14405dbf4424520",
       "human": false
@@ -7865,6 +9540,11 @@
       "en": "246ce762372aeb69",
       "out": "060a66273d8e3e2d",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "f00a3cff970f2e45",
+      "human": false
     }
   },
   "tr": {
@@ -7886,6 +9566,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "1269f735c5e787d2",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "713c3502422c1af1",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "052c602bf5ee4ad8",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "fee7019e0bd7c6a1",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "14eb2a9208c4dae2",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -7946,6 +9646,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "eb9a5b9063a255bb",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "9408c29903d67a07",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "c463a01c3444fd79",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "58d921ed56e8bc29",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "2aab4892ef4f4ff2",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -8036,6 +9756,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "464279801af0363b",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "affc7137a84d2425",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "99d0682414c99181",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "e1a001f869c06df9",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "23219860dd240e8f",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "dc555f6c0137426b",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -8218,6 +9963,36 @@
       "out": "6c6c58a77b867cc3",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "2e2efbd42b48c721",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "f8597ea9dd86ac43",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "44947c51537ac492",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "2ba8c74ea536886f",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "b0f1381084bcc71b",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "149c6e9c62bd7ec0",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "ab79d59d33a00815",
@@ -8239,6 +10014,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "6de6932cad860f0b",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "10f2648b0dc8220f",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "e1256eb04850407c",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "3265d82fc668b82d",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "6de6932cad860f0b",
       "human": false
@@ -8427,6 +10222,11 @@
       "en": "246ce762372aeb69",
       "out": "2bd30b3c550ee07c",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "f0ebf567ffdc2acc",
+      "human": false
     }
   },
   "vi": {
@@ -8448,6 +10248,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "ec586dd0086eedb0",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "06d4d2980f2dc566",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "b5d803b97c93a287",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "39e28b06ee47d526",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "3fbdd5577059029d",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -8508,6 +10328,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "054eb49af2fa578e",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "fb18abb9e5ad82c8",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "5160d48b59a5d5c7",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "219d9dba098ed129",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "76c96e54fcacdff7",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -8598,6 +10438,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "b29fbe04a6d555e8",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "26e72b59ec782015",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "7b0e23553d9bcc39",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "8220619663d6851e",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "4c41ffee36da3bee",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "da75ad664e11ed6d",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -8780,6 +10645,36 @@
       "out": "84cfd8753027388e",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "638325d13ee851e9",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "c32dc2b8c226be94",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "251bc57b1c531bc9",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "705005f110745c04",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "84b5367b019a6a95",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "45922ef4e2bbead4",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "97e35d00e28dc7c6",
@@ -8801,6 +10696,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "34c2dc0fc1abb65a",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "0f4a0c6007e10361",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "ea608806c345cb96",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "f2afcef5312a54d8",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "34c2dc0fc1abb65a",
       "human": false
@@ -8989,6 +10904,11 @@
       "en": "246ce762372aeb69",
       "out": "cac537bae2bc8c1e",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "8d9abd0363b3d14d",
+      "human": false
     }
   },
   "zh-Hans": {
@@ -9010,6 +10930,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "29b4573323ceabfb",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "05796487fa0ad04b",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "699ff22f60974b92",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "30e1588b39117d5b",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "068feb4376d09a47",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -9070,6 +11010,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "27c10b6bdc31d1cf",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "75cda3fea83e3b55",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "6321cb3d89738527",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "01a03d9a0c540ad7",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "ed8e769ae86ad10d",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -9160,6 +11120,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "c11bc55a21de1ac1",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "6c2acd4a2d07d67b",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "50ca557d6a6687d4",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "3b26aa8cfab0a5de",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "4d6ab5eda49eb112",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "ab9c866327a76d1f",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -9342,6 +11327,36 @@
       "out": "aab0fbc3db5bb790",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "3839e06a1d2d0a5b",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "89ccf29325612fe9",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "e3c7132443a3c65e",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "5cf6cb7b74a06a54",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "7b46823e41d32474",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "5146ae493c2b246c",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "b25da58ca38087d4",
@@ -9363,6 +11378,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "b1d5b344958a9876",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "ec93d71aca8b3e74",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "50cfb01f2c10b46b",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "00725dbcacc746ef",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "b1d5b344958a9876",
       "human": false
@@ -9551,6 +11586,11 @@
       "en": "246ce762372aeb69",
       "out": "cf203ae5b4fbc202",
       "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "095bb764f517b114",
+      "human": false
     }
   },
   "zh-Hant": {
@@ -9572,6 +11612,26 @@
     "entries.a-clearer-settings-page.title": {
       "en": "5a94b2bfa5092b5a",
       "out": "0fcf7e89b2665184",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p1": {
+      "en": "4a26f971a101b749",
+      "out": "99b073af52af0d17",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.p2": {
+      "en": "f28801e4c559a362",
+      "out": "d4836085a6606ca8",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.summary": {
+      "en": "04410c191b0d9165",
+      "out": "031d1c9e71378e87",
+      "human": false
+    },
+    "entries.a-loopback-input-is-never-your-microphone.title": {
+      "en": "2f414191094f45d4",
+      "out": "bad33ad0dd296a43",
       "human": false
     },
     "entries.a-tidier-app-page-by-page.p1": {
@@ -9632,6 +11692,26 @@
     "entries.challenge-a-friend-and-share-your-best-takes.title": {
       "en": "a0a7852f983635a1",
       "out": "2a431c4910f07d4a",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p1": {
+      "en": "18a08dd29d6bb0d2",
+      "out": "46e955abf78673fe",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.p2": {
+      "en": "522dba4d861806a2",
+      "out": "b766b20a589b7adf",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.summary": {
+      "en": "cfc49a56a62e29c8",
+      "out": "4396f12e95ee3f1d",
+      "human": false
+    },
+    "entries.challenge-links-are-signed.title": {
+      "en": "0172553fb6ac3d71",
+      "out": "8120e6b6a031b343",
       "human": false
     },
     "entries.fade-the-guide.summary": {
@@ -9722,6 +11802,31 @@
     "entries.lyrics-line-up-better.title": {
       "en": "9a6caebfa6146c05",
       "out": "9782d2e4070cd336",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p1": {
+      "en": "b8aa4b2e8522bb4d",
+      "out": "401cc749cc99bf7c",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p2": {
+      "en": "93592d162770fa4b",
+      "out": "b6ae14bd5cd46be0",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.p3": {
+      "en": "1f4f1cd90c99f51f",
+      "out": "80d0961909608d7c",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.summary": {
+      "en": "84aa01ce671ee809",
+      "out": "2528ca9e0c43b03b",
+      "human": false
+    },
+    "entries.lyrics-timed-for-another-version-of-the-song.title": {
+      "en": "a2a3aab3e048f17d",
+      "out": "1a0611c266acbb20",
       "human": false
     },
     "entries.onkey-in-your-language.p1": {
@@ -9904,6 +12009,36 @@
       "out": "7220bddc11c55f70",
       "human": false
     },
+    "entries.send-feedback.p1": {
+      "en": "0395b3a925f707c7",
+      "out": "0c0fa030f0aae831",
+      "human": false
+    },
+    "entries.send-feedback.p2": {
+      "en": "d1ba3476fe1e6321",
+      "out": "a20e0d09b3d3803c",
+      "human": false
+    },
+    "entries.send-feedback.p3": {
+      "en": "3847bc74ee0ebbf3",
+      "out": "a3d7de89b5458d88",
+      "human": false
+    },
+    "entries.send-feedback.p4": {
+      "en": "38943d14c8cd7dc3",
+      "out": "20105285d657e60b",
+      "human": false
+    },
+    "entries.send-feedback.summary": {
+      "en": "753f00c28ae9c50f",
+      "out": "8b4a7a7e11a2dfb0",
+      "human": false
+    },
+    "entries.send-feedback.title": {
+      "en": "8235980b80addfc7",
+      "out": "f55126fd104f8a81",
+      "human": false
+    },
     "entries.small-fixes-0-3-0.p1": {
       "en": "8601562f392b071d",
       "out": "9865a38c1eb3602a",
@@ -9925,6 +12060,26 @@
       "human": false
     },
     "entries.small-fixes-0-3-0.title": {
+      "en": "fc52e212c80e73c6",
+      "out": "0ba896daafff466c",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p1": {
+      "en": "c98987abdf390de8",
+      "out": "0823e4b9ef1dcd79",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.p2": {
+      "en": "5323b4a32ed46d1d",
+      "out": "0927059588233498",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.summary": {
+      "en": "8ac2d62238590e94",
+      "out": "186abb4a30758c04",
+      "human": false
+    },
+    "entries.small-fixes-0-3-1.title": {
       "en": "fc52e212c80e73c6",
       "out": "0ba896daafff466c",
       "human": false
@@ -10112,6 +12267,11 @@
     "releases.0-3-0.note": {
       "en": "246ce762372aeb69",
       "out": "790e7306e3757a39",
+      "human": false
+    },
+    "releases.0-3-1.note": {
+      "en": "62e93b62553d9e3c",
+      "out": "26a9e7b281a06ea4",
       "human": false
     }
   }

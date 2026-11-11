@@ -15,6 +15,9 @@
     "github": "Każda zmiana jest na <link>GitHub</link>, gdzie OnKey ma otwarty kod."
   },
   "releases": {
+    "0-3-1": {
+      "note": "Opinie wysyłane prosto z aplikacji OnKey i teksty, które trzymają tempo, nawet gdy ich czasy przygotowano dla innej wersji piosenki."
+    },
     "0-3-0": {
       "note": "OnKey w 19 językach, a teksty po hiszpańsku, portugalsku, włosku, francusku i niemiecku trzymają tempo piosenki."
     },
@@ -27,6 +30,39 @@
     }
   },
   "entries": {
+    "send-feedback": {
+      "title": "Wyślij opinię",
+      "summary": "Powiedz Danielowi, który tworzy OnKey, jak Ci się sprawdza: kciuk w górę lub w dół i kilka słów, wysłane prosto z aplikacji.",
+      "p1": "Okno opinii otwiera dymek na górnym pasku; jest też w Ustawieniach, a strona podejścia co jakiś czas sama prosi o opinię",
+      "p2": "Dodaj swój e-mail, jeśli chcesz dostać odpowiedź",
+      "p3": "W oknie Wyślij opinię nic nie jest wysyłane, dopóki nie naciśniesz Wyślij, a okno pokazuje dokładnie, co zostanie wysłane: Twój kciuk, to, co napisano, Twój e-mail, jeśli go podano, wersję OnKey, Twój system i język aplikacji",
+      "p4": "Kciuk kliknięty na karcie na stronie podejścia jest wysyłany tym jednym kliknięciem, razem z wersją OnKey, Twoim systemem i językiem aplikacji"
+    },
+    "lyrics-timed-for-another-version-of-the-song": {
+      "title": "Teksty zsynchronizowane z inną wersją piosenki",
+      "summary": "Niektóre teksty mają czasy dopasowane do innego nagrania, na przykład koncertowego z dłuższą solówką, i po niej spóźniały się albo wyprzedzały śpiew o całe sekundy. Teraz OnKey dopasowuje je do głosu wokalisty w każdej części piosenki.",
+      "p1": "Po długiej przerwie instrumentalnej kolejne wersy trafiają tam, gdzie są śpiewane, nawet gdy przerwa jest dłuższa lub krótsza, niż zakłada tekst",
+      "p2": "OnKey nadąża też za czasami, które z biegiem piosenki rozjeżdżają się coraz bardziej",
+      "p3": "Dzieje się to, gdy OnKey uczy się piosenki. Przy piosence, której już się nauczył, wybierz Naucz się jeszcze raz w jej menu i odtwórz ją raz w całości"
+    },
+    "challenge-links-are-signed": {
+      "title": "Linki z wyzwaniem są podpisane",
+      "summary": "Link z wyzwaniem zapisywał wynik zwykłym tekstem, więc każdy mógł go podwyższyć w pasku adresu. Teraz OnKey podpisuje link, a singonkey.app pokazuje wynik jako sprawdzony tylko wtedy, gdy link jest taki, jaki utworzył OnKey.",
+      "p1": "Link, który zmieniono albo który utworzyła starsza wersja OnKey, nadal się otwiera, ale jego wynik jest oznaczony jako niesprawdzony",
+      "p2": "Sprawdzenie odbywa się w Twojej przeglądarce. Link nadal zawiera tylko piosenkę, wynik i wpisane imię, a nic z tego nie trafia na serwer"
+    },
+    "a-loopback-input-is-never-your-microphone": {
+      "title": "Wejście loopback nigdy nie jest Twoim mikrofonem",
+      "summary": "Niektóre interfejsy audio mają wejścia, które podają dźwięk z samego komputera. Gdy grała piosenka, to one były najgłośniejsze, więc OnKey mógł wziąć piosenkę za Twój głos i w ogóle nie słyszeć Twojego śpiewu.",
+      "p1": "OnKey rozpoznaje teraz, które wejścia są kopią muzyki, i nigdy nie używa ich do Twojego głosu",
+      "p2": "Wejście Twojego mikrofonu zostaje wybrane, gdy tylko pojawi się na nim dźwięk"
+    },
+    "small-fixes-0-3-1": {
+      "title": "Drobne poprawki",
+      "summary": "Rzeczy, które były trochę nie tak, teraz w porządku.",
+      "p1": "„Zakończ i zobacz wynik” nie zostaje już na ekranie, nic nie robiąc, gdy YouTube przejdzie do następnego filmu",
+      "p2": "Słowa mieszczą się na przyciskach i w poradnikach w każdym języku"
+    },
     "onkey-in-your-language": {
       "title": "OnKey w Twoim języku",
       "summary": "OnKey mówi teraz w 19 językach. Sam podąża za językiem Twojego Maca, albo wybierz język z globusa na górnym pasku, na ekranie powitalnym lub w Ustawieniach.",

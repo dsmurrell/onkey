@@ -194,7 +194,8 @@
       "lrclib": "<strong>LRCLIB</strong>: de artiest, titel, het album en de lengte van het nummer, om de gesynchroniseerde songtekst op te halen (tenzij Toon songteksten uitstaat).",
       "apple": "<strong>Apple</strong>: de artiest en titel om albumhoezen te vinden, en het Apple Music-id van een herkend nummer om de lengte op te halen. De hoezen zelf laden van de beeldservers van Spotify, Apple of YouTube.",
       "github": "<strong>GitHub</strong>: een dagelijkse controle op een nieuwe versie, en de download ervan. Je kunt dit uitzetten in Instellingen.",
-      "outro": "Er is geen account, geen analytics en geen server van mij. ‘Meld een probleem’ bewaart alleen een bestand op je Mac, dat je zelf bij een GitHub-issue kunt voegen als je wilt. <link>Privacy, volledig</link>."
+      "feedback": "<strong>Feedback</strong>: alleen als je op Verstuur drukt in ‘Stuur feedback’, of op een duim tikt op de kaart van een take: je duim, wat je schreef, je e-mailadres als je dat gaf, de versie van OnKey, je systeem en de taal van de app.",
+      "outro": "Er is geen account en geen analytics. ‘Meld een probleem’ bewaart alleen een bestand op je Mac, dat je zelf bij een GitHub-issue kunt voegen als je wilt. <link>Privacy, volledig</link>."
     },
     "music": {
       "q": "Levert of downloadt OnKey muziek?",
@@ -618,7 +619,7 @@
         },
         "hood": {
           "stored": "Opgeslagen in <code>{dataDir}</code>: <code>songs/</code> (toonhoogtelijn, balkjes, vingerafdruk, tekstregeltiming en een Shazam-signatuur, bewaard voor elk geleerd nummer in beide modi), <code>takes/</code> (<code>mic.m4a</code>: je microfoon, AAC mono op ongeveer 64 kbps, ongeveer 0,5 MB per minuut, alles samen tot 2 GB, plus scores en het rapport met de tekstregels) en <code>records/</code> (logboeken en een samenvatting van elke beurt, alleen getallen, 30 dagen bewaard, hoogstens 200 MB). Een nummer of take verwijderen verplaatst het naar de prullenmand.",
-          "network": "Netwerk: Shazam (luistermodus, uit te zetten) voor nog niet geleerde nummers, songtekstopvragingen bij LRCLIB (tenzij Toon songteksten uitstaat), iTunes Search voor hoezen, iTunes Lookup voor de lengte van een herkend nummer, de hoesafbeeldingen (van Apple, of de miniatuur van YouTube), en een dagelijkse controle van GitHub Releases op updates. Geen account, geen analytics en geen server van mij.",
+          "network": "Netwerk: Shazam (luistermodus, uit te zetten) voor nog niet geleerde nummers, songtekstopvragingen bij LRCLIB (tenzij Toon songteksten uitstaat), iTunes Search voor hoezen, iTunes Lookup voor de lengte van een herkend nummer, de hoesafbeeldingen (van Apple, of de miniatuur van YouTube), een dagelijkse controle van GitHub Releases op updates, en feedback alleen als je op Verstuur drukt. Geen account en geen analytics.",
           "more": "Meer in <link>Privacy en juridisch</link>."
         }
       }
@@ -725,7 +726,9 @@
         "covers": "<strong>Hoesafbeeldingen</strong>",
         "coversWhat": "Gewone afbeeldingsverzoeken aan de afbeeldingsservers van Spotify, Apple of YouTube als een hoes wordt getoond.",
         "githubWhat": "Een controle op een nieuwere versie van OnKey een minuut na het starten en daarna één keer per dag, en de download als die er is. Met <strong>Controleer automatisch op updates</strong> uit in Instellingen controleert het alleen als je op <strong>Controleer nu</strong> drukt.",
-        "nothingElse": "Verder gaat er niets naar buiten: er is geen account, geen analytics, geen crashrapportage en geen server van mij. Je opnamen worden nooit geüpload. ‘Meld een probleem’ toont je wat er in zijn zip met getallen en logboeken zit, bewaart die op je Mac en verstuurt niets. Jij kiest of je hem aan een GitHub-issue toevoegt. De modellen zitten in de app, dus die downloadt ze nooit.",
+        "feedback": "<strong>Feedback</strong> (feedback.singonkey.app, van mij)",
+        "feedbackWhat": "Alleen als je op <strong>Verstuur</strong> drukt in ‘Stuur feedback’ (in Instellingen, of op de kaart ‘Hoe bevalt OnKey?’ die de pagina van een take twee keer toont: na je 3e take en je 20e): je duim omhoog of omlaag, wat je schreef, je e-mailadres als je dat voor een antwoord gaf, de versie van OnKey, je systeem en de versie ervan, en de taal van de app. Het wordt naar mij gemaild en nergens anders bewaard. Een duim op de kaart wordt met die ene klik verstuurd.",
+        "nothingElse": "Verder gaat er niets naar buiten: er is geen account, geen analytics en geen crashrapportage. Je opnamen worden nooit geüpload. ‘Meld een probleem’ toont je wat er in zijn zip met getallen en logboeken zit, bewaart die op je Mac en verstuurt niets. Jij kiest of je hem aan een GitHub-issue toevoegt. De modellen zitten in de app, dus die downloadt ze nooit.",
         "website": "Deze website (niet de app) telt bezoeken met Plausible. Dat gebruikt geen cookies en niets dat jou identificeert, en houdt alleen totalen bij, zoals hoeveel mensen bezochten, waarvandaan, en hoeveel op Downloaden klikten.",
         "flowMyna": "Anonieme bezoekpaden gaan ook naar Flow Myna, mijn eigen analysetool: welke delen van de site een bezoek las, in welke volgorde, en de grove locatie waar de verbinding vandaan kwam (zoals het land). Geen cookies, en je IP-adres wordt niet bewaard.",
         "stars": "Het aantal sterren op de GitHub-knoppen komt rechtstreeks van GitHub, dus je browser vraagt het aan GitHub."

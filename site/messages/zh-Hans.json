@@ -194,7 +194,8 @@
       "lrclib": "<strong>LRCLIB</strong>：歌曲的歌手、歌名、专辑和时长，用来获取同步歌词（除非关闭了“显示歌词”）。",
       "apple": "<strong>Apple</strong>：歌手和歌名，用来查找专辑封面；以及已识别歌曲的 Apple Music id，用来获取时长。封面本身从 Spotify、Apple 或 YouTube 的图片服务器加载。",
       "github": "<strong>GitHub</strong>：每天一次检查新版本，以及下载它。可以在设置里关闭。",
-      "outro": "没有账户、没有数据统计，也没有我的服务器。“报告问题”只在你的 Mac 上保存一个文件，由你决定是否附到 GitHub issue 里。<link>完整的隐私说明</link>。"
+      "feedback": "<strong>反馈</strong>：只在你在“发送反馈”里按下发送，或在演唱卡片上点赞或踩时：你的赞或踩、你写的内容、你留下的邮箱（如果有）、OnKey 的版本、你的系统和应用的语言。",
+      "outro": "没有账户，也没有数据统计。“报告问题”只在你的 Mac 上保存一个文件，由你决定是否附到 GitHub issue 里。<link>完整的隐私说明</link>。"
     },
     "music": {
       "q": "OnKey 提供或下载音乐吗？",
@@ -618,7 +619,7 @@
         },
         "hood": {
           "stored": "存放在 <code>{dataDir}</code>：<code>songs/</code>（音高线、音符条、指纹、歌词时间和一个 Shazam 签名，两种模式下每首学会的歌都会保存）、<code>takes/</code>（<code>mic.m4a</code>：你的麦克风，AAC 单声道约 64 kbps，每分钟约 0.5 MB，总共最多保留 2 GB，加上分数和带歌词行的报告）和 <code>records/</code>（日志和每次播放的摘要，只有数字，保留 30 天，最多 200 MB）。删除歌曲或演唱会把它移到废纸篓。",
-          "network": "网络：Shazam（聆听模式，可以关闭）用于还没学会的歌，LRCLIB 歌词查询（除非关闭了“显示歌词”），iTunes Search 用于封面，iTunes Lookup 用于已识别歌曲的时长，封面图片（来自 Apple，或 YouTube 的缩略图），以及每天一次到 GitHub Releases 的更新检查。没有账户、没有数据统计，也没有我的服务器。",
+          "network": "网络：Shazam（聆听模式，可以关闭）用于还没学会的歌，LRCLIB 歌词查询（除非关闭了“显示歌词”），iTunes Search 用于封面，iTunes Lookup 用于已识别歌曲的时长，封面图片（来自 Apple，或 YouTube 的缩略图），每天一次到 GitHub Releases 的更新检查，以及只在你按下发送时才发出的反馈。没有账户，也没有数据统计。",
           "more": "更多见<link>隐私与法律</link>。"
         }
       }
@@ -725,7 +726,9 @@
         "covers": "<strong>封面图片</strong>",
         "coversWhat": "显示封面时，向 Spotify、Apple 或 YouTube 的图片服务器发出的普通图片请求。",
         "githubWhat": "启动一分钟后检查一次有没有更新的 OnKey 版本，之后每天一次，有的话就下载。在设置里关闭<strong>自动检查更新</strong>后，只有你按<strong>立即检查</strong>时才会检查。",
-        "nothingElse": "其他什么都不会发出去：没有账户、没有数据统计、没有崩溃报告，也没有我的服务器。你的录音绝不上传。“报告问题”会给你看它那个装着数字和日志的 zip 里有什么，保存在你的 Mac 上，什么都不发。要不要把它附到 GitHub issue 上由你决定。模型随应用一起提供，所以它绝不下载模型。",
+        "feedback": "<strong>反馈</strong>（feedback.singonkey.app，我的服务器）",
+        "feedbackWhat": "只在你在“发送反馈”里按下<strong>发送</strong>时（在设置里，或演唱页面上出现两次的“OnKey 用得怎么样？”卡片：在你第 3 次和第 20 次演唱之后）：你的赞或踩、你写的内容、你为了收到回复而留下的邮箱（如果有）、OnKey 的版本、你的系统及其版本，以及应用的语言。它会通过邮件发给我，不会保存在其他任何地方。在卡片上点一下赞或踩，就会随这一下发送。",
+        "nothingElse": "其他什么都不会发出去：没有账户、没有数据统计，也没有崩溃报告。你的录音绝不上传。“报告问题”会给你看它那个装着数字和日志的 zip 里有什么，保存在你的 Mac 上，什么都不发。要不要把它附到 GitHub issue 上由你决定。模型随应用一起提供，所以它绝不下载模型。",
         "website": "这个网站（不是应用）用 Plausible 统计访问量。它不用 cookie，也不用任何能识别你的东西，只保留总数，比如多少人来过、从哪里来、多少人点了下载。",
         "flowMyna": "匿名的访问路径也会发给 Flow Myna，我自己的分析工具：一次访问按顺序读了网站的哪些部分，以及连接来自的大致位置（比如国家）。不用 cookie，你的 IP 地址不保留。",
         "stars": "GitHub 按钮上的星标数直接来自 GitHub，所以你的浏览器会向 GitHub 请求它。"

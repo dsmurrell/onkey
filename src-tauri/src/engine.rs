@@ -210,12 +210,13 @@ pub fn syllable_bars(store: &Store, track: &crate::source::Track, given: &[(f64,
             let mut moved: Vec<f32> = l.iter().zip(given).map(|(a, b)| (a.0 - b.0).abs() as f32).collect();
             let far = moved.iter().filter(|m| **m > 1.0).count();
             crate::records::note("learn_fit", json!({"track": track.id, "check": store::lyrics_check(given), "lines": given.len(),
-                "heard": fit.heard, "agree": fit.agree, "offset": fit.offset, "drift": fit.drift, "believed": fit.believed,
+                "heard": fit.heard, "agree": fit.agree, "offset": fit.offset, "drift": fit.drift, "believed": fit.believed, "sections": fit.sections,
                 "median_move": crate::dsp::median(&mut moved.clone()), "moved_over_1s": far}));
-            log(&format!("{}: lyric lines placed by the words heard (median move {:.2} s, {far} moved over 1 s; {} of {} lines heard agree on {:+.2} s{}{})",
+            log(&format!("{}: lyric lines placed by the words heard (median move {:.2} s, {far} moved over 1 s; {} of {} lines heard agree, on {:+.2} s{}{})",
                          track.name, crate::dsp::median(&mut moved), fit.agree, fit.heard, fit.offset,
                          if fit.drift != 0.0 { format!(" drifting {:+.1}%", fit.drift * 100.0) } else { String::new() },
-                         if fit.believed { "" } else { ": not consistent, LRCLIB's times kept" }));
+                         if fit.sections > 1 { format!(" in the first of {} sections, each moved on its own", fit.sections) }
+                         else if fit.believed { String::new() } else { ": not consistent, LRCLIB's times kept".to_string() }));
             store.save_lyrics(&track.id, &l);
             if fit.believed {
                 store.mark_lyrics_placed(&track.id);
@@ -1002,6 +1003,8 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                 }
             }
             if capture.is_none() {
+                // (a Finish pressed while nothing is heard has no play to finish: not kept for the next one)
+                shared.lock().unwrap().finish = false;
                 nap(Duration::from_millis(500));
                 continue;
             }
@@ -1379,8 +1382,12 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
                 let since = *lost_since.get_or_insert_with(Instant::now);
                 let over = cur.as_ref().is_some_and(|c| crate::listen::is_over(&c.take.track.id));
                 if over || since.elapsed() > Duration::from_secs(LOST_HOLD_S) {
-                    // no "session finished": the status line says what's next
                     end_take(cur.take(), &shared, if over { "the song came to its end" } else { "the song was lost for 20 s" });
+                    // the window is told, as at every other end of a take: it kept showing the song as still playing,
+                    // with a "Finish and see your score" button that did nothing since no take was open (issue #2:
+                    // YouTube moved on to the next video after the song). The status line still says what's next;
+                    // the page shows it instead of the ended play while a song is being found
+                    emit(&app, json!({"type": "phase", "phase": "ended"}));
                 }
             } else {
                 lost_since = None;

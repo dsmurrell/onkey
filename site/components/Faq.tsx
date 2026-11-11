@@ -19,6 +19,7 @@ export function firstQuestions(locale: string): QA[] {
             <li>{rich("network.lrclib")}</li>
             <li>{rich("network.apple")}</li>
             <li>{rich("network.github")}</li>
+            <li>{rich("network.feedback")}</li>
           </ul>
           <p>{rich("network.outro", link("/docs/privacy/"))}</p>
         </>

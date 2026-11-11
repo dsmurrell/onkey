@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ControlPrompt from "@/components/ControlPrompt";
 import ReportProblem from "@/components/ReportProblem";
+import Feedback from "@/components/Feedback";
 import MirrorBadge from "@/components/MirrorBadge";
 import UpdatePill from "@/components/UpdatePill";
 import GoHome from "@/components/GoHome";
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
           <ControlPrompt />
           <ReportProblem />
+          <Feedback />
           <MirrorBadge />
           <UpdatePill />
           <GoHome />

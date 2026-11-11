@@ -194,7 +194,8 @@
       "lrclib": "<strong>LRCLIB</strong>: zamanlı sözleri getirmek için şarkının sanatçısı, adı, albümü ve süresi (Sözleri göster kapalı değilse).",
       "apple": "<strong>Apple</strong>: albüm kapaklarını bulmak için sanatçı ve şarkı adı; süresini öğrenmek için tanınan şarkının Apple Music kimliği. Kapakların kendisi Spotify’ın, Apple’ın veya YouTube’un görsel sunucularından yüklenir.",
       "github": "<strong>GitHub</strong>: günlük yeni sürüm denetimi ve indirmesi. Bunu Ayarlar’dan kapatabilirsiniz.",
-      "outro": "Hesap yok, analitik yok, bana ait bir sunucu yok. “Sorun bildir” yalnızca Mac’inize bir dosya kaydeder; isterseniz bir GitHub issue’suna eklersiniz. <link>Gizlilik, tamamı</link>."
+      "feedback": "<strong>Geri bildirim</strong>: yalnızca “Geri bildirim gönder”de Gönder’e bastığınızda ya da bir denemenin kartında bir başparmağa dokunduğunuzda: başparmağınız, yazdıklarınız, verdiyseniz e-postanız, OnKey’in sürümü, sisteminiz ve uygulamanın dili.",
+      "outro": "Hesap yok, analitik yok. “Sorun bildir” yalnızca Mac’inize bir dosya kaydeder; isterseniz bir GitHub issue’suna eklersiniz. <link>Gizlilik, tamamı</link>."
     },
     "music": {
       "q": "OnKey müzik sağlıyor veya indiriyor mu?",
@@ -618,7 +619,7 @@
         },
         "hood": {
           "stored": "<code>{dataDir}</code> içinde saklananlar: <code>songs/</code> (perde çizgisi, çubuklar, parmak izi, söz zamanlamaları ve bir Shazam imzası; iki modda da öğrenilen her şarkı için kaydedilir), <code>takes/</code> (<code>mic.m4a</code>: mikrofonunuz, AAC mono yaklaşık 64 kbps, dakikada yaklaşık 0,5 MB, toplamda 2 GB’a kadar tutulur; ayrıca puanlar ve söz satırlarıyla rapor) ve <code>records/</code> (günlükler ve her çalmanın yalnızca sayılardan oluşan bir özeti; 30 gün, en fazla 200 MB). Bir şarkıyı veya denemeyi silmek onu Çöp Sepeti’ne taşır.",
-          "network": "Ağ: henüz öğrenilmemiş şarkılar için Shazam (dinleme modu, kapatılabilir), LRCLIB söz aramaları (Sözleri göster kapalı değilse), kapaklar için iTunes Search, tanınan bir şarkının süresi için iTunes Lookup, kapak görselleri (Apple’dan veya YouTube’un küçük resmi) ve güncellemeler için GitHub Releases’e günlük bir kontrol. Hesap yok, analitik yok, bana ait bir sunucu yok.",
+          "network": "Ağ: henüz öğrenilmemiş şarkılar için Shazam (dinleme modu, kapatılabilir), LRCLIB söz aramaları (Sözleri göster kapalı değilse), kapaklar için iTunes Search, tanınan bir şarkının süresi için iTunes Lookup, kapak görselleri (Apple’dan veya YouTube’un küçük resmi), güncellemeler için GitHub Releases’e günlük bir kontrol ve yalnızca Gönder’e bastığınızda geri bildirim. Hesap yok, analitik yok.",
           "more": "Ayrıntılar <link>Gizlilik ve hukuki bilgiler</link> sayfasında."
         }
       }
@@ -725,7 +726,9 @@
         "covers": "<strong>Kapak görselleri</strong>",
         "coversWhat": "Bir kapak gösterilirken Spotify’ın, Apple’ın veya YouTube’un görsel sunucularına sıradan görsel istekleri.",
         "githubWhat": "Açılıştan bir dakika sonra ve ardından günde bir kez OnKey’in daha yeni bir sürümü için bir kontrol, varsa indirme. Ayarlar’da <strong>Güncellemeleri otomatik denetle</strong> kapalıysa yalnızca <strong>Şimdi denetle</strong>’ye bastığınızda kontrol eder.",
-        "nothingElse": "Başka hiçbir şey dışarı çıkmaz: hesap yok, analitik yok, çökme raporlaması yok, bana ait bir sunucu yok. Kayıtlarınız hiçbir zaman yüklenmez. “Sorun bildir”, sayılar ve günlüklerden oluşan zip dosyasında ne olduğunu size gösterir, Mac’inize kaydeder ve hiçbir şey göndermez. Bir GitHub issue’suna eklemek sizin seçiminizdir. Modeller uygulamanın içinde gelir, dolayısıyla hiçbir zaman indirilmez.",
+        "feedback": "<strong>Geri bildirim</strong> (feedback.singonkey.app, bana ait)",
+        "feedbackWhat": "Yalnızca “Geri bildirim gönder”de <strong>Gönder</strong>’e bastığınızda (Ayarlar’da ya da bir denemenin sayfasının iki kez gösterdiği “OnKey sizin için nasıl gidiyor?” kartında: 3. denemenizden ve 20. denemenizden sonra): yukarı ya da aşağı başparmağınız, yazdıklarınız, yanıt için verdiyseniz e-postanız, OnKey’in sürümü, sisteminiz ve sürümü, ve uygulamanın dili. Bana e-postayla gelir ve başka hiçbir yerde saklanmaz. Karttaki başparmak o tek tıklamayla gönderilir.",
+        "nothingElse": "Başka hiçbir şey dışarı çıkmaz: hesap yok, analitik yok, çökme raporlaması yok. Kayıtlarınız hiçbir zaman yüklenmez. “Sorun bildir”, sayılar ve günlüklerden oluşan zip dosyasında ne olduğunu size gösterir, Mac’inize kaydeder ve hiçbir şey göndermez. Bir GitHub issue’suna eklemek sizin seçiminizdir. Modeller uygulamanın içinde gelir, dolayısıyla hiçbir zaman indirilmez.",
         "website": "Bu web sitesi (uygulama değil) ziyaretleri Plausible ile sayar. Çerez ve sizi tanımlayan hiçbir şey kullanmaz; yalnızca kaç kişinin ziyaret ettiği, nereden geldiği ve kaçının İndir’e tıkladığı gibi toplamları tutar.",
         "flowMyna": "Anonim ziyaret yolları kendi analitik aracım Flow Myna’ya da gider: bir ziyaretin sitenin hangi bölümlerini hangi sırayla okuduğu ve bağlantının kabaca nereden geldiği (ülke gibi). Çerez yok; IP adresiniz saklanmaz.",
         "stars": "GitHub düğmelerindeki yıldız sayısı doğrudan GitHub’dan gelir; yani tarayıcınız bunu GitHub’a sorar."

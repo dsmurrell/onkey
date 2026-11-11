@@ -170,6 +170,10 @@
         "subMac": "Simpan log dan data waktu OnKey sebagai zip untuk dilampirkan ke issue GitHub. Anda melihat isinya dulu; tanpa lirik atau audio, tidak ada yang diunggah.",
         "subPc": "Simpan log dan data waktu OnKey sebagai satu zip di Desktop Anda, untuk dilampirkan ke pesan atau issue GitHub. Anda melihat isinya dulu; tanpa lirik atau audio, tidak ada yang diunggah."
       },
+      "feedback": {
+        "title": "Kirim masukan",
+        "sub": "Beri tahu Daniel, pembuat OnKey, apa yang berjalan baik, apa yang tidak, dan apa yang Anda inginkan berikutnya. Ia membaca setiap pesan."
+      },
       "guides": {
         "title": "Panduan dan bantuan",
         "sub": "Cara kerja OnKey, penilaian, mengatasi masalah dan bernyanyi dengan nyaman, di singonkey.app."
@@ -610,6 +614,14 @@
     },
     "proud": {
       "share": "Bagikan take ini",
+      "notNow": "Nanti saja"
+    },
+    "feedback": {
+      "ask": "Bagaimana OnKey menurut Anda?",
+      "up": "Bagus",
+      "down": "Kurang",
+      "thanks": "Terima kasih. Mau cerita lebih banyak?",
+      "more": "Ceritakan lagi",
       "notNow": "Nanti saja"
     },
     "player": {
@@ -1137,6 +1149,24 @@
     "saveMac": "Simpan…",
     "savePc": "Simpan ke Desktop"
   },
+  "feedback": {
+    "title": "Kirim masukan",
+    "intro": "Daniel, pembuat OnKey, membaca setiap pesan. Sampaikan apa yang Anda suka, apa yang mengganggu, atau apa yang sangat Anda inginkan bisa dilakukannya.",
+    "how": "Bagaimana OnKey menurut Anda?",
+    "up": "Bagus",
+    "down": "Kurang",
+    "label": "Ada yang ingin ditambahkan? <muted>(opsional)</muted>",
+    "placeholder": "mis. saya ingin sekali OnKey bisa dipakai dengan file musik saya sendiri",
+    "emailLabel": "Email Anda, jika ingin dibalas <muted>(opsional)</muted>",
+    "emailPlaceholder": "you@example.com",
+    "sends": "Yang dikirim: jempol Anda (naik atau turun), apa yang Anda tulis, email Anda jika diisi, versi OnKey, sistem yang Anda pakai (dan versinya), serta bahasa aplikasi. Tidak ada yang lain: tanpa lagu, tanpa rekaman, tanpa log.",
+    "send": "Kirim",
+    "sending": "Mengirim…",
+    "cancel": "Batal",
+    "sent": "Terima kasih, sudah terkirim.",
+    "done": "Selesai",
+    "failed": "Tidak bisa dikirim. Pastikan Anda online lalu coba lagi, atau kirim email ke hello@singonkey.app."
+  },
   "nav": {
     "appName": "OnKey",
     "songsToTry": "Lagu untuk dicoba",
@@ -1147,6 +1177,7 @@
     "paused": "Mendengarkan dijeda",
     "resume": "Lanjutkan",
     "resumeWhy": "Lanjutkan mendengarkan (⌘⇧P)",
+    "feedback": "Kirim masukan",
     "whatsNew": "Yang baru di OnKey",
     "whatsNewFresh": "Yang baru di OnKey (baru)",
     "testBuild": "Versi uji",

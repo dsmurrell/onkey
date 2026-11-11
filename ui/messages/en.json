@@ -170,6 +170,10 @@
         "subMac": "Save OnKey’s logs and timings as a zip to attach to a GitHub issue. You see what’s in it first; no lyrics or audio, nothing uploaded.",
         "subPc": "Save OnKey’s logs and timings as one zip on your Desktop, to attach to a message or a GitHub issue. You see what’s in it first; no lyrics or audio, nothing uploaded."
       },
+      "feedback": {
+        "title": "Send feedback",
+        "sub": "Tell Daniel, who makes OnKey, what’s working, what isn’t, and what you’d like next. He reads every one."
+      },
       "guides": {
         "title": "Guides and help",
         "sub": "How OnKey works, scoring, fixing problems and singing comfortably, on singonkey.app."
@@ -610,6 +614,14 @@
     },
     "proud": {
       "share": "Share this take",
+      "notNow": "Not now"
+    },
+    "feedback": {
+      "ask": "How’s OnKey working for you?",
+      "up": "Good",
+      "down": "Not great",
+      "thanks": "Thanks! Want to say more?",
+      "more": "Tell me more",
       "notNow": "Not now"
     },
     "player": {
@@ -1137,6 +1149,24 @@
     "saveMac": "Save…",
     "savePc": "Save to Desktop"
   },
+  "feedback": {
+    "title": "Send feedback",
+    "intro": "Daniel, who makes OnKey, reads every one. Say what you like, what’s getting in the way, or what you’d love it to do.",
+    "how": "How’s OnKey working for you?",
+    "up": "Good",
+    "down": "Not great",
+    "label": "Anything to add? <muted>(optional)</muted>",
+    "placeholder": "e.g. I’d love it to work with my own music files",
+    "emailLabel": "Your email, if you’d like a reply <muted>(optional)</muted>",
+    "emailPlaceholder": "you@example.com",
+    "sends": "Sent: your thumb, what you wrote, your email if you gave one, OnKey’s version, which system you’re on (and its version) and the app’s language. Nothing else: no songs, no recordings, no logs.",
+    "send": "Send",
+    "sending": "Sending…",
+    "cancel": "Cancel",
+    "sent": "Thanks! It’s on its way.",
+    "done": "Done",
+    "failed": "It couldn’t be sent. Check you’re online and try again, or email hello@singonkey.app."
+  },
   "nav": {
     "appName": "OnKey",
     "songsToTry": "Songs to try",
@@ -1147,6 +1177,7 @@
     "paused": "Listening paused",
     "resume": "Resume",
     "resumeWhy": "Resume listening (⌘⇧P)",
+    "feedback": "Send feedback",
     "whatsNew": "What’s new in OnKey",
     "whatsNewFresh": "What’s new in OnKey (new)",
     "testBuild": "Test build",

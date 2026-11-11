@@ -364,19 +364,21 @@ fn section_moves(placed: &[(usize, f64)], n: usize) -> Vec<f64> {
     }).collect()
 }
 
-/// How the words heard moved the lines when a song was learned: one offset for the song plus a steady drift (a
-/// version at another speed), and how many of the lines heard agree with it.
+/// How the words heard moved the lines when a song was learned: one offset plus a steady drift (a version at another
+/// speed), for the whole song or for each of its sections, and how many of the lines heard agree with it.
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Fit {
-    /// s, at the song's start
+    /// s, at the song's start (of the song's first section when there are several)
     pub offset: f64,
-    /// s per s of song (within 2%)
+    /// s per s of song (within 2%, or 6% when two thirds of the lines agree; the first section's when several)
     pub drift: f64,
     /// lines heard that move with the fit (within 0.6 s), and lines heard
     pub agree: usize,
     pub heard: usize,
     /// whether the fit was believed (else LRCLIB's times are kept as given)
     pub believed: bool,
+    /// sections of the song fitted on their own (1: the whole song moves together; 0: not believed)
+    pub sections: usize,
 }
 
 /// Lines placed (song s), when each letter was heard (where believed), and the fit that decided.
@@ -391,6 +393,9 @@ pub type Placement = (Vec<(f64, String)>, Heard, Fit);
 /// where they were heard; every other line moves with the fit. Without such a fit LRCLIB's times are kept
 /// (the live line-up and sing mode refine them). Lines keep LRCLIB's order and at least half its spacing (up
 /// to 0.5 s): never bunched.
+///
+/// Two more fits are tried when that one fails (fit_sections), for lyrics timed on another version or timed badly:
+/// a faster drift, and the song in sections either side of an instrumental break, each with its own offset.
 pub fn place_lines_checked(aligner: &mut WordAligner, vocal16: &[f32], song_offset: f64, lyrics: &[(f64, String)]) -> Option<Placement> {
     place_lines_checked_and_heard(aligner, vocal16, song_offset, lyrics).map(|p| p.0)
 }
@@ -402,12 +407,30 @@ pub fn place_lines_checked_and_heard(aligner: &mut WordAligner, vocal16: &[f32],
     Some((check_placement(lyrics, placed, heard), all))
 }
 
-/// The consistency check of place_lines_checked, on its placement.
-pub fn check_placement(lyrics: &[(f64, String)], placed: Vec<(f64, String)>, mut heard: Heard) -> Placement {
-    let pts: Vec<(usize, f64, f64)> = (0..lyrics.len()).filter(|&i| heard[i].is_some() && lyrics[i].1.chars().any(|c| c.is_alphanumeric()))
-        .map(|i| (i, lyrics[i].0, placed[i].0 - lyrics[i].0)).collect();
+/// The steadiest drift a whole song's lines are believed to have, in thousandths (2%), and the fastest (6%), which
+/// needs two thirds of the lines heard to agree.
+const DRIFT_MAX: i32 = 20;
+const DRIFT_MAX_WIDE: i32 = 60;
+
+/// The shortest break between two lyric lines (s, LRCLIB's times) at which a song may be split into sections that
+/// each move on their own: an instrumental break, where another version of the song can be longer or shorter.
+const SECTION_GAP_S: f64 = 15.0;
+
+/// A stretch of the song whose lines move together: lines given at `from` s or later (until the next section) go to
+/// their given time + `offset` + `drift` x given time.
+#[derive(Debug, Clone, Copy, PartialEq)]
+struct Section {
+    from: f64,
+    offset: f64,
+    drift: f64,
+    agree: usize,
+}
+
+/// The offset and drift (within `max` thousandths) most of `pts` (line, given time, heard start - given time) agree
+/// with within 0.6 s: (lines agreeing, offset, drift).
+fn fit_line(pts: &[(usize, f64, f64)], max: i32) -> (usize, f64, f64) {
     let mut best = (0usize, f64::MAX, 0.0f64, 0.0f64);           // (agree, their error, offset, drift)
-    for k in -20..=20 {
+    for k in -max..=max {
         let b = k as f64 * 0.001;
         let mut r: Vec<f32> = pts.iter().map(|p| (p.2 - b * p.1) as f32).collect();
         if r.is_empty() {
@@ -420,14 +443,80 @@ pub fn check_placement(lyrics: &[(f64, String)], placed: Vec<(f64, String)>, mut
             best = (n, err, a, b);
         }
     }
-    let (agree, _, a, b) = best;
-    let mid = pts.iter().map(|p| p.1).sum::<f64>() / pts.len().max(1) as f64;
-    let big = (a + b * mid).abs() > 3.0;
-    let believed = agree >= 4 && 2 * agree >= pts.len() && (!big || 3 * agree >= 2 * pts.len());
-    let (a, b) = if believed { (a, b) } else { (0.0, 0.0) };
+    (best.0, best.2, best.3)
+}
+
+/// The fit of the lines heard (`pts`: line, given time, heard start - given time) that is believed, as the song's
+/// sections in order; empty when none is. `worded` are the given times of every lyric line with words, in order.
+///   1. the whole stretch on one offset and a drift within 2%: half the lines heard (4 or more) agree, two thirds
+///      when it moves them more than 3 s (or `strict`);
+///   2. the same with a drift within 6%, two thirds agreeing: lyrics timed on a version at another speed, or timed
+///      carelessly (issue #2: Keane's Everybody's Changing, an entry running 7 s ahead by the end, 21 of 24 lines
+///      on +5.8%);
+///   3. split at its longest break between lyric lines (15 s or more, an instrumental), each side believed by
+///      these same rules (strictly, and split once more at most): lyrics timed on a version with a longer or
+///      shorter break (issue #2: Marillion's Sugar Mice with a live album's entry, 2 s late before the guitar solo
+///      and 9 s late after it).
+/// Checked on the library's 197 learned songs (11 Nov): the 22 that rule 1 doesn't believe (packed lines, ramps of
+/// 10-50%) aren't believed by rules 2 and 3 either.
+fn fit_sections(pts: &[(usize, f64, f64)], worded: &[f64], strict: bool, splits: usize) -> Vec<Section> {
+    let believed = |agree: usize, a: f64, b: f64, strict: bool| {
+        let mid = pts.iter().map(|p| p.1).sum::<f64>() / pts.len().max(1) as f64;
+        let big = (a + b * mid).abs() > 3.0;
+        agree >= 4 && 2 * agree >= pts.len() && (!(big || strict) || 3 * agree >= 2 * pts.len())
+    };
+    let from = worded.first().copied().unwrap_or(0.0);
+    let (agree, a, b) = fit_line(pts, DRIFT_MAX);
+    if believed(agree, a, b, strict) {
+        return vec![Section { from, offset: a, drift: b, agree }];
+    }
+    let (agree, a, b) = fit_line(pts, DRIFT_MAX_WIDE);
+    if believed(agree, a, b, true) {
+        return vec![Section { from, offset: a, drift: b, agree }];
+    }
+    if splits == 0 {
+        return Vec::new();
+    }
+    // the longest break between lyric lines (the first of equals)
+    let Some(k) = (1..worded.len()).filter(|&k| worded[k] - worded[k - 1] >= SECTION_GAP_S)
+        .reduce(|x, y| if worded[y] - worded[y - 1] > worded[x] - worded[x - 1] { y } else { x }) else { return Vec::new() };
+    let cut = pts.partition_point(|p| p.1 < worded[k]);
+    if cut < 4 || pts.len() - cut < 4 {
+        return Vec::new();
+    }
+    let mut left = fit_sections(&pts[..cut], &worded[..k], true, splits - 1);
+    let right = fit_sections(&pts[cut..], &worded[k..], true, splits - 1);
+    if left.is_empty() || right.is_empty() {
+        return Vec::new();
+    }
+    left.extend(right);
+    left
+}
+
+/// The consistency check of place_lines_checked, on its placement.
+pub fn check_placement(lyrics: &[(f64, String)], placed: Vec<(f64, String)>, mut heard: Heard) -> Placement {
+    let worded: Vec<usize> = (0..lyrics.len()).filter(|&i| lyrics[i].1.chars().any(|c| c.is_alphanumeric())).collect();
+    let pts: Vec<(usize, f64, f64)> = worded.iter().filter(|&&i| heard[i].is_some()).map(|&i| (i, lyrics[i].0, placed[i].0 - lyrics[i].0)).collect();
+    // (given times in order, as LRCLIB's are: the sections are cut on them)
+    let ordered = lyrics.windows(2).all(|w| w[0].0 <= w[1].0);
+    let times: Vec<f64> = worded.iter().map(|&i| lyrics[i].0).collect();
+    let sections = fit_sections(&pts, &times, false, if ordered { 2 } else { 0 });
+    let believed = !sections.is_empty();
+    // without a believed fit, the one most lines agree with is reported (and nothing moves)
+    let (agree, a0, b0) = if believed { (sections.iter().map(|s| s.agree).sum(), sections[0].offset, sections[0].drift) } else {
+        let (n, _, _) = fit_line(&pts, DRIFT_MAX);
+        (n, 0.0, 0.0)
+    };
+    // the section a line given at `g` belongs to (lines before the first section's start go with it)
+    let moved = |g: f64| -> f64 {
+        match sections.iter().rev().find(|s| s.from <= g).or(sections.first()) {
+            Some(s) => g + s.offset + s.drift * g,
+            None => g,
+        }
+    };
     let mut out: Vec<(f64, String)> = Vec::with_capacity(lyrics.len());
     for (i, (g, text)) in lyrics.iter().enumerate() {
-        let fit = g + a + b * g;
+        let fit = moved(*g);
         let inlier = heard[i].is_some() && (placed[i].0 - fit).abs() <= 0.6;
         if !inlier {
             heard[i] = None;
@@ -441,7 +530,7 @@ pub fn check_placement(lyrics: &[(f64, String)], placed: Vec<(f64, String)>, mut
         }
         out.push((t.max(0.0), text.clone()));
     }
-    (out, heard, Fit { offset: a, drift: b, agree, heard: pts.len(), believed })
+    (out, heard, Fit { offset: a0, drift: b0, agree, heard: pts.len(), believed, sections: sections.len() })
 }
 
 /// Whether a lyric line opens on a sung vowel or filler ("Oh, you and I", "whoa oh oh", "aw ah"), letters doubled or
@@ -1284,10 +1373,54 @@ mod tests {
         m[0] = 0.0;
         m[1] = 0.0;
         assert!(check(&m).2.believed);
+        assert_eq!(check(&m).2.sections, 1);
         // lines heard bunched together keep at least half LRCLIB's spacing (0.5 s at most)
         let m = [0.0, 0.0, 0.0, 0.0, 0.0, -3.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
         let (out, _, _) = check(&m);
         assert!(out[5].0 >= out[4].0 + 0.5 - 1e-9);
+    }
+
+    /// Issue #2 (0.3.0, 10 Nov): lyrics timed on another version of the song, or timed badly. The moves are the ones
+    /// the word timer heard on the two songs reported, with the entries LRCLIB gave the reporter.
+    #[test]
+    fn a_learned_placement_follows_a_longer_break_and_a_fast_drift() {
+        use super::check_placement;
+        let check = |given: &[f64], moves: &[f64]| {
+            let lyrics: Vec<(f64, String)> = given.iter().enumerate().map(|(i, t)| (*t, format!("line {i}"))).collect();
+            let placed = lyrics.iter().zip(moves).map(|(l, m)| (l.0 + m, l.1.clone())).collect();
+            let heard: super::Heard = (0..lyrics.len()).map(|_| Some(vec![(0usize, 0usize, 0.0, 0.0)])).collect();
+            check_placement(&lyrics, placed, heard)
+        };
+        // Sugar Mice with a live album's entry: 2 s late up to the guitar solo, 9 s late after it (80 s without a line)
+        let given = [17.07, 25.05, 33.08, 41.04, 49.02, 57.02, 64.08, 88.06, 96.05, 103.04, 112.0, 119.06, 126.01, 133.07,
+                     225.08, 233.01, 240.04, 248.02, 254.01, 278.06, 285.06, 292.05, 300.01, 308.07, 315.02, 322.09, 329.03];
+        let moves = [-1.8, -1.9, -1.8, -1.8, -2.0, -2.2, -2.2, -2.5, -2.2, -1.4, -2.2, -1.5, -1.4, -2.3,
+                     -9.3, -9.5, -9.4, -8.8, -8.7, -9.6, -9.1, -8.5, -9.1, -9.3, -9.1, -8.9, -8.4];
+        let (out, heard, fit) = check(&given, &moves);
+        assert!(fit.believed && fit.sections == 2 && fit.agree >= 25, "{fit:?}");
+        assert!((out[0].0 - (17.07 - 1.8)).abs() < 1e-9 && (out[14].0 - (225.08 - 9.3)).abs() < 1e-9, "{out:?}");
+        assert!(heard[14].is_some());
+        // one side of the break heard all over the place: nothing is believed, LRCLIB's times are kept
+        let mut bad = moves;
+        for (k, m) in bad.iter_mut().skip(14).enumerate() {
+            *m = -3.0 * k as f64;
+        }
+        let (out, _, fit) = check(&given, &bad);
+        assert!(!fit.believed && fit.sections == 0, "{fit:?}");
+        assert!(out.iter().zip(&given).all(|(o, g)| o.0 == *g));
+        // the same moves without a break between the lines (4 s apart): not two sections
+        let close: Vec<f64> = (0..27).map(|i| 10.0 + 4.0 * i as f64).collect();
+        assert!(!check(&close, &moves).2.believed);
+        // Everybody's Changing with an entry that runs ahead, 7 s by the end (5.8%)
+        let given = [23.2, 32.92, 43.29, 47.29, 52.57, 62.74, 67.04, 72.14, 76.48, 81.05, 101.19, 104.48, 111.03,
+                     120.96, 125.31, 130.38, 134.69, 139.71, 164.08, 168.31, 173.25, 177.95, 182.25, 191.87];
+        let moves = [-0.4, -1.0, -1.4, -0.4, -0.4, 0.3, 0.7, 0.7, 1.1, 1.5, 2.0, 1.6, 1.6, 3.3, 3.7, 3.7, 4.2, 4.1, 6.1, 6.7, 6.8, 6.9, 7.5, 7.2];
+        let (out, _, fit) = check(&given, &moves);
+        assert!(fit.believed && fit.sections == 1 && fit.agree >= 20 && (fit.drift - 0.058).abs() < 0.006, "{fit:?}");
+        assert!((out[22].0 - (182.25 + 7.5)).abs() < 1e-9);
+        // lines packed ever closer by a wrong alignment (a ramp of 40%): never a drift
+        let ramp: Vec<f64> = given.iter().map(|g| -0.4 * (g - 23.2)).collect();
+        assert!(!check(&given, &ramp).2.believed);
     }
 
     #[test]

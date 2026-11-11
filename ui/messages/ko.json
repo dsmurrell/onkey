@@ -170,6 +170,10 @@
         "subMac": "OnKey의 로그와 타이밍 기록을 zip으로 저장해 GitHub 이슈에 첨부할 수 있어요. 내용을 먼저 볼 수 있어요. 가사나 오디오는 없고, 아무것도 업로드되지 않아요.",
         "subPc": "OnKey의 로그와 타이밍 기록을 zip 하나로 바탕 화면에 저장해 메시지나 GitHub 이슈에 첨부할 수 있어요. 내용을 먼저 볼 수 있어요. 가사나 오디오는 없고, 아무것도 업로드되지 않아요."
       },
+      "feedback": {
+        "title": "피드백 보내기",
+        "sub": "OnKey를 만드는 Daniel에게 잘 되는 것, 안 되는 것, 다음에 바라는 것을 알려 주세요. 하나하나 다 읽어요."
+      },
       "guides": {
         "title": "가이드와 도움말",
         "sub": "OnKey의 작동 방식, 채점, 문제 해결, 편안하게 노래하는 법을 singonkey.app에서 볼 수 있어요."
@@ -610,6 +614,14 @@
     },
     "proud": {
       "share": "이 테이크 공유",
+      "notNow": "나중에"
+    },
+    "feedback": {
+      "ask": "OnKey, 써 보니 어때요?",
+      "up": "좋아요",
+      "down": "별로예요",
+      "thanks": "고마워요. 더 이야기해 줄래요?",
+      "more": "더 이야기하기",
       "notNow": "나중에"
     },
     "player": {
@@ -1137,6 +1149,24 @@
     "saveMac": "저장…",
     "savePc": "바탕 화면에 저장"
   },
+  "feedback": {
+    "title": "피드백 보내기",
+    "intro": "OnKey를 만드는 Daniel이 하나하나 다 읽어요. 마음에 드는 점, 불편한 점, 이런 걸 해 줬으면 하는 점을 말해 주세요.",
+    "how": "OnKey, 써 보니 어때요?",
+    "up": "좋아요",
+    "down": "별로예요",
+    "label": "더 하고 싶은 말이 있나요? <muted>(선택)</muted>",
+    "placeholder": "예: 내 음악 파일로도 쓸 수 있으면 좋겠어요",
+    "emailLabel": "답장을 받고 싶다면 이메일 <muted>(선택)</muted>",
+    "emailPlaceholder": "you@example.com",
+    "sends": "보내는 것: 좋아요/별로예요 선택, 쓴 내용, 적었다면 이메일, OnKey 버전, 쓰는 시스템(과 그 버전), 앱 언어. 그 외에는 아무것도 보내지 않아요. 노래도, 녹음도, 로그도 없어요.",
+    "send": "보내기",
+    "sending": "보내는 중…",
+    "cancel": "취소",
+    "sent": "고마워요. 보냈어요.",
+    "done": "완료",
+    "failed": "보내지 못했어요. 인터넷에 연결돼 있는지 확인하고 다시 해 보거나, hello@singonkey.app으로 메일을 보내 주세요."
+  },
   "nav": {
     "appName": "OnKey",
     "songsToTry": "추천 곡",
@@ -1147,6 +1177,7 @@
     "paused": "듣기 일시정지됨",
     "resume": "다시 시작",
     "resumeWhy": "듣기 다시 시작 (⌘⇧P)",
+    "feedback": "피드백 보내기",
     "whatsNew": "OnKey의 새로운 기능",
     "whatsNewFresh": "OnKey의 새로운 기능 (새 소식)",
     "testBuild": "테스트 버전",

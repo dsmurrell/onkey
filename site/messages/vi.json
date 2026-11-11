@@ -194,7 +194,8 @@
       "lrclib": "<strong>LRCLIB</strong>: nghệ sĩ, tiêu đề, album và độ dài bài hát, để lấy lời đã đồng bộ (trừ khi tắt Hiện lời bài hát).",
       "apple": "<strong>Apple</strong>: nghệ sĩ và tiêu đề để tìm ảnh bìa album, và mã Apple Music của bài đã nhận ra để lấy độ dài. Ảnh bìa tải từ máy chủ ảnh của Spotify, Apple hoặc YouTube.",
       "github": "<strong>GitHub</strong>: kiểm tra phiên bản mới mỗi ngày, và tải về bản đó. Bạn có thể tắt trong Cài đặt.",
-      "outro": "Không có tài khoản, không phân tích, không máy chủ nào của tôi. “Báo cáo sự cố” chỉ lưu một tệp trên máy Mac của bạn, để bạn đính kèm vào một issue trên GitHub nếu muốn. <link>Toàn bộ về quyền riêng tư</link>."
+      "feedback": "<strong>Góp ý</strong>: chỉ khi bạn nhấn Gửi trong “Gửi góp ý”, hoặc bấm thích hay không thích trên thẻ của một lượt hát: lượt thích hay không thích của bạn, những gì bạn viết, email nếu bạn để lại, phiên bản OnKey, hệ điều hành và ngôn ngữ của ứng dụng.",
+      "outro": "Không có tài khoản, không phân tích. “Báo cáo sự cố” chỉ lưu một tệp trên máy Mac của bạn, để bạn đính kèm vào một issue trên GitHub nếu muốn. <link>Toàn bộ về quyền riêng tư</link>."
     },
     "music": {
       "q": "OnKey có cung cấp hay tải nhạc không?",
@@ -618,7 +619,7 @@
         },
         "hood": {
           "stored": "Lưu trong <code>{dataDir}</code>: <code>songs/</code> (đường cao độ, các thanh, dấu vân âm thanh, thời gian lời và một chữ ký Shazam, lưu cho mỗi bài đã học ở cả hai chế độ), <code>takes/</code> (<code>mic.m4a</code>: micrô của bạn, AAC mono khoảng 64 kbps, khoảng 0,5 MB mỗi phút, giữ tổng cộng tới 2 GB, cùng điểm và báo cáo với các dòng lời) và <code>records/</code> (nhật ký và bản tóm tắt mỗi lần phát, chỉ gồm số, giữ 30 ngày, tối đa 200 MB). Xóa một bài hay lượt hát sẽ chuyển nó vào Thùng rác.",
-          "network": "Mạng: Shazam (chế độ nghe, có thể tắt) cho bài chưa học, tra lời LRCLIB (trừ khi tắt Hiện lời bài hát), iTunes Search cho ảnh bìa, iTunes Lookup cho độ dài bài đã nhận ra, ảnh bìa (từ Apple, hoặc ảnh thu nhỏ của YouTube), và kiểm tra GitHub Releases mỗi ngày để cập nhật. Không tài khoản, không phân tích, không máy chủ của tôi.",
+          "network": "Mạng: Shazam (chế độ nghe, có thể tắt) cho bài chưa học, tra lời LRCLIB (trừ khi tắt Hiện lời bài hát), iTunes Search cho ảnh bìa, iTunes Lookup cho độ dài bài đã nhận ra, ảnh bìa (từ Apple, hoặc ảnh thu nhỏ của YouTube), kiểm tra GitHub Releases mỗi ngày để cập nhật, và gửi góp ý chỉ khi bạn nhấn Gửi. Không tài khoản, không phân tích.",
           "more": "Xem thêm ở <link>Quyền riêng tư & pháp lý</link>."
         }
       }
@@ -725,7 +726,9 @@
         "covers": "<strong>Ảnh bìa</strong>",
         "coversWhat": "Yêu cầu ảnh thông thường tới máy chủ ảnh của Spotify, Apple hoặc YouTube khi hiển thị ảnh bìa.",
         "githubWhat": "Kiểm tra phiên bản OnKey mới hơn một phút sau khi mở rồi mỗi ngày một lần, và tải xuống nếu có. Khi tắt <strong>Tự động kiểm tra cập nhật</strong> trong Cài đặt, OnKey chỉ kiểm tra khi bạn nhấn <strong>Kiểm tra ngay</strong>.",
-        "nothingElse": "Không có gì khác đi ra: không tài khoản, không phân tích, không báo cáo lỗi sập, và không máy chủ của tôi. Bản ghi của bạn không bao giờ được tải lên. “Báo cáo sự cố” cho bạn xem bên trong tệp zip gồm số liệu và nhật ký, lưu nó trên máy Mac, và không gửi gì. Bạn tự chọn có đính kèm vào một issue trên GitHub hay không. Các mô hình đi kèm trong ứng dụng, nên OnKey không bao giờ tải chúng về.",
+        "feedback": "<strong>Góp ý</strong> (feedback.singonkey.app, máy chủ của tôi)",
+        "feedbackWhat": "Chỉ khi bạn nhấn <strong>Gửi</strong> trong “Gửi góp ý” (trong Cài đặt hoặc trên thẻ “OnKey dùng có ổn với bạn không?” mà trang của một lượt hát hiện hai lần: sau lượt hát thứ 3 và thứ 20 của bạn): lượt thích hay không thích, những gì bạn viết, email nếu bạn để lại để được trả lời, phiên bản OnKey, hệ điều hành và phiên bản của nó và ngôn ngữ của ứng dụng. Nội dung được gửi qua email cho tôi và không lưu ở đâu khác. Một lượt thích hay không thích trên thẻ được gửi ngay với cú nhấp đó.",
+        "nothingElse": "Không có gì khác đi ra: không tài khoản, không phân tích, và không báo cáo lỗi sập. Bản ghi của bạn không bao giờ được tải lên. “Báo cáo sự cố” cho bạn xem bên trong tệp zip gồm số liệu và nhật ký, lưu nó trên máy Mac, và không gửi gì. Bạn tự chọn có đính kèm vào một issue trên GitHub hay không. Các mô hình đi kèm trong ứng dụng, nên OnKey không bao giờ tải chúng về.",
         "website": "Trang web này (không phải ứng dụng) đếm lượt truy cập bằng Plausible. Nó không dùng cookie và không gì nhận diện bạn, chỉ giữ tổng số, như bao nhiêu người ghé, từ đâu, và bao nhiêu người bấm Tải xuống.",
         "flowMyna": "Đường đi ẩn danh của lượt truy cập cũng được gửi tới Flow Myna, công cụ phân tích của riêng tôi: lượt truy cập đọc những phần nào của trang, theo thứ tự, và vị trí đại khái của kết nối (như quốc gia). Không cookie, và địa chỉ IP của bạn không được giữ.",
         "stars": "Số sao trên các nút GitHub lấy thẳng từ GitHub, nên trình duyệt của bạn hỏi GitHub số đó."

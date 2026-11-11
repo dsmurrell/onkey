@@ -150,6 +150,8 @@ fn build_identity() {
     println!("cargo:rustc-env=ONKEY_GIT_SHA={sha}");
     // an official build (scripts/release.sh): updater.rs OFFICIAL
     println!("cargo:rerun-if-env-changed=ONKEY_OFFICIAL");
+    // the key challenge links are signed with (challenge.rs), when the build is given one
+    println!("cargo:rerun-if-env-changed=ONKEY_CHALLENGE_KEY");
     println!("cargo:rustc-env=ONKEY_COMMIT_TIME={time}");
     // (only files that are there: a missing one would run this script, and swiftc, on every build)
     let head = git(&["rev-parse", "--git-path", "HEAD"]);

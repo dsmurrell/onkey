@@ -1,6 +1,7 @@
 pub mod analysis;
 pub mod bleed;
 pub mod capture;
+pub mod challenge;
 pub mod ctc;
 pub mod links;
 pub mod beats;
@@ -17,6 +18,7 @@ pub mod ear;
 #[cfg(feature = "devtest")]
 pub mod mirror;
 pub mod engine;
+pub mod feedback;
 pub mod learn;
 pub mod listen;
 pub mod lowmem;
@@ -28,6 +30,7 @@ pub mod lyrics;
 pub mod messages;
 pub mod models;
 pub mod lyrics_align;
+pub mod miccopy;
 pub mod mdx;
 pub mod music;
 pub mod notmusic;
@@ -472,6 +475,13 @@ fn copy_challenge(link: String) -> bool {
     challenge_link_ok(&link) && platform::shell::copy(&link)
 }
 
+/// A challenge link's signature for the score it says (challenge.rs), or "" from a build without the signing key
+/// (the site then shows the score as not checked). The parts as the link holds them (ui/lib/challenge.ts).
+#[tauri::command]
+fn sign_challenge(song: String, by: String, score: u32, name: String) -> String {
+    challenge::sign(&song, &by, score, &name).unwrap_or_default()
+}
+
 fn challenge_link_ok(link: &str) -> bool {
     link.starts_with("https://singonkey.app/c/") && link.len() <= 1000 && !link.chars().any(char::is_control)
 }
@@ -835,6 +845,25 @@ fn share_prompt_seen(id: String, store: State<store::Store>) {
     share::prompt_seen(&store, &id)
 }
 
+/// The take page's "How's OnKey working for you?" card (feedback::ask): the ask stage, or null.
+#[tauri::command]
+fn feedback_ask(id: String, store: State<store::Store>) -> Option<usize> {
+    feedback::ask(&store, &id)
+}
+
+/// The card for `stage` was shown: not again.
+#[tauri::command]
+fn feedback_asked(stage: usize, store: State<store::Store>) {
+    feedback::asked(&store, stage)
+}
+
+/// "Send feedback": sends your thumb and words (feedback.rs says exactly what goes), only when you press Send.
+#[tauri::command(async)]
+fn feedback_send(mood: Option<String>, text: String, email: String, from: String, language: String) -> Result<(), String> {
+    let body = feedback::body(mood.as_deref(), &text, &email, &from, &language)?;
+    feedback::send(&body)
+}
+
 /// Makes the share video of take `id` from song second `start` into Downloads, shows it in Finder and puts the
 /// song's start time ("0:42") on the clipboard, for Instagram's song picker. The video's path.
 #[tauri::command(async)]
@@ -1157,7 +1186,7 @@ pub fn run() {
     // the menu bar: the Mac's standard menus with "Report a Problem…" in Help; none on Windows (it would sit inside
     // the window: Report a problem is in Settings)
     platform::app::menu(builder)
-        .invoke_handler(tauri::generate_handler![catch_up, player_control, play_track, set_blind, takes, library, voice_range, take, set_not_melody, take_audio, share_window, share_take, share_prompt, share_prompt_seen, open_privacy_settings, ui_log, ui_moving, skip_to, set_mini, forget_song, learn_again, lyrics_look_again, dev_hook, stop_learning, learn_anyway, delete_take, set_echo_cancel, set_youtube, set_setting, set_listening_paused, set_scoring_level, set_language, ui_locale, ui_region, settings_now, allow_control, open_in_app, along_mode, join_along, finish_take, play_along, stop_play_along, player_now, voice_open, voice_play, voice_stop, voice_close, voice_gain, links::link_take, dev_tools, dev_ear, dev_copy, copy_challenge, rename_track, take_playing, demo_info,
+        .invoke_handler(tauri::generate_handler![catch_up, player_control, play_track, set_blind, takes, library, voice_range, take, set_not_melody, take_audio, share_window, share_take, share_prompt, share_prompt_seen, feedback_ask, feedback_asked, feedback_send, open_privacy_settings, ui_log, ui_moving, skip_to, set_mini, forget_song, learn_again, lyrics_look_again, dev_hook, stop_learning, learn_anyway, delete_take, set_echo_cancel, set_youtube, set_setting, set_listening_paused, set_scoring_level, set_language, ui_locale, ui_region, settings_now, allow_control, open_in_app, along_mode, join_along, finish_take, play_along, stop_play_along, player_now, voice_open, voice_play, voice_stop, voice_close, voice_gain, links::link_take, dev_tools, dev_ear, dev_copy, copy_challenge, sign_challenge, rename_track, take_playing, demo_info,
             setup_status, setup_request, setup_open_settings, setup_meter, setup_level, setup_done, setup_control, third_party_notices, perf_frames, report_prepare, report_save, report_open_folder, report_show, report_issue, open_link, starter_cover, set_favorite, is_favorite, open_app, mics, set_mic, output_timing, output_timing_check, output_timing_reset, output_timing_dismiss,
             update_status, update_check, update_set_auto, update_restart])
         .setup(move |app| {
