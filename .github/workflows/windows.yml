@@ -361,7 +361,10 @@ jobs:
           cp "signed/installer/$n" "$f"
           if [ -n "${UPDATER_MODE:-}" ]; then
             rm -f "$f.sig"
-            if [ -z "${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}" ]; then npx tauri signer sign -p "" "$f" </dev/null; else npx tauri signer sign "$f" </dev/null; fi
+            # the key is the secret's text (a release) or a file's path (the throwaway key): `tauri signer sign` takes
+            # a path only as --private-key-path
+            KEY=(); if [ -f "$TAURI_SIGNING_PRIVATE_KEY" ]; then KEY=(--private-key-path "$TAURI_SIGNING_PRIVATE_KEY"); unset TAURI_SIGNING_PRIVATE_KEY; fi
+            if [ -z "${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}" ]; then npx tauri signer sign "${KEY[@]}" -p "" "$f" </dev/null; else npx tauri signer sign "${KEY[@]}" "$f" </dev/null; fi
             [ -s "$f.sig" ] || { echo "::error::no updater signature made for the signed installer"; exit 1; }
           fi
       - name: The installer's code signature

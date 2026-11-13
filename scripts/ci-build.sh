@@ -56,7 +56,11 @@ build() {   # build <version> <out dir> [bundle]: tauri build (or, with "bundle"
       rm -f "$f.sig"
       # the key and its password from the environment, as tauri build had them (a throwaway key's is empty: said
       # so, rather than asked for); never waiting on a prompt
-      if [ -z "${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}" ]; then
+      # (the key is its text, or for the throwaway key a file's path, which `tauri signer sign` takes only as
+      # --private-key-path)
+      if [ -f "${TAURI_SIGNING_PRIVATE_KEY:-}" ]; then
+        TAURI_SIGNING_PRIVATE_KEY= npx tauri signer sign --private-key-path "$TAURI_SIGNING_PRIVATE_KEY" -p "${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}" "$f" </dev/null
+      elif [ -z "${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}" ]; then
         npx tauri signer sign -p "" "$f" </dev/null
       else
         npx tauri signer sign "$f" </dev/null
