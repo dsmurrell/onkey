@@ -206,8 +206,11 @@ jobs:
           cache-dependency-path: |
             package-lock.json
             ui/package-lock.json
-      - name: Rust (stable, MSVC)
-        run: rustup toolchain install stable --profile minimal --no-self-update && rustup default stable && rustc --version
+      # pinned: Rust 1.100 (9 Nov 2026) lays out target/ differently, and ort-sys 2.0.0-rc.10's build script, which
+      # finds target/release by walking up from its own folder, fails on it ("cannot find the path specified").
+      # Raise this together with ort.
+      - name: Rust (1.99.1, MSVC)
+        run: rustup toolchain install 1.99.1 --profile minimal --no-self-update && rustup default 1.99.1 && rustc --version
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
           workspaces: src-tauri
