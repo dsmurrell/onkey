@@ -98,6 +98,21 @@ signature. Spotify and Apple Music say what's playing themselves, so that only a
 releases are signed with my Apple Developer ID and notarised by Apple (`spctl -a -vv /Applications/OnKey.app`
 shows who signed it).
 
+## Code signing policy
+
+Windows releases of OnKey are code-signed. Free code signing is provided by
+[SignPath.io](https://signpath.io), with a certificate from the [SignPath Foundation](https://signpath.org).
+
+Only builds made by this repository's GitHub Actions workflow from a tagged commit are signed, and each
+release is approved by hand before it is signed.
+
+- Committers and reviewers: [Daniel Murrell](https://github.com/dsmurrell)
+- Approver: [Daniel Murrell](https://github.com/dsmurrell)
+
+What OnKey sends over the network, and when, is listed under [Privacy](#privacy).
+
+The first signed release is on its way. The Windows test builds published so far are not signed.
+
 ## Licence and credits
 
 MIT. See [LICENSE](LICENSE). Modified versions can't be called OnKey or use its icon. If you build on OnKey's code,
