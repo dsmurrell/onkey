@@ -2280,9 +2280,19 @@
       "out": "dd6efb71ad7cdb3c",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "9aa0a2e526fab530",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "71a0bfa05abdb6f9",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "d026a2f69301e45f",
       "human": false
     },
     "nav.whatsNew": {
@@ -5345,6 +5355,231 @@
       "out": "d7ed94c7ad52b400",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "53b37bc774497de6",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "dcd3cad3b1502136",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "68305161879d6d10",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "b773b4fe42b2f763",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "7ff887119a61ae57",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "1ba0463c46e6cafa",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "2edfaead289ee460",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "fb71af923be098d2",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "254fbbc03bf90b17",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "d835c14ba0d23b13",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "1feab18010e4c3fa",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "bd0bf40aea8d5c08",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "ab89a9e5c618b077",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "33aaf3da180b2d9a",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "b0c3c3a77089eb1b",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "74f35cd140c818d5",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "1897a3d91347867e",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "401c4e546da80be6",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "62bb83bc8258bee9",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "4b0c148b3ac0156f",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "f07dd5c770928eae",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "df0b42f7d3e82d46",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "30ab2fddbc19e643",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "68903a9280ef70e7",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "b05424fb55b139ba",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "34f23a1c8a0eecf3",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "8eda8655e8155158",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "3a2b9a66af864c82",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "7d881247b3183923",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "9c763f10e36cdb4e",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "a61bb990b388b5a4",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "c69d6eeede7947fa",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "f5c0a2c3857544bb",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "98bfa9560cc81ccb",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "46f85f98795fef24",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "032c9901a5ec7391",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "2839d39b0d22bc92",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "c13ea56b811599d0",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "61bc1fa3af52821d",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "0ef37b906bd97c99",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "8c25f6dac75d7967",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "4f90508b07163b18",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "33ffb22721217e1d",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "d026a2f69301e45f",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "6a847311e8b3421a",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "7c3d164e7f64e79c",
@@ -7747,9 +7982,19 @@
       "out": "56a453c560db9c06",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "860f0387d8ed3a64",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "a9922575cb6336b9",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "627bbdaf4798d357",
       "human": false
     },
     "nav.whatsNew": {
@@ -10812,6 +11057,231 @@
       "out": "2c030da06e46b7cf",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "19ecb66d9791d408",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "8185184722891822",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "2bc40e4e23fac574",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "6f09a0b764e5ffe5",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "dc928d42106f90bc",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "d50a3d4468356132",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "75bf523604a18fce",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "faffe46b3dc5fcb4",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "1fa489b7fdbcecad",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "5074008f5c8c7c6a",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "ece6db80e37700b7",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "6deaa238139e65b2",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "cc88b5bf25a486b7",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "d76e518a4b8b71ee",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "6e13c09a96d4dccf",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "5fa5db0ecd81eb35",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "a9d11aa96e38eb61",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "89f93eb40e56529c",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "2914d567a02beac7",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "0241798e42b951cc",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "46ff16cdf4034d02",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "5fe46536ffd539c0",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "bb53b3375d4e4662",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "eabd4e6b133a757e",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "fb3a9201c112488d",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "8ccdeacc96f24ea6",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "baf479e8845c4789",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "aafd50e1745e758c",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "7e3e7f26cc88b5a3",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "ec92495b6dc12344",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "73c80f66e0ad9f61",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "fa9105b1fb34a15a",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "9ea08c99e61d3f08",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "c8aac7d8da739b6b",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "715428ef84986ac0",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "e702b35515cbc120",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "056c04c953bfabbd",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "51d4e5b9a2204eee",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "85e2adef7edee9e0",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "6993a13a5ef52f68",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "c2e964b325821a45",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "2c9e33fcb27dec74",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "627bbdaf4798d357",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "b0f7787180242395",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "6b71a9e672bda868",
@@ -13214,9 +13684,19 @@
       "out": "56a453c560db9c06",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "860f0387d8ed3a64",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "a9922575cb6336b9",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "627bbdaf4798d357",
       "human": false
     },
     "nav.whatsNew": {
@@ -16279,6 +16759,231 @@
       "out": "2c030da06e46b7cf",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "19ecb66d9791d408",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "f6aad9270b6c9cb4",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "2bc40e4e23fac574",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "6f09a0b764e5ffe5",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "dc928d42106f90bc",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "d50a3d4468356132",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "75bf523604a18fce",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "faffe46b3dc5fcb4",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "1fa489b7fdbcecad",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "5074008f5c8c7c6a",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "ece6db80e37700b7",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "6deaa238139e65b2",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "cc88b5bf25a486b7",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "680669f5ee61f126",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "6e13c09a96d4dccf",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "5fa5db0ecd81eb35",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "a9d11aa96e38eb61",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "b66dd78fb5e764ba",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "2914d567a02beac7",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "0241798e42b951cc",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "46ff16cdf4034d02",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "5fe46536ffd539c0",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "bb53b3375d4e4662",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "eabd4e6b133a757e",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "fb3a9201c112488d",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "8ccdeacc96f24ea6",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "baf479e8845c4789",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "aafd50e1745e758c",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "7e3e7f26cc88b5a3",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "ec92495b6dc12344",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "73c80f66e0ad9f61",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "a9f480fcc8858998",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "9ea08c99e61d3f08",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "c8aac7d8da739b6b",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "715428ef84986ac0",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "e702b35515cbc120",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "056c04c953bfabbd",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "51d4e5b9a2204eee",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "85e2adef7edee9e0",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "6993a13a5ef52f68",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "c2e964b325821a45",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "2c9e33fcb27dec74",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "627bbdaf4798d357",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "b0f7787180242395",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "6b71a9e672bda868",
@@ -18681,9 +19386,19 @@
       "out": "07e59f8785e47e9e",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "c9d60767f33362cc",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "4f9d00011d4874a6",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "df1cf9f3b367fd5a",
       "human": false
     },
     "nav.whatsNew": {
@@ -21746,6 +22461,231 @@
       "out": "ddfbfe7db21cdacd",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "44c3029250bf6da5",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "89176f45af3302c1",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "57d8dee853b2acd0",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "430ac4496495c9c7",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "af1fa13e04f61c20",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "e4750da99f0f7665",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "d614beda1bbedd65",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "57aeba18cb40f34b",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "ddef79617a78bffa",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "5e76c82630ac5a08",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "926f0ab1c77ef8b2",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "1f5a79b37b04911b",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "ad20720fc403d8b4",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "ad07dc6df800defe",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "b3ec05d92c6fa2f0",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "8c3cc6b69d86ee51",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "86d111b22ec12a2a",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "10e924f3c174eb0d",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "47635a0d13319451",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "4b0c148b3ac0156f",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "10a10a85df6823e8",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "1ce4d98af061f43b",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "9c142f029ec05c91",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "9466b65c292217ce",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "239783c75a81d86f",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "439c7cf10b404e39",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "5120ae19d5278ab6",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "7f3df77da6a84479",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "8484248a3073747a",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "cd8f2330dead9f34",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "083ff922b177a9c1",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "696ad8595844b952",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "325ec933ddb0481f",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "2a7809efbbfffc71",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "b1c89002dd3ea0e2",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "3f7fbef10ddccc22",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "f4589648fc961877",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "5101a193bb8861f4",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "1925793129ab0636",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "ca8a9d4c64266bc6",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "1873411aa27fb918",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "0819a1cdc41a7171",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "c1747b6efe77606d",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "df1cf9f3b367fd5a",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "a79d37031ee64dbf",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "d3817fe30c372d8a",
@@ -24148,9 +25088,19 @@
       "out": "94962f5daa73a440",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "3dcdeaf4fd2f9427",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "2cf37be8a2d689f1",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "0365335824bc1f5a",
       "human": false
     },
     "nav.whatsNew": {
@@ -27213,6 +28163,231 @@
       "out": "9307ad4588f9e62f",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "90475d58c6e7c5a0",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "7dfa82a646b83bfd",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "c2099984e90b5613",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "49cb4658ff2a9683",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "a4925ace56f57401",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "08e94053bc50d472",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "8e3e93719b1f9d34",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "e9468d473e65af1a",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "ed7e764a706c0998",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "f8f1444e229d2c3a",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "54096b55874b8807",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "a1a000a06238fc79",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "60622da2b911010f",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "c2081cf2ef906d8c",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "1da52b68621a3a0b",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "3a7f7d94f8cf8d07",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "9c18af2b27391f12",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "3d42d78ad99372dc",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "50054d69eefa0ad7",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "f32b36cbdca85f67",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "db05cce50c379e1b",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "1357240781bff39d",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "88de00148a6772de",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "e2075685537ea7b5",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "34f0cc5cedbdf3cb",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "637f47371a45b210",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "c4fc4cf4f5e3bb55",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "6e056c7b25f84304",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "dbbb1fd9cabb6780",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "9d63ca4e0ac6f1c6",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "67d9db8b74417e2d",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "be1411c02d025f5e",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "bb4181a19e1dd3a9",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "85d672af2a7ce86e",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "5d40bee69a2f0209",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "0037e2070f914aa1",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "d0fef9db12a815e8",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "36b18fdd0f90957e",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "e9d259c8174d02eb",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "ad60fc85296f3b2a",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "2606aba6ec677618",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "d6fcbd69d1589133",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "0365335824bc1f5a",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "ef8aaeea71e08204",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "eb79a58e118999fb",
@@ -29615,9 +30790,19 @@
       "out": "34b2d64f842f7374",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "3d1397c44be1c5a8",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "48cc47f23580b205",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "fc1d2038a62c0e92",
       "human": false
     },
     "nav.whatsNew": {
@@ -32680,6 +33865,231 @@
       "out": "6ef687d3cb665a5d",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "4d4c677108a4b255",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "be8beb456932ac55",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "ec58a5d872b964c7",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "72d2e423b2f5ed3b",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "d62ecbec65920697",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "10725a56892ea5b3",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "1f5701549f85aa5e",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "1566b7ea1b176981",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "3dfd27535ea3f0ef",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "68c282837fc5dde2",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "4b5f06cd7731ed5d",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "2312be668fb74b67",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "037a6d69fe0b3446",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "937eef6cb215a6fb",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "ddc59757d7f10e80",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "215561e2f9064514",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "3d3adeb7df724926",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "e51e56ded0261da9",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "8bbf6958435206d8",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "e9fa38265801f307",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "f0cc9c8d8244729e",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "f2d6138ef7b51802",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "14f004a0517222f2",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "0ea92c15b68e27e2",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "34f23a1c8a0eecf3",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "477d908518fb54e3",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "3743c49cf6002c66",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "c7134a76176eabb1",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "8017f82b08576bf5",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "000b057f1dc3d0fe",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "198721923d00e750",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "150260b4cb9cbf6b",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "175c758602b62dcd",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "a53686d55e217303",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "4bb199e7da9a1da1",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "896abb415e94dfec",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "6dad09d176f3d74f",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "ec7c8dae0f52df75",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "02e90555439c1595",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "1d3c51cf3692c002",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "41ce35d17913b778",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "e7bb609c236ed4da",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "fc1d2038a62c0e92",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "12afc4b503ff9107",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "ccf173f58b1863b6",
@@ -35082,9 +36492,19 @@
       "out": "9c8fc5282e80d766",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "3add53f325b2e562",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "c7f86932dff63394",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "bb9c4880029d2ab0",
       "human": false
     },
     "nav.whatsNew": {
@@ -38147,6 +39567,231 @@
       "out": "958189b1eb8f9f48",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "aa1ce4a0642b057f",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "4b11a60ec6817611",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "5e95f80b0d1e7444",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "15fb2727a9f2703d",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "5f2f61d12b3306e9",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "b0ba31ba717a4c55",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "c8262036240ca17b",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "6e72d78b84aecaea",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "228a780aee53a8bc",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "3083c9a54b8d7877",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "0c0a9fd3220fb404",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "f842709727710bed",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "ef304ea99fce98c6",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "95916945cb3555ad",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "710601a396b51e99",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "6f2cca741d7b4bac",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "31528abe972e52a9",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "553a36e6d7d839a7",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "fdd9aad22e135bb0",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "503b431a1cbe09ee",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "5aa5a1efe5fc2079",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "85686ca896de12e8",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "12aea878b085b899",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "547c2db6770faa92",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "34f23a1c8a0eecf3",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "bd41805c6c07c71d",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "8a79f40b92b856a1",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "d914e644b1d56487",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "067511e11d509283",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "d6ccabe4172114ef",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "2d75c53d93de3579",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "43dfb3d8de5aef5e",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "7a6dc4e86abd1086",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "83fae290844d423f",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "c8e222d498ba3019",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "e6a25ab50c5403ab",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "62e6540a883bcf53",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "8ece5eb50d2f45a1",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "67a398b360a215f3",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "61dc39255911a77c",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "f80e42fba81a294f",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "693f2dba40640cc5",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "bb9c4880029d2ab0",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "ba9755cd017533fa",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "644eff91c857ffda",
@@ -40549,9 +42194,19 @@
       "out": "c39d47fb2acbb7e2",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "2f1e7e3691cbaef8",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "2a1187b6f86c2c96",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "51f9a64e381f1709",
       "human": false
     },
     "nav.whatsNew": {
@@ -43614,6 +45269,231 @@
       "out": "1903bb4b50bfc4b3",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "ea77b921ebf15546",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "6dd347d96125e2a2",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "93a76a4d0a344f00",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "4ea4b7bdedc529c9",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "104fd6c2f0443781",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "df8b14c87ba1216c",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "1a589091d0dd00ab",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "d47cb2feccf2d0e0",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "2a990a0781e77163",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "bfe4199c7ac9ff91",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "cd35395b9809e0aa",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "e879fd58e0ceecec",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "5d3e5f33247540f2",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "d128c5dbeaad45fd",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "b61e4f2930676852",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "938d9830e5ac40d3",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "ac672d968ff1bf04",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "d2b49be88b58c181",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "f805bd38cbc5a2f1",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "9ca767e664ec0195",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "9677d6892ba266a3",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "ae691111dd0c8fce",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "e217bdcadb203ce2",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "4be7d659bc7ec8a0",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "0d86724f65289770",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "2e7a0e72807619fa",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "a0d5a22ac11490e9",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "d9d9203b9accabd1",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "335df4343c3336d3",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "5e9251193c67c00c",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "caee485482e929ea",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "6dfc9f564fb164e3",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "e40a435227a0f399",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "ea22826348f30f62",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "9840fbe99bee0388",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "b51e5486bb687772",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "c6c83d965fcd917a",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "396b371decfe98d8",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "235e9c4f4ff5208b",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "2f3fb037ae645c8b",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "cec914c3a1a47f45",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "85d8deaa6f6bee3a",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "51f9a64e381f1709",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "93eacefb0d97f0be",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "c833689021056eab",
@@ -46016,9 +47896,19 @@
       "out": "33db39f02d1acc44",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "9ef1936a10e3324f",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "4e32ea9f4d64eab0",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "7d5318efd0ba553c",
       "human": false
     },
     "nav.whatsNew": {
@@ -49081,6 +50971,231 @@
       "out": "c54f969af64960d1",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "3970bb3b15229e95",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "174b950acaeb2785",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "14dfdfb4ce06cdc5",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "b0b7d465a696994a",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "aed0a21d8db74d61",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "c8dbc399b9247135",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "defdfcecb5f6df11",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "24aa713e9c6a3abb",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "841e557f67431dc4",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "58e5e72fa98302c6",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "9f07b9bc5fbea83e",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "e06aabb2621bbd02",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "e3bd7dd4fd3d3bec",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "89231012d0bb056d",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "71636353cdf6e2cd",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "53417dcef27ab05f",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "b6da9e163d46ef6d",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "768b1fa98111fdc6",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "a5d9e42de8d3c889",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "e1b2ee43a9ba4f70",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "2b78923eb128a5c7",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "85c2b8eb15352240",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "fd15adeeb43aa314",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "25330a30305259f1",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "3a6b16eab508fe67",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "81a5d8d2accd7b1d",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "9e2422b8dc9dadc8",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "67fff5ec3b832adb",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "9e4d6193d9e23e49",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "bc947fbff933d8dc",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "78d37589ce9ad1e6",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "920b0d402f08f1fb",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "93a8e4a307158276",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "958b8b666909761a",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "d7d7e82381d7a022",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "aa3c0c4ca8419c22",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "dd69394773d30b7e",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "cd08008dcd4e5d6b",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "6c8c0fc79e4dbb5d",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "5327dee9abb508b4",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "01f7929658340c41",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "8ce2925f1ef65182",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "d01e998b39ddfdb8",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "7d5318efd0ba553c",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "3a48276dc48ad51c",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "5cf821cdc3bd2d1c",
@@ -51483,9 +53598,19 @@
       "out": "b5f03e98d5cc94ac",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "0152701389ef5554",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "def1fd6e57c8059f",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "fc1d2038a62c0e92",
       "human": false
     },
     "nav.whatsNew": {
@@ -54548,6 +56673,231 @@
       "out": "3caef74bbf9b5f67",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "b7c7dc9765302186",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "ae817792ac22b657",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "ddf8d653386a4c38",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "424dac680e15f87c",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "a999420e771e02eb",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "7103a5b518c65403",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "f745655e69290200",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "cc3589bd6569c492",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "25b89c1043905cac",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "9693caadc8d60b55",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "8e1294183f539854",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "d8a3106f62505157",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "5dcfd26299226704",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "f5b1e0909e0ef170",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "905d3f2e4acbd1e1",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "735dc9a2064701d1",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "a7f0e247b390006e",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "af8e0e84cc71d289",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "ed382c8e1a239325",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "2c72895981cc96b8",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "c84e5a1e3a081d2f",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "48a17d1c63e82945",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "2e0d13c54ea1400b",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "e2ecb37ee6f636d2",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "34f23a1c8a0eecf3",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "18ce6d7ef2d891f4",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "3021278f7d76185f",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "032f16adf17aa33b",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "49fa9a95c2ca5998",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "592a7ca729c8068d",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "bd996efd4a923afb",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "3faf6beb7e74cde1",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "cb50316c1e7ab889",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "c663fb73a79bc4be",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "3781688d9e695dcd",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "b49199910ba36192",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "d5ed643370c55749",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "a8453d8d18a530ef",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "614a170ceaa19e3b",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "035911b7aa7b4b6c",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "e6117174d9037e59",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "ed239eea8e762e31",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "fc1d2038a62c0e92",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "48c75dd8e6c56d23",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "5a6b1a902d1dfc0b",
@@ -56950,9 +59300,19 @@
       "out": "beae1b50f5620a3a",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "0c08b59518b66979",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "b3b4c3ddfa1b24b4",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "5f353412d5f022f4",
       "human": false
     },
     "nav.whatsNew": {
@@ -60015,6 +62375,231 @@
       "out": "efc2fc13e8ff2576",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "3a6a54ad39bcac36",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "6107d6514543ddaf",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "c3f09643b4983a26",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "4020c93670834b69",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "5c17a99e4e299d3d",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "68dbd6c2052a75b9",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "c8f9d306cce45f9c",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "f92940366fdff1cd",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "4cbef5dc97cfb001",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "48aa07e91f91f502",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "bd6acd426cf05221",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "4fd6a029f84fdd63",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "98ff62bd38982878",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "d9974f041e1d5113",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "f3c5c3700ca0e281",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "b231e0ee7a0460fd",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "bcb8e43dd8fd8e5f",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "c4b5541082556663",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "ef1ece665d74c75d",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "4317330b9895b928",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "83cb213c5f72251d",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "073917fc9c238668",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "844f77ffc716002d",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "e9feee5b3c7b3ce0",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "34f23a1c8a0eecf3",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "122a8c4a5480dbf4",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "c667038b60b8fc90",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "6aece927718beefc",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "af30d72c7143bcac",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "f30f7c0b73ef22b0",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "444757c418937c8a",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "2d075c0889a98c76",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "5e64c766781861d4",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "dfefbcd25d3f0453",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "b8cba7399c63a6f4",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "dc7a3c71aa419458",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "d0e6ff15ec19f245",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "61f11bf9aebefba4",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "b7cd61e2b2dea2c3",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "26c28bcefd0e67e1",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "2e3560545c59a147",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "c2702f61cd1bf42f",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "5f353412d5f022f4",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "6d1a2ab254a732e9",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "f347f43896755a06",
@@ -62417,9 +65002,19 @@
       "out": "e43167168309b9eb",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "68511592a374c4a3",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "fcb3f13e6e23b9cc",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "627bbdaf4798d357",
       "human": false
     },
     "nav.whatsNew": {
@@ -65482,6 +68077,231 @@
       "out": "f59c7c4114bd5d36",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "46d29b5ab50f518a",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "31242dc2fe511aaf",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "714ad05669be5766",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "7e5e112b3e44963d",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "21dd3f5a102654cb",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "5585ca453806844e",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "b841416c30084a04",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "faffe46b3dc5fcb4",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "1fa489b7fdbcecad",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "c7a160b54934293e",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "64c4c44e2cd736ad",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "fff05ddf14473853",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "eb4cee292c4f48a8",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "df2064eb912a4328",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "c0eea8a8a444ed10",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "b325408bd653cfdf",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "ba20692ce0165caa",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "f2ec4024a25fbc34",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "f6e9e327254a099c",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "f2eacb6c5e4fa36d",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "9990f960c12739d5",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "df47eac3b2d736bf",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "75cfea4be57cc06c",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "eabd4e6b133a757e",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "d2f4be7c8b5d302f",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "8ccdeacc96f24ea6",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "6c389be38f531ea6",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "127ae4dc8ce949c3",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "8831358ecddfef47",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "55bc30dabba9f19f",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "b35983977126ef47",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "f0a088b100d89ab7",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "0819fcfb70bca50d",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "7c8130bc24c51a25",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "c1387d619890e121",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "d15bbf8fa7323103",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "9921aceee31e492d",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "7062413dd148fa1f",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "60b0e7da6fabeef6",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "997ce1d2aa51814c",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "3146565abee36f72",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "e1ca8d61747f5e8d",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "627bbdaf4798d357",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "37b977ba305e6203",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "aa5d600544975d36",
@@ -67884,9 +70704,19 @@
       "out": "12213b761c171108",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "0e17d9b8e082c20a",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "fee6e32830cd8db3",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "846583b3aad428fa",
       "human": false
     },
     "nav.whatsNew": {
@@ -70949,6 +73779,231 @@
       "out": "844fc41b3f5cde9c",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "3cdfc40a53e7a1ba",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "5f4196eff25dfd66",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "88163f2d6231381e",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "7d05612bab4d4105",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "3e2119eddccb95b5",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "407f871778d31070",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "429a1b9047694840",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "f465885953a48fad",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "ae313f18bd816a24",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "17518d93a03a4958",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "443c49da2a36d968",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "4475c3ed0716435f",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "ab456ea80cbb696a",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "e699c13b4085aa66",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "fcc20dcec994c596",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "9f10f5d6c1094e23",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "b80159eda7f7b497",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "a8622bb7cceba2b5",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "5abad9c39a021930",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "4b991cfe6327baf2",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "e4acf1e58ffe317b",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "97f7fd69717c9a9c",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "57675177fb9dcca2",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "1ac48e763c2830d7",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "b4bed43bc4b750e7",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "743adcdc81977548",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "d21f583e383a6057",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "0afad79ef6721364",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "f89e3c06197e2349",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "ee79564b75b547c6",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "90506f4b83a31ca4",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "3b68f3a2d6cf95a9",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "28e085b6afa52c82",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "357ccc3e75b952de",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "7de016821141cc6f",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "443c49da2a36d968",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "40a484c6f2791730",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "caf8143216898952",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "56de0e85fa6fbdc8",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "357ccc3e75b952de",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "442b6c414c41f739",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "a0949db051e1ba2b",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "c4585dcb0904d17f",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "846583b3aad428fa",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "e4a0fa0b16737c4d",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "18d9bada4da1ea16",
@@ -73351,9 +76406,19 @@
       "out": "47f76dd231aac644",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "bd30e0eac668be0d",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "d927844adad38761",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "d9c0c0523bb6e7db",
       "human": false
     },
     "nav.whatsNew": {
@@ -76416,6 +79481,231 @@
       "out": "f38701eb42545f15",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "d5bbd35f205b0106",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "69261cb1c658c5a9",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "e3cc30960c71951c",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "dcf6261ab946bba8",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "e860ccf81581c6e3",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "aa4485fdb1f77749",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "0bc6e311014323e0",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "2553c84504b066bd",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "b7f1fc4bb60c326c",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "f5aedc7f4f578e80",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "61bc9d24aa1c8c0a",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "80ec09d27933a4e6",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "c8e2bd6a904dfc5a",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "f47d80a6569fa3b2",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "dbb5452da0cb762a",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "ded52d34b575ac19",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "c52100c386bc3a66",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "17a4f237a4f95d33",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "498680a19efccf74",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "2e88a519bbe73bfe",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "6cae6eeec32d5ef1",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "e89694a4753b3b1a",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "b238473f6abd4578",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "32a5f76d41487e4c",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "ba8e45540d759688",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "510b50480334c0ce",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "ebef97d739ba4c64",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "486a496d1ffe2e7f",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "c04b7bcf2756d4d1",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "4c9decd9e7499dae",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "7a6c4262e9de0040",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "56707d35e6a7eea9",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "2700a51df1d332c4",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "18b98ecb5a9d1c76",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "4c424b4582bf7b07",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "d8c1e8f231dc3e6e",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "c3450759299b5e62",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "3ad8d2529bbe1b82",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "50c9e83e2e132b24",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "221b29764cdf19ce",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "0a818fd392d3af80",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "f3a62c08106e4125",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "d9c0c0523bb6e7db",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "9b9aeb53e5ee72fa",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "1cbe9e1ca3594c58",
@@ -78818,9 +82108,19 @@
       "out": "d6376748b55197fe",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "ffd8a3827230d3de",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "8659965a62fefb16",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "ad3f098ef6203898",
       "human": false
     },
     "nav.whatsNew": {
@@ -81883,6 +85183,231 @@
       "out": "c9ef29e73553f744",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "cf33aa66ad431b47",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "fe37a548b4a2315c",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "69097bf03d89fd0e",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "e284554131f3ef59",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "57695376c72b6071",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "e306951c12fec8b7",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "adeefd209c89d065",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "6ab1687fe36ddd63",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "67c6b9f067775204",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "5b68dc781d02f13e",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "28bdf5927f4e68d7",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "c0cbebf588d57164",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "b25443fe824316e6",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "343558e091ab55c1",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "9a4eed848cb1111f",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "9479b7ad8d5b3968",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "cabbe8d8cef005a8",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "b37500529036f28d",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "2f36a24301dd4bcc",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "a064bd532406b227",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "ad80145b222f80e4",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "9fd8cf20921c0d2c",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "509513e7d402d6b4",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "121ddd17cbb8b443",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "6ec6fc92d594acd3",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "d98b3425b905dc1d",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "fa5be9a2561d9f78",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "fc1c583d6b16dab7",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "02641127a51ce51b",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "500674fcb578f515",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "fdb7489183a9aa0e",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "c646d8c34e973f40",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "b9377d9bc67b7e70",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "d08999763d94685b",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "8432e827eb51dea2",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "a709de061d11cb37",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "130579f45ec6b49a",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "e4bf79400251966b",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "bd20494d744d330a",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "d026dd523d1b5527",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "9372d86a38aa18c8",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "b37086bfb8c7185a",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "ad3f098ef6203898",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "c7dee7499b9b64a6",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "f4e4abfbe39966e8",
@@ -84285,9 +87810,19 @@
       "out": "55f7ee8c6d222ab3",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "01333639b298afaa",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "aaa2759f18eb83cb",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "e7baf7f1ea520779",
       "human": false
     },
     "nav.whatsNew": {
@@ -87350,6 +90885,231 @@
       "out": "3aa7bc5328b455ec",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "1d5dcea974caab99",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "8655ba13a430f539",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "8c1f16258dfea4c3",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "04899eb9f297c4ab",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "5f17498f81c9aecd",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "57435a5c84449ce3",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "2232b8c732b8cf33",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "9652c5f27054d5dc",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "730f067ba6e0e295",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "d1f81695bb12c910",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "4e45ab86f547086c",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "9522d7f8a47528e8",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "da3ea088d3ba454a",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "4c310ea6105c09fc",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "db6cd458821e350f",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "1e33e2bd6b9d2611",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "023dd9547e082fe6",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "b05d000d05b6ab32",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "43cc4598e62a0229",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "b6d6c6c4600ca000",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "15a56630b479738a",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "00028b3c45a800bf",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "3b43c8856a0efe76",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "b3af23395740d699",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "c33dacfaf2e9436c",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "95665f2b6042b45a",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "ac0d91be1c4f1aec",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "b04377389d31567b",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "95a16a9535d40096",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "63b8578b58890799",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "0f2597fc0a585098",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "3abc59a3326ef27f",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "6f53d45e6b239cad",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "2d12bb5e52a4fb72",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "e439edc493d78780",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "cd31933c99816ddf",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "fe50358f2d8d188a",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "1e9fe3ca069e2bf9",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "e1595bd07c121789",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "59b8a07b3c9e2ccb",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "22571a1b29cca0a7",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "4d32bd82b785bc88",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "e7baf7f1ea520779",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "09473734c95d9e52",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "49358c1e88efe911",
@@ -89752,9 +93512,19 @@
       "out": "065d4b037ce5d3c6",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "042413e270298735",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "e0f2599e5edbead4",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "3ea42413583117ae",
       "human": false
     },
     "nav.whatsNew": {
@@ -92817,6 +96587,231 @@
       "out": "4ae13fd5098aa056",
       "human": false
     },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "689a92ee08a664c0",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "813e4eb4bac92b9d",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "b9cd83862842a35e",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "c048edd3b95d941f",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "f7b8feba946e6ba6",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "bce2377283c2455a",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "f9a52703ef70b454",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "f4db9852f5e8c67b",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "048b68cf29a67e68",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "937fc52b6a871a65",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "fd9b72d8dec6c20e",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "4c54736f2cc4b391",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "18ac27b3454de594",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "9f856eca6f0ae491",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "4b2c8c33417f60c6",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "5ab8bbe4e0d31358",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "6b2951defc1f1633",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "d2e0e402f3b3dd9d",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "e14a6a0d8221ff0f",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "3dcae274f8ad3199",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "91cecedd7f1e70bb",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "67aad6177e2432ff",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "9d18a4188b6c32ea",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "37aa6ad6a36d46fa",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "19398ba1998340c3",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "ef59d8661690233c",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "25c07ef8dd1b4260",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "161fffcb478a49c4",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "bd86cb3fc22a0274",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "72bab569dc0c116e",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "50d9e179e3831217",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "5b30ef27f30702e7",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "d679cc8b0f62738e",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "bbc845695f29e340",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "07290b3a9a2bd3d0",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "99daf4bf0617eaec",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "b030aafdbb43f745",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "6d19f126e8e8927f",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "cde6311d914fff17",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "24b30dd45d3ee091",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "53a8a2633b8b25d6",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "db0937ed4f171883",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "3ea42413583117ae",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "caa43a914e849422",
+      "human": false
+    },
     "update.failed.again": {
       "en": "820e4dbf3630aaca",
       "out": "014e8a90c9b1e11b",
@@ -95219,9 +99214,19 @@
       "out": "5498dfbae6cd72bf",
       "human": false
     },
+    "nav.testBuildOfRelease": {
+      "en": "b0626d34204b8b32",
+      "out": "ce83cccc6b690502",
+      "human": false
+    },
     "nav.testBuildTitle": {
       "en": "fb9a96bae60d940b",
       "out": "90f2d1ec38d31a1d",
+      "human": false
+    },
+    "nav.tuner": {
+      "en": "fc1d2038a62c0e92",
+      "out": "dcf50a34639cd6a0",
       "human": false
     },
     "nav.whatsNew": {
@@ -98282,6 +102287,231 @@
     "trend.tipScore": {
       "en": "e66b4628857c5b43",
       "out": "3a0af3da6c6e999a",
+      "human": false
+    },
+    "tuner.another": {
+      "en": "f1ef92b6989a8587",
+      "out": "670582cdb7837db5",
+      "human": false
+    },
+    "tuner.broken": {
+      "en": "dad8b413a7eb412d",
+      "out": "09ad79b0b7b3a22f",
+      "human": false
+    },
+    "tuner.cents.flat": {
+      "en": "8a7c8bd913391e3a",
+      "out": "b9cd83862842a35e",
+      "human": false
+    },
+    "tuner.cents.on": {
+      "en": "652053158056f7f4",
+      "out": "5062026ff9a00938",
+      "human": false
+    },
+    "tuner.cents.sharp": {
+      "en": "92f7c6d6a2b32aee",
+      "out": "f7b8feba946e6ba6",
+      "human": false
+    },
+    "tuner.clear": {
+      "en": "83b12c2216efb4fd",
+      "out": "bce2377283c2455a",
+      "human": false
+    },
+    "tuner.clickLane": {
+      "en": "61332921170b9d01",
+      "out": "593c9206b75a6eeb",
+      "human": false
+    },
+    "tuner.close.relaxed": {
+      "en": "caf399a7535e958f",
+      "out": "3de58e68cae0b7f8",
+      "human": false
+    },
+    "tuner.close.strict": {
+      "en": "2b33564d08c34201",
+      "out": "b791950f05d429bf",
+      "human": false
+    },
+    "tuner.close.title": {
+      "en": "5f98b1f5ccbefe59",
+      "out": "c90ef00e122df33f",
+      "human": false
+    },
+    "tuner.flat": {
+      "en": "9285cedcf26a7cbb",
+      "out": "fd9b72d8dec6c20e",
+      "human": false
+    },
+    "tuner.giveNote": {
+      "en": "2a34d414340b605f",
+      "out": "fdca77b56ad84ee3",
+      "human": false
+    },
+    "tuner.headphones": {
+      "en": "8b604fb32b67b704",
+      "out": "103ec001aa426a42",
+      "human": false
+    },
+    "tuner.hold.flat": {
+      "en": "29094a9890244842",
+      "out": "9f856eca6f0ae491",
+      "human": false
+    },
+    "tuner.hold.label": {
+      "en": "0891a7375310a637",
+      "out": "4b2c8c33417f60c6",
+      "human": false
+    },
+    "tuner.hold.on": {
+      "en": "738b1f8506b9499d",
+      "out": "e073b98e5de3c764",
+      "human": false
+    },
+    "tuner.hold.setting": {
+      "en": "58bd8c2325e942c1",
+      "out": "6b2951defc1f1633",
+      "human": false
+    },
+    "tuner.hold.sharp": {
+      "en": "d90a3e92ddb41971",
+      "out": "d2e0e402f3b3dd9d",
+      "human": false
+    },
+    "tuner.hold.title": {
+      "en": "740d4bdc5ed0c218",
+      "out": "7c5030a3740c2dd8",
+      "human": false
+    },
+    "tuner.hz": {
+      "en": "f42c9ff4bd334aed",
+      "out": "f42c9ff4bd334aed",
+      "human": false
+    },
+    "tuner.intro": {
+      "en": "61a9508052719198",
+      "out": "09e1e6cd578d0842",
+      "human": false
+    },
+    "tuner.listen": {
+      "en": "208b86cf9b140c78",
+      "out": "13fd3db419ff8efb",
+      "human": false
+    },
+    "tuner.noMic": {
+      "en": "5c2e89172f2d583e",
+      "out": "e702e92dd0b64b83",
+      "human": false
+    },
+    "tuner.onlyInApp": {
+      "en": "fe905be4f769aa62",
+      "out": "5d2323dc54772903",
+      "human": false
+    },
+    "tuner.openSettings": {
+      "en": "3f940108cb1ecd9c",
+      "out": "f0762fa62b5e062e",
+      "human": false
+    },
+    "tuner.pattern.arpeggio": {
+      "en": "34f23a1c8a0eecf3",
+      "out": "19398ba1998340c3",
+      "human": false
+    },
+    "tuner.pattern.five": {
+      "en": "302b639a35e2b3eb",
+      "out": "587764065cb76eca",
+      "human": false
+    },
+    "tuner.pattern.octave": {
+      "en": "dea87b036e894662",
+      "out": "675519a3a0a690d8",
+      "human": false
+    },
+    "tuner.playAgain": {
+      "en": "c5d7aa86e8b0e689",
+      "out": "d131813a8d3d1fed",
+      "human": false
+    },
+    "tuner.practise": {
+      "en": "c4e05e6537785c42",
+      "out": "335df4343c3336d3",
+      "human": false
+    },
+    "tuner.private": {
+      "en": "51d01e61f10824e9",
+      "out": "61decdf210b493dd",
+      "human": false
+    },
+    "tuner.seq.again": {
+      "en": "f72894d8fbb37340",
+      "out": "6593ae66e63d6980",
+      "human": false
+    },
+    "tuner.seq.done": {
+      "en": "37072a62452f27f3",
+      "out": "0f3f07d62339e265",
+      "human": false
+    },
+    "tuner.seq.higher": {
+      "en": "f20a248eefd9b247",
+      "out": "58bc6db6906275e8",
+      "human": false
+    },
+    "tuner.seq.higherTitle": {
+      "en": "f8cb088cf394b753",
+      "out": "38c9eea30a65dfa7",
+      "human": false
+    },
+    "tuner.seq.lower": {
+      "en": "4e8bbf3a2bea25e3",
+      "out": "28d0e2d80fb6ab39",
+      "human": false
+    },
+    "tuner.seq.lowerTitle": {
+      "en": "e22957b13693c23c",
+      "out": "3e27aadde815750a",
+      "human": false
+    },
+    "tuner.seq.sing": {
+      "en": "62be7065544061ea",
+      "out": "40e5f025fafac854",
+      "human": false
+    },
+    "tuner.seq.skip": {
+      "en": "fbfd915a8f1cf10a",
+      "out": "686ff3a042bf0341",
+      "human": false
+    },
+    "tuner.sharp": {
+      "en": "1a3c4b300d516c22",
+      "out": "cde6311d914fff17",
+      "human": false
+    },
+    "tuner.target.aim": {
+      "en": "6ca91655144061a9",
+      "out": "008ffb6d9b189d36",
+      "human": false
+    },
+    "tuner.target.none": {
+      "en": "5cc40f73de60329c",
+      "out": "92e356c38f28c2b8",
+      "human": false
+    },
+    "tuner.tip": {
+      "en": "39b09373d41284aa",
+      "out": "36f15ffa9d037400",
+      "human": false
+    },
+    "tuner.title": {
+      "en": "fc1d2038a62c0e92",
+      "out": "dcf50a34639cd6a0",
+      "human": false
+    },
+    "tuner.waiting": {
+      "en": "ec519f132b68234b",
+      "out": "f1176a6e66d9eb67",
       "human": false
     },
     "update.failed.again": {

@@ -54,6 +54,7 @@ pub mod spotify;
 pub mod store;
 pub mod syllables;
 pub mod take;
+pub mod tuner;
 pub mod takeaudio;
 pub mod timing;
 pub mod updater;
@@ -473,6 +474,23 @@ fn dev_copy(text: String) -> bool {
 #[tauri::command]
 fn copy_challenge(link: String) -> bool {
     challenge_link_ok(&link) && platform::shell::copy(&link)
+}
+
+/// The tuner page (tuner.rs): start listening to the mic alone ("" when it's listening, else why not: "mic" or
+/// "model"), stop, and the pitches sung since the last ask.
+#[tauri::command]
+fn tuner_start() -> &'static str {
+    tuner::start().err().unwrap_or("")
+}
+
+#[tauri::command]
+fn tuner_stop() {
+    tuner::stop();
+}
+
+#[tauri::command]
+fn tuner_read() -> Value {
+    tuner::read()
 }
 
 /// A challenge link's signature for the score it says (challenge.rs), or "" from a build without the signing key
@@ -1186,7 +1204,7 @@ pub fn run() {
     // the menu bar: the Mac's standard menus with "Report a Problem…" in Help; none on Windows (it would sit inside
     // the window: Report a problem is in Settings)
     platform::app::menu(builder)
-        .invoke_handler(tauri::generate_handler![catch_up, player_control, play_track, set_blind, takes, library, voice_range, take, set_not_melody, take_audio, share_window, share_take, share_prompt, share_prompt_seen, feedback_ask, feedback_asked, feedback_send, open_privacy_settings, ui_log, ui_moving, skip_to, set_mini, forget_song, learn_again, lyrics_look_again, dev_hook, stop_learning, learn_anyway, delete_take, set_echo_cancel, set_youtube, set_setting, set_listening_paused, set_scoring_level, set_language, ui_locale, ui_region, settings_now, allow_control, open_in_app, along_mode, join_along, finish_take, play_along, stop_play_along, player_now, voice_open, voice_play, voice_stop, voice_close, voice_gain, links::link_take, dev_tools, dev_ear, dev_copy, copy_challenge, sign_challenge, rename_track, take_playing, demo_info,
+        .invoke_handler(tauri::generate_handler![catch_up, player_control, play_track, set_blind, takes, library, voice_range, take, set_not_melody, take_audio, share_window, share_take, share_prompt, share_prompt_seen, feedback_ask, feedback_asked, feedback_send, open_privacy_settings, ui_log, ui_moving, skip_to, set_mini, forget_song, learn_again, lyrics_look_again, dev_hook, stop_learning, learn_anyway, delete_take, set_echo_cancel, set_youtube, set_setting, set_listening_paused, set_scoring_level, set_language, ui_locale, ui_region, settings_now, allow_control, open_in_app, along_mode, join_along, finish_take, play_along, stop_play_along, player_now, voice_open, voice_play, voice_stop, voice_close, voice_gain, links::link_take, dev_tools, dev_ear, dev_copy, copy_challenge, sign_challenge, tuner_start, tuner_stop, tuner_read, rename_track, take_playing, demo_info,
             setup_status, setup_request, setup_open_settings, setup_meter, setup_level, setup_done, setup_control, third_party_notices, perf_frames, report_prepare, report_save, report_open_folder, report_show, report_issue, open_link, starter_cover, set_favorite, is_favorite, open_app, mics, set_mic, output_timing, output_timing_check, output_timing_reset, output_timing_dismiss,
             update_status, update_check, update_set_auto, update_restart])
         .setup(move |app| {

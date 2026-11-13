@@ -1173,6 +1173,7 @@
     "sing": "Sing",
     "library": "Library",
     "history": "History",
+    "tuner": "Tuner",
     "settings": "Settings",
     "paused": "Listening paused",
     "resume": "Resume",
@@ -1181,7 +1182,8 @@
     "whatsNew": "What’s new in OnKey",
     "whatsNewFresh": "What’s new in OnKey (new)",
     "testBuild": "Test build",
-    "testBuildTitle": "A test build of OnKey for Windows or Linux: install the next one over it when it comes"
+    "testBuildTitle": "A test build of OnKey for Windows or Linux: install the next one over it when it comes",
+    "testBuildOfRelease": "A test build of OnKey, made for you to try something new. It updates itself to the next release when that’s out."
   },
   "licences": {
     "back": "← Settings",
@@ -1530,6 +1532,65 @@
     "app": {
       "music_app": "your music app",
       "browser": "your browser"
+    }
+  },
+  "tuner": {
+    "title": "Tuner",
+    "intro": "Sing any note and see which note it is. No song needed.",
+    "waiting": "Sing or hum a note",
+    "hz": "{hz} Hz",
+    "flat": "Flat",
+    "sharp": "Sharp",
+    "cents": {
+      "on": "On the note",
+      "sharp": "{cents} cents sharp",
+      "flat": "{cents} cents flat"
+    },
+    "clickLane": "Click a note to hear it and aim for it (or to start the pattern there)",
+    "giveNote": "Give me a note",
+    "playAgain": "Play it again",
+    "clear": "Clear",
+    "another": "Another note",
+    "close": {
+      "title": "How close to a note counts as on it",
+      "relaxed": "Within 25 cents",
+      "strict": "Within 10 cents"
+    },
+    "target": {
+      "none": "Click a note in the picture to hear it and aim for it, or pick something to practise. A pattern starts from the note you’re on; click another note to start it there.",
+      "aim": "Aim for {note}"
+    },
+    "hold": {
+      "label": "Hold it for {seconds, plural, one {{seconds} second} other {{seconds} seconds}}",
+      "on": "Held, right on the note.",
+      "sharp": "Held. On average {cents} cents sharp.",
+      "flat": "Held. On average {cents} cents flat.",
+      "setting": "Hold for {seconds} s",
+      "title": "How long to stay on a note for it to count as held"
+    },
+    "headphones": "OnKey doesn’t listen while a note plays. With speakers, wait for it to finish before you sing.",
+    "tip": "Listen to the note, hear it in your head, then sing it. Try it with your eyes closed, and decide by ear whether you’re high or low before you look.",
+    "private": "OnKey listens to your microphone only while this page is open, and records nothing. It doesn’t follow your music meanwhile.",
+    "noMic": "OnKey can’t hear a microphone. Check that one is connected and that OnKey is allowed to use it.",
+    "openSettings": "Open Settings",
+    "broken": "The tuner couldn’t start: the pitch model didn’t load.",
+    "onlyInApp": "The tuner works in the OnKey app.",
+    "listen": "Listen…",
+    "practise": "Practise:",
+    "pattern": {
+      "five": "Five notes",
+      "arpeggio": "Arpeggio",
+      "octave": "Octave jump"
+    },
+    "seq": {
+      "sing": "Sing note {n} of {count}",
+      "done": "You hit {hit} of {count}.",
+      "skip": "Skip this note",
+      "again": "Again",
+      "lower": "Lower",
+      "higher": "Higher",
+      "lowerTitle": "The same pattern, started one note lower",
+      "higherTitle": "The same pattern, started one note higher"
     }
   }
 }

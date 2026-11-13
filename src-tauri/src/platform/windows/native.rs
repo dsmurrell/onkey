@@ -127,6 +127,18 @@ pub unsafe fn onkey_mic_blocks() -> i32 {
     audio::meter_blocks()
 }
 
+/// The mic's sound since the last call, for the tuner (audio's `meter_samples`).
+pub unsafe fn onkey_mic_samples(out: *mut f32, cap: i32, rate: *mut f64) -> i32 {
+    if out.is_null() || cap <= 0 {
+        return 0;
+    }
+    let (n, r) = audio::meter_samples(std::slice::from_raw_parts_mut(out, cap as usize));
+    if !rate.is_null() {
+        *rate = r;
+    }
+    n as i32
+}
+
 /// Controlling an app through its media session needs no permission: granted while it runs.
 pub unsafe fn onkey_automation(bundle: *const c_char) -> i32 {
     if procs::running(&from_c(bundle)) { 3 } else { 4 }

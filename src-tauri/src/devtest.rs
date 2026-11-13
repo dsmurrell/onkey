@@ -54,7 +54,7 @@ pub use devkeep::{keep_audio, keep_mic, keep_music};
 #[path = "../dev/devhooks.rs"]
 mod devhooks;
 #[cfg(keepaudio)]
-pub use devhooks::dev_hook;
+pub use devhooks::{dev_hook, own_voice};
 
 #[cfg(not(keepaudio))]
 mod nokeep {
@@ -63,6 +63,8 @@ mod nokeep {
     pub fn keep_audio(_track: &crate::source::Track, _song_offset: f64, _mix16: &[f32], _vocal16: &[f32],
                       _lyrics_given: &[(f64, String)], _lyrics_aligned: &[(f64, String)], _music48: Option<(&[i16], u32)>) {}
     pub fn dev_hook(_name: &str, _args: &serde_json::Value) -> serde_json::Value { serde_json::Value::Null }
+    /// Whether the voice at the mic is one OnKey plays itself (the private checkout's development singer): never here.
+    pub fn own_voice() -> bool { false }
 }
 #[cfg(not(keepaudio))]
 pub use nokeep::*;

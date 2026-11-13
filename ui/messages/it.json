@@ -1173,6 +1173,7 @@
     "sing": "Canta",
     "library": "Libreria",
     "history": "Cronologia",
+    "tuner": "Accordatore",
     "settings": "Impostazioni",
     "paused": "Ascolto in pausa",
     "resume": "Riprendi",
@@ -1181,7 +1182,8 @@
     "whatsNew": "Novità in OnKey",
     "whatsNewFresh": "Novità in OnKey (da leggere)",
     "testBuild": "Versione di prova",
-    "testBuildTitle": "Una versione di prova di OnKey per Windows o Linux: installa la prossima sopra questa quando esce"
+    "testBuildTitle": "Una versione di prova di OnKey per Windows o Linux: installa la prossima sopra questa quando esce",
+    "testBuildOfRelease": "Una versione di prova di OnKey, fatta per farti provare qualcosa di nuovo. Quando esce la prossima versione, si aggiorna da sola."
   },
   "licences": {
     "back": "← Impostazioni",
@@ -1530,6 +1532,65 @@
     "app": {
       "music_app": "la tua app musicale",
       "browser": "il tuo browser"
+    }
+  },
+  "tuner": {
+    "title": "Accordatore",
+    "intro": "Canta una nota qualsiasi e vedi che nota è. Non serve un brano.",
+    "waiting": "Canta o canticchia una nota",
+    "hz": "{hz} Hz",
+    "flat": "Calante",
+    "sharp": "Crescente",
+    "cents": {
+      "on": "Sulla nota",
+      "sharp": "{cents} cent sopra",
+      "flat": "{cents} cent sotto"
+    },
+    "clickLane": "Clicca una nota per sentirla e puntare a quella (o per far partire lo schema da lì)",
+    "giveNote": "Dammi una nota",
+    "playAgain": "Risuonala",
+    "clear": "Azzera",
+    "another": "Un’altra nota",
+    "close": {
+      "title": "Quanta distanza dalla nota conta ancora come sulla nota",
+      "relaxed": "Entro 25 cent",
+      "strict": "Entro 10 cent"
+    },
+    "target": {
+      "none": "Clicca una nota nell’immagine per sentirla e puntare a quella, o scegli qualcosa da esercitare. Uno schema parte dalla nota su cui sei; clicca un’altra nota per farlo partire da lì.",
+      "aim": "Punta a {note}"
+    },
+    "hold": {
+      "label": "Tienila per {seconds, plural, one {{seconds} secondo} other {{seconds} secondi}}",
+      "on": "Tenuta, proprio sulla nota.",
+      "sharp": "Tenuta. In media {cents} cent sopra.",
+      "flat": "Tenuta. In media {cents} cent sotto.",
+      "setting": "Tieni per {seconds} s",
+      "title": "Quanto restare su una nota perché conti come tenuta"
+    },
+    "headphones": "OnKey non ascolta mentre suona una nota. Con le casse, aspetta che finisca prima di cantare.",
+    "tip": "Ascolta la nota, sentila nella testa, poi cantala. Prova a occhi chiusi, e decidi a orecchio se sei alto o basso prima di guardare.",
+    "private": "OnKey ascolta il microfono solo mentre questa pagina è aperta, e non registra niente. Nel frattempo non segue la tua musica.",
+    "noMic": "OnKey non sente nessun microfono. Controlla che ce ne sia uno collegato e che OnKey abbia il permesso di usarlo.",
+    "openSettings": "Apri Impostazioni",
+    "broken": "L’accordatore non è partito: il modello dell’intonazione non si è caricato.",
+    "onlyInApp": "L’accordatore funziona nell’app OnKey.",
+    "listen": "Ascolta…",
+    "practise": "Esercitati:",
+    "pattern": {
+      "five": "Cinque note",
+      "arpeggio": "Arpeggio",
+      "octave": "Salto d’ottava"
+    },
+    "seq": {
+      "sing": "Canta la nota {n} di {count}",
+      "done": "Ne hai prese {hit} su {count}.",
+      "skip": "Salta questa nota",
+      "again": "Di nuovo",
+      "lower": "Più giù",
+      "higher": "Più su",
+      "lowerTitle": "Lo stesso schema, partendo una nota più in basso",
+      "higherTitle": "Lo stesso schema, partendo una nota più in alto"
     }
   }
 }

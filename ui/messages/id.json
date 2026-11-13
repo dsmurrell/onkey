@@ -1173,6 +1173,7 @@
     "sing": "Nyanyi",
     "library": "Pustaka",
     "history": "Riwayat",
+    "tuner": "Tuner",
     "settings": "Pengaturan",
     "paused": "Mendengarkan dijeda",
     "resume": "Lanjutkan",
@@ -1181,7 +1182,8 @@
     "whatsNew": "Yang baru di OnKey",
     "whatsNewFresh": "Yang baru di OnKey (baru)",
     "testBuild": "Versi uji",
-    "testBuildTitle": "Versi uji OnKey untuk Windows atau Linux: pasang versi berikutnya di atasnya saat sudah keluar"
+    "testBuildTitle": "Versi uji OnKey untuk Windows atau Linux: pasang versi berikutnya di atasnya saat sudah keluar",
+    "testBuildOfRelease": "Versi uji OnKey, dibuat agar Anda bisa mencoba sesuatu yang baru. Versi ini memperbarui dirinya ke rilis berikutnya saat rilis itu keluar."
   },
   "licences": {
     "back": "← Pengaturan",
@@ -1530,6 +1532,65 @@
     "app": {
       "music_app": "aplikasi musik Anda",
       "browser": "browser Anda"
+    }
+  },
+  "tuner": {
+    "title": "Tuner",
+    "intro": "Nyanyikan not apa saja dan lihat not apa itu. Tidak perlu lagu.",
+    "waiting": "Nyanyikan atau senandungkan sebuah not",
+    "hz": "{hz} Hz",
+    "flat": "Terlalu rendah",
+    "sharp": "Terlalu tinggi",
+    "cents": {
+      "on": "Tepat di not",
+      "sharp": "{cents} sen terlalu tinggi",
+      "flat": "{cents} sen terlalu rendah"
+    },
+    "clickLane": "Klik sebuah not untuk mendengarnya dan mengincarnya (atau untuk memulai pola dari sana)",
+    "giveNote": "Beri saya satu not",
+    "playAgain": "Putar lagi",
+    "clear": "Hapus",
+    "another": "Not lain",
+    "close": {
+      "title": "Seberapa dekat dengan not agar dihitung tepat",
+      "relaxed": "Dalam 25 sen",
+      "strict": "Dalam 10 sen"
+    },
+    "target": {
+      "none": "Klik sebuah not di gambar untuk mendengarnya dan mengincarnya, atau pilih sesuatu untuk dilatih. Pola dimulai dari not yang sedang Anda nyanyikan; klik not lain untuk memulainya dari sana.",
+      "aim": "Incar {note}"
+    },
+    "hold": {
+      "label": "Tahan selama {seconds, plural, other {{seconds} detik}}",
+      "on": "Berhasil ditahan, tepat di not.",
+      "sharp": "Berhasil ditahan. Rata-rata {cents} sen terlalu tinggi.",
+      "flat": "Berhasil ditahan. Rata-rata {cents} sen terlalu rendah.",
+      "setting": "Tahan {seconds} dtk",
+      "title": "Berapa lama bertahan di sebuah not agar dihitung berhasil ditahan"
+    },
+    "headphones": "OnKey tidak mendengarkan saat sebuah not dibunyikan. Jika memakai speaker, tunggu sampai selesai sebelum bernyanyi.",
+    "tip": "Dengarkan notnya, bayangkan bunyinya di kepala, lalu nyanyikan. Coba dengan mata tertutup, dan tentukan dengan telinga apakah Anda terlalu tinggi atau terlalu rendah sebelum melihat.",
+    "private": "OnKey mendengarkan mikrofon Anda hanya selama halaman ini terbuka, dan tidak merekam apa pun. Selama itu OnKey tidak mengikuti musik Anda.",
+    "noMic": "OnKey tidak mendengar mikrofon apa pun. Pastikan ada mikrofon yang terhubung dan OnKey diizinkan memakainya.",
+    "openSettings": "Buka Pengaturan",
+    "broken": "Tuner tidak dapat dimulai: model nada gagal dimuat.",
+    "onlyInApp": "Tuner berfungsi di aplikasi OnKey.",
+    "listen": "Dengarkan…",
+    "practise": "Latihan:",
+    "pattern": {
+      "five": "Lima not",
+      "arpeggio": "Arpeggio",
+      "octave": "Lompatan oktaf"
+    },
+    "seq": {
+      "sing": "Nyanyikan not {n} dari {count}",
+      "done": "{hit} dari {count} not tercapai.",
+      "skip": "Lewati not ini",
+      "again": "Lagi",
+      "lower": "Lebih rendah",
+      "higher": "Lebih tinggi",
+      "lowerTitle": "Pola yang sama, dimulai satu not lebih rendah",
+      "higherTitle": "Pola yang sama, dimulai satu not lebih tinggi"
     }
   }
 }

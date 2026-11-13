@@ -459,11 +459,38 @@ impl MusicLevel {
     pub fn quiet(&self) -> bool {
         self.heard_s > 2.0 && self.level_db() < Self::QUIET_DB
     }
+
+    /// Whether the music is too quiet for the voice at the mic to be trusted (the take isn't scored and the window
+    /// says so): only when the mic could be hearing the song at all. `speakers`: the output is wired or the
+    /// computer's speakers (Take::speakers; over Bluetooth headphones nothing of the song reaches the mic, so a
+    /// music app turned right down is no reason to stop). `own_voice`: the voice at the mic is one OnKey plays
+    /// itself (the development singer, played with the music app turned down on purpose).
+    pub fn untrusted(&self, speakers: bool, own_voice: bool) -> bool {
+        self.quiet() && speakers && !own_voice
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn quiet_music_stops_scoring_only_where_the_mic_could_hear_the_song() {
+        let mut m = MusicLevel::default();
+        // three seconds of music at about -70 dBFS (the music app turned right down)
+        for _ in 0..300 {
+            m.measure(&[0.0003, -0.0003, 0.0].repeat(480), 48_000.0);
+        }
+        assert!(m.quiet());
+        assert!(m.untrusted(true, false), "speakers: the mic hears the song, and it can't be taken out");
+        assert!(!m.untrusted(false, false), "Bluetooth headphones: nothing of the song at the mic");
+        assert!(!m.untrusted(true, true), "the development singer: turned down on purpose");
+        let mut loud = MusicLevel::default();
+        for _ in 0..300 {
+            loud.measure(&[0.1, -0.1, 0.0].repeat(480), 48_000.0);
+        }
+        assert!(!loud.quiet() && !loud.untrusted(true, false));
+    }
 
     /// Feed the watchdog `secs` of blocks; the times (s) it said to restart.
     fn run(w: &mut Watchdog, secs: f64, block: &[f32], playing: bool) -> Vec<f64> {
