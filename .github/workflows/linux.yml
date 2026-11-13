@@ -1,0 +1,315 @@
+# The Linux build (develop, linux-port and lp-* branches): runs the engine's unit tests and clippy on Linux, builds the
+# AppImage and opens it headless to check it starts, stays up and makes a report. The AppImage is kept as an artifact
+# for 3 days on the port branches and runs by hand only: a push to develop builds it but does not keep it (the free
+# plan's artifact storage is 500 MB a month; each AppImage is 430-860 MB).
+# Built on Ubuntu 22.04, so the AppImage runs on distributions with glibc 2.35 or newer (Ubuntu 22.04+, Debian 12+,
+# Fedora 36+, Mint 21+…). A newer push cancels the older run.
+#   models   fetches/exports the large models (scripts/fetch-models.sh, each checked against the SHA-256 in
+#            src-tauri/src/models.rs) into a cache; a no-op when the cache has them (as windows.yml's)
+#   linux    restores them, builds the UI, runs `cargo test --lib` (with a PulseAudio null output, so OnKey's own
+#            playback is tested too), clippy (warnings in platform/linux fail it), then `tauri build` (release, no
+#            devtest, AppImage), and a launch check under a virtual X display with a session D-Bus and PulseAudio
+#
+# Run by hand it can also make the release's updater files and rehearse the update (docs/RELEASING.md "Windows and
+# Linux"): `updater: release` builds the PUBLIC repo at `public_tag` (the exact source people get), official
+# (ONKEY_OFFICIAL=1), with the updater key from this repo's secrets (TAURI_SIGNING_PRIVATE_KEY and its password),
+# checks the AppImage's signature against the key every installed OnKey trusts, builds the next version too and
+# rehearses updating to it (scripts/update-rehearsal-ci.sh), then uploads the AppImage and its .sig to the draft
+# release (ONKEY_PUBLIC_RELEASE_TOKEN). `updater: throwaway` does the same with a key made in the job, which the app
+# is built to trust, not official and uploaded nowhere: it proves the mechanics without the real key.
+#
+# This one file runs in two repos. In the public one (dsmurrell/onkey) it is the release build: built in the open
+# from the tagged commit, with a build provenance attestation made for the AppImage
+# (`gh attestation verify <AppImage> --repo dsmurrell/onkey`); a push to one of its ci-linux* or ci-all* test branches
+# rehearses that with a throwaway updater key. In the development repo it is the day-to-day build. It never runs on a
+# pull request: only on a push to this repo's own branches, or by hand.
+name: linux
+
+on:
+  push:
+    branches: [develop, linux-port, "lp-*", "ci-linux*", "ci-all*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version the app says it is (a preview: 0.2.0-preview.2). Empty: tauri.conf.json's"
+        required: false
+        default: ""
+      public_tag:
+        description: "Release: build the public repo dsmurrell/onkey at this tag (v0.3.0) instead of this branch"
+        required: false
+        default: ""
+      public_commit:
+        description: "Release: the commit that tag must point at (scripts/release.sh --stage prints both)"
+        required: false
+        default: ""
+      updater:
+        description: "Updater files: none | throwaway (a key made here; rehearsal; test only) | release (the real key from secrets, official, rehearsal, uploaded to the draft release)"
+        type: choice
+        options: [none, throwaway, release]
+        default: none
+
+env:
+  # a push to a ci-* branch (the public repo's test branches) rehearses the whole release path with nothing real
+  UPDATER_IN: ${{ inputs.updater || (github.event_name == 'push' && startsWith(github.ref_name, 'ci-') && 'throwaway') || 'none' }}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: linux-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  models:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    outputs:
+      key: ${{ steps.key.outputs.key }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ inputs.public_tag != '' && 'dsmurrell/onkey' || github.repository }}
+          ref: ${{ inputs.public_tag }}
+      # the models' cache key: changes when a model, how it's fetched or the packages that export it change
+      - id: key
+        run: echo "key=models-v1-${{ hashFiles('src-tauri/src/models.rs', 'scripts/fetch-models.sh', 'scripts/requirements-models.txt', 'scripts/export_*.py') }}" >> "$GITHUB_OUTPUT"
+      - name: Look for the models in the cache
+        id: cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: ${{ steps.key.outputs.key }}
+          path: |
+            src-tauri/models/UVR_MDXNET_KARA_2.onnx
+            src-tauri/models/crepe-full-b32.onnx
+            src-tauri/models/wav2vec2-base-960h-fp16.onnx
+            src-tauri/models/game
+          enableCrossOsArchive: true
+          lookup-only: true
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Fetch and export the models
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          python -m venv .venv
+          # CPU-only torch wheels (the default ones carry CUDA, gigabytes); same versions as requirements-models.txt
+          .venv/bin/pip install --quiet -r scripts/requirements-models.txt \
+            --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
+          PYTHON=.venv/bin/python scripts/fetch-models.sh
+      - name: Check every model against its SHA-256 in models.rs
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: src-tauri/models
+        run: |
+          awk -F'"' '/file: "/{f=$2} /sha256: "/{print $(NF-1) "  " f}' ../src/models.rs | sha256sum -c -
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: ${{ steps.key.outputs.key }}
+          path: |
+            src-tauri/models/UVR_MDXNET_KARA_2.onnx
+            src-tauri/models/crepe-full-b32.onnx
+            src-tauri/models/wav2vec2-base-960h-fp16.onnx
+            src-tauri/models/game
+          enableCrossOsArchive: true
+
+  linux:
+    needs: models
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    permissions:
+      contents: read
+      id-token: write        # the build provenance attestation
+      attestations: write
+    steps:
+      # a release builds the public repo at its tag: the source people get, not this branch (which only holds this
+      # workflow); otherwise this commit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ inputs.public_tag != '' && 'dsmurrell/onkey' || github.repository }}
+          ref: ${{ inputs.public_tag }}
+      - name: The release source is the tagged public commit
+        if: inputs.public_tag != ''
+        env:
+          TAG: ${{ inputs.public_tag }}
+          WANT: ${{ inputs.public_commit }}
+          UPDATER: ${{ env.UPDATER_IN }}
+          VERSION: ${{ inputs.version }}
+        run: bash scripts/ci-release-source.sh
+      - name: Models (from the models job's cache)
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: ${{ needs.models.outputs.key }}
+          path: |
+            src-tauri/models/UVR_MDXNET_KARA_2.onnx
+            src-tauri/models/crepe-full-b32.onnx
+            src-tauri/models/wav2vec2-base-960h-fp16.onnx
+            src-tauri/models/game
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
+      - name: Check every model against its SHA-256 in models.rs
+        working-directory: src-tauri/models
+        run: |
+          awk -F'"' '/file: "/{f=$2} /sha256: "/{print $(NF-1) "  " f}' ../src/models.rs | sha256sum -c -
+      # GStreamer's base and good plugins: WebKitGTK plays audio through GStreamer, and the AppImage bundles them
+      # (bundleMediaFramework) so a take plays back on any distro. Without them: "autoaudiosink not found" and the
+      # take page freezes (tauri#4092; reported on Ubuntu 26.04, 0.3.0-preview.5).
+      - name: System packages (Tauri's WebKitGTK and GTK; GStreamer plugins; xvfb, D-Bus and PulseAudio for the tests and launch check)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev libssl-dev libxdo-dev \
+            build-essential pkg-config file patchelf curl wget \
+            xvfb xauth dbus dbus-x11 pulseaudio pulseaudio-utils libfuse2 unzip fonts-noto-core fonts-noto-cjk squashfs-tools \
+            gstreamer1.0-plugins-base gstreamer1.0-plugins-good
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            ui/package-lock.json
+      # pinned: Rust 1.100 (9 Nov 2026) lays out target/ differently, and ort-sys 2.0.0-rc.10's build script, which
+      # finds target/release by walking up from its own folder, fails on it ("cannot find the path specified").
+      # Raise this together with ort.
+      - name: Rust (1.99.1)
+        run: rustup toolchain install 1.99.1 --profile minimal --component clippy --no-self-update && rustup default 1.99.1 && rustc --version
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          workspaces: src-tauri
+          # keep the compiled dependencies even when a test fails, so the next run doesn't start cold
+          cache-on-failure: true
+      - name: npm ci
+        run: npm ci && npm ci --prefix ui
+      - name: Build the UI (the app embeds it; tauri build below reuses it)
+        run: npm --prefix ui run build
+      # (a failing test doesn't stop the build and launch check below, so one run says how all of it went; the job
+      # still fails at the end)
+      - name: Unit tests (cargo test --lib), with a PulseAudio null output
+        id: tests
+        continue-on-error: true
+        working-directory: src-tauri
+        # release profile with the feature `tauri build` adds, so the build below reuses everything compiled here
+        run: |
+          pulseaudio --start --exit-idle-time=-1 --log-target=stderr 2>/dev/null || true
+          pactl info | head -20 || echo "no PulseAudio"
+          dbus-run-session -- cargo test --release --lib --features tauri/custom-protocol
+      # most desktops run PipeWire, answering through pipewire-pulse: the Linux audio tests again there (a null output
+      # made through pipewire-pulse; its timing is real, so the playback tests run rather than skip)
+      - name: The Linux audio tests on PipeWire (pipewire-pulse)
+        id: pipewire
+        continue-on-error: true
+        working-directory: src-tauri
+        run: |
+          pulseaudio --kill 2>/dev/null || true
+          sudo apt-get install -y --no-install-recommends pipewire pipewire-pulse wireplumber pipewire-audio-client-libraries >/dev/null
+          export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/$(id -u)}
+          dbus-run-session -- bash -c '
+            pipewire & sleep 1; wireplumber & sleep 1; pipewire-pulse & sleep 2
+            pactl load-module module-null-sink sink_name=onkey_ci || true
+            pactl set-default-sink onkey_ci || true
+            pactl info | head -20
+            cargo test --release --lib --features tauri/custom-protocol platform::linux -- --nocapture 2>&1 | grep -vE "^\s*$" | tail -60
+            exit ${PIPESTATUS[0]}'
+          pkill -f pipewire-pulse; pkill wireplumber; pkill pipewire; pulseaudio --start --exit-idle-time=-1 2>/dev/null || true
+      - name: Clippy (any warning in platform/linux fails; the shared code's are listed)
+        id: clippy
+        continue-on-error: true
+        working-directory: src-tauri
+        run: |
+          cargo clippy --release --lib --tests --features tauri/custom-protocol --message-format short 2>&1 | tee ../clippy.txt
+          if grep -E '^src/platform/linux/.*(warning|error)' ../clippy.txt; then echo "clippy: warnings in platform/linux"; exit 1; fi
+      # the updater key (docs/RELEASING.md "Windows and Linux"): a release signs with the real one from this repo's
+      # secrets, as an official build; a throwaway run makes one here and builds the app to trust it
+      - name: The updater key
+        if: env.UPDATER_IN != 'none'
+        env:
+          UPDATER: ${{ env.UPDATER_IN }}
+          HAVE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY != '' && secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD != '' }}
+          PUBLIC_TAG: ${{ inputs.public_tag }}
+        run: bash scripts/ci-updater-key.sh
+      - name: Build the AppImage (release, no devtest)
+        shell: bash
+        env:
+          VERSION: ${{ inputs.version }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ env.UPDATER_IN == 'release' && secrets.TAURI_SIGNING_PRIVATE_KEY || env.THROWAWAY_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ env.UPDATER_IN == 'release' && secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD || '' }}
+          # the key challenge links are signed with (src-tauri/src/challenge.rs); without the secret the build's links
+          # are unsigned and the site shows their scores as not checked
+          ONKEY_CHALLENGE_KEY: ${{ secrets.ONKEY_CHALLENGE_KEY }}
+          BUNDLE_GLOB: src-tauri/target/release/bundle/appimage/*.AppImage
+          BUNDLES: appimage
+        run: bash scripts/ci-build.sh
+      - name: List what was built
+        run: ls -la src-tauri/target/release/onkey dist/ dist/next/ 2>/dev/null || ls -la dist/
+      # anyone can check the AppImage came from this workflow at this commit:
+      #   gh attestation verify <AppImage> --repo dsmurrell/onkey
+      - name: Build provenance attestation for the AppImage
+        if: github.repository == 'dsmurrell/onkey'
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: dist/*.AppImage
+      # the AppImage is only there to download and try; kept on the port branches and runs by hand, not on every push
+      # to develop (artifact storage)
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: github.event_name == 'workflow_dispatch' || github.ref_name != 'develop'
+        with:
+          # the AppImage (and, with updater files, its .sig and the rehearsal's next version): the bare binary can't
+          # run without the models the AppImage brings
+          name: onkey-linux-${{ github.sha }}
+          path: dist
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: error
+      # the AppImage's signature is the one every installed OnKey checks (src-tauri/tauri.conf.json's public key):
+      # a release must pass; a throwaway build must fail (its key is not that one), so it can never be published
+      - name: The updater signature is the key OnKey trusts
+        if: env.UPDATER_MODE != ''
+        run: bash scripts/ci-verify-sig.sh dist/*.AppImage
+      - name: Update rehearsal (the AppImage updates itself to the next version, which opens; refuses a wrongly signed one)
+        if: env.UPDATER_MODE != ''
+        run: |
+          app=$(ls dist/*.AppImage | head -1); next=$(ls dist/next/*.AppImage | head -1)
+          dbus-run-session -- bash scripts/update-rehearsal-ci.sh "$app" "$next" rehearsal "$UPDATER_OFFICIAL"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always() && env.UPDATER_MODE != ''
+        # a report for people; when the account's artifact storage is used up GitHub refuses every upload, which
+        # must not fail the build
+        continue-on-error: true
+        with:
+          name: update-rehearsal-linux-${{ github.sha }}
+          path: rehearsal
+          retention-days: 3
+          if-no-files-found: ignore
+      - name: Launch check (open the AppImage as a tester would, the window loads, it stays up, a report is made)
+        run: |
+          mkdir -p launch-check
+          app=$(ls dist/*.AppImage | head -1)
+          chmod +x "$app"
+          dbus-run-session -- bash scripts/linux-launch-check.sh "$PWD/$app" "$PWD/launch-check"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        # a report for people; when the account's artifact storage is used up GitHub refuses every upload, which
+        # must not fail the build
+        continue-on-error: true
+        with:
+          name: launch-check-linux-${{ github.sha }}
+          path: launch-check
+          retention-days: 3
+          if-no-files-found: ignore
+      # a release: the AppImage and its signature go to the draft release on the public repo (made by
+      # scripts/release.sh --stage; scripts/release-publish.sh checks them and publishes), with a note of this
+      # rehearsal that release-publish.sh reads. Only after the tests below passed too
+      - name: Upload to the draft release
+        if: env.UPDATER_MODE == 'release' && steps.tests.outcome == 'success' && steps.clippy.outcome == 'success' && steps.pipewire.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ secrets.ONKEY_PUBLIC_RELEASE_TOKEN }}
+          TAG: ${{ inputs.public_tag }}
+          TARGET: linux-x86_64
+        run: bash scripts/ci-upload-release.sh dist/*.AppImage
+      - name: The tests (PulseAudio and PipeWire) and clippy passed
+        if: always()
+        run: |
+          [ "${{ steps.tests.outcome }}" = success ] || { echo "::error::unit tests failed (see their step)"; exit 1; }
+          [ "${{ steps.clippy.outcome }}" = success ] || { echo "::error::clippy found warnings in platform/linux (see its step)"; exit 1; }
+          [ "${{ steps.pipewire.outcome }}" = success ] || { echo "::error::the Linux audio tests failed on PipeWire (see that step)"; exit 1; }

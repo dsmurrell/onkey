@@ -1173,6 +1173,7 @@
     "sing": "Śpiewaj",
     "library": "Biblioteka",
     "history": "Historia",
+    "tuner": "Stroik",
     "settings": "Ustawienia",
     "paused": "Słuchanie wstrzymane",
     "resume": "Wznów",
@@ -1181,7 +1182,8 @@
     "whatsNew": "Co nowego w OnKey",
     "whatsNewFresh": "Co nowego w OnKey (nowe)",
     "testBuild": "Wersja testowa",
-    "testBuildTitle": "Wersja testowa OnKey dla Windows lub Linuksa: następną zainstaluj na tej, gdy się pojawi"
+    "testBuildTitle": "Wersja testowa OnKey dla Windows lub Linuksa: następną zainstaluj na tej, gdy się pojawi",
+    "testBuildOfRelease": "Wersja testowa OnKey, przygotowana do wypróbowania czegoś nowego. Sama zaktualizuje się do kolejnego wydania, gdy się ukaże."
   },
   "licences": {
     "back": "← Ustawienia",
@@ -1530,6 +1532,65 @@
     "app": {
       "music_app": "Twoja aplikacja muzyczna",
       "browser": "Twoja przeglądarka"
+    }
+  },
+  "tuner": {
+    "title": "Stroik",
+    "intro": "Zaśpiewaj dowolny dźwięk i zobacz, jaka to nuta. Piosenka nie jest potrzebna.",
+    "waiting": "Zaśpiewaj lub zanuć dźwięk",
+    "hz": "{hz} Hz",
+    "flat": "Za nisko",
+    "sharp": "Za wysoko",
+    "cents": {
+      "on": "Czysto w punkt",
+      "sharp": "o {cents}¢ za wysoko",
+      "flat": "o {cents}¢ za nisko"
+    },
+    "clickLane": "Kliknij nutę, żeby ją usłyszeć i w nią celować (albo żeby od niej zacząć ćwiczenie)",
+    "giveNote": "Daj mi dźwięk",
+    "playAgain": "Zagraj jeszcze raz",
+    "clear": "Wyczyść",
+    "another": "Inna nuta",
+    "close": {
+      "title": "Jak blisko nuty trzeba być, żeby to się liczyło",
+      "relaxed": "Do 25 centów",
+      "strict": "Do 10 centów"
+    },
+    "target": {
+      "none": "Kliknij nutę na obrazku, żeby ją usłyszeć i w nią celować, albo wybierz coś do ćwiczenia. Ćwiczenie zaczyna się od nuty, na której jesteś; kliknij inną nutę, żeby zacząć od niej.",
+      "aim": "Celuj w {note}"
+    },
+    "hold": {
+      "label": "Utrzymaj ją przez {seconds, plural, one {{seconds} sekundę} few {{seconds} sekundy} many {{seconds} sekund} other {{seconds} sekundy}}",
+      "on": "Utrzymana, czysto w punkt.",
+      "sharp": "Utrzymana. Średnio o {cents}¢ za wysoko.",
+      "flat": "Utrzymana. Średnio o {cents}¢ za nisko.",
+      "setting": "Trzymaj {seconds} s",
+      "title": "Jak długo trzeba zostać na nucie, żeby liczyła się jako utrzymana"
+    },
+    "headphones": "OnKey nie słucha, gdy gra nuta. Przy głośnikach poczekaj, aż się skończy, zanim zaśpiewasz.",
+    "tip": "Posłuchaj nuty, usłysz ją w głowie, a potem zaśpiewaj. Spróbuj z zamkniętymi oczami i zanim spojrzysz, oceń na słuch, czy jesteś za wysoko, czy za nisko.",
+    "private": "OnKey słucha Twojego mikrofonu tylko wtedy, gdy ta strona jest otwarta, i niczego nie nagrywa. W tym czasie nie śledzi Twojej muzyki.",
+    "noMic": "OnKey nie słyszy żadnego mikrofonu. Sprawdź, czy mikrofon jest podłączony i czy OnKey ma pozwolenie, by go używać.",
+    "openSettings": "Otwórz Ustawienia",
+    "broken": "Nie udało się uruchomić stroika: model wysokości dźwięku się nie wczytał.",
+    "onlyInApp": "Stroik działa w aplikacji OnKey.",
+    "listen": "Posłuchaj…",
+    "practise": "Ćwicz:",
+    "pattern": {
+      "five": "Pięć nut",
+      "arpeggio": "Arpeggio",
+      "octave": "Skok o oktawę"
+    },
+    "seq": {
+      "sing": "Zaśpiewaj nutę {n} z {count}",
+      "done": "Trafione nuty: {hit} z {count}.",
+      "skip": "Pomiń tę nutę",
+      "again": "Jeszcze raz",
+      "lower": "Niżej",
+      "higher": "Wyżej",
+      "lowerTitle": "To samo ćwiczenie, zaczęte o jedną nutę niżej",
+      "higherTitle": "To samo ćwiczenie, zaczęte o jedną nutę wyżej"
     }
   }
 }

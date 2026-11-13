@@ -65,6 +65,14 @@ pub const OFFICIAL: bool = match option_env!("ONKEY_OFFICIAL") {
     None => false,
 };
 
+/// A test build for a tester to try something before it's released (ONKEY_TEST_BUILD=1 given to the build): the
+/// window says "Test build" beside the name. It is otherwise the release it was built as: built official, it updates
+/// itself to the next release like any other copy.
+pub const TEST_BUILD: bool = match option_env!("ONKEY_TEST_BUILD") {
+    Some(v) => v.len() == 1 && v.as_bytes()[0] == b'1',
+    None => false,
+};
+
 /// This build checks for updates: release builds only (an official one installs them; others only say), on macOS,
 /// Windows and Linux alike: a release carries all three in latest.json (`darwin-aarch64`, `windows-x86_64`,
 /// `linux-x86_64`; docs/RELEASING.md), so a check on any of them finds its build. Not a preview, though (the
@@ -162,6 +170,7 @@ pub fn status(app: &AppHandle) -> Value {
     v["supported"] = json!(supported(app));
     v["preview"] = json!(preview(&app.package_info().version));
     v["official"] = json!(OFFICIAL);
+    v["test_build"] = json!(TEST_BUILD);
     v["auto"] = json!(auto());
     v["waiting"] = json!(RESTART_WANTED.load(Ordering::SeqCst));
     v["checked"] = json!(LAST_CHECK.lock().unwrap().and_then(|t| t.duration_since(SystemTime::UNIX_EPOCH).ok()).map(|d| d.as_secs()));

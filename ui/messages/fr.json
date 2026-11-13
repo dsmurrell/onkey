@@ -1173,6 +1173,7 @@
     "sing": "Chanter",
     "library": "Bibliothèque",
     "history": "Historique",
+    "tuner": "Accordeur",
     "settings": "Réglages",
     "paused": "Écoute en pause",
     "resume": "Reprendre",
@@ -1181,7 +1182,8 @@
     "whatsNew": "Nouveautés d’OnKey",
     "whatsNewFresh": "Nouveautés d’OnKey (nouveau)",
     "testBuild": "Version de test",
-    "testBuildTitle": "Une version de test d’OnKey pour Windows ou Linux : installez la suivante par-dessus quand elle sort"
+    "testBuildTitle": "Une version de test d’OnKey pour Windows ou Linux : installez la suivante par-dessus quand elle sort",
+    "testBuildOfRelease": "Une version de test d’OnKey, faite pour vous faire essayer quelque chose de nouveau. Elle passe toute seule à la version suivante quand celle-ci sort."
   },
   "licences": {
     "back": "← Réglages",
@@ -1530,6 +1532,65 @@
     "app": {
       "music_app": "votre appli musicale",
       "browser": "votre navigateur"
+    }
+  },
+  "tuner": {
+    "title": "Accordeur",
+    "intro": "Chantez n’importe quelle note et voyez de quelle note il s’agit. Pas besoin de chanson.",
+    "waiting": "Chantez ou fredonnez une note",
+    "hz": "{hz} Hz",
+    "flat": "Trop bas",
+    "sharp": "Trop haut",
+    "cents": {
+      "on": "Sur la note",
+      "sharp": "{cents} cents trop haut",
+      "flat": "{cents} cents trop bas"
+    },
+    "clickLane": "Cliquez sur une note pour l’entendre et la viser (ou pour y démarrer l’exercice)",
+    "giveNote": "Donnez-moi une note",
+    "playAgain": "La rejouer",
+    "clear": "Effacer",
+    "another": "Une autre note",
+    "close": {
+      "title": "Écart toléré pour être sur la note",
+      "relaxed": "À 25 cents près",
+      "strict": "À 10 cents près"
+    },
+    "target": {
+      "none": "Cliquez sur une note dans l’image pour l’entendre et la viser, ou choisissez un exercice. Un exercice démarre de la note où vous êtes ; cliquez sur une autre note pour le démarrer là.",
+      "aim": "Visez {note}"
+    },
+    "hold": {
+      "label": "Tenez-la {seconds, plural, one {{seconds} seconde} other {{seconds} secondes}}",
+      "on": "Tenue, pile sur la note.",
+      "sharp": "Tenue. En moyenne {cents} cents trop haut.",
+      "flat": "Tenue. En moyenne {cents} cents trop bas.",
+      "setting": "Tenir {seconds} s",
+      "title": "Combien de temps rester sur une note pour qu’elle compte comme tenue"
+    },
+    "headphones": "OnKey n’écoute pas pendant qu’une note joue. Avec des enceintes, attendez qu’elle se termine avant de chanter.",
+    "tip": "Écoutez la note, entendez-la dans votre tête, puis chantez-la. Essayez les yeux fermés, et décidez à l’oreille si vous êtes trop haut ou trop bas avant de regarder.",
+    "private": "OnKey n’écoute votre micro que tant que cette page est ouverte, et n’enregistre rien. Il ne suit pas votre musique pendant ce temps.",
+    "noMic": "OnKey n’entend aucun micro. Vérifiez qu’il y en a un de branché et qu’OnKey a le droit de l’utiliser.",
+    "openSettings": "Ouvrir les Réglages",
+    "broken": "L’accordeur n’a pas pu démarrer : le modèle de hauteur ne s’est pas chargé.",
+    "onlyInApp": "L’accordeur fonctionne dans l’app OnKey.",
+    "listen": "Écouter…",
+    "practise": "S’entraîner :",
+    "pattern": {
+      "five": "Cinq notes",
+      "arpeggio": "Arpège",
+      "octave": "Saut d’octave"
+    },
+    "seq": {
+      "sing": "Chantez la note {n} sur {count}",
+      "done": "Vous en avez réussi {hit} sur {count}.",
+      "skip": "Passer cette note",
+      "again": "Recommencer",
+      "lower": "Plus bas",
+      "higher": "Plus haut",
+      "lowerTitle": "Le même exercice, une note plus bas",
+      "higherTitle": "Le même exercice, une note plus haut"
     }
   }
 }

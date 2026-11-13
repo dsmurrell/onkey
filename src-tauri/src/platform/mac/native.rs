@@ -36,6 +36,7 @@ extern "C" {
     pub fn onkey_mic_meter(on: i32) -> i32;
     pub fn onkey_mic_level() -> f32;
     pub fn onkey_mic_blocks() -> i32;
+    pub fn onkey_mic_samples(out: *mut f32, cap: i32, rate: *mut f64) -> i32;
     pub fn onkey_automation(bundle: *const c_char) -> i32;
     pub fn onkey_app_running(bundle: *const c_char) -> i32;
 }

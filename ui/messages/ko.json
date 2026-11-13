@@ -1173,6 +1173,7 @@
     "sing": "노래",
     "library": "보관함",
     "history": "기록",
+    "tuner": "튜너",
     "settings": "설정",
     "paused": "듣기 일시정지됨",
     "resume": "다시 시작",
@@ -1181,7 +1182,8 @@
     "whatsNew": "OnKey의 새로운 기능",
     "whatsNewFresh": "OnKey의 새로운 기능 (새 소식)",
     "testBuild": "테스트 버전",
-    "testBuildTitle": "Windows·Linux용 OnKey 테스트 버전이에요. 다음 버전이 나오면 그 위에 설치하세요"
+    "testBuildTitle": "Windows·Linux용 OnKey 테스트 버전이에요. 다음 버전이 나오면 그 위에 설치하세요",
+    "testBuildOfRelease": "새로운 기능을 써 볼 수 있게 만든 OnKey 테스트 버전이에요. 다음 릴리스가 나오면 그 버전으로 스스로 업데이트돼요."
   },
   "licences": {
     "back": "← 설정",
@@ -1530,6 +1532,65 @@
     "app": {
       "music_app": "음악 앱",
       "browser": "브라우저"
+    }
+  },
+  "tuner": {
+    "title": "튜너",
+    "intro": "아무 음이나 불러 보면 어떤 음인지 보여 줘요. 노래는 필요 없어요.",
+    "waiting": "음을 노래하거나 허밍해 보세요",
+    "hz": "{hz}Hz",
+    "flat": "낮음",
+    "sharp": "높음",
+    "cents": {
+      "on": "음정 정확",
+      "sharp": "{cents}센트 높음",
+      "flat": "{cents}센트 낮음"
+    },
+    "clickLane": "음을 클릭하면 들어 보고 그 음을 목표로 부를 수 있어요 (또는 그 음에서 패턴을 시작해요)",
+    "giveNote": "음 들려주기",
+    "playAgain": "다시 들려주기",
+    "clear": "지우기",
+    "another": "다른 음",
+    "close": {
+      "title": "음에 얼마나 가까워야 맞은 것으로 칠지",
+      "relaxed": "25센트 이내",
+      "strict": "10센트 이내"
+    },
+    "target": {
+      "none": "그림에서 음을 클릭하면 들어 보고 그 음을 목표로 부를 수 있어요. 연습할 것을 골라도 돼요. 패턴은 지금 부르는 음에서 시작하고, 다른 음을 클릭하면 거기서 시작해요.",
+      "aim": "목표: {note}"
+    },
+    "hold": {
+      "label": "{seconds, plural, other {{seconds}초}} 동안 유지해 보세요",
+      "on": "유지했어요. 음에 딱 맞았어요.",
+      "sharp": "유지했어요. 평균 {cents}센트 높았어요.",
+      "flat": "유지했어요. 평균 {cents}센트 낮았어요.",
+      "setting": "{seconds}초 유지",
+      "title": "음을 얼마나 오래 지켜야 유지한 것으로 칠지"
+    },
+    "headphones": "음이 재생되는 동안에는 OnKey가 듣지 않아요. 스피커를 쓴다면 소리가 끝난 뒤에 불러 주세요.",
+    "tip": "음을 듣고, 머릿속으로 떠올린 다음 불러 보세요. 눈을 감고 해 보고, 화면을 보기 전에 높은지 낮은지 귀로 먼저 판단해 보세요.",
+    "private": "OnKey는 이 페이지가 열려 있는 동안에만 마이크를 듣고, 아무것도 녹음하지 않아요. 그동안은 음악을 따라가지 않아요.",
+    "noMic": "OnKey가 마이크 소리를 들을 수 없어요. 마이크가 연결되어 있는지, OnKey가 마이크를 사용하도록 허용되어 있는지 확인해 주세요.",
+    "openSettings": "설정 열기",
+    "broken": "튜너를 시작하지 못했어요. 음정 모델을 불러오지 못했어요.",
+    "onlyInApp": "튜너는 OnKey 앱에서 작동해요.",
+    "listen": "들어 보세요…",
+    "practise": "연습:",
+    "pattern": {
+      "five": "다섯 음",
+      "arpeggio": "아르페지오",
+      "octave": "옥타브 점프"
+    },
+    "seq": {
+      "sing": "{count}개 중 {n}번째 음을 불러 보세요",
+      "done": "{count}개 중 {hit}개를 맞혔어요.",
+      "skip": "이 음 건너뛰기",
+      "again": "다시",
+      "lower": "낮게",
+      "higher": "높게",
+      "lowerTitle": "같은 패턴을 한 음 낮게 시작",
+      "higherTitle": "같은 패턴을 한 음 높게 시작"
     }
   }
 }

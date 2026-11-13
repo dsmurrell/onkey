@@ -14,8 +14,10 @@ export function Logo() {
   const path = usePathname();
   // a preview (CI's Windows and Linux test builds, 0.3.0-preview.4): "Test build" beside the name, so a screenshot
   // or a tester's window can't be taken for a release
+  // (and a test build of a release made for a tester, ONKEY_TEST_BUILD: the same tag, with its own explanation)
   const [preview, setPreview] = useState(false);
-  useEffect(() => { updateStatus().then(u => setPreview(!!u.preview)).catch(() => {}); }, []);
+  const [testBuild, setTestBuild] = useState(false);
+  useEffect(() => { updateStatus().then(u => { setPreview(!!u.preview); setTestBuild(!!u.test_build); }).catch(() => {}); }, []);
   // on Sing already, the logo opens the songs to try over the page (StarterSheet) instead of going nowhere
   const onClick = (e: React.MouseEvent) => {
     if (path === "/") { e.preventDefault(); window.dispatchEvent(new CustomEvent("onkey-songs-to-try")); }
@@ -28,7 +30,7 @@ export function Logo() {
         </svg>
       </span>
       <span className="text-[15px] font-semibold tracking-tight">{t("nav.appName")}</span>
-      {preview && <span title={t("nav.testBuildTitle")} className="rounded-full bg-notice-fill/12 px-2 py-0.5 text-[11px] font-medium text-notice">{t("nav.testBuild")}</span>}
+      {(preview || testBuild) && <span title={preview ? t("nav.testBuildTitle") : t("nav.testBuildOfRelease")} className="rounded-full bg-notice-fill/12 px-2 py-0.5 text-[11px] font-medium text-notice">{t("nav.testBuild")}</span>}
     </Link>
   );
 }
@@ -44,10 +46,10 @@ export function Nav() {
       </Link>
     );
   };
-  // tighter on a narrow window, so all four always fit beside the logo
+  // tighter on a narrow window, so all five always fit beside the logo
   return (
     <>
-      <nav className="flex items-center gap-0.5 lg:gap-1">{item("/", t("nav.sing"))}{item("/library", t("nav.library"))}{item("/history", t("nav.history"))}{item("/settings", t("nav.settings"))}</nav>
+      <nav className="flex items-center gap-0.5 lg:gap-1">{item("/", t("nav.sing"))}{item("/library", t("nav.library"))}{item("/history", t("nav.history"))}{item("/tuner", t("nav.tuner"))}{item("/settings", t("nav.settings"))}</nav>
       <PausedPill />
     </>
   );

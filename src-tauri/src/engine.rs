@@ -669,7 +669,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             // the demo song (demo.rs), while it plays: OnKey's own player says where it is, in every mode
             let demo = crate::demo::on();
             // listening paused (and no demo song, which you start yourself): nothing is followed, asked or listened to
-            if crate::settings::listening_paused() && !demo {
+            if (crate::settings::listening_paused() || crate::tuner::on()) && !demo {
                 *state.lock().unwrap() = None;
                 std::thread::sleep(Duration::from_millis(IDLE_POLL_MS));
                 continue;
@@ -735,7 +735,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
     let mut rested = false;
     let mut quiet_since: Option<Instant> = None;
     // "Pause listening" as it was last time round (see `Pause`); paused at launch: as you left it
-    let mut was_paused = crate::settings::listening_paused() && !crate::demo::on();
+    let mut was_paused = (crate::settings::listening_paused() || crate::tuner::on()) && !crate::demo::on();
     if was_paused {
         log("listening paused by you (as it was left)");
     }
@@ -869,7 +869,8 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
             let (mic, audio) = crate::permissions::granted_now();
             // the music captured too quiet to hear well while the app plays (its own volume turned right down): say
             // so, with Spotify's volume when OnKey may read it
-            let quiet_music = (capture.is_some() && music_level.quiet()
+            // (only where the mic could be hearing the song: MusicLevel::untrusted)
+            let quiet_music = (capture.is_some() && music_level.untrusted(capture::output_latency_ms() < 100, crate::devtest::own_voice())
                 && (st.as_ref().is_some_and(|(s, _)| s.playing) || capture::app_sounding(capture_from)))
                 .then(|| json!({"app": crate::listen::app_name_known(capture_from), "level_db": music_level.level_db().round(),
                                 "volume": if capture_from == Source::Spotify.bundle() { crate::spotify::volume_now() } else { None }}));
@@ -893,10 +894,11 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
         // capture stops (as after REST_AFTER), and until you resume nothing is captured, named, recognised or
         // learned, and no take starts; the status above is still sent, so the window shows it. The demo song,
         // which you start yourself, plays on
-        let paused = crate::settings::listening_paused() && !crate::demo::on();
+        // (and while the Tuner page listens to the mic on its own: tuner.rs)
+        let paused = (crate::settings::listening_paused() || crate::tuner::on()) && !crate::demo::on();
         match pause_step(std::mem::replace(&mut was_paused, paused), paused) {
             Pause::Stop => {
-                log("listening paused by you");
+                log(if crate::tuner::on() { "listening paused while the tuner is open" } else { "listening paused by you" });
                 if cur.is_some() {
                     end_take(cur.take(), &shared, "listening paused");
                     emit(&app, json!({"type": "phase", "phase": "ended"}));
@@ -1455,7 +1457,7 @@ fn run(app: AppHandle, shared: Arc<Mutex<Shared>>, store: Store, learners: Learn
         follow_along(&mut along, &shared, st.as_ref(), listening, &store, rate, &block);
         let mut jumped_far: Option<f64> = None;
         if let Some(c) = cur.as_mut() {
-            c.take.music_quiet = music_level.quiet();
+            c.take.music_quiet = music_level.untrusted(c.take.speakers, crate::devtest::own_voice());
             // you dragged the app's progress bar forward: the time skipped becomes silence in the take. In listening
             // mode also the song found again after it was lost a moment (the take carries on, with its learner):
             // the sound heard since it was lost, kept, goes in rather than silence

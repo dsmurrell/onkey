@@ -1,0 +1,531 @@
+# The Windows build (windows-port and wp-* branches, and by hand): runs the engine's unit tests on Windows and builds the
+# NSIS installer, kept as an artifact for 3 days (the free plan's artifact storage is 500 MB a month; each installer is
+# 330-660 MB). Not run on pushes to develop: Windows minutes count double on a private repo and a run is 16 minutes
+# warm, 45 cold, against 2000 free minutes a month; run it by hand (Actions > windows > Run workflow) before a preview
+# or release. linux.yml still runs on every push to develop.
+#
+# This one file runs in two repos. In the public one (dsmurrell/onkey) it is the release build: built in the open
+# from the tagged commit, onkey.exe and the installer code-signed through SignPath Foundation (which signs only what
+# GitHub says this repo's workflow built), and a build provenance attestation made for the installer
+# (`gh attestation verify <installer> --repo dsmurrell/onkey`). In the development repo it is the day-to-day build,
+# unsigned. It never runs on a pull request: only on a push to this repo's own branches, or by hand.
+#   signing  none: unsigned (Windows SmartScreen warns on it). test-signing: SignPath's test certificate, which no
+#            PC trusts (it proves the steps; every push to a ci-win* or ci-all* branch of the public repo does this, with a
+#            throwaway updater key). release-signing: the real certificate, for `updater: release` only; each of
+#            the two requests (onkey.exe, then the installer) waits for an approval at app.signpath.io.
+# Caches keep a run short, and a newer push cancels the older run.
+#   models   (Linux, cheap) fetches/exports the large models (scripts/fetch-models.sh, each checked against the SHA-256
+#            in src-tauri/src/models.rs) and DirectML.dll (scripts/fetch-directml.sh) into caches shared with the
+#            Windows job; a no-op when the caches have them
+#   windows  restores them, builds the UI, runs `cargo test --lib`, then `tauri build` (release, no devtest), opens
+#            the installed app, and (run by hand) times learning a song on the runner's CPU (examples/learntime)
+#
+# Run by hand it can also make the release's updater files and rehearse the update (docs/RELEASING.md "Windows and
+# Linux"): `updater: release` builds the PUBLIC repo at `public_tag` (the exact source people get), official
+# (ONKEY_OFFICIAL=1), with the updater key from this repo's secrets (TAURI_SIGNING_PRIVATE_KEY and its password),
+# checks the installer's signature against the key every installed OnKey trusts, builds the next version too and
+# rehearses updating to it (scripts/update-rehearsal-ci.ps1), then uploads the installer and its .sig to the draft
+# release (ONKEY_PUBLIC_RELEASE_TOKEN). `updater: throwaway` does the same with a key made in the job, which the app
+# is built to trust, not official and uploaded nowhere: it proves the mechanics without the real key.
+name: windows
+
+on:
+  push:
+    # ci-win*, ci-all*: the public repo's test branches (ci-linux* is linux.yml's alone, so a Linux test signs nothing)
+    branches: [windows-port, "wp-*", "ci-win*", "ci-all*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version the app says it is (a preview: 0.2.0-preview.2). Empty: tauri.conf.json's"
+        required: false
+        default: ""
+      public_tag:
+        description: "Release: build the public repo dsmurrell/onkey at this tag (v0.3.0) instead of this branch"
+        required: false
+        default: ""
+      public_commit:
+        description: "Release: the commit that tag must point at (scripts/release.sh --stage prints both)"
+        required: false
+        default: ""
+      updater:
+        description: "Updater files: none | throwaway (a key made here; rehearsal; test only) | release (the real key from secrets, official, rehearsal, uploaded to the draft release)"
+        type: choice
+        options: [none, throwaway, release]
+        default: none
+      test_sign:
+        description: "Code-sign with SignPath's test certificate (public repo only; a release is always signed with the real one)"
+        type: boolean
+        default: false
+
+env:
+  # a push to a ci-* branch (the public repo's test branches) rehearses the whole release path with nothing real
+  UPDATER_IN: ${{ inputs.updater || (github.event_name == 'push' && startsWith(github.ref_name, 'ci-') && 'throwaway') || 'none' }}
+  # which SignPath signing policy, if any (the header's "signing")
+  SIGN: ${{ github.repository != 'dsmurrell/onkey' && 'none' || inputs.updater == 'release' && 'release-signing' || (inputs.test_sign || (github.event_name == 'push' && startsWith(github.ref_name, 'ci-'))) && 'test-signing' || 'none' }}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  models:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    outputs:
+      key: ${{ steps.key.outputs.key }}
+      dml: ${{ steps.key.outputs.dml }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ inputs.public_tag != '' && 'dsmurrell/onkey' || github.repository }}
+          ref: ${{ inputs.public_tag }}
+      # the models' cache key: changes when a model, how it's fetched or the packages that export it change
+      # (worked out here only and handed to the Windows job, whose checkout has CRLF line ends)
+      - id: key
+        run: |
+          echo "key=models-v1-${{ hashFiles('src-tauri/src/models.rs', 'scripts/fetch-models.sh', 'scripts/requirements-models.txt', 'scripts/export_*.py') }}" >> "$GITHUB_OUTPUT"
+          echo "dml=directml-${{ hashFiles('scripts/fetch-directml.sh') }}" >> "$GITHUB_OUTPUT"
+      - name: Look for the models in the cache
+        id: cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: ${{ steps.key.outputs.key }}
+          path: |
+            src-tauri/models/UVR_MDXNET_KARA_2.onnx
+            src-tauri/models/crepe-full-b32.onnx
+            src-tauri/models/wav2vec2-base-960h-fp16.onnx
+            src-tauri/models/game
+          enableCrossOsArchive: true
+          lookup-only: true
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Fetch and export the models
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          python -m venv .venv
+          # CPU-only torch wheels (the default ones carry CUDA, gigabytes); same versions as requirements-models.txt
+          .venv/bin/pip install --quiet -r scripts/requirements-models.txt \
+            --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
+          PYTHON=.venv/bin/python scripts/fetch-models.sh
+      - name: Check every model against its SHA-256 in models.rs
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: src-tauri/models
+        run: |
+          awk -F'"' '/file: "/{f=$2} /sha256: "/{print $(NF-1) "  " f}' ../src/models.rs | sha256sum -c -
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: ${{ steps.key.outputs.key }}
+          path: |
+            src-tauri/models/UVR_MDXNET_KARA_2.onnx
+            src-tauri/models/crepe-full-b32.onnx
+            src-tauri/models/wav2vec2-base-960h-fp16.onnx
+            src-tauri/models/game
+          enableCrossOsArchive: true
+      # DirectML.dll, which the installer puts beside onkey.exe (the GPU for learning: src-tauri/src/gpu.rs), from
+      # Microsoft's 200 MB NuGet package: fetched once and cached
+      - name: Look for DirectML in the cache
+        id: dml
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: ${{ steps.key.outputs.dml }}
+          path: src-tauri/directml
+          enableCrossOsArchive: true
+          lookup-only: true
+      - name: Fetch DirectML
+        if: steps.dml.outputs.cache-hit != 'true'
+        run: scripts/fetch-directml.sh
+      - if: steps.dml.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: ${{ steps.key.outputs.dml }}
+          path: src-tauri/directml
+          enableCrossOsArchive: true
+
+  windows:
+    needs: models
+    runs-on: windows-latest
+    # a release waits twice for an approval at SignPath (up to an hour each)
+    timeout-minutes: 200
+    permissions:
+      contents: read
+      actions: read          # SignPath reads this run's details and the artifact it is asked to sign
+      id-token: write        # the build provenance attestation
+      attestations: write
+    defaults:
+      run:
+        shell: bash
+    steps:
+      # the files exactly as committed (LF): the engine reads some of them in at compile time
+      - run: git config --global core.autocrlf false
+      # a release builds the public repo at its tag: the source people get, not this branch (which only holds this
+      # workflow); otherwise this commit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ inputs.public_tag != '' && 'dsmurrell/onkey' || github.repository }}
+          ref: ${{ inputs.public_tag }}
+      - name: The release source is the tagged public commit
+        if: inputs.public_tag != ''
+        env:
+          TAG: ${{ inputs.public_tag }}
+          WANT: ${{ inputs.public_commit }}
+          UPDATER: ${{ env.UPDATER_IN }}
+          VERSION: ${{ inputs.version }}
+        run: bash scripts/ci-release-source.sh
+      - name: Models (from the models job's cache)
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: ${{ needs.models.outputs.key }}
+          path: |
+            src-tauri/models/UVR_MDXNET_KARA_2.onnx
+            src-tauri/models/crepe-full-b32.onnx
+            src-tauri/models/wav2vec2-base-960h-fp16.onnx
+            src-tauri/models/game
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
+      - name: Check every model against its SHA-256 in models.rs
+        working-directory: src-tauri/models
+        run: |
+          awk -F'"' '/file: "/{f=$2} /sha256: "/{print $(NF-1) "  " f}' ../src/models.rs | sha256sum -c -
+      - name: DirectML (from the models job's cache)
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: ${{ needs.models.outputs.dml }}
+          path: src-tauri/directml
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
+      - run: ls -la src-tauri/directml
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            ui/package-lock.json
+      # pinned: Rust 1.100 (9 Nov 2026) lays out target/ differently, and ort-sys 2.0.0-rc.10's build script, which
+      # finds target/release by walking up from its own folder, fails on it ("cannot find the path specified").
+      # Raise this together with ort.
+      - name: Rust (1.99.1, MSVC)
+        run: rustup toolchain install 1.99.1 --profile minimal --no-self-update && rustup default 1.99.1 && rustc --version
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          workspaces: src-tauri
+          # keep the compiled dependencies even when a test fails, so the next run doesn't start cold (~12 min)
+          cache-on-failure: true
+      - name: npm ci
+        run: npm ci && npm ci --prefix ui
+      - name: Build the UI (the app embeds it; tauri build below reuses it)
+        run: npm --prefix ui run build
+      - name: Unit tests (cargo test --lib)
+        working-directory: src-tauri
+        # release profile with the feature `tauri build` adds, so the build below reuses everything compiled here
+        run: cargo test --release --lib --features tauri/custom-protocol
+      # what the runner's WASAPI stamps packets with (platform/windows/audio.rs's test writes it; a runner without an
+      # audio device says so), for the record
+      - name: WASAPI packet times on this runner
+        shell: pwsh
+        run: |
+          $f = Join-Path $env:TEMP 'onkey-wasapi-timing.txt'
+          if (Test-Path $f) {
+            Get-Content $f | Write-Host
+            "### WASAPI packet times on this runner`n``````n$(Get-Content $f -Raw)`n``````" | Add-Content $env:GITHUB_STEP_SUMMARY
+          } else { Write-Host 'no onkey-wasapi-timing.txt: the test did not run' }
+      # the updater key (docs/RELEASING.md "Windows and Linux"): a release signs with the real one from this repo's
+      # secrets, as an official build; a throwaway run makes one here and builds the app to trust it
+      - name: The updater key
+        if: env.UPDATER_IN != 'none'
+        env:
+          UPDATER: ${{ env.UPDATER_IN }}
+          HAVE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY != '' && secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD != '' }}
+          PUBLIC_TAG: ${{ inputs.public_tag }}
+        run: bash scripts/ci-updater-key.sh
+      # the version this build says it is (scripts/ci-build.sh works it out the same way), for SignPath, which checks
+      # it against the version written inside each file it signs
+      - name: The version
+        id: version
+        env:
+          VERSION: ${{ inputs.version }}
+        run: echo "version=${VERSION:-$(python -c 'import json; print(json.load(open("src-tauri/tauri.conf.json"))["version"])')}" >> "$GITHUB_OUTPUT"
+      # Unsigned: the whole build in one step.
+      - name: Build the installer (NSIS, release, no devtest)
+        if: env.SIGN == 'none'
+        env:
+          VERSION: ${{ inputs.version }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ env.UPDATER_IN == 'release' && secrets.TAURI_SIGNING_PRIVATE_KEY || env.THROWAWAY_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ env.UPDATER_IN == 'release' && secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD || '' }}
+          # the key challenge links are signed with (src-tauri/src/challenge.rs); without the secret the build's links
+          # are unsigned and the site shows their scores as not checked
+          ONKEY_CHALLENGE_KEY: ${{ secrets.ONKEY_CHALLENGE_KEY }}
+          BUNDLE_GLOB: src-tauri/target/release/bundle/nsis/*-setup.exe
+        run: bash scripts/ci-build.sh
+      # Code-signed (the header's "signing"): onkey.exe is built, signed and put back, the installer is packed from
+      # the signed onkey.exe and signed too, and the updater signature is made again over the signed installer.
+      # SignPath takes a file only as an artifact of this run, which is how it knows this workflow built it. The
+      # uninstaller the installer writes on the PC is made while packing and is not signed.
+      - name: Build onkey.exe (release, no devtest; not packed yet)
+        if: env.SIGN != 'none'
+        env:
+          VERSION: ${{ inputs.version }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ env.UPDATER_IN == 'release' && secrets.TAURI_SIGNING_PRIVATE_KEY || env.THROWAWAY_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ env.UPDATER_IN == 'release' && secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD || '' }}
+          # the key challenge links are signed with (src-tauri/src/challenge.rs); without the secret the build's links
+          # are unsigned and the site shows their scores as not checked
+          ONKEY_CHALLENGE_KEY: ${{ secrets.ONKEY_CHALLENGE_KEY }}
+          BUNDLE_GLOB: src-tauri/target/release/bundle/nsis/*-setup.exe
+        run: bash scripts/ci-build.sh compile
+      - name: onkey.exe as an artifact, for SignPath
+        id: unsigned-app
+        if: env.SIGN != 'none'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: unsigned-onkey-exe-${{ github.sha }}
+          path: to-sign/onkey.exe
+          retention-days: 1
+          if-no-files-found: error
+      - name: Sign onkey.exe (SignPath; a release waits here for an approval)
+        if: env.SIGN != 'none'
+        uses: signpath/github-action-submit-signing-request@f6d04783b4569d051e0c80105fe66e82819d0092 # v3
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: 6459deb0-8a4b-4f09-9bc7-6c2d4749b095
+          project-slug: onkey
+          signing-policy-slug: ${{ env.SIGN }}
+          github-artifact-id: ${{ steps.unsigned-app.outputs.artifact-id }}
+          wait-for-completion: true
+          wait-for-completion-timeout-in-seconds: 3600
+          output-artifact-directory: signed/app
+          # the artifact configuration at SignPath signs only an .exe whose product name is OnKey and whose product
+          # version is this one
+          parameters: |
+            version: ${{ toJSON(steps.version.outputs.version) }}
+      - name: Put the signed onkey.exe back
+        if: env.SIGN != 'none'
+        shell: pwsh
+        run: |
+          $sig = Get-AuthenticodeSignature signed/app/onkey.exe
+          if (-not $sig.SignerCertificate) { throw "signed/app/onkey.exe carries no signature" }
+          Write-Host "onkey.exe signed by: $($sig.SignerCertificate.Subject) ($($sig.Status))"
+          Copy-Item signed/app/onkey.exe src-tauri/target/release/onkey.exe -Force
+      - name: Pack the installer from the signed onkey.exe (NSIS)
+        if: env.SIGN != 'none'
+        env:
+          VERSION: ${{ inputs.version }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ env.UPDATER_IN == 'release' && secrets.TAURI_SIGNING_PRIVATE_KEY || env.THROWAWAY_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ env.UPDATER_IN == 'release' && secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD || '' }}
+          # the key challenge links are signed with (src-tauri/src/challenge.rs); without the secret the build's links
+          # are unsigned and the site shows their scores as not checked
+          ONKEY_CHALLENGE_KEY: ${{ secrets.ONKEY_CHALLENGE_KEY }}
+          BUNDLE_GLOB: src-tauri/target/release/bundle/nsis/*-setup.exe
+        run: bash scripts/ci-build.sh bundle
+      - name: The installer as an artifact, for SignPath
+        id: unsigned-installer
+        if: env.SIGN != 'none'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: unsigned-installer-${{ github.sha }}
+          path: dist/*-setup.exe
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
+      - name: Sign the installer (SignPath; a release waits here for an approval)
+        if: env.SIGN != 'none'
+        uses: signpath/github-action-submit-signing-request@f6d04783b4569d051e0c80105fe66e82819d0092 # v3
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: 6459deb0-8a4b-4f09-9bc7-6c2d4749b095
+          project-slug: onkey
+          signing-policy-slug: ${{ env.SIGN }}
+          github-artifact-id: ${{ steps.unsigned-installer.outputs.artifact-id }}
+          wait-for-completion: true
+          wait-for-completion-timeout-in-seconds: 3600
+          output-artifact-directory: signed/installer
+          # the artifact configuration at SignPath signs only an .exe whose product name is OnKey and whose product
+          # version is this one
+          parameters: |
+            version: ${{ toJSON(steps.version.outputs.version) }}
+      # the signed installer replaces the unsigned one; the updater signature tauri made was of the file before, so
+      # it is made again (as ci-build.sh does for the AppImage)
+      - name: Put the signed installer in dist, and sign it again for the updater
+        if: env.SIGN != 'none'
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ env.UPDATER_IN == 'release' && secrets.TAURI_SIGNING_PRIVATE_KEY || env.THROWAWAY_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ env.UPDATER_IN == 'release' && secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD || '' }}
+        run: |
+          f=$(ls dist/*-setup.exe); n=$(basename "$f")
+          [ -f "signed/installer/$n" ] || { echo "::error::no signed/installer/$n came back from SignPath"; ls -la signed/installer; exit 1; }
+          cmp -s "$f" "signed/installer/$n" && { echo "::error::the file SignPath returned is the unsigned one"; exit 1; }
+          cp "signed/installer/$n" "$f"
+          if [ -n "${UPDATER_MODE:-}" ]; then
+            rm -f "$f.sig"
+            # the key is the secret's text (a release) or a file's path (the throwaway key): `tauri signer sign` takes
+            # a path only as --private-key-path
+            KEY=(); if [ -f "$TAURI_SIGNING_PRIVATE_KEY" ]; then KEY=(--private-key-path "$TAURI_SIGNING_PRIVATE_KEY"); unset TAURI_SIGNING_PRIVATE_KEY; fi
+            if [ -z "${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}" ]; then npx tauri signer sign "${KEY[@]}" -p "" "$f" </dev/null; else npx tauri signer sign "${KEY[@]}" "$f" </dev/null; fi
+            [ -s "$f.sig" ] || { echo "::error::no updater signature made for the signed installer"; exit 1; }
+          fi
+      - name: The installer's code signature
+        if: env.SIGN != 'none'
+        shell: pwsh
+        run: |
+          $setup = Get-ChildItem dist/*-setup.exe | Select-Object -First 1
+          $sig = Get-AuthenticodeSignature $setup.FullName
+          if (-not $sig.SignerCertificate) { throw "$($setup.Name) carries no signature" }
+          Write-Host "$($setup.Name) signed by: $($sig.SignerCertificate.Subject) ($($sig.Status))"
+          # the real certificate is one Windows trusts; the test certificate is not, and must not pass as one
+          if ($env:SIGN -eq 'release-signing' -and $sig.Status -ne 'Valid') { throw "the release's signature isn't valid: $($sig.StatusMessage)" }
+          if ($env:SIGN -eq 'test-signing' -and $sig.Status -eq 'Valid') { throw "a test-signed installer must not pass as trusted" }
+          "### Code signature`n- $($setup.Name): $($sig.SignerCertificate.Subject) ($($sig.Status), policy $env:SIGN)" | Add-Content $env:GITHUB_STEP_SUMMARY
+      # anyone can check the installer came from this workflow at this commit:
+      #   gh attestation verify <installer> --repo dsmurrell/onkey
+      - name: Build provenance attestation for the installer
+        if: github.repository == 'dsmurrell/onkey'
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: dist/*-setup.exe
+      - name: List what was built
+        run: ls -la src-tauri/target/release/*.exe dist/ dist/next/ 2>/dev/null || ls -la dist/
+      # the installer is only there to download and try; kept on the port branches and runs by hand, not on every push
+      # to develop (artifact storage)
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: github.event_name == 'workflow_dispatch' || github.ref_name != 'develop'
+        with:
+          # the installer (and, with updater files, its .sig and the rehearsal's next version): the bare onkey.exe
+          # can't run without the models the installer brings
+          name: onkey-windows-${{ github.sha }}
+          path: dist
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: error
+      # the installer's signature is the one every installed OnKey checks (src-tauri/tauri.conf.json's public key):
+      # a release must pass; a throwaway build must fail (its key is not that one), so it can never be published
+      - name: The updater signature is the key OnKey trusts
+        if: env.UPDATER_MODE != ''
+        run: bash scripts/ci-verify-sig.sh dist/*-setup.exe
+      - name: Update rehearsal (the installed OnKey refuses a wrongly signed update, and updates itself to the next version)
+        if: env.UPDATER_MODE != ''
+        shell: pwsh
+        run: |
+          $setup = Get-ChildItem dist/*-setup.exe | Select-Object -First 1
+          $next = Get-ChildItem dist/next/*-setup.exe | Select-Object -First 1
+          pwsh scripts/update-rehearsal-ci.ps1 -Setup $setup.FullName -Next $next.FullName -Out rehearsal -Official $env:UPDATER_OFFICIAL
+          if ($LASTEXITCODE -ne 0) { throw "the update rehearsal failed" }
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always() && env.UPDATER_MODE != ''
+        # a report for people; when the account's artifact storage is used up GitHub refuses every upload, which
+        # must not fail the build
+        continue-on-error: true
+        with:
+          name: update-rehearsal-windows-${{ github.sha }}
+          path: rehearsal
+          retention-days: 3
+          if-no-files-found: ignore
+      - name: Launch check (install as a person would, open it, the window loads and it stays up)
+        shell: pwsh
+        run: |
+          $out = New-Item -ItemType Directory -Force launch-check
+          Get-Process onkey -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+          $setup = Get-ChildItem dist/*-setup.exe | Select-Object -First 1
+          Start-Process $setup.FullName -ArgumentList '/S' -Wait
+          # Tauri's NSIS installer installs for the current user under %LOCALAPPDATA%\<productName>
+          $dir = Join-Path $env:LOCALAPPDATA 'OnKey'
+          $exe = Get-ChildItem $dir -Filter *.exe -ErrorAction SilentlyContinue | Where-Object { $_.Name -notmatch 'uninstall' } | Select-Object -First 1
+          if (-not $exe) { Get-ChildItem $env:LOCALAPPDATA -Directory | Out-String | Write-Host; throw "not installed in $dir" }
+          Get-ChildItem $dir -Recurse | Select-Object FullName, Length | Format-Table -AutoSize | Out-String -Width 200 | Write-Host
+          $log = Join-Path $env:TEMP 'onkey.log'
+          Remove-Item $log -ErrorAction SilentlyContinue
+          $p = Start-Process $exe.FullName -PassThru
+          $loaded = $false
+          $deadline = (Get-Date).AddSeconds(90)
+          while ((Get-Date) -lt $deadline -and -not $p.HasExited) {
+            if ((Test-Path $log) -and (Select-String -Path $log -Pattern 'ui: window loaded' -Quiet)) { $loaded = $true; break }
+            Start-Sleep 2
+          }
+          Start-Sleep 15   # and it's still up a little later
+          Add-Type -AssemblyName System.Windows.Forms, System.Drawing
+          $b = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
+          $bmp = New-Object System.Drawing.Bitmap $b.Width, $b.Height
+          [System.Drawing.Graphics]::FromImage($bmp).CopyFromScreen($b.Location, [System.Drawing.Point]::Empty, $b.Size)
+          $bmp.Save((Join-Path $out 'screen.png'))
+          if (Test-Path $log) { Copy-Item $log $out; Get-Content $log | Write-Host } else { Write-Host 'no onkey.log' }
+          $alive = -not $p.HasExited
+          if ($alive) { Stop-Process -Id $p.Id -Force }
+          if (-not $alive) { throw "OnKey quit by itself (exit code $($p.ExitCode))" }
+          if (-not $loaded) { throw "OnKey's window never loaded (no 'ui: window loaded' in onkey.log)" }
+          # the GPUs it found, and where the live pitch model runs (gpu.rs): with no GPU here, the CPU
+          if (-not (Select-String -Path $log -Pattern 'gpu: ' -Quiet)) { throw "no gpu line in onkey.log" }
+          # a tester's report, as "Report a problem" makes it (ONKEY_REPORT_TO: saved 30 s after launch, lib.rs), from
+          # a second launch: the first was ended above without a quit, so its summary should say so
+          $report = Join-Path $out.FullName 'report.zip'
+          $env:ONKEY_REPORT_TO = $report
+          $p = Start-Process $exe.FullName -PassThru
+          $deadline = (Get-Date).AddSeconds(120)
+          while ((Get-Date) -lt $deadline -and -not $p.HasExited -and -not (Test-Path $report)) { Start-Sleep 2 }
+          Start-Sleep 2
+          if (-not $p.HasExited) { Stop-Process -Id $p.Id -Force }
+          Remove-Item Env:ONKEY_REPORT_TO
+          Copy-Item $log (Join-Path $out 'onkey-second-launch.log')
+          if (-not (Test-Path $report)) { Get-Content $log -Tail 40 | Write-Host; throw "no report made (ONKEY_REPORT_TO)" }
+          Expand-Archive $report (Join-Path $out 'report') -Force
+          $summary = Join-Path $out 'report/summary.txt'
+          if (-not (Test-Path $summary)) { throw "the report has no summary.txt" }
+          Get-Content $summary | Write-Host
+          foreach ($want in "WebView2 ", "didn't close normally", "mic access", "audio devices:") {
+            if (-not (Select-String -Path $summary -SimpleMatch $want -Quiet)) { throw "summary.txt doesn't say '$want'" }
+          }
+          # nothing of the runner's user name or profile folder in it
+          $user = $env:USERNAME
+          $named = Get-ChildItem (Join-Path $out 'report') -Recurse -File | Select-String -SimpleMatch $user
+          if ($named) { $named | Out-String -Width 300 | Write-Host; throw "the report names the user ($user)" }
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        # a report for people; when the account's artifact storage is used up GitHub refuses every upload, which
+        # must not fail the build
+        continue-on-error: true
+        with:
+          name: launch-check-${{ github.sha }}
+          path: launch-check
+          retention-days: 3
+          if-no-files-found: ignore
+      - name: The installed onkey.exe is the signed one
+        if: env.SIGN != 'none'
+        shell: pwsh
+        run: |
+          $exe = Join-Path $env:LOCALAPPDATA 'OnKey/onkey.exe'
+          $sig = Get-AuthenticodeSignature $exe
+          if (-not $sig.SignerCertificate) { throw "the installed onkey.exe carries no signature (packing changed the file?)" }
+          if ($sig.Status -eq 'HashMismatch') { throw "the installed onkey.exe was changed after it was signed" }
+          Write-Host "installed onkey.exe signed by: $($sig.SignerCertificate.Subject) ($($sig.Status))"
+          if ($env:SIGN -eq 'release-signing' -and $sig.Status -ne 'Valid') { throw "the installed onkey.exe's signature isn't valid: $($sig.StatusMessage)" }
+      # a release: the installer and its signature go to the draft release on the public repo (made by
+      # scripts/release.sh --stage; scripts/release-publish.sh checks them and publishes), with a note of this
+      # rehearsal that release-publish.sh reads
+      - name: Upload to the draft release
+        if: env.UPDATER_MODE == 'release'
+        env:
+          GH_TOKEN: ${{ secrets.ONKEY_PUBLIC_RELEASE_TOKEN }}
+          TAG: ${{ inputs.public_tag }}
+          TARGET: windows-x86_64
+        run: bash scripts/ci-upload-release.sh dist/*-setup.exe
+      # how long learning a song takes on this runner's CPU (no GPU here), for the window's wording: a made-up
+      # 3.5-minute song learned as the app learns a first play. Several minutes, so only when run by hand (and not
+      # for a release, which is the public source's build and nothing else)
+      - name: Learning time on the CPU (examples/learntime)
+        if: github.event_name == 'workflow_dispatch' && inputs.public_tag == ''
+        shell: pwsh
+        working-directory: src-tauri
+        run: |
+          cargo build --release --example learntime --features tauri/custom-protocol
+          if ($LASTEXITCODE -ne 0) { throw "learntime didn't build" }
+          Copy-Item directml/DirectML.dll target/release/examples/
+          $log = Join-Path $env:TEMP 'onkey.log'
+          Remove-Item $log -ErrorAction SilentlyContinue
+          $json = ./target/release/examples/learntime.exe --seconds 210
+          if ($LASTEXITCODE -ne 0) { throw "learntime failed" }
+          Write-Host $json
+          Get-Content $log | Write-Host
+          "### Learning a 3.5-minute song on this runner`n``````n$json`n``````" | Add-Content $env:GITHUB_STEP_SUMMARY

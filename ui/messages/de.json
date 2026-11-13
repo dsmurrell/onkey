@@ -1173,6 +1173,7 @@
     "sing": "Singen",
     "library": "Bibliothek",
     "history": "Verlauf",
+    "tuner": "Stimmgerät",
     "settings": "Einstellungen",
     "paused": "Zuhören pausiert",
     "resume": "Fortsetzen",
@@ -1181,7 +1182,8 @@
     "whatsNew": "Neuigkeiten in OnKey",
     "whatsNewFresh": "Neuigkeiten in OnKey (neu)",
     "testBuild": "Testversion",
-    "testBuildTitle": "Eine Testversion von OnKey für Windows oder Linux: Installiere die nächste darüber, sobald sie erscheint"
+    "testBuildTitle": "Eine Testversion von OnKey für Windows oder Linux: Installiere die nächste darüber, sobald sie erscheint",
+    "testBuildOfRelease": "Eine Testversion von OnKey, damit du etwas Neues ausprobieren kannst. Sie aktualisiert sich selbst auf die nächste Version, sobald die erscheint."
   },
   "licences": {
     "back": "← Einstellungen",
@@ -1530,6 +1532,65 @@
     "app": {
       "music_app": "deine Musik-App",
       "browser": "dein Browser"
+    }
+  },
+  "tuner": {
+    "title": "Stimmgerät",
+    "intro": "Sing einen beliebigen Ton und sieh, welche Note es ist. Kein Song nötig.",
+    "waiting": "Sing oder summ einen Ton",
+    "hz": "{hz} Hz",
+    "flat": "Zu tief",
+    "sharp": "Zu hoch",
+    "cents": {
+      "on": "Auf der Note",
+      "sharp": "{cents} Cent zu hoch",
+      "flat": "{cents} Cent zu tief"
+    },
+    "clickLane": "Klick auf eine Note, um sie zu hören und anzusteuern (oder um das Muster dort zu starten)",
+    "giveNote": "Gib mir einen Ton",
+    "playAgain": "Noch mal spielen",
+    "clear": "Zurücksetzen",
+    "another": "Anderer Ton",
+    "close": {
+      "title": "Wie nah an einer Note als getroffen zählt",
+      "relaxed": "Bis 25 Cent",
+      "strict": "Bis 10 Cent"
+    },
+    "target": {
+      "none": "Klick im Bild auf eine Note, um sie zu hören und anzusteuern, oder wähl etwas zum Üben. Ein Muster beginnt auf der Note, auf der du gerade bist; klick auf eine andere Note, um es dort zu starten.",
+      "aim": "Ziel: {note}"
+    },
+    "hold": {
+      "label": "Halte sie {seconds, plural, one {{seconds} Sekunde} other {{seconds} Sekunden}}",
+      "on": "Gehalten, genau auf der Note.",
+      "sharp": "Gehalten. Im Schnitt {cents} Cent zu hoch.",
+      "flat": "Gehalten. Im Schnitt {cents} Cent zu tief.",
+      "setting": "{seconds} s halten",
+      "title": "Wie lange du auf einer Note bleiben musst, damit sie als gehalten zählt"
+    },
+    "headphones": "OnKey hört nicht zu, während ein Ton spielt. Mit Lautsprechern warte, bis er zu Ende ist, bevor du singst.",
+    "tip": "Hör dir den Ton an, hör ihn in deinem Kopf, dann sing ihn. Probier es mit geschlossenen Augen und entscheide nach Gehör, ob du zu hoch oder zu tief bist, bevor du hinschaust.",
+    "private": "OnKey hört dein Mikrofon nur, solange diese Seite offen ist, und nimmt nichts auf. Deiner Musik folgt es in der Zeit nicht.",
+    "noMic": "OnKey hört kein Mikrofon. Prüf, ob eins angeschlossen ist und ob OnKey es benutzen darf.",
+    "openSettings": "Einstellungen öffnen",
+    "broken": "Das Stimmgerät konnte nicht starten: Das Tonhöhenmodell wurde nicht geladen.",
+    "onlyInApp": "Das Stimmgerät funktioniert in der OnKey-App.",
+    "listen": "Anhören…",
+    "practise": "Üben:",
+    "pattern": {
+      "five": "Fünf Töne",
+      "arpeggio": "Arpeggio",
+      "octave": "Oktavsprung"
+    },
+    "seq": {
+      "sing": "Sing Ton {n} von {count}",
+      "done": "Du hast {hit} von {count} getroffen.",
+      "skip": "Diesen Ton überspringen",
+      "again": "Noch mal",
+      "lower": "Tiefer",
+      "higher": "Höher",
+      "lowerTitle": "Dasselbe Muster, einen Ton tiefer begonnen",
+      "higherTitle": "Dasselbe Muster, einen Ton höher begonnen"
     }
   }
 }
