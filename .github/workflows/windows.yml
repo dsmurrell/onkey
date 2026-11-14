@@ -219,6 +219,18 @@ jobs:
           workspaces: src-tauri
           # keep the compiled dependencies even when a test fails, so the next run doesn't start cold (~12 min)
           cache-on-failure: true
+      # ort-sys's build script leaves DirectML.dll in target/release (and deps/, examples/) as a link into its download
+      # folder, outside the cache. Restored from the cache onto a fresh runner, that link points nowhere until ort-sys has
+      # downloaded again, a few seconds in; meanwhile tauri-build copies our directml/DirectML.dll to the same place,
+      # through the link, and fails: "The system cannot find the path specified" (os error 3). It copies the resources
+      # in a random order (a HashMap), so a warm run failed only sometimes (2 of 3 on 13-14 Nov; no cold run did).
+      - name: Links left in the build folder by the cache
+        shell: pwsh
+        run: |
+          $dirs = 'src-tauri/target/release', 'src-tauri/target/release/deps', 'src-tauri/target/release/examples'
+          $links = Get-ChildItem $dirs -Filter *.dll -ErrorAction SilentlyContinue | Where-Object { $_.LinkType }
+          foreach ($l in $links) { Write-Host "removing the link $($l.FullName) -> $($l.Target)"; Remove-Item $l.FullName -Force }
+          Write-Host "$(@($links).Count) link(s) removed"
       - name: npm ci
         run: npm ci && npm ci --prefix ui
       - name: Build the UI (the app embeds it; tauri build below reuses it)
