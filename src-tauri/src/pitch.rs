@@ -65,6 +65,8 @@ pub fn builder() -> ort::Result<SessionBuilder> {
 ///
 /// On a small Mac (lowmem.rs) the session keeps no memory patterns and no CPU arena, so what a run took is given
 /// back after it instead of held for the next (the `lean` sessions' reason, for the CPU side of a Core ML model).
+/// (macOS only: ort has Core ML only in a build with its `coreml` feature, which only the Mac's has, Cargo.toml.)
+#[cfg(target_os = "macos")]
 pub fn load_coreml(model: &std::path::Path, configure: impl Fn(SessionBuilder) -> BuilderResult) -> ort::Result<Session> {
     use ort::ep::{coreml::ModelFormat, CoreML, CPU};
     static ONE_AT_A_TIME: std::sync::Mutex<()> = std::sync::Mutex::new(());
@@ -95,6 +97,7 @@ pub fn load_coreml(model: &std::path::Path, configure: impl Fn(SessionBuilder) -
 /// The cache's layout and the session options that shape a compiled model (ONNX Runtime keys an entry by the
 /// model's path alone): bumped whenever those change, so old entries aren't reused. (3: ONNX Runtime 1.31, whose
 /// Core ML provider may cut and compile a model differently from 1.22's)
+#[cfg(target_os = "macos")]
 const COREML_CACHE_VERSION: u32 = 3;
 
 /// Where the compiled models are kept: the app sets its data folder at launch, so each model is compiled once,
@@ -107,6 +110,7 @@ pub fn set_coreml_cache_dir(dir: &std::path::Path) {
 }
 
 /// Where `model`'s compiled Core ML pieces are kept (None: no cache folder could be made).
+#[cfg(target_os = "macos")]
 fn coreml_cache(model: &std::path::Path) -> Option<std::path::PathBuf> {
     let meta = std::fs::metadata(model).ok()?;
     let modified = meta.modified().ok()?.duration_since(std::time::UNIX_EPOCH).ok()?.as_secs();
