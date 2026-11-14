@@ -10,7 +10,7 @@
 # (`gh attestation verify <installer> --repo dsmurrell/onkey`). In the development repo it is the day-to-day build,
 # unsigned. It never runs on a pull request: only on a push to this repo's own branches, or by hand.
 #   signing  none: unsigned (Windows SmartScreen warns on it). test-signing: SignPath's test certificate, which no
-#            PC trusts (it proves the steps; every push to a ci-* branch of the public repo does this, with a
+#            PC trusts (it proves the steps; every push to a ci-win* or ci-all* branch of the public repo does this, with a
 #            throwaway updater key). release-signing: the real certificate, for `updater: release` only; each of
 #            the two requests (onkey.exe, then the installer) waits for an approval at app.signpath.io.
 # Caches keep a run short, and a newer push cancels the older run.
@@ -25,13 +25,14 @@
 # (ONKEY_OFFICIAL=1), with the updater key from this repo's secrets (TAURI_SIGNING_PRIVATE_KEY and its password),
 # checks the installer's signature against the key every installed OnKey trusts, builds the next version too and
 # rehearses updating to it (scripts/update-rehearsal-ci.ps1), then uploads the installer and its .sig to the draft
-# release (ONKEY_PUBLIC_RELEASE_TOKEN). `updater: throwaway` does the same with a key made in the job, which the app
+# release. `updater: throwaway` does the same with a key made in the job, which the app
 # is built to trust, not official and uploaded nowhere: it proves the mechanics without the real key.
 name: windows
 
 on:
   push:
-    branches: [windows-port, "wp-*", "ci-*"]
+    # ci-win*, ci-all*: the public repo's test branches (ci-linux* is linux.yml's alone, so a Linux test signs nothing)
+    branches: [windows-port, "wp-*", "ci-win*", "ci-all*"]
   workflow_dispatch:
     inputs:
       version:
@@ -81,6 +82,7 @@ jobs:
         with:
           repository: ${{ inputs.public_tag != '' && 'dsmurrell/onkey' || github.repository }}
           ref: ${{ inputs.public_tag }}
+          persist-credentials: false
       # the models' cache key: changes when a model, how it's fetched or the packages that export it change
       # (worked out here only and handed to the Windows job, whose checkout has CRLF line ends)
       - id: key
@@ -152,7 +154,7 @@ jobs:
     # a release waits twice for an approval at SignPath (up to an hour each)
     timeout-minutes: 200
     permissions:
-      contents: read
+      contents: write        # a release's files go to its draft release ("Upload to the draft release"); nothing else writes
       actions: read          # SignPath reads this run's details and the artifact it is asked to sign
       id-token: write        # the build provenance attestation
       attestations: write
@@ -168,6 +170,7 @@ jobs:
         with:
           repository: ${{ inputs.public_tag != '' && 'dsmurrell/onkey' || github.repository }}
           ref: ${{ inputs.public_tag }}
+          persist-credentials: false
       - name: The release source is the tagged public commit
         if: inputs.public_tag != ''
         env:
@@ -209,8 +212,8 @@ jobs:
       # pinned: Rust 1.100 (9 Nov 2026) lays out target/ differently, and ort-sys 2.0.0-rc.10's build script, which
       # finds target/release by walking up from its own folder, fails on it ("cannot find the path specified").
       # Raise this together with ort.
-      - name: Rust (1.99.1, MSVC)
-        run: rustup toolchain install 1.99.1 --profile minimal --no-self-update && rustup default 1.99.1 && rustc --version
+      - name: Rust (1.100.0, MSVC)
+        run: rustup toolchain install 1.100.0 --profile minimal --no-self-update && rustup default 1.100.0 && rustc --version
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
           workspaces: src-tauri
@@ -506,7 +509,9 @@ jobs:
       - name: Upload to the draft release
         if: env.UPDATER_MODE == 'release'
         env:
-          GH_TOKEN: ${{ secrets.ONKEY_PUBLIC_RELEASE_TOKEN }}
+          # in the public repo, this run's own token (the job's `contents: write`); elsewhere a token that may write
+          # the public repo's releases
+          GH_TOKEN: ${{ github.repository == 'dsmurrell/onkey' && github.token || secrets.ONKEY_PUBLIC_RELEASE_TOKEN }}
           TAG: ${{ inputs.public_tag }}
           TARGET: windows-x86_64
         run: bash scripts/ci-upload-release.sh dist/*-setup.exe

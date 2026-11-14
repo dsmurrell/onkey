@@ -55,7 +55,7 @@ missing=0
 for f in OnKey.dmg "$MAC_TARBALL" "$MAC_TARBALL.sig" "$WIN" "$WIN.sig" "$LINUX" "$LINUX.sig" "${NOTES[@]}"; do
   if grep -qxF -- "$f" <<< "$HAVE"; then echo "  $f"; else echo "  MISSING: $f"; missing=1; fi
 done
-[ $missing = 0 ] || die "the draft is missing files: the Windows or Linux CI build hasn't finished, or failed (gh run list --repo dsmurrell/onkey-dev)"
+[ $missing = 0 ] || die "the draft is missing files: the Windows or Linux CI build hasn't finished, or failed (gh run list --repo "$REPO"; the Windows build waits for two approvals at app.signpath.io)"
 extra=$(grep -vxF -e OnKey.dmg -e "$MAC_TARBALL" -e "$MAC_TARBALL.sig" -e "$WIN" -e "$WIN.sig" -e "$LINUX" -e "$LINUX.sig" -e "${NOTES[0]}" -e "${NOTES[1]}" -e latest.json -e SHA256SUMS <<< "$HAVE" || true)
 [ -z "$extra" ] || die "unexpected files on the draft: $(tr '\n' ' ' <<< "$extra")"
 
