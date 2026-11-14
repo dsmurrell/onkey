@@ -1173,6 +1173,7 @@
     "sing": "唱歌",
     "library": "资料库",
     "history": "历史记录",
+    "tuner": "调音器",
     "settings": "设置",
     "paused": "已暂停聆听",
     "resume": "继续",
@@ -1181,7 +1182,8 @@
     "whatsNew": "OnKey 的新功能",
     "whatsNewFresh": "OnKey 的新功能（有更新）",
     "testBuild": "测试版",
-    "testBuildTitle": "OnKey 的 Windows / Linux 测试版：新版本发布后直接覆盖安装"
+    "testBuildTitle": "OnKey 的 Windows / Linux 测试版：新版本发布后直接覆盖安装",
+    "testBuildOfRelease": "OnKey 的测试版，供你试用新功能。正式版发布后会自动更新到该版本。"
   },
   "licences": {
     "back": "← 设置",
@@ -1530,6 +1532,65 @@
     "app": {
       "music_app": "你的音乐应用",
       "browser": "你的浏览器"
+    }
+  },
+  "tuner": {
+    "title": "调音器",
+    "intro": "随便唱一个音，就能看到它是哪个音。不需要放歌。",
+    "waiting": "唱或哼一个音",
+    "hz": "{hz} Hz",
+    "flat": "偏低",
+    "sharp": "偏高",
+    "cents": {
+      "on": "音准到位",
+      "sharp": "偏高 {cents} 音分",
+      "flat": "偏低 {cents} 音分"
+    },
+    "clickLane": "点一个音符就能听到它，并以它为目标（或从那里开始练习模式）",
+    "giveNote": "给我一个音",
+    "playAgain": "再放一遍",
+    "clear": "清除",
+    "another": "换一个音",
+    "close": {
+      "title": "离音多近才算唱准",
+      "relaxed": "25 音分以内",
+      "strict": "10 音分以内"
+    },
+    "target": {
+      "none": "点图中的一个音符就能听到它，并以它为目标；也可以选一项来练习。练习模式从你正在唱的音开始；点另一个音符就从那里开始。",
+      "aim": "目标：{note}"
+    },
+    "hold": {
+      "label": "保持 {seconds, plural, other {{seconds} 秒}}",
+      "on": "保持住了，音准到位。",
+      "sharp": "保持住了。平均偏高 {cents} 音分。",
+      "flat": "保持住了。平均偏低 {cents} 音分。",
+      "setting": "保持 {seconds} 秒",
+      "title": "在一个音上停留多久才算保持住"
+    },
+    "headphones": "音在播放时，OnKey 不会聆听。用扬声器的话，等它放完再唱。",
+    "tip": "先听这个音，在脑子里想着它，再唱出来。试试闭上眼睛唱，看之前先用耳朵判断自己是高了还是低了。",
+    "private": "只有在这个页面打开时，OnKey 才会听你的麦克风，而且什么都不录。这期间它不会跟随你的音乐。",
+    "noMic": "OnKey 听不到麦克风。请检查麦克风是否已连接，以及 OnKey 是否获准使用它。",
+    "openSettings": "打开设置",
+    "broken": "调音器无法启动：音高模型没有加载。",
+    "onlyInApp": "调音器要在 OnKey 应用里使用。",
+    "listen": "先听…",
+    "practise": "练习：",
+    "pattern": {
+      "five": "五个音",
+      "arpeggio": "琶音",
+      "octave": "八度跳跃"
+    },
+    "seq": {
+      "sing": "唱第 {n} 个音（共 {count} 个）",
+      "done": "你唱准了 {count} 个音中的 {hit} 个。",
+      "skip": "跳过这个音",
+      "again": "再来一次",
+      "lower": "低一点",
+      "higher": "高一点",
+      "lowerTitle": "同样的模式，从低一个音开始",
+      "higherTitle": "同样的模式，从高一个音开始"
     }
   }
 }

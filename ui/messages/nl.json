@@ -1173,6 +1173,7 @@
     "sing": "Zingen",
     "library": "Bibliotheek",
     "history": "Geschiedenis",
+    "tuner": "Tuner",
     "settings": "Instellingen",
     "paused": "Luisteren gepauzeerd",
     "resume": "Ga verder",
@@ -1181,7 +1182,8 @@
     "whatsNew": "Wat is er nieuw in OnKey",
     "whatsNewFresh": "Wat is er nieuw in OnKey (nieuw)",
     "testBuild": "Testversie",
-    "testBuildTitle": "Een testversie van OnKey voor Windows of Linux: installeer de volgende eroverheen zodra die er is"
+    "testBuildTitle": "Een testversie van OnKey voor Windows of Linux: installeer de volgende eroverheen zodra die er is",
+    "testBuildOfRelease": "Een testversie van OnKey, gemaakt zodat je iets nieuws kunt proberen. Hij werkt zichzelf bij naar de volgende versie zodra die uit is."
   },
   "licences": {
     "back": "← Instellingen",
@@ -1530,6 +1532,65 @@
     "app": {
       "music_app": "je muziekapp",
       "browser": "je browser"
+    }
+  },
+  "tuner": {
+    "title": "Tuner",
+    "intro": "Zing een willekeurige noot en zie welke noot het is. Geen nummer nodig.",
+    "waiting": "Zing of neurie een noot",
+    "hz": "{hz} Hz",
+    "flat": "Te laag",
+    "sharp": "Te hoog",
+    "cents": {
+      "on": "Precies op de noot",
+      "sharp": "{cents} cent te hoog",
+      "flat": "{cents} cent te laag"
+    },
+    "clickLane": "Klik op een noot om hem te horen en erop te mikken (of om de oefening daar te beginnen)",
+    "giveNote": "Geef me een noot",
+    "playAgain": "Speel opnieuw",
+    "clear": "Wis",
+    "another": "Andere noot",
+    "close": {
+      "title": "Hoe dicht bij een noot telt als erop",
+      "relaxed": "Binnen 25 cent",
+      "strict": "Binnen 10 cent"
+    },
+    "target": {
+      "none": "Klik op een noot in de afbeelding om hem te horen en erop te mikken, of kies iets om te oefenen. Een oefening begint bij de noot waar je op zit; klik op een andere noot om daar te beginnen.",
+      "aim": "Mik op {note}"
+    },
+    "hold": {
+      "label": "Houd hem {seconds, plural, one {{seconds} seconde} other {{seconds} seconden}} aan",
+      "on": "Aangehouden, precies op de noot.",
+      "sharp": "Aangehouden. Gemiddeld {cents} cent te hoog.",
+      "flat": "Aangehouden. Gemiddeld {cents} cent te laag.",
+      "setting": "Houd {seconds} s aan",
+      "title": "Hoe lang je op een noot moet blijven voordat hij telt als aangehouden"
+    },
+    "headphones": "OnKey luistert niet terwijl er een noot speelt. Met luidsprekers wacht je tot hij klaar is voordat je zingt.",
+    "tip": "Luister naar de noot, hoor hem in je hoofd en zing hem dan. Probeer het met je ogen dicht en bepaal op het gehoor of je te hoog of te laag zit voordat je kijkt.",
+    "private": "OnKey luistert alleen naar je microfoon zolang deze pagina open is, en neemt niets op. Je muziek volgt het ondertussen niet.",
+    "noMic": "OnKey hoort geen microfoon. Controleer of er een is aangesloten en of OnKey hem mag gebruiken.",
+    "openSettings": "Open Instellingen",
+    "broken": "De tuner kon niet starten: het toonhoogtemodel is niet geladen.",
+    "onlyInApp": "De tuner werkt in de OnKey-app.",
+    "listen": "Luister…",
+    "practise": "Oefen:",
+    "pattern": {
+      "five": "Vijf noten",
+      "arpeggio": "Arpeggio",
+      "octave": "Octaafsprong"
+    },
+    "seq": {
+      "sing": "Zing noot {n} van {count}",
+      "done": "Je raakte er {hit} van de {count}.",
+      "skip": "Sla deze noot over",
+      "again": "Opnieuw",
+      "lower": "Lager",
+      "higher": "Hoger",
+      "lowerTitle": "Dezelfde oefening, één noot lager begonnen",
+      "higherTitle": "Dezelfde oefening, één noot hoger begonnen"
     }
   }
 }

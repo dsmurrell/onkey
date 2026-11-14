@@ -2,7 +2,7 @@
 //! Same rules as the Python engine: frames of 1024 samples at 16 kHz, hop 160; weighted argmax over the
 //! 9 bins around the peak; confidence ("periodicity") is the peak probability.
 use ndarray::Array2;
-use ort::session::{builder::{GraphOptimizationLevel, SessionBuilder}, Session};
+use ort::session::{builder::{AutoDevicePolicy, BuilderResult, GraphOptimizationLevel, SessionBuilder}, Session};
 
 pub const SR: usize = 16_000;
 pub const HOP: usize = 160;
@@ -31,9 +31,23 @@ const TINY: &[u8] = include_bytes!("../models/crepe-tiny.onnx");
 /// A session for inputs whose size changes from run to run (a whole song's singer): no memory arena and no memory
 /// patterns, so what a run takes is given back after it. With them, ONNX Runtime keeps the most any run took, in
 /// blocks that only grow: word alignment and GAME held 1.5-2 GB each after a few songs (live, OnKey reached 12 GB).
-pub fn lean(b: ort::session::builder::SessionBuilder) -> ort::Result<ort::session::builder::SessionBuilder> {
+pub fn lean(b: SessionBuilder) -> BuilderResult {
     b.with_memory_pattern(false)?
-        .with_execution_providers([ort::execution_providers::CPUExecutionProvider::default().with_arena_allocator(false).build()])
+        .with_execution_providers([ort::ep::CPU::default().with_arena_allocator(false).build()])
+}
+
+/// ONNX Runtime's environment, which every session is made in: one for the whole process (it allows only one), made
+/// at the first session, with the library's defaults (as it made its own before it had to be handed one).
+pub fn environment() -> ort::Result<&'static ort::environment::Environment> {
+    static ENVIRONMENT: std::sync::OnceLock<ort::Result<ort::environment::Environment>> = std::sync::OnceLock::new();
+    ENVIRONMENT.get_or_init(|| ort::init().build()).as_ref().map_err(|e| ort::Error::new(e.message()))
+}
+
+/// Where every session starts. A session runs on the processors it is given here and nowhere else: without any, on
+/// ONNX Runtime's CPU kernels, as it always has. (Left to itself the library now picks one for such a session, "the
+/// most efficient" device: Core ML on a Mac, where the words' and notes' models were never meant to run.)
+pub fn builder() -> ort::Result<SessionBuilder> {
+    Ok(Session::builder(environment()?)?.with_auto_device(AutoDevicePolicy::PreferCPU)?)
 }
 
 /// A session on Core ML (GPU / Neural Engine) for the model file `model`, `configure` setting its own options
@@ -51,19 +65,19 @@ pub fn lean(b: ort::session::builder::SessionBuilder) -> ort::Result<ort::sessio
 ///
 /// On a small Mac (lowmem.rs) the session keeps no memory patterns and no CPU arena, so what a run took is given
 /// back after it instead of held for the next (the `lean` sessions' reason, for the CPU side of a Core ML model).
-pub fn load_coreml(model: &std::path::Path, configure: impl Fn(SessionBuilder) -> ort::Result<SessionBuilder>) -> ort::Result<Session> {
-    use ort::execution_providers::{coreml::CoreMLModelFormat, CoreMLExecutionProvider, CPUExecutionProvider};
+pub fn load_coreml(model: &std::path::Path, configure: impl Fn(SessionBuilder) -> BuilderResult) -> ort::Result<Session> {
+    use ort::ep::{coreml::ModelFormat, CoreML, CPU};
     static ONE_AT_A_TIME: std::sync::Mutex<()> = std::sync::Mutex::new(());
     let _loading = ONE_AT_A_TIME.lock().unwrap_or_else(|e| e.into_inner());
     let build = |cache: Option<&std::path::Path>| -> ort::Result<Session> {
-        let mut ep = CoreMLExecutionProvider::default().with_model_format(CoreMLModelFormat::MLProgram);
+        let mut ep = CoreML::default().with_model_format(ModelFormat::MLProgram);
         if let Some(c) = cache {
             ep = ep.with_model_cache_dir(c.to_string_lossy());
         }
-        let b = configure(Session::builder()?)?;
+        let b = configure(builder()?)?;
         if crate::lowmem::low_memory() {
             b.with_memory_pattern(false)?
-                .with_execution_providers([ep.build(), CPUExecutionProvider::default().with_arena_allocator(false).build()])?
+                .with_execution_providers([ep.build(), CPU::default().with_arena_allocator(false).build()])?
                 .commit_from_file(model)
         } else {
             b.with_execution_providers([ep.build()])?.commit_from_file(model)
@@ -79,8 +93,9 @@ pub fn load_coreml(model: &std::path::Path, configure: impl Fn(SessionBuilder) -
 }
 
 /// The cache's layout and the session options that shape a compiled model (ONNX Runtime keys an entry by the
-/// model's path alone): bumped whenever those change, so old entries aren't reused.
-const COREML_CACHE_VERSION: u32 = 2;
+/// model's path alone): bumped whenever those change, so old entries aren't reused. (3: ONNX Runtime 1.31, whose
+/// Core ML provider may cut and compile a model differently from 1.22's)
+const COREML_CACHE_VERSION: u32 = 3;
 
 /// Where the compiled models are kept: the app sets its data folder at launch, so each model is compiled once,
 /// ever (the temp folder, the default for tools and tests, is cleared by macOS of files untouched for three days,
@@ -146,8 +161,8 @@ impl Crepe {
 
     /// CREPE-tiny with the session set up by `configure` (threads, execution providers): for measuring how to run
     /// the very same model (examples/crepebench).
-    pub fn tiny_with(configure: impl FnOnce(SessionBuilder) -> ort::Result<SessionBuilder>) -> ort::Result<Crepe> {
-        let session = configure(Session::builder()?.with_optimization_level(GraphOptimizationLevel::Level3)?)?
+    pub fn tiny_with(configure: impl FnOnce(SessionBuilder) -> BuilderResult) -> ort::Result<Crepe> {
+        let session = configure(builder()?.with_optimization_level(GraphOptimizationLevel::All)?)?
             .commit_from_memory(TINY)?;
         Ok(Crepe { session, batch: None, hi_bin: BIN_TOP, tones: Some(Tones::new()), gpu: None })
     }
@@ -156,10 +171,10 @@ impl Crepe {
     /// `coreml_batch`, the model has that fixed batch size and runs on Core ML (GPU / Neural Engine), or on Windows
     /// DirectML (gpu.rs).
     pub fn from_file(path: &std::path::Path, threads: usize, coreml_batch: Option<usize>) -> ort::Result<Crepe> {
-        let configure = move |b: SessionBuilder| b.with_optimization_level(GraphOptimizationLevel::Level3)?.with_intra_threads(threads);
+        let configure = move |b: SessionBuilder| b.with_optimization_level(GraphOptimizationLevel::All)?.with_intra_threads(threads);
         let (session, gpu) = match coreml_batch {
             Some(_) => crate::gpu::load("pitch", path, configure)?,
-            None => (configure(Session::builder()?)?.commit_from_file(path)?, None),
+            None => (configure(builder()?)?.commit_from_file(path)?, None),
         };
         Ok(Crepe { session, batch: coreml_batch, hi_bin: BIN_1100_HZ, tones: None, gpu })
     }

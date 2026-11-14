@@ -13,6 +13,8 @@ export type UpdateStatus = {
   /** an official build (scripts/release.sh): installs updates. Any other release build (a fork's, or built from
    *  source) only says when a new official version is out ("official" state) */
   official?: boolean;
+  /** a test build of a release, made for a tester (updater.rs TEST_BUILD): "Test build" shows beside the name */
+  test_build?: boolean;
   /** "Check for updates automatically" */
   auto: boolean;
   state: "idle" | "checking" | "current" | "downloading" | "ready" | "error" | "official";

@@ -429,6 +429,19 @@ private final class Capture {
 private var current: Capture? = nil
 private let lock = NSLock()
 
+/// For the mic meter (permissions.swift): a device's sample rate, and the inputs of a mic device found to carry the
+/// music (see Capture.copyMask), which the tuner must not take for the voice either.
+func deviceRate(_ id: AudioObjectID) -> Double {
+    var r = Float64(0)
+    _ = readProp(id, kAudioDevicePropertyNominalSampleRate, &r)
+    return r
+}
+
+func knownMusicInputs(_ micUID: String) -> UInt32 {
+    lock.lock(); defer { lock.unlock() }
+    return Capture.knownCopies[micUID] ?? 0
+}
+
 // MARK: C interface
 
 /// Start capturing the app whose bundle id starts with `bundle`, plus the microphone `chooseMic` picks (none if

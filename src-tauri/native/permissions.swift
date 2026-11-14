@@ -80,11 +80,23 @@ private final class Meter {
     var proc: AudioDeviceIOProcID? = nil
     var level: Float = -120          // dBFS of the latest block
     var blocks: Int = 0              // blocks heard, to tell "running but silent" from "no audio arriving"
+    // The mic's latest sound, for the tuner (tuner.rs reads it with onkey_mic_samples): one channel, the loudest
+    // input that doesn't carry the music (Capture.knownCopies), in a ring written here on Core Audio's thread and
+    // read by one reader. Fixed storage; `wrote` and `read` only ever grow.
+    static let ringN = 1 << 17
+    let ring = UnsafeMutablePointer<Float>.allocate(capacity: Meter.ringN)
+    var wrote = 0, read = 0
+    var rate: Double = 0
+    var copies: UInt32 = 0
+    init() { ring.initialize(repeating: 0, count: Meter.ringN) }
+    deinit { ring.deallocate() }
 
     /// 0 running, 1 no input device, 2 couldn't make the IO proc, 3 couldn't start it
     func start() -> Int32 {
         guard let mic = chooseMic() else { return 1 }
         device = mic.id
+        rate = deviceRate(device)
+        copies = knownMusicInputs(mic.uid)
         let st = AudioDeviceCreateIOProcIDWithBlock(&proc, device, nil) { [weak self] _, inData, _, _, _ in
             guard let self else { return }
             let abl = UnsafeMutableAudioBufferListPointer(UnsafeMutablePointer(mutating: inData))
@@ -99,6 +111,29 @@ private final class Meter {
             let rms = n > 0 ? (sum / Float(n)).squareRoot() : 0
             self.level = 20 * log10(max(rms, 1e-6))
             self.blocks += 1
+            // the loudest input that isn't a copy of the music, into the ring
+            var best: (p: UnsafeMutablePointer<Float>, stride: Int, at: Int, frames: Int)? = nil
+            var bestE: Float = -1, c = 0
+            for buf in abl {
+                let ch = max(1, Int(buf.mNumberChannels))
+                if let p = buf.mData?.assumingMemoryBound(to: Float.self) {
+                    let frames = Int(buf.mDataByteSize) / (MemoryLayout<Float>.size * ch)
+                    for k in 0..<ch where c + k >= 32 || (self.copies >> UInt32(c + k)) & 1 == 0 {
+                        var e: Float = 0, i = 0
+                        while i < frames { let v = p[i * ch + k]; e += v * v; i += 4 }
+                        if e > bestE { bestE = e; best = (p, ch, k, frames) }
+                    }
+                }
+                c += ch
+            }
+            if let b = best {
+                var w = self.wrote
+                for i in 0..<b.frames {
+                    self.ring[w & (Meter.ringN - 1)] = b.p[i * b.stride + b.at]
+                    w += 1
+                }
+                self.wrote = w
+            }
         }
         guard st == noErr, proc != nil else { return 2 }
         if AudioDeviceStart(device, proc) != noErr {
@@ -142,6 +177,25 @@ public func onkey_mic_meter(_ on: Int32) -> Int32 {
 public func onkey_mic_level() -> Float {
     meterLock.lock(); defer { meterLock.unlock() }
     return meter?.level ?? -120
+}
+
+/// The mic's sound since the last call, for the tuner: up to `cap` samples of one channel into `out`, at `rate` Hz.
+/// Returns how many (0 when the meter isn't running or nothing new came). Sound older than the ring holds (a second
+/// or more) is skipped.
+@_cdecl("onkey_mic_samples")
+public func onkey_mic_samples(_ out: UnsafeMutablePointer<Float>, _ cap: Int32, _ rate: UnsafeMutablePointer<Double>) -> Int32 {
+    meterLock.lock(); defer { meterLock.unlock() }
+    guard let m = meter, cap > 0 else { return 0 }
+    rate.pointee = m.rate
+    let w = m.wrote
+    var r = max(m.read, w - Meter.ringN / 2)
+    var n = 0
+    while r < w && n < Int(cap) {
+        out[n] = m.ring[r & (Meter.ringN - 1)]
+        r += 1; n += 1
+    }
+    m.read = r
+    return Int32(n)
 }
 
 /// How many audio blocks the meter has received since it started (0: nothing is arriving from the mic).

@@ -26,11 +26,11 @@ pub struct Game {
 /// (the pitch line, from CREPE on the same GPU, matched the Mac's); a wrong answer isn't a failure, so the fall-back
 /// to the CPU never came. GAME is small and runs once per learned song: the CPU costs seconds, not minutes.
 fn load(dir: &std::path::Path, name: &str, threads: usize, gpu: &mut Vec<Option<crate::gpu::Fallback>>) -> Result<Session, String> {
-    let s = Session::builder()
-        .and_then(|b| b.with_optimization_level(GraphOptimizationLevel::Level3))
-        .and_then(|b| b.with_intra_threads(threads))
-        .and_then(crate::pitch::lean)
-        .and_then(|b| b.commit_from_file(dir.join(format!("{name}.onnx"))))
+    let s = crate::pitch::builder()
+        .and_then(|b| Ok(b.with_optimization_level(GraphOptimizationLevel::All)?))
+        .and_then(|b| Ok(b.with_intra_threads(threads)?))
+        .and_then(|b| Ok(crate::pitch::lean(b)?))
+        .and_then(|mut b| b.commit_from_file(dir.join(format!("{name}.onnx"))))
         .map_err(|e| format!("loading GAME {name}: {e}"))?;
     gpu.push(None);
     Ok(s)

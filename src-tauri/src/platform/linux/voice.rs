@@ -259,7 +259,12 @@ mod tests {
         assert!((len - 4.0).abs() < 0.05, "{len}");
         gain(-30.0);        // (quiet: a CI machine with speakers)
         play(1.0);
-        std::thread::sleep(Duration::from_millis(400));
+        // it begins once the output has (a slow CI machine's sound server can take half a second: -1 until then)
+        let asked = Instant::now();
+        while position() < 0.0 && asked.elapsed() < Duration::from_secs(3) {
+            std::thread::sleep(Duration::from_millis(20));
+        }
+        std::thread::sleep(Duration::from_millis(200));
         let (a, t0) = (position(), Instant::now());
         std::thread::sleep(Duration::from_millis(1000));
         let (b, t1) = (position(), Instant::now());

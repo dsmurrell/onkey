@@ -1173,6 +1173,7 @@
     "sing": "Hát",
     "library": "Thư viện",
     "history": "Lịch sử",
+    "tuner": "Dò nốt",
     "settings": "Cài đặt",
     "paused": "Đã tạm dừng nghe",
     "resume": "Tiếp tục",
@@ -1181,7 +1182,8 @@
     "whatsNew": "Có gì mới trong OnKey",
     "whatsNewFresh": "Có gì mới trong OnKey (mới)",
     "testBuild": "Bản thử nghiệm",
-    "testBuildTitle": "Bản thử nghiệm OnKey cho Windows hoặc Linux: khi có bản tiếp theo, hãy cài đè lên"
+    "testBuildTitle": "Bản thử nghiệm OnKey cho Windows hoặc Linux: khi có bản tiếp theo, hãy cài đè lên",
+    "testBuildOfRelease": "Bản thử nghiệm của OnKey, làm ra để bạn thử điều mới. Bản này tự cập nhật lên bản phát hành tiếp theo khi bản đó ra mắt."
   },
   "licences": {
     "back": "← Cài đặt",
@@ -1530,6 +1532,65 @@
     "app": {
       "music_app": "ứng dụng nhạc của bạn",
       "browser": "trình duyệt của bạn"
+    }
+  },
+  "tuner": {
+    "title": "Dò nốt",
+    "intro": "Hát bất kỳ nốt nào và xem đó là nốt gì. Không cần bài hát.",
+    "waiting": "Hát hoặc ngân nga một nốt",
+    "hz": "{hz} Hz",
+    "flat": "Thấp",
+    "sharp": "Cao",
+    "cents": {
+      "on": "Đúng nốt",
+      "sharp": "Cao {cents} cent",
+      "flat": "Thấp {cents} cent"
+    },
+    "clickLane": "Bấm vào một nốt để nghe và nhắm tới nó (hoặc để bắt đầu chuỗi nốt từ đó)",
+    "giveNote": "Cho tôi một nốt",
+    "playAgain": "Phát lại",
+    "clear": "Xóa",
+    "another": "Nốt khác",
+    "close": {
+      "title": "Gần nốt bao nhiêu thì tính là đúng",
+      "relaxed": "Trong vòng 25 cent",
+      "strict": "Trong vòng 10 cent"
+    },
+    "target": {
+      "none": "Bấm vào một nốt trong hình để nghe và nhắm tới nó, hoặc chọn một bài để luyện. Chuỗi nốt bắt đầu từ nốt bạn đang hát; bấm nốt khác để bắt đầu từ đó.",
+      "aim": "Nhắm tới {note}"
+    },
+    "hold": {
+      "label": "Giữ trong {seconds, plural, other {{seconds} giây}}",
+      "on": "Đã giữ, đúng ngay nốt.",
+      "sharp": "Đã giữ. Trung bình cao {cents} cent.",
+      "flat": "Đã giữ. Trung bình thấp {cents} cent.",
+      "setting": "Giữ {seconds} giây",
+      "title": "Phải ở trên một nốt bao lâu thì tính là đã giữ"
+    },
+    "headphones": "OnKey không nghe trong lúc một nốt đang phát. Nếu dùng loa, hãy chờ nốt phát xong rồi mới hát.",
+    "tip": "Nghe nốt, hình dung nó trong đầu, rồi hát. Thử nhắm mắt lại và dựa vào tai để biết mình đang cao hay thấp trước khi nhìn.",
+    "private": "OnKey chỉ nghe micrô của bạn khi trang này đang mở và không ghi lại gì. Trong lúc đó OnKey không theo nhạc của bạn.",
+    "noMic": "OnKey không nghe thấy micrô nào. Hãy kiểm tra đã kết nối micrô và OnKey được phép dùng micrô đó.",
+    "openSettings": "Mở Cài đặt",
+    "broken": "Không khởi động được trình dò nốt: mô hình cao độ không tải được.",
+    "onlyInApp": "Dò nốt hoạt động trong ứng dụng OnKey.",
+    "listen": "Nghe…",
+    "practise": "Luyện:",
+    "pattern": {
+      "five": "Năm nốt",
+      "arpeggio": "Hợp âm rải",
+      "octave": "Nhảy quãng tám"
+    },
+    "seq": {
+      "sing": "Hát nốt thứ {n} trên {count}",
+      "done": "Bạn hát trúng {hit} trong {count} nốt.",
+      "skip": "Bỏ qua nốt này",
+      "again": "Hát lại",
+      "lower": "Thấp hơn",
+      "higher": "Cao hơn",
+      "lowerTitle": "Cùng chuỗi nốt, bắt đầu thấp hơn một nốt",
+      "higherTitle": "Cùng chuỗi nốt, bắt đầu cao hơn một nốt"
     }
   }
 }

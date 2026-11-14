@@ -86,7 +86,7 @@ pub struct WordAligner {
 
 impl WordAligner {
     pub fn load(path: &std::path::Path, threads: usize) -> Result<WordAligner, String> {
-        let options = move |b: ort::session::builder::SessionBuilder| b.with_optimization_level(GraphOptimizationLevel::Level3)
+        let options = move |b: ort::session::builder::SessionBuilder| b.with_optimization_level(GraphOptimizationLevel::All)
             .and_then(|b| b.with_intra_threads(threads)).and_then(crate::pitch::lean);
         let loading = |e: ort::Error| format!("loading {}: {e}", path.display());
         // (on Windows on DirectML when it can be: gpu.rs)

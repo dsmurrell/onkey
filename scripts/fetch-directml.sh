@@ -1,6 +1,6 @@
 #!/bin/sh
 # Fetches DirectML.dll for the Windows build into src-tauri/directml/ (not in git): the GPU for learning
-# (src-tauri/src/gpu.rs). ONNX Runtime 1.22, which the app links, is built against DirectML 1.15.4; Windows' own
+# (src-tauri/src/gpu.rs). ONNX Runtime (1.31, which the app links; Microsoft built 1.22-1.24 against it too) uses DirectML 1.15.4, still the newest; Windows' own
 # DirectML.dll is older, so the installer puts this one beside onkey.exe (tauri.windows.conf.json), with its licence.
 # From Microsoft's NuGet package, checked against the SHA-512 nuget.org lists for it. CI runs this (windows.yml).
 set -e

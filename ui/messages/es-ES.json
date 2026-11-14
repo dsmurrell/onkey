@@ -1173,6 +1173,7 @@
     "sing": "Cantar",
     "library": "Biblioteca",
     "history": "Historial",
+    "tuner": "Afinador",
     "settings": "Ajustes",
     "paused": "Escucha en pausa",
     "resume": "Reanudar",
@@ -1181,7 +1182,8 @@
     "whatsNew": "Novedades de OnKey",
     "whatsNewFresh": "Novedades de OnKey (nuevo)",
     "testBuild": "Versión de prueba",
-    "testBuildTitle": "Una versión de prueba de OnKey para Windows o Linux: instala la siguiente encima cuando salga"
+    "testBuildTitle": "Una versión de prueba de OnKey para Windows o Linux: instala la siguiente encima cuando salga",
+    "testBuildOfRelease": "Una versión de prueba de OnKey, hecha para que pruebes algo nuevo. Se actualiza sola a la próxima versión cuando salga."
   },
   "licences": {
     "back": "← Ajustes",
@@ -1530,6 +1532,65 @@
     "app": {
       "music_app": "tu app de música",
       "browser": "tu navegador"
+    }
+  },
+  "tuner": {
+    "title": "Afinador",
+    "intro": "Canta cualquier nota y mira qué nota es. No hace falta ninguna canción.",
+    "waiting": "Canta o tararea una nota",
+    "hz": "{hz} Hz",
+    "flat": "Bajo",
+    "sharp": "Alto",
+    "cents": {
+      "on": "En la nota",
+      "sharp": "{cents} cents por encima",
+      "flat": "{cents} cents por debajo"
+    },
+    "clickLane": "Haz clic en una nota para oírla e intentar darla (o para empezar el patrón desde ahí)",
+    "giveNote": "Dame una nota",
+    "playAgain": "Tocar otra vez",
+    "clear": "Borrar",
+    "another": "Otra nota",
+    "close": {
+      "title": "Lo cerca que tienes que estar de una nota para que cuente",
+      "relaxed": "A menos de 25 cents",
+      "strict": "A menos de 10 cents"
+    },
+    "target": {
+      "none": "Haz clic en una nota de la imagen para oírla e intentar darla, o elige algo para practicar. Un patrón empieza desde la nota en la que estás; haz clic en otra nota para empezarlo ahí.",
+      "aim": "Intenta dar {note}"
+    },
+    "hold": {
+      "label": "Sostenla {seconds, plural, one {{seconds} segundo} other {{seconds} segundos}}",
+      "on": "Sostenida, justo en la nota.",
+      "sharp": "Sostenida. De media, {cents} cents por encima.",
+      "flat": "Sostenida. De media, {cents} cents por debajo.",
+      "setting": "Sostener {seconds} s",
+      "title": "Cuánto tiempo hay que quedarse en una nota para que cuente como sostenida"
+    },
+    "headphones": "OnKey no escucha mientras suena una nota. Con altavoces, espera a que termine antes de cantar.",
+    "tip": "Escucha la nota, óyela en tu cabeza y luego cántala. Prueba con los ojos cerrados, y decide de oído si estás alto o bajo antes de mirar.",
+    "private": "OnKey escucha tu micrófono solo mientras esta página está abierta, y no graba nada. Mientras tanto, no sigue tu música.",
+    "noMic": "OnKey no oye ningún micrófono. Comprueba que haya uno conectado y que OnKey tenga permiso para usarlo.",
+    "openSettings": "Abrir Ajustes",
+    "broken": "No se ha podido iniciar el afinador: no se ha cargado el modelo de afinación.",
+    "onlyInApp": "El afinador funciona en la app OnKey.",
+    "listen": "Escucha…",
+    "practise": "Practicar:",
+    "pattern": {
+      "five": "Cinco notas",
+      "arpeggio": "Arpegio",
+      "octave": "Salto de octava"
+    },
+    "seq": {
+      "sing": "Canta la nota {n} de {count}",
+      "done": "Has dado {hit} de {count}.",
+      "skip": "Saltar esta nota",
+      "again": "Otra vez",
+      "lower": "Más grave",
+      "higher": "Más agudo",
+      "lowerTitle": "El mismo patrón, empezando una nota más abajo",
+      "higherTitle": "El mismo patrón, empezando una nota más arriba"
     }
   }
 }

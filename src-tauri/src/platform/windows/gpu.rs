@@ -1,8 +1,8 @@
 //! Which processor runs each model on Windows: DirectML on the GPU with the most memory of its own (gpu.rs `pick`),
 //! the CPU when there's none or DirectML fails (gpu.rs says why, once).
 use crate::gpu::{note, pick, Adapter};
-use ort::execution_providers::DirectMLExecutionProvider;
-use ort::session::{builder::SessionBuilder, Session};
+use ort::ep::DirectML;
+use ort::session::{builder::{BuilderResult, SessionBuilder}, Session};
 use std::sync::OnceLock;
 
 /// The display adapters, as DXGI lists them (empty if it can't).
@@ -60,21 +60,21 @@ fn directml_dll() -> Option<String> {
 /// allocator), `commit` loads the model. On DirectML the session has no memory patterns and runs its nodes in
 /// order, as DirectML requires, and DirectML comes first, the CPU taking what it can't (ONNX Runtime adds the
 /// CPU's itself, unless `options` did). If DirectML can't load the model, the CPU does.
-pub fn session(model: &'static str, options: impl Fn(SessionBuilder) -> ort::Result<SessionBuilder> + Send + 'static,
+pub fn session(model: &'static str, options: impl Fn(SessionBuilder) -> BuilderResult + Send + 'static,
                commit: impl Fn(SessionBuilder) -> ort::Result<Session> + Send + 'static) -> ort::Result<(Session, Option<Fallback>)> {
     match directml() {
         Ok(gpu) => {
-            let dml = Session::builder()
-                .and_then(|b| b.with_execution_providers([
-                    DirectMLExecutionProvider::default().with_device_id(gpu.index as i32).build().error_on_failure()]))
-                .and_then(|b| b.with_memory_pattern(false))
-                .and_then(|b| b.with_parallel_execution(false))
-                .and_then(&options)
+            let dml = crate::pitch::builder()
+                .and_then(|b| Ok(b.with_execution_providers([
+                    DirectML::default().with_device_id(gpu.index as i32).build().error_on_failure()])?))
+                .and_then(|b| Ok(b.with_memory_pattern(false)?))
+                .and_then(|b| Ok(b.with_parallel_execution(false)?))
+                .and_then(|b| Ok(options(b)?))
                 .and_then(&commit);
             match dml {
                 Ok(s) => {
                     note(model, &format!("DirectML ({})", gpu.name), None);
-                    let cpu = Box::new(move || Session::builder().and_then(&options).and_then(&commit));
+                    let cpu = Box::new(move || crate::pitch::builder().and_then(|b| Ok(options(b)?)).and_then(&commit));
                     return Ok((s, Some(Fallback { model, cpu })));
                 }
                 Err(e) => note(model, "the CPU", Some(&format!("DirectML couldn't load it: {e}"))),
@@ -82,7 +82,7 @@ pub fn session(model: &'static str, options: impl Fn(SessionBuilder) -> ort::Res
         }
         Err(why) => note(model, "the CPU", Some(why)),
     }
-    Ok((Session::builder().and_then(options).and_then(commit)?, None))
+    Ok((crate::pitch::builder().and_then(|b| Ok(options(b)?)).and_then(commit)?, None))
 }
 
 /// A model on DirectML: how to make its session on the CPU instead.
@@ -100,10 +100,10 @@ impl Fallback {
 }
 
 /// `session` for a model in a file (`model`: its name in the log).
-pub fn load(model: &'static str, path: &std::path::Path, options: impl Fn(SessionBuilder) -> ort::Result<SessionBuilder> + Send + 'static)
+pub fn load(model: &'static str, path: &std::path::Path, options: impl Fn(SessionBuilder) -> BuilderResult + Send + 'static)
     -> ort::Result<(Session, Option<Fallback>)> {
     let file = path.to_path_buf();
-    session(model, options, move |b| b.commit_from_file(&file))
+    session(model, options, move |mut b| b.commit_from_file(&file))
 }
 
 /// The live pitch (CREPE-tiny) on DirectML when there's a GPU for it (else the CPU); its first run prepares it, or
@@ -112,7 +112,7 @@ pub fn live_pitch() -> ort::Result<Option<crate::pitch::Crepe>> {
     use ort::session::builder::GraphOptimizationLevel;
     use crate::pitch::{Crepe, HOP, WIN};
     let (session, gpu) = session("live pitch",
-        |b| b.with_optimization_level(GraphOptimizationLevel::Level3)?.with_intra_threads(2), |b| b.commit_from_memory(Crepe::tiny_model()))?;
+        |b| b.with_optimization_level(GraphOptimizationLevel::All)?.with_intra_threads(2), |mut b| b.commit_from_memory(Crepe::tiny_model()))?;
     let mut c = Crepe::tiny_on(session, gpu);
     c.frames(&[0.0; WIN + 2 * HOP], 3)?;
     Ok(Some(c))

@@ -574,6 +574,26 @@ fn active_session_pids() -> Vec<u32> {
 static METER_STOP: Mutex<Option<Arc<AtomicBool>>> = Mutex::new(None);
 static METER_LEVEL: AtomicU32 = AtomicU32::new(0xC2F0_0000);   // -120.0
 static METER_BLOCKS: AtomicI32 = AtomicI32::new(0);
+/// The mic's latest sound (mono, 48 kHz; a second at most), for the tuner (tuner.rs, through `meter_samples`).
+static METER_SOUND: Mutex<VecDeque<f32>> = Mutex::new(VecDeque::new());
+const METER_RATE: f64 = 48_000.0;
+
+fn meter_keep(x: impl Iterator<Item = f32>) {
+    let mut s = METER_SOUND.lock().unwrap();
+    s.extend(x);
+    let over = s.len().saturating_sub(METER_RATE as usize);
+    s.drain(..over);
+}
+
+/// The mic's sound since the last call (see `METER_SOUND`): up to `cap` samples into `out`, and its rate.
+pub fn meter_samples(out: &mut [f32]) -> (usize, f64) {
+    let mut s = METER_SOUND.lock().unwrap();
+    let n = s.len().min(out.len());
+    for (o, v) in out.iter_mut().zip(s.drain(..n)) {
+        *o = v;
+    }
+    (n, METER_RATE)
+}
 
 /// Start (true) or stop the meter: 0 if it's running afterwards (or stopped when asked), 1 no input device, 2 it
 /// wouldn't open.
@@ -583,6 +603,7 @@ pub fn meter(on: bool) -> i32 {
     }
     METER_LEVEL.store((-120f32).to_bits(), Ordering::SeqCst);
     METER_BLOCKS.store(0, Ordering::SeqCst);
+    METER_SOUND.lock().unwrap().clear();
     if !on {
         return 0;
     }
@@ -610,7 +631,7 @@ pub fn meter(on: bool) -> i32 {
             let db = if ms > 0.0 { (10.0 * ms.log10()).max(-120.0) } else { -120.0 };
             METER_LEVEL.store(db.to_bits(), Ordering::SeqCst);
             METER_BLOCKS.fetch_add(1, Ordering::SeqCst);
-            buf.clear();
+            meter_keep(buf.drain(..));
         }
     });
     if rx.recv_timeout(Duration::from_secs(3)).unwrap_or(false) {

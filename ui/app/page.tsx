@@ -408,6 +408,9 @@ function Notices({ status, song }: { status: Status; song: SongState | null }) {
   const [ytClosed, setYtClosed] = useState<string | null>(null);
   // the lyrics-down notice, closed: for that song (another song without its words shows it again)
   const [lyricsClosed, setLyricsClosed] = useState<string | null>(null);
+  // the music-too-quiet notice, closed: until the music is loud enough again (it shows the next time it's too quiet)
+  const [quietClosed, setQuietClosed] = useState(false);
+  useEffect(() => { if (!status.music_quiet) setQuietClosed(false); }, [status.music_quiet]);
   const sounding = status.browser_sounding;
   useEffect(() => { if (status.youtube) setYtOn(false); }, [status.youtube]);
   const learning = !song || song.mode === "learn";
@@ -431,8 +434,8 @@ function Notices({ status, song }: { status: Status; song: SongState | null }) {
         {win ? t.rich("sing.notices.mic.nonePc", { b, soundInput: pc.soundInput }) : t.rich("sing.notices.mic.noneMac", { b })}
       </Notice>
     ),
-    status.music_quiet && (
-      <Notice key="music-quiet" title={t("sing.notices.musicQuiet.title", { app: appText(t, status.music_quiet.app) })}>
+    status.music_quiet && !quietClosed && (
+      <Notice key="music-quiet" onClose={() => setQuietClosed(true)} title={t("sing.notices.musicQuiet.title", { app: appText(t, status.music_quiet.app) })}>
         {t("sing.notices.musicQuiet.body", { app: appText(t, status.music_quiet.app), at: status.music_quiet.volume != null ? "yes" : "no",
                                              volume: String(status.music_quiet.volume ?? ""), os: win ? "pc" : "mac" })}
       </Notice>

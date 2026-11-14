@@ -1173,6 +1173,7 @@
     "sing": "Söyle",
     "library": "Arşiv",
     "history": "Geçmiş",
+    "tuner": "Akort",
     "settings": "Ayarlar",
     "paused": "Dinleme duraklatıldı",
     "resume": "Devam et",
@@ -1181,7 +1182,8 @@
     "whatsNew": "OnKey’de yenilikler",
     "whatsNewFresh": "OnKey’de yenilikler (yeni)",
     "testBuild": "Test sürümü",
-    "testBuildTitle": "Windows veya Linux için OnKey test sürümü: bir sonraki çıktığında bunun üzerine kurun"
+    "testBuildTitle": "Windows veya Linux için OnKey test sürümü: bir sonraki çıktığında bunun üzerine kurun",
+    "testBuildOfRelease": "Yeni bir şeyi denemeniz için hazırlanmış bir OnKey test sürümü. Bir sonraki sürüm çıktığında kendini ona günceller."
   },
   "licences": {
     "back": "← Ayarlar",
@@ -1530,6 +1532,65 @@
     "app": {
       "music_app": "müzik uygulamanız",
       "browser": "tarayıcınız"
+    }
+  },
+  "tuner": {
+    "title": "Akort",
+    "intro": "Herhangi bir nota söyleyin, hangi nota olduğunu görün. Şarkı gerekmez.",
+    "waiting": "Bir nota söyleyin ya da mırıldanın",
+    "hz": "{hz} Hz",
+    "flat": "Pes",
+    "sharp": "Tiz",
+    "cents": {
+      "on": "Tam notada",
+      "sharp": "{cents} sent tiz",
+      "flat": "{cents} sent pes"
+    },
+    "clickLane": "Duymak ve hedeflemek için bir notaya tıklayın (ya da alıştırmayı oradan başlatmak için)",
+    "giveNote": "Bana bir nota ver",
+    "playAgain": "Yeniden çal",
+    "clear": "Temizle",
+    "another": "Başka nota",
+    "close": {
+      "title": "Notaya ne kadar yakın olmak notada sayılır",
+      "relaxed": "25 sent içinde",
+      "strict": "10 sent içinde"
+    },
+    "target": {
+      "none": "Duymak ve hedeflemek için resimdeki bir notaya tıklayın ya da çalışacak bir şey seçin. Alıştırma bulunduğunuz notadan başlar; oradan başlatmak için başka bir notaya tıklayın.",
+      "aim": "Hedef: {note}"
+    },
+    "hold": {
+      "label": "Notayı {seconds, plural, one {{seconds} saniye} other {{seconds} saniye}} tutun",
+      "on": "Tuttunuz, tam notada.",
+      "sharp": "Tuttunuz. Ortalama {cents} sent tiz.",
+      "flat": "Tuttunuz. Ortalama {cents} sent pes.",
+      "setting": "{seconds} sn tut",
+      "title": "Bir notanın tutulmuş sayılması için ne kadar süre üzerinde kalınmalı"
+    },
+    "headphones": "OnKey bir nota çalarken dinlemez. Hoparlör kullanıyorsanız söylemeden önce notanın bitmesini bekleyin.",
+    "tip": "Notayı dinleyin, kafanızda duyun, sonra söyleyin. Gözleriniz kapalı deneyin ve bakmadan önce tiz mi pes mi olduğunuza kulağınızla karar verin.",
+    "private": "OnKey mikrofonunuzu yalnızca bu sayfa açıkken dinler ve hiçbir şey kaydetmez. Bu sırada müziğinizi takip etmez.",
+    "noMic": "OnKey bir mikrofon duyamıyor. Bir mikrofonun bağlı olduğunu ve OnKey’in onu kullanmasına izin verildiğini kontrol edin.",
+    "openSettings": "Ayarlar’ı aç",
+    "broken": "Akort başlatılamadı: ses perdesi modeli yüklenmedi.",
+    "onlyInApp": "Akort, OnKey uygulamasında çalışır.",
+    "listen": "Dinleyin…",
+    "practise": "Alıştırma:",
+    "pattern": {
+      "five": "Beş nota",
+      "arpeggio": "Arpej",
+      "octave": "Oktav atlama"
+    },
+    "seq": {
+      "sing": "{count} notadan {n}. notayı söyleyin",
+      "done": "{count} notadan {hit} tanesini tutturdunuz.",
+      "skip": "Bu notayı geç",
+      "again": "Yeniden",
+      "lower": "Daha pes",
+      "higher": "Daha tiz",
+      "lowerTitle": "Aynı alıştırma, bir nota aşağıdan başlar",
+      "higherTitle": "Aynı alıştırma, bir nota yukarıdan başlar"
     }
   }
 }

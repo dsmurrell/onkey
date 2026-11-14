@@ -30,13 +30,13 @@ impl Mdx {
     pub fn load(path: &std::path::Path, threads: usize, coreml: bool) -> Result<Mdx, String> {
         // one chunk a run: the model's free batch dimension is fixed at 1, so Core ML sees static shapes (with an
         // unbounded one the Neural Engine refuses the model, "E5RT ... unbounded dimension", and the GPU runs it)
-        let configure = move |b: SessionBuilder| b.with_optimization_level(GraphOptimizationLevel::Level3)?.with_intra_threads(threads)?
+        let configure = move |b: SessionBuilder| b.with_optimization_level(GraphOptimizationLevel::All)?.with_intra_threads(threads)?
             .with_dimension_override("batch_size", 1);
         let loading = |e: ort::Error| format!("loading {}: {e}", path.display());
         let (session, gpu) = if coreml {
             crate::gpu::load("separation", path, configure).map_err(loading)?
         } else {
-            (Session::builder().and_then(configure).and_then(|b| b.commit_from_file(path)).map_err(loading)?, None)
+            (crate::pitch::builder().and_then(|b| Ok(configure(b)?)).and_then(|mut b| b.commit_from_file(path)).map_err(loading)?, None)
         };
         let window = (0..N_FFT).map(|n| 0.5 - 0.5 * (2.0 * std::f32::consts::PI * n as f32 / N_FFT as f32).cos()).collect();
         Ok(Mdx { session, window, gpu })

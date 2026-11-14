@@ -6,6 +6,10 @@
 #     same source with the version raised by one patch, into dist/next/, as the fake next version for the update
 #     rehearsal (scripts/update-rehearsal-ci.sh, .ps1). A throwaway run also builds the app to trust its throwaway key
 #     (PUBKEY_OVERRIDE) rather than the one in tauri.conf.json, which only the release's key matches.
+# Windows code signing (SignPath, a step of the workflow between the two): `ci-build.sh compile` stops once onkey.exe is
+# built and leaves a copy in to-sign/ for the workflow to have signed; with the signed one put back in
+# src-tauri/target/release/, `ci-build.sh bundle` packs the installer from it without compiling again (tauri bundle),
+# then builds the rehearsal's next version as before (never released, so never signed). No argument: all in one go.
 # Environment: VERSION (optional), UPDATER_MODE (optional: throwaway|release), PUBKEY_OVERRIDE (throwaway only),
 # BUNDLE_GLOB (where tauri build puts the file: src-tauri/target/release/bundle/nsis/*-setup.exe or
 # .../appimage/*.AppImage), BUNDLES (optional: tauri build --bundles), and the signing key's TAURI_SIGNING_* variables.
@@ -33,11 +37,16 @@ if mode == "throwaway":
 print(json.dumps(cfg))
 EOF
 }
-build() {   # build <version> <out dir>: tauri build, its file (+ .sig) moved to <out dir>
+build() {   # build <version> <out dir> [bundle]: tauri build (or, with "bundle", only the packing), its file (+ .sig) moved to <out dir>
   local v=$1 out=$2 f
   rm -rf "src-tauri/target/release/bundle/nsis" "src-tauri/target/release/bundle/appimage"
-  # shellcheck disable=SC2086
-  npx tauri build --ci ${BUNDLES:+--bundles $BUNDLES} --config "$(config "$v")"
+  if [ "${3:-}" = bundle ]; then
+    # shellcheck disable=SC2086
+    npx tauri bundle --ci ${BUNDLES:+--bundles $BUNDLES} --config "$(config "$v")"
+  else
+    # shellcheck disable=SC2086
+    npx tauri build --ci ${BUNDLES:+--bundles $BUNDLES} --config "$(config "$v")"
+  fi
   # the AppImage: the build machine's Wayland libraries out (a blank window on newer systems), then signed again,
   # as the signature tauri build made was of the file before
   for f in $BUNDLE_GLOB; do
@@ -47,7 +56,11 @@ build() {   # build <version> <out dir>: tauri build, its file (+ .sig) moved to
       rm -f "$f.sig"
       # the key and its password from the environment, as tauri build had them (a throwaway key's is empty: said
       # so, rather than asked for); never waiting on a prompt
-      if [ -z "${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}" ]; then
+      # (the key is its text, or for the throwaway key a file's path, which `tauri signer sign` takes only as
+      # --private-key-path)
+      if [ -f "${TAURI_SIGNING_PRIVATE_KEY:-}" ]; then
+        TAURI_SIGNING_PRIVATE_KEY= npx tauri signer sign --private-key-path "$TAURI_SIGNING_PRIVATE_KEY" -p "${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}" "$f" </dev/null
+      elif [ -z "${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}" ]; then
         npx tauri signer sign -p "" "$f" </dev/null
       else
         npx tauri signer sign "$f" </dev/null
@@ -74,8 +87,17 @@ if [ -n "${UPDATER_MODE:-}" ]; then
   [ -n "${TAURI_SIGNING_PRIVATE_KEY:-}" ] || die "no signing key in TAURI_SIGNING_PRIVATE_KEY"
   [ "$UPDATER_MODE" != throwaway ] || [ -n "${PUBKEY_OVERRIDE:-}" ] || die "a throwaway build needs its public key (PUBKEY_OVERRIDE)"
 fi
-echo "== build $V${UPDATER_MODE:+ (updater files: $UPDATER_MODE${ONKEY_OFFICIAL:+, official})}"
-build "$V" dist
+PHASE=${1:-all}
+case "$PHASE" in all|compile|bundle) ;; *) die "unknown phase '$PHASE' (compile | bundle)" ;; esac
+echo "== build $V${UPDATER_MODE:+ (updater files: $UPDATER_MODE${ONKEY_OFFICIAL:+, official})}$([ "$PHASE" = all ] || echo " [$PHASE]")"
+if [ "$PHASE" = compile ]; then
+  npx tauri build --ci --no-bundle --config "$(config "$V")"
+  [ -f src-tauri/target/release/onkey.exe ] || die "no src-tauri/target/release/onkey.exe after the build"
+  mkdir -p to-sign && cp src-tauri/target/release/onkey.exe to-sign/
+  echo "== compiled; to be signed:"; ls -la to-sign
+  exit 0
+fi
+build "$V" dist "$([ "$PHASE" = bundle ] && echo bundle)"
 if [ -n "${UPDATER_MODE:-}" ]; then
   # the next version: one patch up (a prerelease label dropped, so it's newer by semver), the same source otherwise
   NEXT=$($PY -c 'import sys; v = sys.argv[1].split("-")[0].split("."); v[2] = str(int(v[2]) + 1); print(".".join(v))' "$V")
