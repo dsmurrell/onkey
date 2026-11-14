@@ -87,24 +87,33 @@ Builds: Apple Silicon (`darwin-aarch64`), Windows x64 (`windows-x86_64`), Linux 
 3. **Notarisation** is already set up for `scripts/make-dmg.sh` (Developer ID certificate in the keychain,
    notarytool profile `onkey-notary`, the provisioning profile in `~/Documents/Apple Developer/`).
 4. **CI secrets for the Windows and Linux builds** (once; by the maintainer, by hand, never by a script or an agent).
-   The Windows and Linux updater files are signed on GitHub's runners, so the private repo's Actions need the
-   updater key, as encrypted secrets. On github.com, in the **development** repo (`dsmurrell/onkey-dev`, where
-   `windows.yml` and `linux.yml` live): Settings → Secrets and variables → Actions → New repository secret:
+   The Windows and Linux release builds run in the open, on GitHub's runners in **this** repo (`dsmurrell/onkey`,
+   `.github/workflows/windows.yml` and `linux.yml`): SignPath signs the Windows build only when this repo's
+   workflow made it. Settings → Secrets and variables → Actions → New repository secret:
    - `TAURI_SIGNING_PRIVATE_KEY`: the whole contents of `~/.tauri/onkey-updater.key` (both lines; `pbcopy <
      ~/.tauri/onkey-updater.key` puts it on the clipboard without showing it, then paste). Tauri reads the key
      from this variable directly.
    - `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`: the key's password (`security find-generic-password -a onkey -s
      onkey-updater-key -w | pbcopy`).
-   - `ONKEY_PUBLIC_RELEASE_TOKEN`: a fine-grained personal access token (Settings → Developer settings →
-     Fine-grained tokens) for the one repository `dsmurrell/onkey`, with repository permission **Contents: Read
-     and write** only (that's what uploading release assets needs), a short expiry (renew it when a release
-     fails to upload). The workflow uses it only to upload to a *draft* release; it refuses a published one.
+   - `ONKEY_CHALLENGE_KEY`: the challenge key (step 1).
+   - `SIGNPATH_API_TOKEN`: the token of SignPath's CI user ("CI builds" under Users and Groups at
+     app.signpath.io; Regenerate token shows it once).
+
+   Uploading to the draft release needs no secret: the run's own token does it (the build job's `contents:
+   write`), and only ever to a *draft*; it refuses a published one.
 
    Secrets are encrypted at rest, shown to no one after saving, and masked in logs; the workflows pass the key
-   straight to `tauri build` and never write it to disk or print it. Anyone with write access to `onkey-dev` can
-   run a workflow that uses them, so keep that repo's collaborators to yourself. Rotate (make a new key, ship
-   its public key in a release signed with the old one, then replace the secrets) if `onkey-dev` is ever
-   compromised. The Mac side keeps using the key file and the Keychain as before.
+   straight to `tauri build` and never write it to disk or print it. They are not given to a pull request's
+   run, and neither workflow runs on pull requests: only on a push to this repo's own branches or by hand, so
+   keep the repo's collaborators to yourself. Rotate (make a new key, ship its public key in a release signed
+   with the old one, then replace the secrets) if the repo is ever compromised. The Mac side keeps using the key
+   file and the Keychain as before.
+5. **Windows code signing: SignPath Foundation** (free for open source; the certificate is in SignPath
+   Foundation's name). At app.signpath.io: organization "OnKey [OSS]", project `onkey`, linked to this repo;
+   the SignPath GitHub App installed on this repo; the artifact configuration `github-zip` (a zip holding one
+   `.exe` whose product name is OnKey and whose product version is the build's); two signing policies,
+   `test-signing` (a certificate no PC trusts: rehearsals) and `release-signing` (the real one: only this
+   repo's builds, and each request waits for an approval by the maintainer).
 
 ## Launch day
 
@@ -176,30 +185,36 @@ SHA-256 isn't the expected one) (`scripts/check-release.sh`), or the update isn'
 - **Official builds only install.** `ONKEY_OFFICIAL=1` is set only in the release path (`release.sh` on the Mac;
   `updater: release` in CI, which refuses to be official without the public tag). Throwaway and development
   builds aren't official and only say when a new version is out.
-- **A slot for Windows code signing (Authenticode), when there is a certificate:** `tauri build` signs the
-  installer and `onkey.exe` itself when `bundle.windows.certificateThumbprint` (or a `signCommand`) is configured;
-  it happens inside the same build step, before the updater signature is made over the finished installer, so
-  nothing here changes: add the certificate's secrets and the config override to `scripts/ci-build.sh`'s Windows
-  path. Until then the installer is unsigned: a manual download gets Windows SmartScreen's "Windows protected your
-  PC" (the browser marks downloads as from the Internet, and SmartScreen checks marked files' reputation when
-  they're opened). The updater's path is different: the installer is written by OnKey itself, which doesn't add
-  that mark, so SmartScreen isn't expected to interrupt an update (the CI rehearsal installs exactly this way, on
-  a stock Windows runner, and would hang if a dialog appeared); Microsoft Defender still scans the file, and
-  Windows 11's Smart App Control, where it's on, blocks unsigned programs however they're started, as it would
-  OnKey itself. Signing removes both, in time (reputation builds per certificate).
+- **Windows code signing (Authenticode), through SignPath.** `windows.yml` builds `onkey.exe`, has SignPath sign
+  it, packs the installer from the signed file (`scripts/ci-build.sh compile`, then `bundle`), has SignPath sign
+  the installer, and makes the updater signature again over the signed installer. SignPath takes a file only as
+  an artifact of the run, which is how it knows this repo's workflow built it. A release (`updater: release`)
+  uses `release-signing`, and waits twice, up to an hour each, for the approval at app.signpath.io. The
+  uninstaller the installer writes on the PC is made while packing and is not signed. Reputation builds per
+  certificate, so SmartScreen's "Windows protected your PC" on a manual download fades with downloads, not at
+  once. The updater's path was never affected: the installer is written by OnKey itself, which doesn't add the
+  from-the-Internet mark.
+- **Checkable builds.** Each run makes a build provenance attestation for the installer and the AppImage:
+  `gh attestation verify <file> --repo dsmurrell/onkey` says which commit and workflow produced a download.
+- **Rehearsing in the public repo.** A push to a branch named `ci-win*`, `ci-linux*` or `ci-all*` there runs the
+  whole release path with nothing real: a throwaway updater key, SignPath's test certificate, nothing uploaded.
+  (`workflow_dispatch` needs the workflow on `main`; a test branch doesn't.) Each signed Windows run uses about
+  0.4 GB of SignPath's 48 GB a year.
+- **Rust is pinned in the workflows** (1.99.1): 1.100 lays out `target/` differently and `ort-sys` 2.0.0-rc.10's
+  build script fails on it. Raise it together with `ort`.
 
 ### The sequence
 
 ```sh
 # 1. development checkout, on a clean master: version bump + CHANGELOG entry, committed
 scripts/release.sh 0.3.0 --prepare
-# 2. export that commit to the public copy, review, commit it there; push the private master to the development
-#    repo too (CI runs the workflows from there: ONKEY_CI_REF, default master)
+# 2. export that commit to the public copy, review, commit it there (CI runs the workflows from the public repo)
 # 3. public copy (branch main), gh logged in: the Mac build, notarised, and the Mac rehearsal
 scripts/release.sh 0.3.0 --dry-run --notarise
 # 4. tag, push main + tag, draft release with the Mac files, start the Windows and Linux CI builds of the tag
 scripts/release.sh 0.3.0 --no-build --stage
-# 5. watch both runs (the command it prints); each builds, verifies, rehearses and uploads to the draft (~1 h)
+# 5. watch both runs (the command it prints); each builds, verifies, rehearses and uploads to the draft (~1 h).
+#    The Windows run waits twice for a code-signing approval at app.signpath.io (an email comes for each)
 # 6. check the draft and publish: latest.json for all three, SHA256SUMS, release published as latest
 scripts/release-publish.sh 0.3.0 --dry-run      # reads, downloads, verifies, writes latest.json, publishes nothing
 scripts/release-publish.sh 0.3.0
@@ -211,7 +226,7 @@ three platforms), and the live update test from the previous version on each pla
 **If a CI build fails after `--stage`:** nothing is published, and the draft and tag can go: fix forward on a new
 version if the source is wrong (`gh release delete v0.3.0 --repo dsmurrell/onkey --yes --cleanup-tag`, and
 `git tag -d v0.3.0` in the public copy, then prepare 0.3.1), or if only the build or the runner failed, rerun the
-workflow (`gh run rerun <id> --repo dsmurrell/onkey-dev`, or `gh workflow run … -f public_tag=v0.3.0 -f
+workflow (`gh run rerun <id> --repo dsmurrell/onkey`, or `gh workflow run … -f public_tag=v0.3.0 -f
 public_commit=<sha> -f updater=release`): the same tagged commit, so the same source. `release-publish.sh` refuses
 a draft with any file missing or a rehearsal note that isn't "ok".
 

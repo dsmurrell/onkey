@@ -35,8 +35,10 @@
 #   ONKEY_UPDATER_KEY            the updater's private key (default ~/.tauri/onkey-updater.key)
 #   ONKEY_UPDATER_KEY_PASSWORD   its password (default: from the login Keychain, service "onkey-updater-key")
 #   ONKEY_REPO                   owner/repo (default dsmurrell/onkey)
-#   ONKEY_DEV_REPO               the development repo whose CI builds Windows and Linux (default dsmurrell/onkey-dev)
-#   ONKEY_CI_REF                 its branch holding the workflows to run, for --stage (default master; push it first)
+#   ONKEY_CI_REPO                the repo whose CI builds Windows and Linux, for --stage (default: ONKEY_REPO, the
+#                                public one: SignPath signs the Windows build only when this repo's workflow made it)
+#   ONKEY_CI_REF                 its branch holding the workflows to run (default: the branch being released, which
+#                                --stage has just pushed)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT=$PWD
@@ -59,8 +61,7 @@ done
 [ $PREP = 1 ] && [ $STAGE = 1 ] && { echo "--prepare builds nothing: --stage comes after the export" >&2; exit 2; }
 TAG="v$V"
 REPO=${ONKEY_REPO:-dsmurrell/onkey}
-DEV_REPO=${ONKEY_DEV_REPO:-dsmurrell/onkey-dev}
-CI_REF=${ONKEY_CI_REF:-master}
+CI_REPO=${ONKEY_CI_REPO:-$REPO}
 KEY=${ONKEY_UPDATER_KEY:-$HOME/.tauri/onkey-updater.key}
 export CARGO_TARGET_DIR="$ROOT/src-tauri/target-dist"     # make-dmg.sh's
 # an official build: the only kind that installs updates (updater.rs OFFICIAL); the rehearsal below checks it is
@@ -272,8 +273,9 @@ else
   CREATE=(gh release create "$TAG" --repo "$REPO" --verify-tag --latest --title "OnKey $V" --notes-file "$DIST/notes.md" "${ASSETS[@]}")
 fi
 HEADSHA=$(git rev-parse HEAD)
-CI_WIN=(gh workflow run windows.yml --repo "$DEV_REPO" --ref "$CI_REF" -f "public_tag=$TAG" -f "public_commit=$HEADSHA" -f updater=release)
-CI_LINUX=(gh workflow run linux.yml --repo "$DEV_REPO" --ref "$CI_REF" -f "public_tag=$TAG" -f "public_commit=$HEADSHA" -f updater=release)
+CI_REF=${ONKEY_CI_REF:-$BRANCH}
+CI_WIN=(gh workflow run windows.yml --repo "$CI_REPO" --ref "$CI_REF" -f "public_tag=$TAG" -f "public_commit=$HEADSHA" -f updater=release)
+CI_LINUX=(gh workflow run linux.yml --repo "$CI_REPO" --ref "$CI_REF" -f "public_tag=$TAG" -f "public_commit=$HEADSHA" -f updater=release)
 q() { printf '%q ' "$@"; }
 say "$([ $STAGE = 1 ] && echo stage || echo publish)"
 if [ $DRY = 1 ]; then
@@ -295,13 +297,15 @@ git tag -a "$TAG" -m "OnKey $V"
 "${CREATE[@]}"
 if [ $STAGE = 1 ]; then
   echo "draft release $TAG made: https://github.com/$REPO/releases/tag/$TAG (not published: no latest.json yet)"
-  # the Windows and Linux builds of exactly this commit, on the development repo's CI (its workflows at $CI_REF)
+  # the Windows and Linux builds of exactly this commit, in the open on $CI_REPO's CI (its workflows at $CI_REF)
   "${CI_WIN[@]}"
   "${CI_LINUX[@]}"
   echo
   echo "staged $TAG at $HEADSHA. CI is building Windows and Linux from the public tag:"
-  echo "  gh run list --repo $DEV_REPO --workflow windows.yml -L 1; gh run list --repo $DEV_REPO --workflow linux.yml -L 1"
-  echo "  (gh run watch <id> --repo $DEV_REPO)"
+  echo "  gh run list --repo $CI_REPO --workflow windows.yml -L 1; gh run list --repo $CI_REPO --workflow linux.yml -L 1"
+  echo "  (gh run watch <id> --repo $CI_REPO)"
+  echo "The Windows build stops twice for a code-signing approval (onkey.exe, then the installer): approve each at"
+  echo "  https://app.signpath.io  (Signing Requests; an email comes for each; it waits up to an hour)"
   echo "When both are green (each rehearsed its update and uploaded to the draft): scripts/release-publish.sh $V"
   exit 0
 fi

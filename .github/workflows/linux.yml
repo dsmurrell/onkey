@@ -15,7 +15,7 @@
 # (ONKEY_OFFICIAL=1), with the updater key from this repo's secrets (TAURI_SIGNING_PRIVATE_KEY and its password),
 # checks the AppImage's signature against the key every installed OnKey trusts, builds the next version too and
 # rehearses updating to it (scripts/update-rehearsal-ci.sh), then uploads the AppImage and its .sig to the draft
-# release (ONKEY_PUBLIC_RELEASE_TOKEN). `updater: throwaway` does the same with a key made in the job, which the app
+# release. `updater: throwaway` does the same with a key made in the job, which the app
 # is built to trust, not official and uploaded nowhere: it proves the mechanics without the real key.
 #
 # This one file runs in two repos. In the public one (dsmurrell/onkey) it is the release build: built in the open
@@ -70,6 +70,7 @@ jobs:
         with:
           repository: ${{ inputs.public_tag != '' && 'dsmurrell/onkey' || github.repository }}
           ref: ${{ inputs.public_tag }}
+          persist-credentials: false
       # the models' cache key: changes when a model, how it's fetched or the packages that export it change
       - id: key
         run: echo "key=models-v1-${{ hashFiles('src-tauri/src/models.rs', 'scripts/fetch-models.sh', 'scripts/requirements-models.txt', 'scripts/export_*.py') }}" >> "$GITHUB_OUTPUT"
@@ -118,7 +119,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 90
     permissions:
-      contents: read
+      contents: write        # a release's files go to its draft release ("Upload to the draft release"); nothing else writes
       id-token: write        # the build provenance attestation
       attestations: write
     steps:
@@ -128,6 +129,7 @@ jobs:
         with:
           repository: ${{ inputs.public_tag != '' && 'dsmurrell/onkey' || github.repository }}
           ref: ${{ inputs.public_tag }}
+          persist-credentials: false
       - name: The release source is the tagged public commit
         if: inputs.public_tag != ''
         env:
@@ -172,8 +174,8 @@ jobs:
       # pinned: Rust 1.100 (9 Nov 2026) lays out target/ differently, and ort-sys 2.0.0-rc.10's build script, which
       # finds target/release by walking up from its own folder, fails on it ("cannot find the path specified").
       # Raise this together with ort.
-      - name: Rust (1.99.1)
-        run: rustup toolchain install 1.99.1 --profile minimal --component clippy --no-self-update && rustup default 1.99.1 && rustc --version
+      - name: Rust (1.100.0)
+        run: rustup toolchain install 1.100.0 --profile minimal --component clippy --no-self-update && rustup default 1.100.0 && rustc --version
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
           workspaces: src-tauri
@@ -303,7 +305,9 @@ jobs:
       - name: Upload to the draft release
         if: env.UPDATER_MODE == 'release' && steps.tests.outcome == 'success' && steps.clippy.outcome == 'success' && steps.pipewire.outcome == 'success'
         env:
-          GH_TOKEN: ${{ secrets.ONKEY_PUBLIC_RELEASE_TOKEN }}
+          # in the public repo, this run's own token (the job's `contents: write`); elsewhere a token that may write
+          # the public repo's releases
+          GH_TOKEN: ${{ github.repository == 'dsmurrell/onkey' && github.token || secrets.ONKEY_PUBLIC_RELEASE_TOKEN }}
           TAG: ${{ inputs.public_tag }}
           TARGET: linux-x86_64
         run: bash scripts/ci-upload-release.sh dist/*.AppImage

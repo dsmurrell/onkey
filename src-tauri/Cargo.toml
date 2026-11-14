@@ -29,7 +29,7 @@ rtrb = "0.3"
 # a challenge link's signature (challenge.rs): ECDSA P-256, which every browser's WebCrypto can check on the site
 p256 = { version = "0.13", default-features = false, features = ["ecdsa", "std"] }
 # (Core ML on macOS and DirectML on Windows, below: elsewhere the models run on the CPU)
-ort = "=2.0.0-rc.10"
+ort = "=2.0.0-rc.15"
 ndarray = "0.16"
 ureq = { version = "2", features = ["json"] }
 urlencoding = "2"
@@ -44,7 +44,7 @@ crc32fast = "1"
 tauri-plugin-updater = { version = "2.12", default-features = false, features = ["native-tls"] }
 
 [target.'cfg(target_os = "macos")'.dependencies]
-ort = { version = "=2.0.0-rc.10", features = ["coreml"] }
+ort = { version = "=2.0.0-rc.15", features = ["coreml"] }
 # already in the tree via tauri/tao; used directly to hide the window buttons in mini mode
 objc2 = "0.6"
 objc2-app-kit = { version = "0.3", default-features = false, features = ["std", "NSResponder", "NSWindow", "NSView", "NSControl", "NSButton", "NSRunningApplication", "NSWorkspace", "NSPanel", "NSSavePanel", "NSApplication"] }
@@ -54,7 +54,7 @@ objc2-foundation = { version = "0.3", default-features = false, features = ["std
 [target.'cfg(windows)'.dependencies]
 # DirectML (the GPU) for the learning models and live pitch: gpu.rs. ONNX Runtime's Windows build already has it;
 # the app ships DirectML.dll beside onkey.exe (tauri.windows.conf.json, scripts/fetch-directml.sh)
-ort = { version = "=2.0.0-rc.10", features = ["directml"] }
+ort = { version = "=2.0.0-rc.15", features = ["directml"] }
 # already in the tree (via tauri/wry); used directly for audio (WASAPI, Media Foundation) and the music app (the system media session)
 windows = { version = "0.62", features = [
     "Foundation", "Foundation_Collections", "Media_Control",

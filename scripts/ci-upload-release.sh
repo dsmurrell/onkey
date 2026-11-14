@@ -4,13 +4,13 @@
 # its rehearsal (update-rehearsal-<target>.txt) that scripts/release-publish.sh reads before it writes latest.json
 # and publishes. Only a draft is written to: a published release is what people already get, and never changed here.
 #   scripts/ci-upload-release.sh <installer or AppImage>
-# Environment: GH_TOKEN (a token that may write releases on the public repo: ONKEY_PUBLIC_RELEASE_TOKEN), TAG,
+# Environment: GH_TOKEN (a token that may write releases on the public repo: the run's own there), TAG,
 # TARGET (windows-x86_64 | linux-x86_64), ONKEY_REPO (default dsmurrell/onkey), and GitHub's GITHUB_* for the note.
 set -euo pipefail
 F=${1:?usage: scripts/ci-upload-release.sh <file>}
 REPO=${ONKEY_REPO:-dsmurrell/onkey}
 die() { echo "::error::upload: $*" >&2; exit 1; }
-[ -n "${GH_TOKEN:-}" ] || die "no token (the secret ONKEY_PUBLIC_RELEASE_TOKEN: docs/RELEASING.md, One-time setup)"
+[ -n "${GH_TOKEN:-}" ] || die "no token to write the draft release with (GH_TOKEN)"
 [ -n "${TAG:-}" ] && [ -n "${TARGET:-}" ] || die "TAG and TARGET must be set"
 [ -f "$F" ] && [ -s "$F.sig" ] || die "no $F with a .sig beside it"
 [ "${UPDATER_MODE:-}" = release ] || die "only a release build is uploaded (UPDATER_MODE is '${UPDATER_MODE:-}')"

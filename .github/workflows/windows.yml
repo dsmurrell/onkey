@@ -25,7 +25,7 @@
 # (ONKEY_OFFICIAL=1), with the updater key from this repo's secrets (TAURI_SIGNING_PRIVATE_KEY and its password),
 # checks the installer's signature against the key every installed OnKey trusts, builds the next version too and
 # rehearses updating to it (scripts/update-rehearsal-ci.ps1), then uploads the installer and its .sig to the draft
-# release (ONKEY_PUBLIC_RELEASE_TOKEN). `updater: throwaway` does the same with a key made in the job, which the app
+# release. `updater: throwaway` does the same with a key made in the job, which the app
 # is built to trust, not official and uploaded nowhere: it proves the mechanics without the real key.
 name: windows
 
@@ -82,6 +82,7 @@ jobs:
         with:
           repository: ${{ inputs.public_tag != '' && 'dsmurrell/onkey' || github.repository }}
           ref: ${{ inputs.public_tag }}
+          persist-credentials: false
       # the models' cache key: changes when a model, how it's fetched or the packages that export it change
       # (worked out here only and handed to the Windows job, whose checkout has CRLF line ends)
       - id: key
@@ -153,7 +154,7 @@ jobs:
     # a release waits twice for an approval at SignPath (up to an hour each)
     timeout-minutes: 200
     permissions:
-      contents: read
+      contents: write        # a release's files go to its draft release ("Upload to the draft release"); nothing else writes
       actions: read          # SignPath reads this run's details and the artifact it is asked to sign
       id-token: write        # the build provenance attestation
       attestations: write
@@ -169,6 +170,7 @@ jobs:
         with:
           repository: ${{ inputs.public_tag != '' && 'dsmurrell/onkey' || github.repository }}
           ref: ${{ inputs.public_tag }}
+          persist-credentials: false
       - name: The release source is the tagged public commit
         if: inputs.public_tag != ''
         env:
@@ -507,7 +509,9 @@ jobs:
       - name: Upload to the draft release
         if: env.UPDATER_MODE == 'release'
         env:
-          GH_TOKEN: ${{ secrets.ONKEY_PUBLIC_RELEASE_TOKEN }}
+          # in the public repo, this run's own token (the job's `contents: write`); elsewhere a token that may write
+          # the public repo's releases
+          GH_TOKEN: ${{ github.repository == 'dsmurrell/onkey' && github.token || secrets.ONKEY_PUBLIC_RELEASE_TOKEN }}
           TAG: ${{ inputs.public_tag }}
           TARGET: windows-x86_64
         run: bash scripts/ci-upload-release.sh dist/*-setup.exe
